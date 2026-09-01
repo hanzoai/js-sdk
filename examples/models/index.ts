@@ -11,13 +11,13 @@
 //
 // `data` arrives untyped because this operation declares no response schema —
 // one of 891 in the document that state the route and not its shape.
-import { ModelsApi } from 'hanzoai';
+import { AiApi } from 'hanzoai';
 import { anon, basePath, fail } from '../client';
 
 type Catalog = { data: Array<{ id: string; owned_by?: string; provider?: string }> };
 
 async function main() {
-  const { data } = await new ModelsApi(anon()).getModels();
+  const { data } = await new AiApi(anon()).getModels();
   const catalog = (data as unknown as Catalog).data;
 
   console.log(`${catalog.length} models from ${basePath}`);

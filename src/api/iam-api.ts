@@ -126,6 +126,16 @@ import type { IamSession } from '../models';
 // @ts-ignore
 import type { IamSetAvatarInput } from '../models';
 // @ts-ignore
+import type { IamSetProfileInput } from '../models';
+// @ts-ignore
+import type { IamTeam } from '../models';
+// @ts-ignore
+import type { IamTeamsDeleteOutput } from '../models';
+// @ts-ignore
+import type { IamTeamsInput } from '../models';
+// @ts-ignore
+import type { IamTeamsListOutput } from '../models';
+// @ts-ignore
 import type { IamToken } from '../models';
 // @ts-ignore
 import type { IamTokenMutation } from '../models';
@@ -324,8 +334,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Records a sign-in. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
-         * @summary Records a sign-in.
+         * Records a sign-in and answers with the cookie id it minted. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
+         * @summary Records a sign-in and answers with the cookie id it minted.
          * @param {IamCreateSessionIn} iamCreateSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -786,6 +796,44 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // verify required parameter 'name' is not null or undefined
             assertParamExists('deleteIamServiceAccountsByName', 'name', name)
             const localVarPath = `/v1/iam/service-accounts/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
+         * @summary Removes a team.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamTeamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamTeamsByName', 'name', name)
+            const localVarPath = `/v1/iam/teams/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1631,8 +1679,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.
-         * @summary Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1814,7 +1862,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
          * @param {string} [org] Org is an organization — who may act in it.
@@ -2608,18 +2656,88 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
-         * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
-         * @param {string} owner 
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamTeams: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/teams`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one team: who is in it.
+         * @summary Returns one team: who is in it.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamTeamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamTeamsByName', 'name', name)
+            const localVarPath = `/v1/iam/teams/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
+         * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
+         * @param {string} [owner] 
          * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsers: async (owner: string, email?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'owner' is not null or undefined
-            assertParamExists('getIamUsers', 'owner', owner)
+        getIamUsers: async (owner?: string, email?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3336,17 +3454,15 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
-         * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
-         * @param {string} owner 
+         * Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. A session row names a live account and the applications it is signed in to, so the tenant is decided here rather than taken from the query.
+         * @summary Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application.
+         * @param {string} [owner] 
          * @param {string} [name] 
          * @param {string} [application] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listSessions: async (owner: string, name?: string, application?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'owner' is not null or undefined
-            assertParamExists('listSessions', 'owner', owner)
+        listSessions: async (owner?: string, name?: string, application?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4782,6 +4898,46 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Makes a team — a named set of people that roles and permissions grant to. Granting to a team rather than to each person keeps access correct as people come and go: add someone and they inherit what the team can do. A name already used in your organization is refused.
+         * @summary Makes a team — a named set of people that roles and permissions grant to.
+         * @param {IamTeamsInput} iamTeamsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamTeams: async (iamTeamsInput: IamTeamsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamTeamsInput' is not null or undefined
+            assertParamExists('postIamTeams', 'iamTeamsInput', iamTeamsInput)
+            const localVarPath = `/v1/iam/teams`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamTeamsInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
          * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
          * @param {*} [options] Override http request option.
@@ -5664,6 +5820,50 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Changes who is in a team. Access changes for everyone in it as soon as the write lands. The name and the created stamp do not change.
+         * @summary Changes who is in a team.
+         * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
+         * @param {IamTeamsInput} iamTeamsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamTeamsByName: async (name: string, iamTeamsInput: IamTeamsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamTeamsByName', 'name', name)
+            // verify required parameter 'iamTeamsInput' is not null or undefined
+            assertParamExists('putIamTeamsByName', 'iamTeamsInput', iamTeamsInput)
+            const localVarPath = `/v1/iam/teams/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamTeamsInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {string} owner 
@@ -5800,6 +6000,46 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Changes how an organization reads: its display name, its website and its favicon.  IT EXISTS FOR THE REASON SetAvatar DOES, and the reason is worth stating because the obvious alternative is a trap. Update REPLACES the whole record, so a caller that wants to change one field has to send every other field back — and a record read back first arrives MASKED, so the read half of that read-modify-write hands you \"***\" for the master password and the salt, and the write half stores it. Renaming an organization through Update therefore costs it its credential settings; sending only the new name costs it everything else. Neither is a rename.  So this writes the fields it names and touches nothing else. A nil pointer is not sent and not changed; an empty string is sent and clears the field.
+         * @summary Changes how an organization reads: its display name, its website and its favicon.
+         * @param {IamSetProfileInput} iamSetProfileInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setOrganizationProfile: async (iamSetProfileInput: IamSetProfileInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamSetProfileInput' is not null or undefined
+            assertParamExists('setOrganizationProfile', 'iamSetProfileInput', iamSetProfileInput)
+            const localVarPath = `/v1/iam/organizations/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamSetProfileInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
          * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
          * @param {string} owner 
@@ -5896,8 +6136,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
-         * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+         * Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
+         * @summary Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live.
          * @param {string} owner 
          * @param {string} name 
          * @param {string} application 
@@ -6194,8 +6434,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a sign-in. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
-         * @summary Records a sign-in.
+         * Records a sign-in and answers with the cookie id it minted. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
+         * @summary Records a sign-in and answers with the cookie id it minted.
          * @param {IamCreateSessionIn} iamCreateSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6355,6 +6595,19 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamServiceAccountsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamServiceAccountsByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
+         * @summary Removes a team.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamTeamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamTeamsByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamTeamsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6630,8 +6883,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.
-         * @summary Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6693,7 +6946,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
          * @param {string} [org] Org is an organization — who may act in it.
@@ -6963,16 +7216,41 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
-         * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
-         * @param {string} owner 
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamTeams(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsListOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeams(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamTeams']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one team: who is in it.
+         * @summary Returns one team: who is in it.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamTeamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeam>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeamsByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamTeamsByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
+         * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
+         * @param {string} [owner] 
          * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamUsers(owner: string, email?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersListOutput>> {
+        async getIamUsers(owner?: string, email?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersListOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsers(owner, email, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamUsers']?.[localVarOperationServerIndex]?.url;
@@ -7205,15 +7483,15 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
-         * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
-         * @param {string} owner 
+         * Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. A session row names a live account and the applications it is signed in to, so the tenant is decided here rather than taken from the query.
+         * @summary Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application.
+         * @param {string} [owner] 
          * @param {string} [name] 
          * @param {string} [application] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listSessions(owner: string, name?: string, application?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListSessionsOut>> {
+        async listSessions(owner?: string, name?: string, application?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListSessionsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listSessions(owner, name, application, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.listSessions']?.[localVarOperationServerIndex]?.url;
@@ -7696,6 +7974,19 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Makes a team — a named set of people that roles and permissions grant to. Granting to a team rather than to each person keeps access correct as people come and go: add someone and they inherit what the team can do. A name already used in your organization is refused.
+         * @summary Makes a team — a named set of people that roles and permissions grant to.
+         * @param {IamTeamsInput} iamTeamsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamTeams(iamTeamsInput: IamTeamsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeam>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamTeams(iamTeamsInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamTeams']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
          * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
          * @param {*} [options] Override http request option.
@@ -7984,6 +8275,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Changes who is in a team. Access changes for everyone in it as soon as the write lands. The name and the created stamp do not change.
+         * @summary Changes who is in a team.
+         * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
+         * @param {IamTeamsInput} iamTeamsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamTeamsByName(name: string, iamTeamsInput: IamTeamsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeam>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamTeamsByName(name, iamTeamsInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamTeamsByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {string} owner 
@@ -8027,6 +8332,19 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Changes how an organization reads: its display name, its website and its favicon.  IT EXISTS FOR THE REASON SetAvatar DOES, and the reason is worth stating because the obvious alternative is a trap. Update REPLACES the whole record, so a caller that wants to change one field has to send every other field back — and a record read back first arrives MASKED, so the read half of that read-modify-write hands you \"***\" for the master password and the salt, and the write half stores it. Renaming an organization through Update therefore costs it its credential settings; sending only the new name costs it everything else. Neither is a rename.  So this writes the fields it names and touches nothing else. A nil pointer is not sent and not changed; an empty string is sent and clears the field.
+         * @summary Changes how an organization reads: its display name, its website and its favicon.
+         * @param {IamSetProfileInput} iamSetProfileInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setOrganizationProfile(iamSetProfileInput: IamSetProfileInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setOrganizationProfile(iamSetProfileInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.setOrganizationProfile']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
          * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
          * @param {string} owner 
@@ -8057,8 +8375,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
-         * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+         * Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
+         * @summary Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live.
          * @param {string} owner 
          * @param {string} name 
          * @param {string} application 
@@ -8181,8 +8499,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.createOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a sign-in. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
-         * @summary Records a sign-in.
+         * Records a sign-in and answers with the cookie id it minted. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
+         * @summary Records a sign-in and answers with the cookie id it minted.
          * @param {IamApiCreateSessionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8298,6 +8616,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         deleteIamServiceAccountsByName(requestParameters: IamApiDeleteIamServiceAccountsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteIamServiceAccountsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
+         * @summary Removes a team.
+         * @param {IamApiDeleteIamTeamsByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamTeamsByName(requestParameters: IamApiDeleteIamTeamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeamsDeleteOutput> {
+            return localVarFp.deleteIamTeamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
@@ -8498,8 +8826,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.
-         * @summary Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
          * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8545,7 +8873,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamLinkedAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {IamApiGetIamMembershipsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8745,13 +9073,32 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamServiceAccounts(requestParameters.organization, requestParameters.p, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
-         * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamTeams(options?: RawAxiosRequestConfig): AxiosPromise<IamTeamsListOutput> {
+            return localVarFp.getIamTeams(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one team: who is in it.
+         * @summary Returns one team: who is in it.
+         * @param {IamApiGetIamTeamsByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamTeamsByName(requestParameters: IamApiGetIamTeamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeam> {
+            return localVarFp.getIamTeamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
+         * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
          * @param {IamApiGetIamUsersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsers(requestParameters: IamApiGetIamUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersListOutput> {
+        getIamUsers(requestParameters: IamApiGetIamUsersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersListOutput> {
             return localVarFp.getIamUsers(requestParameters.owner, requestParameters.email, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8918,13 +9265,13 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.listProviders(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
-         * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
+         * Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. A session row names a live account and the applications it is signed in to, so the tenant is decided here rather than taken from the query.
+         * @summary Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application.
          * @param {IamApiListSessionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listSessions(requestParameters: IamApiListSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamListSessionsOut> {
+        listSessions(requestParameters: IamApiListSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListSessionsOut> {
             return localVarFp.listSessions(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9284,6 +9631,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamSignup(options).then((request) => request(axios, basePath));
         },
         /**
+         * Makes a team — a named set of people that roles and permissions grant to. Granting to a team rather than to each person keeps access correct as people come and go: add someone and they inherit what the team can do. A name already used in your organization is refused.
+         * @summary Makes a team — a named set of people that roles and permissions grant to.
+         * @param {IamApiPostIamTeamsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamTeams(requestParameters: IamApiPostIamTeamsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeam> {
+            return localVarFp.postIamTeams(requestParameters.iamTeamsInput, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
          * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
          * @param {*} [options] Override http request option.
@@ -9487,6 +9844,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
+         * Changes who is in a team. Access changes for everyone in it as soon as the write lands. The name and the created stamp do not change.
+         * @summary Changes who is in a team.
+         * @param {IamApiPutIamTeamsByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamTeamsByName(requestParameters: IamApiPutIamTeamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeam> {
+            return localVarFp.putIamTeamsByName(requestParameters.name, requestParameters.iamTeamsInput, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
@@ -9517,6 +9884,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.setOrganizationAvatar(requestParameters.iamSetAvatarInput, options).then((request) => request(axios, basePath));
         },
         /**
+         * Changes how an organization reads: its display name, its website and its favicon.  IT EXISTS FOR THE REASON SetAvatar DOES, and the reason is worth stating because the obvious alternative is a trap. Update REPLACES the whole record, so a caller that wants to change one field has to send every other field back — and a record read back first arrives MASKED, so the read half of that read-modify-write hands you \"***\" for the master password and the salt, and the write half stores it. Renaming an organization through Update therefore costs it its credential settings; sending only the new name costs it everything else. Neither is a rename.  So this writes the fields it names and touches nothing else. A nil pointer is not sent and not changed; an empty string is sent and clears the field.
+         * @summary Changes how an organization reads: its display name, its website and its favicon.
+         * @param {IamApiSetOrganizationProfileRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setOrganizationProfile(requestParameters: IamApiSetOrganizationProfileRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
+            return localVarFp.setOrganizationProfile(requestParameters.iamSetProfileInput, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
          * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
          * @param {IamApiUpdateOrganizationRequest} requestParameters Request parameters.
@@ -9537,8 +9914,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.updateProvider(requestParameters.owner, requestParameters.name, requestParameters.iamProvider, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
-         * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+         * Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
+         * @summary Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live.
          * @param {IamApiUpdateSessionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9858,6 +10235,20 @@ export interface IamApiDeleteIamServiceAccountsByNameRequest {
      * 
      * @type {string}
      * @memberof IamApiDeleteIamServiceAccountsByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamTeamsByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamTeamsByNameRequest
+ */
+export interface IamApiDeleteIamTeamsByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamTeamsByName
      */
     readonly name: string
 }
@@ -10451,6 +10842,20 @@ export interface IamApiGetIamServiceAccountsRequest {
 }
 
 /**
+ * Request parameters for getIamTeamsByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamTeamsByNameRequest
+ */
+export interface IamApiGetIamTeamsByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamTeamsByName
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for getIamUsers operation in IamApi.
  * @export
  * @interface IamApiGetIamUsersRequest
@@ -10461,7 +10866,7 @@ export interface IamApiGetIamUsersRequest {
      * @type {string}
      * @memberof IamApiGetIamUsers
      */
-    readonly owner: string
+    readonly owner?: string
 
     /**
      * Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
@@ -10720,7 +11125,7 @@ export interface IamApiListSessionsRequest {
      * @type {string}
      * @memberof IamApiListSessions
      */
-    readonly owner: string
+    readonly owner?: string
 
     /**
      * 
@@ -10973,6 +11378,20 @@ export interface IamApiPostIamServiceAccountsByNameKeysRequest {
      * @memberof IamApiPostIamServiceAccountsByNameKeys
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for postIamTeams operation in IamApi.
+ * @export
+ * @interface IamApiPostIamTeamsRequest
+ */
+export interface IamApiPostIamTeamsRequest {
+    /**
+     * 
+     * @type {IamTeamsInput}
+     * @memberof IamApiPostIamTeams
+     */
+    readonly iamTeamsInput: IamTeamsInput
 }
 
 /**
@@ -11326,6 +11745,27 @@ export interface IamApiPutIamScimV2UsersByOwnerByNameRequest {
 }
 
 /**
+ * Request parameters for putIamTeamsByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamTeamsByNameRequest
+ */
+export interface IamApiPutIamTeamsByNameRequest {
+    /**
+     * Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
+     * @type {string}
+     * @memberof IamApiPutIamTeamsByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamTeamsInput}
+     * @memberof IamApiPutIamTeamsByName
+     */
+    readonly iamTeamsInput: IamTeamsInput
+}
+
+/**
  * Request parameters for putIamUsersByOwnerByName operation in IamApi.
  * @export
  * @interface IamApiPutIamUsersByOwnerByNameRequest
@@ -11393,6 +11833,20 @@ export interface IamApiSetOrganizationAvatarRequest {
      * @memberof IamApiSetOrganizationAvatar
      */
     readonly iamSetAvatarInput: IamSetAvatarInput
+}
+
+/**
+ * Request parameters for setOrganizationProfile operation in IamApi.
+ * @export
+ * @interface IamApiSetOrganizationProfileRequest
+ */
+export interface IamApiSetOrganizationProfileRequest {
+    /**
+     * 
+     * @type {IamSetProfileInput}
+     * @memberof IamApiSetOrganizationProfile
+     */
+    readonly iamSetProfileInput: IamSetProfileInput
 }
 
 /**
@@ -11640,8 +12094,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Records a sign-in. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
-     * @summary Records a sign-in.
+     * Records a sign-in and answers with the cookie id it minted. Signing in again from another browser adds to the session rather than replacing it, so one person can be signed in from a laptop and a phone at once.  Ask for an exclusive sign-in and the opposite holds: the new sign-in is the only one left and every other browser is signed out. That is the setting to use when one person may hold only one live session at a time.
+     * @summary Records a sign-in and answers with the cookie id it minted.
      * @param {IamApiCreateSessionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11780,6 +12234,18 @@ export class IamApi extends BaseAPI {
      */
     public deleteIamServiceAccountsByName(requestParameters: IamApiDeleteIamServiceAccountsByNameRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).deleteIamServiceAccountsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
+     * @summary Removes a team.
+     * @param {IamApiDeleteIamTeamsByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamTeamsByName(requestParameters: IamApiDeleteIamTeamsByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamTeamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12021,8 +12487,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.
-     * @summary Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+     * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+     * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
      * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12078,7 +12544,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+     * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
      * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
      * @param {IamApiGetIamMembershipsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12320,14 +12786,37 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
-     * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
+     * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+     * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamTeams(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamTeams(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one team: who is in it.
+     * @summary Returns one team: who is in it.
+     * @param {IamApiGetIamTeamsByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamTeamsByName(requestParameters: IamApiGetIamTeamsByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamTeamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
+     * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
      * @param {IamApiGetIamUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamUsers(requestParameters: IamApiGetIamUsersRequest, options?: RawAxiosRequestConfig) {
+    public getIamUsers(requestParameters: IamApiGetIamUsersRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamUsers(requestParameters.owner, requestParameters.email, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -12529,14 +13018,14 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
-     * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
+     * Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. A session row names a live account and the applications it is signed in to, so the tenant is decided here rather than taken from the query.
+     * @summary Returns who is currently signed in to an organization, newest first, and can be narrowed to one person or one application.
      * @param {IamApiListSessionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public listSessions(requestParameters: IamApiListSessionsRequest, options?: RawAxiosRequestConfig) {
+    public listSessions(requestParameters: IamApiListSessionsRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).listSessions(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -12973,6 +13462,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Makes a team — a named set of people that roles and permissions grant to. Granting to a team rather than to each person keeps access correct as people come and go: add someone and they inherit what the team can do. A name already used in your organization is refused.
+     * @summary Makes a team — a named set of people that roles and permissions grant to.
+     * @param {IamApiPostIamTeamsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamTeams(requestParameters: IamApiPostIamTeamsRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamTeams(requestParameters.iamTeamsInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
      * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
      * @param {*} [options] Override http request option.
@@ -13218,6 +13719,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Changes who is in a team. Access changes for everyone in it as soon as the write lands. The name and the created stamp do not change.
+     * @summary Changes who is in a team.
+     * @param {IamApiPutIamTeamsByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamTeamsByName(requestParameters: IamApiPutIamTeamsByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamTeamsByName(requestParameters.name, requestParameters.iamTeamsInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
      * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
      * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
@@ -13254,6 +13767,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Changes how an organization reads: its display name, its website and its favicon.  IT EXISTS FOR THE REASON SetAvatar DOES, and the reason is worth stating because the obvious alternative is a trap. Update REPLACES the whole record, so a caller that wants to change one field has to send every other field back — and a record read back first arrives MASKED, so the read half of that read-modify-write hands you \"***\" for the master password and the salt, and the write half stores it. Renaming an organization through Update therefore costs it its credential settings; sending only the new name costs it everything else. Neither is a rename.  So this writes the fields it names and touches nothing else. A nil pointer is not sent and not changed; an empty string is sent and clears the field.
+     * @summary Changes how an organization reads: its display name, its website and its favicon.
+     * @param {IamApiSetOrganizationProfileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public setOrganizationProfile(requestParameters: IamApiSetOrganizationProfileRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).setOrganizationProfile(requestParameters.iamSetProfileInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
      * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
      * @param {IamApiUpdateOrganizationRequest} requestParameters Request parameters.
@@ -13278,8 +13803,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
-     * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+     * Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
+     * @summary Names the browsers a session keeps — signing out the ones you leave off while the session itself stays live.
      * @param {IamApiUpdateSessionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

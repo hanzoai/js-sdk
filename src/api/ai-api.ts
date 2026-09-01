@@ -3159,40 +3159,6 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Cross-tenant listing. Admin-only; a tenant caller is refused.
-         * @summary List messages across tenants
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAiMessagesGlobal: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/ai/messages/global`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * List the caller\'s nodes.
          * @summary List nodes
          * @param {*} [options] Override http request option.
@@ -12084,18 +12050,6 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Cross-tenant listing. Admin-only; a tenant caller is refused.
-         * @summary List messages across tenants
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAiMessagesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMessages200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMessagesGlobal(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMessagesGlobal']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * List the caller\'s nodes.
          * @summary List nodes
          * @param {*} [options] Override http request option.
@@ -15567,15 +15521,6 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          */
         getAiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetAiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiMessagesByOwnerByNameAnswer(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Cross-tenant listing. Admin-only; a tenant caller is refused.
-         * @summary List messages across tenants
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAiMessagesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMessages200Response> {
-            return localVarFp.getAiMessagesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
          * List the caller\'s nodes.
@@ -20796,17 +20741,6 @@ export class AiApi extends BaseAPI {
      */
     public getAiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetAiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).getAiMessagesByOwnerByNameAnswer(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Cross-tenant listing. Admin-only; a tenant caller is refused.
-     * @summary List messages across tenants
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AiApi
-     */
-    public getAiMessagesGlobal(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).getAiMessagesGlobal(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

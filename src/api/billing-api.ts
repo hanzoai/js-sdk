@@ -30,6 +30,10 @@ import type { AlertPatch } from '../models';
 // @ts-ignore
 import type { AlertSpec } from '../models';
 // @ts-ignore
+import type { AutoRecharge } from '../models';
+// @ts-ignore
+import type { AutoRechargeEdit } from '../models';
+// @ts-ignore
 import type { BillingAccount } from '../models';
 // @ts-ignore
 import type { CapVerdict } from '../models';
@@ -81,6 +85,8 @@ import type { Subscriptions } from '../models';
 import type { Tier } from '../models';
 // @ts-ignore
 import type { TopupIn } from '../models';
+// @ts-ignore
+import type { Transaction } from '../models';
 // @ts-ignore
 import type { Transactions } from '../models';
 // @ts-ignore
@@ -903,6 +909,40 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingRecharge: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/recharge`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
@@ -1041,6 +1081,44 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             if (offset !== undefined) {
                 localVarQueryParameter['offset'] = offset;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one ledger entry by its id.  It is the MEMBER of the collection beside it rather than a second way to ask — the same rows GET /v1/billing/transactions lists, addressed one at a time. A top-up receipt is read here, because a receipt IS a ledger entry: the id this takes is the `transactionId` a top-up hands back.  The read is narrower than the list: commerce\'s core loads the row and refuses anything that is not a deposit, so a row that exists but is not a top-up answers 404. That asymmetry is stated rather than closed, because widening a money read to make two shapes match is not a change worth making for symmetry.  The books are the caller\'s own and cannot be named, so a guessed id misses rather than reaching another tenant\'s ledger.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one ledger entry by its id.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingTransactionsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBillingTransactionsById', 'id', id)
+            const localVarPath = `/v1/billing/transactions/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1654,6 +1732,46 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * @param {AutoRechargeEdit} autoRechargeEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putBillingRecharge: async (autoRechargeEdit: AutoRechargeEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'autoRechargeEdit' is not null or undefined
+            assertParamExists('putBillingRecharge', 'autoRechargeEdit', autoRechargeEdit)
+            const localVarPath = `/v1/billing/recharge`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoRechargeEdit, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Raise a draft invoice against a customer
          * @param {RaiseIn} raiseIn 
@@ -2064,6 +2182,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingRecharge(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoRecharge>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingRecharge(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingRecharge']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
@@ -2112,6 +2242,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTransactions(currency, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTransactions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one ledger entry by its id.  It is the MEMBER of the collection beside it rather than a second way to ask — the same rows GET /v1/billing/transactions lists, addressed one at a time. A top-up receipt is read here, because a receipt IS a ledger entry: the id this takes is the `transactionId` a top-up hands back.  The read is narrower than the list: commerce\'s core loads the row and refuses anything that is not a deposit, so a row that exists but is not a top-up answers 404. That asymmetry is stated rather than closed, because widening a money read to make two shapes match is not a change worth making for symmetry.  The books are the caller\'s own and cannot be named, so a guessed id misses rather than reaching another tenant\'s ledger.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one ledger entry by its id.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingTransactionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Transaction>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTransactionsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTransactionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2315,6 +2458,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingTopupToken(topupIn, xIdempotencyKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingTopupToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * @param {AutoRechargeEdit} autoRechargeEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putBillingRecharge(autoRechargeEdit: AutoRechargeEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoRecharge>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putBillingRecharge(autoRechargeEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.putBillingRecharge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2576,6 +2732,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingRecharge(options?: RawAxiosRequestConfig): AxiosPromise<AutoRecharge> {
+            return localVarFp.getBillingRecharge(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
@@ -2611,6 +2776,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getBillingTransactions(requestParameters: BillingApiGetBillingTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Transactions> {
             return localVarFp.getBillingTransactions(requestParameters.currency, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one ledger entry by its id.  It is the MEMBER of the collection beside it rather than a second way to ask — the same rows GET /v1/billing/transactions lists, addressed one at a time. A top-up receipt is read here, because a receipt IS a ledger entry: the id this takes is the `transactionId` a top-up hands back.  The read is narrower than the list: commerce\'s core loads the row and refuses anything that is not a deposit, so a row that exists but is not a top-up answers 404. That asymmetry is stated rather than closed, because widening a money read to make two shapes match is not a change worth making for symmetry.  The books are the caller\'s own and cannot be named, so a guessed id misses rather than reaching another tenant\'s ledger.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one ledger entry by its id.
+         * @param {BillingApiGetBillingTransactionsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingTransactionsById(requestParameters: BillingApiGetBillingTransactionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Transaction> {
+            return localVarFp.getBillingTransactionsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
@@ -2763,6 +2938,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingTopupToken(requestParameters: BillingApiPostBillingTopupTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<Charged> {
             return localVarFp.postBillingTopupToken(requestParameters.topupIn, requestParameters.xIdempotencyKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putBillingRecharge(requestParameters: BillingApiPutBillingRechargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoRecharge> {
+            return localVarFp.putBillingRecharge(requestParameters.autoRechargeEdit, options).then((request) => request(axios, basePath));
         },
         /**
          * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2994,6 +3179,20 @@ export interface BillingApiGetBillingTransactionsRequest {
 }
 
 /**
+ * Request parameters for getBillingTransactionsById operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingTransactionsByIdRequest
+ */
+export interface BillingApiGetBillingTransactionsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiGetBillingTransactionsById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for getInvoice operation in BillingApi.
  * @export
  * @interface BillingApiGetInvoiceRequest
@@ -3124,6 +3323,20 @@ export interface BillingApiPostBillingTopupTokenRequest {
      * @memberof BillingApiPostBillingTopupToken
      */
     readonly xIdempotencyKey?: string
+}
+
+/**
+ * Request parameters for putBillingRecharge operation in BillingApi.
+ * @export
+ * @interface BillingApiPutBillingRechargeRequest
+ */
+export interface BillingApiPutBillingRechargeRequest {
+    /**
+     * 
+     * @type {AutoRechargeEdit}
+     * @memberof BillingApiPutBillingRecharge
+     */
+    readonly autoRechargeEdit: AutoRechargeEdit
 }
 
 /**
@@ -3435,6 +3648,17 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingRecharge(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingRecharge(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
      * @param {*} [options] Override http request option.
@@ -3477,6 +3701,18 @@ export class BillingApi extends BaseAPI {
      */
     public getBillingTransactions(requestParameters: BillingApiGetBillingTransactionsRequest = {}, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getBillingTransactions(requestParameters.currency, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one ledger entry by its id.  It is the MEMBER of the collection beside it rather than a second way to ask — the same rows GET /v1/billing/transactions lists, addressed one at a time. A top-up receipt is read here, because a receipt IS a ledger entry: the id this takes is the `transactionId` a top-up hands back.  The read is narrower than the list: commerce\'s core loads the row and refuses anything that is not a deposit, so a row that exists but is not a top-up answers 404. That asymmetry is stated rather than closed, because widening a money read to make two shapes match is not a change worth making for symmetry.  The books are the caller\'s own and cannot be named, so a guessed id misses rather than reaching another tenant\'s ledger.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads one ledger entry by its id.
+     * @param {BillingApiGetBillingTransactionsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingTransactionsById(requestParameters: BillingApiGetBillingTransactionsByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingTransactionsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3661,6 +3897,18 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingTopupToken(requestParameters: BillingApiPostBillingTopupTokenRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingTopupToken(requestParameters.topupIn, requestParameters.xIdempotencyKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+     * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public putBillingRecharge(requestParameters: BillingApiPutBillingRechargeRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).putBillingRecharge(requestParameters.autoRechargeEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

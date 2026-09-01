@@ -24,7 +24,7 @@ import type { BotMember } from './bot-member';
  */
 export interface BotRoster {
     /**
-     * Bots is every agent of the caller\'s org, projected as a workspace member.
+     * Bots is every agent of the caller\'s org, projected as a space member.
      * @type {Array<BotMember>}
      * @memberof BotRoster
      */

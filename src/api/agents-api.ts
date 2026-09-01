@@ -595,7 +595,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
-         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
+         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1133,6 +1133,40 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          */
         postAgentsChat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/chat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Writes turns to the caller\'s thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Record turns in a conversation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsChatConversations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agents/chat/conversations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1808,7 +1842,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
-         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
+         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1987,6 +2021,18 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsChat(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsChat']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Writes turns to the caller\'s thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Record turns in a conversation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentsChatConversations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsChatConversations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsChatConversations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2413,6 +2459,15 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.postAgentsChat(options).then((request) => request(axios, basePath));
         },
         /**
+         * Writes turns to the caller\'s thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Record turns in a conversation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsChatConversations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsChatConversations(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {AgentsApiPostAgentsCodingRequest} requestParameters Request parameters.
@@ -2707,7 +2762,7 @@ export interface AgentsApiGetAgentsSessionsRequest {
     readonly project?: string
 
     /**
-     * Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
+     * Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
      * @type {string}
      * @memberof AgentsApiGetAgentsSessions
      */
@@ -3414,6 +3469,17 @@ export class AgentsApi extends BaseAPI {
      */
     public postAgentsChat(options?: RawAxiosRequestConfig) {
         return AgentsApiFp(this.configuration).postAgentsChat(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Writes turns to the caller\'s thread store without running a completion, and answers the `conversationId` they were written under. An absent `conversationId` opens a new thread; supplying one appends to it.  This is for a client that streams its own turn through /v1/chat/completions and still wants the conversation in its history — the round records what IT answers, and is otherwise the only writer. It takes the same store, the same per-org isolation and the same notion of a thread: what is recorded here reads back through the two GETs beside it and the round can continue it by id. A validated principal with a non-empty org is required; 403 without one.
+     * @summary Record turns in a conversation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public postAgentsChatConversations(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsChatConversations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

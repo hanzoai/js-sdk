@@ -45,7 +45,7 @@ if (missing.length) {
 
 // One construction and one call site, so what is proved is that a class WORKS
 // and not merely that a name is bound to something.
-const models = new hanzo.ModelsApi(new hanzo.Configuration({ basePath: 'https://api.hanzo.ai' }));
-if (typeof models.getModels !== 'function') fail('ModelsApi has no getModels');
+const ai = new hanzo.AiApi(new hanzo.Configuration({ basePath: 'https://api.hanzo.ai' }));
+if (typeof ai.getModels !== 'function') fail('AiApi has no getModels');
 
-console.log(`smoke: ${declared.length} API classes exported from the build; ModelsApi constructs`);
+console.log(`smoke: ${declared.length} API classes exported from the build; AiApi constructs`);

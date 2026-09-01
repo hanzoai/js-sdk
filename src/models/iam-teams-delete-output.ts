@@ -13,21 +13,18 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { RoleAssignment } from './role-assignment';
 
 /**
  * 
  * @export
- * @interface RoleList
+ * @interface IamTeamsDeleteOutput
  */
-export interface RoleList {
+export interface IamTeamsDeleteOutput {
     /**
-     * Data is every (user, role) assignment in the caller\'s org.
-     * @type {Array<RoleAssignment>}
-     * @memberof RoleList
+     * 
+     * @type {boolean}
+     * @memberof IamTeamsDeleteOutput
      */
-    'data'?: Array<RoleAssignment>;
+    'deleted'?: boolean;
 }
 

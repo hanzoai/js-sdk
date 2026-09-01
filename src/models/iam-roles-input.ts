@@ -46,12 +46,6 @@ export interface IamRolesInput {
     'domains'?: Array<string>;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof IamRolesInput
-     */
-    'groups'?: Array<string>;
-    /**
-     * 
      * @type {boolean}
      * @memberof IamRolesInput
      */
@@ -74,6 +68,12 @@ export interface IamRolesInput {
      * @memberof IamRolesInput
      */
     'roles'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IamRolesInput
+     */
+    'teams'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
