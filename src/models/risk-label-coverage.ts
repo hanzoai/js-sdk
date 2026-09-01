@@ -54,7 +54,6 @@ export interface RiskLabelCoverage {
      */
     'from'?: string;
     /**
-     * Horizon is the maturity horizon these counts were measured under, IN DAYS — the caller\'s, or 120. It decides Matured (an event is matured when its `at` plus this many days is not after now), it sets each event\'s own as-of and so which assertions were visible to it, and when the caller bounds nothing it also places the default window\'s end.
      * @type {number}
      * @memberof RiskLabelCoverage
      */

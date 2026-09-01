@@ -174,7 +174,6 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
          * @summary How much of the window has matured, and how much of that is judged
          * @param {string} [from] From and To bound the EVENT window, half-open, RFC 3339.  Unstated, the window is the 90 days ENDING where maturity begins — &#x60;to&#x60; is the horizon ago, not now. A default window running to now under a default horizon could not contain one matured event, so every count below it would be zero however much ground truth the tenant held.
          * @param {string} [to] 
-         * @param {number} [horizon] Horizon is the maturity horizon in days the coverage is measured under. Unstated takes 120. It also moves the default window, which ends where maturity begins.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -410,7 +409,6 @@ export const LabelApiFp = function(configuration?: Configuration) {
          * @summary How much of the window has matured, and how much of that is judged
          * @param {string} [from] From and To bound the EVENT window, half-open, RFC 3339.  Unstated, the window is the 90 days ENDING where maturity begins — &#x60;to&#x60; is the horizon ago, not now. A default window running to now under a default horizon could not contain one matured event, so every count below it would be zero however much ground truth the tenant held.
          * @param {string} [to] 
-         * @param {number} [horizon] Horizon is the maturity horizon in days the coverage is measured under. Unstated takes 120. It also moves the default window, which ends where maturity begins.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -608,7 +606,6 @@ export interface LabelApiRiskLabelCoverageRequest {
     readonly to?: string
 
     /**
-     * Horizon is the maturity horizon in days the coverage is measured under. Unstated takes 120. It also moves the default window, which ends where maturity begins.
      * @type {number}
      * @memberof LabelApiRiskLabelCoverage
      */
