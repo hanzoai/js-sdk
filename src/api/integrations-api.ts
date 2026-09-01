@@ -84,6 +84,18 @@ import type { GithubSearchReq } from '../models';
 // @ts-ignore
 import type { GitlabProjectsOut } from '../models';
 // @ts-ignore
+import type { LinearBackfillIn } from '../models';
+// @ts-ignore
+import type { LinearBackfillResult } from '../models';
+// @ts-ignore
+import type { LinearClaimIn } from '../models';
+// @ts-ignore
+import type { LinearClaimOut } from '../models';
+// @ts-ignore
+import type { LinearCommentIn } from '../models';
+// @ts-ignore
+import type { LinearCommentOut } from '../models';
+// @ts-ignore
 import type { ListOut } from '../models';
 // @ts-ignore
 import type { ProviderView } from '../models';
@@ -1644,6 +1656,160 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
+         * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
+         * @param {LinearClaimIn} linearClaimIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearClaim: async (linearClaimIn: LinearClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'linearClaimIn' is not null or undefined
+            assertParamExists('postIntegrationsLinearClaim', 'linearClaimIn', linearClaimIn)
+            const localVarPath = `/v1/integrations/linear/claim`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(linearClaimIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
+         * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
+         * @param {LinearCommentIn} linearCommentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearComments: async (linearCommentIn: LinearCommentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'linearCommentIn' is not null or undefined
+            assertParamExists('postIntegrationsLinearComments', 'linearCommentIn', linearCommentIn)
+            const localVarPath = `/v1/integrations/linear/comments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(linearCommentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
+         * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
+         * @param {LinearBackfillIn} linearBackfillIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearIssuesBackfill: async (linearBackfillIn: LinearBackfillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'linearBackfillIn' is not null or undefined
+            assertParamExists('postIntegrationsLinearIssuesBackfill', 'linearBackfillIn', linearBackfillIn)
+            const localVarPath = `/v1/integrations/linear/issues/backfill`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(linearBackfillIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Linear webhook
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/linear/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * OpenRouter\'s spend is invisible to every Hanzo money lens because those lenses read hanzo.cloud_usage and OpenRouter meters keys of its own. Point a Broadcast destination (Settings ▸ Observability ▸ Webhook) at this endpoint and each generation span becomes ONE row in that same ledger with provider `openrouter`, so one query answers what we spend everywhere. Enable the Cost and Identity field categories: cost is the money and identity carries `openrouter.api_key_name`, which is what says WHICH key spent it — it lands in `account` as openrouter/<key name>.  AUTHENTICATION IS A HANZO KEY. Broadcast signs nothing; its only authentication is the destination\'s Headers map, so send a key as `Authorization: Bearer pk-…` and it is admitted exactly as /v1/event admits a beacon\'s: a project key resolves through the project that minted it, an IAM-issued key through IAM. That key names the org every row is filed under; it can write and cannot read. No key, or a key that names no org, is 401 and nothing is stored.  The body is OTLP/JSON — `{resourceSpans:[{scopeSpans:[{spans:[…]}]}]}` — exactly as OpenTelemetry defines it; the model, tokens and cost are read from each span\'s `gen_ai.*` attributes and the key name from `openrouter.api_key_name`. The answer is `{stored, dropped}`: how many generations became rows, and how many spans named no model. Those are OpenRouter\'s trace and span parents — they carry no cost to meter. An empty payload stores nothing and answers 200, which is what makes Test Connection pass. A warehouse that cannot take the rows answers 503 so the delivery shows red and can be replayed: a row is keyed by its span id, so a redelivery collapses rather than double-counting.
          * @summary Receive OpenRouter Broadcast traces as usage rows
          * @param {{ [key: string]: any; }} [requestBody] 
@@ -2469,6 +2635,57 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
+         * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
+         * @param {LinearClaimIn} linearClaimIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsLinearClaim(linearClaimIn: LinearClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearClaimOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearClaim(linearClaimIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearClaim']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
+         * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
+         * @param {LinearCommentIn} linearCommentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsLinearComments(linearCommentIn: LinearCommentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearCommentOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearComments(linearCommentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearComments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
+         * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
+         * @param {LinearBackfillIn} linearBackfillIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsLinearIssuesBackfill(linearBackfillIn: LinearBackfillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearBackfillResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearIssuesBackfill(linearBackfillIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearIssuesBackfill']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Linear webhook
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearWebhook(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * OpenRouter\'s spend is invisible to every Hanzo money lens because those lenses read hanzo.cloud_usage and OpenRouter meters keys of its own. Point a Broadcast destination (Settings ▸ Observability ▸ Webhook) at this endpoint and each generation span becomes ONE row in that same ledger with provider `openrouter`, so one query answers what we spend everywhere. Enable the Cost and Identity field categories: cost is the money and identity carries `openrouter.api_key_name`, which is what says WHICH key spent it — it lands in `account` as openrouter/<key name>.  AUTHENTICATION IS A HANZO KEY. Broadcast signs nothing; its only authentication is the destination\'s Headers map, so send a key as `Authorization: Bearer pk-…` and it is admitted exactly as /v1/event admits a beacon\'s: a project key resolves through the project that minted it, an IAM-issued key through IAM. That key names the org every row is filed under; it can write and cannot read. No key, or a key that names no org, is 401 and nothing is stored.  The body is OTLP/JSON — `{resourceSpans:[{scopeSpans:[{spans:[…]}]}]}` — exactly as OpenTelemetry defines it; the model, tokens and cost are read from each span\'s `gen_ai.*` attributes and the key name from `openrouter.api_key_name`. The answer is `{stored, dropped}`: how many generations became rows, and how many spans named no model. Those are OpenRouter\'s trace and span parents — they carry no cost to meter. An empty payload stores nothing and answers 200, which is what makes Test Connection pass. A warehouse that cannot take the rows answers 503 so the delivery shows red and can be replayed: a row is keyed by its span id, so a redelivery collapses rather than double-counting.
          * @summary Receive OpenRouter Broadcast traces as usage rows
          * @param {{ [key: string]: any; }} [requestBody] 
@@ -2976,6 +3193,45 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.postIntegrationsGithubWebhook(options).then((request) => request(axios, basePath));
         },
         /**
+         * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
+         * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
+         * @param {IntegrationsApiPostIntegrationsLinearClaimRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearClaim(requestParameters: IntegrationsApiPostIntegrationsLinearClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearClaimOut> {
+            return localVarFp.postIntegrationsLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
+         * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
+         * @param {IntegrationsApiPostIntegrationsLinearCommentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearComments(requestParameters: IntegrationsApiPostIntegrationsLinearCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearCommentOut> {
+            return localVarFp.postIntegrationsLinearComments(requestParameters.linearCommentIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
+         * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
+         * @param {IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearBackfillResult> {
+            return localVarFp.postIntegrationsLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Linear webhook
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationsLinearWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
          * OpenRouter\'s spend is invisible to every Hanzo money lens because those lenses read hanzo.cloud_usage and OpenRouter meters keys of its own. Point a Broadcast destination (Settings ▸ Observability ▸ Webhook) at this endpoint and each generation span becomes ONE row in that same ledger with provider `openrouter`, so one query answers what we spend everywhere. Enable the Cost and Identity field categories: cost is the money and identity carries `openrouter.api_key_name`, which is what says WHICH key spent it — it lands in `account` as openrouter/<key name>.  AUTHENTICATION IS A HANZO KEY. Broadcast signs nothing; its only authentication is the destination\'s Headers map, so send a key as `Authorization: Bearer pk-…` and it is admitted exactly as /v1/event admits a beacon\'s: a project key resolves through the project that minted it, an IAM-issued key through IAM. That key names the org every row is filed under; it can write and cannot read. No key, or a key that names no org, is 401 and nothing is stored.  The body is OTLP/JSON — `{resourceSpans:[{scopeSpans:[{spans:[…]}]}]}` — exactly as OpenTelemetry defines it; the model, tokens and cost are read from each span\'s `gen_ai.*` attributes and the key name from `openrouter.api_key_name`. The answer is `{stored, dropped}`: how many generations became rows, and how many spans named no model. Those are OpenRouter\'s trace and span parents — they carry no cost to meter. An empty payload stores nothing and answers 200, which is what makes Test Connection pass. A warehouse that cannot take the rows answers 503 so the delivery shows red and can be replayed: a row is keyed by its span id, so a redelivery collapses rather than double-counting.
          * @summary Receive OpenRouter Broadcast traces as usage rows
          * @param {IntegrationsApiPostIntegrationsOpenrouterWebhookRequest} requestParameters Request parameters.
@@ -3365,6 +3621,48 @@ export interface IntegrationsApiPostIntegrationsGithubSearchRequest {
      * @memberof IntegrationsApiPostIntegrationsGithubSearch
      */
     readonly githubSearchReq: GithubSearchReq
+}
+
+/**
+ * Request parameters for postIntegrationsLinearClaim operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsLinearClaimRequest
+ */
+export interface IntegrationsApiPostIntegrationsLinearClaimRequest {
+    /**
+     * 
+     * @type {LinearClaimIn}
+     * @memberof IntegrationsApiPostIntegrationsLinearClaim
+     */
+    readonly linearClaimIn: LinearClaimIn
+}
+
+/**
+ * Request parameters for postIntegrationsLinearComments operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsLinearCommentsRequest
+ */
+export interface IntegrationsApiPostIntegrationsLinearCommentsRequest {
+    /**
+     * 
+     * @type {LinearCommentIn}
+     * @memberof IntegrationsApiPostIntegrationsLinearComments
+     */
+    readonly linearCommentIn: LinearCommentIn
+}
+
+/**
+ * Request parameters for postIntegrationsLinearIssuesBackfill operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest
+ */
+export interface IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest {
+    /**
+     * 
+     * @type {LinearBackfillIn}
+     * @memberof IntegrationsApiPostIntegrationsLinearIssuesBackfill
+     */
+    readonly linearBackfillIn: LinearBackfillIn
 }
 
 /**
@@ -3889,6 +4187,53 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postIntegrationsGithubWebhook(options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postIntegrationsGithubWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
+     * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
+     * @param {IntegrationsApiPostIntegrationsLinearClaimRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsLinearClaim(requestParameters: IntegrationsApiPostIntegrationsLinearClaimRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
+     * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
+     * @param {IntegrationsApiPostIntegrationsLinearCommentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsLinearComments(requestParameters: IntegrationsApiPostIntegrationsLinearCommentsRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsLinearComments(requestParameters.linearCommentIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
+     * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
+     * @param {IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsLinearIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+     * @summary Linear webhook
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsLinearWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

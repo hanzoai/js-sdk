@@ -156,7 +156,7 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
-         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
@@ -412,7 +412,7 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
          * @summary Summarises one room\'s work.
-         * @param {string} room Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+         * @param {string} room Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -703,7 +703,7 @@ export const TodoApiFp = function(configuration?: Configuration) {
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
-         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
@@ -777,7 +777,7 @@ export const TodoApiFp = function(configuration?: Configuration) {
         /**
          * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
          * @summary Summarises one room\'s work.
-         * @param {string} room Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+         * @param {string} room Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1108,7 +1108,7 @@ export interface TodoApiGetTodoIssuesRequest {
     readonly repo?: string
 
     /**
-     * Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+     * Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
      * @type {string}
      * @memberof TodoApiGetTodoIssues
      */
@@ -1234,7 +1234,7 @@ export interface TodoApiGetTodoProjectsByKeyIssuesByNumRequest {
  */
 export interface TodoApiGetTodoRoomsByRoomRequest {
     /**
-     * Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+     * Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
      * @type {string}
      * @memberof TodoApiGetTodoRoomsByRoom
      */

@@ -8,7 +8,7 @@
 // A model id is a string, so the wrong one type-checks perfectly and fails on
 // the wire. `zen5` is served today; GET /v1/models is the only authority on the
 // rest, which is what the quickstart in the README prints.
-import { ChatApi } from 'hanzoai';
+import { AiApi } from 'hanzoai';
 import { config, fail } from '../client';
 
 const model = process.env.HANZO_MODEL ?? 'zen5';
@@ -20,7 +20,7 @@ type Completion = {
 };
 
 async function main() {
-  const chat = new ChatApi(config());
+  const chat = new AiApi(config());
 
   const { data } = await chat.postChatCompletions({
     data: {

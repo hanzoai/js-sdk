@@ -88,12 +88,6 @@ export interface IamPermission {
     'effect'?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof IamPermission
-     */
-    'groups'?: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof IamPermission
      */
@@ -152,6 +146,12 @@ export interface IamPermission {
      * @memberof IamPermission
      */
     'submitter'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IamPermission
+     */
+    'teams'?: Array<string>;
     /**
      * 
      * @type {string}

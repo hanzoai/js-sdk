@@ -17,20 +17,32 @@
 /**
  * 
  * @export
- * @interface RoleAssignment
+ * @interface Token
  */
-export interface RoleAssignment {
+export interface Token {
     /**
-     * Role is the granted role\'s name.
+     * At is the token\'s contract address, lowercase.
      * @type {string}
-     * @memberof RoleAssignment
+     * @memberof Token
      */
-    'role'?: string;
+    'at'?: string;
     /**
-     * User is the member the role is granted to.
-     * @type {string}
-     * @memberof RoleAssignment
+     * 
+     * @type {number}
+     * @memberof Token
      */
-    'user'?: string;
+    'decimals'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Token
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Token
+     */
+    'symbol'?: string;
 }
 
