@@ -37,12 +37,6 @@ import type { IamMfaItem } from './iam-mfa-item';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { IamMfaProps } from './iam-mfa-props';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { IamPermission } from './iam-permission';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { IamRole } from './iam-role';
 
 /**
  * 
@@ -51,7 +45,7 @@ import type { IamRole } from './iam-role';
  */
 export interface IamUser {
     /**
-     * API credentials. AccessSecret / AccessSecretHash / the OAuth tokens are bearer material. AccessSecretHash MUST persist (orm stores via JSON; a json:\"-\" field is never saved), so it carries a real json tag and the handler\'s redact() strips it (and AccessSecret + the token fields) before responding.
+     * API credentials. AccessSecret / AccessSecretHash / the OAuth tokens are bearer material, so Mask blanks them and the handler\'s redact() strips them before responding. They carry real json tags because a field orm never saves is a field that silently vanishes.  A presented secret is resolved through Key.AccessSecretDigest and nowhere else, so no credential is ISSUED into these columns: they hold what older rows left behind, and every writer that touches them clears them.
      * @type {string}
      * @memberof IamUser
      */
@@ -466,12 +460,6 @@ export interface IamUser {
     'google'?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof IamUser
-     */
-    'groups'?: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof IamUser
      */
@@ -880,12 +868,6 @@ export interface IamUser {
     'permanentAvatar'?: string;
     /**
      * 
-     * @type {Array<IamPermission>}
-     * @memberof IamUser
-     */
-    'permissions'?: Array<IamPermission>;
-    /**
-     * 
      * @type {string}
      * @memberof IamUser
      */
@@ -950,12 +932,6 @@ export interface IamUser {
      * @memberof IamUser
      */
     'registerType'?: string;
-    /**
-     * Authorization attachments. Roles and Permissions are computed on read from the authz store and carried here for API parity with v1.
-     * @type {Array<IamRole>}
-     * @memberof IamUser
-     */
-    'roles'?: Array<IamRole>;
     /**
      * 
      * @type {string}

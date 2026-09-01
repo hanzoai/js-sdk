@@ -39,7 +39,7 @@ export interface GenerateInput {
      */
     'design'?: string;
     /**
-     * Campaign | SocialPost | Asset
+     * marketing.Campaign | marketing.SocialPost | marketing.Asset
      * @type {string}
      * @memberof GenerateInput
      */

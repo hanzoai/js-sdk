@@ -58,12 +58,6 @@ export interface IamRole {
     'domains'?: Array<string>;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof IamRole
-     */
-    'groups'?: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof IamRole
      */
@@ -92,6 +86,12 @@ export interface IamRole {
      * @memberof IamRole
      */
     'roles'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IamRole
+     */
+    'teams'?: Array<string>;
     /**
      * 
      * @type {string}

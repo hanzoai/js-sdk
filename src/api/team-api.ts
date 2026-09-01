@@ -38,9 +38,17 @@ import type { ProviderInfo } from '../models';
 // @ts-ignore
 import type { StatsOut } from '../models';
 // @ts-ignore
+import type { TeamMessage } from '../models';
+// @ts-ignore
+import type { TeamMessageWrite } from '../models';
+// @ts-ignore
+import type { TeamMessages } from '../models';
+// @ts-ignore
 import type { TeamRoom } from '../models';
 // @ts-ignore
 import type { TeamRoomBind } from '../models';
+// @ts-ignore
+import type { TeamRoomNew } from '../models';
 // @ts-ignore
 import type { TeamRooms } from '../models';
 /**
@@ -84,21 +92,21 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
-         * @summary Removes one blob from a workspace\'s file store.
-         * @param {string} workspace Workspace is the workspace uuid the blob belongs to, from the path.
+         * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
+         * @summary Removes one blob from a space\'s file store.
+         * @param {string} space Space is the space uuid the blob belongs to, from the path.
          * @param {string} filename Filename is the last path segment, which the front sets to the blob id when it sends no explicit &#x60;file&#x60;.
          * @param {string} [file] File is the blob id, and wins over the path segment when both are present.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, file?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('deleteTeamFilesByWorkspaceByFilename', 'workspace', workspace)
+        deleteTeamFilesBySpaceByFilename: async (space: string, filename: string, file?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('deleteTeamFilesBySpaceByFilename', 'space', space)
             // verify required parameter 'filename' is not null or undefined
-            assertParamExists('deleteTeamFilesByWorkspaceByFilename', 'filename', filename)
-            const localVarPath = `/v1/team/files/{workspace}/{filename}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+            assertParamExists('deleteTeamFilesBySpaceByFilename', 'filename', filename)
+            const localVarPath = `/v1/team/files/{space}/{filename}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)))
                 .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -169,7 +177,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
+         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a space ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
          * @summary Complete a sign-in and hand the browser its session
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -309,8 +317,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
+         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
+         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -343,7 +351,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
          * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -377,20 +385,20 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
-         * @summary Download a workspace file
-         * @param {string} workspace 
+         * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
+         * @summary Download a space file
+         * @param {string} space 
          * @param {string} filename 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('getTeamFilesByWorkspaceByFilename', 'workspace', workspace)
+        getTeamFilesBySpaceByFilename: async (space: string, filename: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('getTeamFilesBySpaceByFilename', 'space', space)
             // verify required parameter 'filename' is not null or undefined
-            assertParamExists('getTeamFilesByWorkspaceByFilename', 'filename', filename)
-            const localVarPath = `/v1/team/files/{workspace}/{filename}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+            assertParamExists('getTeamFilesBySpaceByFilename', 'filename', filename)
+            const localVarPath = `/v1/team/files/{space}/{filename}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)))
                 .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -419,8 +427,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -453,8 +461,51 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
-         * @summary Open the workspace data-plane socket
+         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * @param {string} id ID is the room, from the path. The URL is the authority.
+         * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRoomsByIdMessages: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTeamRoomsByIdMessages', 'id', id)
+            const localVarPath = `/v1/team/rooms/{id}/messages`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upgrades to the WebSocket the Team client runs an entire space over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the space\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the space token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a space claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another space\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the space\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as space people without a separate sync call.
+         * @summary Open the space data-plane socket
          * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -491,9 +542,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {string} [token] Token is the workspace token minted by selectWorkspace.
+         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+         * @param {string} [token] Token is the space token minted by selectWorkspace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -530,8 +581,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
-         * @summary Read the caller\'s account and switch workspace
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the space switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a space and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first space, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * @summary Read the caller\'s account and switch space
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -564,8 +615,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a workspace\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone.
+         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
+         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -598,9 +649,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
-         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;spaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
          * @param {CollabRequest} collabRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -642,18 +693,18 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
-         * @summary Upload a file into a workspace
-         * @param {string} workspace 
+         * Stores one file in a space\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or space token AND be a member of the space; an unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the space, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
+         * @summary Upload a file into a space
+         * @param {string} space 
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamFilesByWorkspace: async (workspace: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('postTeamFilesByWorkspace', 'workspace', workspace)
-            const localVarPath = `/v1/team/files/{workspace}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
+        postTeamFilesBySpace: async (space: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('postTeamFilesBySpace', 'space', space)
+            const localVarPath = `/v1/team/files/{space}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -677,6 +728,90 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * @summary Opens a named room and answers it as the store now holds it.
+         * @param {TeamRoomNew} teamRoomNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRooms: async (teamRoomNew: TeamRoomNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamRoomNew' is not null or undefined
+            assertParamExists('postTeamRooms', 'teamRoomNew', teamRoomNew)
+            const localVarPath = `/v1/team/rooms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamRoomNew, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+         * @summary Says one thing in a room, as the caller.
+         * @param {string} id ID is the room to say it in, from the path.
+         * @param {TeamMessageWrite} teamMessageWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRoomsByIdMessages: async (id: string, teamMessageWrite: TeamMessageWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamRoomsByIdMessages', 'id', id)
+            // verify required parameter 'teamMessageWrite' is not null or undefined
+            assertParamExists('postTeamRoomsByIdMessages', 'teamMessageWrite', teamMessageWrite)
+            const localVarPath = `/v1/team/rooms/{id}/messages`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamMessageWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -718,7 +853,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
          * @summary States what a room is for: its lifecycle intent, and what it is about.
          * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
          * @param {TeamRoomBind} teamRoomBind 
@@ -784,18 +919,18 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
-         * @summary Removes one blob from a workspace\'s file store.
-         * @param {string} workspace Workspace is the workspace uuid the blob belongs to, from the path.
+         * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
+         * @summary Removes one blob from a space\'s file store.
+         * @param {string} space Space is the space uuid the blob belongs to, from the path.
          * @param {string} filename Filename is the last path segment, which the front sets to the blob id when it sends no explicit &#x60;file&#x60;.
          * @param {string} [file] File is the blob id, and wins over the path segment when both are present.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTeamFilesByWorkspaceByFilename(workspace: string, filename: string, file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamFilesByWorkspaceByFilename(workspace, filename, file, options);
+        async deleteTeamFilesBySpaceByFilename(space: string, filename: string, file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamFilesBySpaceByFilename(space, filename, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamFilesBySpaceByFilename']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -812,7 +947,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
+         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a space ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
          * @summary Complete a sign-in and hand the browser its session
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -861,8 +996,8 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
+         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
+         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -873,7 +1008,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
          * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -885,22 +1020,22 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
-         * @summary Download a workspace file
-         * @param {string} workspace 
+         * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
+         * @summary Download a space file
+         * @param {string} space 
          * @param {string} filename 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamFilesByWorkspaceByFilename(workspace: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamFilesByWorkspaceByFilename(workspace, filename, options);
+        async getTeamFilesBySpaceByFilename(space: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamFilesBySpaceByFilename(space, filename, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamFilesBySpaceByFilename']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -911,8 +1046,22 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
-         * @summary Open the workspace data-plane socket
+         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * @param {string} id ID is the room, from the path. The URL is the authority.
+         * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamRoomsByIdMessages(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamMessages>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamRoomsByIdMessages(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamRoomsByIdMessages']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Upgrades to the WebSocket the Team client runs an entire space over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the space\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the space token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a space claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another space\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the space\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as space people without a separate sync call.
+         * @summary Open the space data-plane socket
          * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -924,9 +1073,9 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {string} [token] Token is the workspace token minted by selectWorkspace.
+         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+         * @param {string} [token] Token is the space token minted by selectWorkspace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -937,8 +1086,8 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
-         * @summary Read the caller\'s account and switch workspace
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the space switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a space and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first space, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * @summary Read the caller\'s account and switch space
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -949,8 +1098,8 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a workspace\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone.
+         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
+         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -961,9 +1110,9 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
-         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;spaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
          * @param {CollabRequest} collabRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -975,17 +1124,44 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
-         * @summary Upload a file into a workspace
-         * @param {string} workspace 
+         * Stores one file in a space\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or space token AND be a member of the space; an unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the space, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
+         * @summary Upload a file into a space
+         * @param {string} space 
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTeamFilesByWorkspace(workspace: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamFilesByWorkspace(workspace, body, options);
+        async postTeamFilesBySpace(space: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamFilesBySpace(space, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamFilesByWorkspace']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamFilesBySpace']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * @summary Opens a named room and answers it as the store now holds it.
+         * @param {TeamRoomNew} teamRoomNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamRooms(teamRoomNew: TeamRoomNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRooms(teamRoomNew, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamRooms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+         * @summary Says one thing in a room, as the caller.
+         * @param {string} id ID is the room to say it in, from the path.
+         * @param {TeamMessageWrite} teamMessageWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamRoomsByIdMessages(id: string, teamMessageWrite: TeamMessageWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRoomsByIdMessages(id, teamMessageWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamRoomsByIdMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1001,7 +1177,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
          * @summary States what a room is for: its lifecycle intent, and what it is about.
          * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
          * @param {TeamRoomBind} teamRoomBind 
@@ -1034,14 +1210,14 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
-         * @summary Removes one blob from a workspace\'s file store.
-         * @param {TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+         * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
+         * @summary Removes one blob from a space\'s file store.
+         * @param {TeamApiDeleteTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
+        deleteTeamFilesBySpaceByFilename(requestParameters: TeamApiDeleteTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
         },
         /**
          * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
@@ -1054,7 +1230,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamAccountAuthByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
+         * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a space ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
          * @summary Complete a sign-in and hand the browser its session
          * @param {TeamApiGetTeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1091,8 +1267,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamBillingUi(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
+         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
+         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1100,7 +1276,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamBots(options).then((request) => request(axios, basePath));
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
          * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1109,18 +1285,18 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamCollaborator(options).then((request) => request(axios, basePath));
         },
         /**
-         * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
-         * @summary Download a workspace file
-         * @param {TeamApiGetTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+         * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
+         * @summary Download a space file
+         * @param {TeamApiGetTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(axios, basePath));
+        getTeamFilesBySpaceByFilename(requestParameters: TeamApiGetTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1128,8 +1304,18 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamRooms(options).then((request) => request(axios, basePath));
         },
         /**
-         * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
-         * @summary Open the workspace data-plane socket
+         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * @param {TeamApiGetTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRoomsByIdMessages(requestParameters: TeamApiGetTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamMessages> {
+            return localVarFp.getTeamRoomsByIdMessages(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upgrades to the WebSocket the Team client runs an entire space over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the space\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the space token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a space claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another space\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the space\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as space people without a separate sync call.
+         * @summary Open the space data-plane socket
          * @param {TeamApiGetTeamTransactorByTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1138,8 +1324,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamTransactorByToken(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
+         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
          * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1148,8 +1334,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
-         * @summary Read the caller\'s account and switch workspace
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the space switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a space and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first space, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * @summary Read the caller\'s account and switch space
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1157,8 +1343,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postTeamAccount(options).then((request) => request(axios, basePath));
         },
         /**
-         * SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a workspace\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone.
+         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
+         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1166,7 +1352,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postTeamBotsSync(options).then((request) => request(axios, basePath));
         },
         /**
-         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
          * @param {TeamApiPostTeamCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1176,14 +1362,34 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
-         * @summary Upload a file into a workspace
-         * @param {TeamApiPostTeamFilesByWorkspaceRequest} requestParameters Request parameters.
+         * Stores one file in a space\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or space token AND be a member of the space; an unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the space, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
+         * @summary Upload a file into a space
+         * @param {TeamApiPostTeamFilesBySpaceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.postTeamFilesByWorkspace(requestParameters.workspace, requestParameters.body, options).then((request) => request(axios, basePath));
+        postTeamFilesBySpace(requestParameters: TeamApiPostTeamFilesBySpaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.postTeamFilesBySpace(requestParameters.space, requestParameters.body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * @summary Opens a named room and answers it as the store now holds it.
+         * @param {TeamApiPostTeamRoomsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRooms(requestParameters: TeamApiPostTeamRoomsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamRoom> {
+            return localVarFp.postTeamRooms(requestParameters.teamRoomNew, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+         * @summary Says one thing in a room, as the caller.
+         * @param {TeamApiPostTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRoomsByIdMessages(requestParameters: TeamApiPostTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamMessage> {
+            return localVarFp.postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamMessageWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
@@ -1195,7 +1401,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.putTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
          * @summary States what a room is for: its lifecycle intent, and what it is about.
          * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1208,29 +1414,29 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
- * Request parameters for deleteTeamFilesByWorkspaceByFilename operation in TeamApi.
+ * Request parameters for deleteTeamFilesBySpaceByFilename operation in TeamApi.
  * @export
- * @interface TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest
+ * @interface TeamApiDeleteTeamFilesBySpaceByFilenameRequest
  */
-export interface TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest {
+export interface TeamApiDeleteTeamFilesBySpaceByFilenameRequest {
     /**
-     * Workspace is the workspace uuid the blob belongs to, from the path.
+     * Space is the space uuid the blob belongs to, from the path.
      * @type {string}
-     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesBySpaceByFilename
      */
-    readonly workspace: string
+    readonly space: string
 
     /**
      * Filename is the last path segment, which the front sets to the blob id when it sends no explicit &#x60;file&#x60;.
      * @type {string}
-     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesBySpaceByFilename
      */
     readonly filename: string
 
     /**
      * File is the blob id, and wins over the path segment when both are present.
      * @type {string}
-     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesBySpaceByFilename
      */
     readonly file?: string
 }
@@ -1264,24 +1470,45 @@ export interface TeamApiGetTeamAccountAuthByProviderCallbackRequest {
 }
 
 /**
- * Request parameters for getTeamFilesByWorkspaceByFilename operation in TeamApi.
+ * Request parameters for getTeamFilesBySpaceByFilename operation in TeamApi.
  * @export
- * @interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest
+ * @interface TeamApiGetTeamFilesBySpaceByFilenameRequest
  */
-export interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest {
+export interface TeamApiGetTeamFilesBySpaceByFilenameRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetTeamFilesByWorkspaceByFilename
+     * @memberof TeamApiGetTeamFilesBySpaceByFilename
      */
-    readonly workspace: string
+    readonly space: string
 
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetTeamFilesByWorkspaceByFilename
+     * @memberof TeamApiGetTeamFilesBySpaceByFilename
      */
     readonly filename: string
+}
+
+/**
+ * Request parameters for getTeamRoomsByIdMessages operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamRoomsByIdMessagesRequest
+ */
+export interface TeamApiGetTeamRoomsByIdMessagesRequest {
+    /**
+     * ID is the room, from the path. The URL is the authority.
+     * @type {string}
+     * @memberof TeamApiGetTeamRoomsByIdMessages
+     */
+    readonly id: string
+
+    /**
+     * Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+     * @type {string}
+     * @memberof TeamApiGetTeamRoomsByIdMessages
+     */
+    readonly space?: string
 }
 
 /**
@@ -1305,7 +1532,7 @@ export interface TeamApiGetTeamTransactorByTokenRequest {
  */
 export interface TeamApiGetTeamTransactorStatisticsRequest {
     /**
-     * Token is the workspace token minted by selectWorkspace.
+     * Token is the space token minted by selectWorkspace.
      * @type {string}
      * @memberof TeamApiGetTeamTransactorStatistics
      */
@@ -1319,7 +1546,7 @@ export interface TeamApiGetTeamTransactorStatisticsRequest {
  */
 export interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest {
     /**
-     * DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+     * DocumentID addresses the document field, as \&quot;&lt;spaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
      * @type {string}
      * @memberof TeamApiPostTeamCollaboratorRpcByDocumentid
      */
@@ -1334,24 +1561,59 @@ export interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest {
 }
 
 /**
- * Request parameters for postTeamFilesByWorkspace operation in TeamApi.
+ * Request parameters for postTeamFilesBySpace operation in TeamApi.
  * @export
- * @interface TeamApiPostTeamFilesByWorkspaceRequest
+ * @interface TeamApiPostTeamFilesBySpaceRequest
  */
-export interface TeamApiPostTeamFilesByWorkspaceRequest {
+export interface TeamApiPostTeamFilesBySpaceRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiPostTeamFilesByWorkspace
+     * @memberof TeamApiPostTeamFilesBySpace
      */
-    readonly workspace: string
+    readonly space: string
 
     /**
      * 
      * @type {File}
-     * @memberof TeamApiPostTeamFilesByWorkspace
+     * @memberof TeamApiPostTeamFilesBySpace
      */
     readonly body?: File
+}
+
+/**
+ * Request parameters for postTeamRooms operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamRoomsRequest
+ */
+export interface TeamApiPostTeamRoomsRequest {
+    /**
+     * 
+     * @type {TeamRoomNew}
+     * @memberof TeamApiPostTeamRooms
+     */
+    readonly teamRoomNew: TeamRoomNew
+}
+
+/**
+ * Request parameters for postTeamRoomsByIdMessages operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamRoomsByIdMessagesRequest
+ */
+export interface TeamApiPostTeamRoomsByIdMessagesRequest {
+    /**
+     * ID is the room to say it in, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamRoomsByIdMessages
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamMessageWrite}
+     * @memberof TeamApiPostTeamRoomsByIdMessages
+     */
+    readonly teamMessageWrite: TeamMessageWrite
 }
 
 /**
@@ -1394,15 +1656,15 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
-     * @summary Removes one blob from a workspace\'s file store.
-     * @param {TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+     * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
+     * @summary Removes one blob from a space\'s file store.
+     * @param {TeamApiDeleteTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public deleteTeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).deleteTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
+    public deleteTeamFilesBySpaceByFilename(requestParameters: TeamApiDeleteTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1418,7 +1680,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
+     * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a space ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
      * @summary Complete a sign-in and hand the browser its session
      * @param {TeamApiGetTeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1463,8 +1725,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-     * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
+     * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
+     * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
@@ -1474,7 +1736,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+     * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
      * @summary Open the live collaborative-editing socket
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1485,20 +1747,20 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
-     * @summary Download a workspace file
-     * @param {TeamApiGetTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+     * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
+     * @summary Download a space file
+     * @param {TeamApiGetTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
+    public getTeamFilesBySpaceByFilename(requestParameters: TeamApiGetTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-     * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+     * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+     * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
@@ -1508,8 +1770,20 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
-     * @summary Open the workspace data-plane socket
+     * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
+     * @summary Returns the tail of one room\'s conversation, oldest first.
+     * @param {TeamApiGetTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamRoomsByIdMessages(requestParameters: TeamApiGetTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamRoomsByIdMessages(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upgrades to the WebSocket the Team client runs an entire space over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the space\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the space token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a space claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another space\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the space\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as space people without a separate sync call.
+     * @summary Open the space data-plane socket
      * @param {TeamApiGetTeamTransactorByTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1520,8 +1794,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-     * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
+     * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+     * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
      * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1532,8 +1806,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
-     * @summary Read the caller\'s account and switch workspace
+     * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the space switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a space and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first space, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+     * @summary Read the caller\'s account and switch space
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
@@ -1543,8 +1817,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a workspace\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-     * @summary SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone.
+     * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
+     * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
@@ -1554,7 +1828,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+     * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
      * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
      * @param {TeamApiPostTeamCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1566,15 +1840,39 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
-     * @summary Upload a file into a workspace
-     * @param {TeamApiPostTeamFilesByWorkspaceRequest} requestParameters Request parameters.
+     * Stores one file in a space\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or space token AND be a member of the space; an unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the space, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
+     * @summary Upload a file into a space
+     * @param {TeamApiPostTeamFilesBySpaceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamFilesByWorkspace(requestParameters.workspace, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    public postTeamFilesBySpace(requestParameters: TeamApiPostTeamFilesBySpaceRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamFilesBySpace(requestParameters.space, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+     * @summary Opens a named room and answers it as the store now holds it.
+     * @param {TeamApiPostTeamRoomsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamRooms(requestParameters: TeamApiPostTeamRoomsRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamRooms(requestParameters.teamRoomNew, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+     * @summary Says one thing in a room, as the caller.
+     * @param {TeamApiPostTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamRoomsByIdMessages(requestParameters: TeamApiPostTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamMessageWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1589,7 +1887,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+     * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
      * @summary States what a room is for: its lifecycle intent, and what it is about.
      * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

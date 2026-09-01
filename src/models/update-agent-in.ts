@@ -21,6 +21,12 @@
  */
 export interface UpdateAgentIn {
     /**
+     * Avatar and Emoji re-draw the agent. Sending either replaces the pair, so setting an image clears a glyph and \"\" for both goes back to the initial — there is no state where a row holds two answers.
+     * @type {string}
+     * @memberof UpdateAgentIn
+     */
+    'avatar'?: string;
+    /**
      * ComputeRef re-binds (or, with \"\", unbinds) the visor machine. Opaque here.
      * @type {string}
      * @memberof UpdateAgentIn
@@ -32,6 +38,12 @@ export interface UpdateAgentIn {
      * @memberof UpdateAgentIn
      */
     'description'?: string;
+    /**
+     * Emoji re-draws the agent as a glyph. Sending either of the pair replaces BOTH, so setting a glyph clears an image and \"\" for both goes back to the initial — there is no state where a row holds two answers.
+     * @type {string}
+     * @memberof UpdateAgentIn
+     */
+    'emoji'?: string;
     /**
      * ExecutionMode switches between one-shot and long-running. The RESULTING mode+schedule are validated together, so switching to long-running without a stored or supplied cron is refused rather than accepted into an agent the scheduler would skip forever. A switch INTO long-running counts against the per-org cap and can be a 409.
      * @type {string}
