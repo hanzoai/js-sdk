@@ -13,42 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { IdentityView } from './identity-view';
 
 /**
  * 
  * @export
- * @interface CodingStarted
+ * @interface IdentityList
  */
-export interface CodingStarted {
+export interface IdentityList {
     /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
+     * Identities is one row per fabric identity tagged with the caller\'s org role.
+     * @type {Array<IdentityView>}
+     * @memberof IdentityList
      */
-    'branch'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'repo'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CodingStarted
-     */
-    'routed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'sessionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'targetId'?: string;
+    'identities'?: Array<IdentityView>;
 }
 

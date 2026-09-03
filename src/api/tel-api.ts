@@ -450,7 +450,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTelCallsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async deleteTelCallsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTelCallsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.deleteTelCallsById']?.[localVarOperationServerIndex]?.url;
@@ -463,7 +463,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTelNumbersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async deleteTelNumbersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTelNumbersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.deleteTelNumbersById']?.[localVarOperationServerIndex]?.url;
@@ -589,7 +589,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTelCallsById(requestParameters: TelApiDeleteTelCallsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        deleteTelCallsById(requestParameters: TelApiDeleteTelCallsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTelCallsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -599,7 +599,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTelNumbersById(requestParameters: TelApiDeleteTelNumbersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        deleteTelNumbersById(requestParameters: TelApiDeleteTelNumbersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTelNumbersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**

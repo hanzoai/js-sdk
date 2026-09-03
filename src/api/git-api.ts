@@ -75,8 +75,6 @@ import type { SubscriptionView } from '../models';
 import type { TreeJSON } from '../models';
 // @ts-ignore
 import type { UsageView } from '../models';
-// @ts-ignore
-import type { ZapProcReq } from '../models';
 /**
  * GitApi - axios parameter creator
  * @export
@@ -160,19 +158,19 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
-         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
+         * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
+         * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
          * @param {string} name Name is the repo, from the :name path segment.
          * @param {string} id ID is the row to remove, from the :id path segment.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteGitReposByNameMirrorsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteGitReposByNameSubscriptionsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteGitReposByNameMirrorsById', 'name', name)
+            assertParamExists('deleteGitReposByNameSubscriptionsById', 'name', name)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteGitReposByNameMirrorsById', 'id', id)
-            const localVarPath = `/v1/git/repos/{name}/mirrors/{id}`
+            assertParamExists('deleteGitReposByNameSubscriptionsById', 'id', id)
+            const localVarPath = `/v1/git/repos/{name}/subscriptions/{id}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -202,19 +200,19 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
-         * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
+         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
+         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
          * @param {string} name Name is the repo, from the :name path segment.
          * @param {string} id ID is the row to remove, from the :id path segment.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteGitReposByNameSubscriptionsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteGitReposByNameTargetsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteGitReposByNameSubscriptionsById', 'name', name)
+            assertParamExists('deleteGitReposByNameTargetsById', 'name', name)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteGitReposByNameSubscriptionsById', 'id', id)
-            const localVarPath = `/v1/git/repos/{name}/subscriptions/{id}`
+            assertParamExists('deleteGitReposByNameTargetsById', 'id', id)
+            const localVarPath = `/v1/git/repos/{name}/targets/{id}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -739,44 +737,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitReposByNameMirrors: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getGitReposByNameMirrors', 'name', name)
-            const localVarPath = `/v1/git/repos/{name}/mirrors`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
          * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
          * @param {string} name Name is the repo, from the :name path segment.
@@ -953,6 +913,44 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             // verify required parameter 'name' is not null or undefined
             assertParamExists('getGitReposByNameSubscriptions', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/subscriptions`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitReposByNameTargets: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getGitReposByNameTargets', 'name', name)
+            const localVarPath = `/v1/git/repos/{name}/targets`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1461,50 +1459,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
-         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-         * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
-         * @param {MirrorTargetReq} mirrorTargetReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitReposByNameMirrors: async (name: string, mirrorTargetReq: MirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('postGitReposByNameMirrors', 'name', name)
-            // verify required parameter 'mirrorTargetReq' is not null or undefined
-            assertParamExists('postGitReposByNameMirrors', 'mirrorTargetReq', mirrorTargetReq)
-            const localVarPath = `/v1/git/repos/{name}/mirrors`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mirrorTargetReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Proposes a branch for merging and returns it with its number.
          * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
@@ -1679,6 +1633,50 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
+         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
+         * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
+         * @param {MirrorTargetReq} mirrorTargetReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameTargets: async (name: string, mirrorTargetReq: MirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postGitReposByNameTargets', 'name', name)
+            // verify required parameter 'mirrorTargetReq' is not null or undefined
+            assertParamExists('postGitReposByNameTargets', 'mirrorTargetReq', mirrorTargetReq)
+            const localVarPath = `/v1/git/repos/{name}/targets`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mirrorTargetReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — forge pushes build via platform.hanzo.ai
          * @param {*} [options] Override http request option.
@@ -1686,188 +1684,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         postGitWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/git/webhook`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Create a repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapCreaterepo: async (zapProcReq?: ZapProcReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/zap/createRepo`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(zapProcReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Delete a repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapDeleterepo: async (zapProcReq?: ZapProcReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/zap/deleteRepo`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(zapProcReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Read one repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapGetrepo: async (zapProcReq?: ZapProcReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/zap/getRepo`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(zapProcReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary List your repositories over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapListrepos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/zap/listRepos`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Report your org\'s git storage footprint over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapUsage: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/zap/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1931,20 +1747,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
-         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
-         * @param {string} name Name is the repo, from the :name path segment.
-         * @param {string} id ID is the row to remove, from the :id path segment.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteGitReposByNameMirrorsById(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitReposByNameMirrorsById(name, id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteGitReposByNameMirrorsById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
          * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
          * @param {string} name Name is the repo, from the :name path segment.
@@ -1956,6 +1758,20 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitReposByNameSubscriptionsById(name, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.deleteGitReposByNameSubscriptionsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
+         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {string} id ID is the row to remove, from the :id path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteGitReposByNameTargetsById(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitReposByNameTargetsById(name, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteGitReposByNameTargetsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2123,19 +1939,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGitReposByNameMirrors(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameMirrors(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameMirrors']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
          * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
          * @param {string} name Name is the repo, from the :name path segment.
@@ -2201,6 +2004,19 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameSubscriptions(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameSubscriptions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitReposByNameTargets(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameTargets(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2360,20 +2176,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
-         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-         * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
-         * @param {MirrorTargetReq} mirrorTargetReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitReposByNameMirrors(name: string, mirrorTargetReq: MirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorTargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameMirrors(name, mirrorTargetReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameMirrors']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Proposes a branch for merging and returns it with its number.
          * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
@@ -2430,6 +2232,20 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
+         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
+         * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
+         * @param {MirrorTargetReq} mirrorTargetReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitReposByNameTargets(name: string, mirrorTargetReq: MirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorTargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameTargets(name, mirrorTargetReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameTargets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — forge pushes build via platform.hanzo.ai
          * @param {*} [options] Override http request option.
@@ -2439,69 +2255,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGitWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitWebhook']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Create a repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitZapCreaterepo(zapProcReq?: ZapProcReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitZapCreaterepo(zapProcReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitZapCreaterepo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Delete a repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitZapDeleterepo(zapProcReq?: ZapProcReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitZapDeleterepo(zapProcReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitZapDeleterepo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Read one repository over the ZAP transport
-         * @param {ZapProcReq} [zapProcReq] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitZapGetrepo(zapProcReq?: ZapProcReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitZapGetrepo(zapProcReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitZapGetrepo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary List your repositories over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitZapListrepos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitZapListrepos(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitZapListrepos']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Report your org\'s git storage footprint over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGitZapUsage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitZapUsage(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitZapUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2535,16 +2288,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteGitReposByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
-         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
-         * @param {GitApiDeleteGitReposByNameMirrorsByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteGitReposByNameMirrorsById(requestParameters: GitApiDeleteGitReposByNameMirrorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteGitReposByNameMirrorsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
          * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
          * @param {GitApiDeleteGitReposByNameSubscriptionsByIdRequest} requestParameters Request parameters.
@@ -2553,6 +2296,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         deleteGitReposByNameSubscriptionsById(requestParameters: GitApiDeleteGitReposByNameSubscriptionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteGitReposByNameSubscriptionsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
+         * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
+         * @param {GitApiDeleteGitReposByNameTargetsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGitReposByNameTargetsById(requestParameters: GitApiDeleteGitReposByNameTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteGitReposByNameTargetsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
@@ -2671,16 +2424,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitReposByNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @param {GitApiGetGitReposByNameMirrorsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitReposByNameMirrors(requestParameters: GitApiGetGitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorList> {
-            return localVarFp.getGitReposByNameMirrors(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
          * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
          * @param {GitApiGetGitReposByNamePullsRequest} requestParameters Request parameters.
@@ -2729,6 +2472,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGitReposByNameSubscriptions(requestParameters: GitApiGetGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionList> {
             return localVarFp.getGitReposByNameSubscriptions(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+         * @param {GitApiGetGitReposByNameTargetsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitReposByNameTargets(requestParameters: GitApiGetGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorList> {
+            return localVarFp.getGitReposByNameTargets(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
@@ -2840,16 +2593,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitReposByNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
-         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-         * @param {GitApiPostGitReposByNameMirrorsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitReposByNameMirrors(requestParameters: GitApiPostGitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorTargetView> {
-            return localVarFp.postGitReposByNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Proposes a branch for merging and returns it with its number.
          * @param {GitApiPostGitReposByNamePullsRequest} requestParameters Request parameters.
@@ -2890,6 +2633,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitReposByNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(axios, basePath));
         },
         /**
+         * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
+         * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
+         * @param {GitApiPostGitReposByNameTargetsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameTargets(requestParameters: GitApiPostGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorTargetView> {
+            return localVarFp.postGitReposByNameTargets(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
+        },
+        /**
          * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — forge pushes build via platform.hanzo.ai
          * @param {*} [options] Override http request option.
@@ -2897,54 +2650,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         postGitWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postGitWebhook(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Create a repository over the ZAP transport
-         * @param {GitApiPostGitZapCreaterepoRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapCreaterepo(requestParameters: GitApiPostGitZapCreaterepoRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postGitZapCreaterepo(requestParameters.zapProcReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Delete a repository over the ZAP transport
-         * @param {GitApiPostGitZapDeleterepoRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapDeleterepo(requestParameters: GitApiPostGitZapDeleterepoRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postGitZapDeleterepo(requestParameters.zapProcReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Read one repository over the ZAP transport
-         * @param {GitApiPostGitZapGetrepoRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapGetrepo(requestParameters: GitApiPostGitZapGetrepoRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postGitZapGetrepo(requestParameters.zapProcReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary List your repositories over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapListrepos(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postGitZapListrepos(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-         * @summary Report your org\'s git storage footprint over the ZAP transport
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGitZapUsage(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postGitZapUsage(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2978,27 +2683,6 @@ export interface GitApiDeleteGitReposByNameRequest {
 }
 
 /**
- * Request parameters for deleteGitReposByNameMirrorsById operation in GitApi.
- * @export
- * @interface GitApiDeleteGitReposByNameMirrorsByIdRequest
- */
-export interface GitApiDeleteGitReposByNameMirrorsByIdRequest {
-    /**
-     * Name is the repo, from the :name path segment.
-     * @type {string}
-     * @memberof GitApiDeleteGitReposByNameMirrorsById
-     */
-    readonly name: string
-
-    /**
-     * ID is the row to remove, from the :id path segment.
-     * @type {string}
-     * @memberof GitApiDeleteGitReposByNameMirrorsById
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for deleteGitReposByNameSubscriptionsById operation in GitApi.
  * @export
  * @interface GitApiDeleteGitReposByNameSubscriptionsByIdRequest
@@ -3015,6 +2699,27 @@ export interface GitApiDeleteGitReposByNameSubscriptionsByIdRequest {
      * ID is the row to remove, from the :id path segment.
      * @type {string}
      * @memberof GitApiDeleteGitReposByNameSubscriptionsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deleteGitReposByNameTargetsById operation in GitApi.
+ * @export
+ * @interface GitApiDeleteGitReposByNameTargetsByIdRequest
+ */
+export interface GitApiDeleteGitReposByNameTargetsByIdRequest {
+    /**
+     * Name is the repo, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiDeleteGitReposByNameTargetsById
+     */
+    readonly name: string
+
+    /**
+     * ID is the row to remove, from the :id path segment.
+     * @type {string}
+     * @memberof GitApiDeleteGitReposByNameTargetsById
      */
     readonly id: string
 }
@@ -3216,20 +2921,6 @@ export interface GitApiGetGitReposByNameFilesRequest {
 }
 
 /**
- * Request parameters for getGitReposByNameMirrors operation in GitApi.
- * @export
- * @interface GitApiGetGitReposByNameMirrorsRequest
- */
-export interface GitApiGetGitReposByNameMirrorsRequest {
-    /**
-     * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
-     * @type {string}
-     * @memberof GitApiGetGitReposByNameMirrors
-     */
-    readonly name: string
-}
-
-/**
  * Request parameters for getGitReposByNamePulls operation in GitApi.
  * @export
  * @interface GitApiGetGitReposByNamePullsRequest
@@ -3316,6 +3007,20 @@ export interface GitApiGetGitReposByNameSubscriptionsRequest {
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
      * @memberof GitApiGetGitReposByNameSubscriptions
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for getGitReposByNameTargets operation in GitApi.
+ * @export
+ * @interface GitApiGetGitReposByNameTargetsRequest
+ */
+export interface GitApiGetGitReposByNameTargetsRequest {
+    /**
+     * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+     * @type {string}
+     * @memberof GitApiGetGitReposByNameTargets
      */
     readonly name: string
 }
@@ -3559,27 +3264,6 @@ export interface GitApiPostGitReposByNameMirrorRequest {
 }
 
 /**
- * Request parameters for postGitReposByNameMirrors operation in GitApi.
- * @export
- * @interface GitApiPostGitReposByNameMirrorsRequest
- */
-export interface GitApiPostGitReposByNameMirrorsRequest {
-    /**
-     * Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
-     * @type {string}
-     * @memberof GitApiPostGitReposByNameMirrors
-     */
-    readonly name: string
-
-    /**
-     * 
-     * @type {MirrorTargetReq}
-     * @memberof GitApiPostGitReposByNameMirrors
-     */
-    readonly mirrorTargetReq: MirrorTargetReq
-}
-
-/**
  * Request parameters for postGitReposByNamePulls operation in GitApi.
  * @export
  * @interface GitApiPostGitReposByNamePullsRequest
@@ -3664,45 +3348,24 @@ export interface GitApiPostGitReposByNameSubscriptionsRequest {
 }
 
 /**
- * Request parameters for postGitZapCreaterepo operation in GitApi.
+ * Request parameters for postGitReposByNameTargets operation in GitApi.
  * @export
- * @interface GitApiPostGitZapCreaterepoRequest
+ * @interface GitApiPostGitReposByNameTargetsRequest
  */
-export interface GitApiPostGitZapCreaterepoRequest {
+export interface GitApiPostGitReposByNameTargetsRequest {
     /**
-     * 
-     * @type {ZapProcReq}
-     * @memberof GitApiPostGitZapCreaterepo
+     * Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiPostGitReposByNameTargets
      */
-    readonly zapProcReq?: ZapProcReq
-}
+    readonly name: string
 
-/**
- * Request parameters for postGitZapDeleterepo operation in GitApi.
- * @export
- * @interface GitApiPostGitZapDeleterepoRequest
- */
-export interface GitApiPostGitZapDeleterepoRequest {
     /**
      * 
-     * @type {ZapProcReq}
-     * @memberof GitApiPostGitZapDeleterepo
+     * @type {MirrorTargetReq}
+     * @memberof GitApiPostGitReposByNameTargets
      */
-    readonly zapProcReq?: ZapProcReq
-}
-
-/**
- * Request parameters for postGitZapGetrepo operation in GitApi.
- * @export
- * @interface GitApiPostGitZapGetrepoRequest
- */
-export interface GitApiPostGitZapGetrepoRequest {
-    /**
-     * 
-     * @type {ZapProcReq}
-     * @memberof GitApiPostGitZapGetrepo
-     */
-    readonly zapProcReq?: ZapProcReq
+    readonly mirrorTargetReq: MirrorTargetReq
 }
 
 /**
@@ -3737,18 +3400,6 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
-     * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
-     * @param {GitApiDeleteGitReposByNameMirrorsByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public deleteGitReposByNameMirrorsById(requestParameters: GitApiDeleteGitReposByNameMirrorsByIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteGitReposByNameMirrorsById(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
      * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
      * @param {GitApiDeleteGitReposByNameSubscriptionsByIdRequest} requestParameters Request parameters.
@@ -3758,6 +3409,18 @@ export class GitApi extends BaseAPI {
      */
     public deleteGitReposByNameSubscriptionsById(requestParameters: GitApiDeleteGitReposByNameSubscriptionsByIdRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).deleteGitReposByNameSubscriptionsById(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
+     * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
+     * @param {GitApiDeleteGitReposByNameTargetsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public deleteGitReposByNameTargetsById(requestParameters: GitApiDeleteGitReposByNameTargetsByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteGitReposByNameTargetsById(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3901,18 +3564,6 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-     * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-     * @param {GitApiGetGitReposByNameMirrorsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public getGitReposByNameMirrors(requestParameters: GitApiGetGitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitReposByNameMirrors(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
      * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
      * @param {GitApiGetGitReposByNamePullsRequest} requestParameters Request parameters.
@@ -3970,6 +3621,18 @@ export class GitApi extends BaseAPI {
      */
     public getGitReposByNameSubscriptions(requestParameters: GitApiGetGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitReposByNameSubscriptions(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+     * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
+     * @param {GitApiGetGitReposByNameTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitReposByNameTargets(requestParameters: GitApiGetGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitReposByNameTargets(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4104,18 +3767,6 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
-     * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-     * @param {GitApiPostGitReposByNameMirrorsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitReposByNameMirrors(requestParameters: GitApiPostGitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
      * @summary Proposes a branch for merging and returns it with its number.
      * @param {GitApiPostGitReposByNamePullsRequest} requestParameters Request parameters.
@@ -4164,6 +3815,18 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
+     * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
+     * @param {GitApiPostGitReposByNameTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitReposByNameTargets(requestParameters: GitApiPostGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitReposByNameTargets(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
      * @summary Retired — forge pushes build via platform.hanzo.ai
      * @param {*} [options] Override http request option.
@@ -4172,64 +3835,6 @@ export class GitApi extends BaseAPI {
      */
     public postGitWebhook(options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).postGitWebhook(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-     * @summary Create a repository over the ZAP transport
-     * @param {GitApiPostGitZapCreaterepoRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitZapCreaterepo(requestParameters: GitApiPostGitZapCreaterepoRequest = {}, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitZapCreaterepo(requestParameters.zapProcReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-     * @summary Delete a repository over the ZAP transport
-     * @param {GitApiPostGitZapDeleterepoRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitZapDeleterepo(requestParameters: GitApiPostGitZapDeleterepoRequest = {}, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitZapDeleterepo(requestParameters.zapProcReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-     * @summary Read one repository over the ZAP transport
-     * @param {GitApiPostGitZapGetrepoRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitZapGetrepo(requestParameters: GitApiPostGitZapGetrepoRequest = {}, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitZapGetrepo(requestParameters.zapProcReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-     * @summary List your repositories over the ZAP transport
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitZapListrepos(options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitZapListrepos(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns, and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
-     * @summary Report your org\'s git storage footprint over the ZAP transport
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public postGitZapUsage(options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitZapUsage(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

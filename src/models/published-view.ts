@@ -17,38 +17,26 @@
 /**
  * 
  * @export
- * @interface CodingStarted
+ * @interface PublishedView
  */
-export interface CodingStarted {
+export interface PublishedView {
     /**
-     * 
+     * DNS is the name the fabric answers for this service — what a kubeconfig server, or any client on the org\'s overlay, dials.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof PublishedView
      */
-    'branch'?: string;
+    'dns'?: string;
     /**
-     * 
+     * ID is the fabric service\'s id.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof PublishedView
      */
-    'repo'?: string;
+    'id'?: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof CodingStarted
-     */
-    'routed'?: boolean;
-    /**
-     * 
+     * Name is the service\'s name within the org.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof PublishedView
      */
-    'sessionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'targetId'?: string;
+    'name'?: string;
 }
 

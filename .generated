@@ -648,6 +648,7 @@ src/models/enroll-input.ts
 src/models/enroll-req.ts
 src/models/enroll-result.ts
 src/models/enrollment-list.ts
+src/models/enrollment-view.ts
 src/models/enrollment.ts
 src/models/enrolment.ts
 src/models/entitlements-view.ts
@@ -690,7 +691,6 @@ src/models/evaluator-view.ts
 src/models/event-in.ts
 src/models/event-list.ts
 src/models/event-view.ts
-src/models/event.ts
 src/models/example-question.ts
 src/models/exception.ts
 src/models/exec-request.ts
@@ -963,6 +963,9 @@ src/models/iam-workspace.ts
 src/models/iam-workspaces-delete-output.ts
 src/models/iam-workspaces-input.ts
 src/models/iam-workspaces-list-output.ts
+src/models/identity-in.ts
+src/models/identity-list.ts
+src/models/identity-view.ts
 src/models/image-origin.ts
 src/models/image-view.ts
 src/models/import-cap-table-in.ts
@@ -1025,6 +1028,7 @@ src/models/item-view.ts
 src/models/job-cancel.ts
 src/models/job-canceled.ts
 src/models/job-list.ts
+src/models/join-failure.ts
 src/models/journey-step.ts
 src/models/judge-spec.ts
 src/models/kb-authorize-out.ts
@@ -1094,6 +1098,7 @@ src/models/link-mint.ts
 src/models/link-view.ts
 src/models/link.ts
 src/models/list-out.ts
+src/models/listed.ts
 src/models/listing-page.ts
 src/models/listing.ts
 src/models/liveness.ts
@@ -2162,11 +2167,13 @@ src/models/provision-request.ts
 src/models/provision-result.ts
 src/models/provisioned-resource.ts
 src/models/provisioned-summary.ts
+src/models/public-rooms.ts
 src/models/publish-input.ts
 src/models/publish-kit-in.ts
 src/models/publish-req.ts
 src/models/publish-result.ts
 src/models/published-claim.ts
+src/models/published-view.ts
 src/models/pull-list.ts
 src/models/pull-view.ts
 src/models/purge-in.ts
@@ -2242,6 +2249,7 @@ src/models/registry-project.ts
 src/models/registry-status.ts
 src/models/registry-tag-list.ts
 src/models/registry-token.ts
+src/models/reindex-out.ts
 src/models/release-board.ts
 src/models/release-row.ts
 src/models/remark.ts
@@ -2424,6 +2432,7 @@ src/models/sequences.ts
 src/models/series-line.ts
 src/models/series-point.ts
 src/models/service-detail.ts
+src/models/service-in.ts
 src/models/service-port.ts
 src/models/service.ts
 src/models/session-detail.ts
@@ -2450,6 +2459,7 @@ src/models/skill-deleted.ts
 src/models/skill-in.ts
 src/models/skill-written.ts
 src/models/skill.ts
+src/models/slack-join-out.ts
 src/models/slot-view.ts
 src/models/sms.ts
 src/models/social-account-body.ts
@@ -2686,4 +2696,3 @@ src/models/world-wire.ts
 src/models/write-in.ts
 src/models/written.ts
 src/models/wrote.ts
-src/models/zap-proc-req.ts

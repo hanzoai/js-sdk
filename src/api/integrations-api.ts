@@ -102,6 +102,8 @@ import type { ProviderView } from '../models';
 // @ts-ignore
 import type { RefreshOut } from '../models';
 // @ts-ignore
+import type { SlackJoinOut } from '../models';
+// @ts-ignore
 import type { VerifyOut } from '../models';
 /**
  * IntegrationsApi - axios parameter creator
@@ -1916,6 +1918,40 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Joins every public channel in the caller org\'s workspace.  Org admin, because it changes what the whole workspace sees: after it the agent is a member of every public room and answers in all of them.
+         * @summary Joins every public channel in the caller org\'s workspace.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsSlackJoin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/slack/join`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
@@ -2723,6 +2759,18 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Joins every public channel in the caller org\'s workspace.  Org admin, because it changes what the whole workspace sees: after it the agent is a member of every public room and answers in all of them.
+         * @summary Joins every public channel in the caller org\'s workspace.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsSlackJoin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlackJoinOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsSlackJoin(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsSlackJoin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
@@ -3258,6 +3306,15 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         postIntegrationsSlackEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIntegrationsSlackEvents(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Joins every public channel in the caller org\'s workspace.  Org admin, because it changes what the whole workspace sees: after it the agent is a member of every public room and answers in all of them.
+         * @summary Joins every public channel in the caller org\'s workspace.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsSlackJoin(options?: RawAxiosRequestConfig): AxiosPromise<SlackJoinOut> {
+            return localVarFp.postIntegrationsSlackJoin(options).then((request) => request(axios, basePath));
         },
         /**
          * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -4268,6 +4325,17 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postIntegrationsSlackEvents(options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postIntegrationsSlackEvents(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Joins every public channel in the caller org\'s workspace.  Org admin, because it changes what the whole workspace sees: after it the agent is a member of every public room and answers in all of them.
+     * @summary Joins every public channel in the caller org\'s workspace.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsSlackJoin(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsSlackJoin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -34,6 +34,8 @@ import type { KbConnectorsOut } from '../models';
 // @ts-ignore
 import type { KbSyncOut } from '../models';
 // @ts-ignore
+import type { ReindexOut } from '../models';
+// @ts-ignore
 import type { SearchIn } from '../models';
 // @ts-ignore
 import type { SearchOut } from '../models';
@@ -352,6 +354,40 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeReindex: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/knowledge/reindex`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
          * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
          * @param {SearchIn} searchIn 
@@ -506,6 +542,18 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postKnowledgeReindex(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReindexOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeReindex(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeReindex']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
          * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
          * @param {SearchIn} searchIn 
@@ -604,6 +652,15 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          */
         postKnowledgeImport(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postKnowledgeImport(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeReindex(options?: RawAxiosRequestConfig): AxiosPromise<ReindexOut> {
+            return localVarFp.postKnowledgeReindex(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
@@ -821,6 +878,17 @@ export class KnowledgeApi extends BaseAPI {
      */
     public postKnowledgeImport(options?: RawAxiosRequestConfig) {
         return KnowledgeApiFp(this.configuration).postKnowledgeImport(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+     * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public postKnowledgeReindex(options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).postKnowledgeReindex(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

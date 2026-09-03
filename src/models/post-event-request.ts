@@ -21,18 +21,33 @@ import type { CaptureBatch } from './capture-batch';
 import type { CaptureEvent } from './capture-event';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Event } from './event';
+import type { ClipBody } from './clip-body';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Exception } from './exception';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { InsightsBody } from './insights-body';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { InsightsEvent } from './insights-event';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { LogBody } from './log-body';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MetricBody } from './metric-body';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { SpanBody } from './span-body';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { UTM } from './utm';
 
 /**
  * @type PostEventRequest
  * @export
  */
-export type PostEventRequest = Array<Event> | CaptureBatch | Event | InsightsBody;
+export type PostEventRequest = Array<CaptureEvent> | CaptureBatch | CaptureEvent | InsightsBody;
 
 

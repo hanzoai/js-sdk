@@ -36,6 +36,8 @@ import type { PlanInfo } from '../models';
 // @ts-ignore
 import type { ProviderInfo } from '../models';
 // @ts-ignore
+import type { PublicRooms } from '../models';
+// @ts-ignore
 import type { StatsOut } from '../models';
 // @ts-ignore
 import type { TeamMessage } from '../models';
@@ -414,6 +416,55 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
+         * @summary Lists the rooms orgs have published, across every org.
+         * @param {string} [q] Q matches a room\&#39;s name or its topic.
+         * @param {string} [org] Org narrows to one org\&#39;s published rooms.
+         * @param {number} [limit] Limit caps the page, 50 when unstated and 200 at most. An unparseable value reads as unstated rather than as zero — zero pages is not an answer anybody asked for.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamPublic: async (q?: string, org?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/public`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
 
 
     
@@ -1034,6 +1085,21 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
+         * @summary Lists the rooms orgs have published, across every org.
+         * @param {string} [q] Q matches a room\&#39;s name or its topic.
+         * @param {string} [org] Org narrows to one org\&#39;s published rooms.
+         * @param {number} [limit] Limit caps the page, 50 when unstated and 200 at most. An unparseable value reads as unstated rather than as zero — zero pages is not an answer anybody asked for.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamPublic(q?: string, org?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicRooms>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamPublic(q, org, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamPublic']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
          * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
          * @param {*} [options] Override http request option.
@@ -1295,6 +1361,16 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
+         * @summary Lists the rooms orgs have published, across every org.
+         * @param {TeamApiGetTeamPublicRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamPublic(requestParameters: TeamApiGetTeamPublicRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PublicRooms> {
+            return localVarFp.getTeamPublic(requestParameters.q, requestParameters.org, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
          * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
          * @param {*} [options] Override http request option.
@@ -1488,6 +1564,34 @@ export interface TeamApiGetTeamFilesBySpaceByFilenameRequest {
      * @memberof TeamApiGetTeamFilesBySpaceByFilename
      */
     readonly filename: string
+}
+
+/**
+ * Request parameters for getTeamPublic operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamPublicRequest
+ */
+export interface TeamApiGetTeamPublicRequest {
+    /**
+     * Q matches a room\&#39;s name or its topic.
+     * @type {string}
+     * @memberof TeamApiGetTeamPublic
+     */
+    readonly q?: string
+
+    /**
+     * Org narrows to one org\&#39;s published rooms.
+     * @type {string}
+     * @memberof TeamApiGetTeamPublic
+     */
+    readonly org?: string
+
+    /**
+     * Limit caps the page, 50 when unstated and 200 at most. An unparseable value reads as unstated rather than as zero — zero pages is not an answer anybody asked for.
+     * @type {number}
+     * @memberof TeamApiGetTeamPublic
+     */
+    readonly limit?: number
 }
 
 /**
@@ -1756,6 +1860,18 @@ export class TeamApi extends BaseAPI {
      */
     public getTeamFilesBySpaceByFilename(requestParameters: TeamApiGetTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
+     * @summary Lists the rooms orgs have published, across every org.
+     * @param {TeamApiGetTeamPublicRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamPublic(requestParameters: TeamApiGetTeamPublicRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamPublic(requestParameters.q, requestParameters.org, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
