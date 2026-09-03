@@ -13,42 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Listed } from './listed';
 
 /**
  * 
  * @export
- * @interface CodingStarted
+ * @interface PublicRooms
  */
-export interface CodingStarted {
+export interface PublicRooms {
     /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
+     * Rooms is every published room the query matched, newest-written first.
+     * @type {Array<Listed>}
+     * @memberof PublicRooms
      */
-    'branch'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'repo'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CodingStarted
-     */
-    'routed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'sessionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'targetId'?: string;
+    'rooms'?: Array<Listed>;
 }
 

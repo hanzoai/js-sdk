@@ -22,19 +22,67 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { IdentityIn } from '../models';
+// @ts-ignore
+import type { IdentityList } from '../models';
+// @ts-ignore
+import type { IdentityView } from '../models';
+// @ts-ignore
 import type { MeshServiceList } from '../models';
 // @ts-ignore
 import type { NetworkList } from '../models';
 // @ts-ignore
 import type { NetworkView } from '../models';
 // @ts-ignore
+import type { PublishedView } from '../models';
+// @ts-ignore
 import type { RouterList } from '../models';
+// @ts-ignore
+import type { ServiceIn } from '../models';
 /**
  * NetworkApi - axios parameter creator
  * @export
  */
 export const NetworkApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Removes one of the org\'s fabric identities. The device\'s credential stops authenticating and its enrollment, if unspent, stops enrolling.  An id belonging to another org — or to nothing — is 404 before any write reaches the controller: whether an identity exists is itself a cross-tenant fact, and a delete may only ever act on what the caller could list.
+         * @summary Removes one of the org\'s fabric identities.
+         * @param {string} id ID is the identity id from the path. The URL is the addressing authority, so it binds from there whatever else the request carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNetworkIdentitiesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteNetworkIdentitiesById', 'id', id)
+            const localVarPath = `/v1/network/identities/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns the caller\'s org overlay network on the Zero Trust fabric.  The org has at most ONE overlay, projected from the edge-routers tagged with its \"org-<org>\" role attribute: nodes is the real router count and status is \"connected\" once at least one router has dialed home, \"provisioning\" while none has. An org with no routers gets an empty list, never a fabricated network.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list so the console\'s Networks page renders a clean empty state instead of an error.
          * @summary Returns the caller\'s org overlay network on the Zero Trust fabric.
@@ -81,6 +129,40 @@ export const NetworkApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists('getNetworkById', 'id', id)
             const localVarPath = `/v1/network/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the fabric identities the caller\'s org owns.  One row per identity tagged with the org\'s \"org-<org>\" role attribute — a device minted here, enrolled or not. An identity that has not yet enrolled still carries its one-time enrollment, so a mislaid JWT is read again here rather than re-minted.  A tenancy read over the full inventory, so like the mesh list it does NOT degrade: an unconfigured deployment answers 503.
+         * @summary Returns the fabric identities the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNetworkIdentities: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/network/identities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -175,6 +257,86 @@ export const NetworkApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Mints a fabric identity for a device the caller\'s org brings.  The identity is created of type Device, tagged with the org\'s \"org-<org>\" role attribute plus any supplied roles — each scoped to the org, and a \"<service>-host\" role refused unless the org has published that service. The answer carries the controller\'s one-time enrollment JWT: the device presents it once to join the fabric, and until it does the same token can be read back off GET /v1/network/identities.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Mints a fabric identity for a device the caller\'s org brings.
+         * @param {IdentityIn} identityIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postNetworkIdentities: async (identityIn: IdentityIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'identityIn' is not null or undefined
+            assertParamExists('postNetworkIdentities', 'identityIn', identityIn)
+            const localVarPath = `/v1/network/identities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(identityIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.  Answers 201 with the service and its DNS name. The objects behind it are created in dependency order and unwound on failure, so a half-published service never lingers on the fabric.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.
+         * @param {ServiceIn} serviceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postNetworkServices: async (serviceIn: ServiceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceIn' is not null or undefined
+            assertParamExists('postNetworkServices', 'serviceIn', serviceIn)
+            const localVarPath = `/v1/network/services`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(serviceIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -185,6 +347,19 @@ export const NetworkApiAxiosParamCreator = function (configuration?: Configurati
 export const NetworkApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = NetworkApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Removes one of the org\'s fabric identities. The device\'s credential stops authenticating and its enrollment, if unspent, stops enrolling.  An id belonging to another org — or to nothing — is 404 before any write reaches the controller: whether an identity exists is itself a cross-tenant fact, and a delete may only ever act on what the caller could list.
+         * @summary Removes one of the org\'s fabric identities.
+         * @param {string} id ID is the identity id from the path. The URL is the addressing authority, so it binds from there whatever else the request carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteNetworkIdentitiesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteNetworkIdentitiesById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NetworkApi.deleteNetworkIdentitiesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Returns the caller\'s org overlay network on the Zero Trust fabric.  The org has at most ONE overlay, projected from the edge-routers tagged with its \"org-<org>\" role attribute: nodes is the real router count and status is \"connected\" once at least one router has dialed home, \"provisioning\" while none has. An org with no routers gets an empty list, never a fabricated network.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list so the console\'s Networks page renders a clean empty state instead of an error.
          * @summary Returns the caller\'s org overlay network on the Zero Trust fabric.
@@ -211,6 +386,18 @@ export const NetworkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the fabric identities the caller\'s org owns.  One row per identity tagged with the org\'s \"org-<org>\" role attribute — a device minted here, enrolled or not. An identity that has not yet enrolled still carries its one-time enrollment, so a mislaid JWT is read again here rather than re-minted.  A tenancy read over the full inventory, so like the mesh list it does NOT degrade: an unconfigured deployment answers 503.
+         * @summary Returns the fabric identities the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNetworkIdentities(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IdentityList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNetworkIdentities(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NetworkApi.getNetworkIdentities']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the Zero Trust routers the caller\'s org owns.  One row per real ZT edge-router tagged with the org\'s \"org-<org>\" role attribute, carrying the controller\'s own health signal: \"online\" when connected, \"disabled\" when administratively disabled, \"offline\" otherwise. region is filled only from a \"region-<slug>\" role attribute and omitted when the router carries none, so the column renders \"—\" rather than a guess.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list.
          * @summary Returns the Zero Trust routers the caller\'s org owns.
          * @param {*} [options] Override http request option.
@@ -234,6 +421,32 @@ export const NetworkApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['NetworkApi.getNetworkServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Mints a fabric identity for a device the caller\'s org brings.  The identity is created of type Device, tagged with the org\'s \"org-<org>\" role attribute plus any supplied roles — each scoped to the org, and a \"<service>-host\" role refused unless the org has published that service. The answer carries the controller\'s one-time enrollment JWT: the device presents it once to join the fabric, and until it does the same token can be read back off GET /v1/network/identities.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Mints a fabric identity for a device the caller\'s org brings.
+         * @param {IdentityIn} identityIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postNetworkIdentities(identityIn: IdentityIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IdentityView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNetworkIdentities(identityIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NetworkApi.postNetworkIdentities']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.  Answers 201 with the service and its DNS name. The objects behind it are created in dependency order and unwound on failure, so a half-published service never lingers on the fabric.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.
+         * @param {ServiceIn} serviceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postNetworkServices(serviceIn: ServiceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublishedView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNetworkServices(serviceIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NetworkApi.postNetworkServices']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -244,6 +457,16 @@ export const NetworkApiFp = function(configuration?: Configuration) {
 export const NetworkApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = NetworkApiFp(configuration)
     return {
+        /**
+         * Removes one of the org\'s fabric identities. The device\'s credential stops authenticating and its enrollment, if unspent, stops enrolling.  An id belonging to another org — or to nothing — is 404 before any write reaches the controller: whether an identity exists is itself a cross-tenant fact, and a delete may only ever act on what the caller could list.
+         * @summary Removes one of the org\'s fabric identities.
+         * @param {NetworkApiDeleteNetworkIdentitiesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNetworkIdentitiesById(requestParameters: NetworkApiDeleteNetworkIdentitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteNetworkIdentitiesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
         /**
          * Returns the caller\'s org overlay network on the Zero Trust fabric.  The org has at most ONE overlay, projected from the edge-routers tagged with its \"org-<org>\" role attribute: nodes is the real router count and status is \"connected\" once at least one router has dialed home, \"provisioning\" while none has. An org with no routers gets an empty list, never a fabricated network.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list so the console\'s Networks page renders a clean empty state instead of an error.
          * @summary Returns the caller\'s org overlay network on the Zero Trust fabric.
@@ -264,6 +487,15 @@ export const NetworkApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getNetworkById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the fabric identities the caller\'s org owns.  One row per identity tagged with the org\'s \"org-<org>\" role attribute — a device minted here, enrolled or not. An identity that has not yet enrolled still carries its one-time enrollment, so a mislaid JWT is read again here rather than re-minted.  A tenancy read over the full inventory, so like the mesh list it does NOT degrade: an unconfigured deployment answers 503.
+         * @summary Returns the fabric identities the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNetworkIdentities(options?: RawAxiosRequestConfig): AxiosPromise<IdentityList> {
+            return localVarFp.getNetworkIdentities(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the Zero Trust routers the caller\'s org owns.  One row per real ZT edge-router tagged with the org\'s \"org-<org>\" role attribute, carrying the controller\'s own health signal: \"online\" when connected, \"disabled\" when administratively disabled, \"offline\" otherwise. region is filled only from a \"region-<slug>\" role attribute and omitted when the router carries none, so the column renders \"—\" rather than a guess.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list.
          * @summary Returns the Zero Trust routers the caller\'s org owns.
          * @param {*} [options] Override http request option.
@@ -281,8 +513,42 @@ export const NetworkApiFactory = function (configuration?: Configuration, basePa
         getNetworkServices(options?: RawAxiosRequestConfig): AxiosPromise<MeshServiceList> {
             return localVarFp.getNetworkServices(options).then((request) => request(axios, basePath));
         },
+        /**
+         * Mints a fabric identity for a device the caller\'s org brings.  The identity is created of type Device, tagged with the org\'s \"org-<org>\" role attribute plus any supplied roles — each scoped to the org, and a \"<service>-host\" role refused unless the org has published that service. The answer carries the controller\'s one-time enrollment JWT: the device presents it once to join the fabric, and until it does the same token can be read back off GET /v1/network/identities.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Mints a fabric identity for a device the caller\'s org brings.
+         * @param {NetworkApiPostNetworkIdentitiesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postNetworkIdentities(requestParameters: NetworkApiPostNetworkIdentitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IdentityView> {
+            return localVarFp.postNetworkIdentities(requestParameters.identityIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.  Answers 201 with the service and its DNS name. The objects behind it are created in dependency order and unwound on failure, so a half-published service never lingers on the fabric.  A write, so it does not degrade: an unconfigured deployment answers 503.
+         * @summary Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.
+         * @param {NetworkApiPostNetworkServicesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postNetworkServices(requestParameters: NetworkApiPostNetworkServicesRequest, options?: RawAxiosRequestConfig): AxiosPromise<PublishedView> {
+            return localVarFp.postNetworkServices(requestParameters.serviceIn, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for deleteNetworkIdentitiesById operation in NetworkApi.
+ * @export
+ * @interface NetworkApiDeleteNetworkIdentitiesByIdRequest
+ */
+export interface NetworkApiDeleteNetworkIdentitiesByIdRequest {
+    /**
+     * ID is the identity id from the path. The URL is the addressing authority, so it binds from there whatever else the request carries.
+     * @type {string}
+     * @memberof NetworkApiDeleteNetworkIdentitiesById
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for getNetworkById operation in NetworkApi.
@@ -299,12 +565,52 @@ export interface NetworkApiGetNetworkByIdRequest {
 }
 
 /**
+ * Request parameters for postNetworkIdentities operation in NetworkApi.
+ * @export
+ * @interface NetworkApiPostNetworkIdentitiesRequest
+ */
+export interface NetworkApiPostNetworkIdentitiesRequest {
+    /**
+     * 
+     * @type {IdentityIn}
+     * @memberof NetworkApiPostNetworkIdentities
+     */
+    readonly identityIn: IdentityIn
+}
+
+/**
+ * Request parameters for postNetworkServices operation in NetworkApi.
+ * @export
+ * @interface NetworkApiPostNetworkServicesRequest
+ */
+export interface NetworkApiPostNetworkServicesRequest {
+    /**
+     * 
+     * @type {ServiceIn}
+     * @memberof NetworkApiPostNetworkServices
+     */
+    readonly serviceIn: ServiceIn
+}
+
+/**
  * NetworkApi - object-oriented interface
  * @export
  * @class NetworkApi
  * @extends {BaseAPI}
  */
 export class NetworkApi extends BaseAPI {
+    /**
+     * Removes one of the org\'s fabric identities. The device\'s credential stops authenticating and its enrollment, if unspent, stops enrolling.  An id belonging to another org — or to nothing — is 404 before any write reaches the controller: whether an identity exists is itself a cross-tenant fact, and a delete may only ever act on what the caller could list.
+     * @summary Removes one of the org\'s fabric identities.
+     * @param {NetworkApiDeleteNetworkIdentitiesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NetworkApi
+     */
+    public deleteNetworkIdentitiesById(requestParameters: NetworkApiDeleteNetworkIdentitiesByIdRequest, options?: RawAxiosRequestConfig) {
+        return NetworkApiFp(this.configuration).deleteNetworkIdentitiesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns the caller\'s org overlay network on the Zero Trust fabric.  The org has at most ONE overlay, projected from the edge-routers tagged with its \"org-<org>\" role attribute: nodes is the real router count and status is \"connected\" once at least one router has dialed home, \"provisioning\" while none has. An org with no routers gets an empty list, never a fabricated network.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list so the console\'s Networks page renders a clean empty state instead of an error.
      * @summary Returns the caller\'s org overlay network on the Zero Trust fabric.
@@ -329,6 +635,17 @@ export class NetworkApi extends BaseAPI {
     }
 
     /**
+     * Returns the fabric identities the caller\'s org owns.  One row per identity tagged with the org\'s \"org-<org>\" role attribute — a device minted here, enrolled or not. An identity that has not yet enrolled still carries its one-time enrollment, so a mislaid JWT is read again here rather than re-minted.  A tenancy read over the full inventory, so like the mesh list it does NOT degrade: an unconfigured deployment answers 503.
+     * @summary Returns the fabric identities the caller\'s org owns.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NetworkApi
+     */
+    public getNetworkIdentities(options?: RawAxiosRequestConfig) {
+        return NetworkApiFp(this.configuration).getNetworkIdentities(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the Zero Trust routers the caller\'s org owns.  One row per real ZT edge-router tagged with the org\'s \"org-<org>\" role attribute, carrying the controller\'s own health signal: \"online\" when connected, \"disabled\" when administratively disabled, \"offline\" otherwise. region is filled only from a \"region-<slug>\" role attribute and omitted when the router carries none, so the column renders \"—\" rather than a guess.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list.
      * @summary Returns the Zero Trust routers the caller\'s org owns.
      * @param {*} [options] Override http request option.
@@ -348,6 +665,30 @@ export class NetworkApi extends BaseAPI {
      */
     public getNetworkServices(options?: RawAxiosRequestConfig) {
         return NetworkApiFp(this.configuration).getNetworkServices(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mints a fabric identity for a device the caller\'s org brings.  The identity is created of type Device, tagged with the org\'s \"org-<org>\" role attribute plus any supplied roles — each scoped to the org, and a \"<service>-host\" role refused unless the org has published that service. The answer carries the controller\'s one-time enrollment JWT: the device presents it once to join the fabric, and until it does the same token can be read back off GET /v1/network/identities.  A write, so it does not degrade: an unconfigured deployment answers 503.
+     * @summary Mints a fabric identity for a device the caller\'s org brings.
+     * @param {NetworkApiPostNetworkIdentitiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NetworkApi
+     */
+    public postNetworkIdentities(requestParameters: NetworkApiPostNetworkIdentitiesRequest, options?: RawAxiosRequestConfig) {
+        return NetworkApiFp(this.configuration).postNetworkIdentities(requestParameters.identityIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.  Answers 201 with the service and its DNS name. The objects behind it are created in dependency order and unwound on failure, so a half-published service never lingers on the fabric.  A write, so it does not degrade: an unconfigured deployment answers 503.
+     * @summary Puts a name on the org\'s overlay: a fabric service forwarding to host:port on whichever of the org\'s devices carries the \"<name>-host\" role, dialable at \"<name>.<org>.zt\" by any of the org\'s identities — and by the cloud\'s own, which is what lets a BYO cluster\'s apiserver be attached to the fleet with a \".zt\" kubeconfig.
+     * @param {NetworkApiPostNetworkServicesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NetworkApi
+     */
+    public postNetworkServices(requestParameters: NetworkApiPostNetworkServicesRequest, options?: RawAxiosRequestConfig) {
+        return NetworkApiFp(this.configuration).postNetworkServices(requestParameters.serviceIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

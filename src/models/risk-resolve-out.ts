@@ -24,6 +24,7 @@ import type { RiskResolved } from './risk-resolved';
  */
 export interface RiskResolveOut {
     /**
+     * Horizon is the maturity horizon this answer was computed under, IN DAYS — the caller\'s, or 120 when it stated none. Each event\'s as-of is its own `at` plus this many days, and that as-of is what decides which assertions were visible to it; an event whose as-of falls after Now is not resolved at all and is counted in Unmatured instead.
      * @type {number}
      * @memberof RiskResolveOut
      */
@@ -35,6 +36,7 @@ export interface RiskResolveOut {
      */
     'labels'?: Array<RiskResolved>;
     /**
+     * Now and Horizon echo the observation this answer was computed under. A resolved label without them is a claim nobody can check.
      * @type {string}
      * @memberof RiskResolveOut
      */

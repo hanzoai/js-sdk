@@ -482,7 +482,7 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteFunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async deleteFunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFunctionsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.deleteFunctionsByName']?.[localVarOperationServerIndex]?.url;
@@ -633,7 +633,7 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFunctionsByName(requestParameters: FunctionsApiDeleteFunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        deleteFunctionsByName(requestParameters: FunctionsApiDeleteFunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteFunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**

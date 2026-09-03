@@ -17,38 +17,20 @@
 /**
  * 
  * @export
- * @interface Event
+ * @interface EnrollmentView
  */
-export interface Event {
+export interface EnrollmentView {
     /**
-     * 
+     * ExpiresAt is when the un-used token lapses, RFC 3339.
      * @type {string}
-     * @memberof Event
+     * @memberof EnrollmentView
      */
-    'distinctId'?: string;
+    'expiresAt'?: string;
     /**
-     * 
+     * JWT is the one-time enrollment token the device presents ONCE to join the fabric (zt edge enroll / zt-edge-tunnel enroll). Spent or lapsed, it authenticates nothing; this surface stores it nowhere.
      * @type {string}
-     * @memberof Event
+     * @memberof EnrollmentView
      */
-    'event'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Event
-     */
-    'properties'?: { [key: string]: any; };
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    'time'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Event
-     */
-    'type'?: string;
+    'jwt'?: string;
 }
 

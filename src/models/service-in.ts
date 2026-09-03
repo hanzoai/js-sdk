@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface ZapProcReq
+ * @interface ServiceIn
  */
-export interface ZapProcReq {
+export interface ServiceIn {
     /**
-     * 
+     * Host is where the HOSTING identity forwards a connection — an address the host device itself can reach, \"127.0.0.1\" for a server on the device.
      * @type {string}
-     * @memberof ZapProcReq
+     * @memberof ServiceIn
      */
-    'description'?: string;
+    'host'?: string;
     /**
-     * 
+     * Name is the service\'s name within the org — a DNS label. The fabric knows the service as \"<name>.<org>\" and answers for it at \"<name>.<org>.zt\".
      * @type {string}
-     * @memberof ZapProcReq
+     * @memberof ServiceIn
      */
     'name'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof ZapProcReq
+     * Port is the port beside Host, and the one the DNS name intercepts.
+     * @type {number}
+     * @memberof ServiceIn
      */
-    'project'?: string;
+    'port'?: number;
 }
 

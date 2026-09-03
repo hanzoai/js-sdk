@@ -17,38 +17,26 @@
 /**
  * 
  * @export
- * @interface CodingStarted
+ * @interface JoinFailure
  */
-export interface CodingStarted {
+export interface JoinFailure {
     /**
-     * 
+     * Channel is Slack\'s id for the room that refused.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof JoinFailure
      */
-    'branch'?: string;
+    'channel'?: string;
     /**
-     * 
+     * Error is Slack\'s own code, carried through unchanged.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof JoinFailure
      */
-    'repo'?: string;
+    'error'?: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof CodingStarted
-     */
-    'routed'?: boolean;
-    /**
-     * 
+     * Name is that room\'s human name, so the operator does not have to look the id up.
      * @type {string}
-     * @memberof CodingStarted
+     * @memberof JoinFailure
      */
-    'sessionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CodingStarted
-     */
-    'targetId'?: string;
+    'name'?: string;
 }
 
