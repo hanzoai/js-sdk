@@ -28,10 +28,6 @@ import type { BindAgentReq } from '../models';
 // @ts-ignore
 import type { BindingList } from '../models';
 // @ts-ignore
-import type { BotList } from '../models';
-// @ts-ignore
-import type { BotView } from '../models';
-// @ts-ignore
 import type { ClusterAttach } from '../models';
 // @ts-ignore
 import type { ClusterDetached } from '../models';
@@ -76,14 +72,14 @@ import type { SampleList } from '../models';
 // @ts-ignore
 import type { WorkerList } from '../models';
 /**
- * VisorApi - axios parameter creator
+ * ComputeApi - axios parameter creator
  * @export
  */
-export const VisorApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ComputeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
-         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
+         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
          * @param {ClusterAttach} clusterAttach 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -91,7 +87,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         attachCluster: async (clusterAttach: ClusterAttach, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clusterAttach' is not null or undefined
             assertParamExists('attachCluster', 'clusterAttach', clusterAttach)
-            const localVarPath = `/v1/visor/clusters`;
+            const localVarPath = `/v1/compute/clusters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -134,7 +130,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('bindMachineAgent', 'id', id)
             // verify required parameter 'bindAgentReq' is not null or undefined
             assertParamExists('bindMachineAgent', 'bindAgentReq', bindAgentReq)
-            const localVarPath = `/v1/visor/machines/{id}/agent`
+            const localVarPath = `/v1/compute/machines/{id}/agent`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -178,7 +174,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('cancelFleetJob', 'id', id)
             // verify required parameter 'jobCancel' is not null or undefined
             assertParamExists('cancelFleetJob', 'jobCancel', jobCancel)
-            const localVarPath = `/v1/visor/fleet/jobs/{id}/cancel`
+            const localVarPath = `/v1/compute/fleet/jobs/{id}/cancel`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -219,7 +215,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         createKubernetesCluster: async (createClusterReq: CreateClusterReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createClusterReq' is not null or undefined
             assertParamExists('createKubernetesCluster', 'createClusterReq', createClusterReq)
-            const localVarPath = `/v1/visor/k8s/clusters`;
+            const localVarPath = `/v1/compute/k8s/clusters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -262,7 +258,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('createNodePool', 'clusterId', clusterId)
             // verify required parameter 'poolCreate' is not null or undefined
             assertParamExists('createNodePool', 'poolCreate', poolCreate)
-            const localVarPath = `/v1/visor/clusters/{clusterId}/pools`
+            const localVarPath = `/v1/compute/clusters/{clusterId}/pools`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -294,44 +290,6 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-         * @summary Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-         * @param {string} id ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBot: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteBot', 'id', id)
-            const localVarPath = `/v1/visor/compute/bots/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Destroys a DOKS cluster by id and answers 204. ADMIN-GATED, like create. Visor scopes the delete to the org (refuses a foreign id), so this can only ever remove the caller org\'s own cluster.
          * @summary Destroys a DOKS cluster by id and answers 204.
          * @param {string} id ID is the provider\&#39;s DOKS cluster id. Visor scopes the lookup to the caller\&#39;s org, so another tenant\&#39;s id resolves to not-found rather than their cluster.
@@ -341,7 +299,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         deleteKubernetesCluster: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteKubernetesCluster', 'id', id)
-            const localVarPath = `/v1/visor/k8s/clusters/{id}`
+            const localVarPath = `/v1/compute/k8s/clusters/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -379,7 +337,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         deleteMachine: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteMachine', 'id', id)
-            const localVarPath = `/v1/visor/machines/{id}`
+            const localVarPath = `/v1/compute/machines/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -421,7 +379,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('deleteNodePool', 'clusterId', clusterId)
             // verify required parameter 'poolId' is not null or undefined
             assertParamExists('deleteNodePool', 'poolId', poolId)
-            const localVarPath = `/v1/visor/clusters/{clusterId}/pools/{poolId}`
+            const localVarPath = `/v1/compute/clusters/{clusterId}/pools/{poolId}`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
                 .replace(`{${"poolId"}}`, encodeURIComponent(String(poolId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -464,7 +422,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         detachCluster: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('detachCluster', 'id', id)
-            const localVarPath = `/v1/visor/clusters/{id}`
+            const localVarPath = `/v1/compute/clusters/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -493,17 +451,47 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns one of the caller org\'s bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
-         * @summary Returns one of the caller org\'s bot machines with its agent binding.
-         * @param {string} id ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
+         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+         * @summary Regions lists the regions a machine can be launched in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBot: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getBot', 'id', id)
-            const localVarPath = `/v1/visor/compute/bots/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        getComputeRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/compute/regions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+         * @summary Sizes lists the machine sizes available to launch, with their specifications.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getComputeSizes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/compute/sizes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -540,7 +528,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         getKubernetesCluster: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getKubernetesCluster', 'id', id)
-            const localVarPath = `/v1/visor/k8s/clusters/{id}`
+            const localVarPath = `/v1/compute/k8s/clusters/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -578,7 +566,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         getMachine: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getMachine', 'id', id)
-            const localVarPath = `/v1/visor/machines/{id}`
+            const localVarPath = `/v1/compute/machines/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -616,110 +604,8 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         getMachineAgent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getMachineAgent', 'id', id)
-            const localVarPath = `/v1/visor/machines/{id}/agent`
+            const localVarPath = `/v1/compute/machines/{id}/agent`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
-         * @summary Regions lists the regions a machine can be launched in.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVisorComputeRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/compute/regions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
-         * @summary Sizes lists the machine sizes available to launch, with their specifications.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVisorComputeSizes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/compute/sizes`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-         * @summary Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/compute/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -753,7 +639,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listClusters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/clusters`;
+            const localVarPath = `/v1/compute/clusters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -787,7 +673,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listFleet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/fleet`;
+            const localVarPath = `/v1/compute/fleet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -823,7 +709,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listFleetJobs: async (gpu?: string, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/fleet/jobs`;
+            const localVarPath = `/v1/compute/fleet/jobs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -868,7 +754,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listFleetSamples: async (unit?: string, source?: string, range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/fleet/samples`;
+            const localVarPath = `/v1/compute/fleet/samples`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -914,7 +800,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listFleetWorkers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/fleet/workers`;
+            const localVarPath = `/v1/compute/fleet/workers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -948,7 +834,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listGpuAlerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/gpus/alerts`;
+            const localVarPath = `/v1/compute/gpus/alerts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -982,7 +868,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listGpus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/gpus`;
+            const localVarPath = `/v1/compute/gpus`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1016,7 +902,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listKubernetesClusters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/k8s/clusters`;
+            const localVarPath = `/v1/compute/k8s/clusters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1050,7 +936,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listKubernetesNodes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/k8s/nodes`;
+            const localVarPath = `/v1/compute/k8s/nodes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1084,7 +970,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listMachineAgents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/machines/agents`;
+            const localVarPath = `/v1/compute/machines/agents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1114,11 +1000,12 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
          * @summary Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").
+         * @param {string} [kind] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listMachines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/machines`;
+        listMachines: async (kind?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/compute/machines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1127,6 +1014,44 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+         * @summary Launch a metered machine for your org, or price one first with dryRun
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postComputeMachines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/compute/machines`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1153,82 +1078,14 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postVisorComputeBotsByIdByAction: async (id: string, action: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postComputeMachinesByIdByAction: async (id: string, action: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postVisorComputeBotsByIdByAction', 'id', id)
+            assertParamExists('postComputeMachinesByIdByAction', 'id', id)
             // verify required parameter 'action' is not null or undefined
-            assertParamExists('postVisorComputeBotsByIdByAction', 'action', action)
-            const localVarPath = `/v1/visor/compute/bots/{id}/{action}`
+            assertParamExists('postComputeMachinesByIdByAction', 'action', action)
+            const localVarPath = `/v1/compute/machines/{id}/{action}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"action"}}`, encodeURIComponent(String(action)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVisorComputeBotsLaunch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/compute/bots/launch`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
-         * @summary Launch a metered machine for your org, or price one first with dryRun
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVisorMachines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/visor/machines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1265,7 +1122,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         recordFleetSample: async (sampleIngest: SampleIngest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sampleIngest' is not null or undefined
             assertParamExists('recordFleetSample', 'sampleIngest', sampleIngest)
-            const localVarPath = `/v1/visor/fleet/samples`;
+            const localVarPath = `/v1/compute/fleet/samples`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1311,7 +1168,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('scaleNodePool', 'poolId', poolId)
             // verify required parameter 'poolScale' is not null or undefined
             assertParamExists('scaleNodePool', 'poolScale', poolScale)
-            const localVarPath = `/v1/visor/clusters/{clusterId}/pools/{poolId}/scale`
+            const localVarPath = `/v1/compute/clusters/{clusterId}/pools/{poolId}/scale`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
                 .replace(`{${"poolId"}}`, encodeURIComponent(String(poolId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1353,7 +1210,7 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
         unbindMachineAgent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('unbindMachineAgent', 'id', id)
-            const localVarPath = `/v1/visor/machines/{id}/agent`
+            const localVarPath = `/v1/compute/machines/{id}/agent`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1385,15 +1242,15 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
 };
 
 /**
- * VisorApi - functional programming interface
+ * ComputeApi - functional programming interface
  * @export
  */
-export const VisorApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = VisorApiAxiosParamCreator(configuration)
+export const ComputeApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ComputeApiAxiosParamCreator(configuration)
     return {
         /**
-         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
-         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
+         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
          * @param {ClusterAttach} clusterAttach 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1401,7 +1258,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async attachCluster(clusterAttach: ClusterAttach, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.attachCluster(clusterAttach, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.attachCluster']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.attachCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1415,7 +1272,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async bindMachineAgent(id: string, bindAgentReq: BindAgentReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBinding>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.bindMachineAgent(id, bindAgentReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.bindMachineAgent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.bindMachineAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1429,7 +1286,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async cancelFleetJob(id: string, jobCancel: JobCancel, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobCanceled>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cancelFleetJob(id, jobCancel, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.cancelFleetJob']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.cancelFleetJob']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1442,7 +1299,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async createKubernetesCluster(createClusterReq: CreateClusterReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createKubernetesCluster(createClusterReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.createKubernetesCluster']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.createKubernetesCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1456,20 +1313,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async createNodePool(clusterId: string, poolCreate: PoolCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NodePoolView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createNodePool(clusterId, poolCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.createNodePool']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-         * @summary Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-         * @param {string} id ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteBot(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBot(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.deleteBot']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.createNodePool']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1482,7 +1326,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async deleteKubernetesCluster(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKubernetesCluster(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.deleteKubernetesCluster']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.deleteKubernetesCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1495,7 +1339,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async deleteMachine(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMachine(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.deleteMachine']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.deleteMachine']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1510,7 +1354,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async deleteNodePool(clusterId: string, poolId: string, provider?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteNodePool(clusterId, poolId, provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.deleteNodePool']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.deleteNodePool']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1523,20 +1367,31 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async detachCluster(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterDetached>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.detachCluster(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.detachCluster']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.detachCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one of the caller org\'s bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
-         * @summary Returns one of the caller org\'s bot machines with its agent binding.
-         * @param {string} id ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
+         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+         * @summary Regions lists the regions a machine can be launched in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBot(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBot(id, options);
+        async getComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getComputeRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getBot']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getComputeRegions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+         * @summary Sizes lists the machine sizes available to launch, with their specifications.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getComputeSizes(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getComputeSizes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1549,7 +1404,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async getKubernetesCluster(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterDetailView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKubernetesCluster(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getKubernetesCluster']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getKubernetesCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1562,7 +1417,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async getMachine(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMachine(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getMachine']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getMachine']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1575,43 +1430,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async getMachineAgent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBinding>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMachineAgent(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getMachineAgent']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
-         * @summary Regions lists the regions a machine can be launched in.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getVisorComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVisorComputeRegions(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getVisorComputeRegions']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
-         * @summary Sizes lists the machine sizes available to launch, with their specifications.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getVisorComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVisorComputeSizes(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.getVisorComputeSizes']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-         * @summary Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listBots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listBots(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listBots']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getMachineAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1623,7 +1442,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listClusters(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listClusters']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listClusters']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1635,7 +1454,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FleetBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listFleet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listFleet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listFleet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1649,7 +1468,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listFleetJobs(gpu?: string, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listFleetJobs(gpu, status, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listFleetJobs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listFleetJobs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1664,7 +1483,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listFleetSamples(unit?: string, source?: string, range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SampleList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listFleetSamples(unit, source, range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listFleetSamples']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listFleetSamples']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1676,7 +1495,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listFleetWorkers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WorkerList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listFleetWorkers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listFleetWorkers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listFleetWorkers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1688,7 +1507,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listGpuAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GpuAlertList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listGpuAlerts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listGpuAlerts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listGpuAlerts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1700,7 +1519,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listGpus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GpuList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listGpus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listGpus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listGpus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1712,7 +1531,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listKubernetesClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listKubernetesClusters(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listKubernetesClusters']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listKubernetesClusters']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1724,7 +1543,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listKubernetesNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NodeList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listKubernetesNodes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listKubernetesNodes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listKubernetesNodes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1736,19 +1555,32 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async listMachineAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BindingList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listMachineAgents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listMachineAgents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listMachineAgents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
          * @summary Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").
+         * @param {string} [kind] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listMachines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listMachines(options);
+        async listMachines(kind?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listMachines(kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.listMachines']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.listMachines']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+         * @summary Launch a metered machine for your org, or price one first with dryRun
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postComputeMachines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComputeMachines(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postComputeMachines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1759,34 +1591,10 @@ export const VisorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postVisorComputeBotsByIdByAction(id: string, action: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postVisorComputeBotsByIdByAction(id, action, options);
+        async postComputeMachinesByIdByAction(id: string, action: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComputeMachinesByIdByAction(id, action, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.postVisorComputeBotsByIdByAction']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postVisorComputeBotsLaunch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postVisorComputeBotsLaunch(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.postVisorComputeBotsLaunch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
-         * @summary Launch a metered machine for your org, or price one first with dryRun
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postVisorMachines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postVisorMachines(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.postVisorMachines']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postComputeMachinesByIdByAction']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1799,7 +1607,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async recordFleetSample(sampleIngest: SampleIngest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SampleAccepted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recordFleetSample(sampleIngest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.recordFleetSample']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.recordFleetSample']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1814,7 +1622,7 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async scaleNodePool(clusterId: string, poolId: string, poolScale: PoolScale, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NodePoolView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.scaleNodePool(clusterId, poolId, poolScale, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.scaleNodePool']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.scaleNodePool']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1827,158 +1635,108 @@ export const VisorApiFp = function(configuration?: Configuration) {
         async unbindMachineAgent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unbindMachineAgent(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VisorApi.unbindMachineAgent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.unbindMachineAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * VisorApi - factory interface
+ * ComputeApi - factory interface
  * @export
  */
-export const VisorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = VisorApiFp(configuration)
+export const ComputeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ComputeApiFp(configuration)
     return {
         /**
-         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
-         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
-         * @param {VisorApiAttachClusterRequest} requestParameters Request parameters.
+         * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+         * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
+         * @param {ComputeApiAttachClusterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachCluster(requestParameters: VisorApiAttachClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterView> {
+        attachCluster(requestParameters: ComputeApiAttachClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterView> {
             return localVarFp.attachCluster(requestParameters.clusterAttach, options).then((request) => request(axios, basePath));
         },
         /**
          * Binds a cloud Agent to one of the caller org\'s machines: the machine is recorded as running that Agent\'s @hanzo/bot runtime. The owning org is the validated tenant, never a client field.
          * @summary Binds a cloud Agent to one of the caller org\'s machines: the machine is recorded as running that Agent\'s @hanzo/bot runtime.
-         * @param {VisorApiBindMachineAgentRequest} requestParameters Request parameters.
+         * @param {ComputeApiBindMachineAgentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bindMachineAgent(requestParameters: VisorApiBindMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBinding> {
+        bindMachineAgent(requestParameters: ComputeApiBindMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBinding> {
             return localVarFp.bindMachineAgent(requestParameters.id, requestParameters.bindAgentReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Cancels a queued or running render in the caller\'s org. The engine cancel is org-scoped, so a tenant can only ever cancel its OWN job: a job in another tenant\'s shard is 404, exactly like one that never existed. An already-finished job is 409.
          * @summary Cancels a queued or running render in the caller\'s org.
-         * @param {VisorApiCancelFleetJobRequest} requestParameters Request parameters.
+         * @param {ComputeApiCancelFleetJobRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelFleetJob(requestParameters: VisorApiCancelFleetJobRequest, options?: RawAxiosRequestConfig): AxiosPromise<JobCanceled> {
+        cancelFleetJob(requestParameters: ComputeApiCancelFleetJobRequest, options?: RawAxiosRequestConfig): AxiosPromise<JobCanceled> {
             return localVarFp.cancelFleetJob(requestParameters.id, requestParameters.jobCancel, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions a DOKS cluster for the caller\'s org and answers 201. ADMIN-GATED — a SuperAdmin, or an OrgAdmin of the caller\'s own org — because provisioning spends real infrastructure on the house account. The request is validated at this boundary, then Visor owns provisioning and the hanzo-org ownership tag.
          * @summary Provisions a DOKS cluster for the caller\'s org and answers 201.
-         * @param {VisorApiCreateKubernetesClusterRequest} requestParameters Request parameters.
+         * @param {ComputeApiCreateKubernetesClusterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createKubernetesCluster(requestParameters: VisorApiCreateKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterView> {
+        createKubernetesCluster(requestParameters: ComputeApiCreateKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterView> {
             return localVarFp.createKubernetesCluster(requestParameters.createClusterReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a node pool to one of the caller org\'s clusters and answers 201 with the created pool. Only the CreateNodePoolSpec fields are forwarded; owner/provider/clusterId ride in the query exactly as Visor expects them.
          * @summary Adds a node pool to one of the caller org\'s clusters and answers 201 with the created pool.
-         * @param {VisorApiCreateNodePoolRequest} requestParameters Request parameters.
+         * @param {ComputeApiCreateNodePoolRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createNodePool(requestParameters: VisorApiCreateNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<NodePoolView> {
+        createNodePool(requestParameters: ComputeApiCreateNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<NodePoolView> {
             return localVarFp.createNodePool(requestParameters.clusterId, requestParameters.poolCreate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-         * @summary Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-         * @param {VisorApiDeleteBotRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBot(requestParameters: VisorApiDeleteBotRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteBot(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Destroys a DOKS cluster by id and answers 204. ADMIN-GATED, like create. Visor scopes the delete to the org (refuses a foreign id), so this can only ever remove the caller org\'s own cluster.
          * @summary Destroys a DOKS cluster by id and answers 204.
-         * @param {VisorApiDeleteKubernetesClusterRequest} requestParameters Request parameters.
+         * @param {ComputeApiDeleteKubernetesClusterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteKubernetesCluster(requestParameters: VisorApiDeleteKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteKubernetesCluster(requestParameters: ComputeApiDeleteKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteKubernetesCluster(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Terminates one of the caller org\'s machines. Visor takes the machine identity as owner+name, and the owner is the validated principal, so a caller can only ever terminate its own tenant\'s machine. Answers 204.
          * @summary Terminates one of the caller org\'s machines.
-         * @param {VisorApiDeleteMachineRequest} requestParameters Request parameters.
+         * @param {ComputeApiDeleteMachineRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMachine(requestParameters: VisorApiDeleteMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteMachine(requestParameters: ComputeApiDeleteMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteMachine(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a node pool from one of the caller org\'s clusters. The owner scopes the delete to the caller\'s tenant; provider+clusterId drive the provider-side removal. Answers 204.
          * @summary Removes a node pool from one of the caller org\'s clusters.
-         * @param {VisorApiDeleteNodePoolRequest} requestParameters Request parameters.
+         * @param {ComputeApiDeleteNodePoolRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteNodePool(requestParameters: VisorApiDeleteNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteNodePool(requestParameters: ComputeApiDeleteNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a BYO cluster from the caller org\'s fleet. It only ever touches BYO clusters — a managed cluster\'s nodes are removed through the node-pool routes — and answers 404 when the name is not in this org\'s fleet.
          * @summary Removes a BYO cluster from the caller org\'s fleet.
-         * @param {VisorApiDetachClusterRequest} requestParameters Request parameters.
+         * @param {ComputeApiDetachClusterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        detachCluster(requestParameters: VisorApiDetachClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDetached> {
+        detachCluster(requestParameters: ComputeApiDetachClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDetached> {
             return localVarFp.detachCluster(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one of the caller org\'s bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
-         * @summary Returns one of the caller org\'s bot machines with its agent binding.
-         * @param {VisorApiGetBotRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBot(requestParameters: VisorApiGetBotRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotView> {
-            return localVarFp.getBot(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one cluster\'s detail: node pools + worker nodes. Visor scopes the lookup to the org (a foreign or missing id resolves to not-found), so a tenant can never read another tenant\'s cluster by guessing an id.
-         * @summary Returns one cluster\'s detail: node pools + worker nodes.
-         * @param {VisorApiGetKubernetesClusterRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getKubernetesCluster(requestParameters: VisorApiGetKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDetailView> {
-            return localVarFp.getKubernetesCluster(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one of the caller org\'s machines by its org-scoped name. Visor keys the lookup by owner/name, so an id belonging to another tenant resolves to not-found rather than another org\'s machine.
-         * @summary Returns one of the caller org\'s machines by its org-scoped name.
-         * @param {VisorApiGetMachineRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMachine(requestParameters: VisorApiGetMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineView> {
-            return localVarFp.getMachine(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
-         * @summary Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
-         * @param {VisorApiGetMachineAgentRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMachineAgent(requestParameters: VisorApiGetMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBinding> {
-            return localVarFp.getMachineAgent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
@@ -1986,8 +1744,8 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVisorComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getVisorComputeRegions(options).then((request) => request(axios, basePath));
+        getComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getComputeRegions(options).then((request) => request(axios, basePath));
         },
         /**
          * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
@@ -1995,17 +1753,38 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVisorComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getVisorComputeSizes(options).then((request) => request(axios, basePath));
+        getComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getComputeSizes(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-         * @summary Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
+         * Returns one cluster\'s detail: node pools + worker nodes. Visor scopes the lookup to the org (a foreign or missing id resolves to not-found), so a tenant can never read another tenant\'s cluster by guessing an id.
+         * @summary Returns one cluster\'s detail: node pools + worker nodes.
+         * @param {ComputeApiGetKubernetesClusterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBots(options?: RawAxiosRequestConfig): AxiosPromise<BotList> {
-            return localVarFp.listBots(options).then((request) => request(axios, basePath));
+        getKubernetesCluster(requestParameters: ComputeApiGetKubernetesClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDetailView> {
+            return localVarFp.getKubernetesCluster(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one of the caller org\'s machines by its org-scoped name. Visor keys the lookup by owner/name, so an id belonging to another tenant resolves to not-found rather than another org\'s machine.
+         * @summary Returns one of the caller org\'s machines by its org-scoped name.
+         * @param {ComputeApiGetMachineRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMachine(requestParameters: ComputeApiGetMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineView> {
+            return localVarFp.getMachine(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
+         * @summary Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
+         * @param {ComputeApiGetMachineAgentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMachineAgent(requestParameters: ComputeApiGetMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBinding> {
+            return localVarFp.getMachineAgent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s clusters from both sources: the managed clusters projected from Visor\'s node pools, and the BYO clusters attached to the caller\'s project. A Visor outage costs the managed half only — the BYO half still lists, because a page that 502s on an optional provider is worse than a page that shows what it can.
@@ -2028,21 +1807,21 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns the caller org\'s gpu-jobs render queue, each row tagged with the GPU it targets (empty = the shared any-GPU lane) and the node claiming it, optionally narrowed to one GPU\'s queue and/or one status.  A job whose worker died — STARTED with an elapsed lease and not yet reclaimed — reads \"stalled\", not \"running\". Fail-soft: an unavailable tasks engine yields an empty queue rather than an error.
          * @summary Returns the caller org\'s gpu-jobs render queue, each row tagged with the GPU it targets (empty = the shared any-GPU lane) and the node claiming it, optionally narrowed to one GPU\'s queue and/or one status.
-         * @param {VisorApiListFleetJobsRequest} requestParameters Request parameters.
+         * @param {ComputeApiListFleetJobsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFleetJobs(requestParameters: VisorApiListFleetJobsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<JobList> {
+        listFleetJobs(requestParameters: ComputeApiListFleetJobsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<JobList> {
             return localVarFp.listFleetJobs(requestParameters.gpu, requestParameters.status, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s utilization series, oldest first.  A rejected narrower is a 400 carrying its own reason (the vocabulary is ours and safe to echo); a warehouse failure is logged and answered 503 \"unavailable\", because a chart that silently reads \"no load\" when the truth is \"we cannot tell\" is worse than one that says so. An ABSENT warehouse is different again: it returns an empty series, which renders honestly as \"no samples yet\".
          * @summary Returns the caller org\'s utilization series, oldest first.
-         * @param {VisorApiListFleetSamplesRequest} requestParameters Request parameters.
+         * @param {ComputeApiListFleetSamplesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFleetSamples(requestParameters: VisorApiListFleetSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SampleList> {
+        listFleetSamples(requestParameters: ComputeApiListFleetSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SampleList> {
             return localVarFp.listFleetSamples(requestParameters.unit, requestParameters.source, requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2102,30 +1881,12 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
          * @summary Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").
+         * @param {ComputeApiListMachinesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listMachines(options?: RawAxiosRequestConfig): AxiosPromise<MachineList> {
-            return localVarFp.listMachines(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
-         * @summary Message a bot, or stop it, by naming the action in the path
-         * @param {VisorApiPostVisorComputeBotsByIdByActionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVisorComputeBotsByIdByAction(requestParameters: VisorApiPostVisorComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postVisorComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVisorComputeBotsLaunch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postVisorComputeBotsLaunch(options).then((request) => request(axios, basePath));
+        listMachines(requestParameters: ComputeApiListMachinesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MachineList> {
+            return localVarFp.listMachines(requestParameters.kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
@@ -2133,572 +1894,508 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postVisorMachines(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postVisorMachines(options).then((request) => request(axios, basePath));
+        postComputeMachines(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postComputeMachines(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+         * @summary Message a bot, or stop it, by naming the action in the path
+         * @param {ComputeApiPostComputeMachinesByIdByActionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postComputeMachinesByIdByAction(requestParameters: ComputeApiPostComputeMachinesByIdByActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postComputeMachinesByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a BYO worker\'s live GPU utilization into the SAME series the fleet board overlays. The org is the validated principal and source/kind are fixed server-side, so a worker names only its own metrics — never another tenant or another source. Answers 202: the warehouse write is DETACHED (its own bounded context, never in the response path), so a slow or absent warehouse cannot stall a heartbeat.
          * @summary Records a BYO worker\'s live GPU utilization into the SAME series the fleet board overlays.
-         * @param {VisorApiRecordFleetSampleRequest} requestParameters Request parameters.
+         * @param {ComputeApiRecordFleetSampleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recordFleetSample(requestParameters: VisorApiRecordFleetSampleRequest, options?: RawAxiosRequestConfig): AxiosPromise<SampleAccepted> {
+        recordFleetSample(requestParameters: ComputeApiRecordFleetSampleRequest, options?: RawAxiosRequestConfig): AxiosPromise<SampleAccepted> {
             return localVarFp.recordFleetSample(requestParameters.sampleIngest, options).then((request) => request(axios, basePath));
         },
         /**
          * Resizes a node pool to an absolute node count and returns the pool as Visor reports it after the change.
          * @summary Resizes a node pool to an absolute node count and returns the pool as Visor reports it after the change.
-         * @param {VisorApiScaleNodePoolRequest} requestParameters Request parameters.
+         * @param {ComputeApiScaleNodePoolRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        scaleNodePool(requestParameters: VisorApiScaleNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<NodePoolView> {
+        scaleNodePool(requestParameters: ComputeApiScaleNodePoolRequest, options?: RawAxiosRequestConfig): AxiosPromise<NodePoolView> {
             return localVarFp.scaleNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.poolScale, options).then((request) => request(axios, basePath));
         },
         /**
          * Detaches the agent runtime from one of the caller org\'s machines. The machine stays — this halts the bot, it does not terminate the compute. Answers 204.
          * @summary Detaches the agent runtime from one of the caller org\'s machines.
-         * @param {VisorApiUnbindMachineAgentRequest} requestParameters Request parameters.
+         * @param {ComputeApiUnbindMachineAgentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unbindMachineAgent(requestParameters: VisorApiUnbindMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        unbindMachineAgent(requestParameters: ComputeApiUnbindMachineAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.unbindMachineAgent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for attachCluster operation in VisorApi.
+ * Request parameters for attachCluster operation in ComputeApi.
  * @export
- * @interface VisorApiAttachClusterRequest
+ * @interface ComputeApiAttachClusterRequest
  */
-export interface VisorApiAttachClusterRequest {
+export interface ComputeApiAttachClusterRequest {
     /**
      * 
      * @type {ClusterAttach}
-     * @memberof VisorApiAttachCluster
+     * @memberof ComputeApiAttachCluster
      */
     readonly clusterAttach: ClusterAttach
 }
 
 /**
- * Request parameters for bindMachineAgent operation in VisorApi.
+ * Request parameters for bindMachineAgent operation in ComputeApi.
  * @export
- * @interface VisorApiBindMachineAgentRequest
+ * @interface ComputeApiBindMachineAgentRequest
  */
-export interface VisorApiBindMachineAgentRequest {
+export interface ComputeApiBindMachineAgentRequest {
     /**
      * ID is the machine to bind, from the URL path.
      * @type {string}
-     * @memberof VisorApiBindMachineAgent
+     * @memberof ComputeApiBindMachineAgent
      */
     readonly id: string
 
     /**
      * 
      * @type {BindAgentReq}
-     * @memberof VisorApiBindMachineAgent
+     * @memberof ComputeApiBindMachineAgent
      */
     readonly bindAgentReq: BindAgentReq
 }
 
 /**
- * Request parameters for cancelFleetJob operation in VisorApi.
+ * Request parameters for cancelFleetJob operation in ComputeApi.
  * @export
- * @interface VisorApiCancelFleetJobRequest
+ * @interface ComputeApiCancelFleetJobRequest
  */
-export interface VisorApiCancelFleetJobRequest {
+export interface ComputeApiCancelFleetJobRequest {
     /**
      * ID is the job (activity) id, from the URL path.
      * @type {string}
-     * @memberof VisorApiCancelFleetJob
+     * @memberof ComputeApiCancelFleetJob
      */
     readonly id: string
 
     /**
      * 
      * @type {JobCancel}
-     * @memberof VisorApiCancelFleetJob
+     * @memberof ComputeApiCancelFleetJob
      */
     readonly jobCancel: JobCancel
 }
 
 /**
- * Request parameters for createKubernetesCluster operation in VisorApi.
+ * Request parameters for createKubernetesCluster operation in ComputeApi.
  * @export
- * @interface VisorApiCreateKubernetesClusterRequest
+ * @interface ComputeApiCreateKubernetesClusterRequest
  */
-export interface VisorApiCreateKubernetesClusterRequest {
+export interface ComputeApiCreateKubernetesClusterRequest {
     /**
      * 
      * @type {CreateClusterReq}
-     * @memberof VisorApiCreateKubernetesCluster
+     * @memberof ComputeApiCreateKubernetesCluster
      */
     readonly createClusterReq: CreateClusterReq
 }
 
 /**
- * Request parameters for createNodePool operation in VisorApi.
+ * Request parameters for createNodePool operation in ComputeApi.
  * @export
- * @interface VisorApiCreateNodePoolRequest
+ * @interface ComputeApiCreateNodePoolRequest
  */
-export interface VisorApiCreateNodePoolRequest {
+export interface ComputeApiCreateNodePoolRequest {
     /**
      * ClusterID is the cluster to add the pool to, from the URL path.
      * @type {string}
-     * @memberof VisorApiCreateNodePool
+     * @memberof ComputeApiCreateNodePool
      */
     readonly clusterId: string
 
     /**
      * 
      * @type {PoolCreate}
-     * @memberof VisorApiCreateNodePool
+     * @memberof ComputeApiCreateNodePool
      */
     readonly poolCreate: PoolCreate
 }
 
 /**
- * Request parameters for deleteBot operation in VisorApi.
+ * Request parameters for deleteKubernetesCluster operation in ComputeApi.
  * @export
- * @interface VisorApiDeleteBotRequest
+ * @interface ComputeApiDeleteKubernetesClusterRequest
  */
-export interface VisorApiDeleteBotRequest {
-    /**
-     * ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
-     * @type {string}
-     * @memberof VisorApiDeleteBot
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for deleteKubernetesCluster operation in VisorApi.
- * @export
- * @interface VisorApiDeleteKubernetesClusterRequest
- */
-export interface VisorApiDeleteKubernetesClusterRequest {
+export interface ComputeApiDeleteKubernetesClusterRequest {
     /**
      * ID is the provider\&#39;s DOKS cluster id. Visor scopes the lookup to the caller\&#39;s org, so another tenant\&#39;s id resolves to not-found rather than their cluster.
      * @type {string}
-     * @memberof VisorApiDeleteKubernetesCluster
+     * @memberof ComputeApiDeleteKubernetesCluster
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteMachine operation in VisorApi.
+ * Request parameters for deleteMachine operation in ComputeApi.
  * @export
- * @interface VisorApiDeleteMachineRequest
+ * @interface ComputeApiDeleteMachineRequest
  */
-export interface VisorApiDeleteMachineRequest {
+export interface ComputeApiDeleteMachineRequest {
     /**
      * ID is the machine\&#39;s org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
      * @type {string}
-     * @memberof VisorApiDeleteMachine
+     * @memberof ComputeApiDeleteMachine
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteNodePool operation in VisorApi.
+ * Request parameters for deleteNodePool operation in ComputeApi.
  * @export
- * @interface VisorApiDeleteNodePoolRequest
+ * @interface ComputeApiDeleteNodePoolRequest
  */
-export interface VisorApiDeleteNodePoolRequest {
+export interface ComputeApiDeleteNodePoolRequest {
     /**
      * ClusterID and PoolID address the pool, from the URL path.
      * @type {string}
-     * @memberof VisorApiDeleteNodePool
+     * @memberof ComputeApiDeleteNodePool
      */
     readonly clusterId: string
 
     /**
      * 
      * @type {string}
-     * @memberof VisorApiDeleteNodePool
+     * @memberof ComputeApiDeleteNodePool
      */
     readonly poolId: string
 
     /**
      * Provider is the cloud the cluster lives on, from ?provider&#x3D;. Required.
      * @type {string}
-     * @memberof VisorApiDeleteNodePool
+     * @memberof ComputeApiDeleteNodePool
      */
     readonly provider?: string
 }
 
 /**
- * Request parameters for detachCluster operation in VisorApi.
+ * Request parameters for detachCluster operation in ComputeApi.
  * @export
- * @interface VisorApiDetachClusterRequest
+ * @interface ComputeApiDetachClusterRequest
  */
-export interface VisorApiDetachClusterRequest {
+export interface ComputeApiDetachClusterRequest {
     /**
      * ID is the cluster\&#39;s fleet name (the &#x60;name&#x60; it was attached under), matched lower-cased.
      * @type {string}
-     * @memberof VisorApiDetachCluster
+     * @memberof ComputeApiDetachCluster
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getBot operation in VisorApi.
+ * Request parameters for getKubernetesCluster operation in ComputeApi.
  * @export
- * @interface VisorApiGetBotRequest
+ * @interface ComputeApiGetKubernetesClusterRequest
  */
-export interface VisorApiGetBotRequest {
-    /**
-     * ID is the bot machine\&#39;s id — the same id the machines surface addresses it by. Scoped to the caller\&#39;s org upstream, so another tenant\&#39;s id is 404.
-     * @type {string}
-     * @memberof VisorApiGetBot
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getKubernetesCluster operation in VisorApi.
- * @export
- * @interface VisorApiGetKubernetesClusterRequest
- */
-export interface VisorApiGetKubernetesClusterRequest {
+export interface ComputeApiGetKubernetesClusterRequest {
     /**
      * ID is the provider\&#39;s DOKS cluster id. Visor scopes the lookup to the caller\&#39;s org, so another tenant\&#39;s id resolves to not-found rather than their cluster.
      * @type {string}
-     * @memberof VisorApiGetKubernetesCluster
+     * @memberof ComputeApiGetKubernetesCluster
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getMachine operation in VisorApi.
+ * Request parameters for getMachine operation in ComputeApi.
  * @export
- * @interface VisorApiGetMachineRequest
+ * @interface ComputeApiGetMachineRequest
  */
-export interface VisorApiGetMachineRequest {
+export interface ComputeApiGetMachineRequest {
     /**
      * ID is the machine\&#39;s org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
      * @type {string}
-     * @memberof VisorApiGetMachine
+     * @memberof ComputeApiGetMachine
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getMachineAgent operation in VisorApi.
+ * Request parameters for getMachineAgent operation in ComputeApi.
  * @export
- * @interface VisorApiGetMachineAgentRequest
+ * @interface ComputeApiGetMachineAgentRequest
  */
-export interface VisorApiGetMachineAgentRequest {
+export interface ComputeApiGetMachineAgentRequest {
     /**
      * ID is the machine\&#39;s org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
      * @type {string}
-     * @memberof VisorApiGetMachineAgent
+     * @memberof ComputeApiGetMachineAgent
      */
     readonly id: string
 }
 
 /**
- * Request parameters for listFleetJobs operation in VisorApi.
+ * Request parameters for listFleetJobs operation in ComputeApi.
  * @export
- * @interface VisorApiListFleetJobsRequest
+ * @interface ComputeApiListFleetJobsRequest
  */
-export interface VisorApiListFleetJobsRequest {
+export interface ComputeApiListFleetJobsRequest {
     /**
      * GPU selects one node\&#39;s lane: jobs TARGETED at it (gpu:&lt;node&gt;) or CLAIMED by it. The literal \&quot;shared\&quot; selects the any-GPU lane — no target, no claimant. Matched case-insensitively.
      * @type {string}
-     * @memberof VisorApiListFleetJobs
+     * @memberof ComputeApiListFleetJobs
      */
     readonly gpu?: string
 
     /**
      * Status selects one lifecycle state: queued, running, stalled, completed, failed or canceled.
      * @type {string}
-     * @memberof VisorApiListFleetJobs
+     * @memberof ComputeApiListFleetJobs
      */
     readonly status?: string
 }
 
 /**
- * Request parameters for listFleetSamples operation in VisorApi.
+ * Request parameters for listFleetSamples operation in ComputeApi.
  * @export
- * @interface VisorApiListFleetSamplesRequest
+ * @interface ComputeApiListFleetSamplesRequest
  */
-export interface VisorApiListFleetSamplesRequest {
+export interface ComputeApiListFleetSamplesRequest {
     /**
      * Unit selects one compute unit\&#39;s series by its source-local id.
      * @type {string}
-     * @memberof VisorApiListFleetSamples
+     * @memberof ComputeApiListFleetSamples
      */
     readonly unit?: string
 
     /**
      * Source selects one plane: \&quot;agent\&quot;, \&quot;byo\&quot; or \&quot;visor\&quot;.
      * @type {string}
-     * @memberof VisorApiListFleetSamples
+     * @memberof ComputeApiListFleetSamples
      */
     readonly source?: string
 
     /**
      * Range is the lookback window (e.g. \&quot;1h\&quot;, \&quot;24h\&quot;, \&quot;7d\&quot;); empty takes the warehouse default.
      * @type {string}
-     * @memberof VisorApiListFleetSamples
+     * @memberof ComputeApiListFleetSamples
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for postVisorComputeBotsByIdByAction operation in VisorApi.
+ * Request parameters for listMachines operation in ComputeApi.
  * @export
- * @interface VisorApiPostVisorComputeBotsByIdByActionRequest
+ * @interface ComputeApiListMachinesRequest
  */
-export interface VisorApiPostVisorComputeBotsByIdByActionRequest {
+export interface ComputeApiListMachinesRequest {
     /**
      * 
      * @type {string}
-     * @memberof VisorApiPostVisorComputeBotsByIdByAction
+     * @memberof ComputeApiListMachines
+     */
+    readonly kind?: string
+}
+
+/**
+ * Request parameters for postComputeMachinesByIdByAction operation in ComputeApi.
+ * @export
+ * @interface ComputeApiPostComputeMachinesByIdByActionRequest
+ */
+export interface ComputeApiPostComputeMachinesByIdByActionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputeApiPostComputeMachinesByIdByAction
      */
     readonly id: string
 
     /**
      * 
      * @type {string}
-     * @memberof VisorApiPostVisorComputeBotsByIdByAction
+     * @memberof ComputeApiPostComputeMachinesByIdByAction
      */
     readonly action: string
 }
 
 /**
- * Request parameters for recordFleetSample operation in VisorApi.
+ * Request parameters for recordFleetSample operation in ComputeApi.
  * @export
- * @interface VisorApiRecordFleetSampleRequest
+ * @interface ComputeApiRecordFleetSampleRequest
  */
-export interface VisorApiRecordFleetSampleRequest {
+export interface ComputeApiRecordFleetSampleRequest {
     /**
      * 
      * @type {SampleIngest}
-     * @memberof VisorApiRecordFleetSample
+     * @memberof ComputeApiRecordFleetSample
      */
     readonly sampleIngest: SampleIngest
 }
 
 /**
- * Request parameters for scaleNodePool operation in VisorApi.
+ * Request parameters for scaleNodePool operation in ComputeApi.
  * @export
- * @interface VisorApiScaleNodePoolRequest
+ * @interface ComputeApiScaleNodePoolRequest
  */
-export interface VisorApiScaleNodePoolRequest {
+export interface ComputeApiScaleNodePoolRequest {
     /**
      * ClusterID is the cluster holding the pool, from the URL path.
      * @type {string}
-     * @memberof VisorApiScaleNodePool
+     * @memberof ComputeApiScaleNodePool
      */
     readonly clusterId: string
 
     /**
      * PoolID is the pool to resize, from the URL path — the &#x60;poolId&#x60; a cluster read reports for it. Required.
      * @type {string}
-     * @memberof VisorApiScaleNodePool
+     * @memberof ComputeApiScaleNodePool
      */
     readonly poolId: string
 
     /**
      * 
      * @type {PoolScale}
-     * @memberof VisorApiScaleNodePool
+     * @memberof ComputeApiScaleNodePool
      */
     readonly poolScale: PoolScale
 }
 
 /**
- * Request parameters for unbindMachineAgent operation in VisorApi.
+ * Request parameters for unbindMachineAgent operation in ComputeApi.
  * @export
- * @interface VisorApiUnbindMachineAgentRequest
+ * @interface ComputeApiUnbindMachineAgentRequest
  */
-export interface VisorApiUnbindMachineAgentRequest {
+export interface ComputeApiUnbindMachineAgentRequest {
     /**
      * ID is the machine\&#39;s org-scoped NAME — the stable key Visor addresses a machine by (owner/name), not the ephemeral provider id.
      * @type {string}
-     * @memberof VisorApiUnbindMachineAgent
+     * @memberof ComputeApiUnbindMachineAgent
      */
     readonly id: string
 }
 
 /**
- * VisorApi - object-oriented interface
+ * ComputeApi - object-oriented interface
  * @export
- * @class VisorApi
+ * @class ComputeApi
  * @extends {BaseAPI}
  */
-export class VisorApi extends BaseAPI {
+export class ComputeApi extends BaseAPI {
     /**
-     * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
-     * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/visor/clusters.
-     * @param {VisorApiAttachClusterRequest} requestParameters Request parameters.
+     * Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters. Billed the nominal management fee: the customer brings the compute, Hanzo meters the management plane.
+     * @summary Attaches a BYO cluster to the caller\'s org — the kubeconfig is validated, KMS-sealed and added to the fleet — and answers 201 with the cluster as it now appears on GET /v1/compute/clusters.
+     * @param {ComputeApiAttachClusterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public attachCluster(requestParameters: VisorApiAttachClusterRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).attachCluster(requestParameters.clusterAttach, options).then((request) => request(this.axios, this.basePath));
+    public attachCluster(requestParameters: ComputeApiAttachClusterRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).attachCluster(requestParameters.clusterAttach, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Binds a cloud Agent to one of the caller org\'s machines: the machine is recorded as running that Agent\'s @hanzo/bot runtime. The owning org is the validated tenant, never a client field.
      * @summary Binds a cloud Agent to one of the caller org\'s machines: the machine is recorded as running that Agent\'s @hanzo/bot runtime.
-     * @param {VisorApiBindMachineAgentRequest} requestParameters Request parameters.
+     * @param {ComputeApiBindMachineAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public bindMachineAgent(requestParameters: VisorApiBindMachineAgentRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).bindMachineAgent(requestParameters.id, requestParameters.bindAgentReq, options).then((request) => request(this.axios, this.basePath));
+    public bindMachineAgent(requestParameters: ComputeApiBindMachineAgentRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).bindMachineAgent(requestParameters.id, requestParameters.bindAgentReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Cancels a queued or running render in the caller\'s org. The engine cancel is org-scoped, so a tenant can only ever cancel its OWN job: a job in another tenant\'s shard is 404, exactly like one that never existed. An already-finished job is 409.
      * @summary Cancels a queued or running render in the caller\'s org.
-     * @param {VisorApiCancelFleetJobRequest} requestParameters Request parameters.
+     * @param {ComputeApiCancelFleetJobRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public cancelFleetJob(requestParameters: VisorApiCancelFleetJobRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).cancelFleetJob(requestParameters.id, requestParameters.jobCancel, options).then((request) => request(this.axios, this.basePath));
+    public cancelFleetJob(requestParameters: ComputeApiCancelFleetJobRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).cancelFleetJob(requestParameters.id, requestParameters.jobCancel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Provisions a DOKS cluster for the caller\'s org and answers 201. ADMIN-GATED — a SuperAdmin, or an OrgAdmin of the caller\'s own org — because provisioning spends real infrastructure on the house account. The request is validated at this boundary, then Visor owns provisioning and the hanzo-org ownership tag.
      * @summary Provisions a DOKS cluster for the caller\'s org and answers 201.
-     * @param {VisorApiCreateKubernetesClusterRequest} requestParameters Request parameters.
+     * @param {ComputeApiCreateKubernetesClusterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public createKubernetesCluster(requestParameters: VisorApiCreateKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).createKubernetesCluster(requestParameters.createClusterReq, options).then((request) => request(this.axios, this.basePath));
+    public createKubernetesCluster(requestParameters: ComputeApiCreateKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).createKubernetesCluster(requestParameters.createClusterReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a node pool to one of the caller org\'s clusters and answers 201 with the created pool. Only the CreateNodePoolSpec fields are forwarded; owner/provider/clusterId ride in the query exactly as Visor expects them.
      * @summary Adds a node pool to one of the caller org\'s clusters and answers 201 with the created pool.
-     * @param {VisorApiCreateNodePoolRequest} requestParameters Request parameters.
+     * @param {ComputeApiCreateNodePoolRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public createNodePool(requestParameters: VisorApiCreateNodePoolRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).createNodePool(requestParameters.clusterId, requestParameters.poolCreate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine. Answers 204.
-     * @summary Tears down both halves of a bot: it unbinds the agent (best-effort — a bot with no binding still deletes), then terminates the machine.
-     * @param {VisorApiDeleteBotRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public deleteBot(requestParameters: VisorApiDeleteBotRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).deleteBot(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public createNodePool(requestParameters: ComputeApiCreateNodePoolRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).createNodePool(requestParameters.clusterId, requestParameters.poolCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Destroys a DOKS cluster by id and answers 204. ADMIN-GATED, like create. Visor scopes the delete to the org (refuses a foreign id), so this can only ever remove the caller org\'s own cluster.
      * @summary Destroys a DOKS cluster by id and answers 204.
-     * @param {VisorApiDeleteKubernetesClusterRequest} requestParameters Request parameters.
+     * @param {ComputeApiDeleteKubernetesClusterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public deleteKubernetesCluster(requestParameters: VisorApiDeleteKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).deleteKubernetesCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteKubernetesCluster(requestParameters: ComputeApiDeleteKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).deleteKubernetesCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Terminates one of the caller org\'s machines. Visor takes the machine identity as owner+name, and the owner is the validated principal, so a caller can only ever terminate its own tenant\'s machine. Answers 204.
      * @summary Terminates one of the caller org\'s machines.
-     * @param {VisorApiDeleteMachineRequest} requestParameters Request parameters.
+     * @param {ComputeApiDeleteMachineRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public deleteMachine(requestParameters: VisorApiDeleteMachineRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).deleteMachine(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMachine(requestParameters: ComputeApiDeleteMachineRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).deleteMachine(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a node pool from one of the caller org\'s clusters. The owner scopes the delete to the caller\'s tenant; provider+clusterId drive the provider-side removal. Answers 204.
      * @summary Removes a node pool from one of the caller org\'s clusters.
-     * @param {VisorApiDeleteNodePoolRequest} requestParameters Request parameters.
+     * @param {ComputeApiDeleteNodePoolRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public deleteNodePool(requestParameters: VisorApiDeleteNodePoolRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).deleteNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public deleteNodePool(requestParameters: ComputeApiDeleteNodePoolRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).deleteNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a BYO cluster from the caller org\'s fleet. It only ever touches BYO clusters — a managed cluster\'s nodes are removed through the node-pool routes — and answers 404 when the name is not in this org\'s fleet.
      * @summary Removes a BYO cluster from the caller org\'s fleet.
-     * @param {VisorApiDetachClusterRequest} requestParameters Request parameters.
+     * @param {ComputeApiDetachClusterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public detachCluster(requestParameters: VisorApiDetachClusterRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).detachCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one of the caller org\'s bot machines with its agent binding.  A machine counts as a Bot if it carries the hanzo-kind:bot tag OR has an agent binding — either signal is authoritative, so a bot resolves even before its cloud-init has stamped every tag. A machine that is neither is 404: this route answers for bots, not for machines.
-     * @summary Returns one of the caller org\'s bot machines with its agent binding.
-     * @param {VisorApiGetBotRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public getBot(requestParameters: VisorApiGetBotRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getBot(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one cluster\'s detail: node pools + worker nodes. Visor scopes the lookup to the org (a foreign or missing id resolves to not-found), so a tenant can never read another tenant\'s cluster by guessing an id.
-     * @summary Returns one cluster\'s detail: node pools + worker nodes.
-     * @param {VisorApiGetKubernetesClusterRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public getKubernetesCluster(requestParameters: VisorApiGetKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getKubernetesCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one of the caller org\'s machines by its org-scoped name. Visor keys the lookup by owner/name, so an id belonging to another tenant resolves to not-found rather than another org\'s machine.
-     * @summary Returns one of the caller org\'s machines by its org-scoped name.
-     * @param {VisorApiGetMachineRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public getMachine(requestParameters: VisorApiGetMachineRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getMachine(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
-     * @summary Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
-     * @param {VisorApiGetMachineAgentRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public getMachineAgent(requestParameters: VisorApiGetMachineAgentRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getMachineAgent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public detachCluster(requestParameters: ComputeApiDetachClusterRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).detachCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2706,10 +2403,10 @@ export class VisorApi extends BaseAPI {
      * @summary Regions lists the regions a machine can be launched in.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public getVisorComputeRegions(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getVisorComputeRegions(options).then((request) => request(this.axios, this.basePath));
+    public getComputeRegions(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getComputeRegions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2717,21 +2414,46 @@ export class VisorApi extends BaseAPI {
      * @summary Sizes lists the machine sizes available to launch, with their specifications.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public getVisorComputeSizes(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).getVisorComputeSizes(options).then((request) => request(this.axios, this.basePath));
+    public getComputeSizes(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getComputeSizes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
-     * @summary Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.
+     * Returns one cluster\'s detail: node pools + worker nodes. Visor scopes the lookup to the org (a foreign or missing id resolves to not-found), so a tenant can never read another tenant\'s cluster by guessing an id.
+     * @summary Returns one cluster\'s detail: node pools + worker nodes.
+     * @param {ComputeApiGetKubernetesClusterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public listBots(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listBots(options).then((request) => request(this.axios, this.basePath));
+    public getKubernetesCluster(requestParameters: ComputeApiGetKubernetesClusterRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getKubernetesCluster(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one of the caller org\'s machines by its org-scoped name. Visor keys the lookup by owner/name, so an id belonging to another tenant resolves to not-found rather than another org\'s machine.
+     * @summary Returns one of the caller org\'s machines by its org-scoped name.
+     * @param {ComputeApiGetMachineRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputeApi
+     */
+    public getMachine(requestParameters: ComputeApiGetMachineRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getMachine(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
+     * @summary Returns the agent binding of one of the caller org\'s machines, or 404 when the machine runs no bot runtime.
+     * @param {ComputeApiGetMachineAgentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputeApi
+     */
+    public getMachineAgent(requestParameters: ComputeApiGetMachineAgentRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getMachineAgent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2739,10 +2461,10 @@ export class VisorApi extends BaseAPI {
      * @summary Returns the caller org\'s clusters from both sources: the managed clusters projected from Visor\'s node pools, and the BYO clusters attached to the caller\'s project.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listClusters(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listClusters(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listClusters(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2750,34 +2472,34 @@ export class VisorApi extends BaseAPI {
      * @summary Returns every compute unit the caller\'s org has, from every source, each carrying its latest utilization: agent run-targets, the BYO machines that dialed in, attached BYO clusters and Visor-provisioned machines.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listFleet(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listFleet(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listFleet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s gpu-jobs render queue, each row tagged with the GPU it targets (empty = the shared any-GPU lane) and the node claiming it, optionally narrowed to one GPU\'s queue and/or one status.  A job whose worker died — STARTED with an elapsed lease and not yet reclaimed — reads \"stalled\", not \"running\". Fail-soft: an unavailable tasks engine yields an empty queue rather than an error.
      * @summary Returns the caller org\'s gpu-jobs render queue, each row tagged with the GPU it targets (empty = the shared any-GPU lane) and the node claiming it, optionally narrowed to one GPU\'s queue and/or one status.
-     * @param {VisorApiListFleetJobsRequest} requestParameters Request parameters.
+     * @param {ComputeApiListFleetJobsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public listFleetJobs(requestParameters: VisorApiListFleetJobsRequest = {}, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listFleetJobs(requestParameters.gpu, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+    public listFleetJobs(requestParameters: ComputeApiListFleetJobsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).listFleetJobs(requestParameters.gpu, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s utilization series, oldest first.  A rejected narrower is a 400 carrying its own reason (the vocabulary is ours and safe to echo); a warehouse failure is logged and answered 503 \"unavailable\", because a chart that silently reads \"no load\" when the truth is \"we cannot tell\" is worse than one that says so. An ABSENT warehouse is different again: it returns an empty series, which renders honestly as \"no samples yet\".
      * @summary Returns the caller org\'s utilization series, oldest first.
-     * @param {VisorApiListFleetSamplesRequest} requestParameters Request parameters.
+     * @param {ComputeApiListFleetSamplesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public listFleetSamples(requestParameters: VisorApiListFleetSamplesRequest = {}, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listFleetSamples(requestParameters.unit, requestParameters.source, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public listFleetSamples(requestParameters: ComputeApiListFleetSamplesRequest = {}, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).listFleetSamples(requestParameters.unit, requestParameters.source, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2785,10 +2507,10 @@ export class VisorApi extends BaseAPI {
      * @summary Returns the caller org\'s BYO machines — the ones that dialed in via `hanzo link` — with everything each host reported about itself.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listFleetWorkers(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listFleetWorkers(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listFleetWorkers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2796,10 +2518,10 @@ export class VisorApi extends BaseAPI {
      * @summary Is an HONEST empty surface: Visor exposes no GPU alert inventory, so this returns [] rather than fabricating alerts.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listGpuAlerts(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listGpuAlerts(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listGpuAlerts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2807,10 +2529,10 @@ export class VisorApi extends BaseAPI {
      * @summary Returns one row per physical accelerator the caller\'s org has, derived from its real GPU machines (the size slug says how many cards a node holds) and from the accelerators BYO workers report through nvidia-smi.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listGpus(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listGpus(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listGpus(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2818,10 +2540,10 @@ export class VisorApi extends BaseAPI {
      * @summary Lists the org\'s DOKS clusters (Visor, house account) folded with the org\'s BYO clusters — ONE fleet cluster view under the unified k8s noun.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listKubernetesClusters(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listKubernetesClusters(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listKubernetesClusters(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2829,10 +2551,10 @@ export class VisorApi extends BaseAPI {
      * @summary Returns every DOKS worker node in the org\'s clusters as a machine — the SAME set the fleet folds in (managedMachines), exposed directly under the k8s noun.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listKubernetesNodes(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listKubernetesNodes(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listKubernetesNodes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2840,44 +2562,22 @@ export class VisorApi extends BaseAPI {
      * @summary Returns every agent↔machine binding in the caller\'s org — which machines are running which cloud Agent, with vm\'s own reconciled status.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
     public listMachineAgents(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listMachineAgents(options).then((request) => request(this.axios, this.basePath));
+        return ComputeApiFp(this.configuration).listMachineAgents(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").  A source Visor cannot answer for is logged and skipped, never an error: one wedged upstream must not hide the machines the other sources can see.
      * @summary Returns every machine the caller\'s org has — Visor\'s registry, the live DigitalOcean droplets and the DOKS worker nodes (deduped into one union), plus the BYO machines that dialed in via `hanzo link` (provider \"byo\").
+     * @param {ComputeApiListMachinesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public listMachines(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).listMachines(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
-     * @summary Message a bot, or stop it, by naming the action in the path
-     * @param {VisorApiPostVisorComputeBotsByIdByActionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public postVisorComputeBotsByIdByAction(requestParameters: VisorApiPostVisorComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).postVisorComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
-     * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VisorApi
-     */
-    public postVisorComputeBotsLaunch(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).postVisorComputeBotsLaunch(options).then((request) => request(this.axios, this.basePath));
+    public listMachines(requestParameters: ComputeApiListMachinesRequest = {}, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).listMachines(requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2885,46 +2585,58 @@ export class VisorApi extends BaseAPI {
      * @summary Launch a metered machine for your org, or price one first with dryRun
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public postVisorMachines(options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).postVisorMachines(options).then((request) => request(this.axios, this.basePath));
+    public postComputeMachines(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).postComputeMachines(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+     * @summary Message a bot, or stop it, by naming the action in the path
+     * @param {ComputeApiPostComputeMachinesByIdByActionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputeApi
+     */
+    public postComputeMachinesByIdByAction(requestParameters: ComputeApiPostComputeMachinesByIdByActionRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).postComputeMachinesByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records a BYO worker\'s live GPU utilization into the SAME series the fleet board overlays. The org is the validated principal and source/kind are fixed server-side, so a worker names only its own metrics — never another tenant or another source. Answers 202: the warehouse write is DETACHED (its own bounded context, never in the response path), so a slow or absent warehouse cannot stall a heartbeat.
      * @summary Records a BYO worker\'s live GPU utilization into the SAME series the fleet board overlays.
-     * @param {VisorApiRecordFleetSampleRequest} requestParameters Request parameters.
+     * @param {ComputeApiRecordFleetSampleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public recordFleetSample(requestParameters: VisorApiRecordFleetSampleRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).recordFleetSample(requestParameters.sampleIngest, options).then((request) => request(this.axios, this.basePath));
+    public recordFleetSample(requestParameters: ComputeApiRecordFleetSampleRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).recordFleetSample(requestParameters.sampleIngest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Resizes a node pool to an absolute node count and returns the pool as Visor reports it after the change.
      * @summary Resizes a node pool to an absolute node count and returns the pool as Visor reports it after the change.
-     * @param {VisorApiScaleNodePoolRequest} requestParameters Request parameters.
+     * @param {ComputeApiScaleNodePoolRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public scaleNodePool(requestParameters: VisorApiScaleNodePoolRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).scaleNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.poolScale, options).then((request) => request(this.axios, this.basePath));
+    public scaleNodePool(requestParameters: ComputeApiScaleNodePoolRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).scaleNodePool(requestParameters.clusterId, requestParameters.poolId, requestParameters.poolScale, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Detaches the agent runtime from one of the caller org\'s machines. The machine stays — this halts the bot, it does not terminate the compute. Answers 204.
      * @summary Detaches the agent runtime from one of the caller org\'s machines.
-     * @param {VisorApiUnbindMachineAgentRequest} requestParameters Request parameters.
+     * @param {ComputeApiUnbindMachineAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VisorApi
+     * @memberof ComputeApi
      */
-    public unbindMachineAgent(requestParameters: VisorApiUnbindMachineAgentRequest, options?: RawAxiosRequestConfig) {
-        return VisorApiFp(this.configuration).unbindMachineAgent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public unbindMachineAgent(requestParameters: ComputeApiUnbindMachineAgentRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).unbindMachineAgent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

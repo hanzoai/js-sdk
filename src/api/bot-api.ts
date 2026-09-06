@@ -22,15 +22,53 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { BotRoster } from '../models';
+// @ts-ignore
 import type { BotRuns } from '../models';
 // @ts-ignore
 import type { BotStopped } from '../models';
+// @ts-ignore
+import type { BotSync } from '../models';
 /**
  * BotApi - axios parameter creator
  * @export
  */
 export const BotApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+         * @summary Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBotMembers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/bot/members`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
          * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
@@ -47,6 +85,40 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+         * @summary Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBotMembersSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/bot/members/sync`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -148,6 +220,18 @@ export const BotApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotApiAxiosParamCreator(configuration)
     return {
         /**
+         * Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+         * @summary Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBotMembers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRoster>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotMembers(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.getBotMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
          * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
          * @param {*} [options] Override http request option.
@@ -157,6 +241,18 @@ export const BotApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotRuns(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotApi.getBotRuns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+         * @summary Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBotMembersSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotSync>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotMembersSync(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.postBotMembersSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -195,6 +291,15 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = BotApiFp(configuration)
     return {
         /**
+         * Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+         * @summary Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBotMembers(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
+            return localVarFp.getBotMembers(options).then((request) => request(axios, basePath));
+        },
+        /**
          * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
          * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
          * @param {*} [options] Override http request option.
@@ -202,6 +307,15 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          */
         getBotRuns(options?: RawAxiosRequestConfig): AxiosPromise<BotRuns> {
             return localVarFp.getBotRuns(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+         * @summary Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBotMembersSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
+            return localVarFp.postBotMembersSync(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
@@ -247,6 +361,17 @@ export interface BotApiPostBotRunsByRunidStopRequest {
  */
 export class BotApi extends BaseAPI {
     /**
+     * Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.  A deployment that runs no team subsystem has no spaces and therefore no roster, which is an empty list rather than an error: ErrNoPeer is the ONE error that means \"this deployment does not run that app\", and every other failure is an outage and says so.
+     * @summary Returns the caller org\'s bots as space members — each with the member account uuid and the Person reference the roster addresses it by.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotApi
+     */
+    public getBotMembers(options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).getBotMembers(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
      * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
      * @param {*} [options] Override http request option.
@@ -255,6 +380,17 @@ export class BotApi extends BaseAPI {
      */
     public getBotRuns(options?: RawAxiosRequestConfig) {
         return BotApiFp(this.configuration).getBotRuns(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone. Idempotent, and admin only — the admin bit rides the caller to team, which is what decides it.
+     * @summary Re-projects the caller org\'s bots as members into every space of the org and removes the ones whose agent is gone.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotApi
+     */
+    public postBotMembersSync(options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).postBotMembersSync(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

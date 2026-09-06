@@ -22,10 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BotRoster } from '../models';
-// @ts-ignore
-import type { BotSync } from '../models';
-// @ts-ignore
 import type { CollabRequest } from '../models';
 // @ts-ignore
 import type { CollabResult } from '../models';
@@ -292,40 +288,6 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          */
         getTeamBillingUi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/billing/ui`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTeamBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/team/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -639,40 +601,6 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          */
         postTeamAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/account`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTeamBotsSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/team/bots/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1047,18 +975,6 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTeamBots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRoster>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBots(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBots']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
          * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
@@ -1161,18 +1077,6 @@ export const TeamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamAccount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postTeamBotsSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotSync>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamBotsSync(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamBotsSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1333,15 +1237,6 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamBillingUi(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTeamBots(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
-            return localVarFp.getTeamBots(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
          * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
@@ -1417,15 +1312,6 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          */
         postTeamAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postTeamAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-         * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTeamBotsSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
-            return localVarFp.postTeamBotsSync(options).then((request) => request(axios, basePath));
         },
         /**
          * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
@@ -1829,17 +1715,6 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-     * @summary Returns the caller org\'s bot members — the org\'s agents projected as the space Employees they become, each with the member account uuid and Person reference the roster addresses it by.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TeamApi
-     */
-    public getTeamBots(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getTeamBots(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or space token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s space must be the token\'s space when the token pins one, and the caller must be a member of it. A mismatch, an unknown space and a non-member deny alike with \"document not found\". Rooms are keyed by org and space and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
      * @summary Open the live collaborative-editing socket
      * @param {*} [options] Override http request option.
@@ -1930,17 +1805,6 @@ export class TeamApi extends BaseAPI {
      */
     public postTeamAccount(options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).postTeamAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a space\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
-     * @summary SyncBots re-projects the caller org\'s agents as space members into EVERY space of the org, and removes the ones whose agent is gone.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TeamApi
-     */
-    public postTeamBotsSync(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamBotsSync(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

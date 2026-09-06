@@ -37,25 +37,25 @@ export interface O11yGettableAgentCheckIn {
      * @type {string}
      * @memberof O11yGettableAgentCheckIn
      */
-    'cloud_account_id'?: string;
+    'cloudIntegrationId'?: string;
     /**
      * 
      * @type {string}
      * @memberof O11yGettableAgentCheckIn
      */
-    'cloudIntegrationId'?: string;
-    /**
-     * 
-     * @type {O11yIntegrationConfig}
-     * @memberof O11yGettableAgentCheckIn
-     */
-    'integration_config'?: O11yIntegrationConfig;
+    'cloud_account_id'?: string;
     /**
      * 
      * @type {O11yProviderIntegrationConfig}
      * @memberof O11yGettableAgentCheckIn
      */
     'integrationConfig'?: O11yProviderIntegrationConfig;
+    /**
+     * 
+     * @type {O11yIntegrationConfig}
+     * @memberof O11yGettableAgentCheckIn
+     */
+    'integration_config'?: O11yIntegrationConfig;
     /**
      * 
      * @type {string}
@@ -67,12 +67,12 @@ export interface O11yGettableAgentCheckIn {
      * @type {string}
      * @memberof O11yGettableAgentCheckIn
      */
-    'removed_at'?: string;
+    'removedAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof O11yGettableAgentCheckIn
      */
-    'removedAt'?: string;
+    'removed_at'?: string;
 }
 

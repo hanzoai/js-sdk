@@ -46,6 +46,10 @@ import type { DeviceStartOut } from '../models';
 // @ts-ignore
 import type { DisconnectOut } from '../models';
 // @ts-ignore
+import type { ForgeJob } from '../models';
+// @ts-ignore
+import type { ForgeLaunched } from '../models';
+// @ts-ignore
 import type { GithubBackfillIn } from '../models';
 // @ts-ignore
 import type { GithubBackfillResult } from '../models';
@@ -106,10 +110,10 @@ import type { SlackJoinOut } from '../models';
 // @ts-ignore
 import type { VerifyOut } from '../models';
 /**
- * IntegrationsApi - axios parameter creator
+ * IntegrationApi - axios parameter creator
  * @export
  */
-export const IntegrationsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const IntegrationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
@@ -118,10 +122,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIntegrationsConnectorsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIntegrationConnectorsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteIntegrationsConnectorsById', 'id', id)
-            const localVarPath = `/v1/integrations/connectors/{id}`
+            assertParamExists('deleteIntegrationConnectorsById', 'id', id)
+            const localVarPath = `/v1/integration/connectors/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -156,10 +160,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIntegrationsGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIntegrationGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('deleteIntegrationsGithubReposByRepoPages', 'repo', repo)
-            const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
+            assertParamExists('deleteIntegrationGithubReposByRepoPages', 'repo', repo)
+            const localVarPath = `/v1/integration/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -188,13 +192,13 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integration/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations`;
+        getIntegration: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -224,14 +228,14 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIntegrationByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getIntegrationsByProvider', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}`
+            assertParamExists('getIntegrationByProvider', 'provider', provider)
+            const localVarPath = `/v1/integration/{provider}`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -266,10 +270,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsByProviderCallback: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIntegrationByProviderCallback: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getIntegrationsByProviderCallback', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}/callback`
+            assertParamExists('getIntegrationByProviderCallback', 'provider', provider)
+            const localVarPath = `/v1/integration/{provider}/callback`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -303,8 +307,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/connectors`;
+        getIntegrationConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/connectors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -338,10 +342,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectorsByIdToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIntegrationConnectorsByIdToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getIntegrationsConnectorsByIdToken', 'id', id)
-            const localVarPath = `/v1/integrations/connectors/{id}/token`
+            assertParamExists('getIntegrationConnectorsByIdToken', 'id', id)
+            const localVarPath = `/v1/integration/connectors/{id}/token`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -375,8 +379,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectorsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/connectors/providers`;
+        getIntegrationConnectorsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/connectors/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -409,8 +413,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/discord/link`;
+        getIntegrationDiscordLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/discord/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -443,8 +447,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/discord/link/callback`;
+        getIntegrationDiscordLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/discord/link/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -477,8 +481,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLinkDiscord: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/discord/link/discord`;
+        getIntegrationDiscordLinkDiscord: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/discord/link/discord`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -511,8 +515,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubInstallations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/github/installations`;
+        getIntegrationGithubInstallations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/github/installations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -545,8 +549,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubRepos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/github/repos`;
+        getIntegrationGithubRepos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/github/repos`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -580,10 +584,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIntegrationGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('getIntegrationsGithubReposByRepoPages', 'repo', repo)
-            const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
+            assertParamExists('getIntegrationGithubReposByRepoPages', 'repo', repo)
+            const localVarPath = `/v1/integration/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -617,8 +621,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGitlabProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/gitlab/projects`;
+        getIntegrationGitlabProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/gitlab/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -651,8 +655,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackInstall: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/install`;
+        getIntegrationSlackInstall: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/install`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -685,8 +689,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/link`;
+        getIntegrationSlackLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -719,8 +723,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/link/callback`;
+        getIntegrationSlackLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/link/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -753,8 +757,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLinkSlack: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/link/slack`;
+        getIntegrationSlackLinkSlack: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/link/slack`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -787,8 +791,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/teams/link`;
+        getIntegrationTeamsLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/teams/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -821,8 +825,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLinkAad: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/teams/link/aad`;
+        getIntegrationTeamsLinkAad: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/teams/link/aad`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -855,8 +859,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/teams/link/callback`;
+        getIntegrationTeamsLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/teams/link/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -889,8 +893,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/telegram/link`;
+        getIntegrationTelegramLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/telegram/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -923,8 +927,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLinkAuth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/telegram/link/auth`;
+        getIntegrationTelegramLinkAuth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/telegram/link/auth`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -957,8 +961,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/telegram/link/callback`;
+        getIntegrationTelegramLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/telegram/link/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -991,8 +995,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsWhatsappWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/whatsapp/webhook`;
+        getIntegrationWhatsappWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/whatsapp/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1027,12 +1031,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderConnect: async (provider: string, connectIn: ConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationByProviderConnect: async (provider: string, connectIn: ConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsByProviderConnect', 'provider', provider)
+            assertParamExists('postIntegrationByProviderConnect', 'provider', provider)
             // verify required parameter 'connectIn' is not null or undefined
-            assertParamExists('postIntegrationsByProviderConnect', 'connectIn', connectIn)
-            const localVarPath = `/v1/integrations/{provider}/connect`
+            assertParamExists('postIntegrationByProviderConnect', 'connectIn', connectIn)
+            const localVarPath = `/v1/integration/{provider}/connect`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1066,14 +1070,14 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderDisconnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationByProviderDisconnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsByProviderDisconnect', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}/disconnect`
+            assertParamExists('postIntegrationByProviderDisconnect', 'provider', provider)
+            const localVarPath = `/v1/integration/{provider}/disconnect`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1104,14 +1108,14 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
          * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderVerify: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationByProviderVerify: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsByProviderVerify', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}/verify`
+            assertParamExists('postIntegrationByProviderVerify', 'provider', provider)
+            const localVarPath = `/v1/integration/{provider}/verify`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1146,10 +1150,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationConnectorsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByIdRefresh', 'id', id)
-            const localVarPath = `/v1/integrations/connectors/{id}/refresh`
+            assertParamExists('postIntegrationConnectorsByIdRefresh', 'id', id)
+            const localVarPath = `/v1/integration/connectors/{id}/refresh`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1185,12 +1189,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderCredential: async (provider: string, credentialIn: CredentialIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationConnectorsByProviderCredential: async (provider: string, credentialIn: CredentialIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderCredential', 'provider', provider)
+            assertParamExists('postIntegrationConnectorsByProviderCredential', 'provider', provider)
             // verify required parameter 'credentialIn' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderCredential', 'credentialIn', credentialIn)
-            const localVarPath = `/v1/integrations/connectors/{provider}/credential`
+            assertParamExists('postIntegrationConnectorsByProviderCredential', 'credentialIn', credentialIn)
+            const localVarPath = `/v1/integration/connectors/{provider}/credential`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1229,12 +1233,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderDevice: async (provider: string, deviceStartIn: DeviceStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationConnectorsByProviderDevice: async (provider: string, deviceStartIn: DeviceStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderDevice', 'provider', provider)
+            assertParamExists('postIntegrationConnectorsByProviderDevice', 'provider', provider)
             // verify required parameter 'deviceStartIn' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderDevice', 'deviceStartIn', deviceStartIn)
-            const localVarPath = `/v1/integrations/connectors/{provider}/device`
+            assertParamExists('postIntegrationConnectorsByProviderDevice', 'deviceStartIn', deviceStartIn)
+            const localVarPath = `/v1/integration/connectors/{provider}/device`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1273,12 +1277,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderDeviceByFlowPoll: async (provider: string, flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationConnectorsByProviderDeviceByFlowPoll: async (provider: string, flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderDeviceByFlowPoll', 'provider', provider)
+            assertParamExists('postIntegrationConnectorsByProviderDeviceByFlowPoll', 'provider', provider)
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('postIntegrationsConnectorsByProviderDeviceByFlowPoll', 'flow', flow)
-            const localVarPath = `/v1/integrations/connectors/{provider}/device/{flow}/poll`
+            assertParamExists('postIntegrationConnectorsByProviderDeviceByFlowPoll', 'flow', flow)
+            const localVarPath = `/v1/integration/connectors/{provider}/device/{flow}/poll`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1313,8 +1317,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsDiscordInteractions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/discord/interactions`;
+        postIntegrationDiscordInteractions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/discord/interactions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1342,16 +1346,54 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Receives the forge\'s workflow_job delivery. The signature over the raw body is checked against the secret at KMS forge.WebhookRef before anything is decoded; a queued job becomes one ephemeral runner Job on the cluster, minted a registration token for exactly that job. Every other action is answered 200 and ignored.
+         * @summary Forge workflow_job webhook
+         * @param {ForgeJob} [forgeJob] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationForgeWebhook: async (forgeJob?: ForgeJob, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/forge/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(forgeJob, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
          * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
          * @param {GithubClaimIn} githubClaimIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubClaim: async (githubClaimIn: GithubClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubClaim: async (githubClaimIn: GithubClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'githubClaimIn' is not null or undefined
-            assertParamExists('postIntegrationsGithubClaim', 'githubClaimIn', githubClaimIn)
-            const localVarPath = `/v1/integrations/github/claim`;
+            assertParamExists('postIntegrationGithubClaim', 'githubClaimIn', githubClaimIn)
+            const localVarPath = `/v1/integration/github/claim`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1388,10 +1430,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubFork: async (githubForkReq: GithubForkReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubFork: async (githubForkReq: GithubForkReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'githubForkReq' is not null or undefined
-            assertParamExists('postIntegrationsGithubFork', 'githubForkReq', githubForkReq)
-            const localVarPath = `/v1/integrations/github/fork`;
+            assertParamExists('postIntegrationGithubFork', 'githubForkReq', githubForkReq)
+            const localVarPath = `/v1/integration/github/fork`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1428,10 +1470,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubIssuesBackfill: async (githubBackfillIn: GithubBackfillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubIssuesBackfill: async (githubBackfillIn: GithubBackfillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'githubBackfillIn' is not null or undefined
-            assertParamExists('postIntegrationsGithubIssuesBackfill', 'githubBackfillIn', githubBackfillIn)
-            const localVarPath = `/v1/integrations/github/issues/backfill`;
+            assertParamExists('postIntegrationGithubIssuesBackfill', 'githubBackfillIn', githubBackfillIn)
+            const localVarPath = `/v1/integration/github/issues/backfill`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1469,12 +1511,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposByRepoPages: async (repo: string, githubPagesEnableReq: GithubPagesEnableReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubReposByRepoPages: async (repo: string, githubPagesEnableReq: GithubPagesEnableReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('postIntegrationsGithubReposByRepoPages', 'repo', repo)
+            assertParamExists('postIntegrationGithubReposByRepoPages', 'repo', repo)
             // verify required parameter 'githubPagesEnableReq' is not null or undefined
-            assertParamExists('postIntegrationsGithubReposByRepoPages', 'githubPagesEnableReq', githubPagesEnableReq)
-            const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
+            assertParamExists('postIntegrationGithubReposByRepoPages', 'githubPagesEnableReq', githubPagesEnableReq)
+            const localVarPath = `/v1/integration/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1512,10 +1554,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposByRepoPagesBuilds: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubReposByRepoPagesBuilds: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('postIntegrationsGithubReposByRepoPagesBuilds', 'repo', repo)
-            const localVarPath = `/v1/integrations/github/repos/{repo}/pages/builds`
+            assertParamExists('postIntegrationGithubReposByRepoPagesBuilds', 'repo', repo)
+            const localVarPath = `/v1/integration/github/repos/{repo}/pages/builds`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1544,16 +1586,16 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
+         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integration/github/repos for the per-repo status to flip to imported.
          * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
          * @param {GithubImportIn} githubImportIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposImport: async (githubImportIn: GithubImportIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubReposImport: async (githubImportIn: GithubImportIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'githubImportIn' is not null or undefined
-            assertParamExists('postIntegrationsGithubReposImport', 'githubImportIn', githubImportIn)
-            const localVarPath = `/v1/integrations/github/repos/import`;
+            assertParamExists('postIntegrationGithubReposImport', 'githubImportIn', githubImportIn)
+            const localVarPath = `/v1/integration/github/repos/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1590,10 +1632,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubSearch: async (githubSearchReq: GithubSearchReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationGithubSearch: async (githubSearchReq: GithubSearchReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'githubSearchReq' is not null or undefined
-            assertParamExists('postIntegrationsGithubSearch', 'githubSearchReq', githubSearchReq)
-            const localVarPath = `/v1/integrations/github/search`;
+            assertParamExists('postIntegrationGithubSearch', 'githubSearchReq', githubSearchReq)
+            const localVarPath = `/v1/integration/github/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1624,13 +1666,13 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integrations/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integration/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary GitHub App webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/github/webhook`;
+        postIntegrationGithubWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/github/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1664,10 +1706,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearClaim: async (linearClaimIn: LinearClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationLinearClaim: async (linearClaimIn: LinearClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'linearClaimIn' is not null or undefined
-            assertParamExists('postIntegrationsLinearClaim', 'linearClaimIn', linearClaimIn)
-            const localVarPath = `/v1/integrations/linear/claim`;
+            assertParamExists('postIntegrationLinearClaim', 'linearClaimIn', linearClaimIn)
+            const localVarPath = `/v1/integration/linear/claim`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1704,10 +1746,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearComments: async (linearCommentIn: LinearCommentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationLinearComments: async (linearCommentIn: LinearCommentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'linearCommentIn' is not null or undefined
-            assertParamExists('postIntegrationsLinearComments', 'linearCommentIn', linearCommentIn)
-            const localVarPath = `/v1/integrations/linear/comments`;
+            assertParamExists('postIntegrationLinearComments', 'linearCommentIn', linearCommentIn)
+            const localVarPath = `/v1/integration/linear/comments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1744,10 +1786,10 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearIssuesBackfill: async (linearBackfillIn: LinearBackfillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIntegrationLinearIssuesBackfill: async (linearBackfillIn: LinearBackfillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'linearBackfillIn' is not null or undefined
-            assertParamExists('postIntegrationsLinearIssuesBackfill', 'linearBackfillIn', linearBackfillIn)
-            const localVarPath = `/v1/integrations/linear/issues/backfill`;
+            assertParamExists('postIntegrationLinearIssuesBackfill', 'linearBackfillIn', linearBackfillIn)
+            const localVarPath = `/v1/integration/linear/issues/backfill`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1778,13 +1820,13 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integration/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Linear webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/linear/webhook`;
+        postIntegrationLinearWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/linear/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1818,8 +1860,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsOpenrouterWebhook: async (requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/openrouter/webhook`;
+        postIntegrationOpenrouterWebhook: async (requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/openrouter/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1855,8 +1897,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackCommands: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/commands`;
+        postIntegrationSlackCommands: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/commands`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1889,8 +1931,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/events`;
+        postIntegrationSlackEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/events`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1923,8 +1965,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackJoin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/slack/join`;
+        postIntegrationSlackJoin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/slack/join`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1957,8 +1999,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTeamsEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/teams/events`;
+        postIntegrationTeamsEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/teams/events`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1991,8 +2033,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTelegramConnect: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/telegram/connect`;
+        postIntegrationTelegramConnect: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/telegram/connect`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2025,8 +2067,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTelegramWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/telegram/webhook`;
+        postIntegrationTelegramWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/telegram/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2059,8 +2101,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsWhatsappWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/integrations/whatsapp/webhook`;
+        postIntegrationWhatsappWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integration/whatsapp/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2095,12 +2137,12 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIntegrationsGithubReposByRepoPages: async (repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIntegrationGithubReposByRepoPages: async (repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('putIntegrationsGithubReposByRepoPages', 'repo', repo)
+            assertParamExists('putIntegrationGithubReposByRepoPages', 'repo', repo)
             // verify required parameter 'githubPagesUpdateReq' is not null or undefined
-            assertParamExists('putIntegrationsGithubReposByRepoPages', 'githubPagesUpdateReq', githubPagesUpdateReq)
-            const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
+            assertParamExists('putIntegrationGithubReposByRepoPages', 'githubPagesUpdateReq', githubPagesUpdateReq)
+            const localVarPath = `/v1/integration/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2135,11 +2177,11 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
 };
 
 /**
- * IntegrationsApi - functional programming interface
+ * IntegrationApi - functional programming interface
  * @export
  */
-export const IntegrationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = IntegrationsApiAxiosParamCreator(configuration)
+export const IntegrationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = IntegrationApiAxiosParamCreator(configuration)
     return {
         /**
          * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
@@ -2148,10 +2190,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIntegrationsConnectorsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIntegrationsConnectorsById(id, options);
+        async deleteIntegrationConnectorsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIntegrationConnectorsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.deleteIntegrationsConnectorsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.deleteIntegrationConnectorsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2161,35 +2203,35 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIntegrationsGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesDisabledOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIntegrationsGithubReposByRepoPages(repo, options);
+        async deleteIntegrationGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesDisabledOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIntegrationGithubReposByRepoPages(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.deleteIntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.deleteIntegrationGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integration/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrations(options);
+        async getIntegration(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegration(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegration']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsByProvider(provider, options);
+        async getIntegrationByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsByProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationByProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2199,10 +2241,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsByProviderCallback(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsByProviderCallback(provider, options);
+        async getIntegrationByProviderCallback(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationByProviderCallback(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsByProviderCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationByProviderCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2211,10 +2253,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectors(options);
+        async getIntegrationConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationConnectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationConnectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2224,10 +2266,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsConnectorsByIdToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectorsByIdToken(id, options);
+        async getIntegrationConnectorsByIdToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorTokenOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationConnectorsByIdToken(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectorsByIdToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationConnectorsByIdToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2236,10 +2278,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorProvidersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectorsProviders(options);
+        async getIntegrationConnectorsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorProvidersOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationConnectorsProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectorsProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationConnectorsProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2248,10 +2290,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsDiscordLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsDiscordLink(options);
+        async getIntegrationDiscordLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationDiscordLink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsDiscordLink']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationDiscordLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2260,10 +2302,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsDiscordLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsDiscordLinkCallback(options);
+        async getIntegrationDiscordLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationDiscordLinkCallback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsDiscordLinkCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationDiscordLinkCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2272,10 +2314,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsDiscordLinkDiscord(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsDiscordLinkDiscord(options);
+        async getIntegrationDiscordLinkDiscord(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationDiscordLinkDiscord(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsDiscordLinkDiscord']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationDiscordLinkDiscord']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2284,10 +2326,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsGithubInstallations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubInstallationsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsGithubInstallations(options);
+        async getIntegrationGithubInstallations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubInstallationsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationGithubInstallations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsGithubInstallations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationGithubInstallations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2296,10 +2338,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsGithubRepos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubReposOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsGithubRepos(options);
+        async getIntegrationGithubRepos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubReposOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationGithubRepos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsGithubRepos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationGithubRepos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2309,10 +2351,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsGithubReposByRepoPages(repo, options);
+        async getIntegrationGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationGithubReposByRepoPages(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2321,10 +2363,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitlabProjectsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsGitlabProjects(options);
+        async getIntegrationGitlabProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitlabProjectsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationGitlabProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsGitlabProjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationGitlabProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2333,10 +2375,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsSlackInstall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsSlackInstall(options);
+        async getIntegrationSlackInstall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationSlackInstall(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsSlackInstall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationSlackInstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2345,10 +2387,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsSlackLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsSlackLink(options);
+        async getIntegrationSlackLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationSlackLink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsSlackLink']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationSlackLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2357,10 +2399,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsSlackLinkCallback(options);
+        async getIntegrationSlackLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationSlackLinkCallback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsSlackLinkCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationSlackLinkCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2369,10 +2411,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsSlackLinkSlack(options);
+        async getIntegrationSlackLinkSlack(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationSlackLinkSlack(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsSlackLinkSlack']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationSlackLinkSlack']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2381,10 +2423,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTeamsLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTeamsLink(options);
+        async getIntegrationTeamsLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTeamsLink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTeamsLink']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTeamsLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2393,10 +2435,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTeamsLinkAad(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTeamsLinkAad(options);
+        async getIntegrationTeamsLinkAad(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTeamsLinkAad(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTeamsLinkAad']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTeamsLinkAad']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2405,10 +2447,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTeamsLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTeamsLinkCallback(options);
+        async getIntegrationTeamsLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTeamsLinkCallback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTeamsLinkCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTeamsLinkCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2417,10 +2459,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTelegramLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTelegramLink(options);
+        async getIntegrationTelegramLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTelegramLink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTelegramLink']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTelegramLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2429,10 +2471,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTelegramLinkAuth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTelegramLinkAuth(options);
+        async getIntegrationTelegramLinkAuth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTelegramLinkAuth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTelegramLinkAuth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTelegramLinkAuth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2441,10 +2483,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsTelegramLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsTelegramLinkCallback(options);
+        async getIntegrationTelegramLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationTelegramLinkCallback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsTelegramLinkCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationTelegramLinkCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2453,10 +2495,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsWhatsappWebhook(options);
+        async getIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationWhatsappWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsWhatsappWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.getIntegrationWhatsappWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2467,36 +2509,36 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsByProviderConnect(provider: string, connectIn: ConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsByProviderConnect(provider, connectIn, options);
+        async postIntegrationByProviderConnect(provider: string, connectIn: ConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationByProviderConnect(provider, connectIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsByProviderConnect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationByProviderConnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsByProviderDisconnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsByProviderDisconnect(provider, options);
+        async postIntegrationByProviderDisconnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationByProviderDisconnect(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsByProviderDisconnect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationByProviderDisconnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
          * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsByProviderVerify(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsByProviderVerify(provider, options);
+        async postIntegrationByProviderVerify(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationByProviderVerify(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsByProviderVerify']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationByProviderVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2506,10 +2548,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsConnectorsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByIdRefresh(id, options);
+        async postIntegrationConnectorsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationConnectorsByIdRefresh(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByIdRefresh']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationConnectorsByIdRefresh']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2520,10 +2562,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsConnectorsByProviderCredential(provider: string, credentialIn: CredentialIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderCredential(provider, credentialIn, options);
+        async postIntegrationConnectorsByProviderCredential(provider: string, credentialIn: CredentialIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationConnectorsByProviderCredential(provider, credentialIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderCredential']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationConnectorsByProviderCredential']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2534,10 +2576,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsConnectorsByProviderDevice(provider: string, deviceStartIn: DeviceStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceStartOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderDevice(provider, deviceStartIn, options);
+        async postIntegrationConnectorsByProviderDevice(provider: string, deviceStartIn: DeviceStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceStartOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationConnectorsByProviderDevice(provider, deviceStartIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderDevice']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationConnectorsByProviderDevice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2548,10 +2590,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsConnectorsByProviderDeviceByFlowPoll(provider: string, flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DevicePollOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderDeviceByFlowPoll(provider, flow, options);
+        async postIntegrationConnectorsByProviderDeviceByFlowPoll(provider: string, flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DevicePollOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationConnectorsByProviderDeviceByFlowPoll(provider, flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderDeviceByFlowPoll']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationConnectorsByProviderDeviceByFlowPoll']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2560,10 +2602,23 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsDiscordInteractions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsDiscordInteractions(options);
+        async postIntegrationDiscordInteractions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationDiscordInteractions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsDiscordInteractions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationDiscordInteractions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Receives the forge\'s workflow_job delivery. The signature over the raw body is checked against the secret at KMS forge.WebhookRef before anything is decoded; a queued job becomes one ephemeral runner Job on the cluster, minted a registration token for exactly that job. Every other action is answered 200 and ignored.
+         * @summary Forge workflow_job webhook
+         * @param {ForgeJob} [forgeJob] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationForgeWebhook(forgeJob?: ForgeJob, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForgeLaunched>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationForgeWebhook(forgeJob, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationForgeWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2573,10 +2628,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubClaim(githubClaimIn: GithubClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubClaimOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubClaim(githubClaimIn, options);
+        async postIntegrationGithubClaim(githubClaimIn: GithubClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubClaimOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubClaim(githubClaimIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubClaim']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2586,10 +2641,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubFork(githubForkReq: GithubForkReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubForkOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubFork(githubForkReq, options);
+        async postIntegrationGithubFork(githubForkReq: GithubForkReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubForkOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubFork(githubForkReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubFork']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubFork']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2599,10 +2654,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubIssuesBackfill(githubBackfillIn: GithubBackfillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubBackfillResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubIssuesBackfill(githubBackfillIn, options);
+        async postIntegrationGithubIssuesBackfill(githubBackfillIn: GithubBackfillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubBackfillResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubIssuesBackfill(githubBackfillIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubIssuesBackfill']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubIssuesBackfill']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2613,10 +2668,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubReposByRepoPages(repo: string, githubPagesEnableReq: GithubPagesEnableReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubReposByRepoPages(repo, githubPagesEnableReq, options);
+        async postIntegrationGithubReposByRepoPages(repo: string, githubPagesEnableReq: GithubPagesEnableReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubReposByRepoPages(repo, githubPagesEnableReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2626,23 +2681,23 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubReposByRepoPagesBuilds(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesBuildOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubReposByRepoPagesBuilds(repo, options);
+        async postIntegrationGithubReposByRepoPagesBuilds(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesBuildOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubReposByRepoPagesBuilds(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubReposByRepoPagesBuilds']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubReposByRepoPagesBuilds']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
+         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integration/github/repos for the per-repo status to flip to imported.
          * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
          * @param {GithubImportIn} githubImportIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubReposImport(githubImportIn: GithubImportIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubImportOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubReposImport(githubImportIn, options);
+        async postIntegrationGithubReposImport(githubImportIn: GithubImportIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubImportOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubReposImport(githubImportIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubReposImport']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubReposImport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2652,22 +2707,22 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubSearch(githubSearchReq: GithubSearchReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubSearchOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubSearch(githubSearchReq, options);
+        async postIntegrationGithubSearch(githubSearchReq: GithubSearchReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubSearchOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubSearch(githubSearchReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integrations/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integration/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary GitHub App webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsGithubWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsGithubWebhook(options);
+        async postIntegrationGithubWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationGithubWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsGithubWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationGithubWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2677,10 +2732,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsLinearClaim(linearClaimIn: LinearClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearClaimOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearClaim(linearClaimIn, options);
+        async postIntegrationLinearClaim(linearClaimIn: LinearClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearClaimOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationLinearClaim(linearClaimIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearClaim']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationLinearClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2690,10 +2745,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsLinearComments(linearCommentIn: LinearCommentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearCommentOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearComments(linearCommentIn, options);
+        async postIntegrationLinearComments(linearCommentIn: LinearCommentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearCommentOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationLinearComments(linearCommentIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearComments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationLinearComments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2703,22 +2758,22 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsLinearIssuesBackfill(linearBackfillIn: LinearBackfillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearBackfillResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearIssuesBackfill(linearBackfillIn, options);
+        async postIntegrationLinearIssuesBackfill(linearBackfillIn: LinearBackfillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinearBackfillResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationLinearIssuesBackfill(linearBackfillIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearIssuesBackfill']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationLinearIssuesBackfill']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integration/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Linear webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsLinearWebhook(options);
+        async postIntegrationLinearWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationLinearWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsLinearWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationLinearWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2728,10 +2783,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsOpenrouterWebhook(requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsOpenrouterWebhook(requestBody, options);
+        async postIntegrationOpenrouterWebhook(requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationOpenrouterWebhook(requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsOpenrouterWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationOpenrouterWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2740,10 +2795,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsSlackCommands(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsSlackCommands(options);
+        async postIntegrationSlackCommands(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationSlackCommands(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsSlackCommands']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationSlackCommands']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2752,10 +2807,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsSlackEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsSlackEvents(options);
+        async postIntegrationSlackEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationSlackEvents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsSlackEvents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationSlackEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2764,10 +2819,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsSlackJoin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlackJoinOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsSlackJoin(options);
+        async postIntegrationSlackJoin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlackJoinOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationSlackJoin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsSlackJoin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationSlackJoin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2776,10 +2831,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsTeamsEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsTeamsEvents(options);
+        async postIntegrationTeamsEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationTeamsEvents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsTeamsEvents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationTeamsEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2788,10 +2843,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsTelegramConnect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizeOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsTelegramConnect(options);
+        async postIntegrationTelegramConnect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationTelegramConnect(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsTelegramConnect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationTelegramConnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2800,10 +2855,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsTelegramWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsTelegramWebhook(options);
+        async postIntegrationTelegramWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationTelegramWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsTelegramWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationTelegramWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2812,10 +2867,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsWhatsappWebhook(options);
+        async postIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationWhatsappWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsWhatsappWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.postIntegrationWhatsappWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2826,70 +2881,70 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIntegrationsGithubReposByRepoPages(repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesUpdatedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIntegrationsGithubReposByRepoPages(repo, githubPagesUpdateReq, options);
+        async putIntegrationGithubReposByRepoPages(repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesUpdatedOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIntegrationGithubReposByRepoPages(repo, githubPagesUpdateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.putIntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationApi.putIntegrationGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * IntegrationsApi - factory interface
+ * IntegrationApi - factory interface
  * @export
  */
-export const IntegrationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = IntegrationsApiFp(configuration)
+export const IntegrationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = IntegrationApiFp(configuration)
     return {
         /**
          * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
          * @summary Forgets a connector: every custodied secret, then the row.
-         * @param {IntegrationsApiDeleteIntegrationsConnectorsByIdRequest} requestParameters Request parameters.
+         * @param {IntegrationApiDeleteIntegrationConnectorsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIntegrationsConnectorsById(requestParameters: IntegrationsApiDeleteIntegrationsConnectorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
-            return localVarFp.deleteIntegrationsConnectorsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteIntegrationConnectorsById(requestParameters: IntegrationApiDeleteIntegrationConnectorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
+            return localVarFp.deleteIntegrationConnectorsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
          * @summary Deletes the repo\'s Pages site.
-         * @param {IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesDisabledOut> {
-            return localVarFp.deleteIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
+        deleteIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesDisabledOut> {
+            return localVarFp.deleteIntegrationGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integration/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrations(options?: RawAxiosRequestConfig): AxiosPromise<ListOut> {
-            return localVarFp.getIntegrations(options).then((request) => request(axios, basePath));
+        getIntegration(options?: RawAxiosRequestConfig): AxiosPromise<ListOut> {
+            return localVarFp.getIntegration(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {IntegrationsApiGetIntegrationsByProviderRequest} requestParameters Request parameters.
+         * @param {IntegrationApiGetIntegrationByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsByProvider(requestParameters: IntegrationsApiGetIntegrationsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderView> {
-            return localVarFp.getIntegrationsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getIntegrationByProvider(requestParameters: IntegrationApiGetIntegrationByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderView> {
+            return localVarFp.getIntegrationByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
          * @summary OAuth return for any connector
-         * @param {IntegrationsApiGetIntegrationsByProviderCallbackRequest} requestParameters Request parameters.
+         * @param {IntegrationApiGetIntegrationByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsByProviderCallback(requestParameters: IntegrationsApiGetIntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getIntegrationByProviderCallback(requestParameters: IntegrationApiGetIntegrationByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
@@ -2897,18 +2952,18 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectors(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorsOut> {
-            return localVarFp.getIntegrationsConnectors(options).then((request) => request(axios, basePath));
+        getIntegrationConnectors(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorsOut> {
+            return localVarFp.getIntegrationConnectors(options).then((request) => request(axios, basePath));
         },
         /**
          * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
          * @summary Hands the custodied access token to its owner — the ONE place custody exits.
-         * @param {IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest} requestParameters Request parameters.
+         * @param {IntegrationApiGetIntegrationConnectorsByIdTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectorsByIdToken(requestParameters: IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectorTokenOut> {
-            return localVarFp.getIntegrationsConnectorsByIdToken(requestParameters.id, options).then((request) => request(axios, basePath));
+        getIntegrationConnectorsByIdToken(requestParameters: IntegrationApiGetIntegrationConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectorTokenOut> {
+            return localVarFp.getIntegrationConnectorsByIdToken(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
@@ -2916,8 +2971,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorProvidersOut> {
-            return localVarFp.getIntegrationsConnectorsProviders(options).then((request) => request(axios, basePath));
+        getIntegrationConnectorsProviders(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorProvidersOut> {
+            return localVarFp.getIntegrationConnectorsProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -2925,8 +2980,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsDiscordLink(options).then((request) => request(axios, basePath));
+        getIntegrationDiscordLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationDiscordLink(options).then((request) => request(axios, basePath));
         },
         /**
          * The final leg: it binds the verified Discord user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Discord. The Hanzo credential is sealed into the connected org\'s KMS namespace rather than stored beside the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -2934,8 +2989,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsDiscordLinkCallback(options).then((request) => request(axios, basePath));
+        getIntegrationDiscordLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationDiscordLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Where Discord returns the user after the identify consent. It resolves the verified Discord user, confirms the server is connected to an org, and hands the browser to the Hanzo sign-in that completes the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -2943,8 +2998,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsDiscordLinkDiscord(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsDiscordLinkDiscord(options).then((request) => request(axios, basePath));
+        getIntegrationDiscordLinkDiscord(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationDiscordLinkDiscord(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.  The confirmation is the point. A connection row holds an installation id, and an id whose installation was since removed on GitHub is a row that mints nothing — every list and import against it fails with a token error, which reads as \"our git integration is broken\" rather than \"that install is gone\". Checking the App\'s view turns that into a fact the caller can act on.  ORG-SCOPED for a tenant, deliberately. The App is installed across every customer, so the raw list is the customer list; a tenant sees only accounts its own org has bound. It discovers a NEW account by installing it (InstallURL), which is GitHub\'s own consent screen — not by reading ours.  A SUPER ADMIN sees the App\'s whole install list, because that list is the platform\'s own inventory rather than any one tenant\'s data, and platform sudo is the single cross-tenant scope this house has. Without it an App installed out-of-band — granted straight from GitHub, so no connect flow ever ran and no connection row exists — is invisible to everyone: the console card reads \"not connected\" and an operator asked \"which GitHub orgs do you see\" can only answer for accounts already bound, which is precisely the accounts that were never the question.
@@ -2952,8 +3007,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubInstallations(options?: RawAxiosRequestConfig): AxiosPromise<GithubInstallationsOut> {
-            return localVarFp.getIntegrationsGithubInstallations(options).then((request) => request(axios, basePath));
+        getIntegrationGithubInstallations(options?: RawAxiosRequestConfig): AxiosPromise<GithubInstallationsOut> {
+            return localVarFp.getIntegrationGithubInstallations(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane. Org-authed: the org comes from the validated principal, and the granted set is bounded to THAT org\'s installation token — an org can never enumerate another org\'s repos. The console polls it to watch an import flip a repo to imported.
@@ -2961,18 +3016,18 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubRepos(options?: RawAxiosRequestConfig): AxiosPromise<GithubReposOut> {
-            return localVarFp.getIntegrationsGithubRepos(options).then((request) => request(axios, basePath));
+        getIntegrationGithubRepos(options?: RawAxiosRequestConfig): AxiosPromise<GithubReposOut> {
+            return localVarFp.getIntegrationGithubRepos(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the repo\'s Pages status, live URL, custom domain and build source. The repo is resolved against the org installation\'s GRANTED set, so a caller can never address a repo the App was not granted; 404 when the repo has no Pages site.
          * @summary Returns the repo\'s Pages status, live URL, custom domain and build source.
-         * @param {IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationApiGetIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
-            return localVarFp.getIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
+        getIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiGetIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
+            return localVarFp.getIntegrationGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
@@ -2980,8 +3035,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig): AxiosPromise<GitlabProjectsOut> {
-            return localVarFp.getIntegrationsGitlabProjects(options).then((request) => request(axios, basePath));
+        getIntegrationGitlabProjects(options?: RawAxiosRequestConfig): AxiosPromise<GitlabProjectsOut> {
+            return localVarFp.getIntegrationGitlabProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
@@ -2989,8 +3044,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackInstall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsSlackInstall(options).then((request) => request(axios, basePath));
+        getIntegrationSlackInstall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationSlackInstall(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -2998,8 +3053,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsSlackLink(options).then((request) => request(axios, basePath));
+        getIntegrationSlackLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationSlackLink(options).then((request) => request(axios, basePath));
         },
         /**
          * The final leg: the user has proved both who they are in Slack and who they are in Hanzo, and this binds the two. It answers a short confirmation page telling them to return to Slack.  The Hanzo credential obtained here is sealed into the connected workspace\'s own KMS namespace; it is never written to a database column and never logged. A deployment whose secret store is unavailable refuses the link rather than completing it without custody of the credential.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3007,8 +3062,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsSlackLinkCallback(options).then((request) => request(axios, basePath));
+        getIntegrationSlackLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationSlackLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Where Slack returns the user after they sign in. It establishes the verified Slack workspace and user, confirms that workspace is connected to an org, and hands the browser on to the Hanzo sign-in that completes the link.  The verified pair is carried onward in a host-bound cookie rather than in the URL, so the identity being linked cannot be edited in transit.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3016,8 +3071,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsSlackLinkSlack(options).then((request) => request(axios, basePath));
+        getIntegrationSlackLinkSlack(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationSlackLinkSlack(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo shows in Teams. It starts a link session and redirects to Microsoft sign-in addressed to the CHAT\'S OWN tenant, not the common endpoint, so only a member of that tenant can complete it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3025,8 +3080,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTeamsLink(options).then((request) => request(axios, basePath));
+        getIntegrationTeamsLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTeamsLink(options).then((request) => request(axios, basePath));
         },
         /**
          * Where Microsoft returns the user after sign-in. It resolves the verified directory identity and then re-checks the tenant: the signed-in user\'s tenant must equal the tenant of the chat the link started from, so a valid Microsoft sign-in from a different organization is refused here rather than accepted.  This is the leg Teams has and the other platforms do not, which is why the Teams flow has an extra address.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3034,8 +3089,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLinkAad(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTeamsLinkAad(options).then((request) => request(axios, basePath));
+        getIntegrationTeamsLinkAad(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTeamsLinkAad(options).then((request) => request(axios, basePath));
         },
         /**
          * The final leg: it binds the verified directory identity to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Teams. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3043,8 +3098,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTeamsLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTeamsLinkCallback(options).then((request) => request(axios, basePath));
+        getIntegrationTeamsLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTeamsLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo sends in Telegram. Unlike the other platforms it answers an HTML PAGE rather than a redirect: Telegram has no OAuth flow, so the page hosts Telegram\'s Login Widget, and the browser is sent onward only after the user signs in through it.  The widget only appears on the domain registered for the bot, so a deployment whose bot domain is unset renders a page with nothing on it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3052,8 +3107,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTelegramLink(options).then((request) => request(axios, basePath));
+        getIntegrationTelegramLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTelegramLink(options).then((request) => request(axios, basePath));
         },
         /**
          * Where Telegram\'s Login Widget sends the user with its signed authentication data. That data is verified against the bot token — this is the identity source, and it is the widget\'s signature rather than a code exchange — and the chat is confirmed to be bound to an org before the browser is handed to the Hanzo sign-in.  Widget data is only accepted while it is fresh, so a captured sign-in blob cannot be replayed later even though its signature stays valid.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3061,8 +3116,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLinkAuth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTelegramLinkAuth(options).then((request) => request(axios, basePath));
+        getIntegrationTelegramLinkAuth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTelegramLinkAuth(options).then((request) => request(axios, basePath));
         },
         /**
          * The final leg: it binds the verified Telegram user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Telegram. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -3070,8 +3125,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsTelegramLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsTelegramLinkCallback(options).then((request) => request(axios, basePath));
+        getIntegrationTelegramLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationTelegramLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Meta calls this once when the webhook is subscribed, carrying the verify token this deployment was configured with and a challenge to echo. The token is compared in constant time before the echo — answering the challenge without checking it would let anyone point their own app at this address and have it confirm the subscription.
@@ -3079,78 +3134,78 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIntegrationsWhatsappWebhook(options).then((request) => request(axios, basePath));
+        getIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIntegrationWhatsappWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
-         * @param {IntegrationsApiPostIntegrationsByProviderConnectRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationByProviderConnectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderConnect(requestParameters: IntegrationsApiPostIntegrationsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectOut> {
-            return localVarFp.postIntegrationsByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(axios, basePath));
+        postIntegrationByProviderConnect(requestParameters: IntegrationApiPostIntegrationByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectOut> {
+            return localVarFp.postIntegrationByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {IntegrationsApiPostIntegrationsByProviderDisconnectRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationByProviderDisconnectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderDisconnect(requestParameters: IntegrationsApiPostIntegrationsByProviderDisconnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
-            return localVarFp.postIntegrationsByProviderDisconnect(requestParameters.provider, options).then((request) => request(axios, basePath));
+        postIntegrationByProviderDisconnect(requestParameters: IntegrationApiPostIntegrationByProviderDisconnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
+            return localVarFp.postIntegrationByProviderDisconnect(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
          * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {IntegrationsApiPostIntegrationsByProviderVerifyRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationByProviderVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsByProviderVerify(requestParameters: IntegrationsApiPostIntegrationsByProviderVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyOut> {
-            return localVarFp.postIntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
+        postIntegrationByProviderVerify(requestParameters: IntegrationApiPostIntegrationByProviderVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyOut> {
+            return localVarFp.postIntegrationByProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
          * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
-         * @param {IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationConnectorsByIdRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByIdRefresh(requestParameters: IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshOut> {
-            return localVarFp.postIntegrationsConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
+        postIntegrationConnectorsByIdRefresh(requestParameters: IntegrationApiPostIntegrationConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshOut> {
+            return localVarFp.postIntegrationConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
          * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
-         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderCredential(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<CredentialOut> {
-            return localVarFp.postIntegrationsConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(axios, basePath));
+        postIntegrationConnectorsByProviderCredential(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<CredentialOut> {
+            return localVarFp.postIntegrationConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
          * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
-         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderDevice(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceStartOut> {
-            return localVarFp.postIntegrationsConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(axios, basePath));
+        postIntegrationConnectorsByProviderDevice(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceStartOut> {
+            return localVarFp.postIntegrationConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
          * @summary Advances a device sign-in.
-         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig): AxiosPromise<DevicePollOut> {
-            return localVarFp.postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
+        postIntegrationConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig): AxiosPromise<DevicePollOut> {
+            return localVarFp.postIntegrationConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
          * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
@@ -3158,136 +3213,146 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsDiscordInteractions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsDiscordInteractions(options).then((request) => request(axios, basePath));
+        postIntegrationDiscordInteractions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationDiscordInteractions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Receives the forge\'s workflow_job delivery. The signature over the raw body is checked against the secret at KMS forge.WebhookRef before anything is decoded; a queued job becomes one ephemeral runner Job on the cluster, minted a registration token for exactly that job. Every other action is answered 200 and ignored.
+         * @summary Forge workflow_job webhook
+         * @param {IntegrationApiPostIntegrationForgeWebhookRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationForgeWebhook(requestParameters: IntegrationApiPostIntegrationForgeWebhookRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ForgeLaunched> {
+            return localVarFp.postIntegrationForgeWebhook(requestParameters.forgeJob, options).then((request) => request(axios, basePath));
         },
         /**
          * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
          * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
-         * @param {IntegrationsApiPostIntegrationsGithubClaimRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubClaimRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubClaim(requestParameters: IntegrationsApiPostIntegrationsGithubClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubClaimOut> {
-            return localVarFp.postIntegrationsGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(axios, basePath));
+        postIntegrationGithubClaim(requestParameters: IntegrationApiPostIntegrationGithubClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubClaimOut> {
+            return localVarFp.postIntegrationGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
          * @summary Forks a granted repository.
-         * @param {IntegrationsApiPostIntegrationsGithubForkRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubForkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubFork(requestParameters: IntegrationsApiPostIntegrationsGithubForkRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubForkOut> {
-            return localVarFp.postIntegrationsGithubFork(requestParameters.githubForkReq, options).then((request) => request(axios, basePath));
+        postIntegrationGithubFork(requestParameters: IntegrationApiPostIntegrationGithubForkRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubForkOut> {
+            return localVarFp.postIntegrationGithubFork(requestParameters.githubForkReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Seeds the native todo with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
          * @summary Seeds the native todo with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
-         * @param {IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubIssuesBackfillRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubBackfillResult> {
-            return localVarFp.postIntegrationsGithubIssuesBackfill(requestParameters.githubBackfillIn, options).then((request) => request(axios, basePath));
+        postIntegrationGithubIssuesBackfill(requestParameters: IntegrationApiPostIntegrationGithubIssuesBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubBackfillResult> {
+            return localVarFp.postIntegrationGithubIssuesBackfill(requestParameters.githubBackfillIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
          * @summary Creates the repo\'s Pages site and answers 201 Created with it.
-         * @param {IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
-            return localVarFp.postIntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(axios, basePath));
+        postIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiPostIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
+            return localVarFp.postIntegrationGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
          * @summary Requests a Pages rebuild and returns the queued build\'s status.
-         * @param {IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposByRepoPagesBuilds(requestParameters: IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesBuildOut> {
-            return localVarFp.postIntegrationsGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(axios, basePath));
+        postIntegrationGithubReposByRepoPagesBuilds(requestParameters: IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesBuildOut> {
+            return localVarFp.postIntegrationGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
+         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integration/github/repos for the per-repo status to flip to imported.
          * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
-         * @param {IntegrationsApiPostIntegrationsGithubReposImportRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubReposImportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubReposImport(requestParameters: IntegrationsApiPostIntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubImportOut> {
-            return localVarFp.postIntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(axios, basePath));
+        postIntegrationGithubReposImport(requestParameters: IntegrationApiPostIntegrationGithubReposImportRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubImportOut> {
+            return localVarFp.postIntegrationGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
          * @summary Finds repositories on GitHub.
-         * @param {IntegrationsApiPostIntegrationsGithubSearchRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationGithubSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubSearch(requestParameters: IntegrationsApiPostIntegrationsGithubSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubSearchOut> {
-            return localVarFp.postIntegrationsGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(axios, basePath));
+        postIntegrationGithubSearch(requestParameters: IntegrationApiPostIntegrationGithubSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubSearchOut> {
+            return localVarFp.postIntegrationGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integrations/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integration/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary GitHub App webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsGithubWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsGithubWebhook(options).then((request) => request(axios, basePath));
+        postIntegrationGithubWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationGithubWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
          * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
-         * @param {IntegrationsApiPostIntegrationsLinearClaimRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationLinearClaimRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearClaim(requestParameters: IntegrationsApiPostIntegrationsLinearClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearClaimOut> {
-            return localVarFp.postIntegrationsLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(axios, basePath));
+        postIntegrationLinearClaim(requestParameters: IntegrationApiPostIntegrationLinearClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearClaimOut> {
+            return localVarFp.postIntegrationLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
          * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
-         * @param {IntegrationsApiPostIntegrationsLinearCommentsRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationLinearCommentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearComments(requestParameters: IntegrationsApiPostIntegrationsLinearCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearCommentOut> {
-            return localVarFp.postIntegrationsLinearComments(requestParameters.linearCommentIn, options).then((request) => request(axios, basePath));
+        postIntegrationLinearComments(requestParameters: IntegrationApiPostIntegrationLinearCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearCommentOut> {
+            return localVarFp.postIntegrationLinearComments(requestParameters.linearCommentIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
          * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
-         * @param {IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationLinearIssuesBackfillRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearBackfillResult> {
-            return localVarFp.postIntegrationsLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(axios, basePath));
+        postIntegrationLinearIssuesBackfill(requestParameters: IntegrationApiPostIntegrationLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinearBackfillResult> {
+            return localVarFp.postIntegrationLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integration/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Linear webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsLinearWebhook(options).then((request) => request(axios, basePath));
+        postIntegrationLinearWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationLinearWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * OpenRouter\'s spend is invisible to every Hanzo money lens because those lenses read hanzo.cloud_usage and OpenRouter meters keys of its own. Point a Broadcast destination (Settings ▸ Observability ▸ Webhook) at this endpoint and each generation span becomes ONE row in that same ledger with provider `openrouter`, so one query answers what we spend everywhere. Enable the Cost and Identity field categories: cost is the money and identity carries `openrouter.api_key_name`, which is what says WHICH key spent it — it lands in `account` as openrouter/<key name>.  AUTHENTICATION IS A HANZO KEY. Broadcast signs nothing; its only authentication is the destination\'s Headers map, so send a key as `Authorization: Bearer pk-…` and it is admitted exactly as /v1/event admits a beacon\'s: a project key resolves through the project that minted it, an IAM-issued key through IAM. That key names the org every row is filed under; it can write and cannot read. No key, or a key that names no org, is 401 and nothing is stored.  The body is OTLP/JSON — `{resourceSpans:[{scopeSpans:[{spans:[…]}]}]}` — exactly as OpenTelemetry defines it; the model, tokens and cost are read from each span\'s `gen_ai.*` attributes and the key name from `openrouter.api_key_name`. The answer is `{stored, dropped}`: how many generations became rows, and how many spans named no model. Those are OpenRouter\'s trace and span parents — they carry no cost to meter. An empty payload stores nothing and answers 200, which is what makes Test Connection pass. A warehouse that cannot take the rows answers 503 so the delivery shows red and can be replayed: a row is keyed by its span id, so a redelivery collapses rather than double-counting.
          * @summary Receive OpenRouter Broadcast traces as usage rows
-         * @param {IntegrationsApiPostIntegrationsOpenrouterWebhookRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPostIntegrationOpenrouterWebhookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsOpenrouterWebhook(requestParameters: IntegrationsApiPostIntegrationsOpenrouterWebhookRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.postIntegrationsOpenrouterWebhook(requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        postIntegrationOpenrouterWebhook(requestParameters: IntegrationApiPostIntegrationOpenrouterWebhookRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.postIntegrationOpenrouterWebhook(requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -3295,8 +3360,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackCommands(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsSlackCommands(options).then((request) => request(axios, basePath));
+        postIntegrationSlackCommands(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationSlackCommands(options).then((request) => request(axios, basePath));
         },
         /**
          * The address a Slack app posts workspace events to. It answers Slack\'s url_verification handshake with the challenge, and routes an @mention or a direct message to an agent turn that replies in the same thread. The turn holds the product\'s own tools, so a request to change code starts a sandbox run because the model chose to — there is no prefix and no second path.  The raw body and its timestamp are verified against the app\'s signing secret before anything is read from them. Hanzo\'s own bot messages are dropped, so a reply cannot trigger another reply.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -3304,8 +3369,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsSlackEvents(options).then((request) => request(axios, basePath));
+        postIntegrationSlackEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationSlackEvents(options).then((request) => request(axios, basePath));
         },
         /**
          * Joins every public channel in the caller org\'s workspace.  Org admin, because it changes what the whole workspace sees: after it the agent is a member of every public room and answers in all of them.
@@ -3313,8 +3378,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsSlackJoin(options?: RawAxiosRequestConfig): AxiosPromise<SlackJoinOut> {
-            return localVarFp.postIntegrationsSlackJoin(options).then((request) => request(axios, basePath));
+        postIntegrationSlackJoin(options?: RawAxiosRequestConfig): AxiosPromise<SlackJoinOut> {
+            return localVarFp.postIntegrationSlackJoin(options).then((request) => request(axios, basePath));
         },
         /**
          * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -3322,8 +3387,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTeamsEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsTeamsEvents(options).then((request) => request(axios, basePath));
+        postIntegrationTeamsEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationTeamsEvents(options).then((request) => request(axios, basePath));
         },
         /**
          * Mints a short, single-use deep-link code bound to the caller\'s org and returns the t.me link the console navigates to. Org-authed: a caller with no validated principal is 403 (same gate as the framework connect). The code is stored as an oauth_nonce (org,telegram); the webhook\'s /start handler claims it to bind chat→org. It is short (128-bit hex) so it fits Telegram\'s 64-char `start` payload limit.
@@ -3331,8 +3396,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTelegramConnect(options?: RawAxiosRequestConfig): AxiosPromise<AuthorizeOut> {
-            return localVarFp.postIntegrationsTelegramConnect(options).then((request) => request(axios, basePath));
+        postIntegrationTelegramConnect(options?: RawAxiosRequestConfig): AxiosPromise<AuthorizeOut> {
+            return localVarFp.postIntegrationTelegramConnect(options).then((request) => request(axios, basePath));
         },
         /**
          * The update webhook for the Telegram bot. It does two jobs: `/start <code>` or `/connect <code>` binds the chat it was sent from to an org, idempotently; anything else is treated as a possible agent trigger.  What counts as a trigger differs by chat type, and it is easy to get wrong: in a private chat every message is a trigger, while in a group the message must mention the bot or use the `/hanzo` command. Non-triggers and non-message updates are acknowledged and dropped.  Authentication is the secret token Telegram echoes on every update, compared in constant time. A message in a chat that has never been bound is dropped, which is why the bind command exists.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -3340,8 +3405,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsTelegramWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsTelegramWebhook(options).then((request) => request(axios, basePath));
+        postIntegrationTelegramWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationTelegramWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * One delivery from Meta. Authenticity is the X-Hub-Signature-256 HMAC over the raw body, and it is the whole of it: a message accepted here creates the reply route that authorises this org to answer, so an unsigned delivery would let anyone hand an org a conversation to answer under its own number.  Meta batches (entry × changes × messages) and sends status callbacks — sent/delivered/read — through this same address with no message at all. Those are acknowledged and dropped rather than refused, because a non-2xx is retried with backoff and eventually disables the subscription: the only refusals here are an unconfigured endpoint and a bad signature, which are ours to fix and not Meta\'s to retry.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -3349,478 +3414,492 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIntegrationsWhatsappWebhook(options).then((request) => request(axios, basePath));
+        postIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIntegrationWhatsappWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source. ONLY the provided fields are sent to GitHub, so an update never resets a setting the caller did not mention.
          * @summary Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source.
-         * @param {IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationApiPutIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesUpdatedOut> {
-            return localVarFp.putIntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(axios, basePath));
+        putIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiPutIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesUpdatedOut> {
+            return localVarFp.putIntegrationGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteIntegrationsConnectorsById operation in IntegrationsApi.
+ * Request parameters for deleteIntegrationConnectorsById operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiDeleteIntegrationsConnectorsByIdRequest
+ * @interface IntegrationApiDeleteIntegrationConnectorsByIdRequest
  */
-export interface IntegrationsApiDeleteIntegrationsConnectorsByIdRequest {
+export interface IntegrationApiDeleteIntegrationConnectorsByIdRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof IntegrationsApiDeleteIntegrationsConnectorsById
+     * @memberof IntegrationApiDeleteIntegrationConnectorsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteIntegrationsGithubReposByRepoPages operation in IntegrationsApi.
+ * Request parameters for deleteIntegrationGithubReposByRepoPages operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest
+ * @interface IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest {
+export interface IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof IntegrationsApiDeleteIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiDeleteIntegrationGithubReposByRepoPages
      */
     readonly repo: string
 }
 
 /**
- * Request parameters for getIntegrationsByProvider operation in IntegrationsApi.
+ * Request parameters for getIntegrationByProvider operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiGetIntegrationsByProviderRequest
+ * @interface IntegrationApiGetIntegrationByProviderRequest
  */
-export interface IntegrationsApiGetIntegrationsByProviderRequest {
+export interface IntegrationApiGetIntegrationByProviderRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
      * @type {string}
-     * @memberof IntegrationsApiGetIntegrationsByProvider
+     * @memberof IntegrationApiGetIntegrationByProvider
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getIntegrationsByProviderCallback operation in IntegrationsApi.
+ * Request parameters for getIntegrationByProviderCallback operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiGetIntegrationsByProviderCallbackRequest
+ * @interface IntegrationApiGetIntegrationByProviderCallbackRequest
  */
-export interface IntegrationsApiGetIntegrationsByProviderCallbackRequest {
+export interface IntegrationApiGetIntegrationByProviderCallbackRequest {
     /**
      * 
      * @type {string}
-     * @memberof IntegrationsApiGetIntegrationsByProviderCallback
+     * @memberof IntegrationApiGetIntegrationByProviderCallback
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getIntegrationsConnectorsByIdToken operation in IntegrationsApi.
+ * Request parameters for getIntegrationConnectorsByIdToken operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest
+ * @interface IntegrationApiGetIntegrationConnectorsByIdTokenRequest
  */
-export interface IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest {
+export interface IntegrationApiGetIntegrationConnectorsByIdTokenRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof IntegrationsApiGetIntegrationsConnectorsByIdToken
+     * @memberof IntegrationApiGetIntegrationConnectorsByIdToken
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getIntegrationsGithubReposByRepoPages operation in IntegrationsApi.
+ * Request parameters for getIntegrationGithubReposByRepoPages operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest
+ * @interface IntegrationApiGetIntegrationGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest {
+export interface IntegrationApiGetIntegrationGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof IntegrationsApiGetIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiGetIntegrationGithubReposByRepoPages
      */
     readonly repo: string
 }
 
 /**
- * Request parameters for postIntegrationsByProviderConnect operation in IntegrationsApi.
+ * Request parameters for postIntegrationByProviderConnect operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsByProviderConnectRequest
+ * @interface IntegrationApiPostIntegrationByProviderConnectRequest
  */
-export interface IntegrationsApiPostIntegrationsByProviderConnectRequest {
+export interface IntegrationApiPostIntegrationByProviderConnectRequest {
     /**
      * Provider is the connector\&#39;s registry id, from the :provider path segment.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsByProviderConnect
+     * @memberof IntegrationApiPostIntegrationByProviderConnect
      */
     readonly provider: string
 
     /**
      * 
      * @type {ConnectIn}
-     * @memberof IntegrationsApiPostIntegrationsByProviderConnect
+     * @memberof IntegrationApiPostIntegrationByProviderConnect
      */
     readonly connectIn: ConnectIn
 }
 
 /**
- * Request parameters for postIntegrationsByProviderDisconnect operation in IntegrationsApi.
+ * Request parameters for postIntegrationByProviderDisconnect operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsByProviderDisconnectRequest
+ * @interface IntegrationApiPostIntegrationByProviderDisconnectRequest
  */
-export interface IntegrationsApiPostIntegrationsByProviderDisconnectRequest {
+export interface IntegrationApiPostIntegrationByProviderDisconnectRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsByProviderDisconnect
+     * @memberof IntegrationApiPostIntegrationByProviderDisconnect
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for postIntegrationsByProviderVerify operation in IntegrationsApi.
+ * Request parameters for postIntegrationByProviderVerify operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsByProviderVerifyRequest
+ * @interface IntegrationApiPostIntegrationByProviderVerifyRequest
  */
-export interface IntegrationsApiPostIntegrationsByProviderVerifyRequest {
+export interface IntegrationApiPostIntegrationByProviderVerifyRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integration/connectors) providers, which this surface never resolves.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsByProviderVerify
+     * @memberof IntegrationApiPostIntegrationByProviderVerify
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for postIntegrationsConnectorsByIdRefresh operation in IntegrationsApi.
+ * Request parameters for postIntegrationConnectorsByIdRefresh operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest
+ * @interface IntegrationApiPostIntegrationConnectorsByIdRefreshRequest
  */
-export interface IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest {
+export interface IntegrationApiPostIntegrationConnectorsByIdRefreshRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByIdRefresh
+     * @memberof IntegrationApiPostIntegrationConnectorsByIdRefresh
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postIntegrationsConnectorsByProviderCredential operation in IntegrationsApi.
+ * Request parameters for postIntegrationConnectorsByProviderCredential operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest
+ * @interface IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest
  */
-export interface IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest {
+export interface IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderCredential
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderCredential
      */
     readonly provider: string
 
     /**
      * 
      * @type {CredentialIn}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderCredential
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderCredential
      */
     readonly credentialIn: CredentialIn
 }
 
 /**
- * Request parameters for postIntegrationsConnectorsByProviderDevice operation in IntegrationsApi.
+ * Request parameters for postIntegrationConnectorsByProviderDevice operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest
+ * @interface IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest
  */
-export interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest {
+export interface IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDevice
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderDevice
      */
     readonly provider: string
 
     /**
      * 
      * @type {DeviceStartIn}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDevice
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderDevice
      */
     readonly deviceStartIn: DeviceStartIn
 }
 
 /**
- * Request parameters for postIntegrationsConnectorsByProviderDeviceByFlowPoll operation in IntegrationsApi.
+ * Request parameters for postIntegrationConnectorsByProviderDeviceByFlowPoll operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest
+ * @interface IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest
  */
-export interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest {
+export interface IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPoll
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPoll
      */
     readonly provider: string
 
     /**
      * Flow is the id deviceStartOut returned. Expired or another user\&#39;s flow is indistinguishable from an unknown one: 404.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPoll
+     * @memberof IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPoll
      */
     readonly flow: string
 }
 
 /**
- * Request parameters for postIntegrationsGithubClaim operation in IntegrationsApi.
+ * Request parameters for postIntegrationForgeWebhook operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubClaimRequest
+ * @interface IntegrationApiPostIntegrationForgeWebhookRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubClaimRequest {
+export interface IntegrationApiPostIntegrationForgeWebhookRequest {
+    /**
+     * 
+     * @type {ForgeJob}
+     * @memberof IntegrationApiPostIntegrationForgeWebhook
+     */
+    readonly forgeJob?: ForgeJob
+}
+
+/**
+ * Request parameters for postIntegrationGithubClaim operation in IntegrationApi.
+ * @export
+ * @interface IntegrationApiPostIntegrationGithubClaimRequest
+ */
+export interface IntegrationApiPostIntegrationGithubClaimRequest {
     /**
      * 
      * @type {GithubClaimIn}
-     * @memberof IntegrationsApiPostIntegrationsGithubClaim
+     * @memberof IntegrationApiPostIntegrationGithubClaim
      */
     readonly githubClaimIn: GithubClaimIn
 }
 
 /**
- * Request parameters for postIntegrationsGithubFork operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubFork operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubForkRequest
+ * @interface IntegrationApiPostIntegrationGithubForkRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubForkRequest {
+export interface IntegrationApiPostIntegrationGithubForkRequest {
     /**
      * 
      * @type {GithubForkReq}
-     * @memberof IntegrationsApiPostIntegrationsGithubFork
+     * @memberof IntegrationApiPostIntegrationGithubFork
      */
     readonly githubForkReq: GithubForkReq
 }
 
 /**
- * Request parameters for postIntegrationsGithubIssuesBackfill operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubIssuesBackfill operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest
+ * @interface IntegrationApiPostIntegrationGithubIssuesBackfillRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest {
+export interface IntegrationApiPostIntegrationGithubIssuesBackfillRequest {
     /**
      * 
      * @type {GithubBackfillIn}
-     * @memberof IntegrationsApiPostIntegrationsGithubIssuesBackfill
+     * @memberof IntegrationApiPostIntegrationGithubIssuesBackfill
      */
     readonly githubBackfillIn: GithubBackfillIn
 }
 
 /**
- * Request parameters for postIntegrationsGithubReposByRepoPages operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubReposByRepoPages operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest
+ * @interface IntegrationApiPostIntegrationGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest {
+export interface IntegrationApiPostIntegrationGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository, from the :repo path segment.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiPostIntegrationGithubReposByRepoPages
      */
     readonly repo: string
 
     /**
      * 
      * @type {GithubPagesEnableReq}
-     * @memberof IntegrationsApiPostIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiPostIntegrationGithubReposByRepoPages
      */
     readonly githubPagesEnableReq: GithubPagesEnableReq
 }
 
 /**
- * Request parameters for postIntegrationsGithubReposByRepoPagesBuilds operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubReposByRepoPagesBuilds operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest
+ * @interface IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest {
+export interface IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest {
     /**
      * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuilds
+     * @memberof IntegrationApiPostIntegrationGithubReposByRepoPagesBuilds
      */
     readonly repo: string
 }
 
 /**
- * Request parameters for postIntegrationsGithubReposImport operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubReposImport operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubReposImportRequest
+ * @interface IntegrationApiPostIntegrationGithubReposImportRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubReposImportRequest {
+export interface IntegrationApiPostIntegrationGithubReposImportRequest {
     /**
      * 
      * @type {GithubImportIn}
-     * @memberof IntegrationsApiPostIntegrationsGithubReposImport
+     * @memberof IntegrationApiPostIntegrationGithubReposImport
      */
     readonly githubImportIn: GithubImportIn
 }
 
 /**
- * Request parameters for postIntegrationsGithubSearch operation in IntegrationsApi.
+ * Request parameters for postIntegrationGithubSearch operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsGithubSearchRequest
+ * @interface IntegrationApiPostIntegrationGithubSearchRequest
  */
-export interface IntegrationsApiPostIntegrationsGithubSearchRequest {
+export interface IntegrationApiPostIntegrationGithubSearchRequest {
     /**
      * 
      * @type {GithubSearchReq}
-     * @memberof IntegrationsApiPostIntegrationsGithubSearch
+     * @memberof IntegrationApiPostIntegrationGithubSearch
      */
     readonly githubSearchReq: GithubSearchReq
 }
 
 /**
- * Request parameters for postIntegrationsLinearClaim operation in IntegrationsApi.
+ * Request parameters for postIntegrationLinearClaim operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsLinearClaimRequest
+ * @interface IntegrationApiPostIntegrationLinearClaimRequest
  */
-export interface IntegrationsApiPostIntegrationsLinearClaimRequest {
+export interface IntegrationApiPostIntegrationLinearClaimRequest {
     /**
      * 
      * @type {LinearClaimIn}
-     * @memberof IntegrationsApiPostIntegrationsLinearClaim
+     * @memberof IntegrationApiPostIntegrationLinearClaim
      */
     readonly linearClaimIn: LinearClaimIn
 }
 
 /**
- * Request parameters for postIntegrationsLinearComments operation in IntegrationsApi.
+ * Request parameters for postIntegrationLinearComments operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsLinearCommentsRequest
+ * @interface IntegrationApiPostIntegrationLinearCommentsRequest
  */
-export interface IntegrationsApiPostIntegrationsLinearCommentsRequest {
+export interface IntegrationApiPostIntegrationLinearCommentsRequest {
     /**
      * 
      * @type {LinearCommentIn}
-     * @memberof IntegrationsApiPostIntegrationsLinearComments
+     * @memberof IntegrationApiPostIntegrationLinearComments
      */
     readonly linearCommentIn: LinearCommentIn
 }
 
 /**
- * Request parameters for postIntegrationsLinearIssuesBackfill operation in IntegrationsApi.
+ * Request parameters for postIntegrationLinearIssuesBackfill operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest
+ * @interface IntegrationApiPostIntegrationLinearIssuesBackfillRequest
  */
-export interface IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest {
+export interface IntegrationApiPostIntegrationLinearIssuesBackfillRequest {
     /**
      * 
      * @type {LinearBackfillIn}
-     * @memberof IntegrationsApiPostIntegrationsLinearIssuesBackfill
+     * @memberof IntegrationApiPostIntegrationLinearIssuesBackfill
      */
     readonly linearBackfillIn: LinearBackfillIn
 }
 
 /**
- * Request parameters for postIntegrationsOpenrouterWebhook operation in IntegrationsApi.
+ * Request parameters for postIntegrationOpenrouterWebhook operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPostIntegrationsOpenrouterWebhookRequest
+ * @interface IntegrationApiPostIntegrationOpenrouterWebhookRequest
  */
-export interface IntegrationsApiPostIntegrationsOpenrouterWebhookRequest {
+export interface IntegrationApiPostIntegrationOpenrouterWebhookRequest {
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof IntegrationsApiPostIntegrationsOpenrouterWebhook
+     * @memberof IntegrationApiPostIntegrationOpenrouterWebhook
      */
     readonly requestBody?: { [key: string]: any; }
 }
 
 /**
- * Request parameters for putIntegrationsGithubReposByRepoPages operation in IntegrationsApi.
+ * Request parameters for putIntegrationGithubReposByRepoPages operation in IntegrationApi.
  * @export
- * @interface IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest
+ * @interface IntegrationApiPutIntegrationGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest {
+export interface IntegrationApiPutIntegrationGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository, from the :repo path segment.
      * @type {string}
-     * @memberof IntegrationsApiPutIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiPutIntegrationGithubReposByRepoPages
      */
     readonly repo: string
 
     /**
      * 
      * @type {GithubPagesUpdateReq}
-     * @memberof IntegrationsApiPutIntegrationsGithubReposByRepoPages
+     * @memberof IntegrationApiPutIntegrationGithubReposByRepoPages
      */
     readonly githubPagesUpdateReq: GithubPagesUpdateReq
 }
 
 /**
- * IntegrationsApi - object-oriented interface
+ * IntegrationApi - object-oriented interface
  * @export
- * @class IntegrationsApi
+ * @class IntegrationApi
  * @extends {BaseAPI}
  */
-export class IntegrationsApi extends BaseAPI {
+export class IntegrationApi extends BaseAPI {
     /**
      * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
      * @summary Forgets a connector: every custodied secret, then the row.
-     * @param {IntegrationsApiDeleteIntegrationsConnectorsByIdRequest} requestParameters Request parameters.
+     * @param {IntegrationApiDeleteIntegrationConnectorsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public deleteIntegrationsConnectorsById(requestParameters: IntegrationsApiDeleteIntegrationsConnectorsByIdRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).deleteIntegrationsConnectorsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteIntegrationConnectorsById(requestParameters: IntegrationApiDeleteIntegrationConnectorsByIdRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).deleteIntegrationConnectorsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
      * @summary Deletes the repo\'s Pages site.
-     * @param {IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public deleteIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).deleteIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public deleteIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiDeleteIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).deleteIntegrationGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
+     * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integration/connectors surface) are omitted; the two planes are disjoint.
      * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrations(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrations(options).then((request) => request(this.axios, this.basePath));
+    public getIntegration(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegration(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
      * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-     * @param {IntegrationsApiGetIntegrationsByProviderRequest} requestParameters Request parameters.
+     * @param {IntegrationApiGetIntegrationByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsByProvider(requestParameters: IntegrationsApiGetIntegrationsByProviderRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationByProvider(requestParameters: IntegrationApiGetIntegrationByProviderRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
      * @summary OAuth return for any connector
-     * @param {IntegrationsApiGetIntegrationsByProviderCallbackRequest} requestParameters Request parameters.
+     * @param {IntegrationApiGetIntegrationByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsByProviderCallback(requestParameters: IntegrationsApiGetIntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationByProviderCallback(requestParameters: IntegrationApiGetIntegrationByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3828,22 +3907,22 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsConnectors(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsConnectors(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationConnectors(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationConnectors(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
      * @summary Hands the custodied access token to its owner — the ONE place custody exits.
-     * @param {IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest} requestParameters Request parameters.
+     * @param {IntegrationApiGetIntegrationConnectorsByIdTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsConnectorsByIdToken(requestParameters: IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsConnectorsByIdToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationConnectorsByIdToken(requestParameters: IntegrationApiGetIntegrationConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationConnectorsByIdToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3851,10 +3930,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Lists the user-scoped provider cards — the catalog of what a user can connect, and how.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsConnectorsProviders(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationConnectorsProviders(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationConnectorsProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3862,10 +3941,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Begin linking a Hanzo account from Discord
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsDiscordLink(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsDiscordLink(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationDiscordLink(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationDiscordLink(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3873,10 +3952,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Complete the Discord account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsDiscordLinkCallback(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsDiscordLinkCallback(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationDiscordLinkCallback(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationDiscordLinkCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3884,10 +3963,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Discord sign-in return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsDiscordLinkDiscord(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsDiscordLinkDiscord(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationDiscordLinkDiscord(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationDiscordLinkDiscord(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3895,10 +3974,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsGithubInstallations(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsGithubInstallations(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationGithubInstallations(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationGithubInstallations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3906,22 +3985,22 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsGithubRepos(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsGithubRepos(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationGithubRepos(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationGithubRepos(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the repo\'s Pages status, live URL, custom domain and build source. The repo is resolved against the org installation\'s GRANTED set, so a caller can never address a repo the App was not granted; 404 when the repo has no Pages site.
      * @summary Returns the repo\'s Pages status, live URL, custom domain and build source.
-     * @param {IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationApiGetIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiGetIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3929,10 +4008,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsGitlabProjects(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationGitlabProjects(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationGitlabProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3940,10 +4019,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Install the Hanzo app into a Slack workspace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsSlackInstall(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsSlackInstall(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationSlackInstall(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationSlackInstall(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3951,10 +4030,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Begin linking a Hanzo account from Slack
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsSlackLink(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsSlackLink(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationSlackLink(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationSlackLink(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3962,10 +4041,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Complete the Slack account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsSlackLinkCallback(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationSlackLinkCallback(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationSlackLinkCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3973,10 +4052,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Slack sign-in return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsSlackLinkSlack(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationSlackLinkSlack(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationSlackLinkSlack(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3984,10 +4063,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Begin linking a Hanzo account from Teams
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTeamsLink(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTeamsLink(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTeamsLink(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTeamsLink(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3995,10 +4074,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Microsoft sign-in return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTeamsLinkAad(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTeamsLinkAad(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTeamsLinkAad(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTeamsLinkAad(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4006,10 +4085,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Complete the Teams account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTeamsLinkCallback(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTeamsLinkCallback(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTeamsLinkCallback(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTeamsLinkCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4017,10 +4096,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Begin linking a Hanzo account from Telegram
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTelegramLink(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTelegramLink(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTelegramLink(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTelegramLink(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4028,10 +4107,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Telegram Login Widget return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTelegramLinkAuth(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTelegramLinkAuth(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTelegramLinkAuth(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTelegramLinkAuth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4039,10 +4118,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Complete the Telegram account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsTelegramLinkCallback(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsTelegramLinkCallback(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationTelegramLinkCallback(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationTelegramLinkCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4050,94 +4129,94 @@ export class IntegrationsApi extends BaseAPI {
      * @summary WhatsApp Cloud API subscription challenge
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public getIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getIntegrationsWhatsappWebhook(options).then((request) => request(this.axios, this.basePath));
+    public getIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).getIntegrationWhatsappWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
      * @summary Acquires the org\'s credential for one provider.
-     * @param {IntegrationsApiPostIntegrationsByProviderConnectRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationByProviderConnectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsByProviderConnect(requestParameters: IntegrationsApiPostIntegrationsByProviderConnectRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationByProviderConnect(requestParameters: IntegrationApiPostIntegrationByProviderConnectRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
      * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-     * @param {IntegrationsApiPostIntegrationsByProviderDisconnectRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationByProviderDisconnectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsByProviderDisconnect(requestParameters: IntegrationsApiPostIntegrationsByProviderDisconnectRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsByProviderDisconnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationByProviderDisconnect(requestParameters: IntegrationApiPostIntegrationByProviderDisconnectRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationByProviderDisconnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
      * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-     * @param {IntegrationsApiPostIntegrationsByProviderVerifyRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationByProviderVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsByProviderVerify(requestParameters: IntegrationsApiPostIntegrationsByProviderVerifyRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationByProviderVerify(requestParameters: IntegrationApiPostIntegrationByProviderVerifyRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationByProviderVerify(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
      * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
-     * @param {IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationConnectorsByIdRefreshRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsConnectorsByIdRefresh(requestParameters: IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationConnectorsByIdRefresh(requestParameters: IntegrationApiPostIntegrationConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
      * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
-     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsConnectorsByProviderCredential(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationConnectorsByProviderCredential(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
      * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
-     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsConnectorsByProviderDevice(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationConnectorsByProviderDevice(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
      * @summary Advances a device sign-in.
-     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationApiPostIntegrationConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4145,164 +4224,176 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Discord interactions endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsDiscordInteractions(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsDiscordInteractions(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationDiscordInteractions(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationDiscordInteractions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Receives the forge\'s workflow_job delivery. The signature over the raw body is checked against the secret at KMS forge.WebhookRef before anything is decoded; a queued job becomes one ephemeral runner Job on the cluster, minted a registration token for exactly that job. Every other action is answered 200 and ignored.
+     * @summary Forge workflow_job webhook
+     * @param {IntegrationApiPostIntegrationForgeWebhookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationApi
+     */
+    public postIntegrationForgeWebhook(requestParameters: IntegrationApiPostIntegrationForgeWebhookRequest = {}, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationForgeWebhook(requestParameters.forgeJob, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
      * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
-     * @param {IntegrationsApiPostIntegrationsGithubClaimRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubClaimRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubClaim(requestParameters: IntegrationsApiPostIntegrationsGithubClaimRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubClaim(requestParameters: IntegrationApiPostIntegrationGithubClaimRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
      * @summary Forks a granted repository.
-     * @param {IntegrationsApiPostIntegrationsGithubForkRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubForkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubFork(requestParameters: IntegrationsApiPostIntegrationsGithubForkRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubFork(requestParameters.githubForkReq, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubFork(requestParameters: IntegrationApiPostIntegrationGithubForkRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubFork(requestParameters.githubForkReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Seeds the native todo with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
      * @summary Seeds the native todo with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
-     * @param {IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubIssuesBackfillRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsGithubIssuesBackfillRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubIssuesBackfill(requestParameters.githubBackfillIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubIssuesBackfill(requestParameters: IntegrationApiPostIntegrationGithubIssuesBackfillRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubIssuesBackfill(requestParameters.githubBackfillIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
      * @summary Creates the repo\'s Pages site and answers 201 Created with it.
-     * @param {IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPostIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiPostIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
      * @summary Requests a Pages rebuild and returns the queued build\'s status.
-     * @param {IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubReposByRepoPagesBuilds(requestParameters: IntegrationsApiPostIntegrationsGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubReposByRepoPagesBuilds(requestParameters: IntegrationApiPostIntegrationGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
+     * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integration/github/repos for the per-repo status to flip to imported.
      * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
-     * @param {IntegrationsApiPostIntegrationsGithubReposImportRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubReposImportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubReposImport(requestParameters: IntegrationsApiPostIntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubReposImport(requestParameters: IntegrationApiPostIntegrationGithubReposImportRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
      * @summary Finds repositories on GitHub.
-     * @param {IntegrationsApiPostIntegrationsGithubSearchRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationGithubSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubSearch(requestParameters: IntegrationsApiPostIntegrationsGithubSearchRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubSearch(requestParameters: IntegrationApiPostIntegrationGithubSearchRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integrations/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+     * The address the GitHub App delivers events to. A push is handed to the repository sync engine, and an issue or issue-comment event is mirrored into the native todo — idempotently, so the same issue re-syncs to one row however many times it is edited, closed or reopened. A repository event that puts a repo INTO the granted set (created, transferred, unarchived) raises one todo offering to import it; accepting means POSTing that repo to /v1/integration/github/import. It never imports on its own.  It answers a benign 200 for everything it does not act on — the ping, other event types, an unknown installation — deliberately, so GitHub does not enter a retry storm over events that were never going to do anything. Only a bad signature and a genuine sync failure are non-200, and an oversized payload is refused outright.  Two sync rules are worth stating because neither is guessable. EVERY ref syncs, tags as well as branches, because releases are cut by tag and filtering them would stop publishing with nothing reporting a failure. And a delete is NEVER propagated: the native side is canonical, so an inbound delete never removes a native ref.  The payload is verified by HMAC against the webhook secret before it is parsed.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
      * @summary GitHub App webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsGithubWebhook(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsGithubWebhook(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationGithubWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationGithubWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
      * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
-     * @param {IntegrationsApiPostIntegrationsLinearClaimRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationLinearClaimRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsLinearClaim(requestParameters: IntegrationsApiPostIntegrationsLinearClaimRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationLinearClaim(requestParameters: IntegrationApiPostIntegrationLinearClaimRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationLinearClaim(requestParameters.linearClaimIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Posts a comment on a Linear issue with the caller\'s own key, so it carries their name. This is the op an agent is offered when it should answer in Linear rather than in chat.
      * @summary Posts a comment on a Linear issue with the caller\'s own key, so it carries their name.
-     * @param {IntegrationsApiPostIntegrationsLinearCommentsRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationLinearCommentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsLinearComments(requestParameters: IntegrationsApiPostIntegrationsLinearCommentsRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsLinearComments(requestParameters.linearCommentIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationLinearComments(requestParameters: IntegrationApiPostIntegrationLinearCommentsRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationLinearComments(requestParameters.linearCommentIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter. Synchronous and bounded, idempotent by ExtRef.
      * @summary Seeds the native todo with the EXISTING Linear issues the caller\'s key can see (default state=open); the webhook keeps them live thereafter.
-     * @param {IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationLinearIssuesBackfillRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsLinearIssuesBackfill(requestParameters: IntegrationsApiPostIntegrationsLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationLinearIssuesBackfill(requestParameters: IntegrationApiPostIntegrationLinearIssuesBackfillRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationLinearIssuesBackfill(requestParameters.linearBackfillIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integrations/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+     * The address Linear delivers Issue and Comment events to. An issue event is mirrored into the native todo — idempotently by identifier, so ENG-123 is one row however many times it is edited, moved or closed — and every issue and comment event is handed to the automations engine as a verified trigger, which is how an org runs an agent when an issue is assigned to it or a comment mentions it. A remove is never propagated: the native side is canonical.  It answers a benign 200 for what it does not act on — an unknown organization, other event types — so Linear does not retry-storm. A bad signature and a delivery older than a minute are 401; only a sink failure is 502.  The delivery names its Linear organization; that organization\'s own webhook secret — sealed at /v1/integration/linear/claim — verifies the HMAC over the raw body, so the tenant is the organization the signature proves, never a header.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
      * @summary Linear webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsLinearWebhook(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsLinearWebhook(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationLinearWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationLinearWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * OpenRouter\'s spend is invisible to every Hanzo money lens because those lenses read hanzo.cloud_usage and OpenRouter meters keys of its own. Point a Broadcast destination (Settings ▸ Observability ▸ Webhook) at this endpoint and each generation span becomes ONE row in that same ledger with provider `openrouter`, so one query answers what we spend everywhere. Enable the Cost and Identity field categories: cost is the money and identity carries `openrouter.api_key_name`, which is what says WHICH key spent it — it lands in `account` as openrouter/<key name>.  AUTHENTICATION IS A HANZO KEY. Broadcast signs nothing; its only authentication is the destination\'s Headers map, so send a key as `Authorization: Bearer pk-…` and it is admitted exactly as /v1/event admits a beacon\'s: a project key resolves through the project that minted it, an IAM-issued key through IAM. That key names the org every row is filed under; it can write and cannot read. No key, or a key that names no org, is 401 and nothing is stored.  The body is OTLP/JSON — `{resourceSpans:[{scopeSpans:[{spans:[…]}]}]}` — exactly as OpenTelemetry defines it; the model, tokens and cost are read from each span\'s `gen_ai.*` attributes and the key name from `openrouter.api_key_name`. The answer is `{stored, dropped}`: how many generations became rows, and how many spans named no model. Those are OpenRouter\'s trace and span parents — they carry no cost to meter. An empty payload stores nothing and answers 200, which is what makes Test Connection pass. A warehouse that cannot take the rows answers 503 so the delivery shows red and can be replayed: a row is keyed by its span id, so a redelivery collapses rather than double-counting.
      * @summary Receive OpenRouter Broadcast traces as usage rows
-     * @param {IntegrationsApiPostIntegrationsOpenrouterWebhookRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPostIntegrationOpenrouterWebhookRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsOpenrouterWebhook(requestParameters: IntegrationsApiPostIntegrationsOpenrouterWebhookRequest = {}, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsOpenrouterWebhook(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationOpenrouterWebhook(requestParameters: IntegrationApiPostIntegrationOpenrouterWebhookRequest = {}, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationOpenrouterWebhook(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4310,10 +4401,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Slack slash command webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsSlackCommands(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsSlackCommands(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationSlackCommands(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationSlackCommands(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4321,10 +4412,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Slack Events API webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsSlackEvents(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsSlackEvents(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationSlackEvents(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationSlackEvents(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4332,10 +4423,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Joins every public channel in the caller org\'s workspace.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsSlackJoin(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsSlackJoin(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationSlackJoin(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationSlackJoin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4343,10 +4434,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Microsoft Teams Bot Framework webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsTeamsEvents(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsTeamsEvents(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationTeamsEvents(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationTeamsEvents(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4354,10 +4445,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Mints a short, single-use deep-link code bound to the caller\'s org and returns the t.me link the console navigates to.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsTelegramConnect(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsTelegramConnect(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationTelegramConnect(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationTelegramConnect(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4365,10 +4456,10 @@ export class IntegrationsApi extends BaseAPI {
      * @summary Telegram Bot API webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsTelegramWebhook(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsTelegramWebhook(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationTelegramWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationTelegramWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4376,22 +4467,22 @@ export class IntegrationsApi extends BaseAPI {
      * @summary WhatsApp Cloud API webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public postIntegrationsWhatsappWebhook(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postIntegrationsWhatsappWebhook(options).then((request) => request(this.axios, this.basePath));
+    public postIntegrationWhatsappWebhook(options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).postIntegrationWhatsappWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source. ONLY the provided fields are sent to GitHub, so an update never resets a setting the caller did not mention.
      * @summary Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source.
-     * @param {IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationApiPutIntegrationGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IntegrationsApi
+     * @memberof IntegrationApi
      */
-    public putIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).putIntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(this.axios, this.basePath));
+    public putIntegrationGithubReposByRepoPages(requestParameters: IntegrationApiPutIntegrationGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationApiFp(this.configuration).putIntegrationGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

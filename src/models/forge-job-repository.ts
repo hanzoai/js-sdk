@@ -15,19 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { BotView } from './bot-view';
+import type { ForgeJobRepositoryOwner } from './forge-job-repository-owner';
 
 /**
  * 
  * @export
- * @interface BotList
+ * @interface ForgeJobRepository
  */
-export interface BotList {
+export interface ForgeJobRepository {
     /**
-     * Bots is one row per kind=bot machine, each joined with its agent binding when it has one.
-     * @type {Array<BotView>}
-     * @memberof BotList
+     * 
+     * @type {string}
+     * @memberof ForgeJobRepository
      */
-    'bots'?: Array<BotView>;
+    'name'?: string;
+    /**
+     * 
+     * @type {ForgeJobRepositoryOwner}
+     * @memberof ForgeJobRepository
+     */
+    'owner'?: ForgeJobRepositoryOwner;
 }
 

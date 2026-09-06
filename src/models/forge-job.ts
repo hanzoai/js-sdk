@@ -13,24 +13,36 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ForgeJobRepository } from './forge-job-repository';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ForgeJobWorkflowJob } from './forge-job-workflow-job';
 
 /**
  * 
  * @export
- * @interface ApprovePairingIn
+ * @interface ForgeJob
  */
-export interface ApprovePairingIn {
+export interface ForgeJob {
     /**
-     * Channel is the transport the request came in on: discord, slack, teams, telegram or whatsapp.
+     * 
      * @type {string}
-     * @memberof ApprovePairingIn
+     * @memberof ForgeJob
      */
-    'channel'?: string;
+    'action'?: string;
     /**
-     * Code is the pairing code from GET /v1/channel/pairing. It is a capability: holding it is what authorises the approval, alongside org admin.
-     * @type {string}
-     * @memberof ApprovePairingIn
+     * 
+     * @type {ForgeJobRepository}
+     * @memberof ForgeJob
      */
-    'code'?: string;
+    'repository'?: ForgeJobRepository;
+    /**
+     * 
+     * @type {ForgeJobWorkflowJob}
+     * @memberof ForgeJob
+     */
+    'workflow_job'?: ForgeJobWorkflowJob;
 }
 

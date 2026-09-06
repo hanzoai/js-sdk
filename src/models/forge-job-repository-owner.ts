@@ -17,19 +17,19 @@
 /**
  * 
  * @export
- * @interface PushPusher
+ * @interface ForgeJobRepositoryOwner
  */
-export interface PushPusher {
+export interface ForgeJobRepositoryOwner {
     /**
      * 
      * @type {string}
-     * @memberof PushPusher
+     * @memberof ForgeJobRepositoryOwner
      */
     'login'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PushPusher
+     * @memberof ForgeJobRepositoryOwner
      */
     'username'?: string;
 }

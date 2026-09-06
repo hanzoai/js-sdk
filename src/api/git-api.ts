@@ -1677,8 +1677,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2246,8 +2246,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2643,8 +2643,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitReposByNameTargets(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3827,8 +3827,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * GONE (410). Push-to-deploy belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
-     * @summary Retired — forge pushes build via platform.hanzo.ai
+     * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+     * @summary Retired — push-to-deploy has no inbound webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi

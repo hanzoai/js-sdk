@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DriftFlag } from './drift-flag';
 
 /**
  * 
@@ -21,46 +24,16 @@
  */
 export interface Verdict {
     /**
-     * 
-     * @type {number}
+     * Flags are the findings behind the severity, in detection order: floating-declared, floating-running, stale, un-rolled, then the release-artifact ones. Always present — `[]` for a row that runs what it declares, never null.
+     * @type {Array<DriftFlag>}
      * @memberof Verdict
      */
-    'builds'?: number;
+    'flags'?: Array<DriftFlag>;
     /**
-     * 
+     * Severity is the roll-up over Flags — red if any flag is red, else yellow if any is yellow, else ok. It is the column a board sorts and filters on, and \"ok\" is exactly what no flags means.
      * @type {string}
      * @memberof Verdict
      */
-    'commit'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Verdict
-     */
-    'fired'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Verdict
-     */
-    'org'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Verdict
-     */
-    'reason'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Verdict
-     */
-    'ref'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Verdict
-     */
-    'repo'?: string;
+    'severity'?: string;
 }
 

@@ -13,48 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { PushPusher } from './push-pusher';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { PushRepository } from './push-repository';
 
 /**
  * 
  * @export
- * @interface Push
+ * @interface ForgeLaunched
  */
-export interface Push {
+export interface ForgeLaunched {
+    /**
+     * 
+     * @type {number}
+     * @memberof ForgeLaunched
+     */
+    'job'?: number;
     /**
      * 
      * @type {string}
-     * @memberof Push
+     * @memberof ForgeLaunched
      */
-    'after'?: string;
+    'org'?: string;
     /**
      * 
      * @type {string}
-     * @memberof Push
+     * @memberof ForgeLaunched
      */
-    'before'?: string;
-    /**
-     * 
-     * @type {PushPusher}
-     * @memberof Push
-     */
-    'pusher'?: PushPusher;
+    'repo'?: string;
     /**
      * 
      * @type {string}
-     * @memberof Push
+     * @memberof ForgeLaunched
      */
-    'ref'?: string;
-    /**
-     * 
-     * @type {PushRepository}
-     * @memberof Push
-     */
-    'repository'?: PushRepository;
+    'runner'?: string;
 }
 

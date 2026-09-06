@@ -13,27 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { PushPusher } from './push-pusher';
 
 /**
  * 
  * @export
- * @interface PushRepository
+ * @interface ForgeJobWorkflowJob
  */
-export interface PushRepository {
+export interface ForgeJobWorkflowJob {
+    /**
+     * 
+     * @type {number}
+     * @memberof ForgeJobWorkflowJob
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ForgeJobWorkflowJob
+     */
+    'labels'?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof PushRepository
+     * @memberof ForgeJobWorkflowJob
      */
     'name'?: string;
     /**
      * 
-     * @type {PushPusher}
-     * @memberof PushRepository
+     * @type {number}
+     * @memberof ForgeJobWorkflowJob
      */
-    'owner'?: PushPusher;
+    'run_id'?: number;
 }
 

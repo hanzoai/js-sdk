@@ -75,17 +75,17 @@ export interface SampleView {
      */
     'load1'?: number;
     /**
-     * Load5 is the 5-minute load average, the same units as Load1.
-     * @type {number}
-     * @memberof SampleView
-     */
-    'load5'?: number;
-    /**
      * Load15 is the 15-minute load average, the same units as Load1.
      * @type {number}
      * @memberof SampleView
      */
     'load15'?: number;
+    /**
+     * Load5 is the 5-minute load average, the same units as Load1.
+     * @type {number}
+     * @memberof SampleView
+     */
+    'load5'?: number;
     /**
      * MemFree is host memory available, in BYTES, as reported rather than derived.
      * @type {number}

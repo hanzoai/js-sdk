@@ -28,16 +28,16 @@ export interface O11yO11yAgentCheckInIn {
     'account_id'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof O11yO11yAgentCheckInIn
-     */
-    'cloud_account_id'?: string;
-    /**
-     * 
      * @type {any}
      * @memberof O11yO11yAgentCheckInIn
      */
     'cloudIntegrationId'?: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof O11yO11yAgentCheckInIn
+     */
+    'cloud_account_id'?: string;
     /**
      * 
      * @type {{ [key: string]: object; }}

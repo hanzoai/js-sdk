@@ -259,6 +259,12 @@ export interface IamUser {
      * @type {string}
      * @memberof IamUser
      */
+    'custom10'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamUser
+     */
     'custom2'?: string;
     /**
      * 
@@ -302,12 +308,6 @@ export interface IamUser {
      * @memberof IamUser
      */
     'custom9'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamUser
-     */
-    'custom10'?: string;
     /**
      * 
      * @type {string}
