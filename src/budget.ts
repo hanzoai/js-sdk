@@ -9,12 +9,13 @@ import { value, type Call, type Page } from './answer';
 import { bool, list, num, obj, rfc3339, str, when } from './read';
 
 /**
- * Integer minor units. Never a float: a balance that has been through a binary
- * fraction is a balance that cannot be compared for equality with the one the
- * ledger holds.
+ * An amount in the currency's minor units, as ISO 4217 defines them: hundredths
+ * for USD, whole yen for JPY, thousandths for KWD. Not "cents", which is false
+ * for two of those three. Never a float: a balance that has been through a
+ * binary fraction cannot be compared for equality with the one the ledger holds.
  */
 export interface Money {
-  cents: number;
+  minor: number;
   /** ISO 4217. Cloud's ledger answers USD. */
   currency: string;
 }
@@ -43,8 +44,12 @@ export interface Allowance {
 /** The wallet the AI gate reads before admitting a paid request. */
 export interface Balance {
   available: Money;
-  /** Reservations the gate is holding against in-flight requests. */
-  held: Money;
+  /**
+   * Reservations the gate is holding against in-flight requests. The wire
+   * spells it `holds`; the name here is `reserved` because `held` is an arm of
+   * an answer, and one word for two facts is what the naming rule prevents.
+   */
+  reserved: Money;
   /**
    * The ledger key that was resolved — the org's shared pool, or a personal
    * account. Echoed because a client that guesses its own payer can guess wrong,
@@ -82,7 +87,7 @@ export interface Filter {
   product?: string;
 }
 
-const usd = (cents: number): Money => ({ cents, currency: 'USD' });
+const usd = (minor: number): Money => ({ minor, currency: 'USD' });
 
 export class Budget {
   constructor(private readonly call: Call) {}
@@ -113,7 +118,7 @@ export class Budget {
       const b = obj(body);
       return {
         available: usd(num(b['available'])),
-        held: usd(num(b['holds'])),
+        reserved: usd(num(b['holds'])),
         account: str(b['account']),
       };
     });
@@ -134,7 +139,7 @@ export class Budget {
    *
    * The document declares no response schema for this route, so the shape is
    * modelled here from what cloud's own handler writes: `{user, count, usage[]}`
-   * with amounts in USD cents.
+   * with amounts in USD minor units.
    */
   async spent(filter: Filter = {}): Promise<Page<Charge>> {
     const reply = await this.call('GET', '/v1/billing/usage', {

@@ -5,7 +5,7 @@
 // literal `status`, so `a.value` does not typecheck until the union is narrowed
 // and a `switch` that forgets an arm fails to compile.
 //
-// Exceptions stay for outcomes with no decision in them: no credential, a
+// [Fault] stays for outcomes with no decision in them: no credential, a
 // transport failure, a server fault. There is nothing in those for a caller to
 // read, so there is no arm for them.
 
@@ -65,18 +65,35 @@ export interface Page<T> {
   total: number;
 }
 
-/** An outcome with no decision in it. */
-export class Problem extends Error {
+/**
+ * An outcome with no decision in it.
+ *
+ * A 401, a bare 403, any other 4xx, every 5xx, a transport failure, an absent
+ * credential. Nothing in it is for a caller to act on except `request`, which
+ * is what support finds the call by. It is not an arm: a refusal a caller can
+ * act on is [Denied] and a call a person was asked about is [Held], and reading
+ * a network partition as either would let a caller cache a policy answer nobody
+ * gave.
+ *
+ * It is not named `Problem` because RFC 9457's problem detail is the body a 402
+ * carries and this client reads as a [Denied]; one word for two things is what
+ * the naming rule prevents. It is not named `Error` because that name is
+ * already taken, here and in every other language.
+ */
+export class Fault extends Error {
   /** The HTTP status, or 0 when nothing answered. */
   readonly status: number;
-  /** The RFC 9457 `code`, empty where the answer carried none. */
+  /**
+   * The RFC 9457 `code`, empty where the answer carried none — including every
+   * fault raised before a request goes out.
+   */
   readonly code: string;
   readonly detail: string;
   readonly request: string;
 
   constructor(status: number, code: string, detail: string, request: string) {
     super(`hanzoai: ${status}${code ? ' ' + code : ''}: ${detail}${request ? ` (request ${request})` : ''}`);
-    this.name = 'Problem';
+    this.name = 'Fault';
     this.status = status;
     this.code = code;
     this.detail = detail;
@@ -114,21 +131,23 @@ export type Call = (
  * It is here because cloud spells "no validated principal" as 403 forbidden. The
  * day it answers 401 for that, this set goes and the rule below collapses to
  * `402 or 403 ⇒ denied`.
+ *
+ * These are the two codes cloud emits on a 403 it means as a refusal. There is
+ * no third: a policy refusal has no code of its own yet, and a code invented
+ * here would be one no server sends — and would hand an unauthenticated caller
+ * a cure for a refusal nobody made.
  */
-const refusals = new Set([
-  'policy_denied',
-  'entitlement_required',
-  'spend_cap_exceeded',
-  'insufficient_balance',
-]);
+const refusals = new Set(['spend_cap_exceeded', 'insufficient_balance']);
 
 /** What a refusal body says, whichever of cloud's two 402 bodies it is. */
 function refusal(body: unknown): { code: string; reason: string; product?: string; cures: Cure[] } {
   const b = obj(body);
   // RFC 9457 spells the code `code` and the sentence `detail`; the spend gate's
   // own body spells them `error` and `message` and adds `product` and `cure[]`.
-  // One reader, named fallbacks — not two paths — so it keeps working unchanged
-  // when cloud settles on the envelope alone.
+  // Its own `reason` — "unpaid", "unresolved" — names the admit leg that failed
+  // rather than explaining anything to a person, so it is not read. One reader,
+  // named fallbacks — not two paths — so it keeps working unchanged when cloud
+  // settles on the envelope alone.
   const product = str(b['product']);
   return {
     code: str(b['code']) || str(b['error']),
@@ -174,14 +193,14 @@ export function arm<T>(r: Reply, read: (body: unknown) => T): Answer<T> {
   if (r.status === 402 || (r.status === 403 && refusals.has(said.code))) {
     return { status: 'denied', ...said, request: r.request };
   }
-  throw new Problem(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
+  throw new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
 }
 
-/** A read no gate refuses: the value, or a [Problem] because nothing was decided. */
+/** A read no gate refuses: the value, or a [Fault] because nothing was decided. */
 export function value<T>(r: Reply, read: (body: unknown) => T): T {
   if (r.status >= 200 && r.status < 300) return read(r.body);
   const said = refusal(r.body);
-  throw new Problem(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
+  throw new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
 }
 
 /** `{data, total}` — the page shape every listing on this wire answers with. */

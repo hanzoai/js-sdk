@@ -64,7 +64,7 @@ test('a 401 re-mints once and replays; a second 401 is the server saying no', as
   t.after(again.restore);
 
   await assert.rejects(() => client().budget.left(), (err) => {
-    assert.ok(err instanceof hanzoai.answer.Problem);
+    assert.ok(err instanceof hanzoai.answer.Fault);
     assert.equal(err.status, 401);
     return true;
   });
@@ -122,15 +122,22 @@ test('every option falls back to an environment variable', async (t) => {
   assert.equal(moved.resource, 'https://cloud.example');
 });
 
-test('no credential is a problem, not a call', async (t) => {
+test('no credential builds, and fails at the first call rather than at construction', async (t) => {
   const sent = wire([]);
   t.after(sent.restore);
 
+  // Nothing goes to IAM, because there is nothing to exchange, and nothing goes
+  // unsigned to the gateway — an unsigned call comes back a bare 403, which
+  // reads as a refusal of the caller rather than the absence of one. The code
+  // is empty because no answer named one.
+  const c = new hanzoai.Client({ id: '', secret: '' });
   await assert.rejects(
-    () => new hanzoai.Client({ id: '', secret: '' }).budget.left(),
+    () => c.budget.left(),
     (err) => {
-      assert.ok(err instanceof hanzoai.answer.Problem);
-      assert.equal(err.code, 'no_credential');
+      assert.ok(err instanceof hanzoai.answer.Fault);
+      assert.equal(err.status, 0);
+      assert.equal(err.code, '');
+      assert.match(err.message, /HANZO_CLIENT_ID/);
       return true;
     },
   );

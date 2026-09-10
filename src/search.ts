@@ -5,6 +5,7 @@
 // that ignores `partial` reads a truncated corpus as a complete one.
 
 import { arm, type Answer, type Call } from './answer';
+import { doctype, kind } from './kb';
 import { list, num, obj, str } from './read';
 
 /** How to search. The modes name retrieval kinds, never backends. */
@@ -15,7 +16,12 @@ export interface Opts {
   mode?: Mode;
   /** One project scope within the org. */
   project?: string;
-  /** Restrict the semantic leg to these knowledge kinds — `kb.page`, `kb.memory`, `kb.source`. */
+  /**
+   * Restrict retrieval to these knowledge kinds — `page`, `memory`, `source`,
+   * the same word `kb.Doc.kind` takes. The route filters on the doctype address
+   * and silently ignores anything that is not one, so the mapping happens here
+   * rather than in a caller's head.
+   */
   kinds?: string[];
   /** The lexical index to query. Defaults to `kb`. */
   index?: string;
@@ -38,7 +44,11 @@ export interface Hit {
   id: string;
   /** Which store it lives in: `kb`, `code`. Provenance, not something to branch on. */
   corpus: string;
-  /** The knowledge kind — `kb.page`, `kb.memory`, `kb.source`, or the lexical row's own. */
+  /**
+   * The knowledge kind that matched — `page`, `memory` or `source`, the same
+   * word `kb.Doc.kind` takes. A hit out of another corpus carries that corpus's
+   * own type and keeps it.
+   */
   kind: string;
   title: string;
   url: string;
@@ -93,7 +103,7 @@ function hits(body: unknown): Hits {
       return {
         id: str(h['id']),
         corpus: str(h['corpus']),
-        kind: str(h['doctype']),
+        kind: kind(str(h['doctype'])),
         title: str(h['title']),
         url: str(h['url']),
         project: str(h['project']),
@@ -136,7 +146,7 @@ export class Search {
         project: opts.project,
         // `kind` is the word this client uses for a knowledge type; `doctypes`
         // is this route's spelling of it.
-        doctypes: opts.kinds,
+        doctypes: opts.kinds?.map(doctype),
         index: opts.index,
         limit: opts.limit,
         offset: opts.offset,

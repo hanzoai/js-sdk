@@ -44,7 +44,9 @@ test('2xx is the ok arm, and it carries the request id', async (t) => {
   assert.equal(a.value.partial, false);
   assert.equal(a.value.mode, 'hybrid');
   assert.equal(a.value.took, 41);
-  assert.equal(a.value.items[0].kind, 'kb.page');
+  // `kb.page` is the address the route reports; `page` is the word this client
+  // uses for a knowledge kind, in search and in kb alike.
+  assert.equal(a.value.items[0].kind, 'page');
   assert.deepEqual(a.value.items[0].matched, [{ backend: 'vector', rank: 1, score: 0.82 }]);
 });
 
@@ -127,13 +129,13 @@ test('402 with the RFC 9457 envelope is denied on its own code', async (t) => {
 test('403 with a refusal code is denied; 403 forbidden is not', async (t) => {
   const refused = wire([
     { status: 200, body: TOKEN },
-    { status: 403, ...stamped, body: { status: 403, detail: 'clause storage.write', code: 'policy_denied' } },
+    { status: 403, ...stamped, body: { status: 403, detail: 'the monthly cap is spent', code: 'spend_cap_exceeded' } },
   ]);
   t.after(refused.restore);
 
   const a = await client().search.find('runbook');
   assert.equal(a.status, 'denied');
-  assert.equal(a.code, 'policy_denied');
+  assert.equal(a.code, 'spend_cap_exceeded');
 
   // "No validated principal" is cloud spelling 401 as 403. Nothing was decided,
   // so there is nothing in it for a caller to read.
@@ -148,10 +150,25 @@ test('403 with a refusal code is denied; 403 forbidden is not', async (t) => {
   t.after(anonymous.restore);
 
   await assert.rejects(() => client().search.find('runbook'), (err) => {
-    assert.ok(err instanceof hanzoai.answer.Problem);
+    assert.ok(err instanceof hanzoai.answer.Fault);
     assert.equal(err.status, 403);
     assert.equal(err.code, 'forbidden');
     assert.equal(err.request, REQUEST);
+    return true;
+  });
+
+  // Cloud writes neither `policy_denied` nor `entitlement_required` anywhere,
+  // so a 403 read as denied on one of them would hand a caller a cure for a
+  // refusal nobody made — and it is the same 403 an unauthenticated call gets.
+  const invented = wire([
+    { status: 200, body: TOKEN },
+    { status: 403, ...stamped, body: { status: 403, detail: 'clause storage.write', code: 'policy_denied' } },
+  ]);
+  t.after(invented.restore);
+
+  await assert.rejects(() => client().search.find('runbook'), (err) => {
+    assert.ok(err instanceof hanzoai.answer.Fault);
+    assert.equal(err.status, 403);
     return true;
   });
 });
@@ -193,7 +210,7 @@ test('the body decides a hold, not the code', async (t) => {
   assert.equal(b.value.recorded, 1);
 });
 
-test('5xx and an unreachable server are problems, not arms', async (t) => {
+test('5xx and an unreachable server are faults, not arms', async (t) => {
   const broken = wire([
     { status: 200, body: TOKEN },
     { status: 502, ...stamped, body: { status: 502, detail: 'search upstream unreachable' } },
@@ -213,7 +230,7 @@ test('5xx and an unreachable server are problems, not arms', async (t) => {
   };
 
   await assert.rejects(() => client().search.find('runbook'), (err) => {
-    assert.ok(err instanceof hanzoai.answer.Problem);
+    assert.ok(err instanceof hanzoai.answer.Fault);
     assert.equal(err.status, 0);
     assert.equal(err.code, 'unreachable');
     return true;

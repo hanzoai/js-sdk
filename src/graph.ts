@@ -8,7 +8,7 @@
 // The substrate is HIP-0526's. This client talks to /v1/graph and embeds none
 // of it.
 
-import { Problem, arm, value, type Answer, type Call } from './answer';
+import { Fault, arm, value, type Answer, type Call } from './answer';
 import { bool, instant, list, num, obj, rfc3339, str, when } from './read';
 
 /**
@@ -145,8 +145,11 @@ export interface Source {
 export interface Vocabulary {
   /** What this org has actually asserted — the only vocabulary there is. */
   relations: string[];
-  /** The terms of the precedence order, in the order they apply. */
-  rule: string[];
+  /**
+   * The terms of the precedence order, in the order they apply. The wire member
+   * is `rule`; this is plural because it is a list.
+   */
+  rules: string[];
   /** The ceiling on one walk. */
   bound: number;
 }
@@ -213,7 +216,7 @@ export class Graph {
     if (answer.status === 'ok') {
       const { recorded, duplicate, refused } = answer.value;
       if (recorded + duplicate + refused !== facts.length) {
-        throw new Problem(
+        throw new Fault(
           reply.status,
           'short_write',
           `asserted ${facts.length} facts and ${recorded + duplicate + refused} were accounted for`,
@@ -333,7 +336,7 @@ export class Graph {
       const b = obj(body);
       return {
         relations: list(b['relations']).map(str),
-        rule: list(b['rule']).map(str),
+        rules: list(b['rule']).map(str),
         bound: num(b['bound']),
       };
     });

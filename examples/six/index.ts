@@ -27,7 +27,10 @@ async function main() {
   console.log(
     `plan ${left.plan || '(none)'}: ${left.left ?? 'unbounded'} calls left this ${left.window || 'period'}`,
   );
-  console.log(`wallet ${wallet.account}: ${wallet.available.cents}¢ available, ${wallet.held.cents}¢ held`);
+  console.log(
+    `wallet ${wallet.account}: ${wallet.available.minor} available, ${wallet.reserved.minor} reserved, ` +
+      `in ${wallet.available.currency} minor units`,
+  );
 
   // policy — asking whether you may is a question with an answer; being stopped
   // mid-call is what produces a denied arm. The wallet echoed the ledger key
@@ -131,7 +134,7 @@ function read<T>(a: answer.Answer<T>, what: string): T | undefined {
 }
 
 main().catch((err: unknown) => {
-  // A Problem says which call, which status and which request id; anything else
+  // A Fault says which call, which status and which request id; anything else
   // is this program's own bug.
   console.error(err instanceof Error ? err.message : err);
   process.exit(1);

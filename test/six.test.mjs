@@ -39,8 +39,9 @@ test('budget.balance is integer minor units', async (t) => {
   t.after(sent.restore);
 
   const a = await client().budget.balance();
-  assert.deepEqual(a.available, { cents: 2_045_000, currency: 'USD' });
-  assert.deepEqual(a.held, { cents: 1_200, currency: 'USD' });
+  assert.deepEqual(a.available, { minor: 2_045_000, currency: 'USD' });
+  // The wire says `holds`; `held` is an arm of an answer, so this is `reserved`.
+  assert.deepEqual(a.reserved, { minor: 1_200, currency: 'USD' });
   assert.equal(a.account, 'acme');
 });
 
@@ -74,7 +75,7 @@ test('budget.spent reads the charged ledger', async (t) => {
     id: 'txn_1',
     at: new Date('2026-09-09T18:00:00Z'),
     model: 'zen5',
-    amount: { cents: 41, currency: 'USD' },
+    amount: { minor: 41, currency: 'USD' },
   });
 });
 
@@ -162,20 +163,35 @@ test('audit narrows by request id client-side, because the route does not', asyn
 });
 
 test('search sends the kinds as this route spells them', async (t) => {
-  const sent = answering({ status: 200, body: { status: 'ok', hits: [], backends: [] } });
+  const sent = answering({
+    status: 200,
+    body: {
+      status: 'ok',
+      hits: [{ id: 'runbook', corpus: 'kb', doctype: 'kb.page' }, { id: 'f.go:12', corpus: 'code', doctype: 'code' }],
+      backends: [],
+    },
+  });
   t.after(sent.restore);
 
-  await client().search.find('runbook', { mode: 'semantic', kinds: ['kb.page'], limit: 5 });
+  // `page` is the word a caller says — the same word `kb.Doc.kind` takes — and
+  // `kb.page` is the address the route filters on. It drops anything that is
+  // not one of the three, so a query narrowed to `page` would come back
+  // narrowed to nothing at all.
+  const a = await client().search.find('runbook', { mode: 'semantic', kinds: ['page'], limit: 5 });
   assert.deepEqual(json(sent[1]), {
     query: 'runbook',
     mode: 'semantic',
     doctypes: ['kb.page'],
     limit: 5,
   });
+  assert.equal(a.value.items[0].kind, 'page');
+  // A hit out of another corpus carries that corpus's own type and keeps it.
+  assert.equal(a.value.items[1].kind, 'code');
 });
 
 test('kb.put replaces a name that exists and creates one that does not', async (t) => {
-  const doc = { kind: 'page', name: 'runbook', title: 'Runbook', body: '# on call', project: 'ops', url: '' };
+  // A caller writes what it has: only `kind` is required.
+  const doc = { kind: 'page', name: 'runbook', title: 'Runbook', body: '# on call', project: 'ops' };
 
   const replaced = answering({ status: 200, body: { name: 'runbook', title: 'Runbook', body: '# on call' } });
   t.after(replaced.restore);
@@ -183,8 +199,10 @@ test('kb.put replaces a name that exists and creates one that does not', async (
   const a = await client().kb.put(doc);
   assert.equal(replaced[1].method, 'PUT');
   assert.equal(replaced[1].url, 'https://api.hanzo.ai/v1/framework/kb.page/runbook');
+  // The body is field data and nothing else. A page IS its slug — the doctype
+  // is autonamed from that field — so the name rides as `slug`, and `name` is
+  // not a field any of the three doctypes declares.
   assert.deepEqual(json(replaced[1]), {
-    name: 'runbook',
     title: 'Runbook',
     project: 'ops',
     body: '# on call',
@@ -209,16 +227,9 @@ test('kb.put files a memory under the field its own doctype declares', async (t)
   const sent = answering({ status: 201, body: { name: 'm1', content: 'the incident was ours' } });
   t.after(sent.restore);
 
-  const a = await client().kb.put({
-    kind: 'memory',
-    name: '',
-    title: 'incident',
-    body: 'the incident was ours',
-    project: '',
-    url: '',
-  });
+  const a = await client().kb.put({ kind: 'memory', title: 'incident', body: 'the incident was ours' });
   assert.equal(sent[1].method, 'POST');
-  assert.deepEqual(json(sent[1]), { name: '', title: 'incident', project: '', content: 'the incident was ours' });
+  assert.deepEqual(json(sent[1]), { title: 'incident', content: 'the incident was ours' });
   assert.equal(a.value.body, 'the incident was ours');
 });
 
@@ -226,11 +237,13 @@ test('kb.import sends the export verbatim', async (t) => {
   const sent = answering({ status: 200, body: { format: 'obsidian', imported: 3, pages: ['a', 'b', 'c'] } });
   t.after(sent.restore);
 
-  const a = await client().kb.import({ format: 'obsidian', body: 'PK', project: 'ops' });
+  const a = await client().kb.import('obsidian', 'PK', 'ops');
   assert.deepEqual(terms(sent[1]), { format: 'obsidian', project: 'ops' });
   assert.equal(sent[1].headers['content-type'], 'application/octet-stream');
   assert.equal(sent[1].body, 'PK');
   assert.equal(a.value.imported, 3);
+  assert.equal(a.value.format, 'obsidian');
+  assert.deepEqual(a.value.pages, ['a', 'b', 'c']);
 });
 
 test('kb.links describes documents, and calls a type a kind', async (t) => {
@@ -244,7 +257,8 @@ test('kb.links describes documents, and calls a type a kind', async (t) => {
   });
   t.after(sent.restore);
 
-  const l = await client().kb.links();
+  const l = await client().kb.links('ops');
+  assert.deepEqual(terms(sent[1]), { project: 'ops' });
   assert.equal(l.nodes[0].kind, 'kb.page');
   assert.deepEqual(l.edges[0], { from: 'kb.page:runbook', to: 'kb.page:home', kind: 'parent' });
   assert.equal(l.partial, true);
@@ -289,7 +303,7 @@ test('a batch whose counts do not add up is a fault, not an answer', async (t) =
   t.after(sent.restore);
 
   await assert.rejects(() => client().graph.assert([fact, fact]), (err) => {
-    assert.ok(err instanceof hanzoai.answer.Problem);
+    assert.ok(err instanceof hanzoai.answer.Fault);
     assert.equal(err.code, 'short_write');
     return true;
   });
@@ -343,7 +357,8 @@ test('graph reads at an instant, and the route spells that as_of', async (t) => 
   assert.deepEqual(walked.entities, ['acme', 'ops']);
 
   const vocabulary = await c.graph.vocabulary();
-  assert.deepEqual(vocabulary.rule, ['knowable', 'confidence']);
+  // The wire member is `rule`; the SDK pluralizes it because it is a list.
+  assert.deepEqual(vocabulary.rules, ['knowable', 'confidence']);
 });
 
 test('graph.extract records nothing', async (t) => {

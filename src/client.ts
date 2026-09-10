@@ -12,7 +12,7 @@
 // *Api classes stay reachable for the other 2400 operations: read
 // `client.configuration` and construct one with the same identity.
 
-import { Problem, type Call, type Query, type Reply } from './answer';
+import { Fault, type Call, type Query, type Reply } from './answer';
 import { Configuration } from './configuration';
 import { Audit } from './audit';
 import { Budget } from './budget';
@@ -155,10 +155,15 @@ export class Client {
    * anywhere else.
    */
   private async credentials(): Promise<Minted> {
+    // A client with no credential says so at the first call rather than at
+    // construction. There is nothing to exchange, so nothing goes to IAM and
+    // nothing goes unsigned to the gateway — an unsigned call comes back a bare
+    // 403, which reads as a refusal of the caller rather than the absence of
+    // one. The code is empty because no answer named one.
     if (!this.id || !this.secret) {
-      throw new Problem(
+      throw new Fault(
         0,
-        'no_credential',
+        '',
         'no IAM client credentials: pass {id, secret} or set HANZO_CLIENT_ID and HANZO_CLIENT_SECRET',
         '',
       );
@@ -181,7 +186,7 @@ export class Client {
       // Say which identity was refused. A 401 reads identically whether the id
       // is wrong, the secret is stale, or the app may not use this grant, and
       // the reader is holding none of those.
-      throw new Problem(
+      throw new Fault(
         res.status,
         out.error ?? 'invalid_client',
         `${this.issuer} refused client ${this.id}: ${out.error_description ?? 'no access token'}`,
@@ -205,7 +210,7 @@ export class Client {
     });
     const out = (await json(res)) as { accessToken?: string; expiresIn?: number; msg?: string };
     if (!res.ok || !out.accessToken) {
-      throw new Problem(
+      throw new Fault(
         res.status,
         'grant_denied',
         `${this.issuer} refused an act grant for ${subject}: ${out.msg ?? 'no access token'}`,
@@ -219,7 +224,7 @@ export class Client {
    * One authenticated round trip, replayed once on a 401.
    *
    * A 401 is the token, not the caller: re-mint and send it again. A second 401
-   * is the server saying no, and it surfaces as a [Problem] — the arm rule in
+   * is the server saying no, and it surfaces as a [Fault] — the arm rule in
    * answer.ts has nothing to read in it.
    */
   private async send(
@@ -254,7 +259,7 @@ export class Client {
       res = await globalThis.fetch(url, { method, headers, ...(body === undefined ? {} : { body }) });
     } catch (cause) {
       // Nothing answered, so nothing was decided.
-      throw new Problem(0, 'unreachable', `${method} ${url}: ${(cause as Error).message}`, '');
+      throw new Fault(0, 'unreachable', `${method} ${url}: ${(cause as Error).message}`, '');
     }
     return {
       status: res.status,

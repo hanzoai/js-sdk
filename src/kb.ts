@@ -13,17 +13,28 @@ export type Kind = 'page' | 'memory' | 'source';
 
 export interface Doc {
   kind: Kind;
-  /** The document's id within its kind. */
-  name: string;
-  title: string;
+  /**
+   * The document's id within its kind. A page IS its name: the doctype is
+   * autonamed from the slug field, so writing a page names it. A memory and a
+   * source are named by the store, and the name is what a later read or write
+   * addresses them by.
+   *
+   * Everything but `kind` is optional on the way in — a caller writes what it
+   * has — and populated on the way out.
+   */
+  name?: string;
+  title?: string;
   /** The prose. */
-  body: string;
-  project: string;
-  /** Where it came from, on a document a connector ingested. */
-  url: string;
+  body?: string;
+  project?: string;
+  /** Where it came from. Only a source declares one. */
+  url?: string;
 }
 
-/** What narrows a listing. */
+/**
+ * What narrows a listing. The route bounds by `limit` alone — it publishes no
+ * count and takes no page number — so these three are the whole of it.
+ */
 export interface Filter {
   project?: string;
   /** `<field> [asc|desc]`. Empty is most-recently-updated first. */
@@ -37,16 +48,6 @@ export interface Import {
   /** What was actually filed — a page a normalizer could not read is skipped and not counted. */
   imported: number;
   pages: string[];
-}
-
-/** An export to file into the corpus. */
-export interface Source {
-  /** `obsidian`, `notion`, `roam` or `evernote`. */
-  format: string;
-  /** The export itself: a vault zip, a Roam JSON, an Evernote .enex. */
-  body: string | Uint8Array;
-  /** Scopes every imported page to one project. */
-  project?: string;
 }
 
 /** What a rebuild of the org's retrieval did. */
@@ -119,7 +120,22 @@ export interface Links {
   partial: boolean;
 }
 
-const doctype = (kind: Kind): string => `kb.${kind}`;
+/**
+ * The doctype a kind is stored under: `page` addresses `kb.page`. A caller who
+ * already wrote the address keeps it, so this is safe to apply twice.
+ *
+ * It is exported because `search` filters and reports the same vocabulary, and
+ * this is where the vocabulary lives: a knowledge kind is one word — page,
+ * memory, source — everywhere a caller says one.
+ */
+export const doctype = (kind: string): string => (kind.includes('.') ? kind : `kb.${kind}`);
+
+/**
+ * The inverse: `kb.page` is `page`. A doctype from another corpus — a lexical
+ * row carries its own — has no `kb.` prefix and passes through unchanged.
+ */
+export const kind = (doctype: string): string =>
+  doctype.startsWith('kb.') ? doctype.slice(3) : doctype;
 
 function doc(kind: Kind, row: unknown): Doc {
   const r = obj(row);
@@ -134,15 +150,29 @@ function doc(kind: Kind, row: unknown): Doc {
   };
 }
 
-/** A document as its own doctype declares its fields. */
+/**
+ * A document as its own doctype declares its fields, and nothing else: the body
+ * of a framework write is field data, and a member no doctype declares is
+ * dropped before the store sees it.
+ *
+ * kb.page requires a slug and IS it — the doctype is autonamed from that field
+ * — so the name rides as `slug` and not as a name. kb.memory keeps its prose in
+ * `content` where page and source keep it in `body`. Only kb.source declares a
+ * `url`.
+ *
+ * A field the caller left empty is left out, so the doctype's own required
+ * fields refuse the write and say which one is missing.
+ */
 function fields(d: Doc): Record<string, unknown> {
-  const out: Record<string, unknown> = { name: d.name, title: d.title, project: d.project };
-  if (d.kind === 'memory') out['content'] = d.body;
-  else out['body'] = d.body;
-  // kb.page requires a slug and the corpus has one id per document, so the name
-  // is it. A page filed under two ids would be two pages.
-  if (d.kind === 'page') out['slug'] = d.name;
-  if (d.kind === 'source' && d.url) out['url'] = d.url;
+  const out: Record<string, unknown> = {};
+  const set = (field: string, v: string | undefined): void => {
+    if (v) out[field] = v;
+  };
+  set('title', d.title);
+  set('project', d.project);
+  set(d.kind === 'memory' ? 'content' : 'body', d.body);
+  if (d.kind === 'page') set('slug', d.name);
+  if (d.kind === 'source') set('url', d.url);
   return out;
 }
 
@@ -150,20 +180,26 @@ export class Kb {
   constructor(private readonly call: Call) {}
 
   /**
-   * Write a document. A name that already exists is replaced; one that does not
-   * is created.
+   * Write a document.
+   *
+   * A name that already stands is replaced; a name that does not is created.
+   * The store decides which: the replace goes out first and a 404 is the answer
+   * that the document is not there yet, so the create follows. That is one
+   * round trip on a revision — the common case for a corpus — and two on a
+   * first write.
+   *
+   * It cannot be decided from the name alone. A page IS its slug, so a page
+   * being created carries a name exactly as a page being revised does, and
+   * reading a present name as "it exists" would leave no way to create one.
    */
   async put(d: Doc): Promise<Answer<Doc>> {
     const type = doctype(d.kind);
+    const body = fields(d);
     if (d.name) {
-      const replaced = await this.call('PUT', `/v1/framework/${type}/${encodeURIComponent(d.name)}`, {
-        body: fields(d),
-      });
-      if (replaced.status !== 404) return arm(replaced, (body) => doc(d.kind, body));
+      const replaced = await this.call('PUT', `/v1/framework/${type}/${encodeURIComponent(d.name)}`, { body });
+      if (replaced.status !== 404) return arm(replaced, (row) => doc(d.kind, row));
     }
-    return arm(await this.call('POST', `/v1/framework/${type}`, { body: fields(d) }), (body) =>
-      doc(d.kind, body),
-    );
+    return arm(await this.call('POST', `/v1/framework/${type}`, { body }), (row) => doc(d.kind, row));
   }
 
   /** One document by name. */
@@ -190,11 +226,17 @@ export class Kb {
     return arm(reply, () => undefined);
   }
 
-  /** File an Obsidian, Notion, Roam or Evernote export as a tree of pages. */
-  async import(source: Source): Promise<Answer<Import>> {
+  /**
+   * File an Obsidian, Notion, Roam or Evernote export as a tree of pages.
+   *
+   * `format` picks the normalizer and `data` is the export itself: a vault zip,
+   * a Roam JSON, an Evernote .enex. `project` narrows every imported page to
+   * one scope.
+   */
+  async import(format: string, data: string | Uint8Array, project?: string): Promise<Answer<Import>> {
     const reply = await this.call('POST', '/v1/knowledge/import', {
-      query: { format: source.format, project: source.project },
-      body: source.body,
+      query: { format, project },
+      body: data,
       // The export rides as the raw request body, which is what this route reads
       // when there is no multipart part.
       type: 'application/octet-stream',
@@ -277,7 +319,10 @@ export class Kb {
     return arm(reply, () => undefined);
   }
 
-  /** The corpus's own edges, shaped for a renderer. */
+  /**
+   * The corpus's own edges, shaped for a renderer. No `project` reads the whole
+   * org.
+   */
   async links(project?: string): Promise<Links> {
     const reply = await this.call('GET', '/v1/knowledge/graph', { query: { project } });
     return value(reply, (body) => {

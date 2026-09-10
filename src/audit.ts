@@ -57,9 +57,9 @@ export interface Filter {
    * One call's rows, by the `request` an [Answer] carried back.
    *
    * The route does not accept it, so it is applied to what the page returned
-   * rather than to the query — correct and slow. `list` then reports `total` as
-   * the matches on that page; `all` walks the trail and is complete. Both stop
-   * doing that the day `GET /v1/audit` takes `requestId` as a filter.
+   * rather than to the query — correct and slow. `total` still counts what the
+   * server was asked, because a count substituted here would be a number nobody
+   * made. It stops being a scan the day `GET /v1/audit` takes `requestId`.
    */
   request?: string;
 }
@@ -114,19 +114,29 @@ function event(row: unknown): Event {
 export class Audit {
   constructor(private readonly call: Call) {}
 
-  /** One page of the trail, newest first, with the total the filter matched. */
+  /**
+   * One page of the trail, newest first.
+   *
+   * `total` is the server's own count for the filter the server applied. Under
+   * a `request` filter, which the route does not accept, `items` are this
+   * page's matches and `total` still counts what the server was asked.
+   */
   async list(filter: Filter = {}): Promise<Page<Event>> {
     const got = value(await this.call('GET', '/v1/audit', { query: terms(filter) }), (body) =>
       page(body, event),
     );
     if (!filter.request) return got;
-    const items = got.items.filter((e) => e.request === filter.request);
-    return { items, total: items.length };
+    return { items: got.items.filter((e) => e.request === filter.request), total: got.total };
   }
 
   /**
    * Every page of the trail. Requests page 1 at the caller's size and stops
    * when a page comes back empty or the running count reaches the total.
+   *
+   * The walk asks for the pages unfiltered by `request` and matches here, so
+   * what it counts against the total is what the server sent. Counting the
+   * survivors of a narrowing the server never made would end the walk early or
+   * not at all.
    */
   async *all(filter: Filter = {}): AsyncIterableIterator<Event> {
     const size = filter.size ?? SIZE;

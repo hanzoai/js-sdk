@@ -2,9 +2,13 @@
 //
 // Policy appears twice and both must speak one vocabulary. Before a call,
 // `check` answers `allow` as a value. During a call, a request the engine stops
-// comes back as `denied{code: "policy_denied"}` or `held{clause}` — and
-// `held.clause` names the same clause this check would have refused on, so a
-// caller can tell which of its own checks it should have run.
+// comes back as `held{clause}` — and `held.clause` names the same clause this
+// check would have refused on, so a caller can tell which of its own checks it
+// should have run.
+//
+// A policy refusal has no code of its own in cloud today, so a call a policy
+// stops mid-flight arrives with whatever code the response carried, and this
+// module invents none.
 
 import { value, type Call } from './answer';
 // `obj` is aliased so the third argument can carry the contract's own word.
