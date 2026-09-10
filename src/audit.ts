@@ -137,8 +137,9 @@ export class Audit {
       for (const e of got.items) if (!filter.request || e.request === filter.request) yield e;
       seen += got.items.length;
       // The total is what the filter matched across every page, so it is what
-      // says when there is no next one.
-      if (seen >= got.total) return;
+      // says when there is no next one. A listing that published none says
+      // nothing, and the empty page above ends the walk instead.
+      if (got.total > 0 && seen >= got.total) return;
     }
   }
 }

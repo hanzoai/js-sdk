@@ -156,7 +156,10 @@ function refusal(body: unknown): { code: string; reason: string; product?: strin
 export function arm<T>(r: Reply, read: (body: unknown) => T): Answer<T> {
   if (r.status >= 200 && r.status < 300) {
     const b = obj(r.body);
-    if (b['status'] === 'held') {
+    // A hold is 202 AND a body that says so. The code alone would turn every
+    // "accepted, working on it" into an approval nobody is waiting on; the body
+    // alone would turn a search whose own `status` field reads `held` into one.
+    if (r.status === 202 && b['status'] === 'held') {
       return {
         status: 'held',
         id: str(b['id']),
