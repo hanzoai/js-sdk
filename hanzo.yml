@@ -2,8 +2,8 @@
 #
 # No `images:` and no `deploy:`: this is a client library. A consumer installs
 # it from npm at a tag, so what CI owes is a gate, not an artifact. Publishing
-# stays where it already is — .github/workflows/publish-npm.yml, triggered by a
-# `v*` tag. Two publish paths would be one too many.
+# stays where it already is — .github/workflows/publish.yml, on a push to main.
+# Two publish paths would be one too many.
 
 test:
   - name: test
@@ -11,7 +11,7 @@ test:
     # silently resolves a different axios than the release does is not a gate.
     #
     # Then `npm test` — package.json's own statement of what passing means,
-    # rather than a second one written here that can disagree with it. Three
+    # rather than a second one written here that can disagree with it. Four
     # steps, each proving what the others cannot:
     #
     # `build` is both halves (CJS and the bundler-facing ESM), the only thing
@@ -22,8 +22,15 @@ test:
     # broken module graph or an entry point that does not resolve is a fact
     # about the published artifact that neither of them can see.
     #
-    # `examples` compiles the six canonical flows — hello, chat, money, store,
-    # agent, tools — against the client the way a consumer does, importing
+    # `wire` runs the six capabilities — budget, policy, audit, search, kb,
+    # graph — against a scripted fetch, asserting the exact request each one
+    # sends and decoding a realistic answer, `denied` and `held` included. They
+    # are hand-written HTTP over the generated client, so what has to be proved
+    # about them is what goes out and what is made of what comes back; nothing
+    # else in this gate calls them at all.
+    #
+    # `examples` compiles the eight canonical flows — models, hello, chat,
+    # money, store, agent, tools, six — against the client the way a consumer does, importing
     # `from 'hanzoai'` and reading real fields off real response models. It has
     # already earned its place: `choices[0].message.content` failed to compile
     # here (TS2339: Property 'message' does not exist on type 'object') because

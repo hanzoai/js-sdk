@@ -11,7 +11,7 @@
 // The read-back is the RUN list rather than the agent record: an agent you just
 // created tells you nothing you did not just send, while its runs are the part
 // the server produced.
-import { AgentsApi } from 'hanzoai';
+import { AgentApi } from 'hanzoai';
 import { config, fail } from '../client';
 
 // A model id is a string, so the wrong one type-checks and then fails on the
@@ -21,9 +21,9 @@ const model = process.env.HANZO_MODEL ?? 'zen5';
 const name = `example-greeter-${Date.now()}`;
 
 async function main() {
-  const agents = new AgentsApi(config());
+  const agents = new AgentApi(config());
 
-  const { data: created } = await agents.postAgents({
+  const { data: created } = await agents.postAgent({
     createAgentIn: {
       name,
       model,
@@ -33,10 +33,10 @@ async function main() {
   });
   console.log(`created ${created.name} (${created.id}) on ${created.model}`);
 
-  await agents.postAgentsByRefRun({ ref: name });
+  await agents.postAgentByRefRun({ ref: name });
   console.log('run started');
 
-  const { data: runs } = await agents.getAgentsByRefRuns({ ref: name, limit: 5 });
+  const { data: runs } = await agents.getAgentByRefRuns({ ref: name, limit: 5 });
   console.log(`${runs.runs?.length ?? 0} run(s):`);
   for (const r of runs.runs ?? []) {
     console.log(`  ${JSON.stringify(r)}`);

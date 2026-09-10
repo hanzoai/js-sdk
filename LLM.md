@@ -6,10 +6,19 @@ publish under it.
 
 ## The ONE way: generated from the document
 
-`src/` is openapi-generator 7.14.0 (`typescript-axios`) output. The input is
-**`hanzoai/cloud` `openapi.yaml`** — the document cloud's own routers emit —
-pinned in `.spec-lock` by (repo, ref, sha256). Never hand-edit `src/`; change
-the spec upstream and regenerate.
+Most of `src/` is openapi-generator 7.14.0 (`typescript-axios`) output. The
+input is **`hanzoai/cloud` `openapi.yaml`** — the document cloud's own routers
+emit — pinned in `.spec-lock` by (repo, ref, sha256). Never hand-edit a
+generated file; change the spec upstream and regenerate.
+
+**`.generated` says which files those are.** The driver owns the SET of paths it
+last wrote, not the directory: a file the manifest does not name is this repo's
+own, is never compared by `--check`, and is never removed by a regeneration —
+whatever directory it sits in. The ten hand-written files (`hanzo.ts`,
+`client.ts`, `answer.ts`, `read.ts` and the six capabilities) therefore live in
+`src/` beside the generated tree, the way `hanzo.go` sits beside the generated
+Go and `client.py` beside the generated Python. `src/index.ts` IS generated, so
+the package entry is `src/hanzo.ts`, which re-exports it.
 
 ```bash
 export OPENAPI=~/work/hanzo/openapi           # the checkout holding the driver
@@ -18,7 +27,8 @@ export SPEC=~/work/hanzo/cloud/openapi.yaml   # the document, by value
 ./scripts/generate.sh          # rewrite src/
 ./scripts/generate.sh --check  # diff only; non-zero if src/ drifted
 npm run build                  # tsc -> dist (CJS) + dist/esm (bundler ESM)
-npm run examples               # type-check the seven flows
+npm run wire                   # node --test: the six against a scripted fetch
+npm run examples               # type-check the eight flows
 ```
 
 Read `--check`'s **exit code**, not its tail: in a pipeline `$?` belongs to the
@@ -39,10 +49,11 @@ this repo        scripts/generate.sh   ->  src/, then owns its bump and release
 
 Document: 1814 paths (1782 under `/v1`), 2479 operations, 2436 schemas, and 191
 tags in use — the `tags:` array declares 190, and `compat` is used without being
-declared there. Client: 192 `*Api` classes — one per tag plus `DefaultApi`,
-which collects the 50 operations the document leaves untagged (`/`,
-`/.well-known/*`) — 2502 methods (23 operations carry two tags, so they land on
-two classes), 2461 models, 2658 files.
+declared there. Client, measured at the current `.spec-lock`: 120 `*Api`
+classes, 2573 models, 2698 generated files. The tag names singularized somewhere
+between two documents (`AgentsApi` became `AgentApi`, `postAgents` became
+`postAgent`), which is what a rename in cloud looks like from here and why the
+examples gate exists.
 
 891 of the 2479 operations declare a route and no response schema, so callers
 cast: 834 of those come out typed `void`, the other 57 `any`. 694 operations
@@ -75,11 +86,116 @@ which made `accessToken` inert; hand-setting the header in the SDK was a second
 way to do the one thing, and it went away the moment cloud described its own
 auth. Do not reintroduce it.
 
-Bearer only; the token is an IAM access token or a cloud API key, and the server
-derives the org from its `owner` claim, so no route here takes an org argument.
-Mint one the OAuth2 way — `POST /v1/iam/oauth/token`,
-`grant_type=client_credentials` — and check it with
-`GET /v1/iam/oauth/userinfo`, which answers the identity or `401 invalid_token`.
+Bearer only; the token is an IAM access token, and the server derives the org
+from its `owner` claim, so no route here takes an org argument. Where that token
+comes from is `Client`'s business, not the caller's — see the six capabilities
+below. `accessToken` accepts a function, which is how `c.configuration` gives a
+generated `*Api` the same minted, cached, self-renewing credential the six use.
+Check one with `GET /v1/iam/oauth/userinfo`, which answers the identity or
+`401 invalid_token`.
+
+## The six capabilities — hand-written, over the generated client
+
+Every Hanzo SDK offers the same six in the same six words: **budget · policy ·
+audit · search · kb · graph**. In Go and Python they hang off a client that
+already existed; TypeScript had none, so it gained one — `src/client.ts`, the
+only new type the contract adds to this language.
+
+```ts
+import { Client } from 'hanzoai';
+
+const c = new Client();                       // id/secret from the environment
+const a = await c.search.find('runbook');
+switch (a.status) {
+  case 'ok':     use(a.value); break;
+  case 'denied': offer(a.code, a.cures); break;
+  case 'held':   wait(a.id, a.clause); break;
+}
+```
+
+**`Answer<T>` is the spine.** `ok{value}` | `denied{code, reason, product?,
+cures[]}` | `held{id, clause, reason}`, all three carrying `request` — the
+`x-request-id` that joins a call to its audit row. A refused budget and a
+refused policy are ANSWERS, never exceptions: the union is discriminated on the
+literal `status`, so `a.value` does not typecheck until it is narrowed and a
+`switch` that forgets an arm fails to compile (`examples/six` asserts that with
+a `never`). Exceptions (`answer.Problem`) are for outcomes with no decision in
+them — no credential, a transport failure, 401, 403 forbidden, any 5xx.
+
+The mapping from HTTP to arm lives in exactly one function, `answer.arm`, so no
+capability can grow a rule of its own:
+
+| answer | arm |
+|---|---|
+| 2xx, body is not a hold | `ok` |
+| 2xx, body says `"status":"held"` | `held` — the BODY decides, never the code |
+| 402, any code | `denied` |
+| 403 with `policy_denied`/`entitlement_required`/`spend_cap_exceeded`/`insufficient_balance` | `denied` |
+| everything else | throws `Problem` |
+
+That fourth row is a workaround for one cloud defect: cloud spells "no validated
+principal" as 403 forbidden. The day it answers 401 for that, the code list in
+`answer.ts` goes and the rule collapses to `402 or 403 ⇒ denied`.
+
+**Auth is IAM and only IAM.** The client takes a clientId and clientSecret, not
+a bearer: it performs the client_credentials exchange at
+`POST {issuer}/v1/iam/oauth/token` (client_secret_basic, RFC 8707 `resource`,
+HIP-0111), holds the token until 60s before expiry, and re-mints once on a 401
+before replaying. `c.as("usr_7")` mints a subject-bound token from IAM's act
+grant (`POST {issuer}/v1/iam/tokens/issue?id=`) and the operator credential
+leaves with the scope — two credentials on one request are two answers to who
+is calling. There is no `apiKey` option and no `HANZO_API_KEY`. Five options,
+each with an environment fallback: `id`, `secret`, `base`, `issuer`, `resource`.
+
+`c.configuration` hands the same identity to any generated `*Api` class, so the
+other 2400 operations are reachable from the same credential.
+
+**Names.** Types are namespaced by capability — `budget.Allowance`,
+`search.Hit`, `audit.Event`, `graph.Fact`, `kb.Doc`, `answer.Answer` — because
+the generated tree already owns 4599 root names and thirteen of the contract's
+collide with it (`Answer`, `Page`, `Hit`, `Allowance`, `Charge`, `Wrote`,
+`Install`, `Request`, `Link`, `Backend`, `Policy`, `Audit`, `Graph`). `Client`
+and `Options` are free and stay bare.
+
+**Where a word differs from the wire.** Six audit fields are renamed
+(`sub`→`actor`, `time`→`at`, `resourceId`→`id`, `requestId`→`request`,
+`sourceIp`→`ip`, `userAgent`→`agent`); `at` is this client's one word for an
+instant and graph's routes spell it `as_of`; `kind` is its one word for what a
+thing is and search spells it `doctype`, kb's link graph spells it `type`, and
+search's request spells the plural `doctypes`; `since`/`until` is its one word
+for a window and the usage ledger spells it `start`/`end`. Each of those is
+spelled once, in the capability that owns the route.
+
+**Two routes are modelled rather than generated**, because the document states
+an address and not a shape. `/v1/billing/balance` and `/v1/billing/usage`
+declare no response, so `Balance` and `Charge` are read from what cloud's own
+handlers write (`{balance,holds,available,account}` and
+`{user,count,usage[]}`, USD cents). `/v1/authz/check` declares neither a body
+nor a response — see the divergence below.
+
+`npm run wire` is the gate: `node --test` against a scripted `fetch`, asserting
+the exact request each capability sends and decoding a realistic answer
+including `denied` (both of cloud's 402 bodies), `held` and `Problem`.
+
+## Where this client and cloud disagree, measured
+
+- **`POST /v1/authz/check` reads `{subject, verb, path}`, not `{sub, obj, act}`.**
+  The route's own `openapi.Describe` prose in `hanzoai/cloud`
+  `plugin/authz/main.go` says `{sub, obj, act}`; the handler that serves it —
+  `hanzoai/authz@v1.10.37` `serve/use.go`, the version cloud pins — reads
+  `{subject, verb, path, grants}` and answers `{allow, subject, verb, path}`.
+  `policy.check(sub, act, obj)` takes the words a person says and sends the ones
+  the handler reads. The prose and the handler are one fact and should be made
+  to agree upstream.
+- **`GET /v1/framework/kb.page|kb.memory|kb.source` answer 404**, unauthenticated,
+  where every other doctype answers 403 `valid principal required` — so
+  `kb.put`/`get`/`list`/`drop` address a path the deployment does not currently
+  resolve. Measured 2026-09-10 against `x-api-version: v8.5.178`.
+- **`GET /v1/audit` has no `requestId` filter** although every row carries one,
+  so `audit.Filter.request` is applied to what a page returned rather than to
+  the query.
+- **`POST /v1/graph/ingest` validates before it authenticates**: an
+  unauthenticated `POST {}` answers 400 `timestamp "" is not RFC 3339`, not 403.
 
 ## Module formats — what `dist/esm` is and is not
 
@@ -104,13 +220,19 @@ which — `iam-role.ts` and `role-assignment.ts`, so nothing is named `role.ts`
 any more. `src/models/application.ts` belongs to the OTHER service. Do not
 "restore" the bare IAM spellings.
 
-## Examples — seven flows, and they are a gate
+## Examples — eight flows, and they are a gate
 
-`examples/{models,hello,chat,money,store,agent,tools}`, one directory each, plus
+`examples/{models,hello,chat,money,store,agent,tools,six}`, one directory each, plus
 `examples/client.ts` — the single place a base URL, a credential or an error
 format is resolved (`config()` with the token, `anon()` without). `npm run
 examples` type-checks them against the freshly generated client and `hanzo.yml`
 runs it in CI.
+
+`six` is the odd one: it does not use `examples/client.ts`, because it does not
+resolve a credential at all — `new Client()` mints its own from
+`HANZO_CLIENT_ID`/`HANZO_CLIENT_SECRET`. It exercises all six capabilities in
+one pass the way a real caller does: check the budget, ask policy, search the
+corpus, write to the graph, and read back the audit trail of what it just did.
 
 `models` is the one that needs no credential — `GET /v1/models` is one of the
 four `security: []` operations — so `npx tsx examples/models/index.ts` is a
@@ -158,16 +280,18 @@ failed call is not evidence about the client; retry before concluding anything.
 
 ## CI and release
 
-Root `hanzo.yml` holds the gate (build, then examples). Workflows live in
-**`.hanzo/workflows`**, not `.github/workflows` — the forge collects the FIRST
-of its workflow directories that exists and ignores the rest, so a file in the
-other one is not a job that queues, it is a job that does not exist. Both
-`cicd.yml` (calls `hanzoai/ci`) and `publish-npm.yml` are there.
+Root `hanzo.yml` holds the gate (build, wire, smoke, examples). The workflows
+that call it are **`.github/workflows/{cicd,publish}.yml`** — moved there from
+`.hanzo/workflows`, and this repo is not served at `git.hanzo.ai` (HTTPS answers
+404, SSH :22 does not answer at all), so GitHub is where it lives and where its
+runners are. A workflow in one directory is not also a job in the other; keep
+them in one place.
 
-Release: push tag `vX.Y.Z` with `package.json` already holding X.Y.Z.
-`publish-npm.yml` builds, packs, and compares the tarball's `dist.integrity`
-against what npm serves for that version — equal is a no-op (re-running a tag is
-safe), different is a hard failure naming both digests. `npm pack` normalises
+Release: `publish.yml` runs on a push to main, reads what the registry already
+serves for `package.json`'s version and stops when it is current. It builds,
+packs, and compares the tarball's `dist.integrity`
+against what npm serves for that version — equal is a no-op, so re-running the
+job is safe; different is a hard failure naming both digests. `npm pack` normalises
 mtimes, so that comparison is exact. It ends by reading the version back from
 the registry: npm, not `package.json` and not the run's colour, is the version
 of record.

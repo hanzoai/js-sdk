@@ -2,9 +2,11 @@
   // Examples are type-checked, never emitted — CI runs `npm run examples`, which
   // is the gate that they still compile against the regenerated client.
   //
-  // `paths` maps the package's own name onto src/, so every example imports
-  // `from 'hanzoai'` exactly as a consumer would instead of reaching up a
-  // relative path no user would ever write.
+  // `paths` maps the package's own name onto the package entry, so every example
+  // imports `from 'hanzoai'` exactly as a consumer would instead of reaching up a
+  // relative path no user would ever write. That entry is src/hanzo.ts, which
+  // re-exports the generated client and adds the hand-written one beside it —
+  // src/index.ts is the generated half alone and would leave `Client` unreachable.
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
@@ -15,7 +17,7 @@
     // ESM half of the build already uses for the same reason.
     "moduleResolution": "Bundler",
     "paths": {
-      "*": ["./*"], "hanzoai": ["../src/index.ts"] },
+      "*": ["./*"], "hanzoai": ["../src/hanzo.ts"] },
     "types": ["node"],
     "strict": true
   },

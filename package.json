@@ -1,14 +1,14 @@
 {
   "name": "hanzoai",
-  "version": "8.5.157",
+  "version": "8.5.158",
   "description": "The official TypeScript library for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
   "license": "Apache-2.0",
   "repository": "github:hanzoai/js-sdk",
   "type": "commonjs",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/hanzo.js",
+  "module": "dist/esm/hanzo.js",
+  "types": "dist/hanzo.d.ts",
   "files": [
     "dist",
     "src",
@@ -24,7 +24,8 @@
     "typecheck": "tsc --noEmit",
     "examples": "tsc -p examples/tsconfig.json",
     "smoke": "node scripts/smoke.mjs",
-    "test": "npm run build && npm run smoke && npm run examples",
+    "wire": "node --test test/*.test.mjs",
+    "test": "npm run build && npm run smoke && npm run wire && npm run examples",
     "generate": "./scripts/generate.sh",
     "prepublishOnly": "npm run build"
   },
@@ -37,9 +38,9 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "types": "./dist/hanzo.d.ts",
+      "import": "./dist/hanzo.js",
+      "require": "./dist/hanzo.js"
     }
   }
 }

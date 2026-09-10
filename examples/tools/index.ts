@@ -9,11 +9,11 @@
 // the fleet's JSON-RPC MCP endpoint and is live, but it is not in the document, and
 // hand-rolling an HTTP request inside a generated client is the drift these SDKs
 // exist to prevent. /v1/tools is declared and typed, so the flow sits here.
-import { ToolsApi } from 'hanzoai';
+import { ToolApi } from 'hanzoai';
 import { config, fail } from '../client';
 
 async function main() {
-  const { data } = await new ToolsApi(config()).getTools();
+  const { data } = await new ToolApi(config()).getTool();
 
   const tools = data.tools ?? [];
   console.log(`${tools.length} tool(s) visible to this key`);
