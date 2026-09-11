@@ -14,35 +14,37 @@ npm i hanzoai
 
 Types are included. `axios` is the only dependency.
 
+`Client` and the six capabilities below are newer than 8.5.157, the latest
+release on npm, which has the generated `*Api` classes and not them. Until the
+next release, build the package from `main`:
+
+```bash
+git clone https://github.com/hanzoai/js-sdk && cd js-sdk
+npm ci && npm run build && npm pack    # prints hanzoai-<version>.tgz
+```
+
+and install that file in your project with `npm i <path to the .tgz>`.
+
 ## Quickstart
 
-`GET /v1/models` is public, so this runs before you have a key:
+`GET /v1/models` needs no credential, so this runs before you have one. Save it
+as `quickstart.mjs` and run `node quickstart.mjs`:
 
-```ts
+```js
 import { AiApi, Configuration } from 'hanzoai';
 
-const models = new AiApi(new Configuration({ basePath: 'https://api.hanzo.ai' }));
+const ai = new AiApi(new Configuration({ basePath: 'https://api.hanzo.ai' }));
+const { data } = await ai.getModels();
 
-async function main() {
-  const { data } = await models.getModels();
-  const catalog = (data as unknown as { data: Array<{ id: string }> }).data;
-
-  console.log(`${catalog.length} models`);
-  for (const m of catalog.slice(0, 5)) console.log(`  ${m.id}`);
-}
-
-main();
+console.log(`${data.data.length} models`);
+for (const m of data.data.slice(0, 5)) console.log(`  ${m.id}`);
 ```
 
-```
-$ npx tsx quickstart.ts
-481 models
-  aion-labs/aion-2.0
-  aion-labs/aion-3.0
-  aion-labs/aion-3.0-mini
-  aion-labs/aion-rp-llama-3.1-8b
-  amazon/nova-2-lite-v1
-```
+From CommonJS, `require('hanzoai')` returns the same classes.
+
+Calls without a valid credential are limited per address in 8-hour windows.
+Past the limit the answer is `429`, which arrives as an `AxiosError` with
+`err.response.status` set.
 
 ## Auth
 
@@ -50,7 +52,7 @@ One scheme: a bearer token — an IAM access token or a Cloud API key. The serve
 derives your org from the token's `owner` claim, so no route takes an org
 argument.
 
-**It goes in `accessToken`.** Every operation that does not opt out sends
+**It goes in `accessToken`.** When it is set, every operation sends
 `Authorization: Bearer <token>` from that field.
 
 ```ts
@@ -74,10 +76,16 @@ async function main() {
 main();
 ```
 
-Four operations opt out and take no credential: `GET /v1/models`,
+Four operations need no credential: `GET /v1/models`,
 `GET /v1/models/providers`, `GET /v1/commands`, `GET /v1/openapi.json`. For
 those, construct a `Configuration` with no `accessToken` and the client sends no
-header at all.
+`Authorization` header.
+
+A generated call that gets a status outside 2xx throws axios's `AxiosError`,
+with the status on `err.response.status`, after one request; nothing is
+retried. A 200 whose body is an error object resolves like any other 200, and a
+completion's content comes back as the server sent it, `<think>` blocks
+included.
 
 A `Configuration` reads no environment variable of its own — `HANZO_API_KEY`
 above is just where the examples keep theirs. `Client`, below, does read the
@@ -133,8 +141,10 @@ for await (const event of c.audit.all({ request: a.request })) {
 ```
 
 Exceptions are for outcomes with no decision in them: no credential, a transport
-failure, a 401, a 5xx. They arrive as `answer.Problem`, carrying `status`,
-`code` and `request`.
+failure, a 401, a 5xx. They arrive as `answer.Fault`, carrying `status`,
+`code` and `request`. A 401 re-mints the token and replays the call once before
+it throws. A 402, or a 403 with a refusal code, is the `denied` arm. Nothing
+else is retried, and a 200 is always `ok`.
 
 Everything else:
 
@@ -165,9 +175,9 @@ complete program:
 | [`hello`](examples/hello) | identity — prove the key works | `GET /v1/iam/oauth/userinfo` |
 | [`chat`](examples/chat) | one completion | `POST /v1/chat/completions` |
 | [`money`](examples/money) | balance + usage | `GET /v1/billing/balance`, `GET /v1/billing/usage` |
-| [`store`](examples/store) | KV round-trip | `POST /v1/kv`, `GET`/`DELETE /v1/kv/{name}` |
-| [`agent`](examples/agent) | create + run + read | `POST /v1/agents`, `POST /v1/agents/{ref}/run`, `GET /v1/agents/{ref}/runs` |
-| [`tools`](examples/tools) | tool catalog | `GET /v1/tools` |
+| [`store`](examples/store) | KV round-trip | `POST /v1/provisioning/kv`, `GET`/`DELETE /v1/provisioning/kv/{name}` |
+| [`agent`](examples/agent) | create + run + read | `POST /v1/agent`, `POST /v1/agent/{ref}/run`, `GET /v1/agent/{ref}/runs` |
+| [`tools`](examples/tools) | tool catalog | `GET /v1/tool` |
 | [`six`](examples/six) | budget → policy → search → kb → graph → audit, in one pass | the six capabilities |
 
 `models` runs with nothing exported:
@@ -179,15 +189,6 @@ npm ci && npm run build && npx tsx examples/models/index.ts
 (`npm run build` first because the examples import `hanzoai` by name and the
 package resolves its own name through `exports`, which points at `dist/`.)
 
-```
-481 models from https://api.hanzo.ai
-  aion-labs/aion-2.0  (aion-labs)
-  aion-labs/aion-3.0  (aion-labs)
-  aion-labs/aion-3.0-mini  (aion-labs)
-  aion-labs/aion-rp-llama-3.1-8b  (aion-labs)
-  amazon/nova-2-lite-v1  (amazon)
-```
-
 Six of the others read `HANZO_API_KEY` and `six` reads
 `HANZO_CLIENT_ID`/`HANZO_CLIENT_SECRET`; all eight talk to
 `https://api.hanzo.ai` unless `HANZO_BASE_URL` says otherwise:
@@ -195,13 +196,6 @@ Six of the others read `HANZO_API_KEY` and `six` reads
 ```bash
 export HANZO_API_KEY=...
 npx tsx examples/hello/index.ts
-```
-
-```
-hello from https://api.hanzo.ai
-  sub admin/hanzo-cloud in org hanzo
-  (unnamed) <no email>
-  issued by https://hanzo.id
 ```
 
 A token the server refuses answers `HTTP 401:
@@ -215,8 +209,8 @@ runs the six against a scripted `fetch`, and `hanzo.yml` makes both a CI gate.
 
 One class per product — the first path segment after `/v1/`: `AiApi`, `IamApi`,
 `BillingApi`, `GraphApi`, `KnowledgeApi`, `SearchApi`, `AgentApi`, `ToolApi`,
-`CommerceApi`, `O11yApi`, and so on, 120 of them. Each takes a `Configuration`;
-each method takes one request object.
+`CommerceApi`, `O11yApi`, and so on. Each takes a `Configuration`; each method
+takes one request object.
 
 ```ts
 import { Configuration, BillingApi } from 'hanzoai';
@@ -227,7 +221,7 @@ billing.getBillingBalance().then(({ data }) => console.log(data));
 
 Method names are the document's operation ids in camelCase — `get_billing_balance`
 is `getBillingBalance`, and a path parameter reads as `by`:
-`GET /v1/kv/{name}` is `getKvByName({ name })`.
+`GET /v1/provisioning/kv/{name}` is `getProvisioningKvByName({ name })`.
 
 Some operations declare a route but not a response shape, so their `data`
 arrives untyped and wants a cast.
