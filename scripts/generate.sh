@@ -1,31 +1,48 @@
 #!/usr/bin/env bash
-# The call site. Nothing about HOW this SDK is generated lives here.
+# Regenerate the Hanzo TypeScript SDK from the unified OpenAPI spec.
 #
-# The invocation is logic and lives once, in `generate.py`; every per-language
-# knob is data in `sdks.yaml` beside it. This file says "typescript, into this
-# checkout" and nothing else. It used to re-declare the generator name, the -o
-# layout and the whole --additional-properties string; that second copy of the
-# contract drifted, and running the canonical driver against this repo produced
-# an orphan second copy of all 2143 files.
+# The ONE way: hanzoai/openapi `hanzo.yaml` is the single source of truth. This
+# SDK is generated from it with openapi-generator (typescript-axios) — no
+# Stainless, no hand-drift.
 #
-#   ./scripts/generate.sh              # regenerate src/
-#   ./scripts/generate.sh --check      # fail if committed src/ has drifted
+#   ./scripts/generate.sh                 # pulls spec from hanzoai/openapi@main
+#   SPEC=/path/to/hanzo.yaml ./scripts/generate.sh   # local spec override
 #
-# BOTH INPUTS ARRIVE AS VALUES. $SPEC is the document, already fetched at a
-# pinned ref and digest-checked; $OPENAPI is the checkout holding the driver.
-# hanzoai/ci's client lane sets both, because it holds the one credential that
-# reads this forge. This script used to clone the driver itself, anonymously,
-# from a private repo — so every CI regeneration died at the clone.
-#
-# uv rather than a bare python3: the driver needs PyYAML and the runner image
-# promises no interpreter at all, let alone one with it installed.
-#
-# Requires: java 17+, uv.
+# Requires: java 17+, curl.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-: "${OPENAPI:?the generator lives in hanzoai/openapi; the ci client lane sets OPENAPI, or point it at a checkout}"
+GENERATOR_VERSION="${GENERATOR_VERSION:-7.14.0}"
+# hanzoai/openapi is private — fetch hanzo.yaml through the GitHub API with a
+# token (SPEC_TOKEN). raw.githubusercontent.com only serves public repos (it
+# 404s on a private repo). Local override still honored: SPEC=/path/to/hanzo.yaml.
+SPEC_REPO="${SPEC_REPO:-hanzoai/openapi}"
+SPEC_REF="${SPEC_REF:-main}"
+SPEC="${SPEC:-}"
+JAR="${JAR:-/tmp/openapi-generator-cli-${GENERATOR_VERSION}.jar}"
 
-if [ -n "${SPEC:-}" ]; then set -- --spec "$SPEC" "$@"; fi
+if [ -z "$SPEC" ]; then
+  : "${SPEC_TOKEN:?SPEC_TOKEN required to read private $SPEC_REPO}"
+  SPEC="$(mktemp)"
+  curl -fsSL -H "Authorization: Bearer $SPEC_TOKEN" -H "Accept: application/vnd.github.raw" \
+    "https://api.github.com/repos/$SPEC_REPO/contents/hanzo.yaml?ref=$SPEC_REF" -o "$SPEC"
+fi
+if [ ! -f "$JAR" ]; then
+  curl -fsSL -o "$JAR" \
+    "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${GENERATOR_VERSION}/openapi-generator-cli-${GENERATOR_VERSION}.jar"
+fi
 
-exec uv run --with pyyaml python3 "$OPENAPI/generate.py" typescript --repo "$PWD" "$@"
+OUT="$(mktemp -d)"
+java -jar "$JAR" generate \
+  -i "$SPEC" -g typescript-axios \
+  --additional-properties=npmName=hanzoai,supportsES6=true,useSingleRequestParameter=true,withSeparateModelsAndApi=true,apiPackage=api,modelPackage=models \
+  --git-user-id=hanzoai --git-repo-id=js-sdk \
+  -o "$OUT"
+
+# The repo root owns package.json / tsconfig. Keep only the generated sources.
+# Separate api/ + models/ dirs keep every file small (no 10MB monolith).
+rm -rf src
+mkdir -p src
+cp -r "$OUT"/api "$OUT"/models src/
+cp "$OUT"/api.ts "$OUT"/base.ts "$OUT"/common.ts "$OUT"/configuration.ts "$OUT"/index.ts src/
+echo "generated $(find src -name '*.ts' | wc -l) TS files into src/ (api + models split)"

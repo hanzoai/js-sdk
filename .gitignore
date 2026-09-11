@@ -5,6 +5,3 @@ dist-esm/
 *.tgz
 .DS_Store
 .idea/
-
-# tsc incremental state — a local build artifact
-tsconfig.tsbuildinfo
