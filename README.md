@@ -14,16 +14,8 @@ npm i hanzoai
 
 Types are included. `axios` is the only dependency.
 
-`Client` and the six capabilities below are newer than 8.5.157, the latest
-release on npm, which has the generated `*Api` classes and not them. Until the
-next release, build the package from `main`:
-
-```bash
-git clone https://github.com/hanzoai/js-sdk && cd js-sdk
-npm ci && npm run build && npm pack    # prints hanzoai-<version>.tgz
-```
-
-and install that file in your project with `npm i <path to the .tgz>`.
+`Client` and the six capabilities below ship from 8.5.158. 8.5.157 and earlier
+have the generated `*Api` classes and not them.
 
 ## Quickstart
 
