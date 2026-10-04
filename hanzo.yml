@@ -23,14 +23,14 @@ test:
     # about the published artifact that neither of them can see.
     #
     # `wire` runs the six capabilities — budget, policy, audit, search, kb,
-    # graph — against a scripted fetch, asserting the exact request each one
-    # sends and decoding a realistic answer, `denied` and `held` included. They
-    # are hand-written HTTP over the generated client, so what has to be proved
-    # about them is what goes out and what is made of what comes back; nothing
-    # else in this gate calls them at all.
+    # graph — and the typed usage refusals against a scripted fetch, asserting
+    # the exact request each one sends and decoding a realistic answer, `denied`
+    # and `held` included. They are hand-written over the generated client, so
+    # what has to be proved about them is what goes out and what is made of what
+    # comes back; nothing else in this gate calls them at all.
     #
-    # `examples` compiles the eight canonical flows — models, hello, chat,
-    # money, store, agent, tools, six — against the client the way a consumer does, importing
+    # `examples` compiles the nine canonical flows — models, hello, chat,
+    # money, store, agent, tools, six, limits — against the client the way a consumer does, importing
     # `from 'hanzoai'` and reading real fields off real response models. It has
     # already earned its place: `choices[0].message.content` failed to compile
     # here (TS2339: Property 'message' does not exist on type 'object') because

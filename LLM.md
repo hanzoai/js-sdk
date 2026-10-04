@@ -14,8 +14,9 @@ generated file; change the spec upstream and regenerate.
 **`.generated` says which files those are.** The driver owns the SET of paths it
 last wrote, not the directory: a file the manifest does not name is this repo's
 own, is never compared by `--check`, and is never removed by a regeneration —
-whatever directory it sits in. The ten hand-written files (`hanzo.ts`,
-`client.ts`, `answer.ts`, `read.ts` and the six capabilities) therefore live in
+whatever directory it sits in. The twelve hand-written files (`hanzo.ts`,
+`client.ts`, `answer.ts`, `read.ts`, `usage.ts`, `transport.ts` and the six
+capabilities) therefore live in
 `src/` beside the generated tree, the way `hanzo.go` sits beside the generated
 Go and `client.py` beside the generated Python. `src/index.ts` IS generated, so
 the package entry is `src/hanzo.ts`, which re-exports it.
@@ -27,8 +28,8 @@ export SPEC=~/work/hanzo/cloud/openapi.yaml   # the document, by value
 ./scripts/generate.sh          # rewrite src/
 ./scripts/generate.sh --check  # diff only; non-zero if src/ drifted
 npm run build                  # tsc -> dist (CJS) + dist/esm (bundler ESM)
-npm run wire                   # node --test: the six against a scripted fetch
-npm run examples               # type-check the eight flows
+npm run wire                   # node --test: the six and usage against a scripted fetch
+npm run examples               # type-check the nine flows
 ```
 
 Read `--check`'s **exit code**, not its tail: in a pipeline `$?` belongs to the
@@ -220,9 +221,32 @@ which — `iam-role.ts` and `role-assignment.ts`, so nothing is named `role.ts`
 any more. `src/models/application.ts` belongs to the OTHER service. Do not
 "restore" the bare IAM spellings.
 
-## Examples — eight flows, and they are a gate
+## Plan usage — typed refusals and `readUsage`
 
-`examples/{models,hello,chat,money,store,agent,tools,six}`, one directory each, plus
+`/v1/ai/limits`, `/v1/sync`, `/v1/decisions` and `/v1/models` (with `class`,
+`family`, `pricing.variable`) are all generated and typed, so nothing wraps them.
+What is hand-written is `src/usage.ts`: `readUsage(headers)` over the six
+`X-Hanzo-*` headers (fetch `Headers`, `AxiosHeaders` or a record; absent reads
+`undefined`), and `UsageLimitError` with one subclass per refusal code — the
+names the Python and Go SDKs use. `limited(status, body)` is the one place a body
+becomes one; it matches `error.code` in the OpenAI envelope and nothing else.
+
+Both transports throw them from the path they already had:
+
+- **axios** — `src/transport.ts` is a `Configuration` subclass that puts a
+  wrapping adapter in `baseOptions`, which every generated request spreads in.
+  `hanzo.ts` exports it by name, and an explicit export shadows `export *`, so
+  `Configuration` from 'hanzoai' and `Client.configuration` are it. Nothing global
+  is touched. The adapter sees the body unparsed (axios's `transformResponse`
+  runs after it), so it parses there. Tests reach it with `baseOptions: {adapter:
+  'fetch'}`, whose fetch is read at call time.
+- **fetch** — `answer.ts`'s `fault()` throws the typed error where a `Fault` would
+  go. A 402 that `arm` reads as `denied` stays an answer; `refusal()` reads the
+  envelope's nested `error.code`/`message` so that arm carries the real code.
+
+## Examples — nine flows, and they are a gate
+
+`examples/{models,hello,chat,money,store,agent,tools,six,limits}`, one directory each, plus
 `examples/client.ts` — the single place a base URL, a credential or an error
 format is resolved (`config()` with the token, `anon()` without). `npm run
 examples` type-checks them against the freshly generated client and `hanzo.yml`
@@ -295,6 +319,17 @@ job is safe; different is a hard failure naming both digests. `npm pack` normali
 mtimes, so that comparison is exact. It ends by reading the version back from
 the registry: npm, not `package.json` and not the run's colour, is the version
 of record.
+
+**A hand-written change ships with the next release, at the current version.**
+Push it to main with `package.json` untouched: publish.yml reads the registry,
+finds that version served, and stops. Cloud's next release fans out, the client
+lane regenerates on top of it and cuts *cloud's* number verbatim (hanzoai/ci
+`cut`), and publish.yml ships that tree — hand-written files included, since
+`.generated` does not name them. Never bump the version by hand: the next patch
+is the number cloud's next release will hand down, so the lane would cut a
+version the registry already serves, publish.yml would stop on it, and that
+regeneration would never ship. A push also races the lane's own non-forced push
+to main, so push when no `CI/CD` dispatch run is in flight.
 
 The npm credential comes from KMS, like every other publish credential in the
 fleet, and the address is `GET /v1/kms/secrets/NPM_TOKEN?env=prod`, answering

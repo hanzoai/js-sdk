@@ -67,7 +67,10 @@ type Completion = { choices?: Array<{ message?: { content?: string } }> };
 
 async function main() {
   const { data } = await new AiApi(config).postChatCompletions({
-    data: { model: 'zen5', messages: [{ role: 'user', content: 'Say hello in five words.' }] },
+    openaiChatCompletionRequest: {
+      model: 'zen5',
+      messages: [{ role: 'user', content: 'Say hello in five words.' }],
+    },
   });
   const reply = data as unknown as Completion;
   console.log(reply.choices?.[0]?.message?.content);
@@ -82,8 +85,8 @@ those, construct a `Configuration` with no `accessToken` and the client sends no
 `Authorization` header.
 
 A generated call that gets a status outside 2xx throws axios's `AxiosError`,
-with the status on `err.response.status`, after one request; nothing is
-retried. A 200 whose body is an error object resolves like any other 200, and a
+with the status on `err.response.status`, after one request — or, for a usage
+refusal, its own class (below). Nothing is retried. A 200 whose body is an error object resolves like any other 200, and a
 completion's content comes back as the server sent it, `<think>` blocks
 included.
 
@@ -93,6 +96,50 @@ environment, and mints its own token rather than being handed one.
 
 `GET /v1/iam/oauth/userinfo` is how you check a token: it answers the token's
 identity, or `401 {"error":"invalid_token"}`. That is the `hello` flow below.
+
+## Plan usage
+
+Every AI answer says how it was paid for in `X-Hanzo-*` headers. `readUsage`
+reads them off an axios response, a fetch `Response` or a plain record; an
+absent header reads `undefined`.
+
+```ts
+import { AiApi, Configuration, ModelCapError, UsageLimitError, readUsage } from 'hanzoai';
+
+const ai = new AiApi(new Configuration({ accessToken: process.env.HANZO_API_KEY }));
+try {
+  const res = await ai.postChatCompletions({
+    openaiChatCompletionRequest: { model: 'anthropic/claude-sonnet-4.5', messages },
+  });
+  readUsage(res.headers); // { usage: 'ok', usageClass: 'premium', paidBy: 'credits', served: '…', fallback: undefined, reason: undefined }
+} catch (err) {
+  if (err instanceof ModelCapError) retry(err.fallback);
+  else if (err instanceof UsageLimitError) offer(err.actions);
+  else throw err;
+}
+```
+
+A refusal nothing may pay for throws a subclass of `UsageLimitError`, which
+carries `status`, `code`, `type`, `usageClass`, `model`, `fallback`, `resetsAt`,
+`upgradeUrl`, `actions` and `cause` (the `AxiosError`):
+
+| class | status | `code` |
+|---|---|---|
+| `PlanAllowanceUsedError` | 402 | `plan_allowance_used` |
+| `PaidPlanRequiredError` | 402 | `paid_plan_required` |
+| `FreePlanCapError` | 429 | `free_plan_cap` |
+| `ModelCapError` | 402 | `model_cap` |
+| `UsageCapExceededError` | 429 | `usage_cap_exceeded` |
+| `InsufficientBalanceError` | 402 | `insufficient_balance` |
+
+Any other refusal stays an `AxiosError`. `Client`'s six throw these where they
+would throw `answer.Fault`; a 402 there is still the `denied` arm.
+
+The routes are generated: `aiLimits()` and `aiSetLimits({ aiLimitsSet: {
+creditsAfterAllowance } })` on `/v1/ai/limits`; `SyncApi`'s `getSync`,
+`getSyncById`, `postSync` and `postSyncByIdRun` ("sync now") on `/v1/sync`;
+`postDecisions`; and `getModels`, whose rows carry `class` (premium, ours or
+free), `family` and `pricing.variable`.
 
 ## The six capabilities
 
@@ -166,7 +213,7 @@ Types are namespaced by capability: `budget.Allowance`, `search.Hit`,
 
 ## Examples
 
-Eight flows under [`examples/`](examples), one directory each, every one a
+Nine flows under [`examples/`](examples), one directory each, every one a
 complete program:
 
 | flow | what it does | routes |
@@ -179,6 +226,7 @@ complete program:
 | [`agent`](examples/agent) | create + run + read | `POST /v1/agent`, `POST /v1/agent/{ref}/run`, `GET /v1/agent/{ref}/runs` |
 | [`tools`](examples/tools) | tool catalog | `GET /v1/tool` |
 | [`six`](examples/six) | budget → policy → search → kb → graph → audit, in one pass | the six capabilities |
+| [`limits`](examples/limits) | plan, catalog by class, who paid, a typed refusal, repo links | `GET /v1/ai/limits`, `GET /v1/models`, `POST /v1/chat/completions`, `POST /v1/decisions`, `GET /v1/sync` |
 
 `models` runs with nothing exported:
 
@@ -189,8 +237,8 @@ npm ci && npm run build && npx tsx examples/models/index.ts
 (`npm run build` first because the examples import `hanzoai` by name and the
 package resolves its own name through `exports`, which points at `dist/`.)
 
-Six of the others read `HANZO_API_KEY` and `six` reads
-`HANZO_CLIENT_ID`/`HANZO_CLIENT_SECRET`; all eight talk to
+Seven of the others read `HANZO_API_KEY` and `six` reads
+`HANZO_CLIENT_ID`/`HANZO_CLIENT_SECRET`; all nine talk to
 `https://api.hanzo.ai` unless `HANZO_BASE_URL` says otherwise:
 
 ```bash
@@ -202,8 +250,9 @@ A token the server refuses answers `HTTP 401:
 {"error":"invalid_token","error_description":"the access token is invalid or
 revoked"}`.
 
-`npm run examples` type-checks all eight against the client, `npm run wire`
-runs the six against a scripted `fetch`, and `hanzo.yml` makes both a CI gate.
+`npm run examples` type-checks all nine against the client, `npm run wire`
+runs the six and the usage refusals against a scripted `fetch`, and `hanzo.yml`
+makes both a CI gate.
 
 ## The API surface
 
@@ -247,7 +296,8 @@ knob lives once, in that repo's `generate.py` and `sdks.yaml`.
 
 `.generated` lists what the driver owns. A file it does not name is this repo's
 own and a regeneration never touches it — which is where `hanzo.ts`,
-`client.ts`, `answer.ts` and the six capabilities live.
+`client.ts`, `answer.ts`, `usage.ts`, `transport.ts` and the six capabilities
+live.
 
 Requires java 17+ and [uv](https://docs.astral.sh/uv/).
 
