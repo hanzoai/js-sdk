@@ -21,49 +21,61 @@ import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { Configuration as Generated, type ConfigurationParameters } from './configuration';
 import { header, limited } from './usage';
 
-/** The request option that marks a request as sent with this Configuration. */
+/**
+ * The request option that marks a request as sent with this Configuration. Its
+ * value is this module's own interceptor, so two copies of the package sharing
+ * one axios each type only their own requests, with their own classes.
+ */
 const MARK = 'hanzoUsage';
 
-/** A stream body over this is not a refusal, which is a few hundred bytes of JSON. */
+/** A stream body is read this far at most; a refusal is a few hundred bytes of JSON. */
 const CAP = 1 << 16;
 
-let installed = false;
+type Manager = { handlers?: Array<{ rejected?: unknown } | null> };
 
 export class Configuration extends Generated {
   constructor(param: ConfigurationParameters = {}) {
     super(param);
-    this.baseOptions = { ...this.baseOptions, [MARK]: true };
-    if (!installed) {
-      installed = true;
-      axios.interceptors.response.use(undefined, refused);
-    }
+    this.baseOptions = { ...this.baseOptions, [MARK]: refused };
+    // Checked, not remembered: a test teardown's `interceptors.response.clear()`
+    // removes it, and the next Configuration puts it back.
+    const installed = (axios.interceptors.response as unknown as Manager).handlers?.some((h) => h?.rejected === refused);
+    if (!installed) axios.interceptors.response.use(undefined, refused);
   }
 }
 
 /** Rethrow a marked 402 or 429 as the usage refusal its body names; anything else as it came. */
 async function refused(err: unknown): Promise<never> {
-  const res = (err as AxiosError | undefined)?.response;
-  const marked = (err as AxiosError | undefined)?.config as Record<string, unknown> | undefined;
-  if (!res || marked?.[MARK] !== true || (res.status !== 402 && res.status !== 429)) throw err;
-  throw limited(res.status, await body(res), header(res.headers, 'x-request-id'), err) ?? err;
+  const e = err as AxiosError | undefined;
+  const res = e?.response;
+  const config = e?.config as (Record<string, unknown> & { signal?: unknown; timeout?: number }) | undefined;
+  if (!res || config?.[MARK] !== refused || (res.status !== 402 && res.status !== 429)) throw err;
+  let parsed: unknown;
+  try {
+    parsed = await body(res, config);
+  } catch {
+    // A body that cannot be read names nothing: the answer is the one axios gave.
+    throw err;
+  }
+  throw limited(res.status, parsed, header(res.headers, 'x-request-id'), err) ?? err;
 }
 
 /**
  * The body as JSON where it is JSON. axios hands it over parsed by default and
- * raw when the caller asked for a buffer, a blob or a stream; a stream is read
- * without taking it from the caller — `res.data` is left holding one that
- * yields every byte again.
+ * raw when the caller asked for a buffer, a blob or a stream. A stream is read
+ * only when it says it is JSON — a refusal is, an event stream never is — at
+ * most CAP bytes, no longer than the caller's signal and timeout allow, and
+ * without taking it from the caller: `res.data` is left holding a stream of the
+ * same family that yields every byte again.
  */
-async function body(res: AxiosResponse): Promise<unknown> {
+async function body(res: AxiosResponse, config: { signal?: unknown; timeout?: number }): Promise<unknown> {
   let data: unknown = res.data;
-  if (web(data)) {
-    const [mine, theirs] = data.tee();
-    res.data = theirs;
-    data = await new Response(mine).text();
-  } else if (node(data)) {
-    const read = await drain(data);
-    res.data = read.again;
-    data = read.text;
+  if (web(data) || node(data)) {
+    if (!/json/i.test(header(res.headers, 'content-type') ?? '')) return undefined;
+    const read = web(data) ? peekWeb(data, config) : peekNode(data, config);
+    const { text, again } = await read;
+    res.data = again;
+    data = text;
   } else if (typeof Blob !== 'undefined' && data instanceof Blob) {
     data = await data.text();
   } else if (data instanceof ArrayBuffer || ArrayBuffer.isView(data)) {
@@ -88,36 +100,91 @@ const node = (v: unknown): v is Stream =>
   typeof (v as Stream)[Symbol.asyncIterator] === 'function' &&
   typeof (v as Stream).constructor?.from === 'function';
 
-/**
- * Read up to CAP bytes of a Node stream, and a stream of the same family that
- * replays them and then the rest. `Readable.from` is reached through the
- * stream's own constructor, so nothing here imports node:stream into a bundle.
- */
-async function drain(stream: Stream): Promise<{ text: string; again: unknown }> {
+/** Read a WHATWG stream through `peek`, and hand back a WHATWG stream that replays it. */
+async function peekWeb(stream: ReadableStream<Uint8Array>, config: { signal?: unknown; timeout?: number }) {
+  const reader = stream.getReader();
+  const { text, rest } = await peek(() => reader.read(), config);
+  const again = new ReadableStream<Uint8Array>({
+    async pull(controller) {
+      const step = await rest.next();
+      if (step.done) controller.close();
+      else controller.enqueue(step.value as Uint8Array);
+    },
+    cancel: (reason) => reader.cancel(reason),
+  });
+  return { text, again };
+}
+
+/** Read a Node stream through `peek`; `Readable.from` comes off its own constructor, so no bundle gains node:stream. */
+async function peekNode(stream: Stream, config: { signal?: unknown; timeout?: number }) {
   const it = stream[Symbol.asyncIterator]();
+  const { text, rest } = await peek(() => it.next(), config);
+  return { text, again: stream.constructor.from(rest) };
+}
+
+const STOP = Symbol('stop');
+
+/**
+ * Read chunks until the end, CAP bytes, the caller's abort or its timeout,
+ * whichever comes first. `text` is the whole body only when the end was
+ * reached — anything less names no refusal. `rest` yields every chunk read and
+ * then whatever is left, including a read still in flight and a failure, so the
+ * caller's stream loses nothing.
+ */
+async function peek(next: () => Promise<IteratorResult<unknown>>, config: { signal?: unknown; timeout?: number }) {
   const seen: unknown[] = [];
   const decoder = new TextDecoder();
   let text = '';
-  let size = 0;
   let done = false;
-  while (size < CAP) {
-    const step = await it.next();
-    if (step.done) {
-      done = true;
-      break;
+  let failed: { error: unknown } | undefined;
+  let pending: Promise<IteratorResult<unknown>> | undefined;
+
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let quit: (() => void) | undefined;
+  const stop = new Promise<typeof STOP>((resolve) => {
+    quit = () => resolve(STOP);
+    const signal = config.signal as AbortSignal | undefined;
+    if (signal && typeof signal.addEventListener === 'function') {
+      if (signal.aborted) resolve(STOP);
+      signal.addEventListener('abort', () => resolve(STOP), { once: true });
     }
-    seen.push(step.value);
-    const chunk = typeof step.value === 'string' ? step.value : decoder.decode(step.value as Uint8Array, { stream: true });
-    text += chunk;
-    size += chunk.length;
+    if (config.timeout && config.timeout > 0) timer = setTimeout(() => resolve(STOP), config.timeout);
+  });
+
+  try {
+    while (text.length < CAP) {
+      pending = next();
+      const step = await Promise.race([pending, stop]);
+      if (step === STOP) break;
+      pending = undefined;
+      if (step.done) {
+        done = true;
+        break;
+      }
+      seen.push(step.value);
+      text += typeof step.value === 'string' ? step.value : decoder.decode(step.value as Uint8Array, { stream: true });
+    }
+  } catch (error) {
+    pending = undefined;
+    failed = { error };
+  } finally {
+    if (timer) clearTimeout(timer);
+    quit?.();
   }
-  async function* replay() {
+
+  async function* rest() {
     yield* seen;
+    if (failed) throw failed.error;
+    if (pending) {
+      const step = await pending;
+      if (step.done) return;
+      yield step.value;
+    }
     while (!done) {
-      const step = await it.next();
+      const step = await next();
       if (step.done) return;
       yield step.value;
     }
   }
-  return { text, again: stream.constructor.from(replay()) };
+  return { text: done ? text : undefined, rest: rest() };
 }

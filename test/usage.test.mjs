@@ -290,6 +290,68 @@ test('an adapter of the caller\'s own is left alone, on an instance or set globa
   assert.equal(hits, 2);
 });
 
+test('a stream is read only while it is JSON, the caller has not aborted, and time remains', async (t) => {
+  const real = globalThis.fetch;
+  t.after(() => {
+    globalThis.fetch = real;
+  });
+  const endless = (type) => {
+    globalThis.fetch = async () =>
+      new Response(new ReadableStream({ start(c) { c.enqueue(new TextEncoder().encode('{"error":')); } }), {
+        status: 429,
+        headers: { 'content-type': type },
+      });
+  };
+  const ai = new hanzoai.AiApi(configuration());
+
+  // An event stream is never a refusal, so it is not read: the AxiosError comes at once.
+  endless('text/event-stream');
+  const sse = await ai.postDecisions(decision, { responseType: 'stream' }).catch((e) => e);
+  assert.ok(axios.isAxiosError(sse));
+
+  // JSON that never ends: the caller's abort ends the wait with the AxiosError.
+  endless('application/json');
+  const abort = new AbortController();
+  setTimeout(() => abort.abort(), 50);
+  const aborted = await ai.postDecisions(decision, { responseType: 'stream', signal: abort.signal }).catch((e) => e);
+  assert.ok(axios.isAxiosError(aborted));
+  assert.equal(aborted.response.status, 429);
+
+  // And so does its timeout, with what was read still on the stream.
+  endless('application/json');
+  const timed = await ai.postDecisions(decision, { responseType: 'stream', timeout: 50 }).catch((e) => e);
+  assert.ok(axios.isAxiosError(timed));
+  const reader = timed.response.data.getReader();
+  assert.equal(new TextDecoder().decode((await reader.read()).value), '{"error":');
+  reader.cancel();
+});
+
+test('interceptors.response.clear() is undone by the next Configuration', async (t) => {
+  configuration();
+  axios.interceptors.response.clear();
+  const sent = wire([{ status: 402, body: modelCap }]);
+  t.after(sent.restore);
+  await assert.rejects(() => new hanzoai.AiApi(configuration()).postDecisions(decision), hanzoai.ModelCapError);
+});
+
+test('two copies of the package on one axios each type their own requests', async (t) => {
+  const require = createRequire(import.meta.url);
+  const entry = require.resolve('hanzoai');
+  const dist = entry.slice(0, entry.lastIndexOf('/') + 1);
+  const ours = Object.keys(require.cache).filter((k) => k.startsWith(dist));
+  const saved = Object.fromEntries(ours.map((k) => [k, require.cache[k]]));
+  for (const k of ours) delete require.cache[k];
+  const other = require('hanzoai');
+  t.after(() => Object.assign(require.cache, saved));
+  assert.notEqual(other.ModelCapError, hanzoai.ModelCapError);
+
+  const sent = wire([{ status: 402, body: modelCap }, { status: 402, body: modelCap }]);
+  t.after(sent.restore);
+  const cfg = (pkg) => new pkg.Configuration({ basePath: 'https://api.hanzo.ai', baseOptions: { adapter: 'fetch' } });
+  await assert.rejects(() => new other.AiApi(cfg(other)).postDecisions(decision), other.ModelCapError);
+  await assert.rejects(() => new hanzoai.AiApi(cfg(hanzoai)).postDecisions(decision), hanzoai.ModelCapError);
+});
+
 test('readUsage reads a priced answer off the axios response', async (t) => {
   const sent = wire([
     {
