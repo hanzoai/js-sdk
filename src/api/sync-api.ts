@@ -78,8 +78,8 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -194,7 +194,7 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
          * @summary Declares a sync between two endpoints and returns it.
          * @param {SyncSyncReq} syncSyncReq 
          * @param {*} [options] Override http request option.
@@ -295,8 +295,8 @@ export const SyncApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -334,7 +334,7 @@ export const SyncApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
          * @summary Declares a sync between two endpoints and returns it.
          * @param {SyncSyncReq} syncSyncReq 
          * @param {*} [options] Override http request option.
@@ -380,8 +380,8 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteSyncById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -409,7 +409,7 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.patchSyncById(requestParameters.id, requestParameters.syncPatchSyncIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
          * @summary Declares a sync between two endpoints and returns it.
          * @param {SyncApiPostSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -528,8 +528,8 @@ export class SyncApi extends BaseAPI {
     }
 
     /**
-     * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-     * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+     * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+     * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
@@ -563,7 +563,7 @@ export class SyncApi extends BaseAPI {
     }
 
     /**
-     * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+     * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
      * @summary Declares a sync between two endpoints and returns it.
      * @param {SyncApiPostSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

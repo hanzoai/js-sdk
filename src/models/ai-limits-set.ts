@@ -17,38 +17,14 @@
 /**
  * 
  * @export
- * @interface BillingWindow
+ * @interface AiLimitsSet
  */
-export interface BillingWindow {
+export interface AiLimitsSet {
     /**
-     * 
-     * @type {number}
-     * @memberof BillingWindow
+     * CreditsAfterAllowance keeps a model working once the plan\'s included usage of it is spent, paid from prepaid credit (and granted credit where the model takes it), when true; when false the conversation moves to a Hanzo model and other calls are refused until the plan resets. Off until the payer turns it on.
+     * @type {boolean}
+     * @memberof AiLimitsSet
      */
-    'limit'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BillingWindow
-     */
-    'remaining'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingWindow
-     */
-    'resets'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingWindow
-     */
-    'span'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BillingWindow
-     */
-    'used'?: number;
+    'creditsAfterAllowance'?: boolean;
 }
 

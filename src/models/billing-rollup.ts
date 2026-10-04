@@ -19,9 +19,6 @@ import type { BillingRollupAllotment } from './billing-rollup-allotment';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { BillingRollupBalance } from './billing-rollup-balance';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { BillingWindow } from './billing-window';
 
 /**
  * 
@@ -77,11 +74,5 @@ export interface BillingRollup {
      * @memberof BillingRollup
      */
     'user'?: string;
-    /**
-     * 
-     * @type {Array<BillingWindow>}
-     * @memberof BillingRollup
-     */
-    'windows'?: Array<BillingWindow>;
 }
 

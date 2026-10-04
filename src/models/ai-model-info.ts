@@ -40,6 +40,12 @@ export interface AiModelInfo {
     'canonical_slug'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
+    'class'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof AiModelInfo
      */
@@ -55,13 +61,37 @@ export interface AiModelInfo {
      * @type {string}
      * @memberof AiModelInfo
      */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
+    'family'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
     'id'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AiModelInfo
+     */
+    'inputs'?: Array<string>;
     /**
      * 
      * @type {number}
      * @memberof AiModelInfo
      */
     'max_output_tokens'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
+    'name'?: string;
     /**
      * 
      * @type {string}
@@ -98,6 +128,12 @@ export interface AiModelInfo {
      * @memberof AiModelInfo
      */
     'provider'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AiModelInfo
+     */
+    'supports_reasoning'?: boolean;
     /**
      * 
      * @type {boolean}

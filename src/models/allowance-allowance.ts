@@ -54,13 +54,13 @@ export interface AllowanceAllowance {
      */
     'resets'?: number;
     /**
-     * the subject is at the limit
+     * Spent says the ceiling refuses: on a take, that THIS call was refused and nothing was counted; on a read, that the next call would be.
      * @type {boolean}
      * @memberof AllowanceAllowance
      */
     'spent'?: boolean;
     /**
-     * Used is how many zero-priced calls this subject has been SERVED in the period ending at Resets — the UTC calendar day. Only a served call counts, so an admission check, a refusal, or a vendor that never answered leaves it where it stood. It stops AT Limit rather than climbing past it, so Limit-Used is what remains and never goes negative.
+     * Used is how many free calls this subject has been admitted in the period ending at Resets — the UTC calendar day. A call counts when it is admitted, whatever its upstream then does; a refused call counts nothing. It stops AT Limit rather than climbing past it, so Limit-Used is what remains and never goes negative.
      * @type {number}
      * @memberof AllowanceAllowance
      */

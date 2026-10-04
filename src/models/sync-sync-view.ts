@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { SyncEndpointView } from './sync-endpoint-view';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { SyncNativeView } from './sync-native-view';
 
 /**
  * 
@@ -53,6 +56,18 @@ export interface SyncSyncView {
      * @memberof SyncSyncView
      */
     'kind'?: string;
+    /**
+     * Native is the repo link\'s copy on the forge: where it lives and how it stands. Absent for an account link, and absent when the forge could not be read — an unread forge is not reported as a healthy one.
+     * @type {SyncNativeView}
+     * @memberof SyncSyncView
+     */
+    'native'?: SyncNativeView;
+    /**
+     * Scope is \"repo\" for a link to one repository, or \"account\" for a link to a whole GitHub account, which declares a repo link for every repository the account holds — the ones created later included.
+     * @type {string}
+     * @memberof SyncSyncView
+     */
+    'scope'?: string;
     /**
      * Source is the side read FROM on a pull.
      * @type {SyncEndpointView}

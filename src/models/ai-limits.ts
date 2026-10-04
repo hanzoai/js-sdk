@@ -24,6 +24,9 @@ import type { AiClass } from './ai-class';
 import type { AiLimited } from './ai-limited';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AiPaused } from './ai-paused';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AiWindow } from './ai-window';
 
 /**
@@ -45,6 +48,12 @@ export interface AiLimits {
      */
     'classes'?: { [key: string]: AiClass; };
     /**
+     * CreditsAfterAllowance is the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent (PUT /v1/ai/limits sets it).
+     * @type {boolean}
+     * @memberof AiLimits
+     */
+    'credits_after_allowance'?: boolean;
+    /**
      * 
      * @type {AiWindow}
      * @memberof AiLimits
@@ -56,6 +65,12 @@ export interface AiLimits {
      * @memberof AiLimits
      */
     'limited'?: AiLimited;
+    /**
+     * Paused are the models whose share of the plan is used for now: each is answered by its fallback in chat until its share resets.
+     * @type {Array<AiPaused>}
+     * @memberof AiLimits
+     */
+    'paused'?: Array<AiPaused>;
     /**
      * 
      * @type {string}

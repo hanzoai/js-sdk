@@ -19,9 +19,6 @@ import type { BillingTierBalance } from './billing-tier-balance';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { BillingTierLimits } from './billing-tier-limits';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { BillingWindow } from './billing-window';
 
 /**
  * 
@@ -59,11 +56,5 @@ export interface BillingTier {
      * @memberof BillingTier
      */
     'user'?: string;
-    /**
-     * 
-     * @type {Array<BillingWindow>}
-     * @memberof BillingTier
-     */
-    'windows'?: Array<BillingWindow>;
 }
 

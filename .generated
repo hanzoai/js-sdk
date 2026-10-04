@@ -259,6 +259,7 @@ src/models/ai-history-window.ts
 src/models/ai-judge-benchmark.ts
 src/models/ai-judge-panel-state.ts
 src/models/ai-limited.ts
+src/models/ai-limits-set.ts
 src/models/ai-limits.ts
 src/models/ai-mcpapp.ts
 src/models/ai-mcpsurface.ts
@@ -268,6 +269,7 @@ src/models/ai-model-list.ts
 src/models/ai-model-pricing-info.ts
 src/models/ai-model-providers.ts
 src/models/ai-panel-judge.ts
+src/models/ai-paused.ts
 src/models/ai-provider-usage-model-spend.ts
 src/models/ai-provider-usage-series-point.ts
 src/models/ai-provider-usage-totals.ts
@@ -426,7 +428,6 @@ src/models/billing-transaction.ts
 src/models/billing-transactions.ts
 src/models/billing-usage-receipt.ts
 src/models/billing-usage-report.ts
-src/models/billing-window.ts
 src/models/billing-wire-instructions.ts
 src/models/block.ts
 src/models/blueprint-blueprint-health.ts
@@ -2803,6 +2804,7 @@ src/models/store.ts
 src/models/sweep.ts
 src/models/sync-endpoint-req.ts
 src/models/sync-endpoint-view.ts
+src/models/sync-native-view.ts
 src/models/sync-patch-sync-in.ts
 src/models/sync-sync-list.ts
 src/models/sync-sync-queued.ts
