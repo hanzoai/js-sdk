@@ -541,7 +541,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on.
+         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
          * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {string} id ID is the automation, from the path.
          * @param {AutoAutomationPatch} autoAutomationPatch 
@@ -629,7 +629,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, and no `permissions` is ask: it proposes what it would do and changes nothing.
+         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, no `permissions` is ask: it proposes what it would do and changes nothing, and `enabled: false` creates it off, its schedule unarmed.
          * @summary Creates an automation and arms its schedule.
          * @param {AutoAutomationIn} autoAutomationIn 
          * @param {*} [options] Override http request option.
@@ -1235,7 +1235,7 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on.
+         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
          * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {string} id ID is the automation, from the path.
          * @param {AutoAutomationPatch} autoAutomationPatch 
@@ -1263,7 +1263,7 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, and no `permissions` is ask: it proposes what it would do and changes nothing.
+         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, no `permissions` is ask: it proposes what it would do and changes nothing, and `enabled: false` creates it off, its schedule unarmed.
          * @summary Creates an automation and arms its schedule.
          * @param {AutoAutomationIn} autoAutomationIn 
          * @param {*} [options] Override http request option.
@@ -1537,7 +1537,7 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getAutoTemplates(options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on.
+         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
          * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {AutoApiPatchAutoAutomationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1557,7 +1557,7 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.patchAutoFlowsById(requestParameters.id, requestParameters.autoPatchFlowIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, and no `permissions` is ask: it proposes what it would do and changes nothing.
+         * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, no `permissions` is ask: it proposes what it would do and changes nothing, and `enabled: false` creates it off, its schedule unarmed.
          * @summary Creates an automation and arms its schedule.
          * @param {AutoApiPostAutoAutomationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2204,7 +2204,7 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on.
+     * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
      * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
      * @param {AutoApiPatchAutoAutomationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2228,7 +2228,7 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, and no `permissions` is ask: it proposes what it would do and changes nothing.
+     * Creates an automation and arms its schedule. It runs as the caller: their Dev run, in this org, each time it fires. `name` and `instructions` are required; no `schedule` runs it only on demand, no `permissions` is ask: it proposes what it would do and changes nothing, and `enabled: false` creates it off, its schedule unarmed.
      * @summary Creates an automation and arms its schedule.
      * @param {AutoApiPostAutoAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

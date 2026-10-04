@@ -33,6 +33,12 @@ export interface AutoAutomation {
      */
     'created'?: string;
     /**
+     * Draft is a flow with no step yet: it has no instructions, never runs, and becomes an automation when its instructions are saved.
+     * @type {boolean}
+     * @memberof AutoAutomation
+     */
+    'draft'?: boolean;
+    /**
      * Enabled is whether its schedule is armed.
      * @type {boolean}
      * @memberof AutoAutomation

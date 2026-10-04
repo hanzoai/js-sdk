@@ -24,6 +24,12 @@ import type { AutoSchedule } from './auto-schedule';
  */
 export interface AutoAutomationIn {
     /**
+     * Enabled arms its schedule. Absent is true.
+     * @type {boolean}
+     * @memberof AutoAutomationIn
+     */
+    'enabled'?: boolean;
+    /**
      * Instructions are what the agent is asked to do each run. Required.
      * @type {string}
      * @memberof AutoAutomationIn
