@@ -27,11 +27,23 @@ export interface AuditWire {
      */
     'action'?: string;
     /**
+     * 
+     * @type {any}
+     * @memberof AuditWire
+     */
+    'after'?: any;
+    /**
      * Auth is the credential the actor presented: \"jwt\", \"api-key\", or \"none\".
      * @type {string}
      * @memberof AuditWire
      */
     'authMethod'?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof AuditWire
+     */
+    'before'?: any;
     /**
      * Email is the actor\'s validated address, absent when the credential carried none. It comes from the verified token, never from a client header.
      * @type {string}

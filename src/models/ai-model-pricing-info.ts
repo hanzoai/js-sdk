@@ -44,5 +44,11 @@ export interface AiModelPricingInfo {
      * @memberof AiModelPricingInfo
      */
     'prompt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AiModelPricingInfo
+     */
+    'variable'?: boolean;
 }
 
