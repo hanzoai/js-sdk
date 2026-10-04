@@ -119,9 +119,10 @@ try {
 }
 ```
 
-A refusal nothing may pay for throws a subclass of `UsageLimitError`, which
-carries `status`, `code`, `type`, `usageClass`, `model`, `fallback`, `resetsAt`,
-`upgradeUrl`, `actions` and `cause` (the `AxiosError`):
+A 402 or 429 refusal nothing may pay for throws a subclass of
+`UsageLimitError`, which carries `status`, `code`, `type`, `usageClass`,
+`model`, `fallback`, `resetsAt`, `upgradeUrl`, `actions`, `request` (the
+`x-request-id`) and, from a generated call, `cause` (the `AxiosError`):
 
 | class | status | `code` |
 |---|---|---|
@@ -132,8 +133,11 @@ carries `status`, `code`, `type`, `usageClass`, `model`, `fallback`, `resetsAt`,
 | `UsageCapExceededError` | 429 | `usage_cap_exceeded` |
 | `InsufficientBalanceError` | 402 | `insufficient_balance` |
 
-Any other refusal stays an `AxiosError`. `Client`'s six throw these where they
-would throw `answer.Fault`; a 402 there is still the `denied` arm.
+Any other refusal stays an `AxiosError`, as does any refusal through an axios
+instance you pass an `*Api` yourself. A `responseType: 'stream'` body is read
+for the code and left whole on `err.cause.response.data`. `Client`'s six throw
+these where they would throw `answer.Fault`; a 402 there is still the `denied`
+arm.
 
 The routes are generated: `aiLimits()` and `aiSetLimits({ aiLimitsSet: {
 creditsAfterAllowance } })` on `/v1/ai/limits`; `SyncApi`'s `getSync`,

@@ -120,7 +120,7 @@ cures[]}` | `held{id, clause, reason}`, all three carrying `request` — the
 refused policy are ANSWERS, never exceptions: the union is discriminated on the
 literal `status`, so `a.value` does not typecheck until it is narrowed and a
 `switch` that forgets an arm fails to compile (`examples/six` asserts that with
-a `never`). Exceptions (`answer.Problem`) are for outcomes with no decision in
+a `never`). Exceptions (`answer.Fault`) are for outcomes with no decision in
 them — no credential, a transport failure, 401, 403 forbidden, any 5xx.
 
 The mapping from HTTP to arm lives in exactly one function, `answer.arm`, so no
@@ -131,8 +131,8 @@ capability can grow a rule of its own:
 | 2xx, body is not a hold | `ok` |
 | 2xx, body says `"status":"held"` | `held` — the BODY decides, never the code |
 | 402, any code | `denied` |
-| 403 with `policy_denied`/`entitlement_required`/`spend_cap_exceeded`/`insufficient_balance` | `denied` |
-| everything else | throws `Problem` |
+| 403 with `spend_cap_exceeded`/`insufficient_balance` | `denied` |
+| everything else | throws `Fault`, or a usage refusal's own class |
 
 That fourth row is a workaround for one cloud defect: cloud spells "no validated
 principal" as 403 forbidden. The day it answers 401 for that, the code list in
@@ -176,7 +176,7 @@ nor a response — see the divergence below.
 
 `npm run wire` is the gate: `node --test` against a scripted `fetch`, asserting
 the exact request each capability sends and decoding a realistic answer
-including `denied` (both of cloud's 402 bodies), `held` and `Problem`.
+including `denied` (both of cloud's 402 bodies), `held` and `Fault`.
 
 ## Where this client and cloud disagree, measured
 
@@ -229,20 +229,32 @@ What is hand-written is `src/usage.ts`: `readUsage(headers)` over the six
 `X-Hanzo-*` headers (fetch `Headers`, `AxiosHeaders` or a record; absent reads
 `undefined`), and `UsageLimitError` with one subclass per refusal code — the
 names the Python and Go SDKs use. `limited(status, body)` is the one place a body
-becomes one; it matches `error.code` in the OpenAI envelope and nothing else.
+becomes one: a 402 or 429 whose OpenAI-envelope `error.code` is one of the six,
+looked up in a `Map` so `"constructor"` finds nothing. Class names are literals;
+`new.target.name` is what a minifier renames.
 
 Both transports throw them from the path they already had:
 
-- **axios** — `src/transport.ts` is a `Configuration` subclass that puts a
-  wrapping adapter in `baseOptions`, which every generated request spreads in.
-  `hanzo.ts` exports it by name, and an explicit export shadows `export *`, so
-  `Configuration` from 'hanzoai' and `Client.configuration` are it. Nothing global
-  is touched. The adapter sees the body unparsed (axios's `transformResponse`
-  runs after it), so it parses there. Tests reach it with `baseOptions: {adapter:
-  'fetch'}`, whose fetch is read at call time.
+- **axios** — one response interceptor on the default axios instance, installed
+  by the first `src/transport.ts` `Configuration` built. That subclass puts a
+  mark (`hanzoUsage: true`) in `baseOptions`, which every generated request
+  spreads in, and the interceptor acts only on marked requests — so no adapter,
+  transform or other axios traffic of the caller's is touched. An adapter in
+  `baseOptions` was tried first and shadowed an axios instance's own adapter, so
+  a mock-adapter test suite sent real requests. A buffer, blob or stream body is
+  read there; a stream is `tee`d (WHATWG) or replayed through its own
+  constructor's `from` (Node), so the caller still holds every byte. An axios
+  instance passed as an `*Api`'s third argument has its own interceptors: a
+  refusal through it stays an `AxiosError`. `hanzo.ts` exports the subclass by
+  name, and an explicit export shadows `export *`, so `Configuration` from
+  'hanzoai' and `Client.configuration` are it; a test pins that no other
+  hand-written name shadows a generated one.
 - **fetch** — `answer.ts`'s `fault()` throws the typed error where a `Fault` would
   go. A 402 that `arm` reads as `denied` stays an answer; `refusal()` reads the
   envelope's nested `error.code`/`message` so that arm carries the real code.
+
+Tests reach the generated client with `baseOptions: {adapter: 'fetch'}`, whose
+fetch is read at call time, and the http adapter through a local server.
 
 ## Examples — nine flows, and they are a gate
 
