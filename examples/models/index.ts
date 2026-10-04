@@ -9,20 +9,19 @@
 // GET /v1/openapi.json. Everything else inherits the document's top-level
 // `security: [bearer]`.
 //
-// `data` arrives untyped because this operation declares no response schema —
-// one of 891 in the document that state the route and not its shape.
+// Each row is an `AiModelInfo`: `class` (premium, ours or free) says what pays
+// for it, `family` names a Hanzo model's line, and `pricing.variable` marks a
+// router SKU billed at the cost of whichever model answered.
 import { AiApi } from 'hanzoai';
 import { anon, basePath, fail } from '../client';
 
-type Catalog = { data: Array<{ id: string; owned_by?: string; provider?: string }> };
-
 async function main() {
   const { data } = await new AiApi(anon()).getModels();
-  const catalog = (data as unknown as Catalog).data;
+  const catalog = data.data ?? [];
 
   console.log(`${catalog.length} models from ${basePath}`);
   for (const m of catalog.slice(0, 5)) {
-    console.log(`  ${m.id}  (${m.owned_by ?? m.provider ?? 'unattributed'})`);
+    console.log(`  ${m.id}  ${m.class ?? '-'}  (${m.owned_by ?? m.provider ?? 'unattributed'})`);
   }
 }
 
