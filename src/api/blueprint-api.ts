@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BlueprintHealth } from '../models';
+import type { BlueprintBlueprintHealth } from '../models';
 // @ts-ignore
-import type { BlueprintIndex } from '../models';
+import type { BlueprintBlueprintIndex } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * BlueprintApi - axios parameter creator
  * @export
@@ -149,7 +151,7 @@ export const BlueprintApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintIndex>> {
+        async getBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintBlueprintIndex>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprint(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getBlueprint']?.[localVarOperationServerIndex]?.url;
@@ -161,7 +163,7 @@ export const BlueprintApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBlueprintHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintHealth>> {
+        async getBlueprintHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintBlueprintHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getBlueprintHealth']?.[localVarOperationServerIndex]?.url;
@@ -195,7 +197,7 @@ export const BlueprintApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintIndex> {
+        getBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintBlueprintIndex> {
             return localVarFp.getBlueprint(options).then((request) => request(axios, basePath));
         },
         /**
@@ -204,7 +206,7 @@ export const BlueprintApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprintHealth(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintHealth> {
+        getBlueprintHealth(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintBlueprintHealth> {
             return localVarFp.getBlueprintHealth(options).then((request) => request(axios, basePath));
         },
         /**

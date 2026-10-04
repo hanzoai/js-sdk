@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CatalogList } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { MetricList } from '../models';
+import type { PromptCatalogList } from '../models';
 // @ts-ignore
-import type { PromptDetail } from '../models';
+import type { PromptMetricList } from '../models';
 // @ts-ignore
-import type { PromptList } from '../models';
+import type { PromptPromptDetail } from '../models';
 // @ts-ignore
-import type { PromptReq } from '../models';
+import type { PromptPromptList } from '../models';
+// @ts-ignore
+import type { PromptPromptReq } from '../models';
 /**
  * PromptApi - axios parameter creator
  * @export
@@ -76,8 +78,8 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
-         * @summary List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
+         * Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
+         * @summary Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,8 +112,8 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
          * @param {string} name Name is the prompt to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -148,8 +150,8 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
-         * @summary Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
+         * Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
+         * @summary Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -182,8 +184,8 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
-         * @summary Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
+         * Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
+         * @summary Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -216,15 +218,15 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
-         * @summary Create records a prompt for the caller\'s org and answers 201 with it.
-         * @param {PromptReq} promptReq 
+         * Records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
+         * @summary Records a prompt for the caller\'s org and answers 201 with it.
+         * @param {PromptPromptReq} promptPromptReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPrompt: async (promptReq: PromptReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'promptReq' is not null or undefined
-            assertParamExists('postPrompt', 'promptReq', promptReq)
+        postPrompt: async (promptPromptReq: PromptPromptReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'promptPromptReq' is not null or undefined
+            assertParamExists('postPrompt', 'promptPromptReq', promptPromptReq)
             const localVarPath = `/v1/prompt`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -248,7 +250,7 @@ export const PromptApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(promptReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(promptPromptReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -279,63 +281,63 @@ export const PromptApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
-         * @summary List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
+         * Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
+         * @summary Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPrompt(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptList>> {
+        async getPrompt(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptPromptList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPrompt(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptApi.getPrompt']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
          * @param {string} name Name is the prompt to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPromptByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
+        async getPromptByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptPromptDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptApi.getPromptByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
-         * @summary Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
+         * Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
+         * @summary Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPromptCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogList>> {
+        async getPromptCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptCatalogList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptApi.getPromptCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
-         * @summary Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
+         * Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
+         * @summary Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPromptMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricList>> {
+        async getPromptMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptMetricList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptMetrics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptApi.getPromptMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
-         * @summary Create records a prompt for the caller\'s org and answers 201 with it.
-         * @param {PromptReq} promptReq 
+         * Records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
+         * @summary Records a prompt for the caller\'s org and answers 201 with it.
+         * @param {PromptPromptReq} promptPromptReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPrompt(promptReq: PromptReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPrompt(promptReq, options);
+        async postPrompt(promptPromptReq: PromptPromptReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptPromptDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPrompt(promptPromptReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptApi.postPrompt']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -361,51 +363,51 @@ export const PromptApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deletePromptByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
-         * @summary List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
+         * Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
+         * @summary Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrompt(options?: RawAxiosRequestConfig): AxiosPromise<PromptList> {
+        getPrompt(options?: RawAxiosRequestConfig): AxiosPromise<PromptPromptList> {
             return localVarFp.getPrompt(options).then((request) => request(axios, basePath));
         },
         /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
          * @param {PromptApiGetPromptByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPromptByName(requestParameters: PromptApiGetPromptByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
+        getPromptByName(requestParameters: PromptApiGetPromptByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptPromptDetail> {
             return localVarFp.getPromptByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
-         * @summary Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
+         * Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
+         * @summary Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPromptCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogList> {
+        getPromptCatalog(options?: RawAxiosRequestConfig): AxiosPromise<PromptCatalogList> {
             return localVarFp.getPromptCatalog(options).then((request) => request(axios, basePath));
         },
         /**
-         * Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
-         * @summary Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
+         * Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
+         * @summary Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPromptMetrics(options?: RawAxiosRequestConfig): AxiosPromise<MetricList> {
+        getPromptMetrics(options?: RawAxiosRequestConfig): AxiosPromise<PromptMetricList> {
             return localVarFp.getPromptMetrics(options).then((request) => request(axios, basePath));
         },
         /**
-         * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
-         * @summary Create records a prompt for the caller\'s org and answers 201 with it.
+         * Records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
+         * @summary Records a prompt for the caller\'s org and answers 201 with it.
          * @param {PromptApiPostPromptRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPrompt(requestParameters: PromptApiPostPromptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
-            return localVarFp.postPrompt(requestParameters.promptReq, options).then((request) => request(axios, basePath));
+        postPrompt(requestParameters: PromptApiPostPromptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptPromptDetail> {
+            return localVarFp.postPrompt(requestParameters.promptPromptReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -446,10 +448,10 @@ export interface PromptApiGetPromptByNameRequest {
 export interface PromptApiPostPromptRequest {
     /**
      * 
-     * @type {PromptReq}
+     * @type {PromptPromptReq}
      * @memberof PromptApiPostPrompt
      */
-    readonly promptReq: PromptReq
+    readonly promptPromptReq: PromptPromptReq
 }
 
 /**
@@ -472,8 +474,8 @@ export class PromptApi extends BaseAPI {
     }
 
     /**
-     * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
-     * @summary List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
+     * Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
+     * @summary Returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptApi
@@ -483,8 +485,8 @@ export class PromptApi extends BaseAPI {
     }
 
     /**
-     * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-     * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+     * Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+     * @summary Returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
      * @param {PromptApiGetPromptByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -495,8 +497,8 @@ export class PromptApi extends BaseAPI {
     }
 
     /**
-     * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
-     * @summary Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
+     * Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompt. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
+     * @summary Returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptApi
@@ -506,8 +508,8 @@ export class PromptApi extends BaseAPI {
     }
 
     /**
-     * Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
-     * @summary Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
+     * Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
+     * @summary Returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptApi
@@ -517,15 +519,15 @@ export class PromptApi extends BaseAPI {
     }
 
     /**
-     * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
-     * @summary Create records a prompt for the caller\'s org and answers 201 with it.
+     * Records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
+     * @summary Records a prompt for the caller\'s org and answers 201 with it.
      * @param {PromptApiPostPromptRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptApi
      */
     public postPrompt(requestParameters: PromptApiPostPromptRequest, options?: RawAxiosRequestConfig) {
-        return PromptApiFp(this.configuration).postPrompt(requestParameters.promptReq, options).then((request) => request(this.axios, this.basePath));
+        return PromptApiFp(this.configuration).postPrompt(requestParameters.promptPromptReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

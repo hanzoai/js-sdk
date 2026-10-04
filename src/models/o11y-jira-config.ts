@@ -49,10 +49,10 @@ export interface O11yJiraConfig {
     'api_url'?: any;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yJiraConfig
      */
-    'custom_fields'?: { [key: string]: object; };
+    'custom_fields'?: { [key: string]: any; };
     /**
      * 
      * @type {O11yJiraFieldConfig}

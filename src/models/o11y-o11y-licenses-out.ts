@@ -22,10 +22,10 @@
 export interface O11yO11yLicensesOut {
     /**
      * Data are the licenses.
-     * @type {Array<object>}
+     * @type {Array<any>}
      * @memberof O11yO11yLicensesOut
      */
-    'data'?: Array<object>;
+    'data'?: Array<any>;
     /**
      * Status is \"success\".
      * @type {string}

@@ -24,31 +24,31 @@ import type { Leg } from './leg';
  */
 export interface Voucher {
     /**
-     * Description is the human line for the event, e.g. the vendor a bill came from.
+     * 
      * @type {string}
      * @memberof Voucher
      */
     'description'?: string;
     /**
-     * Legs are the sides of the posting. They must balance: Σdebit == Σcredit, give or take the 2¢ round-off allowance.
+     * 
      * @type {Array<Leg>}
      * @memberof Voucher
      */
     'legs'?: Array<Leg>;
     /**
-     * PostingAt is the RFC3339 instant the event posts at — the time every statement window filters on.
+     * 
      * @type {string}
      * @memberof Voucher
      */
     'postingAt'?: string;
     /**
-     * SourceID is the source event\'s own id within that namespace. Together with SourceKind it is the key that makes a repeat posting a no-op.
+     * 
      * @type {string}
      * @memberof Voucher
      */
     'sourceId'?: string;
     /**
-     * SourceKind is the idempotency namespace naming what booked this, e.g. \"scan\".
+     * 
      * @type {string}
      * @memberof Voucher
      */

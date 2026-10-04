@@ -22,23 +22,47 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CatalogOut } from '../models';
+import type { KnowledgeCatalogOut } from '../models';
 // @ts-ignore
-import type { ConnectionOut } from '../models';
+import type { KnowledgeConnectionOut } from '../models';
 // @ts-ignore
-import type { GraphOut } from '../models';
+import type { KnowledgeFile } from '../models';
 // @ts-ignore
-import type { KbAuthorizeOut } from '../models';
+import type { KnowledgeFileGraph } from '../models';
 // @ts-ignore
-import type { KbConnectorsOut } from '../models';
+import type { KnowledgeFileIn } from '../models';
 // @ts-ignore
-import type { KbSyncOut } from '../models';
+import type { KnowledgeFileSearchIn } from '../models';
 // @ts-ignore
-import type { ReindexOut } from '../models';
+import type { KnowledgeFileSearchOut } from '../models';
 // @ts-ignore
-import type { SearchIn } from '../models';
+import type { KnowledgeFilesOut } from '../models';
 // @ts-ignore
-import type { SearchOut } from '../models';
+import type { KnowledgeForgotten } from '../models';
+// @ts-ignore
+import type { KnowledgeGraphOut } from '../models';
+// @ts-ignore
+import type { KnowledgeKbAuthorizeOut } from '../models';
+// @ts-ignore
+import type { KnowledgeKbConnectorsOut } from '../models';
+// @ts-ignore
+import type { KnowledgeKbSyncOut } from '../models';
+// @ts-ignore
+import type { KnowledgeReindexOut } from '../models';
+// @ts-ignore
+import type { KnowledgeRetrieveIn } from '../models';
+// @ts-ignore
+import type { KnowledgeRetrieveOut } from '../models';
+// @ts-ignore
+import type { KnowledgeSearchIn } from '../models';
+// @ts-ignore
+import type { KnowledgeSearchOut } from '../models';
+// @ts-ignore
+import type { KnowledgeSectionOut } from '../models';
+// @ts-ignore
+import type { KnowledgeTocOut } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * KnowledgeApi - axios parameter creator
  * @export
@@ -46,8 +70,8 @@ import type { SearchOut } from '../models';
 export const KnowledgeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
-         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
+         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
+         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected.
          * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57,6 +81,44 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             assertParamExists('deleteKnowledgeConnectorsByProvider', 'provider', provider)
             const localVarPath = `/v1/knowledge/connectors/{provider}`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record. The file is gone from every read when this answers: its listing, its contents, search and retrieval. What the index held of it is removed after, a batch at a time, so forgetting a file of any size answers at once. The object itself stays in its bucket; delete it there. Drive calls this when it deletes a file.
+         * @summary Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKnowledgeFilesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteKnowledgeFilesById', 'id', id)
+            const localVarPath = `/v1/knowledge/files/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -243,6 +305,206 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @summary Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @param {string} [bucket] 
+         * @param {string} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFiles: async (bucket?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/knowledge/files`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (bucket !== undefined) {
+                localVarQueryParameter['bucket'] = bucket;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got. 404 for an id the org holds no file for.
+         * @summary Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getKnowledgeFilesById', 'id', id)
+            const localVarPath = `/v1/knowledge/files/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names. It is how an agent finds the other documents a question about this one needs.
+         * @summary Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdGraph: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getKnowledgeFilesByIdGraph', 'id', id)
+            const localVarPath = `/v1/knowledge/files/{id}/graph`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names. Open the document itself with section 0.
+         * @summary Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names.
+         * @param {string} id ID is the file\&#39;s id.
+         * @param {string} section Section is the section\&#39;s number in the file\&#39;s table of contents.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdSectionsBySection: async (id: string, section: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getKnowledgeFilesByIdSectionsBySection', 'id', id)
+            // verify required parameter 'section' is not null or undefined
+            assertParamExists('getKnowledgeFilesByIdSectionsBySection', 'section', section)
+            const localVarPath = `/v1/knowledge/files/{id}/sections/{section}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"section"}}`, encodeURIComponent(String(section)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary. It is the map a reader — a person in Drive, or an agent deciding where to look — reads before opening a section with GET /v1/knowledge/files/{id}/sections/{section}.
+         * @summary Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdToc: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getKnowledgeFilesByIdToc', 'id', id)
+            const localVarPath = `/v1/knowledge/files/{id}/toc`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges. Wikilink targets are resolved HERE by title or slug, so a rename never needs an edge rewrite and a link that matches no page renders as its own \"unresolved\" node instead of vanishing. ?project= narrows it. A store outage degrades to an honest empty graph, never a 5xx.
          * @summary Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges.
          * @param {string} [project] Project narrows the graph to one project scope. Empty reads the whole org.
@@ -320,6 +582,126 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Makes an object in one of the caller\'s org buckets a workspace file. Upload the bytes first — POST /v1/s3/buckets/{bucket}/objects mints a presigned PUT, POST /v1/s3/buckets/{bucket}/uploads starts a multipart upload for a large one — then register the key here. The object\'s name, type and size are read from the store. The file is recorded as queued, a file_stored event is stated on the org\'s event plane, and a durable ingest is queued that extracts its text and structure, summarizes its table of contents, cuts and embeds its passages and links it into the org\'s graph. An archive (.zip) is unpacked and every file inside becomes a workspace file of its own. Poll GET /v1/knowledge/files/{id} for status. Registering an object again answers the same file, and re-indexes it only when the object changed or its last ingest failed.
+         * @summary Makes an object in one of the caller\'s org buckets a workspace file.
+         * @param {KnowledgeFileIn} knowledgeFileIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFiles: async (knowledgeFileIn: KnowledgeFileIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'knowledgeFileIn' is not null or undefined
+            assertParamExists('postKnowledgeFiles', 'knowledgeFileIn', knowledgeFileIn)
+            const localVarPath = `/v1/knowledge/files`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(knowledgeFileIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace. Every passage cites its file › section › paragraph, so an answer can say exactly where it came from. This is what a chat runs before it answers about an attached file, and what an agent runs before it answers about a workspace.
+         * @summary Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace.
+         * @param {KnowledgeRetrieveIn} knowledgeRetrieveIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFilesRetrieve: async (knowledgeRetrieveIn: KnowledgeRetrieveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'knowledgeRetrieveIn' is not null or undefined
+            assertParamExists('postKnowledgeFilesRetrieve', 'knowledgeRetrieveIn', knowledgeRetrieveIn)
+            const localVarPath = `/v1/knowledge/files/retrieve`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(knowledgeRetrieveIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace. Name file ids to search only those files; name none to search them all. A semantic leg compares the query with every embedded passage and a full-text leg finds the passages holding its words; the two are fused, so a passage both found comes first.
+         * @summary Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace.
+         * @param {KnowledgeFileSearchIn} knowledgeFileSearchIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFilesSearch: async (knowledgeFileSearchIn: KnowledgeFileSearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'knowledgeFileSearchIn' is not null or undefined
+            assertParamExists('postKnowledgeFilesSearch', 'knowledgeFileSearchIn', knowledgeFileSearchIn)
+            const localVarPath = `/v1/knowledge/files/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(knowledgeFileSearchIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Ingests an uploaded export as a tree of kb.page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb.page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb.link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
          * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
          * @param {*} [options] Override http request option.
@@ -354,8 +736,8 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
-         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents. It is what an operator runs after the embedding model changes — passages of another model are never compared with the query, so until then they are unread — and what puts an org\'s retrieval right after an outage of the ai plane. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -388,15 +770,15 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
-         * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
-         * @param {SearchIn} searchIn 
+         * Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN knowledge answers. Two legs run and are fused by reciprocal rank: a semantic leg that embeds the query and compares it with every passage of every document in reach (a document is cut into passages of about 2000 bytes, so a fact deep in a long page is found), and a keyword leg over the org\'s knowledge index. The org comes from the validated principal and its passages live in its own database, so cross-tenant retrieval is impossible. A failed leg answers 200 with what the other leg found and degraded=true, never a 5xx.
+         * @summary Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced.
+         * @param {KnowledgeSearchIn} knowledgeSearchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKnowledgeSearch: async (searchIn: SearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'searchIn' is not null or undefined
-            assertParamExists('postKnowledgeSearch', 'searchIn', searchIn)
+        postKnowledgeSearch: async (knowledgeSearchIn: KnowledgeSearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'knowledgeSearchIn' is not null or undefined
+            assertParamExists('postKnowledgeSearch', 'knowledgeSearchIn', knowledgeSearchIn)
             const localVarPath = `/v1/knowledge/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -420,7 +802,7 @@ export const KnowledgeApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(searchIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(knowledgeSearchIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -438,16 +820,29 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = KnowledgeApiAxiosParamCreator(configuration)
     return {
         /**
-         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
-         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
+         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
+         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected.
          * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteKnowledgeConnectorsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
+        async deleteKnowledgeConnectorsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeConnectionOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKnowledgeConnectorsByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.deleteKnowledgeConnectorsByProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record. The file is gone from every read when this answers: its listing, its contents, search and retrieval. What the index held of it is removed after, a batch at a time, so forgetting a file of any size answers at once. The object itself stays in its bucket; delete it there. Drive calls this when it deletes a file.
+         * @summary Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteKnowledgeFilesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeForgotten>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKnowledgeFilesById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.deleteKnowledgeFilesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -456,7 +851,7 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKnowledgeConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbConnectorsOut>> {
+        async getKnowledgeConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeKbConnectorsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeConnectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeConnectors']?.[localVarOperationServerIndex]?.url;
@@ -472,7 +867,7 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKnowledgeConnectorsByProviderCallback(provider: string, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
+        async getKnowledgeConnectorsByProviderCallback(provider: string, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeConnectionOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeConnectorsByProviderCallback(provider, code, state, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeConnectorsByProviderCallback']?.[localVarOperationServerIndex]?.url;
@@ -485,7 +880,7 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKnowledgeConnectorsByProviderConnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbAuthorizeOut>> {
+        async getKnowledgeConnectorsByProviderConnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeKbAuthorizeOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeConnectorsByProviderConnect(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeConnectorsByProviderConnect']?.[localVarOperationServerIndex]?.url;
@@ -497,10 +892,77 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKnowledgeConnectorsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogOut>> {
+        async getKnowledgeConnectorsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeCatalogOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeConnectorsCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeConnectorsCatalog']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @summary Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @param {string} [bucket] 
+         * @param {string} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeFiles(bucket?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeFilesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeFiles(bucket, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeFiles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got. 404 for an id the org holds no file for.
+         * @summary Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeFilesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeFile>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeFilesById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeFilesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names. It is how an agent finds the other documents a question about this one needs.
+         * @summary Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeFilesByIdGraph(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeFileGraph>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeFilesByIdGraph(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeFilesByIdGraph']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names. Open the document itself with section 0.
+         * @summary Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names.
+         * @param {string} id ID is the file\&#39;s id.
+         * @param {string} section Section is the section\&#39;s number in the file\&#39;s table of contents.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeFilesByIdSectionsBySection(id: string, section: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeSectionOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeFilesByIdSectionsBySection(id, section, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeFilesByIdSectionsBySection']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary. It is the map a reader — a person in Drive, or an agent deciding where to look — reads before opening a section with GET /v1/knowledge/files/{id}/sections/{section}.
+         * @summary Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary.
+         * @param {string} id ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeFilesByIdToc(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeTocOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeFilesByIdToc(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeFilesByIdToc']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -510,7 +972,7 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKnowledgeGraph(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphOut>> {
+        async getKnowledgeGraph(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeGraphOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeGraph(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.getKnowledgeGraph']?.[localVarOperationServerIndex]?.url;
@@ -523,10 +985,49 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKnowledgeConnectorsByProviderSync(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbSyncOut>> {
+        async postKnowledgeConnectorsByProviderSync(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeKbSyncOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeConnectorsByProviderSync(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeConnectorsByProviderSync']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Makes an object in one of the caller\'s org buckets a workspace file. Upload the bytes first — POST /v1/s3/buckets/{bucket}/objects mints a presigned PUT, POST /v1/s3/buckets/{bucket}/uploads starts a multipart upload for a large one — then register the key here. The object\'s name, type and size are read from the store. The file is recorded as queued, a file_stored event is stated on the org\'s event plane, and a durable ingest is queued that extracts its text and structure, summarizes its table of contents, cuts and embeds its passages and links it into the org\'s graph. An archive (.zip) is unpacked and every file inside becomes a workspace file of its own. Poll GET /v1/knowledge/files/{id} for status. Registering an object again answers the same file, and re-indexes it only when the object changed or its last ingest failed.
+         * @summary Makes an object in one of the caller\'s org buckets a workspace file.
+         * @param {KnowledgeFileIn} knowledgeFileIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postKnowledgeFiles(knowledgeFileIn: KnowledgeFileIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeFile>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeFiles(knowledgeFileIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeFiles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace. Every passage cites its file › section › paragraph, so an answer can say exactly where it came from. This is what a chat runs before it answers about an attached file, and what an agent runs before it answers about a workspace.
+         * @summary Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace.
+         * @param {KnowledgeRetrieveIn} knowledgeRetrieveIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postKnowledgeFilesRetrieve(knowledgeRetrieveIn: KnowledgeRetrieveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeRetrieveOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeFilesRetrieve(knowledgeRetrieveIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeFilesRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace. Name file ids to search only those files; name none to search them all. A semantic leg compares the query with every embedded passage and a full-text leg finds the passages holding its words; the two are fused, so a passage both found comes first.
+         * @summary Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace.
+         * @param {KnowledgeFileSearchIn} knowledgeFileSearchIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postKnowledgeFilesSearch(knowledgeFileSearchIn: KnowledgeFileSearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeFileSearchOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeFilesSearch(knowledgeFileSearchIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeFilesSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -542,26 +1043,26 @@ export const KnowledgeApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
-         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents. It is what an operator runs after the embedding model changes — passages of another model are never compared with the query, so until then they are unread — and what puts an org\'s retrieval right after an outage of the ai plane. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKnowledgeReindex(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReindexOut>> {
+        async postKnowledgeReindex(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeReindexOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeReindex(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeReindex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
-         * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
-         * @param {SearchIn} searchIn 
+         * Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN knowledge answers. Two legs run and are fused by reciprocal rank: a semantic leg that embeds the query and compares it with every passage of every document in reach (a document is cut into passages of about 2000 bytes, so a fact deep in a long page is found), and a keyword leg over the org\'s knowledge index. The org comes from the validated principal and its passages live in its own database, so cross-tenant retrieval is impossible. A failed leg answers 200 with what the other leg found and degraded=true, never a 5xx.
+         * @summary Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced.
+         * @param {KnowledgeSearchIn} knowledgeSearchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKnowledgeSearch(searchIn: SearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeSearch(searchIn, options);
+        async postKnowledgeSearch(knowledgeSearchIn: KnowledgeSearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeSearchOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKnowledgeSearch(knowledgeSearchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KnowledgeApi.postKnowledgeSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -577,14 +1078,24 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
     const localVarFp = KnowledgeApiFp(configuration)
     return {
         /**
-         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
-         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
+         * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
+         * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected.
          * @param {KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteKnowledgeConnectorsByProvider(requestParameters: KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
+        deleteKnowledgeConnectorsByProvider(requestParameters: KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeConnectionOut> {
             return localVarFp.deleteKnowledgeConnectorsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record. The file is gone from every read when this answers: its listing, its contents, search and retrieval. What the index held of it is removed after, a batch at a time, so forgetting a file of any size answers at once. The object itself stays in its bucket; delete it there. Drive calls this when it deletes a file.
+         * @summary Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record.
+         * @param {KnowledgeApiDeleteKnowledgeFilesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKnowledgeFilesById(requestParameters: KnowledgeApiDeleteKnowledgeFilesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeForgotten> {
+            return localVarFp.deleteKnowledgeFilesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every supported knowledge connector with THIS org\'s connection state and the REAL number of documents each has ingested into the org\'s store. A provider that is configured for the deployment but not yet connected appears as disconnected, so the console can offer a Connect button. No secret is ever returned.
@@ -592,7 +1103,7 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKnowledgeConnectors(options?: RawAxiosRequestConfig): AxiosPromise<KbConnectorsOut> {
+        getKnowledgeConnectors(options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeKbConnectorsOut> {
             return localVarFp.getKnowledgeConnectors(options).then((request) => request(axios, basePath));
         },
         /**
@@ -602,7 +1113,7 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKnowledgeConnectorsByProviderCallback(requestParameters: KnowledgeApiGetKnowledgeConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
+        getKnowledgeConnectorsByProviderCallback(requestParameters: KnowledgeApiGetKnowledgeConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeConnectionOut> {
             return localVarFp.getKnowledgeConnectorsByProviderCallback(requestParameters.provider, requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(axios, basePath));
         },
         /**
@@ -612,7 +1123,7 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKnowledgeConnectorsByProviderConnect(requestParameters: KnowledgeApiGetKnowledgeConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbAuthorizeOut> {
+        getKnowledgeConnectorsByProviderConnect(requestParameters: KnowledgeApiGetKnowledgeConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeKbAuthorizeOut> {
             return localVarFp.getKnowledgeConnectorsByProviderConnect(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
@@ -621,8 +1132,58 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKnowledgeConnectorsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogOut> {
+        getKnowledgeConnectorsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeCatalogOut> {
             return localVarFp.getKnowledgeConnectorsCatalog(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @summary Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+         * @param {KnowledgeApiGetKnowledgeFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFiles(requestParameters: KnowledgeApiGetKnowledgeFilesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeFilesOut> {
+            return localVarFp.getKnowledgeFiles(requestParameters.bucket, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got. 404 for an id the org holds no file for.
+         * @summary Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got.
+         * @param {KnowledgeApiGetKnowledgeFilesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesById(requestParameters: KnowledgeApiGetKnowledgeFilesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeFile> {
+            return localVarFp.getKnowledgeFilesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names. It is how an agent finds the other documents a question about this one needs.
+         * @summary Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names.
+         * @param {KnowledgeApiGetKnowledgeFilesByIdGraphRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdGraph(requestParameters: KnowledgeApiGetKnowledgeFilesByIdGraphRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeFileGraph> {
+            return localVarFp.getKnowledgeFilesByIdGraph(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names. Open the document itself with section 0.
+         * @summary Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names.
+         * @param {KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdSectionsBySection(requestParameters: KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeSectionOut> {
+            return localVarFp.getKnowledgeFilesByIdSectionsBySection(requestParameters.id, requestParameters.section, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary. It is the map a reader — a person in Drive, or an agent deciding where to look — reads before opening a section with GET /v1/knowledge/files/{id}/sections/{section}.
+         * @summary Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary.
+         * @param {KnowledgeApiGetKnowledgeFilesByIdTocRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeFilesByIdToc(requestParameters: KnowledgeApiGetKnowledgeFilesByIdTocRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeTocOut> {
+            return localVarFp.getKnowledgeFilesByIdToc(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges. Wikilink targets are resolved HERE by title or slug, so a rename never needs an edge rewrite and a link that matches no page renders as its own \"unresolved\" node instead of vanishing. ?project= narrows it. A store outage degrades to an honest empty graph, never a 5xx.
@@ -631,7 +1192,7 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKnowledgeGraph(requestParameters: KnowledgeApiGetKnowledgeGraphRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphOut> {
+        getKnowledgeGraph(requestParameters: KnowledgeApiGetKnowledgeGraphRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeGraphOut> {
             return localVarFp.getKnowledgeGraph(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -641,8 +1202,38 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKnowledgeConnectorsByProviderSync(requestParameters: KnowledgeApiPostKnowledgeConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbSyncOut> {
+        postKnowledgeConnectorsByProviderSync(requestParameters: KnowledgeApiPostKnowledgeConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeKbSyncOut> {
             return localVarFp.postKnowledgeConnectorsByProviderSync(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Makes an object in one of the caller\'s org buckets a workspace file. Upload the bytes first — POST /v1/s3/buckets/{bucket}/objects mints a presigned PUT, POST /v1/s3/buckets/{bucket}/uploads starts a multipart upload for a large one — then register the key here. The object\'s name, type and size are read from the store. The file is recorded as queued, a file_stored event is stated on the org\'s event plane, and a durable ingest is queued that extracts its text and structure, summarizes its table of contents, cuts and embeds its passages and links it into the org\'s graph. An archive (.zip) is unpacked and every file inside becomes a workspace file of its own. Poll GET /v1/knowledge/files/{id} for status. Registering an object again answers the same file, and re-indexes it only when the object changed or its last ingest failed.
+         * @summary Makes an object in one of the caller\'s org buckets a workspace file.
+         * @param {KnowledgeApiPostKnowledgeFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFiles(requestParameters: KnowledgeApiPostKnowledgeFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeFile> {
+            return localVarFp.postKnowledgeFiles(requestParameters.knowledgeFileIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace. Every passage cites its file › section › paragraph, so an answer can say exactly where it came from. This is what a chat runs before it answers about an attached file, and what an agent runs before it answers about a workspace.
+         * @summary Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace.
+         * @param {KnowledgeApiPostKnowledgeFilesRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFilesRetrieve(requestParameters: KnowledgeApiPostKnowledgeFilesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeRetrieveOut> {
+            return localVarFp.postKnowledgeFilesRetrieve(requestParameters.knowledgeRetrieveIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace. Name file ids to search only those files; name none to search them all. A semantic leg compares the query with every embedded passage and a full-text leg finds the passages holding its words; the two are fused, so a passage both found comes first.
+         * @summary Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace.
+         * @param {KnowledgeApiPostKnowledgeFilesSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postKnowledgeFilesSearch(requestParameters: KnowledgeApiPostKnowledgeFilesSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeFileSearchOut> {
+            return localVarFp.postKnowledgeFilesSearch(requestParameters.knowledgeFileSearchIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Ingests an uploaded export as a tree of kb.page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb.page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb.link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
@@ -654,23 +1245,23 @@ export const KnowledgeApiFactory = function (configuration?: Configuration, base
             return localVarFp.postKnowledgeImport(options).then((request) => request(axios, basePath));
         },
         /**
-         * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
-         * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+         * Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents. It is what an operator runs after the embedding model changes — passages of another model are never compared with the query, so until then they are unread — and what puts an org\'s retrieval right after an outage of the ai plane. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+         * @summary Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKnowledgeReindex(options?: RawAxiosRequestConfig): AxiosPromise<ReindexOut> {
+        postKnowledgeReindex(options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeReindexOut> {
             return localVarFp.postKnowledgeReindex(options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
-         * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
+         * Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN knowledge answers. Two legs run and are fused by reciprocal rank: a semantic leg that embeds the query and compares it with every passage of every document in reach (a document is cut into passages of about 2000 bytes, so a fact deep in a long page is found), and a keyword leg over the org\'s knowledge index. The org comes from the validated principal and its passages live in its own database, so cross-tenant retrieval is impossible. A failed leg answers 200 with what the other leg found and degraded=true, never a 5xx.
+         * @summary Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced.
          * @param {KnowledgeApiPostKnowledgeSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKnowledgeSearch(requestParameters: KnowledgeApiPostKnowledgeSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchOut> {
-            return localVarFp.postKnowledgeSearch(requestParameters.searchIn, options).then((request) => request(axios, basePath));
+        postKnowledgeSearch(requestParameters: KnowledgeApiPostKnowledgeSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<KnowledgeSearchOut> {
+            return localVarFp.postKnowledgeSearch(requestParameters.knowledgeSearchIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -687,6 +1278,20 @@ export interface KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest {
      * @memberof KnowledgeApiDeleteKnowledgeConnectorsByProvider
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for deleteKnowledgeFilesById operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiDeleteKnowledgeFilesByIdRequest
+ */
+export interface KnowledgeApiDeleteKnowledgeFilesByIdRequest {
+    /**
+     * ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+     * @type {string}
+     * @memberof KnowledgeApiDeleteKnowledgeFilesById
+     */
+    readonly id: string
 }
 
 /**
@@ -739,6 +1344,90 @@ export interface KnowledgeApiGetKnowledgeConnectorsByProviderConnectRequest {
 }
 
 /**
+ * Request parameters for getKnowledgeFiles operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiGetKnowledgeFilesRequest
+ */
+export interface KnowledgeApiGetKnowledgeFilesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFiles
+     */
+    readonly bucket?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFiles
+     */
+    readonly limit?: string
+}
+
+/**
+ * Request parameters for getKnowledgeFilesById operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiGetKnowledgeFilesByIdRequest
+ */
+export interface KnowledgeApiGetKnowledgeFilesByIdRequest {
+    /**
+     * ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFilesById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getKnowledgeFilesByIdGraph operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiGetKnowledgeFilesByIdGraphRequest
+ */
+export interface KnowledgeApiGetKnowledgeFilesByIdGraphRequest {
+    /**
+     * ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFilesByIdGraph
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getKnowledgeFilesByIdSectionsBySection operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest
+ */
+export interface KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest {
+    /**
+     * ID is the file\&#39;s id.
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFilesByIdSectionsBySection
+     */
+    readonly id: string
+
+    /**
+     * Section is the section\&#39;s number in the file\&#39;s table of contents.
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFilesByIdSectionsBySection
+     */
+    readonly section: string
+}
+
+/**
+ * Request parameters for getKnowledgeFilesByIdToc operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiGetKnowledgeFilesByIdTocRequest
+ */
+export interface KnowledgeApiGetKnowledgeFilesByIdTocRequest {
+    /**
+     * ID is the file\&#39;s id, as POST /v1/knowledge/files answered it.
+     * @type {string}
+     * @memberof KnowledgeApiGetKnowledgeFilesByIdToc
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for getKnowledgeGraph operation in KnowledgeApi.
  * @export
  * @interface KnowledgeApiGetKnowledgeGraphRequest
@@ -767,6 +1456,48 @@ export interface KnowledgeApiPostKnowledgeConnectorsByProviderSyncRequest {
 }
 
 /**
+ * Request parameters for postKnowledgeFiles operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiPostKnowledgeFilesRequest
+ */
+export interface KnowledgeApiPostKnowledgeFilesRequest {
+    /**
+     * 
+     * @type {KnowledgeFileIn}
+     * @memberof KnowledgeApiPostKnowledgeFiles
+     */
+    readonly knowledgeFileIn: KnowledgeFileIn
+}
+
+/**
+ * Request parameters for postKnowledgeFilesRetrieve operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiPostKnowledgeFilesRetrieveRequest
+ */
+export interface KnowledgeApiPostKnowledgeFilesRetrieveRequest {
+    /**
+     * 
+     * @type {KnowledgeRetrieveIn}
+     * @memberof KnowledgeApiPostKnowledgeFilesRetrieve
+     */
+    readonly knowledgeRetrieveIn: KnowledgeRetrieveIn
+}
+
+/**
+ * Request parameters for postKnowledgeFilesSearch operation in KnowledgeApi.
+ * @export
+ * @interface KnowledgeApiPostKnowledgeFilesSearchRequest
+ */
+export interface KnowledgeApiPostKnowledgeFilesSearchRequest {
+    /**
+     * 
+     * @type {KnowledgeFileSearchIn}
+     * @memberof KnowledgeApiPostKnowledgeFilesSearch
+     */
+    readonly knowledgeFileSearchIn: KnowledgeFileSearchIn
+}
+
+/**
  * Request parameters for postKnowledgeSearch operation in KnowledgeApi.
  * @export
  * @interface KnowledgeApiPostKnowledgeSearchRequest
@@ -774,10 +1505,10 @@ export interface KnowledgeApiPostKnowledgeConnectorsByProviderSyncRequest {
 export interface KnowledgeApiPostKnowledgeSearchRequest {
     /**
      * 
-     * @type {SearchIn}
+     * @type {KnowledgeSearchIn}
      * @memberof KnowledgeApiPostKnowledgeSearch
      */
-    readonly searchIn: SearchIn
+    readonly knowledgeSearchIn: KnowledgeSearchIn
 }
 
 /**
@@ -788,8 +1519,8 @@ export interface KnowledgeApiPostKnowledgeSearchRequest {
  */
 export class KnowledgeApi extends BaseAPI {
     /**
-     * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
-     * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
+     * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
+     * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, removes this provider\'s passages from the org\'s store, and marks the connector disconnected.
      * @param {KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -797,6 +1528,18 @@ export class KnowledgeApi extends BaseAPI {
      */
     public deleteKnowledgeConnectorsByProvider(requestParameters: KnowledgeApiDeleteKnowledgeConnectorsByProviderRequest, options?: RawAxiosRequestConfig) {
         return KnowledgeApiFp(this.configuration).deleteKnowledgeConnectorsByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record. The file is gone from every read when this answers: its listing, its contents, search and retrieval. What the index held of it is removed after, a batch at a time, so forgetting a file of any size answers at once. The object itself stays in its bucket; delete it there. Drive calls this when it deletes a file.
+     * @summary Removes one of the caller\'s org files from the index — its table of contents, passages, full-text rows, mentions and links — and its record.
+     * @param {KnowledgeApiDeleteKnowledgeFilesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public deleteKnowledgeFilesById(requestParameters: KnowledgeApiDeleteKnowledgeFilesByIdRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).deleteKnowledgeFilesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -846,6 +1589,66 @@ export class KnowledgeApi extends BaseAPI {
     }
 
     /**
+     * Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+     * @summary Answers the caller\'s org files, most recently changed first, each with its status and stage — optionally only those in one bucket, which is how Drive shows a folder\'s files with their index state.
+     * @param {KnowledgeApiGetKnowledgeFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public getKnowledgeFiles(requestParameters: KnowledgeApiGetKnowledgeFilesRequest = {}, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).getKnowledgeFiles(requestParameters.bucket, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got. 404 for an id the org holds no file for.
+     * @summary Answers one of the caller\'s org files: what it is, where its bytes are, and how far its ingest has got.
+     * @param {KnowledgeApiGetKnowledgeFilesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public getKnowledgeFilesById(requestParameters: KnowledgeApiGetKnowledgeFilesByIdRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).getKnowledgeFilesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names. It is how an agent finds the other documents a question about this one needs.
+     * @summary Answers one of the caller\'s org files\' place in the org\'s graph: the files it links to and is linked from (a hyperlink, a citation by name), the files that name the same entities, and the entities it names.
+     * @param {KnowledgeApiGetKnowledgeFilesByIdGraphRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public getKnowledgeFilesByIdGraph(requestParameters: KnowledgeApiGetKnowledgeFilesByIdGraphRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).getKnowledgeFilesByIdGraph(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names. Open the document itself with section 0.
+     * @summary Answers one section of one of the caller\'s org files: its own text, its subsections, the sections it links to or shares entities with — in this file or another — and the entities it names.
+     * @param {KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public getKnowledgeFilesByIdSectionsBySection(requestParameters: KnowledgeApiGetKnowledgeFilesByIdSectionsBySectionRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).getKnowledgeFilesByIdSectionsBySection(requestParameters.id, requestParameters.section, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary. It is the map a reader — a person in Drive, or an agent deciding where to look — reads before opening a section with GET /v1/knowledge/files/{id}/sections/{section}.
+     * @summary Answers one of the caller\'s org files\' table of contents: every section in document order with its depth, its parent and a one-line summary.
+     * @param {KnowledgeApiGetKnowledgeFilesByIdTocRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public getKnowledgeFilesByIdToc(requestParameters: KnowledgeApiGetKnowledgeFilesByIdTocRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).getKnowledgeFilesByIdToc(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges. Wikilink targets are resolved HERE by title or slug, so a rename never needs an edge rewrite and a link that matches no page renders as its own \"unresolved\" node instead of vanishing. ?project= narrows it. A store outage degrades to an honest empty graph, never a 5xx.
      * @summary Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges.
      * @param {KnowledgeApiGetKnowledgeGraphRequest} requestParameters Request parameters.
@@ -870,6 +1673,42 @@ export class KnowledgeApi extends BaseAPI {
     }
 
     /**
+     * Makes an object in one of the caller\'s org buckets a workspace file. Upload the bytes first — POST /v1/s3/buckets/{bucket}/objects mints a presigned PUT, POST /v1/s3/buckets/{bucket}/uploads starts a multipart upload for a large one — then register the key here. The object\'s name, type and size are read from the store. The file is recorded as queued, a file_stored event is stated on the org\'s event plane, and a durable ingest is queued that extracts its text and structure, summarizes its table of contents, cuts and embeds its passages and links it into the org\'s graph. An archive (.zip) is unpacked and every file inside becomes a workspace file of its own. Poll GET /v1/knowledge/files/{id} for status. Registering an object again answers the same file, and re-indexes it only when the object changed or its last ingest failed.
+     * @summary Makes an object in one of the caller\'s org buckets a workspace file.
+     * @param {KnowledgeApiPostKnowledgeFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public postKnowledgeFiles(requestParameters: KnowledgeApiPostKnowledgeFilesRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).postKnowledgeFiles(requestParameters.knowledgeFileIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace. Every passage cites its file › section › paragraph, so an answer can say exactly where it came from. This is what a chat runs before it answers about an attached file, and what an agent runs before it answers about a workspace.
+     * @summary Grounds an answer in the caller\'s org files, table of contents first: candidate documents are found by searching their passages; a model reads their tables of contents — titles and one-line summaries — and picks the sections the answer is in; hybrid search drills into the passages of those sections; and the graph expands to the sections they link to or name the same entities as, in any file of the workspace.
+     * @param {KnowledgeApiPostKnowledgeFilesRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public postKnowledgeFilesRetrieve(requestParameters: KnowledgeApiPostKnowledgeFilesRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).postKnowledgeFilesRetrieve(requestParameters.knowledgeRetrieveIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace. Name file ids to search only those files; name none to search them all. A semantic leg compares the query with every embedded passage and a full-text leg finds the passages holding its words; the two are fused, so a passage both found comes first.
+     * @summary Answers the passages of the caller\'s org files that match a query, each citing its file › section › paragraph: the search behind Drive\'s box, and the first step an agent takes across a workspace.
+     * @param {KnowledgeApiPostKnowledgeFilesSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeApi
+     */
+    public postKnowledgeFilesSearch(requestParameters: KnowledgeApiPostKnowledgeFilesSearchRequest, options?: RawAxiosRequestConfig) {
+        return KnowledgeApiFp(this.configuration).postKnowledgeFilesSearch(requestParameters.knowledgeFileSearchIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Ingests an uploaded export as a tree of kb.page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb.page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb.link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
      * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
      * @param {*} [options] Override http request option.
@@ -881,8 +1720,8 @@ export class KnowledgeApi extends BaseAPI {
     }
 
     /**
-     * Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set. It is what an operator runs after the embedding model or its dimension changes, and what puts an org\'s retrieval right after a vector outage. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
-     * @summary Rebuilds the caller org\'s retrieval from its documents: the vector collection is dropped and created again at the configured embedding size and every page, memory and source is embedded into it; the lexical index is reconciled to the same set.
+     * Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents. It is what an operator runs after the embedding model changes — passages of another model are never compared with the query, so until then they are unread — and what puts an org\'s retrieval right after an outage of the ai plane. It requires ORG ADMIN and runs inline: an org\'s knowledge is a few thousand documents, and the answer is the count.  The request has no body. Response: {\"vectors\": 412, \"lexical\": 412, \"removed\": 3, \"failed\": 0}
+     * @summary Rebuilds the caller org\'s retrieval from its documents: every passage is removed, and every page, memory and source is cut into passages and embedded again with the configured model; the lexical index is reconciled to the same documents.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeApi
@@ -892,15 +1731,15 @@ export class KnowledgeApi extends BaseAPI {
     }
 
     /**
-     * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
-     * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
+     * Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN knowledge answers. Two legs run and are fused by reciprocal rank: a semantic leg that embeds the query and compares it with every passage of every document in reach (a document is cut into passages of about 2000 bytes, so a fact deep in a long page is found), and a keyword leg over the org\'s knowledge index. The org comes from the validated principal and its passages live in its own database, so cross-tenant retrieval is impossible. A failed leg answers 200 with what the other leg found and degraded=true, never a 5xx.
+     * @summary Runs a hybrid search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced.
      * @param {KnowledgeApiPostKnowledgeSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeApi
      */
     public postKnowledgeSearch(requestParameters: KnowledgeApiPostKnowledgeSearchRequest, options?: RawAxiosRequestConfig) {
-        return KnowledgeApiFp(this.configuration).postKnowledgeSearch(requestParameters.searchIn, options).then((request) => request(this.axios, this.basePath));
+        return KnowledgeApiFp(this.configuration).postKnowledgeSearch(requestParameters.knowledgeSearchIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

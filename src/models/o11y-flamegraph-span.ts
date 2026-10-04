@@ -25,10 +25,10 @@ import type { O11yEvent } from './o11y-event';
 export interface O11yFlamegraphSpan {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yFlamegraphSpan
      */
-    'attributes'?: { [key: string]: object; };
+    'attributes'?: { [key: string]: any; };
     /**
      * 
      * @type {number}

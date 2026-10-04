@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BusAck } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { BusMessage } from '../models';
+import type { PubsubBusAck } from '../models';
 // @ts-ignore
-import type { BusPublish } from '../models';
+import type { PubsubBusMessage } from '../models';
 // @ts-ignore
-import type { BusRequest } from '../models';
+import type { PubsubBusPublish } from '../models';
+// @ts-ignore
+import type { PubsubBusRequest } from '../models';
 /**
  * PubsubApi - axios parameter creator
  * @export
@@ -36,15 +38,15 @@ import type { BusRequest } from '../models';
 export const PubsubApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
-         * @summary Publish puts one message on the org\'s bus.
-         * @param {BusPublish} busPublish 
+         * Puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
+         * @summary Puts one message on the org\'s bus.
+         * @param {PubsubBusPublish} pubsubBusPublish 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPubsubPublish: async (busPublish: BusPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'busPublish' is not null or undefined
-            assertParamExists('postPubsubPublish', 'busPublish', busPublish)
+        postPubsubPublish: async (pubsubBusPublish: PubsubBusPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pubsubBusPublish' is not null or undefined
+            assertParamExists('postPubsubPublish', 'pubsubBusPublish', pubsubBusPublish)
             const localVarPath = `/v1/pubsub/publish`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -68,7 +70,7 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(busPublish, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pubsubBusPublish, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -76,15 +78,15 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
-         * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
-         * @param {BusRequest} busRequest 
+         * Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
+         * @summary Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
+         * @param {PubsubBusRequest} pubsubBusRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPubsubRequest: async (busRequest: BusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'busRequest' is not null or undefined
-            assertParamExists('postPubsubRequest', 'busRequest', busRequest)
+        postPubsubRequest: async (pubsubBusRequest: PubsubBusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pubsubBusRequest' is not null or undefined
+            assertParamExists('postPubsubRequest', 'pubsubBusRequest', pubsubBusRequest)
             const localVarPath = `/v1/pubsub/request`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -108,7 +110,7 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(busRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pubsubBusRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -126,27 +128,27 @@ export const PubsubApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PubsubApiAxiosParamCreator(configuration)
     return {
         /**
-         * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
-         * @summary Publish puts one message on the org\'s bus.
-         * @param {BusPublish} busPublish 
+         * Puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
+         * @summary Puts one message on the org\'s bus.
+         * @param {PubsubBusPublish} pubsubBusPublish 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPubsubPublish(busPublish: BusPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubPublish(busPublish, options);
+        async postPubsubPublish(pubsubBusPublish: PubsubBusPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PubsubBusAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubPublish(pubsubBusPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
-         * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
-         * @param {BusRequest} busRequest 
+         * Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
+         * @summary Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
+         * @param {PubsubBusRequest} pubsubBusRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPubsubRequest(busRequest: BusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusMessage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubRequest(busRequest, options);
+        async postPubsubRequest(pubsubBusRequest: PubsubBusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PubsubBusMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubRequest(pubsubBusRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubRequest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -162,24 +164,24 @@ export const PubsubApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = PubsubApiFp(configuration)
     return {
         /**
-         * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
-         * @summary Publish puts one message on the org\'s bus.
+         * Puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
+         * @summary Puts one message on the org\'s bus.
          * @param {PubsubApiPostPubsubPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPubsubPublish(requestParameters: PubsubApiPostPubsubPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusAck> {
-            return localVarFp.postPubsubPublish(requestParameters.busPublish, options).then((request) => request(axios, basePath));
+        postPubsubPublish(requestParameters: PubsubApiPostPubsubPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<PubsubBusAck> {
+            return localVarFp.postPubsubPublish(requestParameters.pubsubBusPublish, options).then((request) => request(axios, basePath));
         },
         /**
-         * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
-         * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
+         * Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
+         * @summary Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
          * @param {PubsubApiPostPubsubRequestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPubsubRequest(requestParameters: PubsubApiPostPubsubRequestRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusMessage> {
-            return localVarFp.postPubsubRequest(requestParameters.busRequest, options).then((request) => request(axios, basePath));
+        postPubsubRequest(requestParameters: PubsubApiPostPubsubRequestRequest, options?: RawAxiosRequestConfig): AxiosPromise<PubsubBusMessage> {
+            return localVarFp.postPubsubRequest(requestParameters.pubsubBusRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -192,10 +194,10 @@ export const PubsubApiFactory = function (configuration?: Configuration, basePat
 export interface PubsubApiPostPubsubPublishRequest {
     /**
      * 
-     * @type {BusPublish}
+     * @type {PubsubBusPublish}
      * @memberof PubsubApiPostPubsubPublish
      */
-    readonly busPublish: BusPublish
+    readonly pubsubBusPublish: PubsubBusPublish
 }
 
 /**
@@ -206,10 +208,10 @@ export interface PubsubApiPostPubsubPublishRequest {
 export interface PubsubApiPostPubsubRequestRequest {
     /**
      * 
-     * @type {BusRequest}
+     * @type {PubsubBusRequest}
      * @memberof PubsubApiPostPubsubRequest
      */
-    readonly busRequest: BusRequest
+    readonly pubsubBusRequest: PubsubBusRequest
 }
 
 /**
@@ -220,27 +222,27 @@ export interface PubsubApiPostPubsubRequestRequest {
  */
 export class PubsubApi extends BaseAPI {
     /**
-     * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
-     * @summary Publish puts one message on the org\'s bus.
+     * Puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
+     * @summary Puts one message on the org\'s bus.
      * @param {PubsubApiPostPubsubPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
     public postPubsubPublish(requestParameters: PubsubApiPostPubsubPublishRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postPubsubPublish(requestParameters.busPublish, options).then((request) => request(this.axios, this.basePath));
+        return PubsubApiFp(this.configuration).postPubsubPublish(requestParameters.pubsubBusPublish, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
-     * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
+     * Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
+     * @summary Sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
      * @param {PubsubApiPostPubsubRequestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
     public postPubsubRequest(requestParameters: PubsubApiPostPubsubRequestRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postPubsubRequest(requestParameters.busRequest, options).then((request) => request(this.axios, this.basePath));
+        return PubsubApiFp(this.configuration).postPubsubRequest(requestParameters.pubsubBusRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

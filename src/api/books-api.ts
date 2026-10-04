@@ -22,53 +22,57 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Account } from '../models';
-// @ts-ignore
-import type { AskRequest } from '../models';
-// @ts-ignore
-import type { AskResponse } from '../models';
-// @ts-ignore
-import type { BalanceSheet } from '../models';
-// @ts-ignore
 import type { BankTally } from '../models';
 // @ts-ignore
-import type { BankTxnRow } from '../models';
+import type { BooksAccount } from '../models';
 // @ts-ignore
-import type { BookRequest } from '../models';
+import type { BooksAskRequest } from '../models';
 // @ts-ignore
-import type { BookResponse } from '../models';
+import type { BooksAskResponse } from '../models';
 // @ts-ignore
-import type { FinancialPackage } from '../models';
+import type { BooksBalanceSheet } from '../models';
 // @ts-ignore
-import type { GLRow } from '../models';
+import type { BooksBankTally } from '../models';
+// @ts-ignore
+import type { BooksBankTxnRow } from '../models';
+// @ts-ignore
+import type { BooksBookRequest } from '../models';
+// @ts-ignore
+import type { BooksBookResponse } from '../models';
+// @ts-ignore
+import type { BooksFinancialPackage } from '../models';
+// @ts-ignore
+import type { BooksGLRow } from '../models';
+// @ts-ignore
+import type { BooksInboxOut } from '../models';
+// @ts-ignore
+import type { BooksMetricsResponse } from '../models';
+// @ts-ignore
+import type { BooksPnL } from '../models';
+// @ts-ignore
+import type { BooksQuestionsResponse } from '../models';
+// @ts-ignore
+import type { BooksRule } from '../models';
+// @ts-ignore
+import type { BooksRulesOut } from '../models';
+// @ts-ignore
+import type { BooksSyncTally } from '../models';
+// @ts-ignore
+import type { BooksTransactionsOut } from '../models';
+// @ts-ignore
+import type { BooksTrialBalance } from '../models';
+// @ts-ignore
+import type { BooksUnreconciledOut } from '../models';
+// @ts-ignore
+import type { BooksVendorRow } from '../models';
+// @ts-ignore
+import type { BooksVendorsOut } from '../models';
 // @ts-ignore
 import type { InboxItem } from '../models';
 // @ts-ignore
-import type { InboxOut } from '../models';
-// @ts-ignore
-import type { MetricsResponse } from '../models';
-// @ts-ignore
-import type { PnL } from '../models';
-// @ts-ignore
-import type { QuestionsResponse } from '../models';
-// @ts-ignore
-import type { Rule } from '../models';
-// @ts-ignore
-import type { RulesOut } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { ScanDraft } from '../models';
-// @ts-ignore
-import type { SyncTally } from '../models';
-// @ts-ignore
-import type { TransactionsOut } from '../models';
-// @ts-ignore
-import type { TrialBalance } from '../models';
-// @ts-ignore
-import type { UnreconciledOut } from '../models';
-// @ts-ignore
-import type { VendorRow } from '../models';
-// @ts-ignore
-import type { VendorsOut } from '../models';
 /**
  * BooksApi - axios parameter creator
  * @export
@@ -257,8 +261,8 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * ListGL returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
-         * @summary ListGL returns the org\'s most recent GL Entry rows, newest first.
+         * Returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
+         * @summary Returns the org\'s most recent GL Entry rows, newest first.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
          * @param {number} [limit] Limit caps how many rows come back; 500 when absent or not positive.
          * @param {*} [options] Override http request option.
@@ -340,8 +344,8 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
-         * @summary Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
+         * Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
+         * @summary Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
          * @param {string} [from] From is the RFC3339 start of the window, exclusive. Empty means all time.
          * @param {string} [to] To is the RFC3339 end of the window, inclusive. Empty means up to now.
@@ -714,13 +718,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Answers a plain-language question about the caller\'s own books — \"what is my MRR?\", \"how long is my runway?\" — with figures taken from their ledger, never a guessed number. A deterministic keyword router picks the intent and reads the real metrics, and those figures, followups and report sources are computed BEFORE any model call and are never altered by one: the optional narration client only rephrases the sentence, and it degrades silently to the templated answer when no AI plane is wired. It is strictly read-only — it restates the books, it never posts to them.
          * @summary Answers a plain-language question about the caller\'s own books — \"what is my MRR?\", \"how long is my runway?\" — with figures taken from their ledger, never a guessed number.
-         * @param {AskRequest} askRequest 
+         * @param {BooksAskRequest} booksAskRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksAsk: async (askRequest: AskRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'askRequest' is not null or undefined
-            assertParamExists('postBooksAsk', 'askRequest', askRequest)
+        postBooksAsk: async (booksAskRequest: BooksAskRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'booksAskRequest' is not null or undefined
+            assertParamExists('postBooksAsk', 'booksAskRequest', booksAskRequest)
             const localVarPath = `/v1/books/ask`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -744,41 +748,7 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(askRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended second hop of the bank-linking handshake — trade the provider\'s short-lived public token for the durable access credential and seal that credential into KMS — and nothing on the HTTP path reaches an implementation today.  The durable bank credential is the reason this hop exists: it is meant to be sealed server-side and never handed back to the caller. Since the route never succeeds, no credential is stored by it and no bank is connected through it.  Documented as refusing rather than declared with a success body, for the same reason as the first hop: it has never sent one, and stating a shape it has never produced would put a return type in every SDK for a call that always fails. A caller with no principal gets 401 before the 501.
-         * @summary Finish connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBooksBankExchange: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/bank/exchange`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(booksAskRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -858,40 +828,6 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBooksBankToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/bank/token`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Takes a document as RAW BYTES and queues it in the caller org\'s inbox as `unsorted`, answering the queued item. It is the drop box: get the paperwork in now, read it later.  It EXTRACTS NOTHING and calls no model — that is what separates it from the scan. Nothing is proposed and nothing is posted; the item simply waits to be scanned, and a booked document leaves the queue.  IDEMPOTENT BY CONTENT: the item\'s id is the file hash, so re-uploading the same bytes answers the existing item rather than adding a duplicate row — and it is the same id a scan of those bytes uses, which is how the two routes address one document. Scoped to the caller\'s own org from the validated principal and refused without one; `sandbox=true` targets the sandbox ledger, and `filename` is recorded for display. An empty or oversized upload is a 400.
          * @summary Queue a document for later scanning
          * @param {File} [body] 
@@ -932,13 +868,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Creates or updates one auto-categorization rule, keyed by its pattern — writing a pattern that already exists REPLACES that row\'s category and priority. The category is normalized to a real COA expense account, and anything unrecognized becomes 5900 Uncategorized rather than a guessed real account. It answers the row exactly as stored, so the caller sees the normalization. A rule overrides a vendor\'s default category, so this is the standing instruction that decides how a future bill classifies.
          * @summary Creates or updates one auto-categorization rule, keyed by its pattern — writing a pattern that already exists REPLACES that row\'s category and priority.
-         * @param {Rule} rule 
+         * @param {BooksRule} booksRule 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksRules: async (rule: Rule, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'rule' is not null or undefined
-            assertParamExists('postBooksRules', 'rule', rule)
+        postBooksRules: async (booksRule: BooksRule, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'booksRule' is not null or undefined
+            assertParamExists('postBooksRules', 'booksRule', booksRule)
             const localVarPath = `/v1/books/rules`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -962,7 +898,7 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rule, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(booksRule, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1010,13 +946,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Posts a reviewed scanned bill to the ledger. It is the scanner\'s ONLY write: the voucher goes through the same post() choke point every other source uses, so it is checked to balance (Σdebit == Σcredit) and is idempotent by (scan, scanId) — re-booking the same scan answers posted=false and writes nothing. A bill whose economic identity (vendor, total, issue date) already posted under a DIFFERENT scan is refused 409 unless override is set, which is what stops the same receipt re-scanned into a new file hash from double-booking. An unbalanced voucher is refused 400.
          * @summary Posts a reviewed scanned bill to the ledger.
-         * @param {BookRequest} bookRequest 
+         * @param {BooksBookRequest} booksBookRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksScanBook: async (bookRequest: BookRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bookRequest' is not null or undefined
-            assertParamExists('postBooksScanBook', 'bookRequest', bookRequest)
+        postBooksScanBook: async (booksBookRequest: BooksBookRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'booksBookRequest' is not null or undefined
+            assertParamExists('postBooksScanBook', 'booksBookRequest', booksBookRequest)
             const localVarPath = `/v1/books/scan/book`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1040,7 +976,7 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(bookRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(booksBookRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1048,8 +984,8 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
-         * @summary Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
+         * Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
+         * @summary Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1084,13 +1020,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Creates or updates one vendor in the org\'s vendor book, keyed by its canonical name — writing a canonical name that already exists REPLACES that row\'s aliases and default category. A category given as a slug (\"software\") is normalized to its real COA expense account, and anything unrecognized becomes 5900 Uncategorized rather than a guessed real account. It answers the row exactly as stored, so the caller sees the normalization. Recording a vendor is what makes future bills from it self-classify instead of asking again.
          * @summary Creates or updates one vendor in the org\'s vendor book, keyed by its canonical name — writing a canonical name that already exists REPLACES that row\'s aliases and default category.
-         * @param {VendorRow} vendorRow 
+         * @param {BooksVendorRow} booksVendorRow 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksVendors: async (vendorRow: VendorRow, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'vendorRow' is not null or undefined
-            assertParamExists('postBooksVendors', 'vendorRow', vendorRow)
+        postBooksVendors: async (booksVendorRow: BooksVendorRow, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'booksVendorRow' is not null or undefined
+            assertParamExists('postBooksVendors', 'booksVendorRow', booksVendorRow)
             const localVarPath = `/v1/books/vendors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1114,7 +1050,7 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(vendorRow, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(booksVendorRow, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1138,7 +1074,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksAccounts(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Account>>> {
+        async getBooksAccounts(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BooksAccount>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksAccounts(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksAccounts']?.[localVarOperationServerIndex]?.url;
@@ -1152,7 +1088,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksBankTransactions(sandbox?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BankTxnRow>>> {
+        async getBooksBankTransactions(sandbox?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BooksBankTxnRow>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksBankTransactions(sandbox, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksBankTransactions']?.[localVarOperationServerIndex]?.url;
@@ -1165,7 +1101,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksBankUnreconciled(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UnreconciledOut>> {
+        async getBooksBankUnreconciled(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksUnreconciledOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksBankUnreconciled(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksBankUnreconciled']?.[localVarOperationServerIndex]?.url;
@@ -1182,21 +1118,21 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksExport(sandbox?: string, from?: string, to?: string, format?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FinancialPackage>> {
+        async getBooksExport(sandbox?: string, from?: string, to?: string, format?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksFinancialPackage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksExport(sandbox, from, to, format, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksExport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListGL returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
-         * @summary ListGL returns the org\'s most recent GL Entry rows, newest first.
+         * Returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
+         * @summary Returns the org\'s most recent GL Entry rows, newest first.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
          * @param {number} [limit] Limit caps how many rows come back; 500 when absent or not positive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksGl(sandbox?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GLRow>>> {
+        async getBooksGl(sandbox?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BooksGLRow>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksGl(sandbox, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksGl']?.[localVarOperationServerIndex]?.url;
@@ -1209,22 +1145,22 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksInbox(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InboxOut>> {
+        async getBooksInbox(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksInboxOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksInbox(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksInbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
-         * @summary Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
+         * Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
+         * @summary Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
          * @param {string} [from] From is the RFC3339 start of the window, exclusive. Empty means all time.
          * @param {string} [to] To is the RFC3339 end of the window, inclusive. Empty means up to now.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksMetrics(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricsResponse>> {
+        async getBooksMetrics(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksMetricsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksMetrics(sandbox, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksMetrics']?.[localVarOperationServerIndex]?.url;
@@ -1239,7 +1175,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksPnl(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PnL>> {
+        async getBooksPnl(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksPnL>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksPnl(sandbox, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksPnl']?.[localVarOperationServerIndex]?.url;
@@ -1253,7 +1189,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksPosition(sandbox?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BalanceSheet>> {
+        async getBooksPosition(sandbox?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksBalanceSheet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksPosition(sandbox, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksPosition']?.[localVarOperationServerIndex]?.url;
@@ -1266,7 +1202,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksQuestions(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuestionsResponse>> {
+        async getBooksQuestions(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksQuestionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksQuestions(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksQuestions']?.[localVarOperationServerIndex]?.url;
@@ -1279,7 +1215,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksRules(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RulesOut>> {
+        async getBooksRules(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksRulesOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksRules(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksRules']?.[localVarOperationServerIndex]?.url;
@@ -1297,7 +1233,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksTransactions(sandbox?: string, from?: string, to?: string, category?: string, vendor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionsOut>> {
+        async getBooksTransactions(sandbox?: string, from?: string, to?: string, category?: string, vendor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksTransactionsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksTransactions(sandbox, from, to, category, vendor, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksTransactions']?.[localVarOperationServerIndex]?.url;
@@ -1312,7 +1248,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksTrial(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrialBalance>> {
+        async getBooksTrial(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksTrialBalance>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksTrial(sandbox, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksTrial']?.[localVarOperationServerIndex]?.url;
@@ -1325,7 +1261,7 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBooksVendors(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VendorsOut>> {
+        async getBooksVendors(sandbox?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksVendorsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBooksVendors(sandbox, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.getBooksVendors']?.[localVarOperationServerIndex]?.url;
@@ -1334,26 +1270,14 @@ export const BooksApiFp = function(configuration?: Configuration) {
         /**
          * Answers a plain-language question about the caller\'s own books — \"what is my MRR?\", \"how long is my runway?\" — with figures taken from their ledger, never a guessed number. A deterministic keyword router picks the intent and reads the real metrics, and those figures, followups and report sources are computed BEFORE any model call and are never altered by one: the optional narration client only rephrases the sentence, and it degrades silently to the templated answer when no AI plane is wired. It is strictly read-only — it restates the books, it never posts to them.
          * @summary Answers a plain-language question about the caller\'s own books — \"what is my MRR?\", \"how long is my runway?\" — with figures taken from their ledger, never a guessed number.
-         * @param {AskRequest} askRequest 
+         * @param {BooksAskRequest} booksAskRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksAsk(askRequest: AskRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksAsk(askRequest, options);
+        async postBooksAsk(booksAskRequest: BooksAskRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksAskResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksAsk(booksAskRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksAsk']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended second hop of the bank-linking handshake — trade the provider\'s short-lived public token for the durable access credential and seal that credential into KMS — and nothing on the HTTP path reaches an implementation today.  The durable bank credential is the reason this hop exists: it is meant to be sealed server-side and never handed back to the caller. Since the route never succeeds, no credential is stored by it and no bank is connected through it.  Documented as refusing rather than declared with a success body, for the same reason as the first hop: it has never sent one, and stating a shape it has never produced would put a return type in every SDK for a call that always fails. A caller with no principal gets 401 before the 501.
-         * @summary Finish connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postBooksBankExchange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksBankExchange(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksBankExchange']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1375,22 +1299,10 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksBankSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BankTally>> {
+        async postBooksBankSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksBankTally>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksBankSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksBankSync']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postBooksBankToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksBankToken(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksBankToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1409,12 +1321,12 @@ export const BooksApiFp = function(configuration?: Configuration) {
         /**
          * Creates or updates one auto-categorization rule, keyed by its pattern — writing a pattern that already exists REPLACES that row\'s category and priority. The category is normalized to a real COA expense account, and anything unrecognized becomes 5900 Uncategorized rather than a guessed real account. It answers the row exactly as stored, so the caller sees the normalization. A rule overrides a vendor\'s default category, so this is the standing instruction that decides how a future bill classifies.
          * @summary Creates or updates one auto-categorization rule, keyed by its pattern — writing a pattern that already exists REPLACES that row\'s category and priority.
-         * @param {Rule} rule 
+         * @param {BooksRule} booksRule 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksRules(rule: Rule, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Rule>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksRules(rule, options);
+        async postBooksRules(booksRule: BooksRule, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksRule>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksRules(booksRule, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksRules']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1435,23 +1347,23 @@ export const BooksApiFp = function(configuration?: Configuration) {
         /**
          * Posts a reviewed scanned bill to the ledger. It is the scanner\'s ONLY write: the voucher goes through the same post() choke point every other source uses, so it is checked to balance (Σdebit == Σcredit) and is idempotent by (scan, scanId) — re-booking the same scan answers posted=false and writes nothing. A bill whose economic identity (vendor, total, issue date) already posted under a DIFFERENT scan is refused 409 unless override is set, which is what stops the same receipt re-scanned into a new file hash from double-booking. An unbalanced voucher is refused 400.
          * @summary Posts a reviewed scanned bill to the ledger.
-         * @param {BookRequest} bookRequest 
+         * @param {BooksBookRequest} booksBookRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksScanBook(bookRequest: BookRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksScanBook(bookRequest, options);
+        async postBooksScanBook(booksBookRequest: BooksBookRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksBookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksScanBook(booksBookRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksScanBook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
-         * @summary Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
+         * Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
+         * @summary Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncTally>> {
+        async postBooksSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksSyncTally>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksSync']?.[localVarOperationServerIndex]?.url;
@@ -1460,12 +1372,12 @@ export const BooksApiFp = function(configuration?: Configuration) {
         /**
          * Creates or updates one vendor in the org\'s vendor book, keyed by its canonical name — writing a canonical name that already exists REPLACES that row\'s aliases and default category. A category given as a slug (\"software\") is normalized to its real COA expense account, and anything unrecognized becomes 5900 Uncategorized rather than a guessed real account. It answers the row exactly as stored, so the caller sees the normalization. Recording a vendor is what makes future bills from it self-classify instead of asking again.
          * @summary Creates or updates one vendor in the org\'s vendor book, keyed by its canonical name — writing a canonical name that already exists REPLACES that row\'s aliases and default category.
-         * @param {VendorRow} vendorRow 
+         * @param {BooksVendorRow} booksVendorRow 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBooksVendors(vendorRow: VendorRow, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VendorRow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksVendors(vendorRow, options);
+        async postBooksVendors(booksVendorRow: BooksVendorRow, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BooksVendorRow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBooksVendors(booksVendorRow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.postBooksVendors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1487,7 +1399,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksAccounts(requestParameters: BooksApiGetBooksAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<Account>> {
+        getBooksAccounts(requestParameters: BooksApiGetBooksAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<BooksAccount>> {
             return localVarFp.getBooksAccounts(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1497,7 +1409,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksBankTransactions(requestParameters: BooksApiGetBooksBankTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<BankTxnRow>> {
+        getBooksBankTransactions(requestParameters: BooksApiGetBooksBankTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<BooksBankTxnRow>> {
             return localVarFp.getBooksBankTransactions(requestParameters.sandbox, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1507,7 +1419,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksBankUnreconciled(requestParameters: BooksApiGetBooksBankUnreconciledRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UnreconciledOut> {
+        getBooksBankUnreconciled(requestParameters: BooksApiGetBooksBankUnreconciledRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksUnreconciledOut> {
             return localVarFp.getBooksBankUnreconciled(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1517,17 +1429,17 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksExport(requestParameters: BooksApiGetBooksExportRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FinancialPackage> {
+        getBooksExport(requestParameters: BooksApiGetBooksExportRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksFinancialPackage> {
             return localVarFp.getBooksExport(requestParameters.sandbox, requestParameters.from, requestParameters.to, requestParameters.format, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * ListGL returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
-         * @summary ListGL returns the org\'s most recent GL Entry rows, newest first.
+         * Returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
+         * @summary Returns the org\'s most recent GL Entry rows, newest first.
          * @param {BooksApiGetBooksGlRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksGl(requestParameters: BooksApiGetBooksGlRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<GLRow>> {
+        getBooksGl(requestParameters: BooksApiGetBooksGlRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<BooksGLRow>> {
             return localVarFp.getBooksGl(requestParameters.sandbox, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1537,17 +1449,17 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksInbox(requestParameters: BooksApiGetBooksInboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<InboxOut> {
+        getBooksInbox(requestParameters: BooksApiGetBooksInboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksInboxOut> {
             return localVarFp.getBooksInbox(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
-         * Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
-         * @summary Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
+         * Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
+         * @summary Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
          * @param {BooksApiGetBooksMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksMetrics(requestParameters: BooksApiGetBooksMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MetricsResponse> {
+        getBooksMetrics(requestParameters: BooksApiGetBooksMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksMetricsResponse> {
             return localVarFp.getBooksMetrics(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1557,7 +1469,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksPnl(requestParameters: BooksApiGetBooksPnlRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PnL> {
+        getBooksPnl(requestParameters: BooksApiGetBooksPnlRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksPnL> {
             return localVarFp.getBooksPnl(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1567,7 +1479,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksPosition(requestParameters: BooksApiGetBooksPositionRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BalanceSheet> {
+        getBooksPosition(requestParameters: BooksApiGetBooksPositionRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksBalanceSheet> {
             return localVarFp.getBooksPosition(requestParameters.sandbox, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1577,7 +1489,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksQuestions(requestParameters: BooksApiGetBooksQuestionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<QuestionsResponse> {
+        getBooksQuestions(requestParameters: BooksApiGetBooksQuestionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksQuestionsResponse> {
             return localVarFp.getBooksQuestions(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1587,7 +1499,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksRules(requestParameters: BooksApiGetBooksRulesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RulesOut> {
+        getBooksRules(requestParameters: BooksApiGetBooksRulesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksRulesOut> {
             return localVarFp.getBooksRules(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1597,7 +1509,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksTransactions(requestParameters: BooksApiGetBooksTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TransactionsOut> {
+        getBooksTransactions(requestParameters: BooksApiGetBooksTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksTransactionsOut> {
             return localVarFp.getBooksTransactions(requestParameters.sandbox, requestParameters.from, requestParameters.to, requestParameters.category, requestParameters.vendor, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1607,7 +1519,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksTrial(requestParameters: BooksApiGetBooksTrialRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrialBalance> {
+        getBooksTrial(requestParameters: BooksApiGetBooksTrialRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksTrialBalance> {
             return localVarFp.getBooksTrial(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1617,7 +1529,7 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBooksVendors(requestParameters: BooksApiGetBooksVendorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<VendorsOut> {
+        getBooksVendors(requestParameters: BooksApiGetBooksVendorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BooksVendorsOut> {
             return localVarFp.getBooksVendors(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1627,17 +1539,8 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksAsk(requestParameters: BooksApiPostBooksAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskResponse> {
-            return localVarFp.postBooksAsk(requestParameters.askRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended second hop of the bank-linking handshake — trade the provider\'s short-lived public token for the durable access credential and seal that credential into KMS — and nothing on the HTTP path reaches an implementation today.  The durable bank credential is the reason this hop exists: it is meant to be sealed server-side and never handed back to the caller. Since the route never succeeds, no credential is stored by it and no bank is connected through it.  Documented as refusing rather than declared with a success body, for the same reason as the first hop: it has never sent one, and stating a shape it has never produced would put a return type in every SDK for a call that always fails. A caller with no principal gets 401 before the 501.
-         * @summary Finish connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBooksBankExchange(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBooksBankExchange(options).then((request) => request(axios, basePath));
+        postBooksAsk(requestParameters: BooksApiPostBooksAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<BooksAskResponse> {
+            return localVarFp.postBooksAsk(requestParameters.booksAskRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a bank statement as RAW BYTES — the file exactly as downloaded, OFX, QFX or CSV, not wrapped in JSON — parses every row, books it against the caller org\'s own ledger, and answers the tally: how many rows were seen, how many vouchers posted, how many inflows reconciled, how many raised a question, how many were own-account transfers, and how many were skipped.  RE-IMPORTING THE SAME STATEMENT DOES NOT DOUBLE-BOOK. Every row goes through the same posting choke point every other source uses, keyed idempotently, so an overlapping statement — the usual case, since exports overlap at the month boundary — lands its new rows and counts the rest as skipped. Skipped is the number to read on a second import.  It is READ-ONLY against the bank: this ingests, it never sends money. Scoped to the caller\'s own org from the validated principal, and refused without one; `sandbox=true` writes the org\'s sandbox ledger instead of its real books. An empty body is a 400, and a file the parser cannot read is a 400 carrying the parser\'s reason rather than a partial import. On a deployment whose import parser is not built, this answers 501 rather than mishandling the file.
@@ -1655,17 +1558,8 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksBankSync(options?: RawAxiosRequestConfig): AxiosPromise<BankTally> {
+        postBooksBankSync(options?: RawAxiosRequestConfig): AxiosPromise<BooksBankTally> {
             return localVarFp.postBooksBankSync(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBooksBankToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBooksBankToken(options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a document as RAW BYTES and queues it in the caller org\'s inbox as `unsorted`, answering the queued item. It is the drop box: get the paperwork in now, read it later.  It EXTRACTS NOTHING and calls no model — that is what separates it from the scan. Nothing is proposed and nothing is posted; the item simply waits to be scanned, and a booked document leaves the queue.  IDEMPOTENT BY CONTENT: the item\'s id is the file hash, so re-uploading the same bytes answers the existing item rather than adding a duplicate row — and it is the same id a scan of those bytes uses, which is how the two routes address one document. Scoped to the caller\'s own org from the validated principal and refused without one; `sandbox=true` targets the sandbox ledger, and `filename` is recorded for display. An empty or oversized upload is a 400.
@@ -1684,8 +1578,8 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksRules(requestParameters: BooksApiPostBooksRulesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Rule> {
-            return localVarFp.postBooksRules(requestParameters.rule, options).then((request) => request(axios, basePath));
+        postBooksRules(requestParameters: BooksApiPostBooksRulesRequest, options?: RawAxiosRequestConfig): AxiosPromise<BooksRule> {
+            return localVarFp.postBooksRules(requestParameters.booksRule, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a receipt or invoice as RAW BYTES — a PDF, an image or plain text, uploaded under its own content type, not wrapped in JSON — extracts what the document says, resolves the vendor\'s expense category, and answers a DRAFT carrying a balanced voucher proposed for it.  NOTHING IS POSTED. That split is the whole design: the model only ever produces a structured reading of the document, the voucher is assembled deterministically in Go from that reading, and the ledger is written only by the separate book call a human confirms. So a misread scan can propose a wrong draft; it cannot move money. Amounts are exact integer cents end to end — the extraction returns cents, never a decimal — so no rounding enters the ledger.  The draft\'s id is the FILE HASH, and that is what makes booking idempotent: re-scanning the same bytes addresses the same draft rather than queuing a second one. A row is written to the org\'s document inbox as a side effect, moving it from unsorted to draft. Scoped to the caller\'s own org from the validated principal and refused without one; `sandbox=true` targets the sandbox ledger, and `filename` is recorded for the inbox. An empty or oversized upload is a 400, and a deployment with no scanner model answers 501.
@@ -1704,16 +1598,16 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksScanBook(requestParameters: BooksApiPostBooksScanBookRequest, options?: RawAxiosRequestConfig): AxiosPromise<BookResponse> {
-            return localVarFp.postBooksScanBook(requestParameters.bookRequest, options).then((request) => request(axios, basePath));
+        postBooksScanBook(requestParameters: BooksApiPostBooksScanBookRequest, options?: RawAxiosRequestConfig): AxiosPromise<BooksBookResponse> {
+            return localVarFp.postBooksScanBook(requestParameters.booksBookRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
-         * @summary Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
+         * Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
+         * @summary Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksSync(options?: RawAxiosRequestConfig): AxiosPromise<SyncTally> {
+        postBooksSync(options?: RawAxiosRequestConfig): AxiosPromise<BooksSyncTally> {
             return localVarFp.postBooksSync(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1723,8 +1617,8 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBooksVendors(requestParameters: BooksApiPostBooksVendorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<VendorRow> {
-            return localVarFp.postBooksVendors(requestParameters.vendorRow, options).then((request) => request(axios, basePath));
+        postBooksVendors(requestParameters: BooksApiPostBooksVendorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BooksVendorRow> {
+            return localVarFp.postBooksVendors(requestParameters.booksVendorRow, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2059,10 +1953,10 @@ export interface BooksApiGetBooksVendorsRequest {
 export interface BooksApiPostBooksAskRequest {
     /**
      * 
-     * @type {AskRequest}
+     * @type {BooksAskRequest}
      * @memberof BooksApiPostBooksAsk
      */
-    readonly askRequest: AskRequest
+    readonly booksAskRequest: BooksAskRequest
 }
 
 /**
@@ -2101,10 +1995,10 @@ export interface BooksApiPostBooksInboxRequest {
 export interface BooksApiPostBooksRulesRequest {
     /**
      * 
-     * @type {Rule}
+     * @type {BooksRule}
      * @memberof BooksApiPostBooksRules
      */
-    readonly rule: Rule
+    readonly booksRule: BooksRule
 }
 
 /**
@@ -2129,10 +2023,10 @@ export interface BooksApiPostBooksScanRequest {
 export interface BooksApiPostBooksScanBookRequest {
     /**
      * 
-     * @type {BookRequest}
+     * @type {BooksBookRequest}
      * @memberof BooksApiPostBooksScanBook
      */
-    readonly bookRequest: BookRequest
+    readonly booksBookRequest: BooksBookRequest
 }
 
 /**
@@ -2143,10 +2037,10 @@ export interface BooksApiPostBooksScanBookRequest {
 export interface BooksApiPostBooksVendorsRequest {
     /**
      * 
-     * @type {VendorRow}
+     * @type {BooksVendorRow}
      * @memberof BooksApiPostBooksVendors
      */
-    readonly vendorRow: VendorRow
+    readonly booksVendorRow: BooksVendorRow
 }
 
 /**
@@ -2205,8 +2099,8 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
-     * ListGL returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
-     * @summary ListGL returns the org\'s most recent GL Entry rows, newest first.
+     * Returns the org\'s most recent GL Entry rows, newest first. This is the raw double-entry detail behind every statement: one row per leg, with its debit, credit, posting time and the source that booked it.
+     * @summary Returns the org\'s most recent GL Entry rows, newest first.
      * @param {BooksApiGetBooksGlRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2229,8 +2123,8 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
-     * Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
-     * @summary Metrics returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
+     * Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted. Every number is the ledger, aggregated the one way the books define it, never a guess; it is the grounded read the unified /v1/ask advisor replays.
+     * @summary Returns the org\'s deterministic SaaS-metrics snapshot over an optional (from, to] window — MRR, ARR, revenue, COGS, burn, gross margin, net income, cash, deferred revenue, monthly burn and runway — as raw int64-cent figures AND the same figures already formatted.
      * @param {BooksApiGetBooksMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2333,18 +2227,7 @@ export class BooksApi extends BaseAPI {
      * @memberof BooksApi
      */
     public postBooksAsk(requestParameters: BooksApiPostBooksAskRequest, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksAsk(requestParameters.askRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * ANSWERS 501 UNCONDITIONALLY. It is the intended second hop of the bank-linking handshake — trade the provider\'s short-lived public token for the durable access credential and seal that credential into KMS — and nothing on the HTTP path reaches an implementation today.  The durable bank credential is the reason this hop exists: it is meant to be sealed server-side and never handed back to the caller. Since the route never succeeds, no credential is stored by it and no bank is connected through it.  Documented as refusing rather than declared with a success body, for the same reason as the first hop: it has never sent one, and stating a shape it has never produced would put a return type in every SDK for a call that always fails. A caller with no principal gets 401 before the 501.
-     * @summary Finish connecting a bank account (not yet available)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksApi
-     */
-    public postBooksBankExchange(options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksBankExchange(options).then((request) => request(this.axios, this.basePath));
+        return BooksApiFp(this.configuration).postBooksAsk(requestParameters.booksAskRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2371,17 +2254,6 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
-     * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-     * @summary Begin connecting a bank account (not yet available)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksApi
-     */
-    public postBooksBankToken(options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksBankToken(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Takes a document as RAW BYTES and queues it in the caller org\'s inbox as `unsorted`, answering the queued item. It is the drop box: get the paperwork in now, read it later.  It EXTRACTS NOTHING and calls no model — that is what separates it from the scan. Nothing is proposed and nothing is posted; the item simply waits to be scanned, and a booked document leaves the queue.  IDEMPOTENT BY CONTENT: the item\'s id is the file hash, so re-uploading the same bytes answers the existing item rather than adding a duplicate row — and it is the same id a scan of those bytes uses, which is how the two routes address one document. Scoped to the caller\'s own org from the validated principal and refused without one; `sandbox=true` targets the sandbox ledger, and `filename` is recorded for display. An empty or oversized upload is a 400.
      * @summary Queue a document for later scanning
      * @param {BooksApiPostBooksInboxRequest} requestParameters Request parameters.
@@ -2402,7 +2274,7 @@ export class BooksApi extends BaseAPI {
      * @memberof BooksApi
      */
     public postBooksRules(requestParameters: BooksApiPostBooksRulesRequest, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksRules(requestParameters.rule, options).then((request) => request(this.axios, this.basePath));
+        return BooksApiFp(this.configuration).postBooksRules(requestParameters.booksRule, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2426,12 +2298,12 @@ export class BooksApi extends BaseAPI {
      * @memberof BooksApi
      */
     public postBooksScanBook(requestParameters: BooksApiPostBooksScanBookRequest, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksScanBook(requestParameters.bookRequest, options).then((request) => request(this.axios, this.basePath));
+        return BooksApiFp(this.configuration).postBooksScanBook(requestParameters.booksBookRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
-     * @summary Sync ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
+     * Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each. It is idempotent — money that has already been booked posts nothing on a repeat — and it is read-only against commerce: it never mints a deposit, a credit or a payout, only the accounting twin of money that already moved.
+     * @summary Ingests the caller\'s OWN org from commerce into BOTH ledgers (live and sandbox) and reports how many new vouchers posted to each.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BooksApi
@@ -2449,7 +2321,7 @@ export class BooksApi extends BaseAPI {
      * @memberof BooksApi
      */
     public postBooksVendors(requestParameters: BooksApiPostBooksVendorsRequest, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).postBooksVendors(requestParameters.vendorRow, options).then((request) => request(this.axios, this.basePath));
+        return BooksApiFp(this.configuration).postBooksVendors(requestParameters.booksVendorRow, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

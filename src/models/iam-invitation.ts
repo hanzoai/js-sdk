@@ -69,6 +69,12 @@ export interface IamInvitation {
      */
     'email'?: string;
     /**
+     * Generated reports that IAM minted Code itself, from crypto/rand, when the invitation was created. Only such a code is compared without limit; any code a caller wrote is compared only while the org is not being guessed at, however it looks, because a code that looks random need not be.
+     * @type {boolean}
+     * @memberof IamInvitation
+     */
+    'generated'?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof IamInvitation
@@ -104,6 +110,12 @@ export interface IamInvitation {
      * @memberof IamInvitation
      */
     'quota'?: number;
+    /**
+     * SentTime is when an email about this invitation last went to its pinned address (RFC 3339), \"\" when none has. It paces resends, so the send endpoint cannot be used to mail one address over and over.
+     * @type {string}
+     * @memberof IamInvitation
+     */
+    'sentTime'?: string;
     /**
      * 
      * @type {string}

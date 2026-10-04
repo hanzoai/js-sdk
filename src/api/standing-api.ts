@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Upkeep } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { UpkeepIn } from '../models';
+import type { StandingUpkeep } from '../models';
+// @ts-ignore
+import type { StandingUpkeepIn } from '../models';
 /**
  * StandingApi - axios parameter creator
  * @export
@@ -34,13 +36,13 @@ export const StandingApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Reports what keeping this entity costs every year, itemised.  This is the figure that decides where to incorporate, and the one a formation price cannot show: Delaware is cheaper to form than Wyoming for a corporation and dearer to keep, so a founder shown only the formation fee is shown the half that reverses. Each state line carries the authority that publishes it and the date it was checked, and a franchise tax that scales is marked a minimum rather than quoted as final.
          * @summary Reports what keeping this entity costs every year, itemised.
-         * @param {UpkeepIn} upkeepIn 
+         * @param {StandingUpkeepIn} standingUpkeepIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postStandingUpkeep: async (upkeepIn: UpkeepIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'upkeepIn' is not null or undefined
-            assertParamExists('postStandingUpkeep', 'upkeepIn', upkeepIn)
+        postStandingUpkeep: async (standingUpkeepIn: StandingUpkeepIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'standingUpkeepIn' is not null or undefined
+            assertParamExists('postStandingUpkeep', 'standingUpkeepIn', standingUpkeepIn)
             const localVarPath = `/v1/standing/upkeep`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,7 +66,7 @@ export const StandingApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(upkeepIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(standingUpkeepIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -84,12 +86,12 @@ export const StandingApiFp = function(configuration?: Configuration) {
         /**
          * Reports what keeping this entity costs every year, itemised.  This is the figure that decides where to incorporate, and the one a formation price cannot show: Delaware is cheaper to form than Wyoming for a corporation and dearer to keep, so a founder shown only the formation fee is shown the half that reverses. Each state line carries the authority that publishes it and the date it was checked, and a franchise tax that scales is marked a minimum rather than quoted as final.
          * @summary Reports what keeping this entity costs every year, itemised.
-         * @param {UpkeepIn} upkeepIn 
+         * @param {StandingUpkeepIn} standingUpkeepIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postStandingUpkeep(upkeepIn: UpkeepIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upkeep>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postStandingUpkeep(upkeepIn, options);
+        async postStandingUpkeep(standingUpkeepIn: StandingUpkeepIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StandingUpkeep>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStandingUpkeep(standingUpkeepIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StandingApi.postStandingUpkeep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -111,8 +113,8 @@ export const StandingApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postStandingUpkeep(requestParameters: StandingApiPostStandingUpkeepRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upkeep> {
-            return localVarFp.postStandingUpkeep(requestParameters.upkeepIn, options).then((request) => request(axios, basePath));
+        postStandingUpkeep(requestParameters: StandingApiPostStandingUpkeepRequest, options?: RawAxiosRequestConfig): AxiosPromise<StandingUpkeep> {
+            return localVarFp.postStandingUpkeep(requestParameters.standingUpkeepIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -125,10 +127,10 @@ export const StandingApiFactory = function (configuration?: Configuration, baseP
 export interface StandingApiPostStandingUpkeepRequest {
     /**
      * 
-     * @type {UpkeepIn}
+     * @type {StandingUpkeepIn}
      * @memberof StandingApiPostStandingUpkeep
      */
-    readonly upkeepIn: UpkeepIn
+    readonly standingUpkeepIn: StandingUpkeepIn
 }
 
 /**
@@ -147,7 +149,7 @@ export class StandingApi extends BaseAPI {
      * @memberof StandingApi
      */
     public postStandingUpkeep(requestParameters: StandingApiPostStandingUpkeepRequest, options?: RawAxiosRequestConfig) {
-        return StandingApiFp(this.configuration).postStandingUpkeep(requestParameters.upkeepIn, options).then((request) => request(this.axios, this.basePath));
+        return StandingApiFp(this.configuration).postStandingUpkeep(requestParameters.standingUpkeepIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

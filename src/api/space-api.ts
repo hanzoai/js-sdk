@@ -22,21 +22,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { DriveIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { DriveItem } from '../models';
+import type { SpaceDriveIn } from '../models';
 // @ts-ignore
-import type { DriveList } from '../models';
+import type { SpaceDriveItem } from '../models';
 // @ts-ignore
-import type { FileList } from '../models';
+import type { SpaceDriveList } from '../models';
 // @ts-ignore
-import type { SpaceHealth } from '../models';
+import type { SpaceFileList } from '../models';
 // @ts-ignore
-import type { SpaceIn } from '../models';
+import type { SpaceSpaceHealth } from '../models';
 // @ts-ignore
-import type { SpaceItem } from '../models';
+import type { SpaceSpaceIn } from '../models';
 // @ts-ignore
-import type { SpaceList } from '../models';
+import type { SpaceSpaceItem } from '../models';
+// @ts-ignore
+import type { SpaceSpaceList } from '../models';
 /**
  * SpaceApi - axios parameter creator
  * @export
@@ -176,8 +178,8 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Health reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
-         * @summary Health reports whether this deployment can serve spaces, drives and files.
+         * Reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
+         * @summary Reports whether this deployment can serve spaces, drives and files.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -247,15 +249,15 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
          * Makes a new drive in a space and answers 201 with it.  A drive is a PREFIX and not a bucket, so making one writes a zero-byte marker at \"<name>/\" — which is what makes an empty drive visible to a listing that has no other key to find. A name already taken in the space is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the drive exists.
          * @summary Makes a new drive in a space and answers 201 with it.
          * @param {string} space Space is the space to create the drive in, from the path. It carries NO &#x60;url:\&quot;-\&quot;&#x60;, unlike the field below it, and the difference is the whole reason both tags are written out: zip\&#39;s binder skips a field tagged \&quot;-\&quot; for EVERY URL source, path params included, so a path-borne value that carried it would arrive empty and the create would refuse a perfectly good address.
-         * @param {DriveIn} driveIn 
+         * @param {SpaceDriveIn} spaceDriveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSpaceBySpaceDrives: async (space: string, driveIn: DriveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSpaceBySpaceDrives: async (space: string, spaceDriveIn: SpaceDriveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'space' is not null or undefined
             assertParamExists('postSpaceBySpaceDrives', 'space', space)
-            // verify required parameter 'driveIn' is not null or undefined
-            assertParamExists('postSpaceBySpaceDrives', 'driveIn', driveIn)
+            // verify required parameter 'spaceDriveIn' is not null or undefined
+            assertParamExists('postSpaceBySpaceDrives', 'spaceDriveIn', spaceDriveIn)
             const localVarPath = `/v1/space/{space}/drives`
                 .replace(`{${"space"}}`, encodeURIComponent(String(space)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -280,7 +282,7 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(driveIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(spaceDriveIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -290,13 +292,13 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Makes a new space for the caller\'s org and answers 201 with it.  The one bucket a space\'s files live in is derived from the caller\'s VALIDATED org, so an org can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the space exists.
          * @summary Makes a new space for the caller\'s org and answers 201 with it.
-         * @param {SpaceIn} spaceIn 
+         * @param {SpaceSpaceIn} spaceSpaceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSpaceSpaces: async (spaceIn: SpaceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'spaceIn' is not null or undefined
-            assertParamExists('postSpaceSpaces', 'spaceIn', spaceIn)
+        postSpaceSpaces: async (spaceSpaceIn: SpaceSpaceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'spaceSpaceIn' is not null or undefined
+            assertParamExists('postSpaceSpaces', 'spaceSpaceIn', spaceSpaceIn)
             const localVarPath = `/v1/space/spaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -320,7 +322,7 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(spaceIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(spaceSpaceIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -358,7 +360,7 @@ export const SpaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpaceBySpaceDrives(space: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DriveList>> {
+        async getSpaceBySpaceDrives(space: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceDriveList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceBySpaceDrives(space, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceBySpaceDrives']?.[localVarOperationServerIndex]?.url;
@@ -374,19 +376,19 @@ export const SpaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpaceBySpaceDrivesByDriveFiles(space: string, drive: string, folder?: string, recursive?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileList>> {
+        async getSpaceBySpaceDrivesByDriveFiles(space: string, drive: string, folder?: string, recursive?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceFileList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceBySpaceDrivesByDriveFiles(space, drive, folder, recursive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceBySpaceDrivesByDriveFiles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
-         * @summary Health reports whether this deployment can serve spaces, drives and files.
+         * Reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
+         * @summary Reports whether this deployment can serve spaces, drives and files.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpaceHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceHealth>> {
+        async getSpaceHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceSpaceHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceHealth']?.[localVarOperationServerIndex]?.url;
@@ -398,7 +400,7 @@ export const SpaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpaceSpaces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceList>> {
+        async getSpaceSpaces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceSpaceList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceSpaces(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceSpaces']?.[localVarOperationServerIndex]?.url;
@@ -408,12 +410,12 @@ export const SpaceApiFp = function(configuration?: Configuration) {
          * Makes a new drive in a space and answers 201 with it.  A drive is a PREFIX and not a bucket, so making one writes a zero-byte marker at \"<name>/\" — which is what makes an empty drive visible to a listing that has no other key to find. A name already taken in the space is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the drive exists.
          * @summary Makes a new drive in a space and answers 201 with it.
          * @param {string} space Space is the space to create the drive in, from the path. It carries NO &#x60;url:\&quot;-\&quot;&#x60;, unlike the field below it, and the difference is the whole reason both tags are written out: zip\&#39;s binder skips a field tagged \&quot;-\&quot; for EVERY URL source, path params included, so a path-borne value that carried it would arrive empty and the create would refuse a perfectly good address.
-         * @param {DriveIn} driveIn 
+         * @param {SpaceDriveIn} spaceDriveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSpaceBySpaceDrives(space: string, driveIn: DriveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DriveItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSpaceBySpaceDrives(space, driveIn, options);
+        async postSpaceBySpaceDrives(space: string, spaceDriveIn: SpaceDriveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceDriveItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSpaceBySpaceDrives(space, spaceDriveIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.postSpaceBySpaceDrives']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -421,12 +423,12 @@ export const SpaceApiFp = function(configuration?: Configuration) {
         /**
          * Makes a new space for the caller\'s org and answers 201 with it.  The one bucket a space\'s files live in is derived from the caller\'s VALIDATED org, so an org can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the space exists.
          * @summary Makes a new space for the caller\'s org and answers 201 with it.
-         * @param {SpaceIn} spaceIn 
+         * @param {SpaceSpaceIn} spaceSpaceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSpaceSpaces(spaceIn: SpaceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSpaceSpaces(spaceIn, options);
+        async postSpaceSpaces(spaceSpaceIn: SpaceSpaceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceSpaceItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSpaceSpaces(spaceSpaceIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.postSpaceSpaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -458,7 +460,7 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpaceBySpaceDrives(requestParameters: SpaceApiGetSpaceBySpaceDrivesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DriveList> {
+        getSpaceBySpaceDrives(requestParameters: SpaceApiGetSpaceBySpaceDrivesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceDriveList> {
             return localVarFp.getSpaceBySpaceDrives(requestParameters.space, options).then((request) => request(axios, basePath));
         },
         /**
@@ -468,16 +470,16 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpaceBySpaceDrivesByDriveFiles(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<FileList> {
+        getSpaceBySpaceDrivesByDriveFiles(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceFileList> {
             return localVarFp.getSpaceBySpaceDrivesByDriveFiles(requestParameters.space, requestParameters.drive, requestParameters.folder, requestParameters.recursive, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
-         * @summary Health reports whether this deployment can serve spaces, drives and files.
+         * Reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
+         * @summary Reports whether this deployment can serve spaces, drives and files.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpaceHealth(options?: RawAxiosRequestConfig): AxiosPromise<SpaceHealth> {
+        getSpaceHealth(options?: RawAxiosRequestConfig): AxiosPromise<SpaceSpaceHealth> {
             return localVarFp.getSpaceHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -486,7 +488,7 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpaceSpaces(options?: RawAxiosRequestConfig): AxiosPromise<SpaceList> {
+        getSpaceSpaces(options?: RawAxiosRequestConfig): AxiosPromise<SpaceSpaceList> {
             return localVarFp.getSpaceSpaces(options).then((request) => request(axios, basePath));
         },
         /**
@@ -496,8 +498,8 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSpaceBySpaceDrives(requestParameters: SpaceApiPostSpaceBySpaceDrivesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DriveItem> {
-            return localVarFp.postSpaceBySpaceDrives(requestParameters.space, requestParameters.driveIn, options).then((request) => request(axios, basePath));
+        postSpaceBySpaceDrives(requestParameters: SpaceApiPostSpaceBySpaceDrivesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceDriveItem> {
+            return localVarFp.postSpaceBySpaceDrives(requestParameters.space, requestParameters.spaceDriveIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Makes a new space for the caller\'s org and answers 201 with it.  The one bucket a space\'s files live in is derived from the caller\'s VALIDATED org, so an org can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the space exists.
@@ -506,8 +508,8 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSpaceSpaces(requestParameters: SpaceApiPostSpaceSpacesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceItem> {
-            return localVarFp.postSpaceSpaces(requestParameters.spaceIn, options).then((request) => request(axios, basePath));
+        postSpaceSpaces(requestParameters: SpaceApiPostSpaceSpacesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceSpaceItem> {
+            return localVarFp.postSpaceSpaces(requestParameters.spaceSpaceIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -597,10 +599,10 @@ export interface SpaceApiPostSpaceBySpaceDrivesRequest {
 
     /**
      * 
-     * @type {DriveIn}
+     * @type {SpaceDriveIn}
      * @memberof SpaceApiPostSpaceBySpaceDrives
      */
-    readonly driveIn: DriveIn
+    readonly spaceDriveIn: SpaceDriveIn
 }
 
 /**
@@ -611,10 +613,10 @@ export interface SpaceApiPostSpaceBySpaceDrivesRequest {
 export interface SpaceApiPostSpaceSpacesRequest {
     /**
      * 
-     * @type {SpaceIn}
+     * @type {SpaceSpaceIn}
      * @memberof SpaceApiPostSpaceSpaces
      */
-    readonly spaceIn: SpaceIn
+    readonly spaceSpaceIn: SpaceSpaceIn
 }
 
 /**
@@ -661,8 +663,8 @@ export class SpaceApi extends BaseAPI {
     }
 
     /**
-     * Health reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
-     * @summary Health reports whether this deployment can serve spaces, drives and files.
+     * Reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
+     * @summary Reports whether this deployment can serve spaces, drives and files.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SpaceApi
@@ -691,7 +693,7 @@ export class SpaceApi extends BaseAPI {
      * @memberof SpaceApi
      */
     public postSpaceBySpaceDrives(requestParameters: SpaceApiPostSpaceBySpaceDrivesRequest, options?: RawAxiosRequestConfig) {
-        return SpaceApiFp(this.configuration).postSpaceBySpaceDrives(requestParameters.space, requestParameters.driveIn, options).then((request) => request(this.axios, this.basePath));
+        return SpaceApiFp(this.configuration).postSpaceBySpaceDrives(requestParameters.space, requestParameters.spaceDriveIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -703,7 +705,7 @@ export class SpaceApi extends BaseAPI {
      * @memberof SpaceApi
      */
     public postSpaceSpaces(requestParameters: SpaceApiPostSpaceSpacesRequest, options?: RawAxiosRequestConfig) {
-        return SpaceApiFp(this.configuration).postSpaceSpaces(requestParameters.spaceIn, options).then((request) => request(this.axios, this.basePath));
+        return SpaceApiFp(this.configuration).postSpaceSpaces(requestParameters.spaceSpaceIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

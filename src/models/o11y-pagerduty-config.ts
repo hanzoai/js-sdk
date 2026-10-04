@@ -70,10 +70,10 @@ export interface O11yPagerdutyConfig {
     'description'?: string;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yPagerdutyConfig
      */
-    'details'?: { [key: string]: object; };
+    'details'?: { [key: string]: any; };
     /**
      * 
      * @type {string}

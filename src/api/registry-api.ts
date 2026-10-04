@@ -22,19 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { RegistryImageList } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { RegistryMint } from '../models';
+import type { RegistryRegistryImageList } from '../models';
 // @ts-ignore
-import type { RegistryPackageList } from '../models';
+import type { RegistryRegistryMint } from '../models';
 // @ts-ignore
-import type { RegistryProjectList } from '../models';
+import type { RegistryRegistryPackageList } from '../models';
 // @ts-ignore
-import type { RegistryStatus } from '../models';
+import type { RegistryRegistryProjectList } from '../models';
 // @ts-ignore
-import type { RegistryTagList } from '../models';
+import type { RegistryRegistryStatus } from '../models';
 // @ts-ignore
-import type { RegistryToken } from '../models';
+import type { RegistryRegistryTagList } from '../models';
+// @ts-ignore
+import type { RegistryRegistryToken } from '../models';
 /**
  * RegistryApi - axios parameter creator
  * @export
@@ -42,8 +44,8 @@ import type { RegistryToken } from '../models';
 export const RegistryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
-         * @summary Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * @summary Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -76,8 +78,8 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
-         * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
+         * Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
+         * @summary Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
          * @param {string} [query] Query narrows the listing within the org\&#39;s scope when present; the org boundary itself is never widened by it. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -115,8 +117,8 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
-         * @summary Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
+         * Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
+         * @summary Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -149,8 +151,8 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
-         * @summary Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * @summary Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -183,8 +185,8 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
-         * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
+         * Lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
+         * @summary Lists one org-owned repository\'s tags, read live from the OCI registry.
          * @param {string} [image] Image is the repository name inside the org\&#39;s namespace, as returned by the images op. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -222,15 +224,15 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
-         * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
-         * @param {RegistryMint} registryMint 
+         * Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
+         * @summary Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
+         * @param {RegistryRegistryMint} registryRegistryMint 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postRegistryToken: async (registryMint: RegistryMint, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'registryMint' is not null or undefined
-            assertParamExists('postRegistryToken', 'registryMint', registryMint)
+        postRegistryToken: async (registryRegistryMint: RegistryRegistryMint, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registryRegistryMint' is not null or undefined
+            assertParamExists('postRegistryToken', 'registryRegistryMint', registryRegistryMint)
             const localVarPath = `/v1/registry/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -254,7 +256,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registryMint, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(registryRegistryMint, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -272,76 +274,76 @@ export const RegistryApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RegistryApiAxiosParamCreator(configuration)
     return {
         /**
-         * Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
-         * @summary Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * @summary Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRegistryImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryImageList>> {
+        async getRegistryImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryImageList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryImages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryImages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
-         * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
+         * Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
+         * @summary Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
          * @param {string} [query] Query narrows the listing within the org\&#39;s scope when present; the org boundary itself is never widened by it. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRegistryPackages(query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryPackageList>> {
+        async getRegistryPackages(query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryPackageList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryPackages(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryPackages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
-         * @summary Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
+         * Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
+         * @summary Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRegistryProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryProjectList>> {
+        async getRegistryProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryProjectList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
-         * @summary Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * @summary Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRegistryStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryStatus>> {
+        async getRegistryStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
-         * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
+         * Lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
+         * @summary Lists one org-owned repository\'s tags, read live from the OCI registry.
          * @param {string} [image] Image is the repository name inside the org\&#39;s namespace, as returned by the images op. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRegistryTags(image?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryTagList>> {
+        async getRegistryTags(image?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryTagList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryTags(image, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryTags']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
-         * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
-         * @param {RegistryMint} registryMint 
+         * Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
+         * @summary Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
+         * @param {RegistryRegistryMint} registryRegistryMint 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postRegistryToken(registryMint: RegistryMint, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryToken>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postRegistryToken(registryMint, options);
+        async postRegistryToken(registryRegistryMint: RegistryRegistryMint, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryRegistryToken>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRegistryToken(registryRegistryMint, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RegistryApi.postRegistryToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -357,61 +359,61 @@ export const RegistryApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = RegistryApiFp(configuration)
     return {
         /**
-         * Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
-         * @summary Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+         * @summary Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRegistryImages(options?: RawAxiosRequestConfig): AxiosPromise<RegistryImageList> {
+        getRegistryImages(options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryImageList> {
             return localVarFp.getRegistryImages(options).then((request) => request(axios, basePath));
         },
         /**
-         * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
-         * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
+         * Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
+         * @summary Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
          * @param {RegistryApiGetRegistryPackagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRegistryPackages(requestParameters: RegistryApiGetRegistryPackagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryPackageList> {
+        getRegistryPackages(requestParameters: RegistryApiGetRegistryPackagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryPackageList> {
             return localVarFp.getRegistryPackages(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
-         * Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
-         * @summary Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
+         * Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
+         * @summary Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRegistryProjects(options?: RawAxiosRequestConfig): AxiosPromise<RegistryProjectList> {
+        getRegistryProjects(options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryProjectList> {
             return localVarFp.getRegistryProjects(options).then((request) => request(axios, basePath));
         },
         /**
-         * Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
-         * @summary Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+         * @summary Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRegistryStatus(options?: RawAxiosRequestConfig): AxiosPromise<RegistryStatus> {
+        getRegistryStatus(options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryStatus> {
             return localVarFp.getRegistryStatus(options).then((request) => request(axios, basePath));
         },
         /**
-         * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
-         * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
+         * Lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
+         * @summary Lists one org-owned repository\'s tags, read live from the OCI registry.
          * @param {RegistryApiGetRegistryTagsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRegistryTags(requestParameters: RegistryApiGetRegistryTagsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryTagList> {
+        getRegistryTags(requestParameters: RegistryApiGetRegistryTagsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryTagList> {
             return localVarFp.getRegistryTags(requestParameters.image, options).then((request) => request(axios, basePath));
         },
         /**
-         * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
-         * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
+         * Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
+         * @summary Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
          * @param {RegistryApiPostRegistryTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postRegistryToken(requestParameters: RegistryApiPostRegistryTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegistryToken> {
-            return localVarFp.postRegistryToken(requestParameters.registryMint, options).then((request) => request(axios, basePath));
+        postRegistryToken(requestParameters: RegistryApiPostRegistryTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegistryRegistryToken> {
+            return localVarFp.postRegistryToken(requestParameters.registryRegistryMint, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -452,10 +454,10 @@ export interface RegistryApiGetRegistryTagsRequest {
 export interface RegistryApiPostRegistryTokenRequest {
     /**
      * 
-     * @type {RegistryMint}
+     * @type {RegistryRegistryMint}
      * @memberof RegistryApiPostRegistryToken
      */
-    readonly registryMint: RegistryMint
+    readonly registryRegistryMint: RegistryRegistryMint
 }
 
 /**
@@ -466,8 +468,8 @@ export interface RegistryApiPostRegistryTokenRequest {
  */
 export class RegistryApi extends BaseAPI {
     /**
-     * Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
-     * @summary Images lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+     * Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
+     * @summary Lists the org\'s container repositories, read live from the OCI catalog and filtered server-side to the org\'s namespace — the page can only ever hold the caller\'s own images.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
@@ -477,8 +479,8 @@ export class RegistryApi extends BaseAPI {
     }
 
     /**
-     * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
-     * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
+     * Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
+     * @summary Lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
      * @param {RegistryApiGetRegistryPackagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -489,8 +491,8 @@ export class RegistryApi extends BaseAPI {
     }
 
     /**
-     * Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
-     * @summary Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
+     * Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
+     * @summary Lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
@@ -500,8 +502,8 @@ export class RegistryApi extends BaseAPI {
     }
 
     /**
-     * Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
-     * @summary Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+     * Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
+     * @summary Reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
@@ -511,8 +513,8 @@ export class RegistryApi extends BaseAPI {
     }
 
     /**
-     * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
-     * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
+     * Lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
+     * @summary Lists one org-owned repository\'s tags, read live from the OCI registry.
      * @param {RegistryApiGetRegistryTagsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -523,15 +525,15 @@ export class RegistryApi extends BaseAPI {
     }
 
     /**
-     * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
-     * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
+     * Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
+     * @summary Mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
      * @param {RegistryApiPostRegistryTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
     public postRegistryToken(requestParameters: RegistryApiPostRegistryTokenRequest, options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).postRegistryToken(requestParameters.registryMint, options).then((request) => request(this.axios, this.basePath));
+        return RegistryApiFp(this.configuration).postRegistryToken(requestParameters.registryRegistryMint, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

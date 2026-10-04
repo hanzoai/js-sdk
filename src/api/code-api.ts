@@ -22,23 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AskAnswer } from '../models';
+import type { CodeAskAnswer } from '../models';
 // @ts-ignore
-import type { AskPostIn } from '../models';
+import type { CodeAskPostIn } from '../models';
 // @ts-ignore
-import type { ContextBundle } from '../models';
+import type { CodeContextBundle } from '../models';
 // @ts-ignore
-import type { ContextIn } from '../models';
+import type { CodeContextIn } from '../models';
 // @ts-ignore
-import type { FileContent } from '../models';
+import type { CodeFileContent } from '../models';
 // @ts-ignore
-import type { IndexIn } from '../models';
+import type { CodeIndexIn } from '../models';
 // @ts-ignore
-import type { IndexResult } from '../models';
+import type { CodeIndexResult } from '../models';
 // @ts-ignore
-import type { RepoTree } from '../models';
+import type { CodeRepoTree } from '../models';
 // @ts-ignore
-import type { SearchResults } from '../models';
+import type { CodeSearchResults } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * CodeApi - axios parameter creator
  * @export
@@ -227,15 +229,15 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
-         * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
-         * @param {AskPostIn} askPostIn 
+         * Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
+         * @summary Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL.
+         * @param {CodeAskPostIn} codeAskPostIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeAsk: async (askPostIn: AskPostIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'askPostIn' is not null or undefined
-            assertParamExists('postCodeAsk', 'askPostIn', askPostIn)
+        postCodeAsk: async (codeAskPostIn: CodeAskPostIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'codeAskPostIn' is not null or undefined
+            assertParamExists('postCodeAsk', 'codeAskPostIn', codeAskPostIn)
             const localVarPath = `/v1/code/ask`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -259,7 +261,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(askPostIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(codeAskPostIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -269,13 +271,13 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt. It retrieves seed spans, expands each with the definitions it calls and its key callers, then greedily fills the budget, so the answer is a coherent slice of the codebase rather than a list of disconnected matches. The top match is always included, truncated if it alone overflows, so a matched query never comes back empty. A retrieval outage answers 200 with an empty bundle rather than a 5xx.
          * @summary Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt.
-         * @param {ContextIn} contextIn 
+         * @param {CodeContextIn} codeContextIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeContext: async (contextIn: ContextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contextIn' is not null or undefined
-            assertParamExists('postCodeContext', 'contextIn', contextIn)
+        postCodeContext: async (codeContextIn: CodeContextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'codeContextIn' is not null or undefined
+            assertParamExists('postCodeContext', 'codeContextIn', codeContextIn)
             const localVarPath = `/v1/code/context`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -299,7 +301,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(contextIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(codeContextIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -309,13 +311,13 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap. Each file is parsed for symbols, split at AST boundaries and — when the semantic tier is available — embedded, which is what makes it searchable across all three retrieval tiers. Pass `prune` to also DELETE indexed files absent from the request, which turns the call into a full sync; without it the call is an upsert. The index is written to the caller org\'s own physically separate database.
          * @summary (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap.
-         * @param {IndexIn} indexIn 
+         * @param {CodeIndexIn} codeIndexIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeIndex: async (indexIn: IndexIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'indexIn' is not null or undefined
-            assertParamExists('postCodeIndex', 'indexIn', indexIn)
+        postCodeIndex: async (codeIndexIn: CodeIndexIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'codeIndexIn' is not null or undefined
+            assertParamExists('postCodeIndex', 'codeIndexIn', codeIndexIn)
             const localVarPath = `/v1/code/index`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -339,7 +341,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(indexIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(codeIndexIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -364,7 +366,7 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCodeAsk(q?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
+        async getCodeAsk(q?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeAskAnswer>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeAsk(q, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeAsk']?.[localVarOperationServerIndex]?.url;
@@ -378,7 +380,7 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCodeFile(path?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileContent>> {
+        async getCodeFile(path?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeFileContent>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeFile(path, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeFile']?.[localVarOperationServerIndex]?.url;
@@ -394,7 +396,7 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCodeSearch(q?: string, type?: string, repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResults>> {
+        async getCodeSearch(q?: string, type?: string, repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeSearchResults>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeSearch(q, type, repo, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeSearch']?.[localVarOperationServerIndex]?.url;
@@ -407,21 +409,21 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCodeTree(repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoTree>> {
+        async getCodeTree(repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeRepoTree>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeTree(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
-         * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
-         * @param {AskPostIn} askPostIn 
+         * Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
+         * @summary Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL.
+         * @param {CodeAskPostIn} codeAskPostIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCodeAsk(askPostIn: AskPostIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeAsk(askPostIn, options);
+        async postCodeAsk(codeAskPostIn: CodeAskPostIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeAskAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeAsk(codeAskPostIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeAsk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -429,12 +431,12 @@ export const CodeApiFp = function(configuration?: Configuration) {
         /**
          * Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt. It retrieves seed spans, expands each with the definitions it calls and its key callers, then greedily fills the budget, so the answer is a coherent slice of the codebase rather than a list of disconnected matches. The top match is always included, truncated if it alone overflows, so a matched query never comes back empty. A retrieval outage answers 200 with an empty bundle rather than a 5xx.
          * @summary Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt.
-         * @param {ContextIn} contextIn 
+         * @param {CodeContextIn} codeContextIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCodeContext(contextIn: ContextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContextBundle>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeContext(contextIn, options);
+        async postCodeContext(codeContextIn: CodeContextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeContextBundle>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeContext(codeContextIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -442,12 +444,12 @@ export const CodeApiFp = function(configuration?: Configuration) {
         /**
          * (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap. Each file is parsed for symbols, split at AST boundaries and — when the semantic tier is available — embedded, which is what makes it searchable across all three retrieval tiers. Pass `prune` to also DELETE indexed files absent from the request, which turns the call into a full sync; without it the call is an upsert. The index is written to the caller org\'s own physically separate database.
          * @summary (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap.
-         * @param {IndexIn} indexIn 
+         * @param {CodeIndexIn} codeIndexIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCodeIndex(indexIn: IndexIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeIndex(indexIn, options);
+        async postCodeIndex(codeIndexIn: CodeIndexIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeIndexResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeIndex(codeIndexIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeIndex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -469,7 +471,7 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCodeAsk(requestParameters: CodeApiGetCodeAskRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
+        getCodeAsk(requestParameters: CodeApiGetCodeAskRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CodeAskAnswer> {
             return localVarFp.getCodeAsk(requestParameters.q, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
@@ -479,7 +481,7 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCodeFile(requestParameters: CodeApiGetCodeFileRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FileContent> {
+        getCodeFile(requestParameters: CodeApiGetCodeFileRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CodeFileContent> {
             return localVarFp.getCodeFile(requestParameters.path, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
@@ -489,7 +491,7 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCodeSearch(requestParameters: CodeApiGetCodeSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchResults> {
+        getCodeSearch(requestParameters: CodeApiGetCodeSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CodeSearchResults> {
             return localVarFp.getCodeSearch(requestParameters.q, requestParameters.type, requestParameters.repo, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -499,18 +501,18 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCodeTree(requestParameters: CodeApiGetCodeTreeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RepoTree> {
+        getCodeTree(requestParameters: CodeApiGetCodeTreeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CodeRepoTree> {
             return localVarFp.getCodeTree(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
-         * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
+         * Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
+         * @summary Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL.
          * @param {CodeApiPostCodeAskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeAsk(requestParameters: CodeApiPostCodeAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
-            return localVarFp.postCodeAsk(requestParameters.askPostIn, options).then((request) => request(axios, basePath));
+        postCodeAsk(requestParameters: CodeApiPostCodeAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeAskAnswer> {
+            return localVarFp.postCodeAsk(requestParameters.codeAskPostIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt. It retrieves seed spans, expands each with the definitions it calls and its key callers, then greedily fills the budget, so the answer is a coherent slice of the codebase rather than a list of disconnected matches. The top match is always included, truncated if it alone overflows, so a matched query never comes back empty. A retrieval outage answers 200 with an empty bundle rather than a 5xx.
@@ -519,8 +521,8 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeContext(requestParameters: CodeApiPostCodeContextRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContextBundle> {
-            return localVarFp.postCodeContext(requestParameters.contextIn, options).then((request) => request(axios, basePath));
+        postCodeContext(requestParameters: CodeApiPostCodeContextRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeContextBundle> {
+            return localVarFp.postCodeContext(requestParameters.codeContextIn, options).then((request) => request(axios, basePath));
         },
         /**
          * (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap. Each file is parsed for symbols, split at AST boundaries and — when the semantic tier is available — embedded, which is what makes it searchable across all three retrieval tiers. Pass `prune` to also DELETE indexed files absent from the request, which turns the call into a full sync; without it the call is an upsert. The index is written to the caller org\'s own physically separate database.
@@ -529,8 +531,8 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexResult> {
-            return localVarFp.postCodeIndex(requestParameters.indexIn, options).then((request) => request(axios, basePath));
+        postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeIndexResult> {
+            return localVarFp.postCodeIndex(requestParameters.codeIndexIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -634,10 +636,10 @@ export interface CodeApiGetCodeTreeRequest {
 export interface CodeApiPostCodeAskRequest {
     /**
      * 
-     * @type {AskPostIn}
+     * @type {CodeAskPostIn}
      * @memberof CodeApiPostCodeAsk
      */
-    readonly askPostIn: AskPostIn
+    readonly codeAskPostIn: CodeAskPostIn
 }
 
 /**
@@ -648,10 +650,10 @@ export interface CodeApiPostCodeAskRequest {
 export interface CodeApiPostCodeContextRequest {
     /**
      * 
-     * @type {ContextIn}
+     * @type {CodeContextIn}
      * @memberof CodeApiPostCodeContext
      */
-    readonly contextIn: ContextIn
+    readonly codeContextIn: CodeContextIn
 }
 
 /**
@@ -662,10 +664,10 @@ export interface CodeApiPostCodeContextRequest {
 export interface CodeApiPostCodeIndexRequest {
     /**
      * 
-     * @type {IndexIn}
+     * @type {CodeIndexIn}
      * @memberof CodeApiPostCodeIndex
      */
-    readonly indexIn: IndexIn
+    readonly codeIndexIn: CodeIndexIn
 }
 
 /**
@@ -724,15 +726,15 @@ export class CodeApi extends BaseAPI {
     }
 
     /**
-     * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
-     * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
+     * Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
+     * @summary Answers a question about the caller org\'s code with a CITED answer, taking the question from the request BODY, for a question too long or too awkward to put in a URL.
      * @param {CodeApiPostCodeAskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
     public postCodeAsk(requestParameters: CodeApiPostCodeAskRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeAsk(requestParameters.askPostIn, options).then((request) => request(this.axios, this.basePath));
+        return CodeApiFp(this.configuration).postCodeAsk(requestParameters.codeAskPostIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -744,7 +746,7 @@ export class CodeApi extends BaseAPI {
      * @memberof CodeApi
      */
     public postCodeContext(requestParameters: CodeApiPostCodeContextRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeContext(requestParameters.contextIn, options).then((request) => request(this.axios, this.basePath));
+        return CodeApiFp(this.configuration).postCodeContext(requestParameters.codeContextIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -756,7 +758,7 @@ export class CodeApi extends BaseAPI {
      * @memberof CodeApi
      */
     public postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeIndex(requestParameters.indexIn, options).then((request) => request(this.axios, this.basePath));
+        return CodeApiFp(this.configuration).postCodeIndex(requestParameters.codeIndexIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

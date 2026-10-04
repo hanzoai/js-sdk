@@ -22,17 +22,51 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { InstallReq } from '../models';
+import type { MarketplaceDeclineIn } from '../models';
 // @ts-ignore
-import type { InstallState } from '../models';
+import type { MarketplaceDeliverIn } from '../models';
 // @ts-ignore
-import type { Listing } from '../models';
+import type { MarketplaceDisputeIn } from '../models';
 // @ts-ignore
-import type { ListingPage } from '../models';
+import type { MarketplaceFeedback } from '../models';
 // @ts-ignore
-import type { MarketCatalog } from '../models';
+import type { MarketplaceFeedbackIn } from '../models';
 // @ts-ignore
-import type { PublishReq } from '../models';
+import type { MarketplaceHireIn } from '../models';
+// @ts-ignore
+import type { MarketplaceInstallReq } from '../models';
+// @ts-ignore
+import type { MarketplaceInstallState } from '../models';
+// @ts-ignore
+import type { MarketplaceJob } from '../models';
+// @ts-ignore
+import type { MarketplaceJobPage } from '../models';
+// @ts-ignore
+import type { MarketplaceListing } from '../models';
+// @ts-ignore
+import type { MarketplaceListingPage } from '../models';
+// @ts-ignore
+import type { MarketplaceMarketCatalog } from '../models';
+// @ts-ignore
+import type { MarketplaceOnboarding } from '../models';
+// @ts-ignore
+import type { MarketplacePatchReq } from '../models';
+// @ts-ignore
+import type { MarketplacePayout } from '../models';
+// @ts-ignore
+import type { MarketplacePayoutChallenge } from '../models';
+// @ts-ignore
+import type { MarketplacePayoutIn } from '../models';
+// @ts-ignore
+import type { MarketplacePublishReq } from '../models';
+// @ts-ignore
+import type { MarketplaceShop } from '../models';
+// @ts-ignore
+import type { MarketplaceShopListing } from '../models';
+// @ts-ignore
+import type { MarketplaceVerifyIn } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * MarketplaceApi - axios parameter creator
  * @export
@@ -40,9 +74,9 @@ import type { PublishReq } from '../models';
 export const MarketplaceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
-         * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-         * @param {string} id ID is the listing to unpublish, from the path.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
+         * @param {string} id ID is the listing, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -78,13 +112,95 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
-         * @summary Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
+         * Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
+         * @summary Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMarketplace: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketplace`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote. Any member of the org.
+         * @summary Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote.
+         * @param {string} [role] Role is buyer — the jobs the caller\&#39;s org hired for — or seller, the jobs it was hired for. Buyer when empty.
+         * @param {string} [status] Status keeps one state.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceJobs: async (role?: string, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketplace/jobs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (role !== undefined) {
+                localVarQueryParameter['role'] = role;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one job the caller\'s org is a party to. Another org\'s job, and one that does not exist, are the same 404.
+         * @summary Reads one job the caller\'s org is a party to.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceJobsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketplaceJobsById', 'id', id)
+            const localVarPath = `/v1/marketplace/jobs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -146,15 +262,202 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
-         * @summary Install activates one tool for the caller\'s own org and project.
-         * @param {InstallReq} installReq 
+         * Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it. Ready says nothing is missing. Each owning app is asked as the org; one this deployment does not run is named absent rather than read as empty. An org admin reads it.
+         * @summary Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it.
+         * @param {number} [year] Year is the calendar year (UTC); the current one when zero.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceInstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'installReq' is not null or undefined
-            assertParamExists('postMarketplaceInstall', 'installReq', installReq)
+        getMarketplaceSeller: async (year?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketplace/seller`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (year !== undefined) {
+                localVarQueryParameter['year'] = year;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+         * @param {string} [category] Category keeps one category, exactly.
+         * @param {string} [price] Price keeps free listings or priced ones.
+         * @param {number} [rating] Rating keeps listings rated at least this many stars, 1 to 5.
+         * @param {string} [seller] Seller keeps one seller org\&#39;s listings.
+         * @param {number} [limit] Limit is the page size: 48 by default, 200 at most.
+         * @param {number} [offset] Offset is where the page starts.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShop: async (q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketplace/shop`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (price !== undefined) {
+                localVarQueryParameter['price'] = price;
+            }
+
+            if (rating !== undefined) {
+                localVarQueryParameter['rating'] = rating;
+            }
+
+            if (seller !== undefined) {
+                localVarQueryParameter['seller'] = seller;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it. A private listing and one that does not exist are the same 404. It needs no credential.
+         * @summary Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it.
+         * @param {string} id ID is the listing, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShopById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketplaceShopById', 'id', id)
+            const localVarPath = `/v1/marketplace/shop/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * @param {string} id ID is the listing to edit, from the path.
+         * @param {MarketplacePatchReq} marketplacePatchReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketplaceListingsById: async (id: string, marketplacePatchReq: MarketplacePatchReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchMarketplaceListingsById', 'id', id)
+            // verify required parameter 'marketplacePatchReq' is not null or undefined
+            assertParamExists('patchMarketplaceListingsById', 'marketplacePatchReq', marketplacePatchReq)
+            const localVarPath = `/v1/marketplace/listings/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplacePatchReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
+         * @summary Activates one tool for the caller\'s own org and project.
+         * @param {MarketplaceInstallReq} marketplaceInstallReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceInstall: async (marketplaceInstallReq: MarketplaceInstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplaceInstallReq' is not null or undefined
+            assertParamExists('postMarketplaceInstall', 'marketplaceInstallReq', marketplaceInstallReq)
             const localVarPath = `/v1/marketplace/install`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -178,7 +481,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(installReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceInstallReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -186,15 +489,383 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
-         * @summary Publish offers one tool on the marketplace, optionally monetized.
-         * @param {PublishReq} publishReq 
+         * Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.  It is paid over x402, in two steps on this one call. Sent without payment, the terms are cleared first — principal decides whether the buyer may pay the seller this amount, and a blocked payment, one that waits on the seller\'s tax form, and one that clears only with tax withheld, which this rail does not withhold, are refused and nothing is opened — and it answers 402 with the terms to sign, for the job resource job:<id>: on PAYMENT-REQUIRED, in the body, and in the message. Sent again with the signed authorization — on PAYMENT-SIGNATURE, or as payment — echoing that resource, the terms are cleared once more, the job is funding, and the rail checks the payment against exactly those terms, checks it stays acceptable until a dispute could last be ruled on, holds it for this job, and sets the amount aside in the buyer\'s wallet: a wallet that cannot cover it answers 402 insufficient_funds and opens nothing. Nothing is paid until the buyer releases the job, or its review window passes after delivery; a job that ends unpaid returns the amount to the wallet. Any member of the buying org; a platform SuperAdmin inspecting another org cannot spend it.  A hire sent with an attempt — the buyer\'s own key for it, in the body — is one hire however often it is sent: the same attempt with the same request answers the same job, so a request whose answer was lost is sent again as it was, and opens one job and sets its amount aside once. It answers the quote\'s terms again while the job is quoted or funding (a quote over its hour is given up and quoted anew), and the job, 201, once it opened. Another request under an attempt already used is refused, 422. The buyer\'s own jobs list its quotes and those being funded, with their attempts, so an attempt in flight is found there too. Without an attempt, the same terms asked again within the hour answer the same quote, and the same payment sent again answers the job it opened.
+         * @summary Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.
+         * @param {MarketplaceHireIn} marketplaceHireIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceListings: async (publishReq: PublishReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'publishReq' is not null or undefined
-            assertParamExists('postMarketplaceListings', 'publishReq', publishReq)
+        postMarketplaceJobs: async (marketplaceHireIn: MarketplaceHireIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplaceHireIn' is not null or undefined
+            assertParamExists('postMarketplaceJobs', 'marketplaceHireIn', marketplaceHireIn)
+            const localVarPath = `/v1/marketplace/jobs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceHireIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s. Only an open job, and only before its deadline.
+         * @summary Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdAccept: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdAccept', 'id', id)
+            const localVarPath = `/v1/marketplace/jobs/{id}/accept`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes back a job the caller\'s org opened, before the seller accepts it. Nothing was paid: the amount set aside returns to the wallet.
+         * @summary Takes back a job the caller\'s org opened, before the seller accepts it.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdCancel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdCancel', 'id', id)
+            const localVarPath = `/v1/marketplace/jobs/{id}/cancel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Declines a job the caller\'s org was hired for, before any work. Nothing was paid: the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Declines a job the caller\'s org was hired for, before any work.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDeclineIn} marketplaceDeclineIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDecline: async (id: string, marketplaceDeclineIn: MarketplaceDeclineIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDecline', 'id', id)
+            // verify required parameter 'marketplaceDeclineIn' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDecline', 'marketplaceDeclineIn', marketplaceDeclineIn)
+            const localVarPath = `/v1/marketplace/jobs/{id}/decline`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceDeclineIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @summary Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDeliverIn} marketplaceDeliverIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDeliver: async (id: string, marketplaceDeliverIn: MarketplaceDeliverIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDeliver', 'id', id)
+            // verify required parameter 'marketplaceDeliverIn' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDeliver', 'marketplaceDeliverIn', marketplaceDeliverIn)
+            const localVarPath = `/v1/marketplace/jobs/{id}/deliver`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceDeliverIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it. Nothing moves while it is disputed. It ends when the buyer releases it, the seller refunds it, the platform\'s arbiter rules, or the arbiter\'s time lapses and it is refunded.
+         * @summary Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDisputeIn} marketplaceDisputeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDispute: async (id: string, marketplaceDisputeIn: MarketplaceDisputeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDispute', 'id', id)
+            // verify required parameter 'marketplaceDisputeIn' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdDispute', 'marketplaceDisputeIn', marketplaceDisputeIn)
+            const localVarPath = `/v1/marketplace/jobs/{id}/dispute`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceDisputeIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited. A job counts as settled once it was released, or refunded after the seller took it on; one cancelled or declined before any work earns nothing. What buyers say of a seller is its listing\'s and its own reputation in the shop. It answers 201 with the feedback recorded.
+         * @summary Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceFeedbackIn} marketplaceFeedbackIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdFeedback: async (id: string, marketplaceFeedbackIn: MarketplaceFeedbackIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdFeedback', 'id', id)
+            // verify required parameter 'marketplaceFeedbackIn' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdFeedback', 'marketplaceFeedbackIn', marketplaceFeedbackIn)
+            const localVarPath = `/v1/marketplace/jobs/{id}/feedback`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceFeedbackIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdRefund: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdRefund', 'id', id)
+            const localVarPath = `/v1/marketplace/jobs/{id}/refund`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment. The buyer may release any time after acceptance, including to end a dispute.
+         * @summary Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdRelease: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceJobsByIdRelease', 'id', id)
+            const localVarPath = `/v1/marketplace/jobs/{id}/release`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+         * @param {MarketplacePublishReq} marketplacePublishReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceListings: async (marketplacePublishReq: MarketplacePublishReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplacePublishReq' is not null or undefined
+            assertParamExists('postMarketplaceListings', 'marketplacePublishReq', marketplacePublishReq)
             const localVarPath = `/v1/marketplace/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -218,7 +889,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(publishReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplacePublishReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -226,15 +897,95 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
-         * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
-         * @param {InstallReq} installReq 
+         * Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify. A newer challenge replaces an older one. An org admin binds.
+         * @summary Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify.
+         * @param {MarketplacePayoutIn} marketplacePayoutIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceUninstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'installReq' is not null or undefined
-            assertParamExists('postMarketplaceUninstall', 'installReq', installReq)
+        postMarketplaceSellerPayout: async (marketplacePayoutIn: MarketplacePayoutIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplacePayoutIn' is not null or undefined
+            assertParamExists('postMarketplaceSellerPayout', 'marketplacePayoutIn', marketplacePayoutIn)
+            const localVarPath = `/v1/marketplace/seller/payout`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplacePayoutIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires. A challenge binds once. It answers the payout wallet as it now stands; a job offered directly to the org is paid into it. An org admin binds.
+         * @summary Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires.
+         * @param {MarketplaceVerifyIn} marketplaceVerifyIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceSellerPayoutVerify: async (marketplaceVerifyIn: MarketplaceVerifyIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplaceVerifyIn' is not null or undefined
+            assertParamExists('postMarketplaceSellerPayoutVerify', 'marketplaceVerifyIn', marketplaceVerifyIn)
+            const localVarPath = `/v1/marketplace/seller/payout/verify`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceVerifyIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
+         * @summary Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
+         * @param {MarketplaceInstallReq} marketplaceInstallReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceUninstall: async (marketplaceInstallReq: MarketplaceInstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketplaceInstallReq' is not null or undefined
+            assertParamExists('postMarketplaceUninstall', 'marketplaceInstallReq', marketplaceInstallReq)
             const localVarPath = `/v1/marketplace/uninstall`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -258,7 +1009,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(installReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceInstallReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -276,9 +1027,9 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MarketplaceApiAxiosParamCreator(configuration)
     return {
         /**
-         * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
-         * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-         * @param {string} id ID is the listing to unpublish, from the path.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
+         * @param {string} id ID is the listing, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -289,15 +1040,42 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
-         * @summary Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
+         * Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
+         * @summary Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketplace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketCatalog>> {
+        async getMarketplace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceMarketCatalog>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplace(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplace']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote. Any member of the org.
+         * @summary Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote.
+         * @param {string} [role] Role is buyer — the jobs the caller\&#39;s org hired for — or seller, the jobs it was hired for. Buyer when empty.
+         * @param {string} [status] Status keeps one state.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceJobs(role?: string, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJobPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceJobs(role, status, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceJobs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one job the caller\'s org is a party to. Another org\'s job, and one that does not exist, are the same 404.
+         * @summary Reads one job the caller\'s org is a party to.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceJobsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceJobsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceJobsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -306,47 +1084,254 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketplaceListings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListingPage>> {
+        async getMarketplaceListings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListingPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceListings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceListings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
-         * @summary Install activates one tool for the caller\'s own org and project.
-         * @param {InstallReq} installReq 
+         * Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it. Ready says nothing is missing. Each owning app is asked as the org; one this deployment does not run is named absent rather than read as empty. An org admin reads it.
+         * @summary Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it.
+         * @param {number} [year] Year is the calendar year (UTC); the current one when zero.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMarketplaceInstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceInstall(installReq, options);
+        async getMarketplaceSeller(year?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceOnboarding>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceSeller(year, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceSeller']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+         * @param {string} [category] Category keeps one category, exactly.
+         * @param {string} [price] Price keeps free listings or priced ones.
+         * @param {number} [rating] Rating keeps listings rated at least this many stars, 1 to 5.
+         * @param {string} [seller] Seller keeps one seller org\&#39;s listings.
+         * @param {number} [limit] Limit is the page size: 48 by default, 200 at most.
+         * @param {number} [offset] Offset is where the page starts.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceShop(q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceShop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShop(q, kind, category, price, rating, seller, limit, offset, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceShop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it. A private listing and one that does not exist are the same 404. It needs no credential.
+         * @summary Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it.
+         * @param {string} id ID is the listing, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceShopById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceShopListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShopById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceShopById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * @param {string} id ID is the listing to edit, from the path.
+         * @param {MarketplacePatchReq} marketplacePatchReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchMarketplaceListingsById(id: string, marketplacePatchReq: MarketplacePatchReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMarketplaceListingsById(id, marketplacePatchReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.patchMarketplaceListingsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
+         * @summary Activates one tool for the caller\'s own org and project.
+         * @param {MarketplaceInstallReq} marketplaceInstallReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceInstall(marketplaceInstallReq: MarketplaceInstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceInstallState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceInstall(marketplaceInstallReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceInstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
-         * @summary Publish offers one tool on the marketplace, optionally monetized.
-         * @param {PublishReq} publishReq 
+         * Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.  It is paid over x402, in two steps on this one call. Sent without payment, the terms are cleared first — principal decides whether the buyer may pay the seller this amount, and a blocked payment, one that waits on the seller\'s tax form, and one that clears only with tax withheld, which this rail does not withhold, are refused and nothing is opened — and it answers 402 with the terms to sign, for the job resource job:<id>: on PAYMENT-REQUIRED, in the body, and in the message. Sent again with the signed authorization — on PAYMENT-SIGNATURE, or as payment — echoing that resource, the terms are cleared once more, the job is funding, and the rail checks the payment against exactly those terms, checks it stays acceptable until a dispute could last be ruled on, holds it for this job, and sets the amount aside in the buyer\'s wallet: a wallet that cannot cover it answers 402 insufficient_funds and opens nothing. Nothing is paid until the buyer releases the job, or its review window passes after delivery; a job that ends unpaid returns the amount to the wallet. Any member of the buying org; a platform SuperAdmin inspecting another org cannot spend it.  A hire sent with an attempt — the buyer\'s own key for it, in the body — is one hire however often it is sent: the same attempt with the same request answers the same job, so a request whose answer was lost is sent again as it was, and opens one job and sets its amount aside once. It answers the quote\'s terms again while the job is quoted or funding (a quote over its hour is given up and quoted anew), and the job, 201, once it opened. Another request under an attempt already used is refused, 422. The buyer\'s own jobs list its quotes and those being funded, with their attempts, so an attempt in flight is found there too. Without an attempt, the same terms asked again within the hour answer the same quote, and the same payment sent again answers the job it opened.
+         * @summary Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.
+         * @param {MarketplaceHireIn} marketplaceHireIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMarketplaceListings(publishReq: PublishReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceListings(publishReq, options);
+        async postMarketplaceJobs(marketplaceHireIn: MarketplaceHireIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobs(marketplaceHireIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s. Only an open job, and only before its deadline.
+         * @summary Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdAccept(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdAccept(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdAccept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes back a job the caller\'s org opened, before the seller accepts it. Nothing was paid: the amount set aside returns to the wallet.
+         * @summary Takes back a job the caller\'s org opened, before the seller accepts it.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdCancel(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdCancel(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Declines a job the caller\'s org was hired for, before any work. Nothing was paid: the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Declines a job the caller\'s org was hired for, before any work.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDeclineIn} marketplaceDeclineIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdDecline(id: string, marketplaceDeclineIn: MarketplaceDeclineIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdDecline(id, marketplaceDeclineIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdDecline']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @summary Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDeliverIn} marketplaceDeliverIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdDeliver(id: string, marketplaceDeliverIn: MarketplaceDeliverIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdDeliver(id, marketplaceDeliverIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdDeliver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it. Nothing moves while it is disputed. It ends when the buyer releases it, the seller refunds it, the platform\'s arbiter rules, or the arbiter\'s time lapses and it is refunded.
+         * @summary Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceDisputeIn} marketplaceDisputeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdDispute(id: string, marketplaceDisputeIn: MarketplaceDisputeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdDispute(id, marketplaceDisputeIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdDispute']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited. A job counts as settled once it was released, or refunded after the seller took it on; one cancelled or declined before any work earns nothing. What buyers say of a seller is its listing\'s and its own reputation in the shop. It answers 201 with the feedback recorded.
+         * @summary Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited.
+         * @param {string} id ID is the job, from the path.
+         * @param {MarketplaceFeedbackIn} marketplaceFeedbackIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdFeedback(id: string, marketplaceFeedbackIn: MarketplaceFeedbackIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceFeedback>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdFeedback(id, marketplaceFeedbackIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdFeedback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdRefund(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdRefund(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdRefund']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment. The buyer may release any time after acceptance, including to end a dispute.
+         * @summary Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment.
+         * @param {string} id ID is the job, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceJobsByIdRelease(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceJobsByIdRelease(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceJobsByIdRelease']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+         * @param {MarketplacePublishReq} marketplacePublishReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceListings(marketplacePublishReq: MarketplacePublishReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceListings(marketplacePublishReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceListings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
-         * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
-         * @param {InstallReq} installReq 
+         * Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify. A newer challenge replaces an older one. An org admin binds.
+         * @summary Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify.
+         * @param {MarketplacePayoutIn} marketplacePayoutIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMarketplaceUninstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceUninstall(installReq, options);
+        async postMarketplaceSellerPayout(marketplacePayoutIn: MarketplacePayoutIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplacePayoutChallenge>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceSellerPayout(marketplacePayoutIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceSellerPayout']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires. A challenge binds once. It answers the payout wallet as it now stands; a job offered directly to the org is paid into it. An org admin binds.
+         * @summary Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires.
+         * @param {MarketplaceVerifyIn} marketplaceVerifyIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceSellerPayoutVerify(marketplaceVerifyIn: MarketplaceVerifyIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplacePayout>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceSellerPayoutVerify(marketplaceVerifyIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceSellerPayoutVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
+         * @summary Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
+         * @param {MarketplaceInstallReq} marketplaceInstallReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceUninstall(marketplaceInstallReq: MarketplaceInstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceInstallState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceUninstall(marketplaceInstallReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceUninstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -362,8 +1347,8 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
     const localVarFp = MarketplaceApiFp(configuration)
     return {
         /**
-         * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
-         * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
          * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -372,13 +1357,33 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.deleteMarketplaceListingsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
-         * @summary Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
+         * Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
+         * @summary Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketplace(options?: RawAxiosRequestConfig): AxiosPromise<MarketCatalog> {
+        getMarketplace(options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceMarketCatalog> {
             return localVarFp.getMarketplace(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote. Any member of the org.
+         * @summary Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote.
+         * @param {MarketplaceApiGetMarketplaceJobsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceJobs(requestParameters: MarketplaceApiGetMarketplaceJobsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJobPage> {
+            return localVarFp.getMarketplaceJobs(requestParameters.role, requestParameters.status, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one job the caller\'s org is a party to. Another org\'s job, and one that does not exist, are the same 404.
+         * @summary Reads one job the caller\'s org is a party to.
+         * @param {MarketplaceApiGetMarketplaceJobsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceJobsById(requestParameters: MarketplaceApiGetMarketplaceJobsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.getMarketplaceJobsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
@@ -386,38 +1391,188 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketplaceListings(options?: RawAxiosRequestConfig): AxiosPromise<ListingPage> {
+        getMarketplaceListings(options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListingPage> {
             return localVarFp.getMarketplaceListings(options).then((request) => request(axios, basePath));
         },
         /**
-         * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
-         * @summary Install activates one tool for the caller\'s own org and project.
+         * Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it. Ready says nothing is missing. Each owning app is asked as the org; one this deployment does not run is named absent rather than read as empty. An org admin reads it.
+         * @summary Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it.
+         * @param {MarketplaceApiGetMarketplaceSellerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceSeller(requestParameters: MarketplaceApiGetMarketplaceSellerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceOnboarding> {
+            return localVarFp.getMarketplaceSeller(requestParameters.year, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShop(requestParameters: MarketplaceApiGetMarketplaceShopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceShop> {
+            return localVarFp.getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it. A private listing and one that does not exist are the same 404. It needs no credential.
+         * @summary Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it.
+         * @param {MarketplaceApiGetMarketplaceShopByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShopById(requestParameters: MarketplaceApiGetMarketplaceShopByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceShopListing> {
+            return localVarFp.getMarketplaceShopById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * @param {MarketplaceApiPatchMarketplaceListingsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketplaceListingsById(requestParameters: MarketplaceApiPatchMarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListing> {
+            return localVarFp.patchMarketplaceListingsById(requestParameters.id, requestParameters.marketplacePatchReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
+         * @summary Activates one tool for the caller\'s own org and project.
          * @param {MarketplaceApiPostMarketplaceInstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceInstall(requestParameters: MarketplaceApiPostMarketplaceInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
-            return localVarFp.postMarketplaceInstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
+        postMarketplaceInstall(requestParameters: MarketplaceApiPostMarketplaceInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceInstallState> {
+            return localVarFp.postMarketplaceInstall(requestParameters.marketplaceInstallReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
-         * @summary Publish offers one tool on the marketplace, optionally monetized.
+         * Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.  It is paid over x402, in two steps on this one call. Sent without payment, the terms are cleared first — principal decides whether the buyer may pay the seller this amount, and a blocked payment, one that waits on the seller\'s tax form, and one that clears only with tax withheld, which this rail does not withhold, are refused and nothing is opened — and it answers 402 with the terms to sign, for the job resource job:<id>: on PAYMENT-REQUIRED, in the body, and in the message. Sent again with the signed authorization — on PAYMENT-SIGNATURE, or as payment — echoing that resource, the terms are cleared once more, the job is funding, and the rail checks the payment against exactly those terms, checks it stays acceptable until a dispute could last be ruled on, holds it for this job, and sets the amount aside in the buyer\'s wallet: a wallet that cannot cover it answers 402 insufficient_funds and opens nothing. Nothing is paid until the buyer releases the job, or its review window passes after delivery; a job that ends unpaid returns the amount to the wallet. Any member of the buying org; a platform SuperAdmin inspecting another org cannot spend it.  A hire sent with an attempt — the buyer\'s own key for it, in the body — is one hire however often it is sent: the same attempt with the same request answers the same job, so a request whose answer was lost is sent again as it was, and opens one job and sets its amount aside once. It answers the quote\'s terms again while the job is quoted or funding (a quote over its hour is given up and quoted anew), and the job, 201, once it opened. Another request under an attempt already used is refused, 422. The buyer\'s own jobs list its quotes and those being funded, with their attempts, so an attempt in flight is found there too. Without an attempt, the same terms asked again within the hour answer the same quote, and the same payment sent again answers the job it opened.
+         * @summary Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.
+         * @param {MarketplaceApiPostMarketplaceJobsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobs(requestParameters: MarketplaceApiPostMarketplaceJobsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobs(requestParameters.marketplaceHireIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s. Only an open job, and only before its deadline.
+         * @summary Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdAcceptRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdAccept(requestParameters: MarketplaceApiPostMarketplaceJobsByIdAcceptRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdAccept(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes back a job the caller\'s org opened, before the seller accepts it. Nothing was paid: the amount set aside returns to the wallet.
+         * @summary Takes back a job the caller\'s org opened, before the seller accepts it.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdCancel(requestParameters: MarketplaceApiPostMarketplaceJobsByIdCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdCancel(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Declines a job the caller\'s org was hired for, before any work. Nothing was paid: the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Declines a job the caller\'s org was hired for, before any work.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdDeclineRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDecline(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDeclineRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdDecline(requestParameters.id, requestParameters.marketplaceDeclineIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @summary Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdDeliverRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDeliver(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDeliverRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdDeliver(requestParameters.id, requestParameters.marketplaceDeliverIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it. Nothing moves while it is disputed. It ends when the buyer releases it, the seller refunds it, the platform\'s arbiter rules, or the arbiter\'s time lapses and it is refunded.
+         * @summary Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdDisputeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdDispute(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDisputeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdDispute(requestParameters.id, requestParameters.marketplaceDisputeIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited. A job counts as settled once it was released, or refunded after the seller took it on; one cancelled or declined before any work earns nothing. What buyers say of a seller is its listing\'s and its own reputation in the shop. It answers 201 with the feedback recorded.
+         * @summary Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdFeedback(requestParameters: MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceFeedback> {
+            return localVarFp.postMarketplaceJobsByIdFeedback(requestParameters.id, requestParameters.marketplaceFeedbackIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @summary Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdRefundRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdRefund(requestParameters: MarketplaceApiPostMarketplaceJobsByIdRefundRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdRefund(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment. The buyer may release any time after acceptance, including to end a dispute.
+         * @summary Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment.
+         * @param {MarketplaceApiPostMarketplaceJobsByIdReleaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceJobsByIdRelease(requestParameters: MarketplaceApiPostMarketplaceJobsByIdReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceJob> {
+            return localVarFp.postMarketplaceJobsByIdRelease(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Listing> {
-            return localVarFp.postMarketplaceListings(requestParameters.publishReq, options).then((request) => request(axios, basePath));
+        postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListing> {
+            return localVarFp.postMarketplaceListings(requestParameters.marketplacePublishReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
-         * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
+         * Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify. A newer challenge replaces an older one. An org admin binds.
+         * @summary Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify.
+         * @param {MarketplaceApiPostMarketplaceSellerPayoutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceSellerPayout(requestParameters: MarketplaceApiPostMarketplaceSellerPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplacePayoutChallenge> {
+            return localVarFp.postMarketplaceSellerPayout(requestParameters.marketplacePayoutIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires. A challenge binds once. It answers the payout wallet as it now stands; a job offered directly to the org is paid into it. An org admin binds.
+         * @summary Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires.
+         * @param {MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceSellerPayoutVerify(requestParameters: MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplacePayout> {
+            return localVarFp.postMarketplaceSellerPayoutVerify(requestParameters.marketplaceVerifyIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
+         * @summary Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
          * @param {MarketplaceApiPostMarketplaceUninstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketplaceUninstall(requestParameters: MarketplaceApiPostMarketplaceUninstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
-            return localVarFp.postMarketplaceUninstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
+        postMarketplaceUninstall(requestParameters: MarketplaceApiPostMarketplaceUninstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceInstallState> {
+            return localVarFp.postMarketplaceUninstall(requestParameters.marketplaceInstallReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -429,11 +1584,158 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
  */
 export interface MarketplaceApiDeleteMarketplaceListingsByIdRequest {
     /**
-     * ID is the listing to unpublish, from the path.
+     * ID is the listing, from the path.
      * @type {string}
      * @memberof MarketplaceApiDeleteMarketplaceListingsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getMarketplaceJobs operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceJobsRequest
+ */
+export interface MarketplaceApiGetMarketplaceJobsRequest {
+    /**
+     * Role is buyer — the jobs the caller\&#39;s org hired for — or seller, the jobs it was hired for. Buyer when empty.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceJobs
+     */
+    readonly role?: string
+
+    /**
+     * Status keeps one state.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceJobs
+     */
+    readonly status?: string
+}
+
+/**
+ * Request parameters for getMarketplaceJobsById operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceJobsByIdRequest
+ */
+export interface MarketplaceApiGetMarketplaceJobsByIdRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceJobsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketplaceSeller operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceSellerRequest
+ */
+export interface MarketplaceApiGetMarketplaceSellerRequest {
+    /**
+     * Year is the calendar year (UTC); the current one when zero.
+     * @type {number}
+     * @memberof MarketplaceApiGetMarketplaceSeller
+     */
+    readonly year?: number
+}
+
+/**
+ * Request parameters for getMarketplaceShop operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceShopRequest
+ */
+export interface MarketplaceApiGetMarketplaceShopRequest {
+    /**
+     * Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly q?: string
+
+    /**
+     * Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly kind?: string
+
+    /**
+     * Category keeps one category, exactly.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly category?: string
+
+    /**
+     * Price keeps free listings or priced ones.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly price?: string
+
+    /**
+     * Rating keeps listings rated at least this many stars, 1 to 5.
+     * @type {number}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly rating?: number
+
+    /**
+     * Seller keeps one seller org\&#39;s listings.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly seller?: string
+
+    /**
+     * Limit is the page size: 48 by default, 200 at most.
+     * @type {number}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly limit?: number
+
+    /**
+     * Offset is where the page starts.
+     * @type {number}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly offset?: number
+}
+
+/**
+ * Request parameters for getMarketplaceShopById operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceShopByIdRequest
+ */
+export interface MarketplaceApiGetMarketplaceShopByIdRequest {
+    /**
+     * ID is the listing, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShopById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for patchMarketplaceListingsById operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPatchMarketplaceListingsByIdRequest
+ */
+export interface MarketplaceApiPatchMarketplaceListingsByIdRequest {
+    /**
+     * ID is the listing to edit, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPatchMarketplaceListingsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplacePatchReq}
+     * @memberof MarketplaceApiPatchMarketplaceListingsById
+     */
+    readonly marketplacePatchReq: MarketplacePatchReq
 }
 
 /**
@@ -444,10 +1746,164 @@ export interface MarketplaceApiDeleteMarketplaceListingsByIdRequest {
 export interface MarketplaceApiPostMarketplaceInstallRequest {
     /**
      * 
-     * @type {InstallReq}
+     * @type {MarketplaceInstallReq}
      * @memberof MarketplaceApiPostMarketplaceInstall
      */
-    readonly installReq: InstallReq
+    readonly marketplaceInstallReq: MarketplaceInstallReq
+}
+
+/**
+ * Request parameters for postMarketplaceJobs operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsRequest {
+    /**
+     * 
+     * @type {MarketplaceHireIn}
+     * @memberof MarketplaceApiPostMarketplaceJobs
+     */
+    readonly marketplaceHireIn: MarketplaceHireIn
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdAccept operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdAcceptRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdAcceptRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdAccept
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdCancel operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdCancelRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdCancelRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdCancel
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdDecline operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdDeclineRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdDeclineRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDecline
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplaceDeclineIn}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDecline
+     */
+    readonly marketplaceDeclineIn: MarketplaceDeclineIn
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdDeliver operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdDeliverRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdDeliverRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDeliver
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplaceDeliverIn}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDeliver
+     */
+    readonly marketplaceDeliverIn: MarketplaceDeliverIn
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdDispute operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdDisputeRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdDisputeRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDispute
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplaceDisputeIn}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdDispute
+     */
+    readonly marketplaceDisputeIn: MarketplaceDisputeIn
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdFeedback operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdFeedback
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplaceFeedbackIn}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdFeedback
+     */
+    readonly marketplaceFeedbackIn: MarketplaceFeedbackIn
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdRefund operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdRefundRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdRefundRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdRefund
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postMarketplaceJobsByIdRelease operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceJobsByIdReleaseRequest
+ */
+export interface MarketplaceApiPostMarketplaceJobsByIdReleaseRequest {
+    /**
+     * ID is the job, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceJobsByIdRelease
+     */
+    readonly id: string
 }
 
 /**
@@ -458,10 +1914,38 @@ export interface MarketplaceApiPostMarketplaceInstallRequest {
 export interface MarketplaceApiPostMarketplaceListingsRequest {
     /**
      * 
-     * @type {PublishReq}
+     * @type {MarketplacePublishReq}
      * @memberof MarketplaceApiPostMarketplaceListings
      */
-    readonly publishReq: PublishReq
+    readonly marketplacePublishReq: MarketplacePublishReq
+}
+
+/**
+ * Request parameters for postMarketplaceSellerPayout operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceSellerPayoutRequest
+ */
+export interface MarketplaceApiPostMarketplaceSellerPayoutRequest {
+    /**
+     * 
+     * @type {MarketplacePayoutIn}
+     * @memberof MarketplaceApiPostMarketplaceSellerPayout
+     */
+    readonly marketplacePayoutIn: MarketplacePayoutIn
+}
+
+/**
+ * Request parameters for postMarketplaceSellerPayoutVerify operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest
+ */
+export interface MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest {
+    /**
+     * 
+     * @type {MarketplaceVerifyIn}
+     * @memberof MarketplaceApiPostMarketplaceSellerPayoutVerify
+     */
+    readonly marketplaceVerifyIn: MarketplaceVerifyIn
 }
 
 /**
@@ -472,10 +1956,10 @@ export interface MarketplaceApiPostMarketplaceListingsRequest {
 export interface MarketplaceApiPostMarketplaceUninstallRequest {
     /**
      * 
-     * @type {InstallReq}
+     * @type {MarketplaceInstallReq}
      * @memberof MarketplaceApiPostMarketplaceUninstall
      */
-    readonly installReq: InstallReq
+    readonly marketplaceInstallReq: MarketplaceInstallReq
 }
 
 /**
@@ -486,8 +1970,8 @@ export interface MarketplaceApiPostMarketplaceUninstallRequest {
  */
 export class MarketplaceApi extends BaseAPI {
     /**
-     * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
-     * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
+     * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+     * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
      * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -498,14 +1982,38 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
-     * @summary Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
+     * Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
+     * @summary Lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
     public getMarketplace(options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).getMarketplace(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote. Any member of the org.
+     * @summary Lists the jobs the caller\'s org is a party to, newest first: as buyer, the work it hired — with the quotes it has not paid and the jobs being funded, each with the attempt that made it, so a hire whose answer was lost is found here — and as seller, the work it was hired for, which never includes another org\'s quote.
+     * @param {MarketplaceApiGetMarketplaceJobsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceJobs(requestParameters: MarketplaceApiGetMarketplaceJobsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceJobs(requestParameters.role, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one job the caller\'s org is a party to. Another org\'s job, and one that does not exist, are the same 404.
+     * @summary Reads one job the caller\'s org is a party to.
+     * @param {MarketplaceApiGetMarketplaceJobsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceJobsById(requestParameters: MarketplaceApiGetMarketplaceJobsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceJobsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -520,39 +2028,219 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
-     * @summary Install activates one tool for the caller\'s own org and project.
+     * Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it. Ready says nothing is missing. Each owning app is asked as the org; one this deployment does not run is named absent rather than read as empty. An org admin reads it.
+     * @summary Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it.
+     * @param {MarketplaceApiGetMarketplaceSellerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceSeller(requestParameters: MarketplaceApiGetMarketplaceSellerRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceSeller(requestParameters.year, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+     * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+     * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceShop(requestParameters: MarketplaceApiGetMarketplaceShopRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it. A private listing and one that does not exist are the same 404. It needs no credential.
+     * @summary Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it.
+     * @param {MarketplaceApiGetMarketplaceShopByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceShopById(requestParameters: MarketplaceApiGetMarketplaceShopByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceShopById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
+     * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+     * @param {MarketplaceApiPatchMarketplaceListingsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public patchMarketplaceListingsById(requestParameters: MarketplaceApiPatchMarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).patchMarketplaceListingsById(requestParameters.id, requestParameters.marketplacePatchReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
+     * @summary Activates one tool for the caller\'s own org and project.
      * @param {MarketplaceApiPostMarketplaceInstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
     public postMarketplaceInstall(requestParameters: MarketplaceApiPostMarketplaceInstallRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postMarketplaceInstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
+        return MarketplaceApiFp(this.configuration).postMarketplaceInstall(requestParameters.marketplaceInstallReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
-     * @summary Publish offers one tool on the marketplace, optionally monetized.
+     * Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.  It is paid over x402, in two steps on this one call. Sent without payment, the terms are cleared first — principal decides whether the buyer may pay the seller this amount, and a blocked payment, one that waits on the seller\'s tax form, and one that clears only with tax withheld, which this rail does not withhold, are refused and nothing is opened — and it answers 402 with the terms to sign, for the job resource job:<id>: on PAYMENT-REQUIRED, in the body, and in the message. Sent again with the signed authorization — on PAYMENT-SIGNATURE, or as payment — echoing that resource, the terms are cleared once more, the job is funding, and the rail checks the payment against exactly those terms, checks it stays acceptable until a dispute could last be ruled on, holds it for this job, and sets the amount aside in the buyer\'s wallet: a wallet that cannot cover it answers 402 insufficient_funds and opens nothing. Nothing is paid until the buyer releases the job, or its review window passes after delivery; a job that ends unpaid returns the amount to the wallet. Any member of the buying org; a platform SuperAdmin inspecting another org cannot spend it.  A hire sent with an attempt — the buyer\'s own key for it, in the body — is one hire however often it is sent: the same attempt with the same request answers the same job, so a request whose answer was lost is sent again as it was, and opens one job and sets its amount aside once. It answers the quote\'s terms again while the job is quoted or funding (a quote over its hour is given up and quoted anew), and the job, 201, once it opened. Another request under an attempt already used is refused, 422. The buyer\'s own jobs list its quotes and those being funded, with their attempts, so an attempt in flight is found there too. Without an attempt, the same terms asked again within the hour answer the same quote, and the same payment sent again answers the job it opened.
+     * @summary Hires another org for a piece of work, through a public listing or by a direct offer, and answers 201 with the job — open, waiting for the seller.
+     * @param {MarketplaceApiPostMarketplaceJobsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobs(requestParameters: MarketplaceApiPostMarketplaceJobsRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobs(requestParameters.marketplaceHireIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s. Only an open job, and only before its deadline.
+     * @summary Accepts a job the caller\'s org was hired for: the seller takes the work on and the clock toward its deadline is the seller\'s.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdAcceptRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdAccept(requestParameters: MarketplaceApiPostMarketplaceJobsByIdAcceptRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdAccept(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes back a job the caller\'s org opened, before the seller accepts it. Nothing was paid: the amount set aside returns to the wallet.
+     * @summary Takes back a job the caller\'s org opened, before the seller accepts it.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdCancel(requestParameters: MarketplaceApiPostMarketplaceJobsByIdCancelRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdCancel(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Declines a job the caller\'s org was hired for, before any work. Nothing was paid: the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+     * @summary Declines a job the caller\'s org was hired for, before any work.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdDeclineRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdDecline(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDeclineRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdDecline(requestParameters.id, requestParameters.marketplaceDeclineIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+     * @summary Records delivery of a job the caller\'s org accepted, before its deadline, and starts the review window: the buyer releases or disputes within it, or it releases itself when it closes.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdDeliverRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdDeliver(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDeliverRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdDeliver(requestParameters.id, requestParameters.marketplaceDeliverIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it. Nothing moves while it is disputed. It ends when the buyer releases it, the seller refunds it, the platform\'s arbiter rules, or the arbiter\'s time lapses and it is refunded.
+     * @summary Stops a job for a ruling, as either party: before delivery (and before the deadline), or within the review window after it.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdDisputeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdDispute(requestParameters: MarketplaceApiPostMarketplaceJobsByIdDisputeRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdDispute(requestParameters.id, requestParameters.marketplaceDisputeIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited. A job counts as settled once it was released, or refunded after the seller took it on; one cancelled or declined before any work earns nothing. What buyers say of a seller is its listing\'s and its own reputation in the shop. It answers 201 with the feedback recorded.
+     * @summary Rates the other party of a settled job — the seller when the caller\'s org bought, the buyer when it sold — once per party per job, and never edited.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdFeedback(requestParameters: MarketplaceApiPostMarketplaceJobsByIdFeedbackRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdFeedback(requestParameters.id, requestParameters.marketplaceFeedbackIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+     * @summary Refunds a job the caller\'s org accepted, as the seller, at any point before it is paid: nothing was moved, so the buyer\'s authorization is given up, never settled, and the amount it set aside returns to the buyer\'s wallet.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdRefundRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdRefund(requestParameters: MarketplaceApiPostMarketplaceJobsByIdRefundRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdRefund(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment. The buyer may release any time after acceptance, including to end a dispute.
+     * @summary Releases a job the caller\'s org is paying for, paying the seller the whole amount: the buyer\'s authorization is settled on the rail, once, and the rail states the payment.
+     * @param {MarketplaceApiPostMarketplaceJobsByIdReleaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceJobsByIdRelease(requestParameters: MarketplaceApiPostMarketplaceJobsByIdReleaseRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceJobsByIdRelease(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+     * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
      * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
     public postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postMarketplaceListings(requestParameters.publishReq, options).then((request) => request(this.axios, this.basePath));
+        return MarketplaceApiFp(this.configuration).postMarketplaceListings(requestParameters.marketplacePublishReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
-     * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
+     * Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify. A newer challenge replaces an older one. An org admin binds.
+     * @summary Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify.
+     * @param {MarketplaceApiPostMarketplaceSellerPayoutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceSellerPayout(requestParameters: MarketplaceApiPostMarketplaceSellerPayoutRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceSellerPayout(requestParameters.marketplacePayoutIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires. A challenge binds once. It answers the payout wallet as it now stands; a job offered directly to the org is paid into it. An org admin binds.
+     * @summary Binds the caller org\'s payout wallet: the signature over its outstanding challenge is recovered, and must recover to the wallet\'s address, before the challenge expires.
+     * @param {MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceSellerPayoutVerify(requestParameters: MarketplaceApiPostMarketplaceSellerPayoutVerifyRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceSellerPayoutVerify(requestParameters.marketplaceVerifyIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
+     * @summary Deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
      * @param {MarketplaceApiPostMarketplaceUninstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
     public postMarketplaceUninstall(requestParameters: MarketplaceApiPostMarketplaceUninstallRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postMarketplaceUninstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
+        return MarketplaceApiFp(this.configuration).postMarketplaceUninstall(requestParameters.marketplaceInstallReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

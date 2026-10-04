@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { WebSearchQuery } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { WebSearchResults } from '../models';
+import type { WebsearchWebSearchQuery } from '../models';
+// @ts-ignore
+import type { WebsearchWebSearchResults } from '../models';
 /**
  * WebsearchApi - axios parameter creator
  * @export
@@ -238,13 +240,13 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Searches the live web and answers with ranked results.  This is the fleet\'s path to what is happening RIGHT NOW — today\'s weather, an outage, a release that postdates any model\'s training. `q` is the query and `language` narrows it to a locale. The answer is `{query, number_of_results, results:[{url, title, content, engine}]}`, where `content` is the ENGINE\'s snippet and not the page: read a page with POST /v1/crawl.  It is served in-process by a Go meta-search over keyless public engines — never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept, so distinct queries stay distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  It fails SOFT on the engines. One that errors, times out or is served a bot-challenge page contributes zero results and never fails the call, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  Two refusals in the order they have to be asked, both in the PREAMBLE. A typed op is also an MCP tool, a call-plane operation, a graph field and a CLI command, and every one of those invokes it with no route and therefore no middleware — so what admits a caller here is asked where every caller reaches it rather than in a middleware only one of them passes through.  A VALIDATED PRINCIPAL IS REQUIRED, and there is no tenant beyond that: the results are public web pages, identical for every caller, so nothing here is scoped and nothing here can leak across orgs.  THEN THE ANTI-FORGERY TOKEN, immediately before the money, because that is what it is about. This search is the SAME bought meta-search the compat endpoint runs — the engines cost, and account.Shared/meter.go bills the caller\'s ledger for the answer — so a page the caller never visited must not be able to spend for them by sending their browser here with a cookie they already hold. Nothing leaks; the answer is unreadable cross-origin. What moves is money.  It is account\'s control, the one every operation in this estate asks, and it is a no-op the moment a caller PRESENTS a credential (Bearer, gateway, API key) — which is every service and console caller here — so it costs a CLI, an agent and an API client nothing. Only the ambient-cookie path is asked for the echoed token. The raw /v1/websearch/search route asks the same control on its group (see Mount), so the two addresses of one search are admitted alike.
          * @summary Search the live web
-         * @param {WebSearchQuery} webSearchQuery 
+         * @param {WebsearchWebSearchQuery} websearchWebSearchQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchWeb: async (webSearchQuery: WebSearchQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webSearchQuery' is not null or undefined
-            assertParamExists('searchWeb', 'webSearchQuery', webSearchQuery)
+        searchWeb: async (websearchWebSearchQuery: WebsearchWebSearchQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'websearchWebSearchQuery' is not null or undefined
+            assertParamExists('searchWeb', 'websearchWebSearchQuery', websearchWebSearchQuery)
             const localVarPath = `/v1/websearch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -268,7 +270,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(webSearchQuery, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(websearchWebSearchQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -360,12 +362,12 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
         /**
          * Searches the live web and answers with ranked results.  This is the fleet\'s path to what is happening RIGHT NOW — today\'s weather, an outage, a release that postdates any model\'s training. `q` is the query and `language` narrows it to a locale. The answer is `{query, number_of_results, results:[{url, title, content, engine}]}`, where `content` is the ENGINE\'s snippet and not the page: read a page with POST /v1/crawl.  It is served in-process by a Go meta-search over keyless public engines — never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept, so distinct queries stay distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  It fails SOFT on the engines. One that errors, times out or is served a bot-challenge page contributes zero results and never fails the call, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  Two refusals in the order they have to be asked, both in the PREAMBLE. A typed op is also an MCP tool, a call-plane operation, a graph field and a CLI command, and every one of those invokes it with no route and therefore no middleware — so what admits a caller here is asked where every caller reaches it rather than in a middleware only one of them passes through.  A VALIDATED PRINCIPAL IS REQUIRED, and there is no tenant beyond that: the results are public web pages, identical for every caller, so nothing here is scoped and nothing here can leak across orgs.  THEN THE ANTI-FORGERY TOKEN, immediately before the money, because that is what it is about. This search is the SAME bought meta-search the compat endpoint runs — the engines cost, and account.Shared/meter.go bills the caller\'s ledger for the answer — so a page the caller never visited must not be able to spend for them by sending their browser here with a cookie they already hold. Nothing leaks; the answer is unreadable cross-origin. What moves is money.  It is account\'s control, the one every operation in this estate asks, and it is a no-op the moment a caller PRESENTS a credential (Bearer, gateway, API key) — which is every service and console caller here — so it costs a CLI, an agent and an API client nothing. Only the ambient-cookie path is asked for the echoed token. The raw /v1/websearch/search route asks the same control on its group (see Mount), so the two addresses of one search are admitted alike.
          * @summary Search the live web
-         * @param {WebSearchQuery} webSearchQuery 
+         * @param {WebsearchWebSearchQuery} websearchWebSearchQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchWeb(webSearchQuery: WebSearchQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebSearchResults>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchWeb(webSearchQuery, options);
+        async searchWeb(websearchWebSearchQuery: WebsearchWebSearchQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebsearchWebSearchResults>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchWeb(websearchWebSearchQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebsearchApi.searchWeb']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -441,8 +443,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchWeb(requestParameters: WebsearchApiSearchWebRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebSearchResults> {
-            return localVarFp.searchWeb(requestParameters.webSearchQuery, options).then((request) => request(axios, basePath));
+        searchWeb(requestParameters: WebsearchApiSearchWebRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebsearchWebSearchResults> {
+            return localVarFp.searchWeb(requestParameters.websearchWebSearchQuery, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -455,10 +457,10 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
 export interface WebsearchApiSearchWebRequest {
     /**
      * 
-     * @type {WebSearchQuery}
+     * @type {WebsearchWebSearchQuery}
      * @memberof WebsearchApiSearchWeb
      */
-    readonly webSearchQuery: WebSearchQuery
+    readonly websearchWebSearchQuery: WebsearchWebSearchQuery
 }
 
 /**
@@ -543,7 +545,7 @@ export class WebsearchApi extends BaseAPI {
      * @memberof WebsearchApi
      */
     public searchWeb(requestParameters: WebsearchApiSearchWebRequest, options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).searchWeb(requestParameters.webSearchQuery, options).then((request) => request(this.axios, this.basePath));
+        return WebsearchApiFp(this.configuration).searchWeb(requestParameters.websearchWebSearchQuery, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

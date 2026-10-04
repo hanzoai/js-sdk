@@ -22,7 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CatalogPage } from '../models';
+import type { CatalogCatalogPage } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * CatalogApi - axios parameter creator
  * @export
@@ -30,8 +32,8 @@ import type { CatalogPage } from '../models';
 export const CatalogApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
-         * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
+         * Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
+         * @summary Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
          * @param {string} [q] Q is the free-text query the lexical index scores relevance on. Empty is a browse rather than a search — the same request either way.
          * @param {string} [org] Org narrows to one builder org: hanzo | lux | zoo. Case-insensitive.
          * @param {string} [kind] Kind narrows to repo | site. Case-insensitive.
@@ -124,8 +126,8 @@ export const CatalogApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CatalogApiAxiosParamCreator(configuration)
     return {
         /**
-         * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
-         * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
+         * Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
+         * @summary Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
          * @param {string} [q] Q is the free-text query the lexical index scores relevance on. Empty is a browse rather than a search — the same request either way.
          * @param {string} [org] Org narrows to one builder org: hanzo | lux | zoo. Case-insensitive.
          * @param {string} [kind] Kind narrows to repo | site. Case-insensitive.
@@ -139,7 +141,7 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCatalog(q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogPage>> {
+        async getCatalog(q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogCatalogPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCatalog(q, org, kind, origin, archetype, language, template, forkable, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CatalogApi.getCatalog']?.[localVarOperationServerIndex]?.url;
@@ -156,13 +158,13 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = CatalogApiFp(configuration)
     return {
         /**
-         * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
-         * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
+         * Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
+         * @summary Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
          * @param {CatalogApiGetCatalogRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CatalogPage> {
+        getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CatalogCatalogPage> {
             return localVarFp.getCatalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
     };
@@ -253,8 +255,8 @@ export interface CatalogApiGetCatalogRequest {
  */
 export class CatalogApi extends BaseAPI {
     /**
-     * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
-     * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
+     * Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
+     * @summary Searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
      * @param {CatalogApiGetCatalogRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

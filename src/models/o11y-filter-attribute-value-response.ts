@@ -28,10 +28,10 @@ export interface O11yFilterAttributeValueResponse {
     'boolAttributeValues'?: Array<boolean>;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<any>}
      * @memberof O11yFilterAttributeValueResponse
      */
-    'numberAttributeValues'?: Array<object>;
+    'numberAttributeValues'?: Array<any>;
     /**
      * 
      * @type {O11yFilterAttributeValueResponse}

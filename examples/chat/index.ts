@@ -23,7 +23,7 @@ async function main() {
   const chat = new AiApi(config());
 
   const { data } = await chat.postChatCompletions({
-    data: {
+    openaiChatCompletionRequest: {
       model,
       messages: [{ role: 'user', content: 'Say hello in exactly five words.' }],
     },

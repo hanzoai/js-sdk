@@ -22,27 +22,29 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { RiskDisposeIn } from '../models';
+import type { LabelRiskDisposeIn } from '../models';
 // @ts-ignore
-import type { RiskDisposeOut } from '../models';
+import type { LabelRiskDisposeOut } from '../models';
 // @ts-ignore
-import type { RiskHoldIn } from '../models';
+import type { LabelRiskHoldIn } from '../models';
 // @ts-ignore
-import type { RiskHoldOut } from '../models';
+import type { LabelRiskHoldOut } from '../models';
 // @ts-ignore
-import type { RiskLabelCoverage } from '../models';
+import type { LabelRiskLabelCoverage } from '../models';
 // @ts-ignore
-import type { RiskLabelIn } from '../models';
+import type { LabelRiskLabelIn } from '../models';
 // @ts-ignore
-import type { RiskLabelOut } from '../models';
+import type { LabelRiskLabelOut } from '../models';
 // @ts-ignore
-import type { RiskLabelVocabulary } from '../models';
+import type { LabelRiskLabelVocabulary } from '../models';
 // @ts-ignore
-import type { RiskLabelsOut } from '../models';
+import type { LabelRiskLabelsOut } from '../models';
 // @ts-ignore
-import type { RiskResolveIn } from '../models';
+import type { LabelRiskResolveIn } from '../models';
 // @ts-ignore
-import type { RiskResolveOut } from '../models';
+import type { LabelRiskResolveOut } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LabelApi - axios parameter creator
  * @export
@@ -52,13 +54,13 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Applies this tenant\'s retention, and only this tenant\'s.  It is bounded three ways, each a compliance property rather than a convenience. It refuses a boundary younger than the platform floor, because a label can be the input to an adverse action and five years is what the retention ledger holds such a record for. It never touches a record under litigation hold. And it disposes of whole records rather than redacting fields.  It removes the derived columnar copy BEFORE the record, and refuses the whole disposal if the warehouse cannot be reached. The other order would leave rows in the warehouse that nothing can identify any more, which is a disposal that did not happen and says it did.
          * @summary Dispose of this tenant\'s expired assertions, whole records only
-         * @param {RiskDisposeIn} riskDisposeIn 
+         * @param {LabelRiskDisposeIn} labelRiskDisposeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDisposeLabels: async (riskDisposeIn: RiskDisposeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskDisposeIn' is not null or undefined
-            assertParamExists('riskDisposeLabels', 'riskDisposeIn', riskDisposeIn)
+        riskDisposeLabels: async (labelRiskDisposeIn: LabelRiskDisposeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelRiskDisposeIn' is not null or undefined
+            assertParamExists('riskDisposeLabels', 'labelRiskDisposeIn', labelRiskDisposeIn)
             const localVarPath = `/v1/label/dispose`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82,7 +84,7 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskDisposeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(labelRiskDisposeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -92,13 +94,13 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Places or releases a litigation hold on named records.  A hold is a fact about the RECORD, not about the world: it says retention may not dispose of this row, and it asserts nothing about what happened. So it is not a field on an assertion and it is not folded into the content digest — carried there it was silently a no-op on any record that already existed, since re-filing the same assertion with a hold flag produced the same digest, the insert was ignored, and the caller was answered `duplicate` while the hold it asked for was never placed. This op is the one way a hold moves, in either direction, and the move is written to the audit log.  Every named id is this tenant\'s or is nothing. The statement runs against the tenant\'s own file, which holds no other tenant\'s rows and has no column that could name one.
          * @summary Place or release a litigation hold on named records
-         * @param {RiskHoldIn} riskHoldIn 
+         * @param {LabelRiskHoldIn} labelRiskHoldIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskHoldLabels: async (riskHoldIn: RiskHoldIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskHoldIn' is not null or undefined
-            assertParamExists('riskHoldLabels', 'riskHoldIn', riskHoldIn)
+        riskHoldLabels: async (labelRiskHoldIn: LabelRiskHoldIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelRiskHoldIn' is not null or undefined
+            assertParamExists('riskHoldLabels', 'labelRiskHoldIn', labelRiskHoldIn)
             const localVarPath = `/v1/label/hold`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -122,7 +124,7 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskHoldIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(labelRiskHoldIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -132,13 +134,13 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Records a batch of ground truth against the entities it judges.  Each assertion carries TWO times — when the judged event happened, and when the assertion became knowable — and both are required. The second is what keeps a chargeback that landed in June out of a model that had to decide in February.  It is idempotent on the CONTENT of an assertion, so a webhook that redelivers is safe. It never overwrites: a source that corrects itself later files a NEW assertion, which wins from the moment it became knowable and leaves every earlier observation instant seeing exactly what it saw.  The asserter is stamped from the validated credential and is not a body field.
          * @summary Assert ground truth about events
-         * @param {RiskLabelIn} riskLabelIn 
+         * @param {LabelRiskLabelIn} labelRiskLabelIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLabel: async (riskLabelIn: RiskLabelIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskLabelIn' is not null or undefined
-            assertParamExists('riskLabel', 'riskLabelIn', riskLabelIn)
+        riskLabel: async (labelRiskLabelIn: LabelRiskLabelIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelRiskLabelIn' is not null or undefined
+            assertParamExists('riskLabel', 'labelRiskLabelIn', labelRiskLabelIn)
             const localVarPath = `/v1/label`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -162,7 +164,7 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskLabelIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(labelRiskLabelIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -319,13 +321,13 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Answers, for each named event, which assertion was in force AS OF that event\'s own horizon — and what disagreed with it.  This is the join surface: the dataset materialiser calls it to attach ground truth to training rows, and the evaluator calls it to score a past decision against what was knowable when the decision had to be made. One mechanism for both, so a model can never be trained under one leakage rule and scored under another.  Three answers are distinct and all three are honest: a resolved label, an event that has not matured, and a matured event nobody has judged. The last is never reported as unproductive.
          * @summary Resolve the label in force for named events, as of each event\'s own horizon
-         * @param {RiskResolveIn} riskResolveIn 
+         * @param {LabelRiskResolveIn} labelRiskResolveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskResolveLabels: async (riskResolveIn: RiskResolveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskResolveIn' is not null or undefined
-            assertParamExists('riskResolveLabels', 'riskResolveIn', riskResolveIn)
+        riskResolveLabels: async (labelRiskResolveIn: LabelRiskResolveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelRiskResolveIn' is not null or undefined
+            assertParamExists('riskResolveLabels', 'labelRiskResolveIn', labelRiskResolveIn)
             const localVarPath = `/v1/label/resolve`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -349,7 +351,7 @@ export const LabelApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskResolveIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(labelRiskResolveIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -369,12 +371,12 @@ export const LabelApiFp = function(configuration?: Configuration) {
         /**
          * Applies this tenant\'s retention, and only this tenant\'s.  It is bounded three ways, each a compliance property rather than a convenience. It refuses a boundary younger than the platform floor, because a label can be the input to an adverse action and five years is what the retention ledger holds such a record for. It never touches a record under litigation hold. And it disposes of whole records rather than redacting fields.  It removes the derived columnar copy BEFORE the record, and refuses the whole disposal if the warehouse cannot be reached. The other order would leave rows in the warehouse that nothing can identify any more, which is a disposal that did not happen and says it did.
          * @summary Dispose of this tenant\'s expired assertions, whole records only
-         * @param {RiskDisposeIn} riskDisposeIn 
+         * @param {LabelRiskDisposeIn} labelRiskDisposeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskDisposeLabels(riskDisposeIn: RiskDisposeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDisposeOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskDisposeLabels(riskDisposeIn, options);
+        async riskDisposeLabels(labelRiskDisposeIn: LabelRiskDisposeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskDisposeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskDisposeLabels(labelRiskDisposeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskDisposeLabels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -382,12 +384,12 @@ export const LabelApiFp = function(configuration?: Configuration) {
         /**
          * Places or releases a litigation hold on named records.  A hold is a fact about the RECORD, not about the world: it says retention may not dispose of this row, and it asserts nothing about what happened. So it is not a field on an assertion and it is not folded into the content digest — carried there it was silently a no-op on any record that already existed, since re-filing the same assertion with a hold flag produced the same digest, the insert was ignored, and the caller was answered `duplicate` while the hold it asked for was never placed. This op is the one way a hold moves, in either direction, and the move is written to the audit log.  Every named id is this tenant\'s or is nothing. The statement runs against the tenant\'s own file, which holds no other tenant\'s rows and has no column that could name one.
          * @summary Place or release a litigation hold on named records
-         * @param {RiskHoldIn} riskHoldIn 
+         * @param {LabelRiskHoldIn} labelRiskHoldIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskHoldLabels(riskHoldIn: RiskHoldIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskHoldOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskHoldLabels(riskHoldIn, options);
+        async riskHoldLabels(labelRiskHoldIn: LabelRiskHoldIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskHoldOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskHoldLabels(labelRiskHoldIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskHoldLabels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -395,12 +397,12 @@ export const LabelApiFp = function(configuration?: Configuration) {
         /**
          * Records a batch of ground truth against the entities it judges.  Each assertion carries TWO times — when the judged event happened, and when the assertion became knowable — and both are required. The second is what keeps a chargeback that landed in June out of a model that had to decide in February.  It is idempotent on the CONTENT of an assertion, so a webhook that redelivers is safe. It never overwrites: a source that corrects itself later files a NEW assertion, which wins from the moment it became knowable and leaves every earlier observation instant seeing exactly what it saw.  The asserter is stamped from the validated credential and is not a body field.
          * @summary Assert ground truth about events
-         * @param {RiskLabelIn} riskLabelIn 
+         * @param {LabelRiskLabelIn} labelRiskLabelIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskLabel(riskLabelIn: RiskLabelIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLabelOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskLabel(riskLabelIn, options);
+        async riskLabel(labelRiskLabelIn: LabelRiskLabelIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskLabelOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskLabel(labelRiskLabelIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskLabel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -414,7 +416,7 @@ export const LabelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskLabelCoverage(from?: string, to?: string, horizon?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLabelCoverage>> {
+        async riskLabelCoverage(from?: string, to?: string, horizon?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskLabelCoverage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskLabelCoverage(from, to, horizon, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskLabelCoverage']?.[localVarOperationServerIndex]?.url;
@@ -426,7 +428,7 @@ export const LabelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskLabelVocabulary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLabelVocabulary>> {
+        async riskLabelVocabulary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskLabelVocabulary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskLabelVocabulary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskLabelVocabulary']?.[localVarOperationServerIndex]?.url;
@@ -444,7 +446,7 @@ export const LabelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskLabels(kind?: string, subject?: string, source?: string, from?: string, to?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLabelsOut>> {
+        async riskLabels(kind?: string, subject?: string, source?: string, from?: string, to?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskLabelsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskLabels(kind, subject, source, from, to, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskLabels']?.[localVarOperationServerIndex]?.url;
@@ -453,12 +455,12 @@ export const LabelApiFp = function(configuration?: Configuration) {
         /**
          * Answers, for each named event, which assertion was in force AS OF that event\'s own horizon — and what disagreed with it.  This is the join surface: the dataset materialiser calls it to attach ground truth to training rows, and the evaluator calls it to score a past decision against what was knowable when the decision had to be made. One mechanism for both, so a model can never be trained under one leakage rule and scored under another.  Three answers are distinct and all three are honest: a resolved label, an event that has not matured, and a matured event nobody has judged. The last is never reported as unproductive.
          * @summary Resolve the label in force for named events, as of each event\'s own horizon
-         * @param {RiskResolveIn} riskResolveIn 
+         * @param {LabelRiskResolveIn} labelRiskResolveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskResolveLabels(riskResolveIn: RiskResolveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskResolveOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskResolveLabels(riskResolveIn, options);
+        async riskResolveLabels(labelRiskResolveIn: LabelRiskResolveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelRiskResolveOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskResolveLabels(labelRiskResolveIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LabelApi.riskResolveLabels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -480,8 +482,8 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDisposeLabels(requestParameters: LabelApiRiskDisposeLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDisposeOut> {
-            return localVarFp.riskDisposeLabels(requestParameters.riskDisposeIn, options).then((request) => request(axios, basePath));
+        riskDisposeLabels(requestParameters: LabelApiRiskDisposeLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskDisposeOut> {
+            return localVarFp.riskDisposeLabels(requestParameters.labelRiskDisposeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Places or releases a litigation hold on named records.  A hold is a fact about the RECORD, not about the world: it says retention may not dispose of this row, and it asserts nothing about what happened. So it is not a field on an assertion and it is not folded into the content digest — carried there it was silently a no-op on any record that already existed, since re-filing the same assertion with a hold flag produced the same digest, the insert was ignored, and the caller was answered `duplicate` while the hold it asked for was never placed. This op is the one way a hold moves, in either direction, and the move is written to the audit log.  Every named id is this tenant\'s or is nothing. The statement runs against the tenant\'s own file, which holds no other tenant\'s rows and has no column that could name one.
@@ -490,8 +492,8 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskHoldLabels(requestParameters: LabelApiRiskHoldLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskHoldOut> {
-            return localVarFp.riskHoldLabels(requestParameters.riskHoldIn, options).then((request) => request(axios, basePath));
+        riskHoldLabels(requestParameters: LabelApiRiskHoldLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskHoldOut> {
+            return localVarFp.riskHoldLabels(requestParameters.labelRiskHoldIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a batch of ground truth against the entities it judges.  Each assertion carries TWO times — when the judged event happened, and when the assertion became knowable — and both are required. The second is what keeps a chargeback that landed in June out of a model that had to decide in February.  It is idempotent on the CONTENT of an assertion, so a webhook that redelivers is safe. It never overwrites: a source that corrects itself later files a NEW assertion, which wins from the moment it became knowable and leaves every earlier observation instant seeing exactly what it saw.  The asserter is stamped from the validated credential and is not a body field.
@@ -500,8 +502,8 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLabel(requestParameters: LabelApiRiskLabelRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskLabelOut> {
-            return localVarFp.riskLabel(requestParameters.riskLabelIn, options).then((request) => request(axios, basePath));
+        riskLabel(requestParameters: LabelApiRiskLabelRequest, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskLabelOut> {
+            return localVarFp.riskLabel(requestParameters.labelRiskLabelIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports how much of a window has matured and how much of that is judged, per source.  It is the gate on training. A supervised fit over a window whose judged count is near zero produces a number, and the number is meaningless; this op is what lets that be stated before the fit rather than discovered after it.  It reads the RECORD plane and folds every assertion at that event\'s OWN as-of, so the counts obey exactly the leakage rule a materialisation would. It counts only what was ASSERTED: what share of the whole event STREAM carries a label is a question about the feature plane\'s denominator and is not answerable here.
@@ -510,7 +512,7 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLabelCoverage(requestParameters: LabelApiRiskLabelCoverageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RiskLabelCoverage> {
+        riskLabelCoverage(requestParameters: LabelApiRiskLabelCoverageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskLabelCoverage> {
             return localVarFp.riskLabelCoverage(requestParameters.from, requestParameters.to, requestParameters.horizon, options).then((request) => request(axios, basePath));
         },
         /**
@@ -519,7 +521,7 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLabelVocabulary(options?: RawAxiosRequestConfig): AxiosPromise<RiskLabelVocabulary> {
+        riskLabelVocabulary(options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskLabelVocabulary> {
             return localVarFp.riskLabelVocabulary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -529,7 +531,7 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLabels(requestParameters: LabelApiRiskLabelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RiskLabelsOut> {
+        riskLabels(requestParameters: LabelApiRiskLabelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskLabelsOut> {
             return localVarFp.riskLabels(requestParameters.kind, requestParameters.subject, requestParameters.source, requestParameters.from, requestParameters.to, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -539,8 +541,8 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskResolveLabels(requestParameters: LabelApiRiskResolveLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskResolveOut> {
-            return localVarFp.riskResolveLabels(requestParameters.riskResolveIn, options).then((request) => request(axios, basePath));
+        riskResolveLabels(requestParameters: LabelApiRiskResolveLabelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LabelRiskResolveOut> {
+            return localVarFp.riskResolveLabels(requestParameters.labelRiskResolveIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -553,10 +555,10 @@ export const LabelApiFactory = function (configuration?: Configuration, basePath
 export interface LabelApiRiskDisposeLabelsRequest {
     /**
      * 
-     * @type {RiskDisposeIn}
+     * @type {LabelRiskDisposeIn}
      * @memberof LabelApiRiskDisposeLabels
      */
-    readonly riskDisposeIn: RiskDisposeIn
+    readonly labelRiskDisposeIn: LabelRiskDisposeIn
 }
 
 /**
@@ -567,10 +569,10 @@ export interface LabelApiRiskDisposeLabelsRequest {
 export interface LabelApiRiskHoldLabelsRequest {
     /**
      * 
-     * @type {RiskHoldIn}
+     * @type {LabelRiskHoldIn}
      * @memberof LabelApiRiskHoldLabels
      */
-    readonly riskHoldIn: RiskHoldIn
+    readonly labelRiskHoldIn: LabelRiskHoldIn
 }
 
 /**
@@ -581,10 +583,10 @@ export interface LabelApiRiskHoldLabelsRequest {
 export interface LabelApiRiskLabelRequest {
     /**
      * 
-     * @type {RiskLabelIn}
+     * @type {LabelRiskLabelIn}
      * @memberof LabelApiRiskLabel
      */
-    readonly riskLabelIn: RiskLabelIn
+    readonly labelRiskLabelIn: LabelRiskLabelIn
 }
 
 /**
@@ -672,10 +674,10 @@ export interface LabelApiRiskLabelsRequest {
 export interface LabelApiRiskResolveLabelsRequest {
     /**
      * 
-     * @type {RiskResolveIn}
+     * @type {LabelRiskResolveIn}
      * @memberof LabelApiRiskResolveLabels
      */
-    readonly riskResolveIn: RiskResolveIn
+    readonly labelRiskResolveIn: LabelRiskResolveIn
 }
 
 /**
@@ -694,7 +696,7 @@ export class LabelApi extends BaseAPI {
      * @memberof LabelApi
      */
     public riskDisposeLabels(requestParameters: LabelApiRiskDisposeLabelsRequest, options?: RawAxiosRequestConfig) {
-        return LabelApiFp(this.configuration).riskDisposeLabels(requestParameters.riskDisposeIn, options).then((request) => request(this.axios, this.basePath));
+        return LabelApiFp(this.configuration).riskDisposeLabels(requestParameters.labelRiskDisposeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -706,7 +708,7 @@ export class LabelApi extends BaseAPI {
      * @memberof LabelApi
      */
     public riskHoldLabels(requestParameters: LabelApiRiskHoldLabelsRequest, options?: RawAxiosRequestConfig) {
-        return LabelApiFp(this.configuration).riskHoldLabels(requestParameters.riskHoldIn, options).then((request) => request(this.axios, this.basePath));
+        return LabelApiFp(this.configuration).riskHoldLabels(requestParameters.labelRiskHoldIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -718,7 +720,7 @@ export class LabelApi extends BaseAPI {
      * @memberof LabelApi
      */
     public riskLabel(requestParameters: LabelApiRiskLabelRequest, options?: RawAxiosRequestConfig) {
-        return LabelApiFp(this.configuration).riskLabel(requestParameters.riskLabelIn, options).then((request) => request(this.axios, this.basePath));
+        return LabelApiFp(this.configuration).riskLabel(requestParameters.labelRiskLabelIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -765,7 +767,7 @@ export class LabelApi extends BaseAPI {
      * @memberof LabelApi
      */
     public riskResolveLabels(requestParameters: LabelApiRiskResolveLabelsRequest, options?: RawAxiosRequestConfig) {
-        return LabelApiFp(this.configuration).riskResolveLabels(requestParameters.riskResolveIn, options).then((request) => request(this.axios, this.basePath));
+        return LabelApiFp(this.configuration).riskResolveLabels(requestParameters.labelRiskResolveIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

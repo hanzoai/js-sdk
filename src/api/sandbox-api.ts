@@ -22,37 +22,47 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Blob } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { EndIn } from '../models';
+import type { SandboxBlob } from '../models';
 // @ts-ignore
-import type { ExecRequest } from '../models';
+import type { SandboxEndIn } from '../models';
 // @ts-ignore
-import type { ExecResult } from '../models';
+import type { SandboxExecRequest } from '../models';
 // @ts-ignore
-import type { LeaseIn } from '../models';
+import type { SandboxExecResult } from '../models';
 // @ts-ignore
-import type { Leased } from '../models';
+import type { SandboxLeaseIn } from '../models';
 // @ts-ignore
-import type { PathIn } from '../models';
+import type { SandboxLeased } from '../models';
 // @ts-ignore
-import type { Ran } from '../models';
+import type { SandboxPathIn } from '../models';
 // @ts-ignore
-import type { RunIn } from '../models';
+import type { SandboxPorts } from '../models';
 // @ts-ignore
-import type { Sandbox } from '../models';
+import type { SandboxPreviewGrant } from '../models';
 // @ts-ignore
-import type { SandboxList } from '../models';
+import type { SandboxPreviewIn } from '../models';
 // @ts-ignore
-import type { StopIn } from '../models';
+import type { SandboxRan } from '../models';
 // @ts-ignore
-import type { Stopped } from '../models';
+import type { SandboxRunIn } from '../models';
 // @ts-ignore
-import type { TicketGrant } from '../models';
+import type { SandboxSandbox } from '../models';
 // @ts-ignore
-import type { WriteIn } from '../models';
+import type { SandboxSandboxIn } from '../models';
 // @ts-ignore
-import type { Wrote } from '../models';
+import type { SandboxSandboxList } from '../models';
+// @ts-ignore
+import type { SandboxStopIn } from '../models';
+// @ts-ignore
+import type { SandboxStopped } from '../models';
+// @ts-ignore
+import type { SandboxTicketGrant } from '../models';
+// @ts-ignore
+import type { SandboxWriteIn } from '../models';
+// @ts-ignore
+import type { SandboxWrote } from '../models';
 /**
  * SandboxApi - axios parameter creator
  * @export
@@ -105,13 +115,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
          * @summary End a sandbox and release it
-         * @param {EndIn} endIn 
+         * @param {SandboxEndIn} sandboxEndIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        endSandbox: async (endIn: EndIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'endIn' is not null or undefined
-            assertParamExists('endSandbox', 'endIn', endIn)
+        endSandbox: async (sandboxEndIn: SandboxEndIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxEndIn' is not null or undefined
+            assertParamExists('endSandbox', 'sandboxEndIn', sandboxEndIn)
             const localVarPath = `/v1/sandbox/end`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,7 +145,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(endIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxEndIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -143,8 +153,8 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Lists the caller org\'s sandboxes, newest first.  `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
-         * @summary Lists the caller org\'s sandboxes, newest first.
+         * Lists the sandboxes the caller holds, newest first.  A member holds the sandboxes they leased; an admin of the org, or a SuperAdmin, holds every one in it. `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
+         * @summary Lists the sandboxes the caller holds, newest first.
          * @param {string} [project] 
          * @param {string} [status] 
          * @param {*} [options] Override http request option.
@@ -187,7 +197,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  An id the caller\'s org does not hold is the same 404 an unknown id gives — the store is keyed on the org, so a cross-tenant id simply is not there.
+         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  A sandbox is its lessee\'s and its org admins\'. An id the caller does not hold — another org\'s, or another member\'s — is the same 404 an unknown id gives.
          * @summary Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.
          * @param {string} id ID is the sandbox to address, from the path.
          * @param {*} [options] Override http request option.
@@ -235,6 +245,44 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getSandboxByIdFs', 'id', id)
             const localVarPath = `/v1/sandbox/{id}/fs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open. A dev server started in the sandbox appears here once it listens.
+         * @summary Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open.
+         * @param {string} id ID is the sandbox, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxByIdPorts: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getSandboxByIdPorts', 'id', id)
+            const localVarPath = `/v1/sandbox/{id}/ports`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -415,15 +463,15 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
-         * @param {LeaseIn} leaseIn 
+         * @param {SandboxLeaseIn} sandboxLeaseIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaseSandbox: async (leaseIn: LeaseIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'leaseIn' is not null or undefined
-            assertParamExists('leaseSandbox', 'leaseIn', leaseIn)
+        leaseSandbox: async (sandboxLeaseIn: SandboxLeaseIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxLeaseIn' is not null or undefined
+            assertParamExists('leaseSandbox', 'sandboxLeaseIn', sandboxLeaseIn)
             const localVarPath = `/v1/sandbox/lease`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -447,7 +495,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(leaseIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxLeaseIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -457,13 +505,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Leases a sandbox — a real computer — for the caller\'s org.  The class decides what it is for and therefore its image, working directory and isolation. A dev or desktop sandbox is SINGLE-ATTACH per project, so asking twice for one project resumes the one that exists rather than paying for a second; an exec sandbox carries no project and is bounded per org instead, refused 429 past the ceiling because the caller\'s correct response is to wait.  Answers 201 with the sandbox as leased, which names the runtime it GOT — not the one that was asked for.
          * @summary Leases a sandbox — a real computer — for the caller\'s org.
-         * @param {LeaseIn} leaseIn 
+         * @param {SandboxSandboxIn} sandboxSandboxIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandbox: async (leaseIn: LeaseIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'leaseIn' is not null or undefined
-            assertParamExists('postSandbox', 'leaseIn', leaseIn)
+        postSandbox: async (sandboxSandboxIn: SandboxSandboxIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxSandboxIn' is not null or undefined
+            assertParamExists('postSandbox', 'sandboxSandboxIn', sandboxSandboxIn)
             const localVarPath = `/v1/sandbox`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -487,7 +535,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(leaseIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxSandboxIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -498,15 +546,15 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
          * Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.  Send `argv` — an argument vector cannot be word-split by accident — or `command` for a shell line, which is the only input here that ever reaches a shell. A non-zero exit is a SUCCESSFUL call carrying a failed command: the status is 200 and the exit code is in the answer, because \"the command failed\" and \"the call failed\" are different facts.
          * @summary Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.
          * @param {string} id ID is the sandbox to run in, from the path.
-         * @param {ExecRequest} execRequest 
+         * @param {SandboxExecRequest} sandboxExecRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandboxByIdExec: async (id: string, execRequest: ExecRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSandboxByIdExec: async (id: string, sandboxExecRequest: SandboxExecRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postSandboxByIdExec', 'id', id)
-            // verify required parameter 'execRequest' is not null or undefined
-            assertParamExists('postSandboxByIdExec', 'execRequest', execRequest)
+            // verify required parameter 'sandboxExecRequest' is not null or undefined
+            assertParamExists('postSandboxByIdExec', 'sandboxExecRequest', sandboxExecRequest)
             const localVarPath = `/v1/sandbox/{id}/exec`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -531,7 +579,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(execRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxExecRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -549,6 +597,126 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postSandboxByIdFs', 'id', id)
             const localVarPath = `/v1/sandbox/{id}/fs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.  The claim, the stop and the ship are ONE settlement for the same reason a retirement is — the snapshot that carries the advanced watermark has to carry the new state, or a successor hydrates a running row for a pod that is gone and bills for it until the reaper notices.
+         * @summary Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.
+         * @param {string} id ID is the sandbox to address, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postSandboxByIdPause', 'id', id)
+            const localVarPath = `/v1/sandbox/{id}/pause`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a port of a sandbox the caller holds in a browser.  It answers a URL at an origin of the preview\'s own — https://sandbox-<id>-preview-<port>.<apex>/ — carrying a single-use ticket. Opening it sets a cookie on that origin and lands on its root, and from then on every request there is carried to the port inside the sandbox: pages, assets, APIs and WebSockets, as the app serves them on localhost. The preview stays open for twelve hours or until the sandbox stops running; a preview answering 401 is opened again by asking for another URL. A sandbox that is not running is 409.
+         * @summary Opens a port of a sandbox the caller holds in a browser.
+         * @param {string} id ID is the sandbox, from the path.
+         * @param {SandboxPreviewIn} sandboxPreviewIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdPreview: async (id: string, sandboxPreviewIn: SandboxPreviewIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postSandboxByIdPreview', 'id', id)
+            // verify required parameter 'sandboxPreviewIn' is not null or undefined
+            assertParamExists('postSandboxByIdPreview', 'sandboxPreviewIn', sandboxPreviewIn)
+            const localVarPath = `/v1/sandbox/{id}/preview`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxPreviewIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.  The pod is NEW and so is its lease: a fresh pod name, because a pod name is never reused (store.go), the volume the row already names, a lease of the class\'s own length from now, and the RESUMING caller\'s credential rather than the one that took the lease — a session is short-lived and the one that parked it is gone.
+         * @summary Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.
+         * @param {string} id ID is the sandbox to address, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postSandboxByIdResume', 'id', id)
+            const localVarPath = `/v1/sandbox/{id}/resume`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -655,13 +823,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
          * @summary Read a file from a sandbox you hold
-         * @param {PathIn} pathIn 
+         * @param {SandboxPathIn} sandboxPathIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readSandboxFile: async (pathIn: PathIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pathIn' is not null or undefined
-            assertParamExists('readSandboxFile', 'pathIn', pathIn)
+        readSandboxFile: async (sandboxPathIn: SandboxPathIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxPathIn' is not null or undefined
+            assertParamExists('readSandboxFile', 'sandboxPathIn', sandboxPathIn)
             const localVarPath = `/v1/sandbox/read`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -685,7 +853,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pathIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxPathIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -695,13 +863,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agent/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
          * @summary Run a command in a sandbox you hold and read its output
-         * @param {RunIn} runIn 
+         * @param {SandboxRunIn} sandboxRunIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runInSandbox: async (runIn: RunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'runIn' is not null or undefined
-            assertParamExists('runInSandbox', 'runIn', runIn)
+        runInSandbox: async (sandboxRunIn: SandboxRunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxRunIn' is not null or undefined
+            assertParamExists('runInSandbox', 'sandboxRunIn', sandboxRunIn)
             const localVarPath = `/v1/sandbox/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -725,7 +893,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(runIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxRunIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -735,13 +903,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
          * @summary Stop what a sandbox is running, and keep the sandbox
-         * @param {StopIn} stopIn 
+         * @param {SandboxStopIn} sandboxStopIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun: async (stopIn: StopIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stopIn' is not null or undefined
-            assertParamExists('stopRun', 'stopIn', stopIn)
+        stopRun: async (sandboxStopIn: SandboxStopIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxStopIn' is not null or undefined
+            assertParamExists('stopRun', 'sandboxStopIn', sandboxStopIn)
             const localVarPath = `/v1/sandbox/stop`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -765,7 +933,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(stopIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxStopIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -775,13 +943,13 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
          * @summary Write a file into a sandbox you hold
-         * @param {WriteIn} writeIn 
+         * @param {SandboxWriteIn} sandboxWriteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeSandboxFile: async (writeIn: WriteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'writeIn' is not null or undefined
-            assertParamExists('writeSandboxFile', 'writeIn', writeIn)
+        writeSandboxFile: async (sandboxWriteIn: SandboxWriteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxWriteIn' is not null or undefined
+            assertParamExists('writeSandboxFile', 'sandboxWriteIn', sandboxWriteIn)
             const localVarPath = `/v1/sandbox/write`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -805,7 +973,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(writeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxWriteIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -839,38 +1007,38 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
          * @summary End a sandbox and release it
-         * @param {EndIn} endIn 
+         * @param {SandboxEndIn} sandboxEndIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async endSandbox(endIn: EndIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.endSandbox(endIn, options);
+        async endSandbox(sandboxEndIn: SandboxEndIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.endSandbox(sandboxEndIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.endSandbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the caller org\'s sandboxes, newest first.  `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
-         * @summary Lists the caller org\'s sandboxes, newest first.
+         * Lists the sandboxes the caller holds, newest first.  A member holds the sandboxes they leased; an admin of the org, or a SuperAdmin, holds every one in it. `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
+         * @summary Lists the sandboxes the caller holds, newest first.
          * @param {string} [project] 
          * @param {string} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSandbox(project?: string, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxList>> {
+        async getSandbox(project?: string, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxSandboxList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSandbox(project, status, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.getSandbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  An id the caller\'s org does not hold is the same 404 an unknown id gives — the store is keyed on the org, so a cross-tenant id simply is not there.
+         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  A sandbox is its lessee\'s and its org admins\'. An id the caller does not hold — another org\'s, or another member\'s — is the same 404 an unknown id gives.
          * @summary Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.
          * @param {string} id ID is the sandbox to address, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSandboxById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Sandbox>> {
+        async getSandboxById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxSandbox>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.getSandboxById']?.[localVarOperationServerIndex]?.url;
@@ -887,6 +1055,19 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxByIdFs(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.getSandboxByIdFs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open. A dev server started in the sandbox appears here once it listens.
+         * @summary Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open.
+         * @param {string} id ID is the sandbox, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSandboxByIdPorts(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxPorts>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxByIdPorts(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.getSandboxByIdPorts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -942,14 +1123,14 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
-         * @param {LeaseIn} leaseIn 
+         * @param {SandboxLeaseIn} sandboxLeaseIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async leaseSandbox(leaseIn: LeaseIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Leased>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.leaseSandbox(leaseIn, options);
+        async leaseSandbox(sandboxLeaseIn: SandboxLeaseIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxLeased>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.leaseSandbox(sandboxLeaseIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.leaseSandbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -957,12 +1138,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Leases a sandbox — a real computer — for the caller\'s org.  The class decides what it is for and therefore its image, working directory and isolation. A dev or desktop sandbox is SINGLE-ATTACH per project, so asking twice for one project resumes the one that exists rather than paying for a second; an exec sandbox carries no project and is bounded per org instead, refused 429 past the ceiling because the caller\'s correct response is to wait.  Answers 201 with the sandbox as leased, which names the runtime it GOT — not the one that was asked for.
          * @summary Leases a sandbox — a real computer — for the caller\'s org.
-         * @param {LeaseIn} leaseIn 
+         * @param {SandboxSandboxIn} sandboxSandboxIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSandbox(leaseIn: LeaseIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Sandbox>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandbox(leaseIn, options);
+        async postSandbox(sandboxSandboxIn: SandboxSandboxIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxSandbox>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandbox(sandboxSandboxIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -971,12 +1152,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
          * Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.  Send `argv` — an argument vector cannot be word-split by accident — or `command` for a shell line, which is the only input here that ever reaches a shell. A non-zero exit is a SUCCESSFUL call carrying a failed command: the status is 200 and the exit code is in the answer, because \"the command failed\" and \"the call failed\" are different facts.
          * @summary Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.
          * @param {string} id ID is the sandbox to run in, from the path.
-         * @param {ExecRequest} execRequest 
+         * @param {SandboxExecRequest} sandboxExecRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSandboxByIdExec(id: string, execRequest: ExecRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdExec(id, execRequest, options);
+        async postSandboxByIdExec(id: string, sandboxExecRequest: SandboxExecRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxExecResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdExec(id, sandboxExecRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdExec']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -995,13 +1176,53 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.  The claim, the stop and the ship are ONE settlement for the same reason a retirement is — the snapshot that carries the advanced watermark has to carry the new state, or a successor hydrates a running row for a pod that is gone and bills for it until the reaper notices.
+         * @summary Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.
+         * @param {string} id ID is the sandbox to address, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSandboxByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxSandbox>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdPause(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdPause']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a port of a sandbox the caller holds in a browser.  It answers a URL at an origin of the preview\'s own — https://sandbox-<id>-preview-<port>.<apex>/ — carrying a single-use ticket. Opening it sets a cookie on that origin and lands on its root, and from then on every request there is carried to the port inside the sandbox: pages, assets, APIs and WebSockets, as the app serves them on localhost. The preview stays open for twelve hours or until the sandbox stops running; a preview answering 401 is opened again by asking for another URL. A sandbox that is not running is 409.
+         * @summary Opens a port of a sandbox the caller holds in a browser.
+         * @param {string} id ID is the sandbox, from the path.
+         * @param {SandboxPreviewIn} sandboxPreviewIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSandboxByIdPreview(id: string, sandboxPreviewIn: SandboxPreviewIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxPreviewGrant>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdPreview(id, sandboxPreviewIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdPreview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.  The pod is NEW and so is its lease: a fresh pod name, because a pod name is never reused (store.go), the volume the row already names, a lease of the class\'s own length from now, and the RESUMING caller\'s credential rather than the one that took the lease — a session is short-lived and the one that parked it is gone.
+         * @summary Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.
+         * @param {string} id ID is the sandbox to address, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSandboxByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxSandbox>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdResume(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdResume']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
          * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
          * @param {string} id ID is the sandbox to address, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSandboxByIdScreenTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TicketGrant>> {
+        async postSandboxByIdScreenTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxTicketGrant>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdScreenTicket(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdScreenTicket']?.[localVarOperationServerIndex]?.url;
@@ -1014,7 +1235,7 @@ export const SandboxApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSandboxByIdTerminalTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TicketGrant>> {
+        async postSandboxByIdTerminalTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxTicketGrant>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdTerminalTicket(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdTerminalTicket']?.[localVarOperationServerIndex]?.url;
@@ -1023,12 +1244,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
          * @summary Read a file from a sandbox you hold
-         * @param {PathIn} pathIn 
+         * @param {SandboxPathIn} sandboxPathIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readSandboxFile(pathIn: PathIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Blob>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readSandboxFile(pathIn, options);
+        async readSandboxFile(sandboxPathIn: SandboxPathIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxBlob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readSandboxFile(sandboxPathIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.readSandboxFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1036,12 +1257,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agent/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
          * @summary Run a command in a sandbox you hold and read its output
-         * @param {RunIn} runIn 
+         * @param {SandboxRunIn} sandboxRunIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async runInSandbox(runIn: RunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ran>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.runInSandbox(runIn, options);
+        async runInSandbox(sandboxRunIn: SandboxRunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxRan>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.runInSandbox(sandboxRunIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.runInSandbox']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1049,12 +1270,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
          * @summary Stop what a sandbox is running, and keep the sandbox
-         * @param {StopIn} stopIn 
+         * @param {SandboxStopIn} sandboxStopIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopRun(stopIn: StopIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stopped>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stopRun(stopIn, options);
+        async stopRun(sandboxStopIn: SandboxStopIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxStopped>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopRun(sandboxStopIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.stopRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1062,12 +1283,12 @@ export const SandboxApiFp = function(configuration?: Configuration) {
         /**
          * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
          * @summary Write a file into a sandbox you hold
-         * @param {WriteIn} writeIn 
+         * @param {SandboxWriteIn} sandboxWriteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async writeSandboxFile(writeIn: WriteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Wrote>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.writeSandboxFile(writeIn, options);
+        async writeSandboxFile(sandboxWriteIn: SandboxWriteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxWrote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeSandboxFile(sandboxWriteIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.writeSandboxFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1100,26 +1321,26 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         endSandbox(requestParameters: SandboxApiEndSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.endSandbox(requestParameters.endIn, options).then((request) => request(axios, basePath));
+            return localVarFp.endSandbox(requestParameters.sandboxEndIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the caller org\'s sandboxes, newest first.  `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
-         * @summary Lists the caller org\'s sandboxes, newest first.
+         * Lists the sandboxes the caller holds, newest first.  A member holds the sandboxes they leased; an admin of the org, or a SuperAdmin, holds every one in it. `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
+         * @summary Lists the sandboxes the caller holds, newest first.
          * @param {SandboxApiGetSandboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSandbox(requestParameters: SandboxApiGetSandboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SandboxList> {
+        getSandbox(requestParameters: SandboxApiGetSandboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandboxList> {
             return localVarFp.getSandbox(requestParameters.project, requestParameters.status, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  An id the caller\'s org does not hold is the same 404 an unknown id gives — the store is keyed on the org, so a cross-tenant id simply is not there.
+         * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  A sandbox is its lessee\'s and its org admins\'. An id the caller does not hold — another org\'s, or another member\'s — is the same 404 an unknown id gives.
          * @summary Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.
          * @param {SandboxApiGetSandboxByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSandboxById(requestParameters: SandboxApiGetSandboxByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Sandbox> {
+        getSandboxById(requestParameters: SandboxApiGetSandboxByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandbox> {
             return localVarFp.getSandboxById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1131,6 +1352,16 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          */
         getSandboxByIdFs(requestParameters: SandboxApiGetSandboxByIdFsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getSandboxByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open. A dev server started in the sandbox appears here once it listens.
+         * @summary Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open.
+         * @param {SandboxApiGetSandboxByIdPortsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxByIdPorts(requestParameters: SandboxApiGetSandboxByIdPortsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxPorts> {
+            return localVarFp.getSandboxByIdPorts(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * A complete, self-contained desktop — noVNC inline, no other origin — that opens its own socket and draws this sandbox\'s display. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above, carried through to the socket. The page is NOT gated: it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything. `frame-ancestors` admits our own brands\' hosts and nothing further.  It is served for every class, not only for `desktop`. The class is a fact about the image, and a sandbox with no VNC server already fails exactly — the connection is refused and the page says so — where a check here would be a second opinion about what is running inside a pod, formed from a label rather than from the pod.
@@ -1173,14 +1404,14 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getSandboxByIdTerminalWs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {SandboxApiLeaseSandboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        leaseSandbox(requestParameters: SandboxApiLeaseSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<Leased> {
-            return localVarFp.leaseSandbox(requestParameters.leaseIn, options).then((request) => request(axios, basePath));
+        leaseSandbox(requestParameters: SandboxApiLeaseSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxLeased> {
+            return localVarFp.leaseSandbox(requestParameters.sandboxLeaseIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Leases a sandbox — a real computer — for the caller\'s org.  The class decides what it is for and therefore its image, working directory and isolation. A dev or desktop sandbox is SINGLE-ATTACH per project, so asking twice for one project resumes the one that exists rather than paying for a second; an exec sandbox carries no project and is bounded per org instead, refused 429 past the ceiling because the caller\'s correct response is to wait.  Answers 201 with the sandbox as leased, which names the runtime it GOT — not the one that was asked for.
@@ -1189,8 +1420,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandbox(requestParameters: SandboxApiPostSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<Sandbox> {
-            return localVarFp.postSandbox(requestParameters.leaseIn, options).then((request) => request(axios, basePath));
+        postSandbox(requestParameters: SandboxApiPostSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandbox> {
+            return localVarFp.postSandbox(requestParameters.sandboxSandboxIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.  Send `argv` — an argument vector cannot be word-split by accident — or `command` for a shell line, which is the only input here that ever reaches a shell. A non-zero exit is a SUCCESSFUL call carrying a failed command: the status is 200 and the exit code is in the answer, because \"the command failed\" and \"the call failed\" are different facts.
@@ -1199,8 +1430,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandboxByIdExec(requestParameters: SandboxApiPostSandboxByIdExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExecResult> {
-            return localVarFp.postSandboxByIdExec(requestParameters.id, requestParameters.execRequest, options).then((request) => request(axios, basePath));
+        postSandboxByIdExec(requestParameters: SandboxApiPostSandboxByIdExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxExecResult> {
+            return localVarFp.postSandboxByIdExec(requestParameters.id, requestParameters.sandboxExecRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the request body to one file in the sandbox\'s project directory, creating parent directories. Same confinement as the read above.
@@ -1213,13 +1444,43 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postSandboxByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.  The claim, the stop and the ship are ONE settlement for the same reason a retirement is — the snapshot that carries the advanced watermark has to carry the new state, or a successor hydrates a running row for a pod that is gone and bills for it until the reaper notices.
+         * @summary Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.
+         * @param {SandboxApiPostSandboxByIdPauseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdPause(requestParameters: SandboxApiPostSandboxByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandbox> {
+            return localVarFp.postSandboxByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a port of a sandbox the caller holds in a browser.  It answers a URL at an origin of the preview\'s own — https://sandbox-<id>-preview-<port>.<apex>/ — carrying a single-use ticket. Opening it sets a cookie on that origin and lands on its root, and from then on every request there is carried to the port inside the sandbox: pages, assets, APIs and WebSockets, as the app serves them on localhost. The preview stays open for twelve hours or until the sandbox stops running; a preview answering 401 is opened again by asking for another URL. A sandbox that is not running is 409.
+         * @summary Opens a port of a sandbox the caller holds in a browser.
+         * @param {SandboxApiPostSandboxByIdPreviewRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdPreview(requestParameters: SandboxApiPostSandboxByIdPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxPreviewGrant> {
+            return localVarFp.postSandboxByIdPreview(requestParameters.id, requestParameters.sandboxPreviewIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.  The pod is NEW and so is its lease: a fresh pod name, because a pod name is never reused (store.go), the volume the row already names, a lease of the class\'s own length from now, and the RESUMING caller\'s credential rather than the one that took the lease — a session is short-lived and the one that parked it is gone.
+         * @summary Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.
+         * @param {SandboxApiPostSandboxByIdResumeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdResume(requestParameters: SandboxApiPostSandboxByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandbox> {
+            return localVarFp.postSandboxByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
          * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
          * @param {SandboxApiPostSandboxByIdScreenTicketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandboxByIdScreenTicket(requestParameters: SandboxApiPostSandboxByIdScreenTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<TicketGrant> {
+        postSandboxByIdScreenTicket(requestParameters: SandboxApiPostSandboxByIdScreenTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxTicketGrant> {
             return localVarFp.postSandboxByIdScreenTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1229,7 +1490,7 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSandboxByIdTerminalTicket(requestParameters: SandboxApiPostSandboxByIdTerminalTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<TicketGrant> {
+        postSandboxByIdTerminalTicket(requestParameters: SandboxApiPostSandboxByIdTerminalTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxTicketGrant> {
             return localVarFp.postSandboxByIdTerminalTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1239,8 +1500,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readSandboxFile(requestParameters: SandboxApiReadSandboxFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<Blob> {
-            return localVarFp.readSandboxFile(requestParameters.pathIn, options).then((request) => request(axios, basePath));
+        readSandboxFile(requestParameters: SandboxApiReadSandboxFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxBlob> {
+            return localVarFp.readSandboxFile(requestParameters.sandboxPathIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agent/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
@@ -1249,8 +1510,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runInSandbox(requestParameters: SandboxApiRunInSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<Ran> {
-            return localVarFp.runInSandbox(requestParameters.runIn, options).then((request) => request(axios, basePath));
+        runInSandbox(requestParameters: SandboxApiRunInSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxRan> {
+            return localVarFp.runInSandbox(requestParameters.sandboxRunIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
@@ -1259,8 +1520,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun(requestParameters: SandboxApiStopRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stopped> {
-            return localVarFp.stopRun(requestParameters.stopIn, options).then((request) => request(axios, basePath));
+        stopRun(requestParameters: SandboxApiStopRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxStopped> {
+            return localVarFp.stopRun(requestParameters.sandboxStopIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
@@ -1269,8 +1530,8 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeSandboxFile(requestParameters: SandboxApiWriteSandboxFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<Wrote> {
-            return localVarFp.writeSandboxFile(requestParameters.writeIn, options).then((request) => request(axios, basePath));
+        writeSandboxFile(requestParameters: SandboxApiWriteSandboxFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxWrote> {
+            return localVarFp.writeSandboxFile(requestParameters.sandboxWriteIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1304,10 +1565,10 @@ export interface SandboxApiDeleteSandboxByIdRequest {
 export interface SandboxApiEndSandboxRequest {
     /**
      * 
-     * @type {EndIn}
+     * @type {SandboxEndIn}
      * @memberof SandboxApiEndSandbox
      */
-    readonly endIn: EndIn
+    readonly sandboxEndIn: SandboxEndIn
 }
 
 /**
@@ -1355,6 +1616,20 @@ export interface SandboxApiGetSandboxByIdFsRequest {
      * 
      * @type {string}
      * @memberof SandboxApiGetSandboxByIdFs
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getSandboxByIdPorts operation in SandboxApi.
+ * @export
+ * @interface SandboxApiGetSandboxByIdPortsRequest
+ */
+export interface SandboxApiGetSandboxByIdPortsRequest {
+    /**
+     * ID is the sandbox, from the path.
+     * @type {string}
+     * @memberof SandboxApiGetSandboxByIdPorts
      */
     readonly id: string
 }
@@ -1423,10 +1698,10 @@ export interface SandboxApiGetSandboxByIdTerminalWsRequest {
 export interface SandboxApiLeaseSandboxRequest {
     /**
      * 
-     * @type {LeaseIn}
+     * @type {SandboxLeaseIn}
      * @memberof SandboxApiLeaseSandbox
      */
-    readonly leaseIn: LeaseIn
+    readonly sandboxLeaseIn: SandboxLeaseIn
 }
 
 /**
@@ -1437,10 +1712,10 @@ export interface SandboxApiLeaseSandboxRequest {
 export interface SandboxApiPostSandboxRequest {
     /**
      * 
-     * @type {LeaseIn}
+     * @type {SandboxSandboxIn}
      * @memberof SandboxApiPostSandbox
      */
-    readonly leaseIn: LeaseIn
+    readonly sandboxSandboxIn: SandboxSandboxIn
 }
 
 /**
@@ -1458,10 +1733,10 @@ export interface SandboxApiPostSandboxByIdExecRequest {
 
     /**
      * 
-     * @type {ExecRequest}
+     * @type {SandboxExecRequest}
      * @memberof SandboxApiPostSandboxByIdExec
      */
-    readonly execRequest: ExecRequest
+    readonly sandboxExecRequest: SandboxExecRequest
 }
 
 /**
@@ -1474,6 +1749,55 @@ export interface SandboxApiPostSandboxByIdFsRequest {
      * 
      * @type {string}
      * @memberof SandboxApiPostSandboxByIdFs
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postSandboxByIdPause operation in SandboxApi.
+ * @export
+ * @interface SandboxApiPostSandboxByIdPauseRequest
+ */
+export interface SandboxApiPostSandboxByIdPauseRequest {
+    /**
+     * ID is the sandbox to address, from the path.
+     * @type {string}
+     * @memberof SandboxApiPostSandboxByIdPause
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postSandboxByIdPreview operation in SandboxApi.
+ * @export
+ * @interface SandboxApiPostSandboxByIdPreviewRequest
+ */
+export interface SandboxApiPostSandboxByIdPreviewRequest {
+    /**
+     * ID is the sandbox, from the path.
+     * @type {string}
+     * @memberof SandboxApiPostSandboxByIdPreview
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SandboxPreviewIn}
+     * @memberof SandboxApiPostSandboxByIdPreview
+     */
+    readonly sandboxPreviewIn: SandboxPreviewIn
+}
+
+/**
+ * Request parameters for postSandboxByIdResume operation in SandboxApi.
+ * @export
+ * @interface SandboxApiPostSandboxByIdResumeRequest
+ */
+export interface SandboxApiPostSandboxByIdResumeRequest {
+    /**
+     * ID is the sandbox to address, from the path.
+     * @type {string}
+     * @memberof SandboxApiPostSandboxByIdResume
      */
     readonly id: string
 }
@@ -1514,10 +1838,10 @@ export interface SandboxApiPostSandboxByIdTerminalTicketRequest {
 export interface SandboxApiReadSandboxFileRequest {
     /**
      * 
-     * @type {PathIn}
+     * @type {SandboxPathIn}
      * @memberof SandboxApiReadSandboxFile
      */
-    readonly pathIn: PathIn
+    readonly sandboxPathIn: SandboxPathIn
 }
 
 /**
@@ -1528,10 +1852,10 @@ export interface SandboxApiReadSandboxFileRequest {
 export interface SandboxApiRunInSandboxRequest {
     /**
      * 
-     * @type {RunIn}
+     * @type {SandboxRunIn}
      * @memberof SandboxApiRunInSandbox
      */
-    readonly runIn: RunIn
+    readonly sandboxRunIn: SandboxRunIn
 }
 
 /**
@@ -1542,10 +1866,10 @@ export interface SandboxApiRunInSandboxRequest {
 export interface SandboxApiStopRunRequest {
     /**
      * 
-     * @type {StopIn}
+     * @type {SandboxStopIn}
      * @memberof SandboxApiStopRun
      */
-    readonly stopIn: StopIn
+    readonly sandboxStopIn: SandboxStopIn
 }
 
 /**
@@ -1556,10 +1880,10 @@ export interface SandboxApiStopRunRequest {
 export interface SandboxApiWriteSandboxFileRequest {
     /**
      * 
-     * @type {WriteIn}
+     * @type {SandboxWriteIn}
      * @memberof SandboxApiWriteSandboxFile
      */
-    readonly writeIn: WriteIn
+    readonly sandboxWriteIn: SandboxWriteIn
 }
 
 /**
@@ -1590,12 +1914,12 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public endSandbox(requestParameters: SandboxApiEndSandboxRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).endSandbox(requestParameters.endIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).endSandbox(requestParameters.sandboxEndIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Lists the caller org\'s sandboxes, newest first.  `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
-     * @summary Lists the caller org\'s sandboxes, newest first.
+     * Lists the sandboxes the caller holds, newest first.  A member holds the sandboxes they leased; an admin of the org, or a SuperAdmin, holds every one in it. `?project=` and `?status=` narrow it. Only the caller\'s org\'s: the store is keyed on the validated org, so another tenant\'s sandbox is not something this operation can return.
+     * @summary Lists the sandboxes the caller holds, newest first.
      * @param {SandboxApiGetSandboxRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1606,7 +1930,7 @@ export class SandboxApi extends BaseAPI {
     }
 
     /**
-     * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  An id the caller\'s org does not hold is the same 404 an unknown id gives — the store is keyed on the org, so a cross-tenant id simply is not there.
+     * Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.  A sandbox is its lessee\'s and its org admins\'. An id the caller does not hold — another org\'s, or another member\'s — is the same 404 an unknown id gives.
      * @summary Returns one sandbox: its class, project, image, the runtime it was given, its status and when its lease ends.
      * @param {SandboxApiGetSandboxByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1627,6 +1951,18 @@ export class SandboxApi extends BaseAPI {
      */
     public getSandboxByIdFs(requestParameters: SandboxApiGetSandboxByIdFsRequest, options?: RawAxiosRequestConfig) {
         return SandboxApiFp(this.configuration).getSandboxByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open. A dev server started in the sandbox appears here once it listens.
+     * @summary Lists the TCP ports something listens on in a sandbox the caller holds, each with the preview host that serves it — what the sandbox\'s Browser can open.
+     * @param {SandboxApiGetSandboxByIdPortsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public getSandboxByIdPorts(requestParameters: SandboxApiGetSandboxByIdPortsRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).getSandboxByIdPorts(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1678,7 +2014,7 @@ export class SandboxApi extends BaseAPI {
     }
 
     /**
-     * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
+     * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
      * @summary Lease a sandbox — a real computer — or resume one you hold
      * @param {SandboxApiLeaseSandboxRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1686,7 +2022,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public leaseSandbox(requestParameters: SandboxApiLeaseSandboxRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).leaseSandbox(requestParameters.leaseIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).leaseSandbox(requestParameters.sandboxLeaseIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1698,7 +2034,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public postSandbox(requestParameters: SandboxApiPostSandboxRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).postSandbox(requestParameters.leaseIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).postSandbox(requestParameters.sandboxSandboxIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1710,7 +2046,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public postSandboxByIdExec(requestParameters: SandboxApiPostSandboxByIdExecRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).postSandboxByIdExec(requestParameters.id, requestParameters.execRequest, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).postSandboxByIdExec(requestParameters.id, requestParameters.sandboxExecRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1723,6 +2059,42 @@ export class SandboxApi extends BaseAPI {
      */
     public postSandboxByIdFs(requestParameters: SandboxApiPostSandboxByIdFsRequest, options?: RawAxiosRequestConfig) {
         return SandboxApiFp(this.configuration).postSandboxByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.  The claim, the stop and the ship are ONE settlement for the same reason a retirement is — the snapshot that carries the advanced watermark has to carry the new state, or a successor hydrates a running row for a pod that is gone and bills for it until the reaper notices.
+     * @summary Stops the pod, keeps the row and the volume, and settles the tail: POST /v1/sandbox/:id/pause.
+     * @param {SandboxApiPostSandboxByIdPauseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public postSandboxByIdPause(requestParameters: SandboxApiPostSandboxByIdPauseRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).postSandboxByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a port of a sandbox the caller holds in a browser.  It answers a URL at an origin of the preview\'s own — https://sandbox-<id>-preview-<port>.<apex>/ — carrying a single-use ticket. Opening it sets a cookie on that origin and lands on its root, and from then on every request there is carried to the port inside the sandbox: pages, assets, APIs and WebSockets, as the app serves them on localhost. The preview stays open for twelve hours or until the sandbox stops running; a preview answering 401 is opened again by asking for another URL. A sandbox that is not running is 409.
+     * @summary Opens a port of a sandbox the caller holds in a browser.
+     * @param {SandboxApiPostSandboxByIdPreviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public postSandboxByIdPreview(requestParameters: SandboxApiPostSandboxByIdPreviewRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).postSandboxByIdPreview(requestParameters.id, requestParameters.sandboxPreviewIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.  The pod is NEW and so is its lease: a fresh pod name, because a pod name is never reused (store.go), the volume the row already names, a lease of the class\'s own length from now, and the RESUMING caller\'s credential rather than the one that took the lease — a session is short-lived and the one that parked it is gone.
+     * @summary Gives a parked sandbox a pod again: POST /v1/sandbox/:id/resume.
+     * @param {SandboxApiPostSandboxByIdResumeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public postSandboxByIdResume(requestParameters: SandboxApiPostSandboxByIdResumeRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).postSandboxByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1758,7 +2130,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public readSandboxFile(requestParameters: SandboxApiReadSandboxFileRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).readSandboxFile(requestParameters.pathIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).readSandboxFile(requestParameters.sandboxPathIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1770,7 +2142,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public runInSandbox(requestParameters: SandboxApiRunInSandboxRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).runInSandbox(requestParameters.runIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).runInSandbox(requestParameters.sandboxRunIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1782,7 +2154,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public stopRun(requestParameters: SandboxApiStopRunRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).stopRun(requestParameters.stopIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).stopRun(requestParameters.sandboxStopIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1794,7 +2166,7 @@ export class SandboxApi extends BaseAPI {
      * @memberof SandboxApi
      */
     public writeSandboxFile(requestParameters: SandboxApiWriteSandboxFileRequest, options?: RawAxiosRequestConfig) {
-        return SandboxApiFp(this.configuration).writeSandboxFile(requestParameters.writeIn, options).then((request) => request(this.axios, this.basePath));
+        return SandboxApiFp(this.configuration).writeSandboxFile(requestParameters.sandboxWriteIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

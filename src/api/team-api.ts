@@ -22,33 +22,75 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CollabRequest } from '../models';
-// @ts-ignore
-import type { CollabResult } from '../models';
-// @ts-ignore
 import type { CookieAck } from '../models';
 // @ts-ignore
-import type { PlanInfo } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ProviderInfo } from '../models';
+import type { TeamCollabRequest } from '../models';
 // @ts-ignore
-import type { PublicRooms } from '../models';
+import type { TeamCollabResult } from '../models';
 // @ts-ignore
-import type { StatsOut } from '../models';
+import type { TeamCookieAck } from '../models';
 // @ts-ignore
-import type { TeamMessage } from '../models';
+import type { TeamPlanInfo } from '../models';
 // @ts-ignore
-import type { TeamMessageWrite } from '../models';
+import type { TeamProviderInfo } from '../models';
 // @ts-ignore
-import type { TeamMessages } from '../models';
+import type { TeamPublicRooms } from '../models';
 // @ts-ignore
-import type { TeamRoom } from '../models';
+import type { TeamStatsOut } from '../models';
 // @ts-ignore
-import type { TeamRoomBind } from '../models';
+import type { TeamTeamCommentWrite } from '../models';
 // @ts-ignore
-import type { TeamRoomNew } from '../models';
+import type { TeamTeamDirect } from '../models';
 // @ts-ignore
-import type { TeamRooms } from '../models';
+import type { TeamTeamDirectOpen } from '../models';
+// @ts-ignore
+import type { TeamTeamDoc } from '../models';
+// @ts-ignore
+import type { TeamTeamDocEdit } from '../models';
+// @ts-ignore
+import type { TeamTeamDocNew } from '../models';
+// @ts-ignore
+import type { TeamTeamDocs } from '../models';
+// @ts-ignore
+import type { TeamTeamInbox } from '../models';
+// @ts-ignore
+import type { TeamTeamInboxAll } from '../models';
+// @ts-ignore
+import type { TeamTeamInboxAt } from '../models';
+// @ts-ignore
+import type { TeamTeamInboxCleared } from '../models';
+// @ts-ignore
+import type { TeamTeamInboxItem } from '../models';
+// @ts-ignore
+import type { TeamTeamMembers } from '../models';
+// @ts-ignore
+import type { TeamTeamMessage } from '../models';
+// @ts-ignore
+import type { TeamTeamMessageEdit } from '../models';
+// @ts-ignore
+import type { TeamTeamMessageWrite } from '../models';
+// @ts-ignore
+import type { TeamTeamMessages } from '../models';
+// @ts-ignore
+import type { TeamTeamReactionWrite } from '../models';
+// @ts-ignore
+import type { TeamTeamReplyWrite } from '../models';
+// @ts-ignore
+import type { TeamTeamRoom } from '../models';
+// @ts-ignore
+import type { TeamTeamRoomBind } from '../models';
+// @ts-ignore
+import type { TeamTeamRoomEdit } from '../models';
+// @ts-ignore
+import type { TeamTeamRoomJoin } from '../models';
+// @ts-ignore
+import type { TeamTeamRoomMembers } from '../models';
+// @ts-ignore
+import type { TeamTeamRoomNew } from '../models';
+// @ts-ignore
+import type { TeamTeamRooms } from '../models';
 /**
  * TeamApi - axios parameter creator
  * @export
@@ -77,6 +119,49 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it. Its author, an owner of its teamspace or an admin of the space may delete it. Answers 204.  The document model has no archived state for a page (only a teamspace can be archived), so there is nothing softer to offer here than removal.
+         * @summary Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamDocsById: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTeamDocsById', 'id', id)
+            const localVarPath = `/v1/team/docs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
 
 
     
@@ -123,6 +208,143 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (file !== undefined) {
                 localVarQueryParameter['file'] = file;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a message, with its replies, reactions, files and the inbox notifications that point at it. Its author may delete it, and so may an owner or admin of the space.  Each removal is a platform remove through the Team client\'s write path, so the message disappears from every open client live. Answers 204.
+         * @summary Removes a message, with its replies, reactions, files and the inbox notifications that point at it.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} [space] Space names the space holding it. A message id is unique within a space, not across the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMessagesById: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTeamMessagesById', 'id', id)
+            const localVarPath = `/v1/team/messages/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand. Taking back a reaction the caller never made changes nothing and is not an error.
+         * @summary Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} emoji Emoji is the reaction, from the path (percent-encoded on the wire).
+         * @param {string} [space] Space names the space holding the message.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMessagesByIdReactionsByEmoji: async (id: string, emoji: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTeamMessagesByIdReactionsByEmoji', 'id', id)
+            // verify required parameter 'emoji' is not null or undefined
+            assertParamExists('deleteTeamMessagesByIdReactionsByEmoji', 'emoji', emoji)
+            const localVarPath = `/v1/team/messages/{id}/reactions/{emoji}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"emoji"}}`, encodeURIComponent(String(emoji)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes one person out of a room — the caller leaving, when the account is their own. Removing somebody else takes owning the room or administering the space. Leaving a room you are not in, or removing somebody who is not there, changes nothing. A direct message cannot be left: its people are what it is. Answers 204.
+         * @summary Takes one person out of a room — the caller leaving, when the account is their own.
+         * @param {string} id ID is the room, from the path.
+         * @param {string} account Account is the account uuid to remove, from the path. Your own is leaving.
+         * @param {string} [space] Space is the space uuid holding the room.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamRoomsByIdMembersByAccount: async (id: string, account: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTeamRoomsByIdMembersByAccount', 'id', id)
+            // verify required parameter 'account' is not null or undefined
+            assertParamExists('deleteTeamRoomsByIdMembersByAccount', 'account', account)
+            const localVarPath = `/v1/team/rooms/{id}/members/{account}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"account"}}`, encodeURIComponent(String(account)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
             }
 
 
@@ -349,6 +571,175 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Returns the documents of a space the caller may see, with the teamspaces they are grouped in.  These are the Team client\'s own document rows, so a page created there is here with no sync. Each carries the `collaborator` id its body opens with on the /v1/team/collaborator socket. A private teamspace\'s documents are listed only for its members.
+         * @summary Returns the documents of a space the caller may see, with the teamspaces they are grouped in.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {string} [teamspace] Teamspace narrows the answer to one teamspace.
+         * @param {string} [parent] Parent narrows the answer to one document\&#39;s children.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocs: async (space?: string, teamspace?: string, parent?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/docs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+            if (teamspace !== undefined) {
+                localVarQueryParameter['teamspace'] = teamspace;
+            }
+
+            if (parent !== undefined) {
+                localVarQueryParameter['parent'] = parent;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one document the caller may see.
+         * @summary Returns one document the caller may see.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocsById: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTeamDocsById', 'id', id)
+            const localVarPath = `/v1/team/docs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @summary Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocsByIdComments: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTeamDocsByIdComments', 'id', id)
+            const localVarPath = `/v1/team/docs/{id}/comments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Holds one text/event-stream open per caller and pushes each change as it is written — by the Team client, a typed op or an agent — filtered to the rooms, documents and inbox the caller may see under the same rule the ops apply. Authenticate with `Authorization: Bearer` (a fetch-based SSE reader; a browser EventSource cannot set it). `?space=` narrows the stream to one space; without it the stream covers every space the caller is a member of at connect.  Each frame is `event: <name>` and a JSON `data:` line carrying `space` and one of: - `message.created`, `message.updated` — `message`, the message as the message ops answer it (a room message, a thread reply or a document comment; a count or reaction change is an update); - `message.deleted` — `id`, and `room`/`doc`/`thread` where known; - `reaction.changed` — `message`, with its reactions as they now stand; - `room.changed` — `room`, as the room listing answers it, sent to those who can see it after the change (somebody removed from a private room is not told; the room list is the truth); - `doc.changed` — `doc`, as the document ops answer it (`removed: true` and `id` when deleted); body edits happen on the collaborator socket and are not streamed here; - `inbox.created`, `inbox.updated` — `item`, one of the caller\'s own notifications.  A `: ping` comment is written every 25 seconds. There is no resume: the server keeps no event sequence, so frames carry no `id` and Last-Event-ID is ignored; on reconnect, re-read the ops. A stream that falls too far behind is closed rather than allowed to slow a writer, and so is one whose caller is no longer a member of the space an event is in. 401 without a verified team credential; 404 for a named space the caller is not in.
+         * @summary Stream live changes to what the caller may see, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/events`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
          * @summary Download a space file
          * @param {string} space 
@@ -378,6 +769,132 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.  These are the rows the Team client\'s Inbox reads, so a notification cleared there is cleared here. Only the caller\'s own notifications are ever listed.
+         * @summary Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {boolean} [archived] Archived lists the archived notifications instead of the live ones.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamInbox: async (space?: string, archived?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/inbox`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+            if (archived !== undefined) {
+                localVarQueryParameter['archived'] = archived;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.  People come from IAM, the membership authority; agents from the org\'s agent registry; avatars from the Person documents the Team client edits. An IAM that does not answer is a 502 rather than an empty roster, and an agent registry that does not answer is named in `degraded` beside the people who did load. The caller must be a member of the space.
+         * @summary Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMembers: async (space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/members`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @summary Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} [space] Space names the space holding it. A message id is unique within a space, not across the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMessagesByIdReplies: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTeamMessagesByIdReplies', 'id', id)
+            const localVarPath = `/v1/team/messages/{id}/replies`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
 
 
     
@@ -440,8 +957,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
+         * Returns the rooms the caller may see, with the kind and work facet each carries.  A signed-in TEAM MEMBER reads every room of every space they are in that is open to them: public channels, and the private channels and direct messages that name them. An APPLICATION of the org (its own machine credential) reads the public channels of the org\'s spaces and nothing that belongs to particular people. Anybody else without a team session is 401.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document.
+         * @summary Returns the rooms the caller may see, with the kind and work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -474,8 +991,51 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
-         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * Returns the people and agents in one room, as the roster describes them. The caller must be able to see the room.
+         * @summary Returns the people and agents in one room, as the roster describes them.
+         * @param {string} id ID is the room, from the path. The URL is the authority.
+         * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRoomsByIdMembers: async (id: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTeamRoomsByIdMembers', 'id', id)
+            const localVarPath = `/v1/team/rooms/{id}/members`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (space !== undefined) {
+                localVarQueryParameter['space'] = space;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A team member reads any room they may see; an application of the org reads public channels only; anybody else without a team session is 401. A room the caller may not read answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.
          * @param {string} id ID is the room, from the path. The URL is the authority.
          * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
          * @param {*} [options] Override http request option.
@@ -555,8 +1115,8 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+         * Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
          * @param {string} [token] Token is the space token minted by selectWorkspace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -587,6 +1147,138 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.  Anyone who can write the teamspace may rename or move a page, as in the Team client. A move goes after its new siblings, and a document cannot be moved under itself or under one of its own descendants.
+         * @summary Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.
+         * @param {string} id ID is the document, from the path.
+         * @param {TeamTeamDocEdit} teamTeamDocEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamDocsById: async (id: string, teamTeamDocEdit: TeamTeamDocEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchTeamDocsById', 'id', id)
+            // verify required parameter 'teamTeamDocEdit' is not null or undefined
+            assertParamExists('patchTeamDocsById', 'teamTeamDocEdit', teamTeamDocEdit)
+            const localVarPath = `/v1/team/docs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamDocEdit, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Rewrites what a message says. Only its author may edit it.  The edit is an ordinary update of the message document through the Team client\'s own write path, stamped with editedOn, so an open client shows the new text and the \"edited\" mark live. Somebody the new text mentions for the first time is notified.
+         * @summary Rewrites what a message says.
+         * @param {string} id ID is the message, from the path.
+         * @param {TeamTeamMessageEdit} teamTeamMessageEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamMessagesById: async (id: string, teamTeamMessageEdit: TeamTeamMessageEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchTeamMessagesById', 'id', id)
+            // verify required parameter 'teamTeamMessageEdit' is not null or undefined
+            assertParamExists('patchTeamMessagesById', 'teamTeamMessageEdit', teamTeamMessageEdit)
+            const localVarPath = `/v1/team/messages/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamMessageEdit, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.  Its owners and the space\'s admins may edit a room; a room nobody owns — one opened by an integration — may be edited by anyone in it, and a direct message by either person in it. Archiving withdraws a public channel from the cross-org directory in the same write; reopening lists it again.
+         * @summary Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.
+         * @param {string} id ID is the room, from the path.
+         * @param {TeamTeamRoomEdit} teamTeamRoomEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamRoomsById: async (id: string, teamTeamRoomEdit: TeamTeamRoomEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchTeamRoomsById', 'id', id)
+            // verify required parameter 'teamTeamRoomEdit' is not null or undefined
+            assertParamExists('patchTeamRoomsById', 'teamTeamRoomEdit', teamTeamRoomEdit)
+            const localVarPath = `/v1/team/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamRoomEdit, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -631,15 +1323,15 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
          * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;spaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
-         * @param {CollabRequest} collabRequest 
+         * @param {TeamCollabRequest} teamCollabRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamCollaboratorRpcByDocumentid: async (documentId: string, collabRequest: CollabRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamCollaboratorRpcByDocumentid: async (documentId: string, teamCollabRequest: TeamCollabRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'documentId' is not null or undefined
             assertParamExists('postTeamCollaboratorRpcByDocumentid', 'documentId', documentId)
-            // verify required parameter 'collabRequest' is not null or undefined
-            assertParamExists('postTeamCollaboratorRpcByDocumentid', 'collabRequest', collabRequest)
+            // verify required parameter 'teamCollabRequest' is not null or undefined
+            assertParamExists('postTeamCollaboratorRpcByDocumentid', 'teamCollabRequest', teamCollabRequest)
             const localVarPath = `/v1/team/collaborator/rpc/{documentId}`
                 .replace(`{${"documentId"}}`, encodeURIComponent(String(documentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -664,7 +1356,131 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(collabRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(teamCollabRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.  Every person named must be a member of the space or one of the org\'s agents; a direct message with an agent is a conversation it answers every message in, and a guest may not open one. Answers 201 when this call opened it and 200 when it was already there.
+         * @summary Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.
+         * @param {TeamTeamDirectOpen} teamTeamDirectOpen 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDms: async (teamTeamDirectOpen: TeamTeamDirectOpen, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamTeamDirectOpen' is not null or undefined
+            assertParamExists('postTeamDms', 'teamTeamDirectOpen', teamTeamDirectOpen)
+            const localVarPath = `/v1/team/dms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamDirectOpen, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a document, as the caller, after its siblings.  It is created through the Team client\'s own write path, so it appears in an open Documents sidebar live, and its author is subscribed to it: a comment on it lands in their inbox. Its body starts empty — open the returned `collaborator` id on the /v1/team/collaborator socket to write it.  A space whose caller can write no teamspace at all gets one on its first document: a public \"General\" teamspace every current member of the space is in, which is what the Team client would otherwise make somebody create by hand before the first page. Guests and agents are not made members of it.
+         * @summary Creates a document, as the caller, after its siblings.
+         * @param {TeamTeamDocNew} teamTeamDocNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDocs: async (teamTeamDocNew: TeamTeamDocNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamTeamDocNew' is not null or undefined
+            assertParamExists('postTeamDocs', 'teamTeamDocNew', teamTeamDocNew)
+            const localVarPath = `/v1/team/docs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamDocNew, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Comments on a document, as the caller.  It is a message attached to the document, written through the Team client\'s own path: the people subscribed to the document and anyone mentioned are notified, and an agent mentioned answers with a comment of its own. It can be replied to, reacted to, edited and deleted with the message ops.
+         * @summary Comments on a document, as the caller.
+         * @param {string} id ID is the document, from the path.
+         * @param {TeamTeamCommentWrite} teamTeamCommentWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDocsByIdComments: async (id: string, teamTeamCommentWrite: TeamTeamCommentWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamDocsByIdComments', 'id', id)
+            // verify required parameter 'teamTeamCommentWrite' is not null or undefined
+            assertParamExists('postTeamDocsByIdComments', 'teamTeamCommentWrite', teamTeamCommentWrite)
+            const localVarPath = `/v1/team/docs/{id}/comments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamCommentWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -714,15 +1530,187 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
-         * @summary Opens a named room and answers it as the store now holds it.
-         * @param {TeamRoomNew} teamRoomNew 
+         * Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it. It is listed again with `archived=true`.
+         * @summary Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it.
+         * @param {string} id ID is the notification, from the path.
+         * @param {TeamTeamInboxAt} teamTeamInboxAt 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamRooms: async (teamRoomNew: TeamRoomNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'teamRoomNew' is not null or undefined
-            assertParamExists('postTeamRooms', 'teamRoomNew', teamRoomNew)
+        postTeamInboxByIdArchive: async (id: string, teamTeamInboxAt: TeamTeamInboxAt, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamInboxByIdArchive', 'id', id)
+            // verify required parameter 'teamTeamInboxAt' is not null or undefined
+            assertParamExists('postTeamInboxByIdArchive', 'teamTeamInboxAt', teamTeamInboxAt)
+            const localVarPath = `/v1/team/inbox/{id}/archive`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamInboxAt, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Marks one of the caller\'s notifications read and answers it. Another person\'s notification is a 404, as one that does not exist is.
+         * @summary Marks one of the caller\'s notifications read and answers it.
+         * @param {string} id ID is the notification, from the path.
+         * @param {TeamTeamInboxAt} teamTeamInboxAt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamInboxByIdRead: async (id: string, teamTeamInboxAt: TeamTeamInboxAt, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamInboxByIdRead', 'id', id)
+            // verify required parameter 'teamTeamInboxAt' is not null or undefined
+            assertParamExists('postTeamInboxByIdRead', 'teamTeamInboxAt', teamTeamInboxAt)
+            const localVarPath = `/v1/team/inbox/{id}/read`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamInboxAt, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Marks every live notification of the caller\'s read, and says how many it changed.
+         * @summary Marks every live notification of the caller\'s read, and says how many it changed.
+         * @param {TeamTeamInboxAll} teamTeamInboxAll 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamInboxRead: async (teamTeamInboxAll: TeamTeamInboxAll, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamTeamInboxAll' is not null or undefined
+            assertParamExists('postTeamInboxRead', 'teamTeamInboxAll', teamTeamInboxAll)
+            const localVarPath = `/v1/team/inbox/read`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamInboxAll, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers a message in its thread, as the caller.  A reply is a thread message attached to the one it answers, written through the Team client\'s own path: the parent\'s reply count and last-reply time move with it, the people already in the thread and anyone mentioned are notified, and an agent mentioned in a reply answers in the same thread. A reply cannot itself be replied to — threads are one level deep, as in the Team client.
+         * @summary Answers a message in its thread, as the caller.
+         * @param {string} id ID is the message being answered, from the path.
+         * @param {TeamTeamReplyWrite} teamTeamReplyWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamMessagesByIdReplies: async (id: string, teamTeamReplyWrite: TeamTeamReplyWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamMessagesByIdReplies', 'id', id)
+            // verify required parameter 'teamTeamReplyWrite' is not null or undefined
+            assertParamExists('postTeamMessagesByIdReplies', 'teamTeamReplyWrite', teamTeamReplyWrite)
+            const localVarPath = `/v1/team/messages/{id}/replies`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamReplyWrite, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  A SIGNED-IN TEAM MEMBER opens it as themselves: they are its first member and its owner, every other member named must be somebody the space knows (a person in it, or one of the org\'s agents), and a guest may not open rooms at all. An application of the org opens it as the org, with exactly the members it names. Anybody else without a team session is 401.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * @summary Opens a named room and answers it as the store now holds it.
+         * @param {TeamTeamRoomNew} teamTeamRoomNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRooms: async (teamTeamRoomNew: TeamTeamRoomNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamTeamRoomNew' is not null or undefined
+            assertParamExists('postTeamRooms', 'teamTeamRoomNew', teamTeamRoomNew)
             const localVarPath = `/v1/team/rooms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -746,7 +1734,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(teamRoomNew, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamRoomNew, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -754,18 +1742,62 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
-         * @summary Says one thing in a room, as the caller.
-         * @param {string} id ID is the room to say it in, from the path.
-         * @param {TeamMessageWrite} teamMessageWrite 
+         * Adds people to a room and answers the room as it now stands.  Anyone in the space except a guest may join a public channel by naming themselves. Adding somebody else takes being in the room already (or administering the space, for a room they can see). A direct message\'s people are what it is, so none can be added — open another one. Everyone added must be a member of the space or one of the org\'s agents; an agent added to a room answers when it is @-mentioned there.
+         * @summary Adds people to a room and answers the room as it now stands.
+         * @param {string} id ID is the room, from the path.
+         * @param {TeamTeamRoomJoin} teamTeamRoomJoin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamRoomsByIdMessages: async (id: string, teamMessageWrite: TeamMessageWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamRoomsByIdMembers: async (id: string, teamTeamRoomJoin: TeamTeamRoomJoin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postTeamRoomsByIdMembers', 'id', id)
+            // verify required parameter 'teamTeamRoomJoin' is not null or undefined
+            assertParamExists('postTeamRoomsByIdMembers', 'teamTeamRoomJoin', teamTeamRoomJoin)
+            const localVarPath = `/v1/team/rooms/{id}/members`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamRoomJoin, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.  `<@account-uuid>` in the text is stored as the platform\'s mention, so the person is notified in their inbox. Mentioning one of the org\'s agents — or writing in a direct message with one — wakes it: it runs as itself, on behalf of the caller, and posts its answer into the same room. The caller must be able to see the room, and an archived room refuses new messages (409).
+         * @summary Says one thing in a room, as the caller.
+         * @param {string} id ID is the room to say it in, from the path.
+         * @param {TeamTeamMessageWrite} teamTeamMessageWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRoomsByIdMessages: async (id: string, teamTeamMessageWrite: TeamTeamMessageWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postTeamRoomsByIdMessages', 'id', id)
-            // verify required parameter 'teamMessageWrite' is not null or undefined
-            assertParamExists('postTeamRoomsByIdMessages', 'teamMessageWrite', teamMessageWrite)
+            // verify required parameter 'teamTeamMessageWrite' is not null or undefined
+            assertParamExists('postTeamRoomsByIdMessages', 'teamTeamMessageWrite', teamTeamMessageWrite)
             const localVarPath = `/v1/team/rooms/{id}/messages`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -790,7 +1822,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(teamMessageWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamMessageWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -832,18 +1864,66 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
-         * @summary States what a room is for: its lifecycle intent, and what it is about.
-         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
-         * @param {TeamRoomBind} teamRoomBind 
+         * Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand. Reacting twice with one emoji is one reaction: the second call changes nothing.  The emoji is the last path segment, percent-encoded — PUT /v1/team/messages/7a1c/reactions/%F0%9F%91%8D for 👍.
+         * @summary Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} emoji Emoji is the reaction, from the path (percent-encoded on the wire).
+         * @param {TeamTeamReactionWrite} teamTeamReactionWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTeamRoomsById: async (id: string, teamRoomBind: TeamRoomBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTeamMessagesByIdReactionsByEmoji: async (id: string, emoji: string, teamTeamReactionWrite: TeamTeamReactionWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putTeamMessagesByIdReactionsByEmoji', 'id', id)
+            // verify required parameter 'emoji' is not null or undefined
+            assertParamExists('putTeamMessagesByIdReactionsByEmoji', 'emoji', emoji)
+            // verify required parameter 'teamTeamReactionWrite' is not null or undefined
+            assertParamExists('putTeamMessagesByIdReactionsByEmoji', 'teamTeamReactionWrite', teamTeamReactionWrite)
+            const localVarPath = `/v1/team/messages/{id}/reactions/{emoji}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"emoji"}}`, encodeURIComponent(String(emoji)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamReactionWrite, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload. A team member binds a room they can see; an application of the org binds its public channels only; anybody else without a team session is 401.
+         * @summary States what a room is for: its lifecycle intent, and what it is about.
+         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
+         * @param {TeamTeamRoomBind} teamTeamRoomBind 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTeamRoomsById: async (id: string, teamTeamRoomBind: TeamTeamRoomBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putTeamRoomsById', 'id', id)
-            // verify required parameter 'teamRoomBind' is not null or undefined
-            assertParamExists('putTeamRoomsById', 'teamRoomBind', teamRoomBind)
+            // verify required parameter 'teamTeamRoomBind' is not null or undefined
+            assertParamExists('putTeamRoomsById', 'teamTeamRoomBind', teamTeamRoomBind)
             const localVarPath = `/v1/team/rooms/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -868,7 +1948,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(teamRoomBind, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(teamTeamRoomBind, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -891,10 +1971,24 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CookieAck>> {
+        async deleteTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamCookieAck>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamAccountCookie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamAccountCookie']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it. Its author, an owner of its teamspace or an admin of the space may delete it. Answers 204.  The document model has no archived state for a page (only a teamspace can be archived), so there is nothing softer to offer here than removal.
+         * @summary Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTeamDocsById(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamDocsById(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamDocsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -910,6 +2004,50 @@ export const TeamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamFilesBySpaceByFilename(space, filename, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamFilesBySpaceByFilename']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a message, with its replies, reactions, files and the inbox notifications that point at it. Its author may delete it, and so may an owner or admin of the space.  Each removal is a platform remove through the Team client\'s write path, so the message disappears from every open client live. Answers 204.
+         * @summary Removes a message, with its replies, reactions, files and the inbox notifications that point at it.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} [space] Space names the space holding it. A message id is unique within a space, not across the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTeamMessagesById(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamMessagesById(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamMessagesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand. Taking back a reaction the caller never made changes nothing and is not an error.
+         * @summary Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} emoji Emoji is the reaction, from the path (percent-encoded on the wire).
+         * @param {string} [space] Space names the space holding the message.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTeamMessagesByIdReactionsByEmoji(id: string, emoji: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamMessagesByIdReactionsByEmoji(id, emoji, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamMessagesByIdReactionsByEmoji']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes one person out of a room — the caller leaving, when the account is their own. Removing somebody else takes owning the room or administering the space. Leaving a room you are not in, or removing somebody who is not there, changes nothing. A direct message cannot be left: its people are what it is. Answers 204.
+         * @summary Takes one person out of a room — the caller leaving, when the account is their own.
+         * @param {string} id ID is the room, from the path.
+         * @param {string} account Account is the account uuid to remove, from the path. Your own is leaving.
+         * @param {string} [space] Space is the space uuid holding the room.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTeamRoomsByIdMembersByAccount(id: string, account: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamRoomsByIdMembersByAccount(id, account, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamRoomsByIdMembersByAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -944,7 +2082,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamAccountProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProviderInfo>>> {
+        async getTeamAccountProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TeamProviderInfo>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamAccountProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamAccountProviders']?.[localVarOperationServerIndex]?.url;
@@ -956,7 +2094,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamBillingPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanInfo>> {
+        async getTeamBillingPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamPlanInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingPlan(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingPlan']?.[localVarOperationServerIndex]?.url;
@@ -987,6 +2125,61 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the documents of a space the caller may see, with the teamspaces they are grouped in.  These are the Team client\'s own document rows, so a page created there is here with no sync. Each carries the `collaborator` id its body opens with on the /v1/team/collaborator socket. A private teamspace\'s documents are listed only for its members.
+         * @summary Returns the documents of a space the caller may see, with the teamspaces they are grouped in.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {string} [teamspace] Teamspace narrows the answer to one teamspace.
+         * @param {string} [parent] Parent narrows the answer to one document\&#39;s children.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamDocs(space?: string, teamspace?: string, parent?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamDocs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamDocs(space, teamspace, parent, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamDocs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one document the caller may see.
+         * @summary Returns one document the caller may see.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamDocsById(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamDoc>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamDocsById(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamDocsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @summary Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @param {string} id ID is the document, from the path.
+         * @param {string} [space] Space is the space uuid holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamDocsByIdComments(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessages>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamDocsByIdComments(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamDocsByIdComments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Holds one text/event-stream open per caller and pushes each change as it is written — by the Team client, a typed op or an agent — filtered to the rooms, documents and inbox the caller may see under the same rule the ops apply. Authenticate with `Authorization: Bearer` (a fetch-based SSE reader; a browser EventSource cannot set it). `?space=` narrows the stream to one space; without it the stream covers every space the caller is a member of at connect.  Each frame is `event: <name>` and a JSON `data:` line carrying `space` and one of: - `message.created`, `message.updated` — `message`, the message as the message ops answer it (a room message, a thread reply or a document comment; a count or reaction change is an update); - `message.deleted` — `id`, and `room`/`doc`/`thread` where known; - `reaction.changed` — `message`, with its reactions as they now stand; - `room.changed` — `room`, as the room listing answers it, sent to those who can see it after the change (somebody removed from a private room is not told; the room list is the truth); - `doc.changed` — `doc`, as the document ops answer it (`removed: true` and `id` when deleted); body edits happen on the collaborator socket and are not streamed here; - `inbox.created`, `inbox.updated` — `item`, one of the caller\'s own notifications.  A `: ping` comment is written every 25 seconds. There is no resume: the server keeps no event sequence, so frames carry no `id` and Last-Event-ID is ignored; on reconnect, re-read the ops. A stream that falls too far behind is closed rather than allowed to slow a writer, and so is one whose caller is no longer a member of the space an event is in. 401 without a verified team credential; 404 for a named space the caller is not in.
+         * @summary Stream live changes to what the caller may see, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamEvents(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamEvents']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
          * @summary Download a space file
          * @param {string} space 
@@ -1001,6 +2194,47 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.  These are the rows the Team client\'s Inbox reads, so a notification cleared there is cleared here. Only the caller\'s own notifications are ever listed.
+         * @summary Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {boolean} [archived] Archived lists the archived notifications instead of the live ones.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamInbox(space?: string, archived?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamInbox>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamInbox(space, archived, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamInbox']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.  People come from IAM, the membership authority; agents from the org\'s agent registry; avatars from the Person documents the Team client edits. An IAM that does not answer is a 502 rather than an empty roster, and an agent registry that does not answer is named in `degraded` beside the people who did load. The caller must be a member of the space.
+         * @summary Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.
+         * @param {string} [space] Space is the space uuid. Optional for a caller in exactly one space.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamMembers(space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMembers>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamMembers(space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @summary Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} [space] Space names the space holding it. A message id is unique within a space, not across the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamMessagesByIdReplies(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessages>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamMessagesByIdReplies(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamMessagesByIdReplies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
          * @summary Lists the rooms orgs have published, across every org.
          * @param {string} [q] Q matches a room\&#39;s name or its topic.
@@ -1009,33 +2243,47 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamPublic(q?: string, org?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicRooms>> {
+        async getTeamPublic(q?: string, org?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamPublicRooms>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamPublic(q, org, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamPublic']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
+         * Returns the rooms the caller may see, with the kind and work facet each carries.  A signed-in TEAM MEMBER reads every room of every space they are in that is open to them: public channels, and the private channels and direct messages that name them. An APPLICATION of the org (its own machine credential) reads the public channels of the org\'s spaces and nothing that belongs to particular people. Anybody else without a team session is 401.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document.
+         * @summary Returns the rooms the caller may see, with the kind and work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamRooms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRooms>> {
+        async getTeamRooms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRooms>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamRooms(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamRooms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
-         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * Returns the people and agents in one room, as the roster describes them. The caller must be able to see the room.
+         * @summary Returns the people and agents in one room, as the roster describes them.
          * @param {string} id ID is the room, from the path. The URL is the authority.
          * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamRoomsByIdMessages(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamMessages>> {
+        async getTeamRoomsByIdMembers(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRoomMembers>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamRoomsByIdMembers(id, space, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamRoomsByIdMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A team member reads any room they may see; an application of the org reads public channels only; anybody else without a team session is 401. A room the caller may not read answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.
+         * @param {string} id ID is the room, from the path. The URL is the authority.
+         * @param {string} [space] Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamRoomsByIdMessages(id: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessages>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamRoomsByIdMessages(id, space, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamRoomsByIdMessages']?.[localVarOperationServerIndex]?.url;
@@ -1055,16 +2303,58 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+         * Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
          * @param {string} [token] Token is the space token minted by selectWorkspace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamTransactorStatistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
+        async getTeamTransactorStatistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamStatsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamTransactorStatistics(token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamTransactorStatistics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.  Anyone who can write the teamspace may rename or move a page, as in the Team client. A move goes after its new siblings, and a document cannot be moved under itself or under one of its own descendants.
+         * @summary Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.
+         * @param {string} id ID is the document, from the path.
+         * @param {TeamTeamDocEdit} teamTeamDocEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchTeamDocsById(id: string, teamTeamDocEdit: TeamTeamDocEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamDoc>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTeamDocsById(id, teamTeamDocEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.patchTeamDocsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Rewrites what a message says. Only its author may edit it.  The edit is an ordinary update of the message document through the Team client\'s own write path, stamped with editedOn, so an open client shows the new text and the \"edited\" mark live. Somebody the new text mentions for the first time is notified.
+         * @summary Rewrites what a message says.
+         * @param {string} id ID is the message, from the path.
+         * @param {TeamTeamMessageEdit} teamTeamMessageEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchTeamMessagesById(id: string, teamTeamMessageEdit: TeamTeamMessageEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTeamMessagesById(id, teamTeamMessageEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.patchTeamMessagesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.  Its owners and the space\'s admins may edit a room; a room nobody owns — one opened by an integration — may be edited by anyone in it, and a direct message by either person in it. Archiving withdraws a public channel from the cross-org directory in the same write; reopening lists it again.
+         * @summary Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.
+         * @param {string} id ID is the room, from the path.
+         * @param {TeamTeamRoomEdit} teamTeamRoomEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchTeamRoomsById(id: string, teamTeamRoomEdit: TeamTeamRoomEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTeamRoomsById(id, teamTeamRoomEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.patchTeamRoomsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1083,14 +2373,54 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or space token: the documentId\'s space must be the token\'s space when the token names one, and the caller must be a member of it. An unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
          * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;spaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
-         * @param {CollabRequest} collabRequest 
+         * @param {TeamCollabRequest} teamCollabRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTeamCollaboratorRpcByDocumentid(documentId: string, collabRequest: CollabRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CollabResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamCollaboratorRpcByDocumentid(documentId, collabRequest, options);
+        async postTeamCollaboratorRpcByDocumentid(documentId: string, teamCollabRequest: TeamCollabRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamCollabResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamCollaboratorRpcByDocumentid(documentId, teamCollabRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamCollaboratorRpcByDocumentid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.  Every person named must be a member of the space or one of the org\'s agents; a direct message with an agent is a conversation it answers every message in, and a guest may not open one. Answers 201 when this call opened it and 200 when it was already there.
+         * @summary Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.
+         * @param {TeamTeamDirectOpen} teamTeamDirectOpen 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamDms(teamTeamDirectOpen: TeamTeamDirectOpen, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamDirect>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamDms(teamTeamDirectOpen, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamDms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a document, as the caller, after its siblings.  It is created through the Team client\'s own write path, so it appears in an open Documents sidebar live, and its author is subscribed to it: a comment on it lands in their inbox. Its body starts empty — open the returned `collaborator` id on the /v1/team/collaborator socket to write it.  A space whose caller can write no teamspace at all gets one on its first document: a public \"General\" teamspace every current member of the space is in, which is what the Team client would otherwise make somebody create by hand before the first page. Guests and agents are not made members of it.
+         * @summary Creates a document, as the caller, after its siblings.
+         * @param {TeamTeamDocNew} teamTeamDocNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamDocs(teamTeamDocNew: TeamTeamDocNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamDoc>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamDocs(teamTeamDocNew, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamDocs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Comments on a document, as the caller.  It is a message attached to the document, written through the Team client\'s own path: the people subscribed to the document and anyone mentioned are notified, and an agent mentioned answers with a comment of its own. It can be replied to, reacted to, edited and deleted with the message ops.
+         * @summary Comments on a document, as the caller.
+         * @param {string} id ID is the document, from the path.
+         * @param {TeamTeamCommentWrite} teamTeamCommentWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamDocsByIdComments(id: string, teamTeamCommentWrite: TeamTeamCommentWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamDocsByIdComments(id, teamTeamCommentWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamDocsByIdComments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1108,28 +2438,97 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
-         * @summary Opens a named room and answers it as the store now holds it.
-         * @param {TeamRoomNew} teamRoomNew 
+         * Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it. It is listed again with `archived=true`.
+         * @summary Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it.
+         * @param {string} id ID is the notification, from the path.
+         * @param {TeamTeamInboxAt} teamTeamInboxAt 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTeamRooms(teamRoomNew: TeamRoomNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRoom>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRooms(teamRoomNew, options);
+        async postTeamInboxByIdArchive(id: string, teamTeamInboxAt: TeamTeamInboxAt, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamInboxItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamInboxByIdArchive(id, teamTeamInboxAt, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamInboxByIdArchive']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Marks one of the caller\'s notifications read and answers it. Another person\'s notification is a 404, as one that does not exist is.
+         * @summary Marks one of the caller\'s notifications read and answers it.
+         * @param {string} id ID is the notification, from the path.
+         * @param {TeamTeamInboxAt} teamTeamInboxAt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamInboxByIdRead(id: string, teamTeamInboxAt: TeamTeamInboxAt, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamInboxItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamInboxByIdRead(id, teamTeamInboxAt, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamInboxByIdRead']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Marks every live notification of the caller\'s read, and says how many it changed.
+         * @summary Marks every live notification of the caller\'s read, and says how many it changed.
+         * @param {TeamTeamInboxAll} teamTeamInboxAll 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamInboxRead(teamTeamInboxAll: TeamTeamInboxAll, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamInboxCleared>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamInboxRead(teamTeamInboxAll, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamInboxRead']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a message in its thread, as the caller.  A reply is a thread message attached to the one it answers, written through the Team client\'s own path: the parent\'s reply count and last-reply time move with it, the people already in the thread and anyone mentioned are notified, and an agent mentioned in a reply answers in the same thread. A reply cannot itself be replied to — threads are one level deep, as in the Team client.
+         * @summary Answers a message in its thread, as the caller.
+         * @param {string} id ID is the message being answered, from the path.
+         * @param {TeamTeamReplyWrite} teamTeamReplyWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamMessagesByIdReplies(id: string, teamTeamReplyWrite: TeamTeamReplyWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamMessagesByIdReplies(id, teamTeamReplyWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamMessagesByIdReplies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  A SIGNED-IN TEAM MEMBER opens it as themselves: they are its first member and its owner, every other member named must be somebody the space knows (a person in it, or one of the org\'s agents), and a guest may not open rooms at all. An application of the org opens it as the org, with exactly the members it names. Anybody else without a team session is 401.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * @summary Opens a named room and answers it as the store now holds it.
+         * @param {TeamTeamRoomNew} teamTeamRoomNew 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamRooms(teamTeamRoomNew: TeamTeamRoomNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRooms(teamTeamRoomNew, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamRooms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
-         * @summary Says one thing in a room, as the caller.
-         * @param {string} id ID is the room to say it in, from the path.
-         * @param {TeamMessageWrite} teamMessageWrite 
+         * Adds people to a room and answers the room as it now stands.  Anyone in the space except a guest may join a public channel by naming themselves. Adding somebody else takes being in the room already (or administering the space, for a room they can see). A direct message\'s people are what it is, so none can be added — open another one. Everyone added must be a member of the space or one of the org\'s agents; an agent added to a room answers when it is @-mentioned there.
+         * @summary Adds people to a room and answers the room as it now stands.
+         * @param {string} id ID is the room, from the path.
+         * @param {TeamTeamRoomJoin} teamTeamRoomJoin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTeamRoomsByIdMessages(id: string, teamMessageWrite: TeamMessageWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamMessage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRoomsByIdMessages(id, teamMessageWrite, options);
+        async postTeamRoomsByIdMembers(id: string, teamTeamRoomJoin: TeamTeamRoomJoin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRoomsByIdMembers(id, teamTeamRoomJoin, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamRoomsByIdMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.  `<@account-uuid>` in the text is stored as the platform\'s mention, so the person is notified in their inbox. Mentioning one of the org\'s agents — or writing in a direct message with one — wakes it: it runs as itself, on behalf of the caller, and posts its answer into the same room. The caller must be able to see the room, and an archived room refuses new messages (409).
+         * @summary Says one thing in a room, as the caller.
+         * @param {string} id ID is the room to say it in, from the path.
+         * @param {TeamTeamMessageWrite} teamTeamMessageWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamRoomsByIdMessages(id: string, teamTeamMessageWrite: TeamTeamMessageWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamRoomsByIdMessages(id, teamTeamMessageWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamRoomsByIdMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1147,15 +2546,30 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
-         * @summary States what a room is for: its lifecycle intent, and what it is about.
-         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
-         * @param {TeamRoomBind} teamRoomBind 
+         * Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand. Reacting twice with one emoji is one reaction: the second call changes nothing.  The emoji is the last path segment, percent-encoded — PUT /v1/team/messages/7a1c/reactions/%F0%9F%91%8D for 👍.
+         * @summary Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {string} id ID is the message, from the path.
+         * @param {string} emoji Emoji is the reaction, from the path (percent-encoded on the wire).
+         * @param {TeamTeamReactionWrite} teamTeamReactionWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTeamRoomsById(id: string, teamRoomBind: TeamRoomBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRoom>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamRoomsById(id, teamRoomBind, options);
+        async putTeamMessagesByIdReactionsByEmoji(id: string, emoji: string, teamTeamReactionWrite: TeamTeamReactionWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamMessagesByIdReactionsByEmoji(id, emoji, teamTeamReactionWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamMessagesByIdReactionsByEmoji']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload. A team member binds a room they can see; an application of the org binds its public channels only; anybody else without a team session is 401.
+         * @summary States what a room is for: its lifecycle intent, and what it is about.
+         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
+         * @param {TeamTeamRoomBind} teamTeamRoomBind 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putTeamRoomsById(id: string, teamTeamRoomBind: TeamTeamRoomBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamTeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamRoomsById(id, teamTeamRoomBind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamRoomsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1176,8 +2590,18 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<CookieAck> {
+        deleteTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<TeamCookieAck> {
             return localVarFp.deleteTeamAccountCookie(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it. Its author, an owner of its teamspace or an admin of the space may delete it. Answers 204.  The document model has no archived state for a page (only a teamspace can be archived), so there is nothing softer to offer here than removal.
+         * @summary Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it.
+         * @param {TeamApiDeleteTeamDocsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamDocsById(requestParameters: TeamApiDeleteTeamDocsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTeamDocsById(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
@@ -1188,6 +2612,36 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          */
         deleteTeamFilesBySpaceByFilename(requestParameters: TeamApiDeleteTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a message, with its replies, reactions, files and the inbox notifications that point at it. Its author may delete it, and so may an owner or admin of the space.  Each removal is a platform remove through the Team client\'s write path, so the message disappears from every open client live. Answers 204.
+         * @summary Removes a message, with its replies, reactions, files and the inbox notifications that point at it.
+         * @param {TeamApiDeleteTeamMessagesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMessagesById(requestParameters: TeamApiDeleteTeamMessagesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTeamMessagesById(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand. Taking back a reaction the caller never made changes nothing and is not an error.
+         * @summary Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMessagesByIdReactionsByEmoji(requestParameters: TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.deleteTeamMessagesByIdReactionsByEmoji(requestParameters.id, requestParameters.emoji, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes one person out of a room — the caller leaving, when the account is their own. Removing somebody else takes owning the room or administering the space. Leaving a room you are not in, or removing somebody who is not there, changes nothing. A direct message cannot be left: its people are what it is. Answers 204.
+         * @summary Takes one person out of a room — the caller leaving, when the account is their own.
+         * @param {TeamApiDeleteTeamRoomsByIdMembersByAccountRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamRoomsByIdMembersByAccount(requestParameters: TeamApiDeleteTeamRoomsByIdMembersByAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTeamRoomsByIdMembersByAccount(requestParameters.id, requestParameters.account, requestParameters.space, options).then((request) => request(axios, basePath));
         },
         /**
          * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
@@ -1215,7 +2669,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamAccountProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProviderInfo>> {
+        getTeamAccountProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<TeamProviderInfo>> {
             return localVarFp.getTeamAccountProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1224,7 +2678,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamBillingPlan(options?: RawAxiosRequestConfig): AxiosPromise<PlanInfo> {
+        getTeamBillingPlan(options?: RawAxiosRequestConfig): AxiosPromise<TeamPlanInfo> {
             return localVarFp.getTeamBillingPlan(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1246,6 +2700,45 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamCollaborator(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the documents of a space the caller may see, with the teamspaces they are grouped in.  These are the Team client\'s own document rows, so a page created there is here with no sync. Each carries the `collaborator` id its body opens with on the /v1/team/collaborator socket. A private teamspace\'s documents are listed only for its members.
+         * @summary Returns the documents of a space the caller may see, with the teamspaces they are grouped in.
+         * @param {TeamApiGetTeamDocsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocs(requestParameters: TeamApiGetTeamDocsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamDocs> {
+            return localVarFp.getTeamDocs(requestParameters.space, requestParameters.teamspace, requestParameters.parent, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one document the caller may see.
+         * @summary Returns one document the caller may see.
+         * @param {TeamApiGetTeamDocsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocsById(requestParameters: TeamApiGetTeamDocsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamDoc> {
+            return localVarFp.getTeamDocsById(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @summary Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+         * @param {TeamApiGetTeamDocsByIdCommentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamDocsByIdComments(requestParameters: TeamApiGetTeamDocsByIdCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessages> {
+            return localVarFp.getTeamDocsByIdComments(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Holds one text/event-stream open per caller and pushes each change as it is written — by the Team client, a typed op or an agent — filtered to the rooms, documents and inbox the caller may see under the same rule the ops apply. Authenticate with `Authorization: Bearer` (a fetch-based SSE reader; a browser EventSource cannot set it). `?space=` narrows the stream to one space; without it the stream covers every space the caller is a member of at connect.  Each frame is `event: <name>` and a JSON `data:` line carrying `space` and one of: - `message.created`, `message.updated` — `message`, the message as the message ops answer it (a room message, a thread reply or a document comment; a count or reaction change is an update); - `message.deleted` — `id`, and `room`/`doc`/`thread` where known; - `reaction.changed` — `message`, with its reactions as they now stand; - `room.changed` — `room`, as the room listing answers it, sent to those who can see it after the change (somebody removed from a private room is not told; the room list is the truth); - `doc.changed` — `doc`, as the document ops answer it (`removed: true` and `id` when deleted); body edits happen on the collaborator socket and are not streamed here; - `inbox.created`, `inbox.updated` — `item`, one of the caller\'s own notifications.  A `: ping` comment is written every 25 seconds. There is no resume: the server keeps no event sequence, so frames carry no `id` and Last-Event-ID is ignored; on reconnect, re-read the ops. A stream that falls too far behind is closed rather than allowed to slow a writer, and so is one whose caller is no longer a member of the space an event is in. 401 without a verified team credential; 404 for a named space the caller is not in.
+         * @summary Stream live changes to what the caller may see, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamEvents(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getTeamEvents(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
          * @summary Download a space file
          * @param {TeamApiGetTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
@@ -1256,32 +2749,72 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.  These are the rows the Team client\'s Inbox reads, so a notification cleared there is cleared here. Only the caller\'s own notifications are ever listed.
+         * @summary Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.
+         * @param {TeamApiGetTeamInboxRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamInbox(requestParameters: TeamApiGetTeamInboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamInbox> {
+            return localVarFp.getTeamInbox(requestParameters.space, requestParameters.archived, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.  People come from IAM, the membership authority; agents from the org\'s agent registry; avatars from the Person documents the Team client edits. An IAM that does not answer is a 502 rather than an empty roster, and an agent registry that does not answer is named in `degraded` beside the people who did load. The caller must be a member of the space.
+         * @summary Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.
+         * @param {TeamApiGetTeamMembersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMembers(requestParameters: TeamApiGetTeamMembersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMembers> {
+            return localVarFp.getTeamMembers(requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @summary Returns a message\'s thread, oldest first, each reply with its reactions and files.
+         * @param {TeamApiGetTeamMessagesByIdRepliesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMessagesByIdReplies(requestParameters: TeamApiGetTeamMessagesByIdRepliesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessages> {
+            return localVarFp.getTeamMessagesByIdReplies(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the rooms orgs have published, across every org.  It is NOT part of GET /rooms, and the separation is the point: that address answers the CALLER\'S rooms, so folding these in would put strangers\' channels in somebody\'s own sidebar.  It reads the directory and never a tenant\'s store. Every field it can answer with is one an org published by making a room public, so there is nothing here to scope by org — a directory only its own org can read is not a directory. An authenticated principal is still required, because an anonymous crawler is not who this is for.
          * @summary Lists the rooms orgs have published, across every org.
          * @param {TeamApiGetTeamPublicRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamPublic(requestParameters: TeamApiGetTeamPublicRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PublicRooms> {
+        getTeamPublic(requestParameters: TeamApiGetTeamPublicRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamPublicRooms> {
             return localVarFp.getTeamPublic(requestParameters.q, requestParameters.org, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-         * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
+         * Returns the rooms the caller may see, with the kind and work facet each carries.  A signed-in TEAM MEMBER reads every room of every space they are in that is open to them: public channels, and the private channels and direct messages that name them. An APPLICATION of the org (its own machine credential) reads the public channels of the org\'s spaces and nothing that belongs to particular people. Anybody else without a team session is 401.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document.
+         * @summary Returns the rooms the caller may see, with the kind and work facet each carries.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamRooms(options?: RawAxiosRequestConfig): AxiosPromise<TeamRooms> {
+        getTeamRooms(options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRooms> {
             return localVarFp.getTeamRooms(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
-         * @summary Returns the tail of one room\'s conversation, oldest first.
+         * Returns the people and agents in one room, as the roster describes them. The caller must be able to see the room.
+         * @summary Returns the people and agents in one room, as the roster describes them.
+         * @param {TeamApiGetTeamRoomsByIdMembersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRoomsByIdMembers(requestParameters: TeamApiGetTeamRoomsByIdMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRoomMembers> {
+            return localVarFp.getTeamRoomsByIdMembers(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A team member reads any room they may see; an application of the org reads public channels only; anybody else without a team session is 401. A room the caller may not read answers 404 rather than 403, so a probe learns nothing about what exists.
+         * @summary Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.
          * @param {TeamApiGetTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamRoomsByIdMessages(requestParameters: TeamApiGetTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamMessages> {
+        getTeamRoomsByIdMessages(requestParameters: TeamApiGetTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessages> {
             return localVarFp.getTeamRoomsByIdMessages(requestParameters.id, requestParameters.space, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1295,14 +2828,44 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamTransactorByToken(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+         * Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+         * @summary Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
          * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamTransactorStatistics(requestParameters: TeamApiGetTeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
+        getTeamTransactorStatistics(requestParameters: TeamApiGetTeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamStatsOut> {
             return localVarFp.getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.  Anyone who can write the teamspace may rename or move a page, as in the Team client. A move goes after its new siblings, and a document cannot be moved under itself or under one of its own descendants.
+         * @summary Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.
+         * @param {TeamApiPatchTeamDocsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamDocsById(requestParameters: TeamApiPatchTeamDocsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamDoc> {
+            return localVarFp.patchTeamDocsById(requestParameters.id, requestParameters.teamTeamDocEdit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rewrites what a message says. Only its author may edit it.  The edit is an ordinary update of the message document through the Team client\'s own write path, stamped with editedOn, so an open client shows the new text and the \"edited\" mark live. Somebody the new text mentions for the first time is notified.
+         * @summary Rewrites what a message says.
+         * @param {TeamApiPatchTeamMessagesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamMessagesById(requestParameters: TeamApiPatchTeamMessagesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.patchTeamMessagesById(requestParameters.id, requestParameters.teamTeamMessageEdit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.  Its owners and the space\'s admins may edit a room; a room nobody owns — one opened by an integration — may be edited by anyone in it, and a direct message by either person in it. Archiving withdraws a public channel from the cross-org directory in the same write; reopening lists it again.
+         * @summary Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.
+         * @param {TeamApiPatchTeamRoomsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamRoomsById(requestParameters: TeamApiPatchTeamRoomsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRoom> {
+            return localVarFp.patchTeamRoomsById(requestParameters.id, requestParameters.teamTeamRoomEdit, options).then((request) => request(axios, basePath));
         },
         /**
          * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the space switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a space and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first space, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
@@ -1320,8 +2883,38 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamCollaboratorRpcByDocumentid(requestParameters: TeamApiPostTeamCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig): AxiosPromise<CollabResult> {
-            return localVarFp.postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(axios, basePath));
+        postTeamCollaboratorRpcByDocumentid(requestParameters: TeamApiPostTeamCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamCollabResult> {
+            return localVarFp.postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.teamCollabRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.  Every person named must be a member of the space or one of the org\'s agents; a direct message with an agent is a conversation it answers every message in, and a guest may not open one. Answers 201 when this call opened it and 200 when it was already there.
+         * @summary Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.
+         * @param {TeamApiPostTeamDmsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDms(requestParameters: TeamApiPostTeamDmsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamDirect> {
+            return localVarFp.postTeamDms(requestParameters.teamTeamDirectOpen, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a document, as the caller, after its siblings.  It is created through the Team client\'s own write path, so it appears in an open Documents sidebar live, and its author is subscribed to it: a comment on it lands in their inbox. Its body starts empty — open the returned `collaborator` id on the /v1/team/collaborator socket to write it.  A space whose caller can write no teamspace at all gets one on its first document: a public \"General\" teamspace every current member of the space is in, which is what the Team client would otherwise make somebody create by hand before the first page. Guests and agents are not made members of it.
+         * @summary Creates a document, as the caller, after its siblings.
+         * @param {TeamApiPostTeamDocsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDocs(requestParameters: TeamApiPostTeamDocsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamDoc> {
+            return localVarFp.postTeamDocs(requestParameters.teamTeamDocNew, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Comments on a document, as the caller.  It is a message attached to the document, written through the Team client\'s own path: the people subscribed to the document and anyone mentioned are notified, and an agent mentioned answers with a comment of its own. It can be replied to, reacted to, edited and deleted with the message ops.
+         * @summary Comments on a document, as the caller.
+         * @param {TeamApiPostTeamDocsByIdCommentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamDocsByIdComments(requestParameters: TeamApiPostTeamDocsByIdCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.postTeamDocsByIdComments(requestParameters.id, requestParameters.teamTeamCommentWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one file in a space\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or space token AND be a member of the space; an unknown space, another tenant\'s space and a space the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the space, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
@@ -1334,24 +2927,74 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postTeamFilesBySpace(requestParameters.space, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+         * Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it. It is listed again with `archived=true`.
+         * @summary Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it.
+         * @param {TeamApiPostTeamInboxByIdArchiveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamInboxByIdArchive(requestParameters: TeamApiPostTeamInboxByIdArchiveRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamInboxItem> {
+            return localVarFp.postTeamInboxByIdArchive(requestParameters.id, requestParameters.teamTeamInboxAt, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Marks one of the caller\'s notifications read and answers it. Another person\'s notification is a 404, as one that does not exist is.
+         * @summary Marks one of the caller\'s notifications read and answers it.
+         * @param {TeamApiPostTeamInboxByIdReadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamInboxByIdRead(requestParameters: TeamApiPostTeamInboxByIdReadRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamInboxItem> {
+            return localVarFp.postTeamInboxByIdRead(requestParameters.id, requestParameters.teamTeamInboxAt, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Marks every live notification of the caller\'s read, and says how many it changed.
+         * @summary Marks every live notification of the caller\'s read, and says how many it changed.
+         * @param {TeamApiPostTeamInboxReadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamInboxRead(requestParameters: TeamApiPostTeamInboxReadRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamInboxCleared> {
+            return localVarFp.postTeamInboxRead(requestParameters.teamTeamInboxAll, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a message in its thread, as the caller.  A reply is a thread message attached to the one it answers, written through the Team client\'s own path: the parent\'s reply count and last-reply time move with it, the people already in the thread and anyone mentioned are notified, and an agent mentioned in a reply answers in the same thread. A reply cannot itself be replied to — threads are one level deep, as in the Team client.
+         * @summary Answers a message in its thread, as the caller.
+         * @param {TeamApiPostTeamMessagesByIdRepliesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamMessagesByIdReplies(requestParameters: TeamApiPostTeamMessagesByIdRepliesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.postTeamMessagesByIdReplies(requestParameters.id, requestParameters.teamTeamReplyWrite, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  A SIGNED-IN TEAM MEMBER opens it as themselves: they are its first member and its owner, every other member named must be somebody the space knows (a person in it, or one of the org\'s agents), and a guest may not open rooms at all. An application of the org opens it as the org, with exactly the members it names. Anybody else without a team session is 401.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
          * @summary Opens a named room and answers it as the store now holds it.
          * @param {TeamApiPostTeamRoomsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamRooms(requestParameters: TeamApiPostTeamRoomsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamRoom> {
-            return localVarFp.postTeamRooms(requestParameters.teamRoomNew, options).then((request) => request(axios, basePath));
+        postTeamRooms(requestParameters: TeamApiPostTeamRoomsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRoom> {
+            return localVarFp.postTeamRooms(requestParameters.teamTeamRoomNew, options).then((request) => request(axios, basePath));
         },
         /**
-         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+         * Adds people to a room and answers the room as it now stands.  Anyone in the space except a guest may join a public channel by naming themselves. Adding somebody else takes being in the room already (or administering the space, for a room they can see). A direct message\'s people are what it is, so none can be added — open another one. Everyone added must be a member of the space or one of the org\'s agents; an agent added to a room answers when it is @-mentioned there.
+         * @summary Adds people to a room and answers the room as it now stands.
+         * @param {TeamApiPostTeamRoomsByIdMembersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamRoomsByIdMembers(requestParameters: TeamApiPostTeamRoomsByIdMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRoom> {
+            return localVarFp.postTeamRoomsByIdMembers(requestParameters.id, requestParameters.teamTeamRoomJoin, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.  `<@account-uuid>` in the text is stored as the platform\'s mention, so the person is notified in their inbox. Mentioning one of the org\'s agents — or writing in a direct message with one — wakes it: it runs as itself, on behalf of the caller, and posts its answer into the same room. The caller must be able to see the room, and an archived room refuses new messages (409).
          * @summary Says one thing in a room, as the caller.
          * @param {TeamApiPostTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamRoomsByIdMessages(requestParameters: TeamApiPostTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamMessage> {
-            return localVarFp.postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamMessageWrite, options).then((request) => request(axios, basePath));
+        postTeamRoomsByIdMessages(requestParameters: TeamApiPostTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamTeamMessageWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
@@ -1363,17 +3006,48 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.putTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
         /**
-         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
+         * Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand. Reacting twice with one emoji is one reaction: the second call changes nothing.  The emoji is the last path segment, percent-encoded — PUT /v1/team/messages/7a1c/reactions/%F0%9F%91%8D for 👍.
+         * @summary Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+         * @param {TeamApiPutTeamMessagesByIdReactionsByEmojiRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTeamMessagesByIdReactionsByEmoji(requestParameters: TeamApiPutTeamMessagesByIdReactionsByEmojiRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamMessage> {
+            return localVarFp.putTeamMessagesByIdReactionsByEmoji(requestParameters.id, requestParameters.emoji, requestParameters.teamTeamReactionWrite, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload. A team member binds a room they can see; an application of the org binds its public channels only; anybody else without a team session is 401.
          * @summary States what a room is for: its lifecycle intent, and what it is about.
          * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTeamRoomsById(requestParameters: TeamApiPutTeamRoomsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamRoom> {
-            return localVarFp.putTeamRoomsById(requestParameters.id, requestParameters.teamRoomBind, options).then((request) => request(axios, basePath));
+        putTeamRoomsById(requestParameters: TeamApiPutTeamRoomsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamTeamRoom> {
+            return localVarFp.putTeamRoomsById(requestParameters.id, requestParameters.teamTeamRoomBind, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for deleteTeamDocsById operation in TeamApi.
+ * @export
+ * @interface TeamApiDeleteTeamDocsByIdRequest
+ */
+export interface TeamApiDeleteTeamDocsByIdRequest {
+    /**
+     * ID is the document, from the path.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamDocsById
+     */
+    readonly id: string
+
+    /**
+     * Space is the space uuid holding it.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamDocsById
+     */
+    readonly space?: string
+}
 
 /**
  * Request parameters for deleteTeamFilesBySpaceByFilename operation in TeamApi.
@@ -1401,6 +3075,83 @@ export interface TeamApiDeleteTeamFilesBySpaceByFilenameRequest {
      * @memberof TeamApiDeleteTeamFilesBySpaceByFilename
      */
     readonly file?: string
+}
+
+/**
+ * Request parameters for deleteTeamMessagesById operation in TeamApi.
+ * @export
+ * @interface TeamApiDeleteTeamMessagesByIdRequest
+ */
+export interface TeamApiDeleteTeamMessagesByIdRequest {
+    /**
+     * ID is the message, from the path.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamMessagesById
+     */
+    readonly id: string
+
+    /**
+     * Space names the space holding it. A message id is unique within a space, not across the org.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamMessagesById
+     */
+    readonly space?: string
+}
+
+/**
+ * Request parameters for deleteTeamMessagesByIdReactionsByEmoji operation in TeamApi.
+ * @export
+ * @interface TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest
+ */
+export interface TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest {
+    /**
+     * ID is the message, from the path.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamMessagesByIdReactionsByEmoji
+     */
+    readonly id: string
+
+    /**
+     * Emoji is the reaction, from the path (percent-encoded on the wire).
+     * @type {string}
+     * @memberof TeamApiDeleteTeamMessagesByIdReactionsByEmoji
+     */
+    readonly emoji: string
+
+    /**
+     * Space names the space holding the message.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamMessagesByIdReactionsByEmoji
+     */
+    readonly space?: string
+}
+
+/**
+ * Request parameters for deleteTeamRoomsByIdMembersByAccount operation in TeamApi.
+ * @export
+ * @interface TeamApiDeleteTeamRoomsByIdMembersByAccountRequest
+ */
+export interface TeamApiDeleteTeamRoomsByIdMembersByAccountRequest {
+    /**
+     * ID is the room, from the path.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamRoomsByIdMembersByAccount
+     */
+    readonly id: string
+
+    /**
+     * Account is the account uuid to remove, from the path. Your own is leaving.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamRoomsByIdMembersByAccount
+     */
+    readonly account: string
+
+    /**
+     * Space is the space uuid holding the room.
+     * @type {string}
+     * @memberof TeamApiDeleteTeamRoomsByIdMembersByAccount
+     */
+    readonly space?: string
 }
 
 /**
@@ -1432,6 +3183,76 @@ export interface TeamApiGetTeamAccountAuthByProviderCallbackRequest {
 }
 
 /**
+ * Request parameters for getTeamDocs operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamDocsRequest
+ */
+export interface TeamApiGetTeamDocsRequest {
+    /**
+     * Space is the space uuid. Optional for a caller in exactly one space.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocs
+     */
+    readonly space?: string
+
+    /**
+     * Teamspace narrows the answer to one teamspace.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocs
+     */
+    readonly teamspace?: string
+
+    /**
+     * Parent narrows the answer to one document\&#39;s children.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocs
+     */
+    readonly parent?: string
+}
+
+/**
+ * Request parameters for getTeamDocsById operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamDocsByIdRequest
+ */
+export interface TeamApiGetTeamDocsByIdRequest {
+    /**
+     * ID is the document, from the path.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocsById
+     */
+    readonly id: string
+
+    /**
+     * Space is the space uuid holding it.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocsById
+     */
+    readonly space?: string
+}
+
+/**
+ * Request parameters for getTeamDocsByIdComments operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamDocsByIdCommentsRequest
+ */
+export interface TeamApiGetTeamDocsByIdCommentsRequest {
+    /**
+     * ID is the document, from the path.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocsByIdComments
+     */
+    readonly id: string
+
+    /**
+     * Space is the space uuid holding it.
+     * @type {string}
+     * @memberof TeamApiGetTeamDocsByIdComments
+     */
+    readonly space?: string
+}
+
+/**
  * Request parameters for getTeamFilesBySpaceByFilename operation in TeamApi.
  * @export
  * @interface TeamApiGetTeamFilesBySpaceByFilenameRequest
@@ -1450,6 +3271,62 @@ export interface TeamApiGetTeamFilesBySpaceByFilenameRequest {
      * @memberof TeamApiGetTeamFilesBySpaceByFilename
      */
     readonly filename: string
+}
+
+/**
+ * Request parameters for getTeamInbox operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamInboxRequest
+ */
+export interface TeamApiGetTeamInboxRequest {
+    /**
+     * Space is the space uuid. Optional for a caller in exactly one space.
+     * @type {string}
+     * @memberof TeamApiGetTeamInbox
+     */
+    readonly space?: string
+
+    /**
+     * Archived lists the archived notifications instead of the live ones.
+     * @type {boolean}
+     * @memberof TeamApiGetTeamInbox
+     */
+    readonly archived?: boolean
+}
+
+/**
+ * Request parameters for getTeamMembers operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamMembersRequest
+ */
+export interface TeamApiGetTeamMembersRequest {
+    /**
+     * Space is the space uuid. Optional for a caller in exactly one space.
+     * @type {string}
+     * @memberof TeamApiGetTeamMembers
+     */
+    readonly space?: string
+}
+
+/**
+ * Request parameters for getTeamMessagesByIdReplies operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamMessagesByIdRepliesRequest
+ */
+export interface TeamApiGetTeamMessagesByIdRepliesRequest {
+    /**
+     * ID is the message, from the path.
+     * @type {string}
+     * @memberof TeamApiGetTeamMessagesByIdReplies
+     */
+    readonly id: string
+
+    /**
+     * Space names the space holding it. A message id is unique within a space, not across the org.
+     * @type {string}
+     * @memberof TeamApiGetTeamMessagesByIdReplies
+     */
+    readonly space?: string
 }
 
 /**
@@ -1478,6 +3355,27 @@ export interface TeamApiGetTeamPublicRequest {
      * @memberof TeamApiGetTeamPublic
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for getTeamRoomsByIdMembers operation in TeamApi.
+ * @export
+ * @interface TeamApiGetTeamRoomsByIdMembersRequest
+ */
+export interface TeamApiGetTeamRoomsByIdMembersRequest {
+    /**
+     * ID is the room, from the path. The URL is the authority.
+     * @type {string}
+     * @memberof TeamApiGetTeamRoomsByIdMembers
+     */
+    readonly id: string
+
+    /**
+     * Space names the space holding the room, and is required for the reason the bind op requires it: a room id is unique within a space and not across the org, so searching every space for a match would make the answer depend on iteration order.
+     * @type {string}
+     * @memberof TeamApiGetTeamRoomsByIdMembers
+     */
+    readonly space?: string
 }
 
 /**
@@ -1530,6 +3428,69 @@ export interface TeamApiGetTeamTransactorStatisticsRequest {
 }
 
 /**
+ * Request parameters for patchTeamDocsById operation in TeamApi.
+ * @export
+ * @interface TeamApiPatchTeamDocsByIdRequest
+ */
+export interface TeamApiPatchTeamDocsByIdRequest {
+    /**
+     * ID is the document, from the path.
+     * @type {string}
+     * @memberof TeamApiPatchTeamDocsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamDocEdit}
+     * @memberof TeamApiPatchTeamDocsById
+     */
+    readonly teamTeamDocEdit: TeamTeamDocEdit
+}
+
+/**
+ * Request parameters for patchTeamMessagesById operation in TeamApi.
+ * @export
+ * @interface TeamApiPatchTeamMessagesByIdRequest
+ */
+export interface TeamApiPatchTeamMessagesByIdRequest {
+    /**
+     * ID is the message, from the path.
+     * @type {string}
+     * @memberof TeamApiPatchTeamMessagesById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamMessageEdit}
+     * @memberof TeamApiPatchTeamMessagesById
+     */
+    readonly teamTeamMessageEdit: TeamTeamMessageEdit
+}
+
+/**
+ * Request parameters for patchTeamRoomsById operation in TeamApi.
+ * @export
+ * @interface TeamApiPatchTeamRoomsByIdRequest
+ */
+export interface TeamApiPatchTeamRoomsByIdRequest {
+    /**
+     * ID is the room, from the path.
+     * @type {string}
+     * @memberof TeamApiPatchTeamRoomsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamRoomEdit}
+     * @memberof TeamApiPatchTeamRoomsById
+     */
+    readonly teamTeamRoomEdit: TeamTeamRoomEdit
+}
+
+/**
  * Request parameters for postTeamCollaboratorRpcByDocumentid operation in TeamApi.
  * @export
  * @interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest
@@ -1544,10 +3505,59 @@ export interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest {
 
     /**
      * 
-     * @type {CollabRequest}
+     * @type {TeamCollabRequest}
      * @memberof TeamApiPostTeamCollaboratorRpcByDocumentid
      */
-    readonly collabRequest: CollabRequest
+    readonly teamCollabRequest: TeamCollabRequest
+}
+
+/**
+ * Request parameters for postTeamDms operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamDmsRequest
+ */
+export interface TeamApiPostTeamDmsRequest {
+    /**
+     * 
+     * @type {TeamTeamDirectOpen}
+     * @memberof TeamApiPostTeamDms
+     */
+    readonly teamTeamDirectOpen: TeamTeamDirectOpen
+}
+
+/**
+ * Request parameters for postTeamDocs operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamDocsRequest
+ */
+export interface TeamApiPostTeamDocsRequest {
+    /**
+     * 
+     * @type {TeamTeamDocNew}
+     * @memberof TeamApiPostTeamDocs
+     */
+    readonly teamTeamDocNew: TeamTeamDocNew
+}
+
+/**
+ * Request parameters for postTeamDocsByIdComments operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamDocsByIdCommentsRequest
+ */
+export interface TeamApiPostTeamDocsByIdCommentsRequest {
+    /**
+     * ID is the document, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamDocsByIdComments
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamCommentWrite}
+     * @memberof TeamApiPostTeamDocsByIdComments
+     */
+    readonly teamTeamCommentWrite: TeamTeamCommentWrite
 }
 
 /**
@@ -1572,6 +3582,83 @@ export interface TeamApiPostTeamFilesBySpaceRequest {
 }
 
 /**
+ * Request parameters for postTeamInboxByIdArchive operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamInboxByIdArchiveRequest
+ */
+export interface TeamApiPostTeamInboxByIdArchiveRequest {
+    /**
+     * ID is the notification, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamInboxByIdArchive
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamInboxAt}
+     * @memberof TeamApiPostTeamInboxByIdArchive
+     */
+    readonly teamTeamInboxAt: TeamTeamInboxAt
+}
+
+/**
+ * Request parameters for postTeamInboxByIdRead operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamInboxByIdReadRequest
+ */
+export interface TeamApiPostTeamInboxByIdReadRequest {
+    /**
+     * ID is the notification, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamInboxByIdRead
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamInboxAt}
+     * @memberof TeamApiPostTeamInboxByIdRead
+     */
+    readonly teamTeamInboxAt: TeamTeamInboxAt
+}
+
+/**
+ * Request parameters for postTeamInboxRead operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamInboxReadRequest
+ */
+export interface TeamApiPostTeamInboxReadRequest {
+    /**
+     * 
+     * @type {TeamTeamInboxAll}
+     * @memberof TeamApiPostTeamInboxRead
+     */
+    readonly teamTeamInboxAll: TeamTeamInboxAll
+}
+
+/**
+ * Request parameters for postTeamMessagesByIdReplies operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamMessagesByIdRepliesRequest
+ */
+export interface TeamApiPostTeamMessagesByIdRepliesRequest {
+    /**
+     * ID is the message being answered, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamMessagesByIdReplies
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamReplyWrite}
+     * @memberof TeamApiPostTeamMessagesByIdReplies
+     */
+    readonly teamTeamReplyWrite: TeamTeamReplyWrite
+}
+
+/**
  * Request parameters for postTeamRooms operation in TeamApi.
  * @export
  * @interface TeamApiPostTeamRoomsRequest
@@ -1579,10 +3666,31 @@ export interface TeamApiPostTeamFilesBySpaceRequest {
 export interface TeamApiPostTeamRoomsRequest {
     /**
      * 
-     * @type {TeamRoomNew}
+     * @type {TeamTeamRoomNew}
      * @memberof TeamApiPostTeamRooms
      */
-    readonly teamRoomNew: TeamRoomNew
+    readonly teamTeamRoomNew: TeamTeamRoomNew
+}
+
+/**
+ * Request parameters for postTeamRoomsByIdMembers operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamRoomsByIdMembersRequest
+ */
+export interface TeamApiPostTeamRoomsByIdMembersRequest {
+    /**
+     * ID is the room, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamRoomsByIdMembers
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamTeamRoomJoin}
+     * @memberof TeamApiPostTeamRoomsByIdMembers
+     */
+    readonly teamTeamRoomJoin: TeamTeamRoomJoin
 }
 
 /**
@@ -1600,10 +3708,38 @@ export interface TeamApiPostTeamRoomsByIdMessagesRequest {
 
     /**
      * 
-     * @type {TeamMessageWrite}
+     * @type {TeamTeamMessageWrite}
      * @memberof TeamApiPostTeamRoomsByIdMessages
      */
-    readonly teamMessageWrite: TeamMessageWrite
+    readonly teamTeamMessageWrite: TeamTeamMessageWrite
+}
+
+/**
+ * Request parameters for putTeamMessagesByIdReactionsByEmoji operation in TeamApi.
+ * @export
+ * @interface TeamApiPutTeamMessagesByIdReactionsByEmojiRequest
+ */
+export interface TeamApiPutTeamMessagesByIdReactionsByEmojiRequest {
+    /**
+     * ID is the message, from the path.
+     * @type {string}
+     * @memberof TeamApiPutTeamMessagesByIdReactionsByEmoji
+     */
+    readonly id: string
+
+    /**
+     * Emoji is the reaction, from the path (percent-encoded on the wire).
+     * @type {string}
+     * @memberof TeamApiPutTeamMessagesByIdReactionsByEmoji
+     */
+    readonly emoji: string
+
+    /**
+     * 
+     * @type {TeamTeamReactionWrite}
+     * @memberof TeamApiPutTeamMessagesByIdReactionsByEmoji
+     */
+    readonly teamTeamReactionWrite: TeamTeamReactionWrite
 }
 
 /**
@@ -1621,10 +3757,10 @@ export interface TeamApiPutTeamRoomsByIdRequest {
 
     /**
      * 
-     * @type {TeamRoomBind}
+     * @type {TeamTeamRoomBind}
      * @memberof TeamApiPutTeamRoomsById
      */
-    readonly teamRoomBind: TeamRoomBind
+    readonly teamTeamRoomBind: TeamTeamRoomBind
 }
 
 /**
@@ -1646,6 +3782,18 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
+     * Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it. Its author, an owner of its teamspace or an admin of the space may delete it. Answers 204.  The document model has no archived state for a page (only a teamspace can be archived), so there is nothing softer to offer here than removal.
+     * @summary Removes a document with everything nested under it and every comment on any of them — the Team client\'s own delete, which takes the subtree with it.
+     * @param {TeamApiDeleteTeamDocsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public deleteTeamDocsById(requestParameters: TeamApiDeleteTeamDocsByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamDocsById(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Removes one blob from a space\'s file store. The caller must hold a verified session AND be a member of the space; anything else — an unknown space, another tenant\'s space, a space the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
      * @summary Removes one blob from a space\'s file store.
      * @param {TeamApiDeleteTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
@@ -1655,6 +3803,42 @@ export class TeamApi extends BaseAPI {
      */
     public deleteTeamFilesBySpaceByFilename(requestParameters: TeamApiDeleteTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).deleteTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a message, with its replies, reactions, files and the inbox notifications that point at it. Its author may delete it, and so may an owner or admin of the space.  Each removal is a platform remove through the Team client\'s write path, so the message disappears from every open client live. Answers 204.
+     * @summary Removes a message, with its replies, reactions, files and the inbox notifications that point at it.
+     * @param {TeamApiDeleteTeamMessagesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public deleteTeamMessagesById(requestParameters: TeamApiDeleteTeamMessagesByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamMessagesById(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand. Taking back a reaction the caller never made changes nothing and is not an error.
+     * @summary Takes back the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+     * @param {TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public deleteTeamMessagesByIdReactionsByEmoji(requestParameters: TeamApiDeleteTeamMessagesByIdReactionsByEmojiRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamMessagesByIdReactionsByEmoji(requestParameters.id, requestParameters.emoji, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes one person out of a room — the caller leaving, when the account is their own. Removing somebody else takes owning the room or administering the space. Leaving a room you are not in, or removing somebody who is not there, changes nothing. A direct message cannot be left: its people are what it is. Answers 204.
+     * @summary Takes one person out of a room — the caller leaving, when the account is their own.
+     * @param {TeamApiDeleteTeamRoomsByIdMembersByAccountRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public deleteTeamRoomsByIdMembersByAccount(requestParameters: TeamApiDeleteTeamRoomsByIdMembersByAccountRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamRoomsByIdMembersByAccount(requestParameters.id, requestParameters.account, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1726,6 +3910,53 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
+     * Returns the documents of a space the caller may see, with the teamspaces they are grouped in.  These are the Team client\'s own document rows, so a page created there is here with no sync. Each carries the `collaborator` id its body opens with on the /v1/team/collaborator socket. A private teamspace\'s documents are listed only for its members.
+     * @summary Returns the documents of a space the caller may see, with the teamspaces they are grouped in.
+     * @param {TeamApiGetTeamDocsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamDocs(requestParameters: TeamApiGetTeamDocsRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamDocs(requestParameters.space, requestParameters.teamspace, requestParameters.parent, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one document the caller may see.
+     * @summary Returns one document the caller may see.
+     * @param {TeamApiGetTeamDocsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamDocsById(requestParameters: TeamApiGetTeamDocsByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamDocsById(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+     * @summary Returns the comments on a document, oldest first — the same message shape a room\'s conversation answers.
+     * @param {TeamApiGetTeamDocsByIdCommentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamDocsByIdComments(requestParameters: TeamApiGetTeamDocsByIdCommentsRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamDocsByIdComments(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Holds one text/event-stream open per caller and pushes each change as it is written — by the Team client, a typed op or an agent — filtered to the rooms, documents and inbox the caller may see under the same rule the ops apply. Authenticate with `Authorization: Bearer` (a fetch-based SSE reader; a browser EventSource cannot set it). `?space=` narrows the stream to one space; without it the stream covers every space the caller is a member of at connect.  Each frame is `event: <name>` and a JSON `data:` line carrying `space` and one of: - `message.created`, `message.updated` — `message`, the message as the message ops answer it (a room message, a thread reply or a document comment; a count or reaction change is an update); - `message.deleted` — `id`, and `room`/`doc`/`thread` where known; - `reaction.changed` — `message`, with its reactions as they now stand; - `room.changed` — `room`, as the room listing answers it, sent to those who can see it after the change (somebody removed from a private room is not told; the room list is the truth); - `doc.changed` — `doc`, as the document ops answer it (`removed: true` and `id` when deleted); body edits happen on the collaborator socket and are not streamed here; - `inbox.created`, `inbox.updated` — `item`, one of the caller\'s own notifications.  A `: ping` comment is written every 25 seconds. There is no resume: the server keeps no event sequence, so frames carry no `id` and Last-Event-ID is ignored; on reconnect, re-read the ops. A stream that falls too far behind is closed rather than allowed to slow a writer, and so is one whose caller is no longer a member of the space an event is in. 401 without a verified team credential; 404 for a named space the caller is not in.
+     * @summary Stream live changes to what the caller may see, as Server-Sent Events
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamEvents(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamEvents(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Streams one blob\'s raw BYTES back — this is the read side of the space file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the space. A genuine miss, another tenant\'s space, a space the caller is not in, and a blob id belonging to a different space are ONE answer — 404 — because the physical key is org- and space-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
      * @summary Download a space file
      * @param {TeamApiGetTeamFilesBySpaceByFilenameRequest} requestParameters Request parameters.
@@ -1735,6 +3966,42 @@ export class TeamApi extends BaseAPI {
      */
     public getTeamFilesBySpaceByFilename(requestParameters: TeamApiGetTeamFilesBySpaceByFilenameRequest, options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).getTeamFilesBySpaceByFilename(requestParameters.space, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.  These are the rows the Team client\'s Inbox reads, so a notification cleared there is cleared here. Only the caller\'s own notifications are ever listed.
+     * @summary Returns the caller\'s notifications, newest first, each with the room or document it is about and the message that caused it.
+     * @param {TeamApiGetTeamInboxRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamInbox(requestParameters: TeamApiGetTeamInboxRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamInbox(requestParameters.space, requestParameters.archived, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.  People come from IAM, the membership authority; agents from the org\'s agent registry; avatars from the Person documents the Team client edits. An IAM that does not answer is a 502 rather than an empty roster, and an agent registry that does not answer is named in `degraded` beside the people who did load. The caller must be a member of the space.
+     * @summary Returns the people and agents in a space, with the name, avatar, role and presence a client draws them with.
+     * @param {TeamApiGetTeamMembersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamMembers(requestParameters: TeamApiGetTeamMembersRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamMembers(requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a message\'s thread, oldest first, each reply with its reactions and files.
+     * @summary Returns a message\'s thread, oldest first, each reply with its reactions and files.
+     * @param {TeamApiGetTeamMessagesByIdRepliesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamMessagesByIdReplies(requestParameters: TeamApiGetTeamMessagesByIdRepliesRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamMessagesByIdReplies(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1750,8 +4017,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
-     * @summary Returns every room of the caller\'s org, across the spaces it owns, with the work facet each carries.
+     * Returns the rooms the caller may see, with the kind and work facet each carries.  A signed-in TEAM MEMBER reads every room of every space they are in that is open to them: public channels, and the private channels and direct messages that name them. An APPLICATION of the org (its own machine credential) reads the public channels of the org\'s spaces and nothing that belongs to particular people. Anybody else without a team session is 401.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document.
+     * @summary Returns the rooms the caller may see, with the kind and work facet each carries.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
@@ -1761,8 +4028,20 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Returns the tail of one room\'s conversation, oldest first.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A room the caller\'s org does not own answers 404 rather than 403, so a probe learns nothing about what exists.
-     * @summary Returns the tail of one room\'s conversation, oldest first.
+     * Returns the people and agents in one room, as the roster describes them. The caller must be able to see the room.
+     * @summary Returns the people and agents in one room, as the roster describes them.
+     * @param {TeamApiGetTeamRoomsByIdMembersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamRoomsByIdMembers(requestParameters: TeamApiGetTeamRoomsByIdMembersRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamRoomsByIdMembers(requestParameters.id, requestParameters.space, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.  It reads the SAME Chunter documents the transactor serves, so a message typed in the Team client is here with no sync. A team member reads any room they may see; an application of the org reads public channels only; anybody else without a team session is 401. A room the caller may not read answers 404 rather than 403, so a probe learns nothing about what exists.
+     * @summary Returns the tail of one room\'s conversation, oldest first, each message with its reactions, files and thread count.
      * @param {TeamApiGetTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1785,8 +4064,8 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-     * @summary Statistics returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
+     * Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a space UUID names the space and is authorized against the membership rows, an HS256 space token names it in its signed claims. activeSessions carries ONLY that one space, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
+     * @summary Returns the transactor\'s live sessions for the space the caller\'s credential names — the endpoint the front\'s space switcher and server panel poll on the transactor base.
      * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1794,6 +4073,42 @@ export class TeamApi extends BaseAPI {
      */
     public getTeamTransactorStatistics(requestParameters: TeamApiGetTeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.  Anyone who can write the teamspace may rename or move a page, as in the Team client. A move goes after its new siblings, and a document cannot be moved under itself or under one of its own descendants.
+     * @summary Renames a document or moves it — under another document, to the top of its teamspace, or to another teamspace with everything nested under it.
+     * @param {TeamApiPatchTeamDocsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public patchTeamDocsById(requestParameters: TeamApiPatchTeamDocsByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).patchTeamDocsById(requestParameters.id, requestParameters.teamTeamDocEdit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rewrites what a message says. Only its author may edit it.  The edit is an ordinary update of the message document through the Team client\'s own write path, stamped with editedOn, so an open client shows the new text and the \"edited\" mark live. Somebody the new text mentions for the first time is notified.
+     * @summary Rewrites what a message says.
+     * @param {TeamApiPatchTeamMessagesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public patchTeamMessagesById(requestParameters: TeamApiPatchTeamMessagesByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).patchTeamMessagesById(requestParameters.id, requestParameters.teamTeamMessageEdit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.  Its owners and the space\'s admins may edit a room; a room nobody owns — one opened by an integration — may be edited by anyone in it, and a direct message by either person in it. Archiving withdraws a public channel from the cross-org directory in the same write; reopening lists it again.
+     * @summary Renames a channel, sets its topic, or archives or reopens it, and answers the room as it now stands.
+     * @param {TeamApiPatchTeamRoomsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public patchTeamRoomsById(requestParameters: TeamApiPatchTeamRoomsByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).patchTeamRoomsById(requestParameters.id, requestParameters.teamTeamRoomEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1816,7 +4131,43 @@ export class TeamApi extends BaseAPI {
      * @memberof TeamApi
      */
     public postTeamCollaboratorRpcByDocumentid(requestParameters: TeamApiPostTeamCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(this.axios, this.basePath));
+        return TeamApiFp(this.configuration).postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.teamCollabRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.  Every person named must be a member of the space or one of the org\'s agents; a direct message with an agent is a conversation it answers every message in, and a guest may not open one. Answers 201 when this call opened it and 200 when it was already there.
+     * @summary Opens the direct message between the caller and the people named, or answers the one that already exists — there is one conversation per set of people, however many times it is asked for.
+     * @param {TeamApiPostTeamDmsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamDms(requestParameters: TeamApiPostTeamDmsRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamDms(requestParameters.teamTeamDirectOpen, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a document, as the caller, after its siblings.  It is created through the Team client\'s own write path, so it appears in an open Documents sidebar live, and its author is subscribed to it: a comment on it lands in their inbox. Its body starts empty — open the returned `collaborator` id on the /v1/team/collaborator socket to write it.  A space whose caller can write no teamspace at all gets one on its first document: a public \"General\" teamspace every current member of the space is in, which is what the Team client would otherwise make somebody create by hand before the first page. Guests and agents are not made members of it.
+     * @summary Creates a document, as the caller, after its siblings.
+     * @param {TeamApiPostTeamDocsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamDocs(requestParameters: TeamApiPostTeamDocsRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamDocs(requestParameters.teamTeamDocNew, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Comments on a document, as the caller.  It is a message attached to the document, written through the Team client\'s own path: the people subscribed to the document and anyone mentioned are notified, and an agent mentioned answers with a comment of its own. It can be replied to, reacted to, edited and deleted with the message ops.
+     * @summary Comments on a document, as the caller.
+     * @param {TeamApiPostTeamDocsByIdCommentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamDocsByIdComments(requestParameters: TeamApiPostTeamDocsByIdCommentsRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamDocsByIdComments(requestParameters.id, requestParameters.teamTeamCommentWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1832,7 +4183,55 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
+     * Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it. It is listed again with `archived=true`.
+     * @summary Archives one of the caller\'s notifications — read, and out of the live inbox — and answers it.
+     * @param {TeamApiPostTeamInboxByIdArchiveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamInboxByIdArchive(requestParameters: TeamApiPostTeamInboxByIdArchiveRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamInboxByIdArchive(requestParameters.id, requestParameters.teamTeamInboxAt, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Marks one of the caller\'s notifications read and answers it. Another person\'s notification is a 404, as one that does not exist is.
+     * @summary Marks one of the caller\'s notifications read and answers it.
+     * @param {TeamApiPostTeamInboxByIdReadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamInboxByIdRead(requestParameters: TeamApiPostTeamInboxByIdReadRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamInboxByIdRead(requestParameters.id, requestParameters.teamTeamInboxAt, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Marks every live notification of the caller\'s read, and says how many it changed.
+     * @summary Marks every live notification of the caller\'s read, and says how many it changed.
+     * @param {TeamApiPostTeamInboxReadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamInboxRead(requestParameters: TeamApiPostTeamInboxReadRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamInboxRead(requestParameters.teamTeamInboxAll, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a message in its thread, as the caller.  A reply is a thread message attached to the one it answers, written through the Team client\'s own path: the parent\'s reply count and last-reply time move with it, the people already in the thread and anyone mentioned are notified, and an agent mentioned in a reply answers in the same thread. A reply cannot itself be replied to — threads are one level deep, as in the Team client.
+     * @summary Answers a message in its thread, as the caller.
+     * @param {TeamApiPostTeamMessagesByIdRepliesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamMessagesByIdReplies(requestParameters: TeamApiPostTeamMessagesByIdRepliesRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamMessagesByIdReplies(requestParameters.id, requestParameters.teamTeamReplyWrite, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a named room and answers it as the store now holds it.  It writes through the SAME applyTx path the Team client uses, so a room opened here is broadcast to every live client of the space and appears in an open sidebar without a reload — the same property listRooms rests on, read from the write side.  A SIGNED-IN TEAM MEMBER opens it as themselves: they are its first member and its owner, every other member named must be somebody the space knows (a person in it, or one of the org\'s agents), and a guest may not open rooms at all. An application of the org opens it as the org, with exactly the members it names. Anybody else without a team session is 401.  TWO TRANSACTIONS, NOT ONE, when the request states a facet. The document and its mixin are separate writes in this model (bindRoom writes only the second), and composing them here rather than inventing a combined tx keeps one write path for each. A create that lands and a facet that does not is visible as a room with default intent, which is the honest partial state.
      * @summary Opens a named room and answers it as the store now holds it.
      * @param {TeamApiPostTeamRoomsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1840,11 +4239,23 @@ export class TeamApi extends BaseAPI {
      * @memberof TeamApi
      */
     public postTeamRooms(requestParameters: TeamApiPostTeamRoomsRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamRooms(requestParameters.teamRoomNew, options).then((request) => request(this.axios, this.basePath));
+        return TeamApiFp(this.configuration).postTeamRooms(requestParameters.teamTeamRoomNew, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.
+     * Adds people to a room and answers the room as it now stands.  Anyone in the space except a guest may join a public channel by naming themselves. Adding somebody else takes being in the room already (or administering the space, for a room they can see). A direct message\'s people are what it is, so none can be added — open another one. Everyone added must be a member of the space or one of the org\'s agents; an agent added to a room answers when it is @-mentioned there.
+     * @summary Adds people to a room and answers the room as it now stands.
+     * @param {TeamApiPostTeamRoomsByIdMembersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamRoomsByIdMembers(requestParameters: TeamApiPostTeamRoomsByIdMembersRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamRoomsByIdMembers(requestParameters.id, requestParameters.teamTeamRoomJoin, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Says one thing in a room, as the caller.  The write goes through the SAME applyTx path the Team client\'s own messages take and is broadcast to every connected client of the space, so a message sent here appears live in an open room rather than on the next reload. It answers the message as the store now HOLDS it.  `<@account-uuid>` in the text is stored as the platform\'s mention, so the person is notified in their inbox. Mentioning one of the org\'s agents — or writing in a direct message with one — wakes it: it runs as itself, on behalf of the caller, and posts its answer into the same room. The caller must be able to see the room, and an archived room refuses new messages (409).
      * @summary Says one thing in a room, as the caller.
      * @param {TeamApiPostTeamRoomsByIdMessagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1852,7 +4263,7 @@ export class TeamApi extends BaseAPI {
      * @memberof TeamApi
      */
     public postTeamRoomsByIdMessages(requestParameters: TeamApiPostTeamRoomsByIdMessagesRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamMessageWrite, options).then((request) => request(this.axios, this.basePath));
+        return TeamApiFp(this.configuration).postTeamRoomsByIdMessages(requestParameters.id, requestParameters.teamTeamMessageWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1867,7 +4278,19 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload.
+     * Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand. Reacting twice with one emoji is one reaction: the second call changes nothing.  The emoji is the last path segment, percent-encoded — PUT /v1/team/messages/7a1c/reactions/%F0%9F%91%8D for 👍.
+     * @summary Adds the caller\'s reaction to a message and answers the message with its reactions as they now stand.
+     * @param {TeamApiPutTeamMessagesByIdReactionsByEmojiRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public putTeamMessagesByIdReactionsByEmoji(requestParameters: TeamApiPutTeamMessagesByIdReactionsByEmojiRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).putTeamMessagesByIdReactionsByEmoji(requestParameters.id, requestParameters.emoji, requestParameters.teamTeamReactionWrite, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open space rather than on the next reload. A team member binds a room they can see; an application of the org binds its public channels only; anybody else without a team session is 401.
      * @summary States what a room is for: its lifecycle intent, and what it is about.
      * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1875,7 +4298,7 @@ export class TeamApi extends BaseAPI {
      * @memberof TeamApi
      */
     public putTeamRoomsById(requestParameters: TeamApiPutTeamRoomsByIdRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).putTeamRoomsById(requestParameters.id, requestParameters.teamRoomBind, options).then((request) => request(this.axios, this.basePath));
+        return TeamApiFp(this.configuration).putTeamRoomsById(requestParameters.id, requestParameters.teamTeamRoomBind, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

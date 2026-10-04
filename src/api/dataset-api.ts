@@ -22,19 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { RiskDataset } from '../models';
+import type { DatasetRiskDataset } from '../models';
 // @ts-ignore
-import type { RiskDatasetDisposal } from '../models';
+import type { DatasetRiskDatasetDisposal } from '../models';
 // @ts-ignore
-import type { RiskDatasetList } from '../models';
+import type { DatasetRiskDatasetList } from '../models';
 // @ts-ignore
-import type { RiskDatasetRows } from '../models';
+import type { DatasetRiskDatasetRows } from '../models';
 // @ts-ignore
-import type { RiskDatasetSpec } from '../models';
+import type { DatasetRiskDatasetSpec } from '../models';
 // @ts-ignore
-import type { RiskDatasetVersions } from '../models';
+import type { DatasetRiskDatasetVersions } from '../models';
 // @ts-ignore
-import type { RiskLineage } from '../models';
+import type { DatasetRiskLineage } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * DatasetApi - axios parameter creator
  * @export
@@ -44,13 +46,13 @@ export const DatasetApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Declares the next version of a dataset from a bound query over this org\'s own feature surface.  It mints a VERSION and writes no rows: a version is declared, then materialised once, then never rewritten. Version numbers are monotone and never reused, so \"version 3 of signups\" means one thing forever — which is the whole reason a model can cite one.  The window is bounded by the source\'s retention, the horizon by a year, the rows by the plane\'s cap, and the number of datasets and versions per org by their own limits. Every refusal names which bound it hit.
          * @summary Declare the next version of a dataset
-         * @param {RiskDatasetSpec} riskDatasetSpec 
+         * @param {DatasetRiskDatasetSpec} datasetRiskDatasetSpec 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskCreateDataset: async (riskDatasetSpec: RiskDatasetSpec, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskDatasetSpec' is not null or undefined
-            assertParamExists('riskCreateDataset', 'riskDatasetSpec', riskDatasetSpec)
+        riskCreateDataset: async (datasetRiskDatasetSpec: DatasetRiskDatasetSpec, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'datasetRiskDatasetSpec' is not null or undefined
+            assertParamExists('riskCreateDataset', 'datasetRiskDatasetSpec', datasetRiskDatasetSpec)
             const localVarPath = `/v1/dataset`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -74,7 +76,7 @@ export const DatasetApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskDatasetSpec, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(datasetRiskDatasetSpec, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -343,12 +345,12 @@ export const DatasetApiFp = function(configuration?: Configuration) {
         /**
          * Declares the next version of a dataset from a bound query over this org\'s own feature surface.  It mints a VERSION and writes no rows: a version is declared, then materialised once, then never rewritten. Version numbers are monotone and never reused, so \"version 3 of signups\" means one thing forever — which is the whole reason a model can cite one.  The window is bounded by the source\'s retention, the horizon by a year, the rows by the plane\'s cap, and the number of datasets and versions per org by their own limits. Every refusal names which bound it hit.
          * @summary Declare the next version of a dataset
-         * @param {RiskDatasetSpec} riskDatasetSpec 
+         * @param {DatasetRiskDatasetSpec} datasetRiskDatasetSpec 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskCreateDataset(riskDatasetSpec: RiskDatasetSpec, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDataset>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskCreateDataset(riskDatasetSpec, options);
+        async riskCreateDataset(datasetRiskDatasetSpec: DatasetRiskDatasetSpec, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDataset>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskCreateDataset(datasetRiskDatasetSpec, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskCreateDataset']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -360,7 +362,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDatasetVersions>> {
+        async riskDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDatasetVersions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskDataset(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskDataset']?.[localVarOperationServerIndex]?.url;
@@ -374,7 +376,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskDatasetLineage(name: string, version?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLineage>> {
+        async riskDatasetLineage(name: string, version?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskLineage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskDatasetLineage(name, version, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskDatasetLineage']?.[localVarOperationServerIndex]?.url;
@@ -386,7 +388,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDatasetList>> {
+        async riskDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDatasetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskDatasets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskDatasets']?.[localVarOperationServerIndex]?.url;
@@ -399,7 +401,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskDeleteDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDatasetDisposal>> {
+        async riskDeleteDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDatasetDisposal>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskDeleteDataset(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskDeleteDataset']?.[localVarOperationServerIndex]?.url;
@@ -416,7 +418,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskExportDataset(name: string, version?: number, split?: string, offset?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDatasetRows>> {
+        async riskExportDataset(name: string, version?: number, split?: string, offset?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDatasetRows>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskExportDataset(name, version, split, offset, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskExportDataset']?.[localVarOperationServerIndex]?.url;
@@ -429,7 +431,7 @@ export const DatasetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskMaterializeDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskDataset>> {
+        async riskMaterializeDataset(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetRiskDataset>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskMaterializeDataset(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatasetApi.riskMaterializeDataset']?.[localVarOperationServerIndex]?.url;
@@ -452,8 +454,8 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskCreateDataset(requestParameters: DatasetApiRiskCreateDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDataset> {
-            return localVarFp.riskCreateDataset(requestParameters.riskDatasetSpec, options).then((request) => request(axios, basePath));
+        riskCreateDataset(requestParameters: DatasetApiRiskCreateDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDataset> {
+            return localVarFp.riskCreateDataset(requestParameters.datasetRiskDatasetSpec, options).then((request) => request(axios, basePath));
         },
         /**
          * Dataset describes every version of one dataset, newest first — the whole history, because the point of a version is that the older ones are still there and a model fitted last quarter cites one of them.  A name this org does not own answers 404, exactly as an unknown name does, so a probe learns nothing about another tenant\'s datasets.
@@ -462,7 +464,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDataset(requestParameters: DatasetApiRiskDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDatasetVersions> {
+        riskDataset(requestParameters: DatasetApiRiskDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDatasetVersions> {
             return localVarFp.riskDataset(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -472,7 +474,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDatasetLineage(requestParameters: DatasetApiRiskDatasetLineageRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskLineage> {
+        riskDatasetLineage(requestParameters: DatasetApiRiskDatasetLineageRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskLineage> {
             return localVarFp.riskDatasetLineage(requestParameters.name, requestParameters.version, options).then((request) => request(axios, basePath));
         },
         /**
@@ -481,7 +483,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDatasets(options?: RawAxiosRequestConfig): AxiosPromise<RiskDatasetList> {
+        riskDatasets(options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDatasetList> {
             return localVarFp.riskDatasets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -491,7 +493,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskDeleteDataset(requestParameters: DatasetApiRiskDeleteDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDatasetDisposal> {
+        riskDeleteDataset(requestParameters: DatasetApiRiskDeleteDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDatasetDisposal> {
             return localVarFp.riskDeleteDataset(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -501,7 +503,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskExportDataset(requestParameters: DatasetApiRiskExportDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDatasetRows> {
+        riskExportDataset(requestParameters: DatasetApiRiskExportDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDatasetRows> {
             return localVarFp.riskExportDataset(requestParameters.name, requestParameters.version, requestParameters.split, requestParameters.offset, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -511,7 +513,7 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskMaterializeDataset(requestParameters: DatasetApiRiskMaterializeDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskDataset> {
+        riskMaterializeDataset(requestParameters: DatasetApiRiskMaterializeDatasetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetRiskDataset> {
             return localVarFp.riskMaterializeDataset(requestParameters.name, options).then((request) => request(axios, basePath));
         },
     };
@@ -525,10 +527,10 @@ export const DatasetApiFactory = function (configuration?: Configuration, basePa
 export interface DatasetApiRiskCreateDatasetRequest {
     /**
      * 
-     * @type {RiskDatasetSpec}
+     * @type {DatasetRiskDatasetSpec}
      * @memberof DatasetApiRiskCreateDataset
      */
-    readonly riskDatasetSpec: RiskDatasetSpec
+    readonly datasetRiskDatasetSpec: DatasetRiskDatasetSpec
 }
 
 /**
@@ -652,7 +654,7 @@ export class DatasetApi extends BaseAPI {
      * @memberof DatasetApi
      */
     public riskCreateDataset(requestParameters: DatasetApiRiskCreateDatasetRequest, options?: RawAxiosRequestConfig) {
-        return DatasetApiFp(this.configuration).riskCreateDataset(requestParameters.riskDatasetSpec, options).then((request) => request(this.axios, this.basePath));
+        return DatasetApiFp(this.configuration).riskCreateDataset(requestParameters.datasetRiskDatasetSpec, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

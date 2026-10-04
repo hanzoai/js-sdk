@@ -22,19 +22,37 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BucketIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { BucketItem } from '../models';
+import type { S3BucketIn } from '../models';
 // @ts-ignore
-import type { BucketList } from '../models';
+import type { S3BucketItem } from '../models';
 // @ts-ignore
-import type { ObjectList } from '../models';
+import type { S3BucketList } from '../models';
 // @ts-ignore
-import type { PresignResponse } from '../models';
+import type { S3ObjectList } from '../models';
 // @ts-ignore
-import type { S3Health } from '../models';
+import type { S3PartURLs } from '../models';
 // @ts-ignore
-import type { UploadIn } from '../models';
+import type { S3PresignResponse } from '../models';
+// @ts-ignore
+import type { S3S3Health } from '../models';
+// @ts-ignore
+import type { S3StoredParts } from '../models';
+// @ts-ignore
+import type { S3UploadDone } from '../models';
+// @ts-ignore
+import type { S3UploadGone } from '../models';
+// @ts-ignore
+import type { S3UploadIn } from '../models';
+// @ts-ignore
+import type { S3UploadParts } from '../models';
+// @ts-ignore
+import type { S3UploadRef } from '../models';
+// @ts-ignore
+import type { S3UploadStart } from '../models';
+// @ts-ignore
+import type { S3UploadStarted } from '../models';
 /**
  * S3Api - axios parameter creator
  * @export
@@ -67,6 +85,53 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
+         * @summary Aborts a multipart upload and deletes the parts it stored.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {string} [key] Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteS3BucketsByBucketUploadsByUpload: async (bucket: string, upload: string, key?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('deleteS3BucketsByBucketUploadsByUpload', 'bucket', bucket)
+            // verify required parameter 'upload' is not null or undefined
+            assertParamExists('deleteS3BucketsByBucketUploadsByUpload', 'upload', upload)
+            const localVarPath = `/v1/s3/buckets/{bucket}/uploads/{upload}`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"upload"}}`, encodeURIComponent(String(upload)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (key !== undefined) {
+                localVarQueryParameter['key'] = key;
+            }
 
 
     
@@ -162,8 +227,55 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
-         * @summary Health reports whether this deployment can serve object storage.
+         * Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @summary Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {string} [key] Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getS3BucketsByBucketUploadsByUpload: async (bucket: string, upload: string, key?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('getS3BucketsByBucketUploadsByUpload', 'bucket', bucket)
+            // verify required parameter 'upload' is not null or undefined
+            assertParamExists('getS3BucketsByBucketUploadsByUpload', 'upload', upload)
+            const localVarPath = `/v1/s3/buckets/{bucket}/uploads/{upload}`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"upload"}}`, encodeURIComponent(String(upload)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (key !== undefined) {
+                localVarQueryParameter['key'] = key;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Reports whether this deployment can serve object storage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -198,13 +310,13 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
          * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
-         * @param {BucketIn} bucketIn 
+         * @param {S3BucketIn} s3BucketIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3Buckets: async (bucketIn: BucketIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bucketIn' is not null or undefined
-            assertParamExists('postS3Buckets', 'bucketIn', bucketIn)
+        postS3Buckets: async (s3BucketIn: S3BucketIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 's3BucketIn' is not null or undefined
+            assertParamExists('postS3Buckets', 's3BucketIn', s3BucketIn)
             const localVarPath = `/v1/s3/buckets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -228,7 +340,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(bucketIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(s3BucketIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -239,15 +351,15 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows it goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
          * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
          * @param {string} bucket Bucket is the bucket to upload into, from the path.
-         * @param {UploadIn} uploadIn 
+         * @param {S3UploadIn} s3UploadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3BucketsByBucketObjects: async (bucket: string, uploadIn: UploadIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3BucketsByBucketObjects: async (bucket: string, s3UploadIn: S3UploadIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
             assertParamExists('postS3BucketsByBucketObjects', 'bucket', bucket)
-            // verify required parameter 'uploadIn' is not null or undefined
-            assertParamExists('postS3BucketsByBucketObjects', 'uploadIn', uploadIn)
+            // verify required parameter 's3UploadIn' is not null or undefined
+            assertParamExists('postS3BucketsByBucketObjects', 's3UploadIn', s3UploadIn)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -272,7 +384,147 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(uploadIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(s3UploadIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Begins a multipart upload of a large file into one of the caller\'s org buckets. Then mint presigned URLs for its parts with POST .../uploads/{upload}/parts, PUT each part\'s bytes to its URL — every part but the last exactly partSize bytes — and assemble the object with POST .../uploads/{upload}/complete. A dropped connection loses nothing: GET .../uploads/{upload} lists the parts already stored, so only the rest are sent again. Use this for anything over a few megabytes; a small file takes the single presigned PUT of POST /v1/s3/buckets/{bucket}/objects.
+         * @summary Begins a multipart upload of a large file into one of the caller\'s org buckets.
+         * @param {string} bucket Bucket is the bucket to upload into, from the path.
+         * @param {S3UploadStart} s3UploadStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploads: async (bucket: string, s3UploadStart: S3UploadStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploads', 'bucket', bucket)
+            // verify required parameter 's3UploadStart' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploads', 's3UploadStart', s3UploadStart)
+            const localVarPath = `/v1/s3/buckets/{bucket}/uploads`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(s3UploadStart, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Assembles a multipart upload into its object from every part the store holds, in order. The parts must run 1, 2, 3 … with no gap; a gap is 409, naming the first part missing, and the upload stays open to send it.
+         * @summary Assembles a multipart upload into its object from every part the store holds, in order.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {S3UploadRef} s3UploadRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploadsByUploadComplete: async (bucket: string, upload: string, s3UploadRef: S3UploadRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadComplete', 'bucket', bucket)
+            // verify required parameter 'upload' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadComplete', 'upload', upload)
+            // verify required parameter 's3UploadRef' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadComplete', 's3UploadRef', s3UploadRef)
+            const localVarPath = `/v1/s3/buckets/{bucket}/uploads/{upload}/complete`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"upload"}}`, encodeURIComponent(String(upload)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(s3UploadRef, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them. PUT a part\'s bytes to its URL as they are — no headers are signed — and the store answers the part\'s ETag, which completing does not need.
+         * @summary Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {S3UploadParts} s3UploadParts 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploadsByUploadParts: async (bucket: string, upload: string, s3UploadParts: S3UploadParts, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadParts', 'bucket', bucket)
+            // verify required parameter 'upload' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadParts', 'upload', upload)
+            // verify required parameter 's3UploadParts' is not null or undefined
+            assertParamExists('postS3BucketsByBucketUploadsByUploadParts', 's3UploadParts', s3UploadParts)
+            const localVarPath = `/v1/s3/buckets/{bucket}/uploads/{upload}/parts`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"upload"}}`, encodeURIComponent(String(upload)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(s3UploadParts, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -303,12 +555,27 @@ export const S3ApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
+         * @summary Aborts a multipart upload and deletes the parts it stored.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {string} [key] Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteS3BucketsByBucketUploadsByUpload(bucket: string, upload: string, key?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3UploadGone>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3BucketsByBucketUploadsByUpload(bucket, upload, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3BucketsByBucketUploadsByUpload']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all. Another org\'s bucket is not refused but INVISIBLE, so this cannot be used to learn that a name is taken elsewhere.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit lands only once the work has succeeded.
          * @summary Lists the caller org\'s own buckets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketList>> {
+        async getS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3BucketList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Buckets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Buckets']?.[localVarOperationServerIndex]?.url;
@@ -323,19 +590,34 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getS3BucketsByBucketObjects(bucket: string, prefix?: string, recursive?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ObjectList>> {
+        async getS3BucketsByBucketObjects(bucket: string, prefix?: string, recursive?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3ObjectList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjects(bucket, prefix, recursive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
-         * @summary Health reports whether this deployment can serve object storage.
+         * Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @summary Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {string} [key] Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getS3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3Health>> {
+        async getS3BucketsByBucketUploadsByUpload(bucket: string, upload: string, key?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3StoredParts>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketUploadsByUpload(bucket, upload, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketUploadsByUpload']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Reports whether this deployment can serve object storage.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getS3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3S3Health>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Health(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Health']?.[localVarOperationServerIndex]?.url;
@@ -344,12 +626,12 @@ export const S3ApiFp = function(configuration?: Configuration) {
         /**
          * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
          * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
-         * @param {BucketIn} bucketIn 
+         * @param {S3BucketIn} s3BucketIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postS3Buckets(bucketIn: BucketIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3Buckets(bucketIn, options);
+        async postS3Buckets(s3BucketIn: S3BucketIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3BucketItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3Buckets(s3BucketIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.postS3Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -358,14 +640,58 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows it goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
          * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
          * @param {string} bucket Bucket is the bucket to upload into, from the path.
-         * @param {UploadIn} uploadIn 
+         * @param {S3UploadIn} s3UploadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postS3BucketsByBucketObjects(bucket: string, uploadIn: UploadIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresignResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketObjects(bucket, uploadIn, options);
+        async postS3BucketsByBucketObjects(bucket: string, s3UploadIn: S3UploadIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3PresignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketObjects(bucket, s3UploadIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Begins a multipart upload of a large file into one of the caller\'s org buckets. Then mint presigned URLs for its parts with POST .../uploads/{upload}/parts, PUT each part\'s bytes to its URL — every part but the last exactly partSize bytes — and assemble the object with POST .../uploads/{upload}/complete. A dropped connection loses nothing: GET .../uploads/{upload} lists the parts already stored, so only the rest are sent again. Use this for anything over a few megabytes; a small file takes the single presigned PUT of POST /v1/s3/buckets/{bucket}/objects.
+         * @summary Begins a multipart upload of a large file into one of the caller\'s org buckets.
+         * @param {string} bucket Bucket is the bucket to upload into, from the path.
+         * @param {S3UploadStart} s3UploadStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postS3BucketsByBucketUploads(bucket: string, s3UploadStart: S3UploadStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3UploadStarted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketUploads(bucket, s3UploadStart, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketUploads']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Assembles a multipart upload into its object from every part the store holds, in order. The parts must run 1, 2, 3 … with no gap; a gap is 409, naming the first part missing, and the upload stays open to send it.
+         * @summary Assembles a multipart upload into its object from every part the store holds, in order.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {S3UploadRef} s3UploadRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postS3BucketsByBucketUploadsByUploadComplete(bucket: string, upload: string, s3UploadRef: S3UploadRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3UploadDone>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketUploadsByUploadComplete(bucket, upload, s3UploadRef, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketUploadsByUploadComplete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them. PUT a part\'s bytes to its URL as they are — no headers are signed — and the store answers the part\'s ETag, which completing does not need.
+         * @summary Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them.
+         * @param {string} bucket Bucket is the bucket, from the path.
+         * @param {string} upload Upload is the upload\&#39;s id, from the path.
+         * @param {S3UploadParts} s3UploadParts 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postS3BucketsByBucketUploadsByUploadParts(bucket: string, upload: string, s3UploadParts: S3UploadParts, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3PartURLs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketUploadsByUploadParts(bucket, upload, s3UploadParts, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketUploadsByUploadParts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -389,12 +715,22 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
+         * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
+         * @summary Aborts a multipart upload and deletes the parts it stored.
+         * @param {S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteS3BucketsByBucketUploadsByUpload(requestParameters: S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3UploadGone> {
+            return localVarFp.deleteS3BucketsByBucketUploadsByUpload(requestParameters.bucket, requestParameters.upload, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all. Another org\'s bucket is not refused but INVISIBLE, so this cannot be used to learn that a name is taken elsewhere.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit lands only once the work has succeeded.
          * @summary Lists the caller org\'s own buckets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<BucketList> {
+        getS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<S3BucketList> {
             return localVarFp.getS3Buckets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -404,16 +740,26 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ObjectList> {
+        getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3ObjectList> {
             return localVarFp.getS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.prefix, requestParameters.recursive, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
-         * @summary Health reports whether this deployment can serve object storage.
+         * Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @summary Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+         * @param {S3ApiGetS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3Health(options?: RawAxiosRequestConfig): AxiosPromise<S3Health> {
+        getS3BucketsByBucketUploadsByUpload(requestParameters: S3ApiGetS3BucketsByBucketUploadsByUploadRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3StoredParts> {
+            return localVarFp.getS3BucketsByBucketUploadsByUpload(requestParameters.bucket, requestParameters.upload, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Reports whether this deployment can serve object storage.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getS3Health(options?: RawAxiosRequestConfig): AxiosPromise<S3S3Health> {
             return localVarFp.getS3Health(options).then((request) => request(axios, basePath));
         },
         /**
@@ -423,8 +769,8 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3Buckets(requestParameters: S3ApiPostS3BucketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BucketItem> {
-            return localVarFp.postS3Buckets(requestParameters.bucketIn, options).then((request) => request(axios, basePath));
+        postS3Buckets(requestParameters: S3ApiPostS3BucketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3BucketItem> {
+            return localVarFp.postS3Buckets(requestParameters.s3BucketIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows it goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
@@ -433,8 +779,38 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PresignResponse> {
-            return localVarFp.postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.uploadIn, options).then((request) => request(axios, basePath));
+        postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3PresignResponse> {
+            return localVarFp.postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.s3UploadIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Begins a multipart upload of a large file into one of the caller\'s org buckets. Then mint presigned URLs for its parts with POST .../uploads/{upload}/parts, PUT each part\'s bytes to its URL — every part but the last exactly partSize bytes — and assemble the object with POST .../uploads/{upload}/complete. A dropped connection loses nothing: GET .../uploads/{upload} lists the parts already stored, so only the rest are sent again. Use this for anything over a few megabytes; a small file takes the single presigned PUT of POST /v1/s3/buckets/{bucket}/objects.
+         * @summary Begins a multipart upload of a large file into one of the caller\'s org buckets.
+         * @param {S3ApiPostS3BucketsByBucketUploadsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploads(requestParameters: S3ApiPostS3BucketsByBucketUploadsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3UploadStarted> {
+            return localVarFp.postS3BucketsByBucketUploads(requestParameters.bucket, requestParameters.s3UploadStart, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Assembles a multipart upload into its object from every part the store holds, in order. The parts must run 1, 2, 3 … with no gap; a gap is 409, naming the first part missing, and the upload stays open to send it.
+         * @summary Assembles a multipart upload into its object from every part the store holds, in order.
+         * @param {S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploadsByUploadComplete(requestParameters: S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3UploadDone> {
+            return localVarFp.postS3BucketsByBucketUploadsByUploadComplete(requestParameters.bucket, requestParameters.upload, requestParameters.s3UploadRef, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them. PUT a part\'s bytes to its URL as they are — no headers are signed — and the store answers the part\'s ETag, which completing does not need.
+         * @summary Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them.
+         * @param {S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postS3BucketsByBucketUploadsByUploadParts(requestParameters: S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3PartURLs> {
+            return localVarFp.postS3BucketsByBucketUploadsByUploadParts(requestParameters.bucket, requestParameters.upload, requestParameters.s3UploadParts, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -451,6 +827,34 @@ export interface S3ApiDeleteS3BucketsByBucketRequest {
      * @memberof S3ApiDeleteS3BucketsByBucket
      */
     readonly bucket: string
+}
+
+/**
+ * Request parameters for deleteS3BucketsByBucketUploadsByUpload operation in S3Api.
+ * @export
+ * @interface S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest
+ */
+export interface S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest {
+    /**
+     * Bucket is the bucket, from the path.
+     * @type {string}
+     * @memberof S3ApiDeleteS3BucketsByBucketUploadsByUpload
+     */
+    readonly bucket: string
+
+    /**
+     * Upload is the upload\&#39;s id, from the path.
+     * @type {string}
+     * @memberof S3ApiDeleteS3BucketsByBucketUploadsByUpload
+     */
+    readonly upload: string
+
+    /**
+     * Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
+     * @type {string}
+     * @memberof S3ApiDeleteS3BucketsByBucketUploadsByUpload
+     */
+    readonly key?: string
 }
 
 /**
@@ -482,6 +886,34 @@ export interface S3ApiGetS3BucketsByBucketObjectsRequest {
 }
 
 /**
+ * Request parameters for getS3BucketsByBucketUploadsByUpload operation in S3Api.
+ * @export
+ * @interface S3ApiGetS3BucketsByBucketUploadsByUploadRequest
+ */
+export interface S3ApiGetS3BucketsByBucketUploadsByUploadRequest {
+    /**
+     * Bucket is the bucket, from the path.
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketUploadsByUpload
+     */
+    readonly bucket: string
+
+    /**
+     * Upload is the upload\&#39;s id, from the path.
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketUploadsByUpload
+     */
+    readonly upload: string
+
+    /**
+     * Key is the object key the upload was started on. In the query for a read or an abandon, in the body to complete.
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketUploadsByUpload
+     */
+    readonly key?: string
+}
+
+/**
  * Request parameters for postS3Buckets operation in S3Api.
  * @export
  * @interface S3ApiPostS3BucketsRequest
@@ -489,10 +921,10 @@ export interface S3ApiGetS3BucketsByBucketObjectsRequest {
 export interface S3ApiPostS3BucketsRequest {
     /**
      * 
-     * @type {BucketIn}
+     * @type {S3BucketIn}
      * @memberof S3ApiPostS3Buckets
      */
-    readonly bucketIn: BucketIn
+    readonly s3BucketIn: S3BucketIn
 }
 
 /**
@@ -510,10 +942,87 @@ export interface S3ApiPostS3BucketsByBucketObjectsRequest {
 
     /**
      * 
-     * @type {UploadIn}
+     * @type {S3UploadIn}
      * @memberof S3ApiPostS3BucketsByBucketObjects
      */
-    readonly uploadIn: UploadIn
+    readonly s3UploadIn: S3UploadIn
+}
+
+/**
+ * Request parameters for postS3BucketsByBucketUploads operation in S3Api.
+ * @export
+ * @interface S3ApiPostS3BucketsByBucketUploadsRequest
+ */
+export interface S3ApiPostS3BucketsByBucketUploadsRequest {
+    /**
+     * Bucket is the bucket to upload into, from the path.
+     * @type {string}
+     * @memberof S3ApiPostS3BucketsByBucketUploads
+     */
+    readonly bucket: string
+
+    /**
+     * 
+     * @type {S3UploadStart}
+     * @memberof S3ApiPostS3BucketsByBucketUploads
+     */
+    readonly s3UploadStart: S3UploadStart
+}
+
+/**
+ * Request parameters for postS3BucketsByBucketUploadsByUploadComplete operation in S3Api.
+ * @export
+ * @interface S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest
+ */
+export interface S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest {
+    /**
+     * Bucket is the bucket, from the path.
+     * @type {string}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadComplete
+     */
+    readonly bucket: string
+
+    /**
+     * Upload is the upload\&#39;s id, from the path.
+     * @type {string}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadComplete
+     */
+    readonly upload: string
+
+    /**
+     * 
+     * @type {S3UploadRef}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadComplete
+     */
+    readonly s3UploadRef: S3UploadRef
+}
+
+/**
+ * Request parameters for postS3BucketsByBucketUploadsByUploadParts operation in S3Api.
+ * @export
+ * @interface S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest
+ */
+export interface S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest {
+    /**
+     * Bucket is the bucket, from the path.
+     * @type {string}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadParts
+     */
+    readonly bucket: string
+
+    /**
+     * Upload is the upload\&#39;s id, from the path.
+     * @type {string}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadParts
+     */
+    readonly upload: string
+
+    /**
+     * 
+     * @type {S3UploadParts}
+     * @memberof S3ApiPostS3BucketsByBucketUploadsByUploadParts
+     */
+    readonly s3UploadParts: S3UploadParts
 }
 
 /**
@@ -533,6 +1042,18 @@ export class S3Api extends BaseAPI {
      */
     public deleteS3BucketsByBucket(requestParameters: S3ApiDeleteS3BucketsByBucketRequest, options?: RawAxiosRequestConfig) {
         return S3ApiFp(this.configuration).deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
+     * @summary Aborts a multipart upload and deletes the parts it stored.
+     * @param {S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public deleteS3BucketsByBucketUploadsByUpload(requestParameters: S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteS3BucketsByBucketUploadsByUpload(requestParameters.bucket, requestParameters.upload, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -559,8 +1080,20 @@ export class S3Api extends BaseAPI {
     }
 
     /**
-     * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
-     * @summary Health reports whether this deployment can serve object storage.
+     * Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+     * @summary Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
+     * @param {S3ApiGetS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public getS3BucketsByBucketUploadsByUpload(requestParameters: S3ApiGetS3BucketsByBucketUploadsByUploadRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3BucketsByBucketUploadsByUpload(requestParameters.bucket, requestParameters.upload, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+     * @summary Reports whether this deployment can serve object storage.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
@@ -578,7 +1111,7 @@ export class S3Api extends BaseAPI {
      * @memberof S3Api
      */
     public postS3Buckets(requestParameters: S3ApiPostS3BucketsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postS3Buckets(requestParameters.bucketIn, options).then((request) => request(this.axios, this.basePath));
+        return S3ApiFp(this.configuration).postS3Buckets(requestParameters.s3BucketIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -590,7 +1123,43 @@ export class S3Api extends BaseAPI {
      * @memberof S3Api
      */
     public postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.uploadIn, options).then((request) => request(this.axios, this.basePath));
+        return S3ApiFp(this.configuration).postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.s3UploadIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Begins a multipart upload of a large file into one of the caller\'s org buckets. Then mint presigned URLs for its parts with POST .../uploads/{upload}/parts, PUT each part\'s bytes to its URL — every part but the last exactly partSize bytes — and assemble the object with POST .../uploads/{upload}/complete. A dropped connection loses nothing: GET .../uploads/{upload} lists the parts already stored, so only the rest are sent again. Use this for anything over a few megabytes; a small file takes the single presigned PUT of POST /v1/s3/buckets/{bucket}/objects.
+     * @summary Begins a multipart upload of a large file into one of the caller\'s org buckets.
+     * @param {S3ApiPostS3BucketsByBucketUploadsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public postS3BucketsByBucketUploads(requestParameters: S3ApiPostS3BucketsByBucketUploadsRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3BucketsByBucketUploads(requestParameters.bucket, requestParameters.s3UploadStart, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Assembles a multipart upload into its object from every part the store holds, in order. The parts must run 1, 2, 3 … with no gap; a gap is 409, naming the first part missing, and the upload stays open to send it.
+     * @summary Assembles a multipart upload into its object from every part the store holds, in order.
+     * @param {S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public postS3BucketsByBucketUploadsByUploadComplete(requestParameters: S3ApiPostS3BucketsByBucketUploadsByUploadCompleteRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3BucketsByBucketUploadsByUploadComplete(requestParameters.bucket, requestParameters.upload, requestParameters.s3UploadRef, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them. PUT a part\'s bytes to its URL as they are — no headers are signed — and the store answers the part\'s ETag, which completing does not need.
+     * @summary Answers presigned PUT URLs for some parts of a multipart upload, at most 64 a call, each valid for minutes: mint them as the upload reaches them.
+     * @param {S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public postS3BucketsByBucketUploadsByUploadParts(requestParameters: S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3BucketsByBucketUploadsByUploadParts(requestParameters.bucket, requestParameters.upload, requestParameters.s3UploadParts, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

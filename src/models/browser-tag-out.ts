@@ -22,6 +22,12 @@
 export interface BrowserTagOut {
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof BrowserTagOut
+     */
+    'events'?: { [key: string]: string; };
+    /**
+     * 
      * @type {string}
      * @memberof BrowserTagOut
      */

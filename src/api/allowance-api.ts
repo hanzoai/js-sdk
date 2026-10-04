@@ -22,7 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Allowance } from '../models';
+import type { AllowanceAllowance } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * AllowanceApi - axios parameter creator
  * @export
@@ -30,7 +32,7 @@ import type { Allowance } from '../models';
 export const AllowanceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  A bounded caller is POOLED: the Free plan is limited usage from one pool every free user shares — the platform\'s vendor accounts for free models — so the answer says so (pooled) and carries that pool\'s standing: available, busy or exhausted, and when it refills. The pool is read from the process that spends it and is absent when that process does not answer, never guessed. A paid plan is not pooled and carries no pool: its usage is metered in money.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -74,12 +76,12 @@ export const AllowanceApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AllowanceApiAxiosParamCreator(configuration)
     return {
         /**
-         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  A bounded caller is POOLED: the Free plan is limited usage from one pool every free user shares — the platform\'s vendor accounts for free models — so the answer says so (pooled) and carries that pool\'s standing: available, busy or exhausted, and when it refills. The pool is read from the process that spends it and is absent when that process does not answer, never guessed. A paid plan is not pooled and carries no pool: its usage is metered in money.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllowance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Allowance>> {
+        async getAllowance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowanceAllowance>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllowance(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AllowanceApi.getAllowance']?.[localVarOperationServerIndex]?.url;
@@ -96,12 +98,12 @@ export const AllowanceApiFactory = function (configuration?: Configuration, base
     const localVarFp = AllowanceApiFp(configuration)
     return {
         /**
-         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  A bounded caller is POOLED: the Free plan is limited usage from one pool every free user shares — the platform\'s vendor accounts for free models — so the answer says so (pooled) and carries that pool\'s standing: available, busy or exhausted, and when it refills. The pool is read from the process that spends it and is absent when that process does not answer, never guessed. A paid plan is not pooled and carries no pool: its usage is metered in money.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowance(options?: RawAxiosRequestConfig): AxiosPromise<Allowance> {
+        getAllowance(options?: RawAxiosRequestConfig): AxiosPromise<AllowanceAllowance> {
             return localVarFp.getAllowance(options).then((request) => request(axios, basePath));
         },
     };
@@ -115,7 +117,7 @@ export const AllowanceApiFactory = function (configuration?: Configuration, base
  */
 export class AllowanceApi extends BaseAPI {
     /**
-     * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.  This is the number a product shows beside the composer — \"17 of 20 left today\" — and the moment to offer a plan is when it reaches zero. It READS: asking does not spend, so a page that polls it costs the caller nothing.  A bounded caller is POOLED: the Free plan is limited usage from one pool every free user shares — the platform\'s vendor accounts for free models — so the answer says so (pooled) and carries that pool\'s standing: available, busy or exhausted, and when it refills. The pool is read from the process that spends it and is absent when that process does not answer, never guessed. A paid plan is not pooled and carries no pool: its usage is metered in money.  The subject is the caller\'s own, resolved from the verified credential, and can never be named in the request — so this is a mirror, not a lookup of someone else. An unauthenticated caller is refused: there is no allowance without someone to hold it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Answers what the CALLER has left of their plan\'s free-call allowance this period, and the instant the count starts again.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

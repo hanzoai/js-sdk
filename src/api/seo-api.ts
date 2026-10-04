@@ -22,31 +22,33 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { SeoAuditIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SeoAuditOut } from '../models';
+import type { SeoSeoAuditIn } from '../models';
 // @ts-ignore
-import type { SeoBacklinkIn } from '../models';
+import type { SeoSeoAuditOut } from '../models';
 // @ts-ignore
-import type { SeoBacklinkOut } from '../models';
+import type { SeoSeoBacklinkIn } from '../models';
 // @ts-ignore
-import type { SeoCompetitorIn } from '../models';
+import type { SeoSeoBacklinkOut } from '../models';
 // @ts-ignore
-import type { SeoCompetitorOut } from '../models';
+import type { SeoSeoCompetitorIn } from '../models';
 // @ts-ignore
-import type { SeoIdeaIn } from '../models';
+import type { SeoSeoCompetitorOut } from '../models';
 // @ts-ignore
-import type { SeoIdeaOut } from '../models';
+import type { SeoSeoIdeaIn } from '../models';
 // @ts-ignore
-import type { SeoKeywordIn } from '../models';
+import type { SeoSeoIdeaOut } from '../models';
 // @ts-ignore
-import type { SeoKeywordOut } from '../models';
+import type { SeoSeoKeywordIn } from '../models';
 // @ts-ignore
-import type { SeoRankIn } from '../models';
+import type { SeoSeoKeywordOut } from '../models';
 // @ts-ignore
-import type { SeoRankOut } from '../models';
+import type { SeoSeoRankIn } from '../models';
 // @ts-ignore
-import type { SeoRateOut } from '../models';
+import type { SeoSeoRankOut } from '../models';
+// @ts-ignore
+import type { SeoSeoRateOut } from '../models';
 /**
  * SeoApi - axios parameter creator
  * @export
@@ -56,13 +58,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Fetches one page and reports what it gets wrong.  It returns the page\'s on-page score, its title and description, how much readable text it carries, and the full set of named checks — is it https, does it have one h1, is the title duplicated, is it slow, is it a redirect, is anything on it broken. It is the technical half of search visibility, and it is the half a developer can act on this afternoon.  ONE PAGE, LIVE, IN THIS REQUEST. It is deliberately not a site crawl: a crawl is a job with a lifecycle, and this answers the same questions about the page somebody is actually looking at, now, with no task id to poll. Point it at the pages that matter one at a time.  It is priced per page fetched, which is one.
          * @summary Fetch one page and report what it gets wrong
-         * @param {SeoAuditIn} seoAuditIn 
+         * @param {SeoSeoAuditIn} seoSeoAuditIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoAudit: async (seoAuditIn: SeoAuditIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoAuditIn' is not null or undefined
-            assertParamExists('seoAudit', 'seoAuditIn', seoAuditIn)
+        seoAudit: async (seoSeoAuditIn: SeoSeoAuditIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoAuditIn' is not null or undefined
+            assertParamExists('seoAudit', 'seoSeoAuditIn', seoSeoAuditIn)
             const localVarPath = `/v1/seo/audit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -86,7 +88,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoAuditIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoAuditIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -96,13 +98,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Summarises who links to a target.  It returns the authority score, how many links point at it and from how many distinct sites, how many of those are broken, and how much of the profile reads as spam. Distinct sites is the number to read: a thousand links from one domain is one endorsement, and a profile that grew fast in links and not in domains is usually a profile somebody bought.  The target can be a whole domain, a subdomain, or one page URL — the summary is scoped to whatever is named. It is priced per request, so a domain with ten million links costs the same as one with ten.
          * @summary Who links to a target, and how much of it is broken or spam
-         * @param {SeoBacklinkIn} seoBacklinkIn 
+         * @param {SeoSeoBacklinkIn} seoSeoBacklinkIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoBacklink: async (seoBacklinkIn: SeoBacklinkIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoBacklinkIn' is not null or undefined
-            assertParamExists('seoBacklink', 'seoBacklinkIn', seoBacklinkIn)
+        seoBacklink: async (seoSeoBacklinkIn: SeoSeoBacklinkIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoBacklinkIn' is not null or undefined
+            assertParamExists('seoBacklink', 'seoSeoBacklinkIn', seoSeoBacklinkIn)
             const localVarPath = `/v1/seo/backlinks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -126,7 +128,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoBacklinkIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoBacklinkIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -136,13 +138,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Names the domains that place for the same phrases.  Given a set of phrases it returns the sites that appear across them, with each one\'s average position, how many of the phrases it places for, its share of the available attention and the visits that earns. It answers \"who am I actually up against here\", which is a different question from \"who do I think my competitors are\" and frequently a different answer.  Pair it with seoRank: this says who is in the race, seoRank says where any one of them finishes. It is priced per row, so Limit decides the cost.
          * @summary The domains that place for the same phrases
-         * @param {SeoCompetitorIn} seoCompetitorIn 
+         * @param {SeoSeoCompetitorIn} seoSeoCompetitorIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoCompetitor: async (seoCompetitorIn: SeoCompetitorIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoCompetitorIn' is not null or undefined
-            assertParamExists('seoCompetitor', 'seoCompetitorIn', seoCompetitorIn)
+        seoCompetitor: async (seoSeoCompetitorIn: SeoSeoCompetitorIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoCompetitorIn' is not null or undefined
+            assertParamExists('seoCompetitor', 'seoSeoCompetitorIn', seoSeoCompetitorIn)
             const localVarPath = `/v1/seo/competitors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -166,7 +168,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoCompetitorIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoCompetitorIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -176,13 +178,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Grows a seed phrase into the phrases nobody named yet.  It takes phrases you have and returns phrases in the same category that you do not — relevant rather than merely containing the seed — each with its search volume, click cost, competition and how hard its first page is to reach. This is where a keyword list comes FROM; seoKeyword is where a list you already have gets measured.  It is priced per row, so Limit is the knob that decides what the call costs. Total says how many more there were.
          * @summary Grow a seed phrase into the phrases nobody named yet
-         * @param {SeoIdeaIn} seoIdeaIn 
+         * @param {SeoSeoIdeaIn} seoSeoIdeaIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoIdea: async (seoIdeaIn: SeoIdeaIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoIdeaIn' is not null or undefined
-            assertParamExists('seoIdea', 'seoIdeaIn', seoIdeaIn)
+        seoIdea: async (seoSeoIdeaIn: SeoSeoIdeaIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoIdeaIn' is not null or undefined
+            assertParamExists('seoIdea', 'seoSeoIdeaIn', seoSeoIdeaIn)
             const localVarPath = `/v1/seo/ideas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -206,7 +208,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoIdeaIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoIdeaIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -216,13 +218,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Measures phrases the caller already has.  It answers, for each phrase named, how many people search it in a month, what an advertising click on it costs, and how contested that advertising is. This is the ground fact of search: everything else on this surface is a question about phrases, and this is the one that says whether a phrase is worth having.  Give it phrases you already suspect. To find phrases you have not thought of, use seoIdea; to find the ones a site already places for, use seoRank.  The market defaults to the United States in English. It is priced per request rather than per phrase, so asking about fifty phrases costs what asking about one does.
          * @summary How often named phrases are searched, and what a click costs
-         * @param {SeoKeywordIn} seoKeywordIn 
+         * @param {SeoSeoKeywordIn} seoSeoKeywordIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoKeyword: async (seoKeywordIn: SeoKeywordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoKeywordIn' is not null or undefined
-            assertParamExists('seoKeyword', 'seoKeywordIn', seoKeywordIn)
+        seoKeyword: async (seoSeoKeywordIn: SeoSeoKeywordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoKeywordIn' is not null or undefined
+            assertParamExists('seoKeyword', 'seoSeoKeywordIn', seoSeoKeywordIn)
             const localVarPath = `/v1/seo/keywords`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -246,7 +248,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoKeywordIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoKeywordIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -256,13 +258,13 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Reports every phrase a domain already places for.  For each one it gives the phrase, the position on the results page, the page of the site that placed, that result\'s headline, the phrase\'s monthly searches and the visits the placement is estimated to earn. It is the single most direct question about a site\'s search visibility — yours or a competitor\'s, since it takes any domain.  Position is the ABSOLUTE rank, counting every element on the page — the ads, the answer boxes, the map — because that is what a person scrolling actually passes. An organic-only rank flatters a result that sits below half a screen of other things.  It is priced per row, so Limit decides what the call costs, and Total says how many more there were.
          * @summary Every phrase a domain already places for, with its position
-         * @param {SeoRankIn} seoRankIn 
+         * @param {SeoSeoRankIn} seoSeoRankIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoRank: async (seoRankIn: SeoRankIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'seoRankIn' is not null or undefined
-            assertParamExists('seoRank', 'seoRankIn', seoRankIn)
+        seoRank: async (seoSeoRankIn: SeoSeoRankIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seoSeoRankIn' is not null or undefined
+            assertParamExists('seoRank', 'seoSeoRankIn', seoSeoRankIn)
             const localVarPath = `/v1/seo/rankings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -286,7 +288,7 @@ export const SeoApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(seoRankIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(seoSeoRankIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -340,12 +342,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Fetches one page and reports what it gets wrong.  It returns the page\'s on-page score, its title and description, how much readable text it carries, and the full set of named checks — is it https, does it have one h1, is the title duplicated, is it slow, is it a redirect, is anything on it broken. It is the technical half of search visibility, and it is the half a developer can act on this afternoon.  ONE PAGE, LIVE, IN THIS REQUEST. It is deliberately not a site crawl: a crawl is a job with a lifecycle, and this answers the same questions about the page somebody is actually looking at, now, with no task id to poll. Point it at the pages that matter one at a time.  It is priced per page fetched, which is one.
          * @summary Fetch one page and report what it gets wrong
-         * @param {SeoAuditIn} seoAuditIn 
+         * @param {SeoSeoAuditIn} seoSeoAuditIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoAudit(seoAuditIn: SeoAuditIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoAuditOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoAudit(seoAuditIn, options);
+        async seoAudit(seoSeoAuditIn: SeoSeoAuditIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoAuditOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoAudit(seoSeoAuditIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoAudit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -353,12 +355,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Summarises who links to a target.  It returns the authority score, how many links point at it and from how many distinct sites, how many of those are broken, and how much of the profile reads as spam. Distinct sites is the number to read: a thousand links from one domain is one endorsement, and a profile that grew fast in links and not in domains is usually a profile somebody bought.  The target can be a whole domain, a subdomain, or one page URL — the summary is scoped to whatever is named. It is priced per request, so a domain with ten million links costs the same as one with ten.
          * @summary Who links to a target, and how much of it is broken or spam
-         * @param {SeoBacklinkIn} seoBacklinkIn 
+         * @param {SeoSeoBacklinkIn} seoSeoBacklinkIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoBacklink(seoBacklinkIn: SeoBacklinkIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoBacklinkOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoBacklink(seoBacklinkIn, options);
+        async seoBacklink(seoSeoBacklinkIn: SeoSeoBacklinkIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoBacklinkOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoBacklink(seoSeoBacklinkIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoBacklink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -366,12 +368,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Names the domains that place for the same phrases.  Given a set of phrases it returns the sites that appear across them, with each one\'s average position, how many of the phrases it places for, its share of the available attention and the visits that earns. It answers \"who am I actually up against here\", which is a different question from \"who do I think my competitors are\" and frequently a different answer.  Pair it with seoRank: this says who is in the race, seoRank says where any one of them finishes. It is priced per row, so Limit decides the cost.
          * @summary The domains that place for the same phrases
-         * @param {SeoCompetitorIn} seoCompetitorIn 
+         * @param {SeoSeoCompetitorIn} seoSeoCompetitorIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoCompetitor(seoCompetitorIn: SeoCompetitorIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoCompetitorOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoCompetitor(seoCompetitorIn, options);
+        async seoCompetitor(seoSeoCompetitorIn: SeoSeoCompetitorIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoCompetitorOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoCompetitor(seoSeoCompetitorIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoCompetitor']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -379,12 +381,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Grows a seed phrase into the phrases nobody named yet.  It takes phrases you have and returns phrases in the same category that you do not — relevant rather than merely containing the seed — each with its search volume, click cost, competition and how hard its first page is to reach. This is where a keyword list comes FROM; seoKeyword is where a list you already have gets measured.  It is priced per row, so Limit is the knob that decides what the call costs. Total says how many more there were.
          * @summary Grow a seed phrase into the phrases nobody named yet
-         * @param {SeoIdeaIn} seoIdeaIn 
+         * @param {SeoSeoIdeaIn} seoSeoIdeaIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoIdea(seoIdeaIn: SeoIdeaIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoIdeaOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoIdea(seoIdeaIn, options);
+        async seoIdea(seoSeoIdeaIn: SeoSeoIdeaIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoIdeaOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoIdea(seoSeoIdeaIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoIdea']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -392,12 +394,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Measures phrases the caller already has.  It answers, for each phrase named, how many people search it in a month, what an advertising click on it costs, and how contested that advertising is. This is the ground fact of search: everything else on this surface is a question about phrases, and this is the one that says whether a phrase is worth having.  Give it phrases you already suspect. To find phrases you have not thought of, use seoIdea; to find the ones a site already places for, use seoRank.  The market defaults to the United States in English. It is priced per request rather than per phrase, so asking about fifty phrases costs what asking about one does.
          * @summary How often named phrases are searched, and what a click costs
-         * @param {SeoKeywordIn} seoKeywordIn 
+         * @param {SeoSeoKeywordIn} seoSeoKeywordIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoKeyword(seoKeywordIn: SeoKeywordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoKeywordOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoKeyword(seoKeywordIn, options);
+        async seoKeyword(seoSeoKeywordIn: SeoSeoKeywordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoKeywordOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoKeyword(seoSeoKeywordIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoKeyword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -405,12 +407,12 @@ export const SeoApiFp = function(configuration?: Configuration) {
         /**
          * Reports every phrase a domain already places for.  For each one it gives the phrase, the position on the results page, the page of the site that placed, that result\'s headline, the phrase\'s monthly searches and the visits the placement is estimated to earn. It is the single most direct question about a site\'s search visibility — yours or a competitor\'s, since it takes any domain.  Position is the ABSOLUTE rank, counting every element on the page — the ads, the answer boxes, the map — because that is what a person scrolling actually passes. An organic-only rank flatters a result that sits below half a screen of other things.  It is priced per row, so Limit decides what the call costs, and Total says how many more there were.
          * @summary Every phrase a domain already places for, with its position
-         * @param {SeoRankIn} seoRankIn 
+         * @param {SeoSeoRankIn} seoSeoRankIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoRank(seoRankIn: SeoRankIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoRankOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.seoRank(seoRankIn, options);
+        async seoRank(seoSeoRankIn: SeoSeoRankIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoRankOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.seoRank(seoSeoRankIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoRank']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -421,7 +423,7 @@ export const SeoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async seoRate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoRateOut>> {
+        async seoRate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeoSeoRateOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.seoRate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SeoApi.seoRate']?.[localVarOperationServerIndex]?.url;
@@ -444,8 +446,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoAudit(requestParameters: SeoApiSeoAuditRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoAuditOut> {
-            return localVarFp.seoAudit(requestParameters.seoAuditIn, options).then((request) => request(axios, basePath));
+        seoAudit(requestParameters: SeoApiSeoAuditRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoAuditOut> {
+            return localVarFp.seoAudit(requestParameters.seoSeoAuditIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Summarises who links to a target.  It returns the authority score, how many links point at it and from how many distinct sites, how many of those are broken, and how much of the profile reads as spam. Distinct sites is the number to read: a thousand links from one domain is one endorsement, and a profile that grew fast in links and not in domains is usually a profile somebody bought.  The target can be a whole domain, a subdomain, or one page URL — the summary is scoped to whatever is named. It is priced per request, so a domain with ten million links costs the same as one with ten.
@@ -454,8 +456,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoBacklink(requestParameters: SeoApiSeoBacklinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoBacklinkOut> {
-            return localVarFp.seoBacklink(requestParameters.seoBacklinkIn, options).then((request) => request(axios, basePath));
+        seoBacklink(requestParameters: SeoApiSeoBacklinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoBacklinkOut> {
+            return localVarFp.seoBacklink(requestParameters.seoSeoBacklinkIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Names the domains that place for the same phrases.  Given a set of phrases it returns the sites that appear across them, with each one\'s average position, how many of the phrases it places for, its share of the available attention and the visits that earns. It answers \"who am I actually up against here\", which is a different question from \"who do I think my competitors are\" and frequently a different answer.  Pair it with seoRank: this says who is in the race, seoRank says where any one of them finishes. It is priced per row, so Limit decides the cost.
@@ -464,8 +466,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoCompetitor(requestParameters: SeoApiSeoCompetitorRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoCompetitorOut> {
-            return localVarFp.seoCompetitor(requestParameters.seoCompetitorIn, options).then((request) => request(axios, basePath));
+        seoCompetitor(requestParameters: SeoApiSeoCompetitorRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoCompetitorOut> {
+            return localVarFp.seoCompetitor(requestParameters.seoSeoCompetitorIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Grows a seed phrase into the phrases nobody named yet.  It takes phrases you have and returns phrases in the same category that you do not — relevant rather than merely containing the seed — each with its search volume, click cost, competition and how hard its first page is to reach. This is where a keyword list comes FROM; seoKeyword is where a list you already have gets measured.  It is priced per row, so Limit is the knob that decides what the call costs. Total says how many more there were.
@@ -474,8 +476,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoIdea(requestParameters: SeoApiSeoIdeaRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoIdeaOut> {
-            return localVarFp.seoIdea(requestParameters.seoIdeaIn, options).then((request) => request(axios, basePath));
+        seoIdea(requestParameters: SeoApiSeoIdeaRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoIdeaOut> {
+            return localVarFp.seoIdea(requestParameters.seoSeoIdeaIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Measures phrases the caller already has.  It answers, for each phrase named, how many people search it in a month, what an advertising click on it costs, and how contested that advertising is. This is the ground fact of search: everything else on this surface is a question about phrases, and this is the one that says whether a phrase is worth having.  Give it phrases you already suspect. To find phrases you have not thought of, use seoIdea; to find the ones a site already places for, use seoRank.  The market defaults to the United States in English. It is priced per request rather than per phrase, so asking about fifty phrases costs what asking about one does.
@@ -484,8 +486,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoKeyword(requestParameters: SeoApiSeoKeywordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoKeywordOut> {
-            return localVarFp.seoKeyword(requestParameters.seoKeywordIn, options).then((request) => request(axios, basePath));
+        seoKeyword(requestParameters: SeoApiSeoKeywordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoKeywordOut> {
+            return localVarFp.seoKeyword(requestParameters.seoSeoKeywordIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports every phrase a domain already places for.  For each one it gives the phrase, the position on the results page, the page of the site that placed, that result\'s headline, the phrase\'s monthly searches and the visits the placement is estimated to earn. It is the single most direct question about a site\'s search visibility — yours or a competitor\'s, since it takes any domain.  Position is the ABSOLUTE rank, counting every element on the page — the ads, the answer boxes, the map — because that is what a person scrolling actually passes. An organic-only rank flatters a result that sits below half a screen of other things.  It is priced per row, so Limit decides what the call costs, and Total says how many more there were.
@@ -494,8 +496,8 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoRank(requestParameters: SeoApiSeoRankRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoRankOut> {
-            return localVarFp.seoRank(requestParameters.seoRankIn, options).then((request) => request(axios, basePath));
+        seoRank(requestParameters: SeoApiSeoRankRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoRankOut> {
+            return localVarFp.seoRank(requestParameters.seoSeoRankIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes what every call on this surface costs.  The numbers are read from the upstream\'s own published price list, not from a table kept here, so a price change on their side moves this card within the hour and moves what is debited with it. That is the whole of the pricing model: this surface resells at cost, and the cost is theirs to state.  A row has two numbers because a call has two costs: a flat charge for asking, and a charge per row returned. An op priced per request reports zero for the second, and for one priced per row the total is `request + result x limit` — which is the amount your balance is authorized against before the call, and roughly what you will be debited after it.  It is a read and it is free: asking what something costs must not require the balance that would pay for it. If the upstream cannot be reached the card comes back empty rather than stale — a price nobody can confirm is not a price.
@@ -503,7 +505,7 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        seoRate(options?: RawAxiosRequestConfig): AxiosPromise<SeoRateOut> {
+        seoRate(options?: RawAxiosRequestConfig): AxiosPromise<SeoSeoRateOut> {
             return localVarFp.seoRate(options).then((request) => request(axios, basePath));
         },
     };
@@ -517,10 +519,10 @@ export const SeoApiFactory = function (configuration?: Configuration, basePath?:
 export interface SeoApiSeoAuditRequest {
     /**
      * 
-     * @type {SeoAuditIn}
+     * @type {SeoSeoAuditIn}
      * @memberof SeoApiSeoAudit
      */
-    readonly seoAuditIn: SeoAuditIn
+    readonly seoSeoAuditIn: SeoSeoAuditIn
 }
 
 /**
@@ -531,10 +533,10 @@ export interface SeoApiSeoAuditRequest {
 export interface SeoApiSeoBacklinkRequest {
     /**
      * 
-     * @type {SeoBacklinkIn}
+     * @type {SeoSeoBacklinkIn}
      * @memberof SeoApiSeoBacklink
      */
-    readonly seoBacklinkIn: SeoBacklinkIn
+    readonly seoSeoBacklinkIn: SeoSeoBacklinkIn
 }
 
 /**
@@ -545,10 +547,10 @@ export interface SeoApiSeoBacklinkRequest {
 export interface SeoApiSeoCompetitorRequest {
     /**
      * 
-     * @type {SeoCompetitorIn}
+     * @type {SeoSeoCompetitorIn}
      * @memberof SeoApiSeoCompetitor
      */
-    readonly seoCompetitorIn: SeoCompetitorIn
+    readonly seoSeoCompetitorIn: SeoSeoCompetitorIn
 }
 
 /**
@@ -559,10 +561,10 @@ export interface SeoApiSeoCompetitorRequest {
 export interface SeoApiSeoIdeaRequest {
     /**
      * 
-     * @type {SeoIdeaIn}
+     * @type {SeoSeoIdeaIn}
      * @memberof SeoApiSeoIdea
      */
-    readonly seoIdeaIn: SeoIdeaIn
+    readonly seoSeoIdeaIn: SeoSeoIdeaIn
 }
 
 /**
@@ -573,10 +575,10 @@ export interface SeoApiSeoIdeaRequest {
 export interface SeoApiSeoKeywordRequest {
     /**
      * 
-     * @type {SeoKeywordIn}
+     * @type {SeoSeoKeywordIn}
      * @memberof SeoApiSeoKeyword
      */
-    readonly seoKeywordIn: SeoKeywordIn
+    readonly seoSeoKeywordIn: SeoSeoKeywordIn
 }
 
 /**
@@ -587,10 +589,10 @@ export interface SeoApiSeoKeywordRequest {
 export interface SeoApiSeoRankRequest {
     /**
      * 
-     * @type {SeoRankIn}
+     * @type {SeoSeoRankIn}
      * @memberof SeoApiSeoRank
      */
-    readonly seoRankIn: SeoRankIn
+    readonly seoSeoRankIn: SeoSeoRankIn
 }
 
 /**
@@ -609,7 +611,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoAudit(requestParameters: SeoApiSeoAuditRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoAudit(requestParameters.seoAuditIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoAudit(requestParameters.seoSeoAuditIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -621,7 +623,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoBacklink(requestParameters: SeoApiSeoBacklinkRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoBacklink(requestParameters.seoBacklinkIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoBacklink(requestParameters.seoSeoBacklinkIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -633,7 +635,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoCompetitor(requestParameters: SeoApiSeoCompetitorRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoCompetitor(requestParameters.seoCompetitorIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoCompetitor(requestParameters.seoSeoCompetitorIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -645,7 +647,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoIdea(requestParameters: SeoApiSeoIdeaRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoIdea(requestParameters.seoIdeaIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoIdea(requestParameters.seoSeoIdeaIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -657,7 +659,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoKeyword(requestParameters: SeoApiSeoKeywordRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoKeyword(requestParameters.seoKeywordIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoKeyword(requestParameters.seoSeoKeywordIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -669,7 +671,7 @@ export class SeoApi extends BaseAPI {
      * @memberof SeoApi
      */
     public seoRank(requestParameters: SeoApiSeoRankRequest, options?: RawAxiosRequestConfig) {
-        return SeoApiFp(this.configuration).seoRank(requestParameters.seoRankIn, options).then((request) => request(this.axios, this.basePath));
+        return SeoApiFp(this.configuration).seoRank(requestParameters.seoSeoRankIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

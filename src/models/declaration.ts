@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DeclareEnv } from './declare-env';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { SecretRef } from './secret-ref';
 
 /**
  * 
@@ -24,55 +27,67 @@ import type { DeclareEnv } from './declare-env';
  */
 export interface Declaration {
     /**
-     * Application is the CD Application name the generator mints: <org>-<name>. It is the join key against /v1/platform/cd.
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'application'?: string;
     /**
-     * Automated is cd.automated: false means the Application reports drift and NOTHING moves. It is off by default for a new file on purpose.
+     * 
      * @type {boolean}
      * @memberof Declaration
      */
     'automated'?: boolean;
     /**
-     * image.digest — wins over tag
+     * 
+     * @type {string}
+     * @memberof Declaration
+     */
+    'component'?: string;
+    /**
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'digest'?: string;
     /**
-     * Env is the declared container environment, as the chart\'s list of {name,value}. It is read back so a re-declare of an identical body is a no-op rather than a refusal — idempotency is what makes a retry safe.
+     * 
      * @type {Array<DeclareEnv>}
      * @memberof Declaration
      */
     'env'?: Array<DeclareEnv>;
     /**
-     * ingress.hosts, both shapes flattened
+     * 
      * @type {Array<string>}
      * @memberof Declaration
      */
     'hosts'?: Array<string>;
     /**
-     * the Helm release name — the file\'s basename
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'name'?: string;
     /**
-     * Org is the owner. It is ALSO the values directory and the destination namespace, because those are one value under one name — see the header.
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'org'?: string;
     /**
-     * Path is the file, relative to the repository root.
+     * 
+     * @type {string}
+     * @memberof Declaration
+     */
+    'partOf'?: string;
+    /**
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'path'?: string;
     /**
-     * Project is the AppProject the sync is admitted under, derived from the directory exactly as the ApplicationSet derives it. It differs from Org for a reserved directory, which syncs under the platform fence.
+     * 
      * @type {string}
      * @memberof Declaration
      */
@@ -84,13 +99,19 @@ export interface Declaration {
      */
     'replicas'?: number;
     /**
-     * image.repository
+     * 
      * @type {string}
      * @memberof Declaration
      */
     'repository'?: string;
     /**
-     * image.tag
+     * 
+     * @type {Array<SecretRef>}
+     * @memberof Declaration
+     */
+    'secrets'?: Array<SecretRef>;
+    /**
+     * 
      * @type {string}
      * @memberof Declaration
      */

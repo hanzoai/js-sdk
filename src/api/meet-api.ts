@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { MeetHealth } from '../models';
+import type { MeetMeetHealth } from '../models';
 // @ts-ignore
-import type { RecordIn } from '../models';
+import type { MeetRecordIn } from '../models';
 // @ts-ignore
-import type { Recording } from '../models';
+import type { MeetRecording } from '../models';
 // @ts-ignore
-import type { Venue } from '../models';
+import type { MeetVenue } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * MeetApi - axios parameter creator
  * @export
@@ -36,8 +38,8 @@ import type { Venue } from '../models';
 export const MeetApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Health reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
-         * @summary Health reports whether the office can mint join tokens.
+         * Reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Reports whether the office can mint join tokens.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -195,13 +197,13 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
          * @summary Start recording a room, or return the recording already running
-         * @param {RecordIn} recordIn 
+         * @param {MeetRecordIn} meetRecordIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetRecordStart: async (recordIn: RecordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'recordIn' is not null or undefined
-            assertParamExists('meetRecordStart', 'recordIn', recordIn)
+        meetRecordStart: async (meetRecordIn: MeetRecordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'meetRecordIn' is not null or undefined
+            assertParamExists('meetRecordStart', 'meetRecordIn', meetRecordIn)
             const localVarPath = `/v1/meet/record`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -225,7 +227,7 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(recordIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(meetRecordIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -318,12 +320,12 @@ export const MeetApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MeetApiAxiosParamCreator(configuration)
     return {
         /**
-         * Health reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
-         * @summary Health reports whether the office can mint join tokens.
+         * Reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Reports whether the office can mint join tokens.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMeetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetHealth>> {
+        async getMeetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetMeetHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.getMeetHealth']?.[localVarOperationServerIndex]?.url;
@@ -349,7 +351,7 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetCall(space: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Venue>> {
+        async meetCall(space: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetVenue>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.meetCall(space, room, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetCall']?.[localVarOperationServerIndex]?.url;
@@ -362,7 +364,7 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetRecordRead(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
+        async meetRecordRead(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetRecording>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordRead(room, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordRead']?.[localVarOperationServerIndex]?.url;
@@ -371,12 +373,12 @@ export const MeetApiFp = function(configuration?: Configuration) {
         /**
          * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
          * @summary Start recording a room, or return the recording already running
-         * @param {RecordIn} recordIn 
+         * @param {MeetRecordIn} meetRecordIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetRecordStart(recordIn: RecordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordStart(recordIn, options);
+        async meetRecordStart(meetRecordIn: MeetRecordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetRecording>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordStart(meetRecordIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -388,7 +390,7 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetRecordStop(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
+        async meetRecordStop(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetRecording>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordStop(room, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordStop']?.[localVarOperationServerIndex]?.url;
@@ -417,12 +419,12 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = MeetApiFp(configuration)
     return {
         /**
-         * Health reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
-         * @summary Health reports whether the office can mint join tokens.
+         * Reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Reports whether the office can mint join tokens.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMeetHealth(options?: RawAxiosRequestConfig): AxiosPromise<MeetHealth> {
+        getMeetHealth(options?: RawAxiosRequestConfig): AxiosPromise<MeetMeetHealth> {
             return localVarFp.getMeetHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -441,7 +443,7 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Venue> {
+        meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<MeetVenue> {
             return localVarFp.meetCall(requestParameters.space, requestParameters.room, options).then((request) => request(axios, basePath));
         },
         /**
@@ -451,7 +453,7 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetRecordRead(requestParameters: MeetApiMeetRecordReadRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
+        meetRecordRead(requestParameters: MeetApiMeetRecordReadRequest, options?: RawAxiosRequestConfig): AxiosPromise<MeetRecording> {
             return localVarFp.meetRecordRead(requestParameters.room, options).then((request) => request(axios, basePath));
         },
         /**
@@ -461,8 +463,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetRecordStart(requestParameters: MeetApiMeetRecordStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
-            return localVarFp.meetRecordStart(requestParameters.recordIn, options).then((request) => request(axios, basePath));
+        meetRecordStart(requestParameters: MeetApiMeetRecordStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<MeetRecording> {
+            return localVarFp.meetRecordStart(requestParameters.meetRecordIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Ends a room\'s recording — EVERY one of them.  Whoever the room admits may stop it, including someone who did not start it: a person being recorded has to be able to end it, and a rule that only the starter may stop would deny exactly that. Stopping is free — a caller made to pay to stop being recorded would be paying for the wrong thing.  200 MEANS THE ROOM IS NOT BEING RECORDED, and that is why this ends all of them rather than the first. \"At most one per room\" is an invariant this surface wants and cannot impose: reading the list and starting are two calls, and two replicas racing through that window both start. When the list comes back holding two, two is the truth — and ending one while answering 200 tells the person withdrawing consent that it stopped while a second worker keeps writing. A stop that cannot finish the job says so instead.  Stopping a room that is not being recorded is not an error. The answer names the room with no recording on it, which is the state the caller asked for.
@@ -471,7 +473,7 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetRecordStop(requestParameters: MeetApiMeetRecordStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
+        meetRecordStop(requestParameters: MeetApiMeetRecordStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<MeetRecording> {
             return localVarFp.meetRecordStop(requestParameters.room, options).then((request) => request(axios, basePath));
         },
         /**
@@ -529,10 +531,10 @@ export interface MeetApiMeetRecordReadRequest {
 export interface MeetApiMeetRecordStartRequest {
     /**
      * 
-     * @type {RecordIn}
+     * @type {MeetRecordIn}
      * @memberof MeetApiMeetRecordStart
      */
-    readonly recordIn: RecordIn
+    readonly meetRecordIn: MeetRecordIn
 }
 
 /**
@@ -557,8 +559,8 @@ export interface MeetApiMeetRecordStopRequest {
  */
 export class MeetApi extends BaseAPI {
     /**
-     * Health reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
-     * @summary Health reports whether the office can mint join tokens.
+     * Reports whether the office can mint join tokens.  It reports whether this deployment holds the LiveKit key pair it needs: ready:true with 200 when tokens can be minted, the SAME body with ready:false, status \"degraded\" and 503 when they cannot — so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: ready is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+     * @summary Reports whether the office can mint join tokens.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MeetApi
@@ -611,7 +613,7 @@ export class MeetApi extends BaseAPI {
      * @memberof MeetApi
      */
     public meetRecordStart(requestParameters: MeetApiMeetRecordStartRequest, options?: RawAxiosRequestConfig) {
-        return MeetApiFp(this.configuration).meetRecordStart(requestParameters.recordIn, options).then((request) => request(this.axios, this.basePath));
+        return MeetApiFp(this.configuration).meetRecordStart(requestParameters.meetRecordIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

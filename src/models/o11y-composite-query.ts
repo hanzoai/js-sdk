@@ -15,15 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yBuilderQuery } from './o11y-builder-query';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { O11yDatastoreQuery } from './o11y-datastore-query';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { O11yPromQuery } from './o11y-prom-query';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { O11yQueryEnvelope } from './o11y-query-envelope';
 
 /**
@@ -33,52 +24,10 @@ import type { O11yQueryEnvelope } from './o11y-query-envelope';
  */
 export interface O11yCompositeQuery {
     /**
-     * 
-     * @type {{ [key: string]: O11yBuilderQuery; }}
-     * @memberof O11yCompositeQuery
-     */
-    'builderQueries'?: { [key: string]: O11yBuilderQuery; };
-    /**
-     * 
-     * @type {{ [key: string]: O11yDatastoreQuery; }}
-     * @memberof O11yCompositeQuery
-     */
-    'chQueries'?: { [key: string]: O11yDatastoreQuery; };
-    /**
-     * FillGaps is used to fill the gaps in the time series data
-     * @type {boolean}
-     * @memberof O11yCompositeQuery
-     */
-    'fillGaps'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yCompositeQuery
-     */
-    'panelType'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: O11yPromQuery; }}
-     * @memberof O11yCompositeQuery
-     */
-    'promQueries'?: { [key: string]: O11yPromQuery; };
-    /**
-     * 
+     * Queries is the queries to use for the request.
      * @type {Array<O11yQueryEnvelope>}
      * @memberof O11yCompositeQuery
      */
     'queries'?: Array<O11yQueryEnvelope>;
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yCompositeQuery
-     */
-    'queryType'?: string;
-    /**
-     * Unit for the time series data shown in the graph This is used in alerts to format the value and threshold
-     * @type {string}
-     * @memberof O11yCompositeQuery
-     */
-    'unit'?: string;
 }
 

@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { BrowserTagOut } from './browser-tag-out';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Decision } from './decision';
 
 /**
  * 
@@ -23,6 +26,18 @@ import type { BrowserTagOut } from './browser-tag-out';
  * @interface TagConfig
  */
 export interface TagConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagConfig
+     */
+    'audience'?: string;
+    /**
+     * 
+     * @type {Decision}
+     * @memberof TagConfig
+     */
+    'consent'?: Decision;
     /**
      * 
      * @type {Array<BrowserTagOut>}

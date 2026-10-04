@@ -22,49 +22,51 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ActivationReq } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ActivationSet } from '../models';
+import type { ToolActivationReq } from '../models';
 // @ts-ignore
-import type { AuthoredPluginList } from '../models';
+import type { ToolActivationSet } from '../models';
 // @ts-ignore
-import type { AuthoredSkillList } from '../models';
+import type { ToolAuthoredPluginList } from '../models';
 // @ts-ignore
-import type { BuildOut } from '../models';
+import type { ToolAuthoredSkillList } from '../models';
 // @ts-ignore
-import type { BuildRequest } from '../models';
+import type { ToolBuildOut } from '../models';
 // @ts-ignore
-import type { CreateServerReq } from '../models';
+import type { ToolBuildRequest } from '../models';
 // @ts-ignore
-import type { CurateReq } from '../models';
+import type { ToolCreateServerReq } from '../models';
 // @ts-ignore
-import type { MCPListing } from '../models';
+import type { ToolKit } from '../models';
 // @ts-ignore
-import type { MCPServer } from '../models';
+import type { ToolMCPListing } from '../models';
 // @ts-ignore
-import type { McpCatalog } from '../models';
+import type { ToolMCPServer } from '../models';
 // @ts-ignore
-import type { McpCatalogSync } from '../models';
+import type { ToolMcpCatalog } from '../models';
 // @ts-ignore
-import type { McpServerList } from '../models';
+import type { ToolMcpServerList } from '../models';
 // @ts-ignore
-import type { PluginDeleted } from '../models';
+import type { ToolMuteReq } from '../models';
 // @ts-ignore
-import type { PluginMountList } from '../models';
+import type { ToolPluginDeleted } from '../models';
 // @ts-ignore
-import type { SkillDeleted } from '../models';
+import type { ToolPluginMountList } from '../models';
 // @ts-ignore
-import type { SkillIn } from '../models';
+import type { ToolSkillDeleted } from '../models';
 // @ts-ignore
-import type { SkillWritten } from '../models';
+import type { ToolSkillIn } from '../models';
 // @ts-ignore
-import type { SourceToolList } from '../models';
+import type { ToolSkillWritten } from '../models';
 // @ts-ignore
-import type { ToolCall } from '../models';
+import type { ToolSourceToolList } from '../models';
 // @ts-ignore
-import type { ToolList } from '../models';
+import type { ToolToolCall } from '../models';
 // @ts-ignore
-import type { ToolResult } from '../models';
+import type { ToolToolList } from '../models';
+// @ts-ignore
+import type { ToolToolResult } from '../models';
 /**
  * ToolApi - axios parameter creator
  * @export
@@ -72,7 +74,7 @@ import type { ToolResult } from '../models';
 export const ToolApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
+         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404. Like registering one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
          * @param {string} id ID is the server to deregister, from the path.
          * @param {*} [options] Override http request option.
@@ -148,7 +150,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
+         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is. Like writing one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Removes one of the caller org\'s authored skills.
          * @param {string} id ID is the skill to remove, from the path. It is the skill\&#39;s name.
          * @param {*} [options] Override http request option.
@@ -264,7 +266,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.  It needs no credential: the shelf is a copy of public registries, the same for every org, and a storefront shows it to a visitor before anyone signs in.
          * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
          * @param {string} [q] Q matches the name, title or description, case-insensitively.
          * @param {string} [featured] Featured keeps only the listings we put on the front of the shelf, and only when it is exactly the string \&quot;true\&quot;.
@@ -286,10 +288,6 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
@@ -323,7 +321,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
+         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back. Like the shelf, it needs no credential.
          * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
          * @param {string} id ID is the listing, from the path. It is the publisher\&#39;s reverse-DNS name with its one slash written as an underscore — \&quot;com.stripe_mcp\&quot;.
          * @param {*} [options] Override http request option.
@@ -334,6 +332,36 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('getToolCatalogById', 'id', id)
             const localVarPath = `/v1/tool/catalog/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane. Skills are the documents of those an admin of the org activated; servers are those an admin registered, each by its id with the tools of it an admin activated — never an address or a credential, which stay on the plane. Both leave out what the caller muted, and muted names it. It is the one read a run makes, so what it answers is what the caller\'s runs carry.
+         * @summary Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getToolKit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/tool/kit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -361,7 +389,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
+         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it. Each also says whether its tools could be listed — status, a reason when they could not, and how many there are — so a server that contributes nothing says why.  The whole URL is answered to an admin of the org or a SuperAdmin, who register servers. A member is answered its scheme and host: which server it is, and not a path or query an admin may have put a key in.
          * @summary Lists the external MCP servers the caller\'s org has registered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -541,59 +569,15 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
-         * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-         * @param {string} id ID is the listing to curate, from the path.
-         * @param {CurateReq} curateReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchToolCatalogById: async (id: string, curateReq: CurateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchToolCatalogById', 'id', id)
-            // verify required parameter 'curateReq' is not null or undefined
-            assertParamExists('patchToolCatalogById', 'curateReq', curateReq)
-            const localVarPath = `/v1/tool/catalog/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(curateReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Runs one of the caller\'s activated tools and answers with its output.  This is the endpoint onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
          * @summary Runs one of the caller\'s activated tools and answers with its output.
-         * @param {ToolCall} toolCall 
+         * @param {ToolToolCall} toolToolCall 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolCall: async (toolCall: ToolCall, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'toolCall' is not null or undefined
-            assertParamExists('postToolCall', 'toolCall', toolCall)
+        postToolCall: async (toolToolCall: ToolToolCall, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolToolCall' is not null or undefined
+            assertParamExists('postToolCall', 'toolToolCall', toolToolCall)
             const localVarPath = `/v1/tool/call`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -617,7 +601,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(toolCall, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(toolToolCall, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -625,49 +609,15 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher\'s own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
-         * @summary Pulls the public MCP registry into our canonical copy and reports what changed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postToolCatalogSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/tool/catalog/sync`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
+         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
-         * @param {CreateServerReq} createServerReq 
+         * @param {ToolCreateServerReq} toolCreateServerReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolMcpServers: async (createServerReq: CreateServerReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createServerReq' is not null or undefined
-            assertParamExists('postToolMcpServers', 'createServerReq', createServerReq)
+        postToolMcpServers: async (toolCreateServerReq: ToolCreateServerReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolCreateServerReq' is not null or undefined
+            assertParamExists('postToolMcpServers', 'toolCreateServerReq', toolCreateServerReq)
             const localVarPath = `/v1/tool/mcp/servers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -691,7 +641,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createServerReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(toolCreateServerReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -701,13 +651,13 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Builds and stores one plugin for the caller\'s org. The 201 carries the bundle\'s size, whether a model wrote the source, and the plugin as stored.  Post `source` to build TypeScript as-is, or `spec` — an OpenAPI document or plain prose describing the endpoints — to have one generated; the generated source comes back in the answer, so a caller reads what will run before it runs. Exactly one of the two, and `name` must be one lowercase path segment; both or neither is 400.  COMPILING IS THE GATE. The source goes through the same pipeline the committed connectors do — esbuild to one CommonJS program, then compiled in the goja runtime that will actually execute it — and anything that fails is rejected and NEVER stored. So a plugin in the store is one this deployment has already loaded once, not one a model claimed was fine. A failed build answers 422 carrying the diagnostics a caller needs to fix it: the bundler\'s error (`detail`), the source that failed, and whether the model wrote it.  CREDENTIALS ARE NOT PART OF A PLUGIN. A plugin names the connectors `provider` it needs and reads that credential from `ctx.auth` at run time, under KMS custody. Source that carries something key-shaped is REFUSED rather than silently persisted — a scrubbed key looks like it worked.
          * @summary Builds and stores one plugin for the caller\'s org.
-         * @param {BuildRequest} buildRequest 
+         * @param {ToolBuildRequest} toolBuildRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolPluginsBuild: async (buildRequest: BuildRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'buildRequest' is not null or undefined
-            assertParamExists('postToolPluginsBuild', 'buildRequest', buildRequest)
+        postToolPluginsBuild: async (toolBuildRequest: ToolBuildRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolBuildRequest' is not null or undefined
+            assertParamExists('postToolPluginsBuild', 'toolBuildRequest', toolBuildRequest)
             const localVarPath = `/v1/tool/plugins/build`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -731,7 +681,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(buildRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(toolBuildRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -739,15 +689,15 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
+         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.  An activated skill is carried into every agent run in the org, so writing one takes an admin of the org or a SuperAdmin; a member is refused 403. The write is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
-         * @param {SkillIn} skillIn 
+         * @param {ToolSkillIn} toolSkillIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolSkills: async (skillIn: SkillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'skillIn' is not null or undefined
-            assertParamExists('postToolSkills', 'skillIn', skillIn)
+        postToolSkills: async (toolSkillIn: ToolSkillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolSkillIn' is not null or undefined
+            assertParamExists('postToolSkills', 'toolSkillIn', toolSkillIn)
             const localVarPath = `/v1/tool/skills`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -771,7 +721,7 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(skillIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(toolSkillIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -779,15 +729,15 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
+         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.  Switching a skill (skill_<name>) or a tool of an MCP server the org registered (<server>_<tool>) changes what every agent run in the org carries, so it takes an admin of the org or a SuperAdmin: a member naming one is refused 403 and nothing in the request is switched. Every change is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
-         * @param {ActivationReq} activationReq 
+         * @param {ToolActivationReq} toolActivationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putToolActivation: async (activationReq: ActivationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'activationReq' is not null or undefined
-            assertParamExists('putToolActivation', 'activationReq', activationReq)
+        putToolActivation: async (toolActivationReq: ToolActivationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolActivationReq' is not null or undefined
+            assertParamExists('putToolActivation', 'toolActivationReq', toolActivationReq)
             const localVarPath = `/v1/tool/activation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -811,7 +761,47 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(activationReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(toolActivationReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after. The layer only narrows: a name the org\'s kit does not carry is refused 400, since muting it would say nothing, and unmuting never gives the caller more than an admin put in place. It is the caller\'s own, so any member may write it. More than 256 names is refused 413.
+         * @summary Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after.
+         * @param {ToolMuteReq} toolMuteReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putToolKit: async (toolMuteReq: ToolMuteReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolMuteReq' is not null or undefined
+            assertParamExists('putToolKit', 'toolMuteReq', toolMuteReq)
+            const localVarPath = `/v1/tool/kit`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(toolMuteReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -829,7 +819,7 @@ export const ToolApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ToolApiAxiosParamCreator(configuration)
     return {
         /**
-         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
+         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404. Like registering one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
          * @param {string} id ID is the server to deregister, from the path.
          * @param {*} [options] Override http request option.
@@ -848,20 +838,20 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteToolPluginsAuthoredById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginDeleted>> {
+        async deleteToolPluginsAuthoredById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolPluginDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteToolPluginsAuthoredById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.deleteToolPluginsAuthoredById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
+         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is. Like writing one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Removes one of the caller org\'s authored skills.
          * @param {string} id ID is the skill to remove, from the path. It is the skill\&#39;s name.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteToolSkillsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillDeleted>> {
+        async deleteToolSkillsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolSkillDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteToolSkillsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.deleteToolSkillsById']?.[localVarOperationServerIndex]?.url;
@@ -875,7 +865,7 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTool(source?: string, activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolList>> {
+        async getTool(source?: string, activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolToolList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTool(source, activated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getTool']?.[localVarOperationServerIndex]?.url;
@@ -887,14 +877,14 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolActivation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
+        async getToolActivation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolActivationSet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolActivation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolActivation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.  It needs no credential: the shelf is a copy of public registries, the same for every org, and a storefront shows it to a visitor before anyone signs in.
          * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
          * @param {string} [q] Q matches the name, title or description, case-insensitively.
          * @param {string} [featured] Featured keeps only the listings we put on the front of the shelf, and only when it is exactly the string \&quot;true\&quot;.
@@ -904,32 +894,44 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolCatalog(q?: string, featured?: string, official?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalog>> {
+        async getToolCatalog(q?: string, featured?: string, official?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolMcpCatalog>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolCatalog(q, featured, official, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
+         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back. Like the shelf, it needs no credential.
          * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
          * @param {string} id ID is the listing, from the path. It is the publisher\&#39;s reverse-DNS name with its one slash written as an underscore — \&quot;com.stripe_mcp\&quot;.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolCatalogById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
+        async getToolCatalogById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolMCPListing>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolCatalogById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolCatalogById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
+         * Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane. Skills are the documents of those an admin of the org activated; servers are those an admin registered, each by its id with the tools of it an admin activated — never an address or a credential, which stay on the plane. Both leave out what the caller muted, and muted names it. It is the one read a run makes, so what it answers is what the caller\'s runs carry.
+         * @summary Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getToolKit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolKit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getToolKit(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolKit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it. Each also says whether its tools could be listed — status, a reason when they could not, and how many there are — so a server that contributes nothing says why.  The whole URL is answered to an admin of the org or a SuperAdmin, who register servers. A member is answered its scheme and host: which server it is, and not a path or query an admin may have put a key in.
          * @summary Lists the external MCP servers the caller\'s org has registered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolMcpServers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerList>> {
+        async getToolMcpServers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolMcpServerList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolMcpServers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolMcpServers']?.[localVarOperationServerIndex]?.url;
@@ -942,7 +944,7 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolPlugins(all?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginMountList>> {
+        async getToolPlugins(all?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolPluginMountList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolPlugins(all, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolPlugins']?.[localVarOperationServerIndex]?.url;
@@ -954,7 +956,7 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolPluginsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredPluginList>> {
+        async getToolPluginsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolAuthoredPluginList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolPluginsAuthored(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolPluginsAuthored']?.[localVarOperationServerIndex]?.url;
@@ -967,7 +969,7 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolSkills(activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceToolList>> {
+        async getToolSkills(activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolSourceToolList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolSkills(activated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolSkills']?.[localVarOperationServerIndex]?.url;
@@ -979,60 +981,34 @@ export const ToolApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToolSkillsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredSkillList>> {
+        async getToolSkillsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolAuthoredSkillList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getToolSkillsAuthored(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.getToolSkillsAuthored']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
-         * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-         * @param {string} id ID is the listing to curate, from the path.
-         * @param {CurateReq} curateReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchToolCatalogById(id: string, curateReq: CurateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchToolCatalogById(id, curateReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolApi.patchToolCatalogById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Runs one of the caller\'s activated tools and answers with its output.  This is the endpoint onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
          * @summary Runs one of the caller\'s activated tools and answers with its output.
-         * @param {ToolCall} toolCall 
+         * @param {ToolToolCall} toolToolCall 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postToolCall(toolCall: ToolCall, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolCall(toolCall, options);
+        async postToolCall(toolToolCall: ToolToolCall, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolToolResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolCall(toolToolCall, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolCall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher\'s own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
-         * @summary Pulls the public MCP registry into our canonical copy and reports what changed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postToolCatalogSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalogSync>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolCatalogSync(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolCatalogSync']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
+         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
-         * @param {CreateServerReq} createServerReq 
+         * @param {ToolCreateServerReq} toolCreateServerReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postToolMcpServers(createServerReq: CreateServerReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPServer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolMcpServers(createServerReq, options);
+        async postToolMcpServers(toolCreateServerReq: ToolCreateServerReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolMCPServer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolMcpServers(toolCreateServerReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolMcpServers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1040,40 +1016,53 @@ export const ToolApiFp = function(configuration?: Configuration) {
         /**
          * Builds and stores one plugin for the caller\'s org. The 201 carries the bundle\'s size, whether a model wrote the source, and the plugin as stored.  Post `source` to build TypeScript as-is, or `spec` — an OpenAPI document or plain prose describing the endpoints — to have one generated; the generated source comes back in the answer, so a caller reads what will run before it runs. Exactly one of the two, and `name` must be one lowercase path segment; both or neither is 400.  COMPILING IS THE GATE. The source goes through the same pipeline the committed connectors do — esbuild to one CommonJS program, then compiled in the goja runtime that will actually execute it — and anything that fails is rejected and NEVER stored. So a plugin in the store is one this deployment has already loaded once, not one a model claimed was fine. A failed build answers 422 carrying the diagnostics a caller needs to fix it: the bundler\'s error (`detail`), the source that failed, and whether the model wrote it.  CREDENTIALS ARE NOT PART OF A PLUGIN. A plugin names the connectors `provider` it needs and reads that credential from `ctx.auth` at run time, under KMS custody. Source that carries something key-shaped is REFUSED rather than silently persisted — a scrubbed key looks like it worked.
          * @summary Builds and stores one plugin for the caller\'s org.
-         * @param {BuildRequest} buildRequest 
+         * @param {ToolBuildRequest} toolBuildRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postToolPluginsBuild(buildRequest: BuildRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolPluginsBuild(buildRequest, options);
+        async postToolPluginsBuild(toolBuildRequest: ToolBuildRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolBuildOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolPluginsBuild(toolBuildRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolPluginsBuild']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
+         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.  An activated skill is carried into every agent run in the org, so writing one takes an admin of the org or a SuperAdmin; a member is refused 403. The write is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
-         * @param {SkillIn} skillIn 
+         * @param {ToolSkillIn} toolSkillIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postToolSkills(skillIn: SkillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillWritten>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolSkills(skillIn, options);
+        async postToolSkills(toolSkillIn: ToolSkillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolSkillWritten>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolSkills(toolSkillIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolSkills']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
+         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.  Switching a skill (skill_<name>) or a tool of an MCP server the org registered (<server>_<tool>) changes what every agent run in the org carries, so it takes an admin of the org or a SuperAdmin: a member naming one is refused 403 and nothing in the request is switched. Every change is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
-         * @param {ActivationReq} activationReq 
+         * @param {ToolActivationReq} toolActivationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putToolActivation(activationReq: ActivationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putToolActivation(activationReq, options);
+        async putToolActivation(toolActivationReq: ToolActivationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolActivationSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putToolActivation(toolActivationReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ToolApi.putToolActivation']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after. The layer only narrows: a name the org\'s kit does not carry is refused 400, since muting it would say nothing, and unmuting never gives the caller more than an admin put in place. It is the caller\'s own, so any member may write it. More than 256 names is refused 413.
+         * @summary Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after.
+         * @param {ToolMuteReq} toolMuteReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putToolKit(toolMuteReq: ToolMuteReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolKit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putToolKit(toolMuteReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ToolApi.putToolKit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1087,7 +1076,7 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = ToolApiFp(configuration)
     return {
         /**
-         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
+         * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404. Like registering one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
          * @param {ToolApiDeleteToolMcpServersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1103,17 +1092,17 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteToolPluginsAuthoredById(requestParameters: ToolApiDeleteToolPluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PluginDeleted> {
+        deleteToolPluginsAuthoredById(requestParameters: ToolApiDeleteToolPluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolPluginDeleted> {
             return localVarFp.deleteToolPluginsAuthoredById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
+         * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is. Like writing one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
          * @summary Removes one of the caller org\'s authored skills.
          * @param {ToolApiDeleteToolSkillsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteToolSkillsById(requestParameters: ToolApiDeleteToolSkillsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillDeleted> {
+        deleteToolSkillsById(requestParameters: ToolApiDeleteToolSkillsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolSkillDeleted> {
             return localVarFp.deleteToolSkillsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1123,7 +1112,7 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTool(requestParameters: ToolApiGetToolRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolList> {
+        getTool(requestParameters: ToolApiGetToolRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolToolList> {
             return localVarFp.getTool(requestParameters.source, requestParameters.activated, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1132,36 +1121,45 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolActivation(options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
+        getToolActivation(options?: RawAxiosRequestConfig): AxiosPromise<ToolActivationSet> {
             return localVarFp.getToolActivation(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+         * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.  It needs no credential: the shelf is a copy of public registries, the same for every org, and a storefront shows it to a visitor before anyone signs in.
          * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
          * @param {ToolApiGetToolCatalogRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolCatalog(requestParameters: ToolApiGetToolCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<McpCatalog> {
+        getToolCatalog(requestParameters: ToolApiGetToolCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolMcpCatalog> {
             return localVarFp.getToolCatalog(requestParameters.q, requestParameters.featured, requestParameters.official, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
+         * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back. Like the shelf, it needs no credential.
          * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
          * @param {ToolApiGetToolCatalogByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolCatalogById(requestParameters: ToolApiGetToolCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
+        getToolCatalogById(requestParameters: ToolApiGetToolCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolMCPListing> {
             return localVarFp.getToolCatalogById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
+         * Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane. Skills are the documents of those an admin of the org activated; servers are those an admin registered, each by its id with the tools of it an admin activated — never an address or a credential, which stay on the plane. Both leave out what the caller muted, and muted names it. It is the one read a run makes, so what it answers is what the caller\'s runs carry.
+         * @summary Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getToolKit(options?: RawAxiosRequestConfig): AxiosPromise<ToolKit> {
+            return localVarFp.getToolKit(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it. Each also says whether its tools could be listed — status, a reason when they could not, and how many there are — so a server that contributes nothing says why.  The whole URL is answered to an admin of the org or a SuperAdmin, who register servers. A member is answered its scheme and host: which server it is, and not a path or query an admin may have put a key in.
          * @summary Lists the external MCP servers the caller\'s org has registered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolMcpServers(options?: RawAxiosRequestConfig): AxiosPromise<McpServerList> {
+        getToolMcpServers(options?: RawAxiosRequestConfig): AxiosPromise<ToolMcpServerList> {
             return localVarFp.getToolMcpServers(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1171,7 +1169,7 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolPlugins(requestParameters: ToolApiGetToolPluginsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PluginMountList> {
+        getToolPlugins(requestParameters: ToolApiGetToolPluginsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolPluginMountList> {
             return localVarFp.getToolPlugins(requestParameters.all, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1180,7 +1178,7 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolPluginsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredPluginList> {
+        getToolPluginsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<ToolAuthoredPluginList> {
             return localVarFp.getToolPluginsAuthored(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1190,7 +1188,7 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolSkills(requestParameters: ToolApiGetToolSkillsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SourceToolList> {
+        getToolSkills(requestParameters: ToolApiGetToolSkillsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolSourceToolList> {
             return localVarFp.getToolSkills(requestParameters.activated, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1199,18 +1197,8 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToolSkillsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredSkillList> {
+        getToolSkillsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<ToolAuthoredSkillList> {
             return localVarFp.getToolSkillsAuthored(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
-         * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-         * @param {ToolApiPatchToolCatalogByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchToolCatalogById(requestParameters: ToolApiPatchToolCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
-            return localVarFp.patchToolCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one of the caller\'s activated tools and answers with its output.  This is the endpoint onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
@@ -1219,27 +1207,18 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolCall(requestParameters: ToolApiPostToolCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolResult> {
-            return localVarFp.postToolCall(requestParameters.toolCall, options).then((request) => request(axios, basePath));
+        postToolCall(requestParameters: ToolApiPostToolCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolToolResult> {
+            return localVarFp.postToolCall(requestParameters.toolToolCall, options).then((request) => request(axios, basePath));
         },
         /**
-         * Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher\'s own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
-         * @summary Pulls the public MCP registry into our canonical copy and reports what changed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postToolCatalogSync(options?: RawAxiosRequestConfig): AxiosPromise<McpCatalogSync> {
-            return localVarFp.postToolCatalogSync(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
+         * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
          * @param {ToolApiPostToolMcpServersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolMcpServers(requestParameters: ToolApiPostToolMcpServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPServer> {
-            return localVarFp.postToolMcpServers(requestParameters.createServerReq, options).then((request) => request(axios, basePath));
+        postToolMcpServers(requestParameters: ToolApiPostToolMcpServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolMCPServer> {
+            return localVarFp.postToolMcpServers(requestParameters.toolCreateServerReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Builds and stores one plugin for the caller\'s org. The 201 carries the bundle\'s size, whether a model wrote the source, and the plugin as stored.  Post `source` to build TypeScript as-is, or `spec` — an OpenAPI document or plain prose describing the endpoints — to have one generated; the generated source comes back in the answer, so a caller reads what will run before it runs. Exactly one of the two, and `name` must be one lowercase path segment; both or neither is 400.  COMPILING IS THE GATE. The source goes through the same pipeline the committed connectors do — esbuild to one CommonJS program, then compiled in the goja runtime that will actually execute it — and anything that fails is rejected and NEVER stored. So a plugin in the store is one this deployment has already loaded once, not one a model claimed was fine. A failed build answers 422 carrying the diagnostics a caller needs to fix it: the bundler\'s error (`detail`), the source that failed, and whether the model wrote it.  CREDENTIALS ARE NOT PART OF A PLUGIN. A plugin names the connectors `provider` it needs and reads that credential from `ctx.auth` at run time, under KMS custody. Source that carries something key-shaped is REFUSED rather than silently persisted — a scrubbed key looks like it worked.
@@ -1248,28 +1227,38 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolPluginsBuild(requestParameters: ToolApiPostToolPluginsBuildRequest, options?: RawAxiosRequestConfig): AxiosPromise<BuildOut> {
-            return localVarFp.postToolPluginsBuild(requestParameters.buildRequest, options).then((request) => request(axios, basePath));
+        postToolPluginsBuild(requestParameters: ToolApiPostToolPluginsBuildRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolBuildOut> {
+            return localVarFp.postToolPluginsBuild(requestParameters.toolBuildRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
+         * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.  An activated skill is carried into every agent run in the org, so writing one takes an admin of the org or a SuperAdmin; a member is refused 403. The write is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
          * @param {ToolApiPostToolSkillsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postToolSkills(requestParameters: ToolApiPostToolSkillsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillWritten> {
-            return localVarFp.postToolSkills(requestParameters.skillIn, options).then((request) => request(axios, basePath));
+        postToolSkills(requestParameters: ToolApiPostToolSkillsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolSkillWritten> {
+            return localVarFp.postToolSkills(requestParameters.toolSkillIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
+         * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.  Switching a skill (skill_<name>) or a tool of an MCP server the org registered (<server>_<tool>) changes what every agent run in the org carries, so it takes an admin of the org or a SuperAdmin: a member naming one is refused 403 and nothing in the request is switched. Every change is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
          * @param {ToolApiPutToolActivationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putToolActivation(requestParameters: ToolApiPutToolActivationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
-            return localVarFp.putToolActivation(requestParameters.activationReq, options).then((request) => request(axios, basePath));
+        putToolActivation(requestParameters: ToolApiPutToolActivationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolActivationSet> {
+            return localVarFp.putToolActivation(requestParameters.toolActivationReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after. The layer only narrows: a name the org\'s kit does not carry is refused 400, since muting it would say nothing, and unmuting never gives the caller more than an admin put in place. It is the caller\'s own, so any member may write it. More than 256 names is refused 413.
+         * @summary Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after.
+         * @param {ToolApiPutToolKitRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putToolKit(requestParameters: ToolApiPutToolKitRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolKit> {
+            return localVarFp.putToolKit(requestParameters.toolMuteReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1422,27 +1411,6 @@ export interface ToolApiGetToolSkillsRequest {
 }
 
 /**
- * Request parameters for patchToolCatalogById operation in ToolApi.
- * @export
- * @interface ToolApiPatchToolCatalogByIdRequest
- */
-export interface ToolApiPatchToolCatalogByIdRequest {
-    /**
-     * ID is the listing to curate, from the path.
-     * @type {string}
-     * @memberof ToolApiPatchToolCatalogById
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {CurateReq}
-     * @memberof ToolApiPatchToolCatalogById
-     */
-    readonly curateReq: CurateReq
-}
-
-/**
  * Request parameters for postToolCall operation in ToolApi.
  * @export
  * @interface ToolApiPostToolCallRequest
@@ -1450,10 +1418,10 @@ export interface ToolApiPatchToolCatalogByIdRequest {
 export interface ToolApiPostToolCallRequest {
     /**
      * 
-     * @type {ToolCall}
+     * @type {ToolToolCall}
      * @memberof ToolApiPostToolCall
      */
-    readonly toolCall: ToolCall
+    readonly toolToolCall: ToolToolCall
 }
 
 /**
@@ -1464,10 +1432,10 @@ export interface ToolApiPostToolCallRequest {
 export interface ToolApiPostToolMcpServersRequest {
     /**
      * 
-     * @type {CreateServerReq}
+     * @type {ToolCreateServerReq}
      * @memberof ToolApiPostToolMcpServers
      */
-    readonly createServerReq: CreateServerReq
+    readonly toolCreateServerReq: ToolCreateServerReq
 }
 
 /**
@@ -1478,10 +1446,10 @@ export interface ToolApiPostToolMcpServersRequest {
 export interface ToolApiPostToolPluginsBuildRequest {
     /**
      * 
-     * @type {BuildRequest}
+     * @type {ToolBuildRequest}
      * @memberof ToolApiPostToolPluginsBuild
      */
-    readonly buildRequest: BuildRequest
+    readonly toolBuildRequest: ToolBuildRequest
 }
 
 /**
@@ -1492,10 +1460,10 @@ export interface ToolApiPostToolPluginsBuildRequest {
 export interface ToolApiPostToolSkillsRequest {
     /**
      * 
-     * @type {SkillIn}
+     * @type {ToolSkillIn}
      * @memberof ToolApiPostToolSkills
      */
-    readonly skillIn: SkillIn
+    readonly toolSkillIn: ToolSkillIn
 }
 
 /**
@@ -1506,10 +1474,24 @@ export interface ToolApiPostToolSkillsRequest {
 export interface ToolApiPutToolActivationRequest {
     /**
      * 
-     * @type {ActivationReq}
+     * @type {ToolActivationReq}
      * @memberof ToolApiPutToolActivation
      */
-    readonly activationReq: ActivationReq
+    readonly toolActivationReq: ToolActivationReq
+}
+
+/**
+ * Request parameters for putToolKit operation in ToolApi.
+ * @export
+ * @interface ToolApiPutToolKitRequest
+ */
+export interface ToolApiPutToolKitRequest {
+    /**
+     * 
+     * @type {ToolMuteReq}
+     * @memberof ToolApiPutToolKit
+     */
+    readonly toolMuteReq: ToolMuteReq
 }
 
 /**
@@ -1520,7 +1502,7 @@ export interface ToolApiPutToolActivationRequest {
  */
 export class ToolApi extends BaseAPI {
     /**
-     * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
+     * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404. Like registering one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
      * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
      * @param {ToolApiDeleteToolMcpServersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1544,7 +1526,7 @@ export class ToolApi extends BaseAPI {
     }
 
     /**
-     * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
+     * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is. Like writing one it takes an admin of the org or a SuperAdmin, and is on the org\'s audit trail before it is made.
      * @summary Removes one of the caller org\'s authored skills.
      * @param {ToolApiDeleteToolSkillsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1579,7 +1561,7 @@ export class ToolApi extends BaseAPI {
     }
 
     /**
-     * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
+     * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/tool/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP server. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.  It needs no credential: the shelf is a copy of public registries, the same for every org, and a storefront shows it to a visitor before anyone signs in.
      * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
      * @param {ToolApiGetToolCatalogRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1591,7 +1573,7 @@ export class ToolApi extends BaseAPI {
     }
 
     /**
-     * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
+     * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back. Like the shelf, it needs no credential.
      * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
      * @param {ToolApiGetToolCatalogByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1603,7 +1585,18 @@ export class ToolApi extends BaseAPI {
     }
 
     /**
-     * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
+     * Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane. Skills are the documents of those an admin of the org activated; servers are those an admin registered, each by its id with the tools of it an admin activated — never an address or a credential, which stay on the plane. Both leave out what the caller muted, and muted names it. It is the one read a run makes, so what it answers is what the caller\'s runs carry.
+     * @summary Answers the caller\'s kit: what their coding runs carry of the org\'s tool plane.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ToolApi
+     */
+    public getToolKit(options?: RawAxiosRequestConfig) {
+        return ToolApiFp(this.configuration).getToolKit(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it. Each also says whether its tools could be listed — status, a reason when they could not, and how many there are — so a server that contributes nothing says why.  The whole URL is answered to an admin of the org or a SuperAdmin, who register servers. A member is answered its scheme and host: which server it is, and not a path or query an admin may have put a key in.
      * @summary Lists the external MCP servers the caller\'s org has registered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1660,18 +1653,6 @@ export class ToolApi extends BaseAPI {
     }
 
     /**
-     * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
-     * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-     * @param {ToolApiPatchToolCatalogByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolApi
-     */
-    public patchToolCatalogById(requestParameters: ToolApiPatchToolCatalogByIdRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).patchToolCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Runs one of the caller\'s activated tools and answers with its output.  This is the endpoint onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 client or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tool — ?activated=true for the callable set.
      * @summary Runs one of the caller\'s activated tools and answers with its output.
      * @param {ToolApiPostToolCallRequest} requestParameters Request parameters.
@@ -1680,22 +1661,11 @@ export class ToolApi extends BaseAPI {
      * @memberof ToolApi
      */
     public postToolCall(requestParameters: ToolApiPostToolCallRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).postToolCall(requestParameters.toolCall, options).then((request) => request(this.axios, this.basePath));
+        return ToolApiFp(this.configuration).postToolCall(requestParameters.toolToolCall, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher\'s own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
-     * @summary Pulls the public MCP registry into our canonical copy and reports what changed.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolApi
-     */
-    public postToolCatalogSync(options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).postToolCatalogSync(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
+     * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
      * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
      * @param {ToolApiPostToolMcpServersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1703,7 +1673,7 @@ export class ToolApi extends BaseAPI {
      * @memberof ToolApi
      */
     public postToolMcpServers(requestParameters: ToolApiPostToolMcpServersRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).postToolMcpServers(requestParameters.createServerReq, options).then((request) => request(this.axios, this.basePath));
+        return ToolApiFp(this.configuration).postToolMcpServers(requestParameters.toolCreateServerReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1715,11 +1685,11 @@ export class ToolApi extends BaseAPI {
      * @memberof ToolApi
      */
     public postToolPluginsBuild(requestParameters: ToolApiPostToolPluginsBuildRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).postToolPluginsBuild(requestParameters.buildRequest, options).then((request) => request(this.axios, this.basePath));
+        return ToolApiFp(this.configuration).postToolPluginsBuild(requestParameters.toolBuildRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
+     * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.  An activated skill is carried into every agent run in the org, so writing one takes an admin of the org or a SuperAdmin; a member is refused 403. The write is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
      * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
      * @param {ToolApiPostToolSkillsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1727,11 +1697,11 @@ export class ToolApi extends BaseAPI {
      * @memberof ToolApi
      */
     public postToolSkills(requestParameters: ToolApiPostToolSkillsRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).postToolSkills(requestParameters.skillIn, options).then((request) => request(this.axios, this.basePath));
+        return ToolApiFp(this.configuration).postToolSkills(requestParameters.toolSkillIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
+     * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.  Switching a skill (skill_<name>) or a tool of an MCP server the org registered (<server>_<tool>) changes what every agent run in the org carries, so it takes an admin of the org or a SuperAdmin: a member naming one is refused 403 and nothing in the request is switched. Every change is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
      * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
      * @param {ToolApiPutToolActivationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1739,7 +1709,19 @@ export class ToolApi extends BaseAPI {
      * @memberof ToolApi
      */
     public putToolActivation(requestParameters: ToolApiPutToolActivationRequest, options?: RawAxiosRequestConfig) {
-        return ToolApiFp(this.configuration).putToolActivation(requestParameters.activationReq, options).then((request) => request(this.axios, this.basePath));
+        return ToolApiFp(this.configuration).putToolActivation(requestParameters.toolActivationReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after. The layer only narrows: a name the org\'s kit does not carry is refused 400, since muting it would say nothing, and unmuting never gives the caller more than an admin put in place. It is the caller\'s own, so any member may write it. More than 256 names is refused 413.
+     * @summary Mutes and unmutes names of the org\'s kit for the caller\'s own runs, and answers the caller\'s kit after.
+     * @param {ToolApiPutToolKitRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ToolApi
+     */
+    public putToolKit(requestParameters: ToolApiPutToolKitRequest, options?: RawAxiosRequestConfig) {
+        return ToolApiFp(this.configuration).putToolKit(requestParameters.toolMuteReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

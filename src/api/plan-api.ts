@@ -22,23 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { PlanEntitlements } from '../models';
+import type { PlanPlanEntitlements } from '../models';
 // @ts-ignore
-import type { PlanHealth } from '../models';
+import type { PlanPlanHealth } from '../models';
 // @ts-ignore
-import type { PlanList } from '../models';
+import type { PlanPlanList } from '../models';
 // @ts-ignore
-import type { PlanRegionList } from '../models';
+import type { PlanPlanRegionList } from '../models';
 // @ts-ignore
-import type { PlanResolution } from '../models';
+import type { PlanPlanResolution } from '../models';
 // @ts-ignore
-import type { PlanSchemas } from '../models';
+import type { PlanPlanSchemas } from '../models';
 // @ts-ignore
-import type { PlanTierList } from '../models';
+import type { PlanPlanTierList } from '../models';
 // @ts-ignore
-import type { PlanToolList } from '../models';
+import type { PlanPlanToolList } from '../models';
 // @ts-ignore
-import type { PlanVocab } from '../models';
+import type { PlanPlanVocab } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * PlanApi - axios parameter creator
  * @export
@@ -220,8 +222,8 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Health reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the plans subsystem is mounted and serving.
+         * Reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the plans subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -545,7 +547,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanList>> {
+        async getPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlan(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlan']?.[localVarOperationServerIndex]?.url;
@@ -557,7 +559,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanList>> {
+        async getPlanBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanBlockchain(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanBlockchain']?.[localVarOperationServerIndex]?.url;
@@ -569,7 +571,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanDns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanList>> {
+        async getPlanDns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanDns(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanDns']?.[localVarOperationServerIndex]?.url;
@@ -582,7 +584,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanEntitlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanEntitlements>> {
+        async getPlanEntitlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanEntitlements>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanEntitlementsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanEntitlementsById']?.[localVarOperationServerIndex]?.url;
@@ -594,19 +596,19 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanTierList>> {
+        async getPlanGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanTierList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanGpu(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanGpu']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the plans subsystem is mounted and serving.
+         * Reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the plans subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanHealth>> {
+        async getPlanHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanHealth']?.[localVarOperationServerIndex]?.url;
@@ -630,7 +632,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanRegionList>> {
+        async getPlanRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanRegionList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanRegions']?.[localVarOperationServerIndex]?.url;
@@ -643,7 +645,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanResolveById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanResolution>> {
+        async getPlanResolveById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanResolution>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanResolveById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanResolveById']?.[localVarOperationServerIndex]?.url;
@@ -655,7 +657,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanSchema(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanSchemas>> {
+        async getPlanSchema(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanSchemas>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanSchema(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanSchema']?.[localVarOperationServerIndex]?.url;
@@ -679,7 +681,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanList>> {
+        async getPlanSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanSubscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanSubscriptions']?.[localVarOperationServerIndex]?.url;
@@ -691,7 +693,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanToolList>> {
+        async getPlanTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanToolList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanTools(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanTools']?.[localVarOperationServerIndex]?.url;
@@ -703,7 +705,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlanVocab(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanVocab>> {
+        async getPlanVocab(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanPlanVocab>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlanVocab(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlanApi.getPlanVocab']?.[localVarOperationServerIndex]?.url;
@@ -725,7 +727,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlan(options?: RawAxiosRequestConfig): AxiosPromise<PlanList> {
+        getPlan(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanList> {
             return localVarFp.getPlan(options).then((request) => request(axios, basePath));
         },
         /**
@@ -734,7 +736,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PlanList> {
+        getPlanBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanList> {
             return localVarFp.getPlanBlockchain(options).then((request) => request(axios, basePath));
         },
         /**
@@ -743,7 +745,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanDns(options?: RawAxiosRequestConfig): AxiosPromise<PlanList> {
+        getPlanDns(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanList> {
             return localVarFp.getPlanDns(options).then((request) => request(axios, basePath));
         },
         /**
@@ -753,7 +755,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanEntitlementsById(requestParameters: PlanApiGetPlanEntitlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanEntitlements> {
+        getPlanEntitlementsById(requestParameters: PlanApiGetPlanEntitlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanEntitlements> {
             return localVarFp.getPlanEntitlementsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -762,16 +764,16 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanGpu(options?: RawAxiosRequestConfig): AxiosPromise<PlanTierList> {
+        getPlanGpu(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanTierList> {
             return localVarFp.getPlanGpu(options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the plans subsystem is mounted and serving.
+         * Reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the plans subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanHealth(options?: RawAxiosRequestConfig): AxiosPromise<PlanHealth> {
+        getPlanHealth(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanHealth> {
             return localVarFp.getPlanHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -789,7 +791,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanRegions(options?: RawAxiosRequestConfig): AxiosPromise<PlanRegionList> {
+        getPlanRegions(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanRegionList> {
             return localVarFp.getPlanRegions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -799,7 +801,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanResolveById(requestParameters: PlanApiGetPlanResolveByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanResolution> {
+        getPlanResolveById(requestParameters: PlanApiGetPlanResolveByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanResolution> {
             return localVarFp.getPlanResolveById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -808,7 +810,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanSchema(options?: RawAxiosRequestConfig): AxiosPromise<PlanSchemas> {
+        getPlanSchema(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanSchemas> {
             return localVarFp.getPlanSchema(options).then((request) => request(axios, basePath));
         },
         /**
@@ -826,7 +828,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PlanList> {
+        getPlanSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanList> {
             return localVarFp.getPlanSubscriptions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -835,7 +837,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanTools(options?: RawAxiosRequestConfig): AxiosPromise<PlanToolList> {
+        getPlanTools(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanToolList> {
             return localVarFp.getPlanTools(options).then((request) => request(axios, basePath));
         },
         /**
@@ -844,7 +846,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlanVocab(options?: RawAxiosRequestConfig): AxiosPromise<PlanVocab> {
+        getPlanVocab(options?: RawAxiosRequestConfig): AxiosPromise<PlanPlanVocab> {
             return localVarFp.getPlanVocab(options).then((request) => request(axios, basePath));
         },
     };
@@ -942,8 +944,8 @@ export class PlanApi extends BaseAPI {
     }
 
     /**
-     * Health reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
-     * @summary Health reports that the plans subsystem is mounted and serving.
+     * Reports that the plans subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the goja host, so it stays \"ok\" while either is degraded.
+     * @summary Reports that the plans subsystem is mounted and serving.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlanApi

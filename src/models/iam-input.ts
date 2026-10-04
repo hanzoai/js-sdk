@@ -25,39 +25,33 @@ export interface IamInput {
      * @type {string}
      * @memberof IamInput
      */
-    'action'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'clientIp'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
     'createdTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'displayName'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IamInput
+     */
+    'domains'?: Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof IamInput
      */
-    'isTriggered'?: boolean;
+    'isEnabled'?: boolean;
     /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'language'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'method'?: string;
-    /**
-     * 
+     * Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
      * @type {string}
      * @memberof IamInput
      */
@@ -67,42 +61,24 @@ export interface IamInput {
      * @type {string}
      * @memberof IamInput
      */
-    'object'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'organization'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
     'owner'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof IamInput
      */
-    'requestUri'?: string;
+    'roles'?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof IamInput
      */
-    'response'?: string;
+    'teams'?: Array<string>;
     /**
      * 
-     * @type {number}
+     * @type {Array<string>}
      * @memberof IamInput
      */
-    'statusCode'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'user'?: string;
+    'users'?: Array<string>;
 }
 

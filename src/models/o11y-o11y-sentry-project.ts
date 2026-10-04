@@ -27,12 +27,6 @@ export interface O11yO11ySentryProject {
      */
     'createdAt'?: string;
     /**
-     * DSN is the project\'s freshly-derived ingest DSN.
-     * @type {string}
-     * @memberof O11yO11ySentryProject
-     */
-    'dsn'?: string;
-    /**
      * ID is the project id.
      * @type {string}
      * @memberof O11yO11ySentryProject

@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Balances } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ChainList } from '../models';
+import type { Web3Balances } from '../models';
 // @ts-ignore
-import type { ChainStatus } from '../models';
+import type { Web3ChainList } from '../models';
 // @ts-ignore
-import type { RpcIn } from '../models';
+import type { Web3ChainStatus } from '../models';
 // @ts-ignore
-import type { RpcOut } from '../models';
+import type { Web3RpcIn } from '../models';
+// @ts-ignore
+import type { Web3RpcOut } from '../models';
 /**
  * Web3Api - axios parameter creator
  * @export
@@ -155,15 +157,15 @@ export const Web3ApiAxiosParamCreator = function (configuration?: Configuration)
          * Forwards a JSON-RPC call to the named chain and returns its answer unchanged. Only declared chains are reachable, and only to a caller with a validated principal — this is the deployment\'s upstream, not an open relay.
          * @summary Forwards a JSON-RPC call to the named chain and returns its answer unchanged.
          * @param {string} chain Chain is the registry id, from the URL.
-         * @param {RpcIn} rpcIn 
+         * @param {Web3RpcIn} web3RpcIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWeb3RpcByChain: async (chain: string, rpcIn: RpcIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postWeb3RpcByChain: async (chain: string, web3RpcIn: Web3RpcIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'chain' is not null or undefined
             assertParamExists('postWeb3RpcByChain', 'chain', chain)
-            // verify required parameter 'rpcIn' is not null or undefined
-            assertParamExists('postWeb3RpcByChain', 'rpcIn', rpcIn)
+            // verify required parameter 'web3RpcIn' is not null or undefined
+            assertParamExists('postWeb3RpcByChain', 'web3RpcIn', web3RpcIn)
             const localVarPath = `/v1/web3/rpc/{chain}`
                 .replace(`{${"chain"}}`, encodeURIComponent(String(chain)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -188,7 +190,7 @@ export const Web3ApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rpcIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(web3RpcIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -211,7 +213,7 @@ export const Web3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWeb3Chains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChainList>> {
+        async getWeb3Chains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Web3ChainList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWeb3Chains(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Web3Api.getWeb3Chains']?.[localVarOperationServerIndex]?.url;
@@ -224,7 +226,7 @@ export const Web3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWeb3ChainsByChain(chain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChainStatus>> {
+        async getWeb3ChainsByChain(chain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Web3ChainStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWeb3ChainsByChain(chain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Web3Api.getWeb3ChainsByChain']?.[localVarOperationServerIndex]?.url;
@@ -238,7 +240,7 @@ export const Web3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWeb3TokensByChainByAddress(chain: string, address: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Balances>> {
+        async getWeb3TokensByChainByAddress(chain: string, address: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Web3Balances>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWeb3TokensByChainByAddress(chain, address, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Web3Api.getWeb3TokensByChainByAddress']?.[localVarOperationServerIndex]?.url;
@@ -248,12 +250,12 @@ export const Web3ApiFp = function(configuration?: Configuration) {
          * Forwards a JSON-RPC call to the named chain and returns its answer unchanged. Only declared chains are reachable, and only to a caller with a validated principal — this is the deployment\'s upstream, not an open relay.
          * @summary Forwards a JSON-RPC call to the named chain and returns its answer unchanged.
          * @param {string} chain Chain is the registry id, from the URL.
-         * @param {RpcIn} rpcIn 
+         * @param {Web3RpcIn} web3RpcIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWeb3RpcByChain(chain: string, rpcIn: RpcIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RpcOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWeb3RpcByChain(chain, rpcIn, options);
+        async postWeb3RpcByChain(chain: string, web3RpcIn: Web3RpcIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Web3RpcOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWeb3RpcByChain(chain, web3RpcIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Web3Api.postWeb3RpcByChain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -274,7 +276,7 @@ export const Web3ApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWeb3Chains(options?: RawAxiosRequestConfig): AxiosPromise<ChainList> {
+        getWeb3Chains(options?: RawAxiosRequestConfig): AxiosPromise<Web3ChainList> {
             return localVarFp.getWeb3Chains(options).then((request) => request(axios, basePath));
         },
         /**
@@ -284,7 +286,7 @@ export const Web3ApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWeb3ChainsByChain(requestParameters: Web3ApiGetWeb3ChainsByChainRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChainStatus> {
+        getWeb3ChainsByChain(requestParameters: Web3ApiGetWeb3ChainsByChainRequest, options?: RawAxiosRequestConfig): AxiosPromise<Web3ChainStatus> {
             return localVarFp.getWeb3ChainsByChain(requestParameters.chain, options).then((request) => request(axios, basePath));
         },
         /**
@@ -294,7 +296,7 @@ export const Web3ApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWeb3TokensByChainByAddress(requestParameters: Web3ApiGetWeb3TokensByChainByAddressRequest, options?: RawAxiosRequestConfig): AxiosPromise<Balances> {
+        getWeb3TokensByChainByAddress(requestParameters: Web3ApiGetWeb3TokensByChainByAddressRequest, options?: RawAxiosRequestConfig): AxiosPromise<Web3Balances> {
             return localVarFp.getWeb3TokensByChainByAddress(requestParameters.chain, requestParameters.address, options).then((request) => request(axios, basePath));
         },
         /**
@@ -304,8 +306,8 @@ export const Web3ApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWeb3RpcByChain(requestParameters: Web3ApiPostWeb3RpcByChainRequest, options?: RawAxiosRequestConfig): AxiosPromise<RpcOut> {
-            return localVarFp.postWeb3RpcByChain(requestParameters.chain, requestParameters.rpcIn, options).then((request) => request(axios, basePath));
+        postWeb3RpcByChain(requestParameters: Web3ApiPostWeb3RpcByChainRequest, options?: RawAxiosRequestConfig): AxiosPromise<Web3RpcOut> {
+            return localVarFp.postWeb3RpcByChain(requestParameters.chain, requestParameters.web3RpcIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -360,10 +362,10 @@ export interface Web3ApiPostWeb3RpcByChainRequest {
 
     /**
      * 
-     * @type {RpcIn}
+     * @type {Web3RpcIn}
      * @memberof Web3ApiPostWeb3RpcByChain
      */
-    readonly rpcIn: RpcIn
+    readonly web3RpcIn: Web3RpcIn
 }
 
 /**
@@ -417,7 +419,7 @@ export class Web3Api extends BaseAPI {
      * @memberof Web3Api
      */
     public postWeb3RpcByChain(requestParameters: Web3ApiPostWeb3RpcByChainRequest, options?: RawAxiosRequestConfig) {
-        return Web3ApiFp(this.configuration).postWeb3RpcByChain(requestParameters.chain, requestParameters.rpcIn, options).then((request) => request(this.axios, this.basePath));
+        return Web3ApiFp(this.configuration).postWeb3RpcByChain(requestParameters.chain, requestParameters.web3RpcIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

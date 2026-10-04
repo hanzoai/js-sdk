@@ -28,9 +28,9 @@ export interface O11yO11yDashboardVarsIn {
     'query': string;
     /**
      * Variables are the current values of the other dashboard variables, for queries that reference them.
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yO11yDashboardVarsIn
      */
-    'variables'?: { [key: string]: object; };
+    'variables'?: { [key: string]: any; };
 }
 

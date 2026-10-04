@@ -37,10 +37,10 @@ export interface O11yOAuth2 {
     'audience'?: string;
     /**
      * Claims is a map of claims to be added to the JWT token. Only used if GrantType is set to \"urn:ietf:params:oauth:grant-type:jwt-bearer\".
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yOAuth2
      */
-    'claims'?: { [key: string]: object; };
+    'claims'?: { [key: string]: any; };
     /**
      * 
      * @type {any}

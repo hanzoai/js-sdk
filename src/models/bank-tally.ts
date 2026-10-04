@@ -21,37 +21,37 @@
  */
 export interface BankTally {
     /**
-     * transactions seen
+     * 
      * @type {number}
      * @memberof BankTally
      */
     'ingested'?: number;
     /**
-     * vouchers newly posted (outflow + reconciled)
+     * 
      * @type {number}
      * @memberof BankTally
      */
     'posted'?: number;
     /**
-     * unmatched inflows that raised a question
+     * 
      * @type {number}
      * @memberof BankTally
      */
     'questions'?: number;
     /**
-     * inflows cleared against Square-clearing
+     * 
      * @type {number}
      * @memberof BankTally
      */
     'reconciled'?: number;
     /**
-     * already-processed idempotent no-ops
+     * 
      * @type {number}
      * @memberof BankTally
      */
     'skipped'?: number;
     /**
-     * own-account moves recorded (no P&L)
+     * 
      * @type {number}
      * @memberof BankTally
      */

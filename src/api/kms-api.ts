@@ -22,19 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { KmsConfig } from '../models';
+import type { KmsKmsConfig } from '../models';
 // @ts-ignore
-import type { KmsHealth } from '../models';
+import type { KmsKmsHealth } from '../models';
 // @ts-ignore
-import type { KmsLogin } from '../models';
+import type { KmsKmsLogin } from '../models';
 // @ts-ignore
-import type { KmsPut } from '../models';
+import type { KmsKmsPut } from '../models';
 // @ts-ignore
-import type { KmsSecrets } from '../models';
+import type { KmsKmsSecrets } from '../models';
 // @ts-ignore
-import type { KmsStored } from '../models';
+import type { KmsKmsStored } from '../models';
 // @ts-ignore
-import type { KmsToken } from '../models';
+import type { KmsKmsToken } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * KmsApi - axios parameter creator
  * @export
@@ -166,13 +168,13 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
-         * @param {KmsLogin} kmsLogin 
+         * @param {KmsKmsLogin} kmsKmsLogin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKmsAuthLogin: async (kmsLogin: KmsLogin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'kmsLogin' is not null or undefined
-            assertParamExists('postKmsAuthLogin', 'kmsLogin', kmsLogin)
+        postKmsAuthLogin: async (kmsKmsLogin: KmsKmsLogin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'kmsKmsLogin' is not null or undefined
+            assertParamExists('postKmsAuthLogin', 'kmsKmsLogin', kmsKmsLogin)
             const localVarPath = `/v1/kms/auth/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -196,7 +198,7 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(kmsLogin, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(kmsKmsLogin, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -204,15 +206,15 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Requires ADMIN authority over the org — a member reads, an admin writes. A machine credential holds no membership and so is never an org admin: it can read the secrets it was issued for and cannot replace one. Fail-closed admission, in order: admin of the org, well-formed org, master key present — 403, 400 and 503, all decided before any record is touched.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
-         * @param {KmsPut} kmsPut 
+         * @param {KmsKmsPut} kmsKmsPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKmsSecrets: async (kmsPut: KmsPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'kmsPut' is not null or undefined
-            assertParamExists('postKmsSecrets', 'kmsPut', kmsPut)
+        postKmsSecrets: async (kmsKmsPut: KmsKmsPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'kmsKmsPut' is not null or undefined
+            assertParamExists('postKmsSecrets', 'kmsKmsPut', kmsKmsPut)
             const localVarPath = `/v1/kms/secrets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -236,7 +238,7 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(kmsPut, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(kmsKmsPut, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -259,7 +261,7 @@ export const KmsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKmsConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsConfig>> {
+        async getKmsConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsConfig>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKmsConfig(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.getKmsConfig']?.[localVarOperationServerIndex]?.url;
@@ -271,7 +273,7 @@ export const KmsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKmsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsHealth>> {
+        async getKmsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKmsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.getKmsHealth']?.[localVarOperationServerIndex]?.url;
@@ -287,7 +289,7 @@ export const KmsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKmsSecrets(env?: string, environment?: string, path?: string, secretPath?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsSecrets>> {
+        async getKmsSecrets(env?: string, environment?: string, path?: string, secretPath?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsSecrets>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKmsSecrets(env, environment, path, secretPath, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.getKmsSecrets']?.[localVarOperationServerIndex]?.url;
@@ -296,25 +298,25 @@ export const KmsApiFp = function(configuration?: Configuration) {
         /**
          * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
-         * @param {KmsLogin} kmsLogin 
+         * @param {KmsKmsLogin} kmsKmsLogin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKmsAuthLogin(kmsLogin: KmsLogin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsToken>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postKmsAuthLogin(kmsLogin, options);
+        async postKmsAuthLogin(kmsKmsLogin: KmsKmsLogin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsToken>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKmsAuthLogin(kmsKmsLogin, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.postKmsAuthLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Requires ADMIN authority over the org — a member reads, an admin writes. A machine credential holds no membership and so is never an org admin: it can read the secrets it was issued for and cannot replace one. Fail-closed admission, in order: admin of the org, well-formed org, master key present — 403, 400 and 503, all decided before any record is touched.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
-         * @param {KmsPut} kmsPut 
+         * @param {KmsKmsPut} kmsKmsPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKmsSecrets(kmsPut: KmsPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsStored>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postKmsSecrets(kmsPut, options);
+        async postKmsSecrets(kmsKmsPut: KmsKmsPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsStored>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKmsSecrets(kmsKmsPut, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.postKmsSecrets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -335,7 +337,7 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKmsConfig(options?: RawAxiosRequestConfig): AxiosPromise<KmsConfig> {
+        getKmsConfig(options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsConfig> {
             return localVarFp.getKmsConfig(options).then((request) => request(axios, basePath));
         },
         /**
@@ -344,7 +346,7 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKmsHealth(options?: RawAxiosRequestConfig): AxiosPromise<KmsHealth> {
+        getKmsHealth(options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsHealth> {
             return localVarFp.getKmsHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -354,7 +356,7 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKmsSecrets(requestParameters: KmsApiGetKmsSecretsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<KmsSecrets> {
+        getKmsSecrets(requestParameters: KmsApiGetKmsSecretsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsSecrets> {
             return localVarFp.getKmsSecrets(requestParameters.env, requestParameters.environment, requestParameters.path, requestParameters.secretPath, options).then((request) => request(axios, basePath));
         },
         /**
@@ -364,18 +366,18 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKmsAuthLogin(requestParameters: KmsApiPostKmsAuthLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<KmsToken> {
-            return localVarFp.postKmsAuthLogin(requestParameters.kmsLogin, options).then((request) => request(axios, basePath));
+        postKmsAuthLogin(requestParameters: KmsApiPostKmsAuthLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsToken> {
+            return localVarFp.postKmsAuthLogin(requestParameters.kmsKmsLogin, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Requires ADMIN authority over the org — a member reads, an admin writes. A machine credential holds no membership and so is never an org admin: it can read the secrets it was issued for and cannot replace one. Fail-closed admission, in order: admin of the org, well-formed org, master key present — 403, 400 and 503, all decided before any record is touched.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
          * @param {KmsApiPostKmsSecretsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKmsSecrets(requestParameters: KmsApiPostKmsSecretsRequest, options?: RawAxiosRequestConfig): AxiosPromise<KmsStored> {
-            return localVarFp.postKmsSecrets(requestParameters.kmsPut, options).then((request) => request(axios, basePath));
+        postKmsSecrets(requestParameters: KmsApiPostKmsSecretsRequest, options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsStored> {
+            return localVarFp.postKmsSecrets(requestParameters.kmsKmsPut, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -423,10 +425,10 @@ export interface KmsApiGetKmsSecretsRequest {
 export interface KmsApiPostKmsAuthLoginRequest {
     /**
      * 
-     * @type {KmsLogin}
+     * @type {KmsKmsLogin}
      * @memberof KmsApiPostKmsAuthLogin
      */
-    readonly kmsLogin: KmsLogin
+    readonly kmsKmsLogin: KmsKmsLogin
 }
 
 /**
@@ -437,10 +439,10 @@ export interface KmsApiPostKmsAuthLoginRequest {
 export interface KmsApiPostKmsSecretsRequest {
     /**
      * 
-     * @type {KmsPut}
+     * @type {KmsKmsPut}
      * @memberof KmsApiPostKmsSecrets
      */
-    readonly kmsPut: KmsPut
+    readonly kmsKmsPut: KmsKmsPut
 }
 
 /**
@@ -493,11 +495,11 @@ export class KmsApi extends BaseAPI {
      * @memberof KmsApi
      */
     public postKmsAuthLogin(requestParameters: KmsApiPostKmsAuthLoginRequest, options?: RawAxiosRequestConfig) {
-        return KmsApiFp(this.configuration).postKmsAuthLogin(requestParameters.kmsLogin, options).then((request) => request(this.axios, this.basePath));
+        return KmsApiFp(this.configuration).postKmsAuthLogin(requestParameters.kmsKmsLogin, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Requires ADMIN authority over the org — a member reads, an admin writes. A machine credential holds no membership and so is never an org admin: it can read the secrets it was issued for and cannot replace one. Fail-closed admission, in order: admin of the org, well-formed org, master key present — 403, 400 and 503, all decided before any record is touched.
+     * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
      * @summary Stores or replaces one secret in your org.
      * @param {KmsApiPostKmsSecretsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -505,7 +507,7 @@ export class KmsApi extends BaseAPI {
      * @memberof KmsApi
      */
     public postKmsSecrets(requestParameters: KmsApiPostKmsSecretsRequest, options?: RawAxiosRequestConfig) {
-        return KmsApiFp(this.configuration).postKmsSecrets(requestParameters.kmsPut, options).then((request) => request(this.axios, this.basePath));
+        return KmsApiFp(this.configuration).postKmsSecrets(requestParameters.kmsKmsPut, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

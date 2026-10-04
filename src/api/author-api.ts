@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Claim } from '../models';
+import type { AuthorClaim } from '../models';
 // @ts-ignore
-import type { ConnectRequest } from '../models';
+import type { AuthorConnectRequest } from '../models';
 // @ts-ignore
-import type { DeployRecord } from '../models';
+import type { AuthorDeployRecord } from '../models';
 // @ts-ignore
-import type { DeployRequest } from '../models';
+import type { AuthorDeployRequest } from '../models';
 // @ts-ignore
-import type { Enrolment } from '../models';
+import type { AuthorEnrolment } from '../models';
 // @ts-ignore
-import type { VerifyRequest } from '../models';
+import type { AuthorVerifyRequest } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * AuthorApi - axios parameter creator
  * @export
@@ -115,13 +117,13 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Enrols the caller\'s org in the author program at status \"connected\" and returns its enrolment, including the verify code the file method needs. It is IDEMPOTENT: a second call returns the same enrolment rather than a conflict.  The forge login is taken from IAM\'s LINKED account for the provider when there is one — that is identity proof, not a claim — and only otherwise from the login in the body, which then has to be proven per repository. Connecting does not admit an org to earning: a platform reviewer approves that separately.  Answers 201 when it enrolled the org and 200 when it found an existing enrolment.
          * @summary Enrols the caller\'s org in the author program at status \"connected\" and returns its enrolment, including the verify code the file method needs.
-         * @param {ConnectRequest} connectRequest 
+         * @param {AuthorConnectRequest} authorConnectRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorConnect: async (connectRequest: ConnectRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'connectRequest' is not null or undefined
-            assertParamExists('postAuthorConnect', 'connectRequest', connectRequest)
+        postAuthorConnect: async (authorConnectRequest: AuthorConnectRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorConnectRequest' is not null or undefined
+            assertParamExists('postAuthorConnect', 'authorConnectRequest', authorConnectRequest)
             const localVarPath = `/v1/author/connect`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -145,7 +147,7 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(connectRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(authorConnectRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -155,13 +157,13 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Records that the caller\'s org deployed a project built from a source repository, which is the edge that makes an author\'s work earn royalty.  It is deliberately NOT an error for a deploy to attribute to nobody: a project built from no repository, or from one no author has verified, answers {\"recorded\": false, \"reason\"} so a deploy pipeline can fire this on every deploy without branching. Attribution resolves per-repository first, then owner-wide, so a repository with its own claim always earns for its own author.  A deploy of a Hanzo-maintained template attributes to the platform treasury, and a self-deploy (the author\'s own org deploying its own repository) is recorded for provenance but excluded from accrual. The edge is idempotent per repository+project+org.  Answers 201 when it recorded a new edge and 200 otherwise.
          * @summary Records that the caller\'s org deployed a project built from a source repository, which is the edge that makes an author\'s work earn royalty.
-         * @param {DeployRequest} deployRequest 
+         * @param {AuthorDeployRequest} authorDeployRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorDeploysRecord: async (deployRequest: DeployRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'deployRequest' is not null or undefined
-            assertParamExists('postAuthorDeploysRecord', 'deployRequest', deployRequest)
+        postAuthorDeploysRecord: async (authorDeployRequest: AuthorDeployRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorDeployRequest' is not null or undefined
+            assertParamExists('postAuthorDeploysRecord', 'authorDeployRequest', authorDeployRequest)
             const localVarPath = `/v1/author/deploys/record`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -185,7 +187,7 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(deployRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(authorDeployRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -195,13 +197,13 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Proves that the caller owns a repository — or a whole OWNER — and records the claim, which is what makes deploys of that code earn royalty.  Ownership is proven the SAME two ways in both cases, tried in order: an IAM-linked forge token with admin or push permission, or a hanzo.json on the default branch carrying the author\'s verify code. Claiming an OWNER proves it against that owner\'s \".github\" control repository, and is exactly as strong as a per-repository claim — an owner the caller cannot prove is refused with 422, never assumed.  A per-repository claim wins over an owner-wide one, so a specifically-claimed repository always earns for its own author. A repository another author has already verified is a 409. The org must have connected first.  Answers 201 when it recorded a new claim and 200 when the claim already existed.
          * @summary Proves that the caller owns a repository — or a whole OWNER — and records the claim, which is what makes deploys of that code earn royalty.
-         * @param {VerifyRequest} verifyRequest 
+         * @param {AuthorVerifyRequest} authorVerifyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorReposVerify: async (verifyRequest: VerifyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'verifyRequest' is not null or undefined
-            assertParamExists('postAuthorReposVerify', 'verifyRequest', verifyRequest)
+        postAuthorReposVerify: async (authorVerifyRequest: AuthorVerifyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorVerifyRequest' is not null or undefined
+            assertParamExists('postAuthorReposVerify', 'authorVerifyRequest', authorVerifyRequest)
             const localVarPath = `/v1/author/repos/verify`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -225,7 +227,7 @@ export const AuthorApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(verifyRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(authorVerifyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -248,7 +250,7 @@ export const AuthorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAuthor(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getAuthor(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthor(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorApi.getAuthor']?.[localVarOperationServerIndex]?.url;
@@ -261,7 +263,7 @@ export const AuthorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAuthorBasis(period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getAuthorBasis(period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthorBasis(period, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorApi.getAuthorBasis']?.[localVarOperationServerIndex]?.url;
@@ -270,12 +272,12 @@ export const AuthorApiFp = function(configuration?: Configuration) {
         /**
          * Enrols the caller\'s org in the author program at status \"connected\" and returns its enrolment, including the verify code the file method needs. It is IDEMPOTENT: a second call returns the same enrolment rather than a conflict.  The forge login is taken from IAM\'s LINKED account for the provider when there is one — that is identity proof, not a claim — and only otherwise from the login in the body, which then has to be proven per repository. Connecting does not admit an org to earning: a platform reviewer approves that separately.  Answers 201 when it enrolled the org and 200 when it found an existing enrolment.
          * @summary Enrols the caller\'s org in the author program at status \"connected\" and returns its enrolment, including the verify code the file method needs.
-         * @param {ConnectRequest} connectRequest 
+         * @param {AuthorConnectRequest} authorConnectRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAuthorConnect(connectRequest: ConnectRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Enrolment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorConnect(connectRequest, options);
+        async postAuthorConnect(authorConnectRequest: AuthorConnectRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorEnrolment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorConnect(authorConnectRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorApi.postAuthorConnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -283,12 +285,12 @@ export const AuthorApiFp = function(configuration?: Configuration) {
         /**
          * Records that the caller\'s org deployed a project built from a source repository, which is the edge that makes an author\'s work earn royalty.  It is deliberately NOT an error for a deploy to attribute to nobody: a project built from no repository, or from one no author has verified, answers {\"recorded\": false, \"reason\"} so a deploy pipeline can fire this on every deploy without branching. Attribution resolves per-repository first, then owner-wide, so a repository with its own claim always earns for its own author.  A deploy of a Hanzo-maintained template attributes to the platform treasury, and a self-deploy (the author\'s own org deploying its own repository) is recorded for provenance but excluded from accrual. The edge is idempotent per repository+project+org.  Answers 201 when it recorded a new edge and 200 otherwise.
          * @summary Records that the caller\'s org deployed a project built from a source repository, which is the edge that makes an author\'s work earn royalty.
-         * @param {DeployRequest} deployRequest 
+         * @param {AuthorDeployRequest} authorDeployRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAuthorDeploysRecord(deployRequest: DeployRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorDeploysRecord(deployRequest, options);
+        async postAuthorDeploysRecord(authorDeployRequest: AuthorDeployRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorDeployRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorDeploysRecord(authorDeployRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorApi.postAuthorDeploysRecord']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -296,12 +298,12 @@ export const AuthorApiFp = function(configuration?: Configuration) {
         /**
          * Proves that the caller owns a repository — or a whole OWNER — and records the claim, which is what makes deploys of that code earn royalty.  Ownership is proven the SAME two ways in both cases, tried in order: an IAM-linked forge token with admin or push permission, or a hanzo.json on the default branch carrying the author\'s verify code. Claiming an OWNER proves it against that owner\'s \".github\" control repository, and is exactly as strong as a per-repository claim — an owner the caller cannot prove is refused with 422, never assumed.  A per-repository claim wins over an owner-wide one, so a specifically-claimed repository always earns for its own author. A repository another author has already verified is a 409. The org must have connected first.  Answers 201 when it recorded a new claim and 200 when the claim already existed.
          * @summary Proves that the caller owns a repository — or a whole OWNER — and records the claim, which is what makes deploys of that code earn royalty.
-         * @param {VerifyRequest} verifyRequest 
+         * @param {AuthorVerifyRequest} authorVerifyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAuthorReposVerify(verifyRequest: VerifyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Claim>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorReposVerify(verifyRequest, options);
+        async postAuthorReposVerify(authorVerifyRequest: AuthorVerifyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorClaim>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthorReposVerify(authorVerifyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorApi.postAuthorReposVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -322,7 +324,7 @@ export const AuthorApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAuthor(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getAuthor(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getAuthor(options).then((request) => request(axios, basePath));
         },
         /**
@@ -332,7 +334,7 @@ export const AuthorApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAuthorBasis(requestParameters: AuthorApiGetAuthorBasisRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getAuthorBasis(requestParameters: AuthorApiGetAuthorBasisRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getAuthorBasis(requestParameters.period, options).then((request) => request(axios, basePath));
         },
         /**
@@ -342,8 +344,8 @@ export const AuthorApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorConnect(requestParameters: AuthorApiPostAuthorConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<Enrolment> {
-            return localVarFp.postAuthorConnect(requestParameters.connectRequest, options).then((request) => request(axios, basePath));
+        postAuthorConnect(requestParameters: AuthorApiPostAuthorConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorEnrolment> {
+            return localVarFp.postAuthorConnect(requestParameters.authorConnectRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records that the caller\'s org deployed a project built from a source repository, which is the edge that makes an author\'s work earn royalty.  It is deliberately NOT an error for a deploy to attribute to nobody: a project built from no repository, or from one no author has verified, answers {\"recorded\": false, \"reason\"} so a deploy pipeline can fire this on every deploy without branching. Attribution resolves per-repository first, then owner-wide, so a repository with its own claim always earns for its own author.  A deploy of a Hanzo-maintained template attributes to the platform treasury, and a self-deploy (the author\'s own org deploying its own repository) is recorded for provenance but excluded from accrual. The edge is idempotent per repository+project+org.  Answers 201 when it recorded a new edge and 200 otherwise.
@@ -352,8 +354,8 @@ export const AuthorApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorDeploysRecord(requestParameters: AuthorApiPostAuthorDeploysRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployRecord> {
-            return localVarFp.postAuthorDeploysRecord(requestParameters.deployRequest, options).then((request) => request(axios, basePath));
+        postAuthorDeploysRecord(requestParameters: AuthorApiPostAuthorDeploysRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorDeployRecord> {
+            return localVarFp.postAuthorDeploysRecord(requestParameters.authorDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Proves that the caller owns a repository — or a whole OWNER — and records the claim, which is what makes deploys of that code earn royalty.  Ownership is proven the SAME two ways in both cases, tried in order: an IAM-linked forge token with admin or push permission, or a hanzo.json on the default branch carrying the author\'s verify code. Claiming an OWNER proves it against that owner\'s \".github\" control repository, and is exactly as strong as a per-repository claim — an owner the caller cannot prove is refused with 422, never assumed.  A per-repository claim wins over an owner-wide one, so a specifically-claimed repository always earns for its own author. A repository another author has already verified is a 409. The org must have connected first.  Answers 201 when it recorded a new claim and 200 when the claim already existed.
@@ -362,8 +364,8 @@ export const AuthorApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAuthorReposVerify(requestParameters: AuthorApiPostAuthorReposVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Claim> {
-            return localVarFp.postAuthorReposVerify(requestParameters.verifyRequest, options).then((request) => request(axios, basePath));
+        postAuthorReposVerify(requestParameters: AuthorApiPostAuthorReposVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorClaim> {
+            return localVarFp.postAuthorReposVerify(requestParameters.authorVerifyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -390,10 +392,10 @@ export interface AuthorApiGetAuthorBasisRequest {
 export interface AuthorApiPostAuthorConnectRequest {
     /**
      * 
-     * @type {ConnectRequest}
+     * @type {AuthorConnectRequest}
      * @memberof AuthorApiPostAuthorConnect
      */
-    readonly connectRequest: ConnectRequest
+    readonly authorConnectRequest: AuthorConnectRequest
 }
 
 /**
@@ -404,10 +406,10 @@ export interface AuthorApiPostAuthorConnectRequest {
 export interface AuthorApiPostAuthorDeploysRecordRequest {
     /**
      * 
-     * @type {DeployRequest}
+     * @type {AuthorDeployRequest}
      * @memberof AuthorApiPostAuthorDeploysRecord
      */
-    readonly deployRequest: DeployRequest
+    readonly authorDeployRequest: AuthorDeployRequest
 }
 
 /**
@@ -418,10 +420,10 @@ export interface AuthorApiPostAuthorDeploysRecordRequest {
 export interface AuthorApiPostAuthorReposVerifyRequest {
     /**
      * 
-     * @type {VerifyRequest}
+     * @type {AuthorVerifyRequest}
      * @memberof AuthorApiPostAuthorReposVerify
      */
-    readonly verifyRequest: VerifyRequest
+    readonly authorVerifyRequest: AuthorVerifyRequest
 }
 
 /**
@@ -463,7 +465,7 @@ export class AuthorApi extends BaseAPI {
      * @memberof AuthorApi
      */
     public postAuthorConnect(requestParameters: AuthorApiPostAuthorConnectRequest, options?: RawAxiosRequestConfig) {
-        return AuthorApiFp(this.configuration).postAuthorConnect(requestParameters.connectRequest, options).then((request) => request(this.axios, this.basePath));
+        return AuthorApiFp(this.configuration).postAuthorConnect(requestParameters.authorConnectRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -475,7 +477,7 @@ export class AuthorApi extends BaseAPI {
      * @memberof AuthorApi
      */
     public postAuthorDeploysRecord(requestParameters: AuthorApiPostAuthorDeploysRecordRequest, options?: RawAxiosRequestConfig) {
-        return AuthorApiFp(this.configuration).postAuthorDeploysRecord(requestParameters.deployRequest, options).then((request) => request(this.axios, this.basePath));
+        return AuthorApiFp(this.configuration).postAuthorDeploysRecord(requestParameters.authorDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -487,7 +489,7 @@ export class AuthorApi extends BaseAPI {
      * @memberof AuthorApi
      */
     public postAuthorReposVerify(requestParameters: AuthorApiPostAuthorReposVerifyRequest, options?: RawAxiosRequestConfig) {
-        return AuthorApiFp(this.configuration).postAuthorReposVerify(requestParameters.verifyRequest, options).then((request) => request(this.axios, this.basePath));
+        return AuthorApiFp(this.configuration).postAuthorReposVerify(requestParameters.authorVerifyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

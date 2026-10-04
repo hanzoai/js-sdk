@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { IndexersOut } from '../models';
+import type { ExplorerIndexersOut } from '../models';
 // @ts-ignore
-import type { OraclesOut } from '../models';
+import type { ExplorerOraclesOut } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * ExplorerApi - axios parameter creator
  * @export
@@ -115,7 +117,7 @@ export const ExplorerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExplorerIndexers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexersOut>> {
+        async getExplorerIndexers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExplorerIndexersOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExplorerIndexers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExplorerApi.getExplorerIndexers']?.[localVarOperationServerIndex]?.url;
@@ -127,7 +129,7 @@ export const ExplorerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExplorerOracles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OraclesOut>> {
+        async getExplorerOracles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExplorerOraclesOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExplorerOracles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExplorerApi.getExplorerOracles']?.[localVarOperationServerIndex]?.url;
@@ -149,7 +151,7 @@ export const ExplorerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExplorerIndexers(options?: RawAxiosRequestConfig): AxiosPromise<IndexersOut> {
+        getExplorerIndexers(options?: RawAxiosRequestConfig): AxiosPromise<ExplorerIndexersOut> {
             return localVarFp.getExplorerIndexers(options).then((request) => request(axios, basePath));
         },
         /**
@@ -158,7 +160,7 @@ export const ExplorerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExplorerOracles(options?: RawAxiosRequestConfig): AxiosPromise<OraclesOut> {
+        getExplorerOracles(options?: RawAxiosRequestConfig): AxiosPromise<ExplorerOraclesOut> {
             return localVarFp.getExplorerOracles(options).then((request) => request(axios, basePath));
         },
     };

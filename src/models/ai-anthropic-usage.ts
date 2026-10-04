@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AiCacheWrites } from './ai-cache-writes';
 
 /**
  * 
@@ -22,10 +25,34 @@
 export interface AiAnthropicUsage {
     /**
      * 
+     * @type {AiCacheWrites}
+     * @memberof AiAnthropicUsage
+     */
+    'cache_creation'?: AiCacheWrites;
+    /**
+     * 
+     * @type {number}
+     * @memberof AiAnthropicUsage
+     */
+    'cache_creation_input_tokens'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AiAnthropicUsage
+     */
+    'cache_read_input_tokens'?: number;
+    /**
+     * 
      * @type {number}
      * @memberof AiAnthropicUsage
      */
     'input_tokens'?: number;
+    /**
+     * 
+     * @type {Array<AiAnthropicUsage>}
+     * @memberof AiAnthropicUsage
+     */
+    'iterations'?: Array<AiAnthropicUsage>;
     /**
      * 
      * @type {number}

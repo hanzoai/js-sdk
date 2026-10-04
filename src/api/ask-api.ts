@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AskReport } from '../models';
+// @ts-ignore
 import type { AskRequest } from '../models';
 // @ts-ignore
-import type { Report } from '../models';
+import type { AskWebQuestion } from '../models';
 // @ts-ignore
-import type { WebQuestion } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * AskApi - axios parameter creator
  * @export
@@ -74,13 +76,13 @@ export const AskApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
          * @summary Research a question on the live web and answer it with sources cited
-         * @param {WebQuestion} webQuestion 
+         * @param {AskWebQuestion} askWebQuestion 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        researchWeb: async (webQuestion: WebQuestion, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webQuestion' is not null or undefined
-            assertParamExists('researchWeb', 'webQuestion', webQuestion)
+        researchWeb: async (askWebQuestion: AskWebQuestion, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'askWebQuestion' is not null or undefined
+            assertParamExists('researchWeb', 'askWebQuestion', askWebQuestion)
             const localVarPath = `/v1/ask/web`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,7 +106,7 @@ export const AskApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(webQuestion, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(askWebQuestion, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -137,12 +139,12 @@ export const AskApiFp = function(configuration?: Configuration) {
         /**
          * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
          * @summary Research a question on the live web and answer it with sources cited
-         * @param {WebQuestion} webQuestion 
+         * @param {AskWebQuestion} askWebQuestion 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async researchWeb(webQuestion: WebQuestion, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Report>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.researchWeb(webQuestion, options);
+        async researchWeb(askWebQuestion: AskWebQuestion, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskReport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.researchWeb(askWebQuestion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AskApi.researchWeb']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -174,8 +176,8 @@ export const AskApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        researchWeb(requestParameters: AskApiResearchWebRequest, options?: RawAxiosRequestConfig): AxiosPromise<Report> {
-            return localVarFp.researchWeb(requestParameters.webQuestion, options).then((request) => request(axios, basePath));
+        researchWeb(requestParameters: AskApiResearchWebRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskReport> {
+            return localVarFp.researchWeb(requestParameters.askWebQuestion, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -202,10 +204,10 @@ export interface AskApiPostAskRequest {
 export interface AskApiResearchWebRequest {
     /**
      * 
-     * @type {WebQuestion}
+     * @type {AskWebQuestion}
      * @memberof AskApiResearchWeb
      */
-    readonly webQuestion: WebQuestion
+    readonly askWebQuestion: AskWebQuestion
 }
 
 /**
@@ -236,7 +238,7 @@ export class AskApi extends BaseAPI {
      * @memberof AskApi
      */
     public researchWeb(requestParameters: AskApiResearchWebRequest, options?: RawAxiosRequestConfig) {
-        return AskApiFp(this.configuration).researchWeb(requestParameters.webQuestion, options).then((request) => request(this.axios, this.basePath));
+        return AskApiFp(this.configuration).researchWeb(requestParameters.askWebQuestion, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

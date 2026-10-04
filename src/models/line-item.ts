@@ -21,13 +21,13 @@
  */
 export interface LineItem {
     /**
-     * AmountCents is that line\'s amount in whole cents. The scanner is instructed to return integer cents rather than a decimal, so no float rounding can enter the ledger through here.
+     * 
      * @type {number}
      * @memberof LineItem
      */
     'amountCents'?: number;
     /**
-     * Description is the line as it appears on the document.
+     * 
      * @type {string}
      * @memberof LineItem
      */

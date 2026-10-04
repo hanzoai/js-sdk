@@ -21,49 +21,49 @@
  */
 export interface O11yO11yUser {
     /**
-     * CreatedAt is when they joined.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'createdAt'?: string;
     /**
-     * DisplayName is what the console shows for them.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'displayName'?: string;
     /**
-     * Email is their address.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'email'?: string;
     /**
-     * ID is the user id.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'id'?: string;
     /**
-     * IsRoot marks the org\'s root user, which cannot be deleted or demoted.
+     * 
      * @type {boolean}
      * @memberof O11yO11yUser
      */
     'isRoot'?: boolean;
     /**
-     * OrgID is the org they belong to.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'orgId'?: string;
     /**
-     * Status is their lifecycle state — active, pending_invite or deleted.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */
     'status'?: string;
     /**
-     * UpdatedAt is when their record last changed.
+     * 
      * @type {string}
      * @memberof O11yO11yUser
      */

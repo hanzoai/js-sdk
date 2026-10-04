@@ -22,25 +22,27 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { SocialAccount } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SocialAccountBody } from '../models';
+import type { SocialSocialAccount } from '../models';
 // @ts-ignore
-import type { SocialAccountWrite } from '../models';
+import type { SocialSocialAccountBody } from '../models';
 // @ts-ignore
-import type { SocialAccounts } from '../models';
+import type { SocialSocialAccountWrite } from '../models';
 // @ts-ignore
-import type { SocialPost } from '../models';
+import type { SocialSocialAccounts } from '../models';
 // @ts-ignore
-import type { SocialPostBody } from '../models';
+import type { SocialSocialPost } from '../models';
 // @ts-ignore
-import type { SocialPostWrite } from '../models';
+import type { SocialSocialPostBody } from '../models';
 // @ts-ignore
-import type { SocialPosts } from '../models';
+import type { SocialSocialPostWrite } from '../models';
 // @ts-ignore
-import type { SocialProviders } from '../models';
+import type { SocialSocialPosts } from '../models';
 // @ts-ignore
-import type { SocialSummary } from '../models';
+import type { SocialSocialProviders } from '../models';
+// @ts-ignore
+import type { SocialSocialSummary } from '../models';
 /**
  * SocialApi - axios parameter creator
  * @export
@@ -358,13 +360,13 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
-         * @param {SocialAccountBody} socialAccountBody 
+         * @param {SocialSocialAccountBody} socialSocialAccountBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialAccounts: async (socialAccountBody: SocialAccountBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'socialAccountBody' is not null or undefined
-            assertParamExists('postSocialAccounts', 'socialAccountBody', socialAccountBody)
+        postSocialAccounts: async (socialSocialAccountBody: SocialSocialAccountBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialSocialAccountBody' is not null or undefined
+            assertParamExists('postSocialAccounts', 'socialSocialAccountBody', socialSocialAccountBody)
             const localVarPath = `/v1/social/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -388,7 +390,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(socialAccountBody, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(socialSocialAccountBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -398,13 +400,13 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
          * @summary Stores a post for the org and answers 201 with the stored row.
-         * @param {SocialPostBody} socialPostBody 
+         * @param {SocialSocialPostBody} socialSocialPostBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPosts: async (socialPostBody: SocialPostBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'socialPostBody' is not null or undefined
-            assertParamExists('postSocialPosts', 'socialPostBody', socialPostBody)
+        postSocialPosts: async (socialSocialPostBody: SocialSocialPostBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialSocialPostBody' is not null or undefined
+            assertParamExists('postSocialPosts', 'socialSocialPostBody', socialSocialPostBody)
             const localVarPath = `/v1/social/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -428,7 +430,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(socialPostBody, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(socialSocialPostBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -477,15 +479,15 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
          * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
-         * @param {SocialAccountWrite} socialAccountWrite 
+         * @param {SocialSocialAccountWrite} socialSocialAccountWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialAccountsById: async (id: string, socialAccountWrite: SocialAccountWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialAccountsById: async (id: string, socialSocialAccountWrite: SocialSocialAccountWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putSocialAccountsById', 'id', id)
-            // verify required parameter 'socialAccountWrite' is not null or undefined
-            assertParamExists('putSocialAccountsById', 'socialAccountWrite', socialAccountWrite)
+            // verify required parameter 'socialSocialAccountWrite' is not null or undefined
+            assertParamExists('putSocialAccountsById', 'socialSocialAccountWrite', socialSocialAccountWrite)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -510,7 +512,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(socialAccountWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(socialSocialAccountWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -521,15 +523,15 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
          * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
          * @param {string} id 
-         * @param {SocialPostWrite} socialPostWrite 
+         * @param {SocialSocialPostWrite} socialSocialPostWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialPostsById: async (id: string, socialPostWrite: SocialPostWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialPostsById: async (id: string, socialSocialPostWrite: SocialSocialPostWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putSocialPostsById', 'id', id)
-            // verify required parameter 'socialPostWrite' is not null or undefined
-            assertParamExists('putSocialPostsById', 'socialPostWrite', socialPostWrite)
+            // verify required parameter 'socialSocialPostWrite' is not null or undefined
+            assertParamExists('putSocialPostsById', 'socialSocialPostWrite', socialSocialPostWrite)
             const localVarPath = `/v1/social/posts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -554,7 +556,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(socialPostWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(socialSocialPostWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -605,7 +607,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialAccounts(provider?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccounts>> {
+        async getSocialAccounts(provider?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialAccounts>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccounts(provider, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccounts']?.[localVarOperationServerIndex]?.url;
@@ -618,7 +620,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
+        async getSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialAccount>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccountsById']?.[localVarOperationServerIndex]?.url;
@@ -632,7 +634,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialPosts(status?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPosts>> {
+        async getSocialPosts(status?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialPosts>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPosts(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPosts']?.[localVarOperationServerIndex]?.url;
@@ -645,7 +647,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
+        async getSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialPost>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPostsById']?.[localVarOperationServerIndex]?.url;
@@ -657,7 +659,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialProviders>> {
+        async getSocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialProviders>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialProviders']?.[localVarOperationServerIndex]?.url;
@@ -669,7 +671,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSummary>> {
+        async getSocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialSummary']?.[localVarOperationServerIndex]?.url;
@@ -678,12 +680,12 @@ export const SocialApiFp = function(configuration?: Configuration) {
         /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
-         * @param {SocialAccountBody} socialAccountBody 
+         * @param {SocialSocialAccountBody} socialSocialAccountBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialAccounts(socialAccountBody: SocialAccountBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(socialAccountBody, options);
+        async postSocialAccounts(socialSocialAccountBody: SocialSocialAccountBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialAccount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(socialSocialAccountBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -691,12 +693,12 @@ export const SocialApiFp = function(configuration?: Configuration) {
         /**
          * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
          * @summary Stores a post for the org and answers 201 with the stored row.
-         * @param {SocialPostBody} socialPostBody 
+         * @param {SocialSocialPostBody} socialSocialPostBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialPosts(socialPostBody: SocialPostBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPosts(socialPostBody, options);
+        async postSocialPosts(socialSocialPostBody: SocialSocialPostBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPosts(socialSocialPostBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPosts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -708,7 +710,7 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
+        async postSocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialPost>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPostsByIdPublish(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPostsByIdPublish']?.[localVarOperationServerIndex]?.url;
@@ -718,12 +720,12 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
          * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
-         * @param {SocialAccountWrite} socialAccountWrite 
+         * @param {SocialSocialAccountWrite} socialSocialAccountWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putSocialAccountsById(id: string, socialAccountWrite: SocialAccountWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, socialAccountWrite, options);
+        async putSocialAccountsById(id: string, socialSocialAccountWrite: SocialSocialAccountWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialAccount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, socialSocialAccountWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -732,12 +734,12 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
          * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
          * @param {string} id 
-         * @param {SocialPostWrite} socialPostWrite 
+         * @param {SocialSocialPostWrite} socialSocialPostWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putSocialPostsById(id: string, socialPostWrite: SocialPostWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialPostsById(id, socialPostWrite, options);
+        async putSocialPostsById(id: string, socialSocialPostWrite: SocialSocialPostWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSocialPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialPostsById(id, socialSocialPostWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -779,7 +781,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialAccounts(requestParameters: SocialApiGetSocialAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccounts> {
+        getSocialAccounts(requestParameters: SocialApiGetSocialAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccounts> {
             return localVarFp.getSocialAccounts(requestParameters.provider, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -789,7 +791,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
+        getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
             return localVarFp.getSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -799,7 +801,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialPosts(requestParameters: SocialApiGetSocialPostsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialPosts> {
+        getSocialPosts(requestParameters: SocialApiGetSocialPostsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialPosts> {
             return localVarFp.getSocialPosts(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -809,7 +811,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
+        getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialPost> {
             return localVarFp.getSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -818,7 +820,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<SocialProviders> {
+        getSocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialProviders> {
             return localVarFp.getSocialProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -827,7 +829,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<SocialSummary> {
+        getSocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialSummary> {
             return localVarFp.getSocialSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -837,8 +839,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
-            return localVarFp.postSocialAccounts(requestParameters.socialAccountBody, options).then((request) => request(axios, basePath));
+        postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
+            return localVarFp.postSocialAccounts(requestParameters.socialSocialAccountBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
@@ -847,8 +849,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPosts(requestParameters: SocialApiPostSocialPostsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
-            return localVarFp.postSocialPosts(requestParameters.socialPostBody, options).then((request) => request(axios, basePath));
+        postSocialPosts(requestParameters: SocialApiPostSocialPostsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialPost> {
+            return localVarFp.postSocialPosts(requestParameters.socialSocialPostBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.
@@ -857,7 +859,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
+        postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialPost> {
             return localVarFp.postSocialPostsByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -867,8 +869,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
-            return localVarFp.putSocialAccountsById(requestParameters.id, requestParameters.socialAccountWrite, options).then((request) => request(axios, basePath));
+        putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
+            return localVarFp.putSocialAccountsById(requestParameters.id, requestParameters.socialSocialAccountWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
@@ -877,8 +879,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
-            return localVarFp.putSocialPostsById(requestParameters.id, requestParameters.socialPostWrite, options).then((request) => request(axios, basePath));
+        putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialPost> {
+            return localVarFp.putSocialPostsById(requestParameters.id, requestParameters.socialSocialPostWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -989,10 +991,10 @@ export interface SocialApiGetSocialPostsByIdRequest {
 export interface SocialApiPostSocialAccountsRequest {
     /**
      * 
-     * @type {SocialAccountBody}
+     * @type {SocialSocialAccountBody}
      * @memberof SocialApiPostSocialAccounts
      */
-    readonly socialAccountBody: SocialAccountBody
+    readonly socialSocialAccountBody: SocialSocialAccountBody
 }
 
 /**
@@ -1003,10 +1005,10 @@ export interface SocialApiPostSocialAccountsRequest {
 export interface SocialApiPostSocialPostsRequest {
     /**
      * 
-     * @type {SocialPostBody}
+     * @type {SocialSocialPostBody}
      * @memberof SocialApiPostSocialPosts
      */
-    readonly socialPostBody: SocialPostBody
+    readonly socialSocialPostBody: SocialSocialPostBody
 }
 
 /**
@@ -1038,10 +1040,10 @@ export interface SocialApiPutSocialAccountsByIdRequest {
 
     /**
      * 
-     * @type {SocialAccountWrite}
+     * @type {SocialSocialAccountWrite}
      * @memberof SocialApiPutSocialAccountsById
      */
-    readonly socialAccountWrite: SocialAccountWrite
+    readonly socialSocialAccountWrite: SocialSocialAccountWrite
 }
 
 /**
@@ -1059,10 +1061,10 @@ export interface SocialApiPutSocialPostsByIdRequest {
 
     /**
      * 
-     * @type {SocialPostWrite}
+     * @type {SocialSocialPostWrite}
      * @memberof SocialApiPutSocialPostsById
      */
-    readonly socialPostWrite: SocialPostWrite
+    readonly socialSocialPostWrite: SocialSocialPostWrite
 }
 
 /**
@@ -1175,7 +1177,7 @@ export class SocialApi extends BaseAPI {
      * @memberof SocialApi
      */
     public postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postSocialAccounts(requestParameters.socialAccountBody, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).postSocialAccounts(requestParameters.socialSocialAccountBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1187,7 +1189,7 @@ export class SocialApi extends BaseAPI {
      * @memberof SocialApi
      */
     public postSocialPosts(requestParameters: SocialApiPostSocialPostsRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postSocialPosts(requestParameters.socialPostBody, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).postSocialPosts(requestParameters.socialSocialPostBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1211,7 +1213,7 @@ export class SocialApi extends BaseAPI {
      * @memberof SocialApi
      */
     public putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, requestParameters.socialAccountWrite, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, requestParameters.socialSocialAccountWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1223,7 +1225,7 @@ export class SocialApi extends BaseAPI {
      * @memberof SocialApi
      */
     public putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putSocialPostsById(requestParameters.id, requestParameters.socialPostWrite, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).putSocialPostsById(requestParameters.id, requestParameters.socialSocialPostWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -22,31 +22,33 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { RiskAdoptIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { RiskAppetiteIn } from '../models';
+import type { RiskRiskAdoptIn } from '../models';
 // @ts-ignore
-import type { RiskCatalog } from '../models';
+import type { RiskRiskAppetiteIn } from '../models';
 // @ts-ignore
-import type { RiskLearnIn } from '../models';
+import type { RiskRiskCatalog } from '../models';
 // @ts-ignore
-import type { RiskLearnOut } from '../models';
+import type { RiskRiskLearnIn } from '../models';
 // @ts-ignore
-import type { RiskModelState } from '../models';
+import type { RiskRiskLearnOut } from '../models';
 // @ts-ignore
-import type { RiskPolicyOut } from '../models';
+import type { RiskRiskModelState } from '../models';
 // @ts-ignore
-import type { RiskPublishOut } from '../models';
+import type { RiskRiskPolicyOut } from '../models';
 // @ts-ignore
-import type { RiskScoreIn } from '../models';
+import type { RiskRiskPublishOut } from '../models';
 // @ts-ignore
-import type { RiskScoreOut } from '../models';
+import type { RiskRiskScoreIn } from '../models';
 // @ts-ignore
-import type { RiskSearchIn } from '../models';
+import type { RiskRiskScoreOut } from '../models';
 // @ts-ignore
-import type { RiskSearchReport } from '../models';
+import type { RiskRiskSearchIn } from '../models';
 // @ts-ignore
-import type { RiskSearchRun } from '../models';
+import type { RiskRiskSearchReport } from '../models';
+// @ts-ignore
+import type { RiskRiskSearchRun } from '../models';
 /**
  * RiskApi - axios parameter creator
  * @export
@@ -90,13 +92,13 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Puts one of your organisation\'s OWN PUBLISHED VALUES in force, by name — which is what an instant rollback is, what promoting a challenger is, and what installing the shape a search found is.  IT TAKES AN ADDRESS AND NEVER STATE. The masses are read from your own store, so nothing about your model has to be held by whatever is making this call. That closes the sharpest edge the previous shape had: a body of counters is something a caller can COMPOSE, and a region filled until activity inside it reads as ordinary is a model that has been shaped rather than learned. The engine\'s mass invariant was the only thing standing between a composed body and the model; with an address there is no body to compose.  IT ADOPTS THE SHAPE, NOT ONLY THE MASSES. A value records the model space its masses were taken in, and a value whose space differs from the one in force REPLANTS your model into that space before restoring them. That is what makes POST /v1/risk/search actionable: a search answers with the shape that fits your own history best and publishes it fitted, and its address is what you name here. Before this, a winning shape was advice nobody could take — the adoption path refused every shape change, and a winner is a different shape by definition.  WHAT ADOPTING A SEARCHED SHAPE COSTS, SAID PLAINLY: the value a search fits has learned the window the search replayed and nothing older, so installing it trades history for fit. Your appetite is untouched — that is your policy record\'s, with its own versions — and so is the geometry, which stays your own.  An address your organisation has not published is NOT FOUND. That includes one another organisation published, and it is not a lookup that failed: the store is per organisation and the address is a name, never an authority.
          * @summary Put one of your organisation\'s own published model values in force
-         * @param {RiskAdoptIn} riskAdoptIn 
+         * @param {RiskRiskAdoptIn} riskRiskAdoptIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskAdoptModel: async (riskAdoptIn: RiskAdoptIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskAdoptIn' is not null or undefined
-            assertParamExists('riskAdoptModel', 'riskAdoptIn', riskAdoptIn)
+        riskAdoptModel: async (riskRiskAdoptIn: RiskRiskAdoptIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'riskRiskAdoptIn' is not null or undefined
+            assertParamExists('riskAdoptModel', 'riskRiskAdoptIn', riskRiskAdoptIn)
             const localVarPath = `/v1/risk/state/model`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,7 +122,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskAdoptIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(riskRiskAdoptIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -167,15 +169,15 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Learn records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
+         * Records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
          * @summary Teach your organisation\'s own model from its own events
-         * @param {RiskLearnIn} riskLearnIn 
+         * @param {RiskRiskLearnIn} riskRiskLearnIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLearn: async (riskLearnIn: RiskLearnIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskLearnIn' is not null or undefined
-            assertParamExists('riskLearn', 'riskLearnIn', riskLearnIn)
+        riskLearn: async (riskRiskLearnIn: RiskRiskLearnIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'riskRiskLearnIn' is not null or undefined
+            assertParamExists('riskLearn', 'riskRiskLearnIn', riskRiskLearnIn)
             const localVarPath = `/v1/risk/learn`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -199,7 +201,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskLearnIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(riskRiskLearnIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -207,7 +209,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Policy reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
+         * Reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
          * @summary Your organisation\'s decision-regime history, and which version is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -275,15 +277,15 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Score judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
+         * Judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
          * @summary Score one event against your organisation\'s own model
-         * @param {RiskScoreIn} riskScoreIn 
+         * @param {RiskRiskScoreIn} riskRiskScoreIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskScore: async (riskScoreIn: RiskScoreIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskScoreIn' is not null or undefined
-            assertParamExists('riskScore', 'riskScoreIn', riskScoreIn)
+        riskScore: async (riskRiskScoreIn: RiskRiskScoreIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'riskRiskScoreIn' is not null or undefined
+            assertParamExists('riskScore', 'riskRiskScoreIn', riskRiskScoreIn)
             const localVarPath = `/v1/risk/score`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -307,7 +309,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskScoreIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(riskRiskScoreIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -315,15 +317,15 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Search runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
+         * Runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
          * @summary Search exhaustively for the model shape that fits your own history
-         * @param {RiskSearchIn} riskSearchIn 
+         * @param {RiskRiskSearchIn} riskRiskSearchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSearch: async (riskSearchIn: RiskSearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskSearchIn' is not null or undefined
-            assertParamExists('riskSearch', 'riskSearchIn', riskSearchIn)
+        riskSearch: async (riskRiskSearchIn: RiskRiskSearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'riskRiskSearchIn' is not null or undefined
+            assertParamExists('riskSearch', 'riskRiskSearchIn', riskRiskSearchIn)
             const localVarPath = `/v1/risk/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -347,7 +349,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskSearchIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(riskRiskSearchIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -395,13 +397,13 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * States the decision regime the caller organisation\'s model decides under: how much of its own stream may be sent for examination, how much of the rest is sampled to measure what was missed, and whether the model may change an outcome at all.  The appetite is the decision a model is not permitted to make for itself: its output is a probability, so how likely it is to MISS something is a matter of policy that has to be stated, measured and reviewed rather than absorbed into a constant. The alert threshold is derived from it as a quantile of the scores actually observed, which is what keeps its meaning as the distribution drifts.  It is DURABLE BEFORE IT IS IN FORCE. The regime is recorded as a new version on the organisation\'s own shelf before anything in memory moves, so a policy that cannot be written down is refused rather than answered from state the next rollout would silently undo.  ARMING IS AN ADMIN ACT AND TUNING IS NOT. Setting `live` requires an admin of this organisation; stating the appetite and the sample is self-service for any member. Taking the model live decides whether it may change an OUTCOME at all — a payment frozen, a grant refused — for every customer this organisation has, and that is a decision an organisation takes rather than one of its members.  A RESTATEMENT OF THE REGIME IN FORCE MINTS NOTHING and answers the version already in force. Compare the version you receive with the version you had: unchanged means the numbers were the same, which is why there is no flag for it.  Learned state survives the change. The model\'s identity covers its SHAPE — the inventory and the geometry — and not its appetite, so restating policy unlearns nothing. It also does not REPORT the learned state: what the model is is read from the model.
          * @summary State the decision regime: the appetite, the sample, and whether the model is live
-         * @param {RiskAppetiteIn} riskAppetiteIn 
+         * @param {RiskRiskAppetiteIn} riskRiskAppetiteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSetPolicy: async (riskAppetiteIn: RiskAppetiteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'riskAppetiteIn' is not null or undefined
-            assertParamExists('riskSetPolicy', 'riskAppetiteIn', riskAppetiteIn)
+        riskSetPolicy: async (riskRiskAppetiteIn: RiskRiskAppetiteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'riskRiskAppetiteIn' is not null or undefined
+            assertParamExists('riskSetPolicy', 'riskRiskAppetiteIn', riskRiskAppetiteIn)
             const localVarPath = `/v1/risk/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -425,7 +427,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(riskAppetiteIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(riskRiskAppetiteIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -433,7 +435,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * State reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
+         * Reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
          * @summary Report your organisation\'s model: what it learned, and what it realised
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -491,12 +493,12 @@ export const RiskApiFp = function(configuration?: Configuration) {
         /**
          * Puts one of your organisation\'s OWN PUBLISHED VALUES in force, by name — which is what an instant rollback is, what promoting a challenger is, and what installing the shape a search found is.  IT TAKES AN ADDRESS AND NEVER STATE. The masses are read from your own store, so nothing about your model has to be held by whatever is making this call. That closes the sharpest edge the previous shape had: a body of counters is something a caller can COMPOSE, and a region filled until activity inside it reads as ordinary is a model that has been shaped rather than learned. The engine\'s mass invariant was the only thing standing between a composed body and the model; with an address there is no body to compose.  IT ADOPTS THE SHAPE, NOT ONLY THE MASSES. A value records the model space its masses were taken in, and a value whose space differs from the one in force REPLANTS your model into that space before restoring them. That is what makes POST /v1/risk/search actionable: a search answers with the shape that fits your own history best and publishes it fitted, and its address is what you name here. Before this, a winning shape was advice nobody could take — the adoption path refused every shape change, and a winner is a different shape by definition.  WHAT ADOPTING A SEARCHED SHAPE COSTS, SAID PLAINLY: the value a search fits has learned the window the search replayed and nothing older, so installing it trades history for fit. Your appetite is untouched — that is your policy record\'s, with its own versions — and so is the geometry, which stays your own.  An address your organisation has not published is NOT FOUND. That includes one another organisation published, and it is not a lookup that failed: the store is per organisation and the address is a name, never an authority.
          * @summary Put one of your organisation\'s own published model values in force
-         * @param {RiskAdoptIn} riskAdoptIn 
+         * @param {RiskRiskAdoptIn} riskRiskAdoptIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskAdoptModel(riskAdoptIn: RiskAdoptIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskModelState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskAdoptModel(riskAdoptIn, options);
+        async riskAdoptModel(riskRiskAdoptIn: RiskRiskAdoptIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskModelState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskAdoptModel(riskRiskAdoptIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskAdoptModel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -508,32 +510,32 @@ export const RiskApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskFeatures(days?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskCatalog>> {
+        async riskFeatures(days?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskCatalog>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskFeatures(days, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskFeatures']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Learn records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
+         * Records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
          * @summary Teach your organisation\'s own model from its own events
-         * @param {RiskLearnIn} riskLearnIn 
+         * @param {RiskRiskLearnIn} riskRiskLearnIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskLearn(riskLearnIn: RiskLearnIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskLearnOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskLearn(riskLearnIn, options);
+        async riskLearn(riskRiskLearnIn: RiskRiskLearnIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskLearnOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskLearn(riskRiskLearnIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskLearn']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Policy reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
+         * Reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
          * @summary Your organisation\'s decision-regime history, and which version is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskPolicyOut>> {
+        async riskPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskPolicyOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskPolicy']?.[localVarOperationServerIndex]?.url;
@@ -545,34 +547,34 @@ export const RiskApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskPublishModel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskPublishOut>> {
+        async riskPublishModel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskPublishOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskPublishModel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskPublishModel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Score judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
+         * Judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
          * @summary Score one event against your organisation\'s own model
-         * @param {RiskScoreIn} riskScoreIn 
+         * @param {RiskRiskScoreIn} riskRiskScoreIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskScore(riskScoreIn: RiskScoreIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskScoreOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskScore(riskScoreIn, options);
+        async riskScore(riskRiskScoreIn: RiskRiskScoreIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskScoreOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskScore(riskRiskScoreIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskScore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Search runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
+         * Runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
          * @summary Search exhaustively for the model shape that fits your own history
-         * @param {RiskSearchIn} riskSearchIn 
+         * @param {RiskRiskSearchIn} riskRiskSearchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskSearch(riskSearchIn: RiskSearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskSearchRun>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSearch(riskSearchIn, options);
+        async riskSearch(riskRiskSearchIn: RiskRiskSearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskSearchRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSearch(riskRiskSearchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -584,7 +586,7 @@ export const RiskApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskSearchResult(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskSearchReport>> {
+        async riskSearchResult(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskSearchReport>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskSearchResult(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskSearchResult']?.[localVarOperationServerIndex]?.url;
@@ -593,23 +595,23 @@ export const RiskApiFp = function(configuration?: Configuration) {
         /**
          * States the decision regime the caller organisation\'s model decides under: how much of its own stream may be sent for examination, how much of the rest is sampled to measure what was missed, and whether the model may change an outcome at all.  The appetite is the decision a model is not permitted to make for itself: its output is a probability, so how likely it is to MISS something is a matter of policy that has to be stated, measured and reviewed rather than absorbed into a constant. The alert threshold is derived from it as a quantile of the scores actually observed, which is what keeps its meaning as the distribution drifts.  It is DURABLE BEFORE IT IS IN FORCE. The regime is recorded as a new version on the organisation\'s own shelf before anything in memory moves, so a policy that cannot be written down is refused rather than answered from state the next rollout would silently undo.  ARMING IS AN ADMIN ACT AND TUNING IS NOT. Setting `live` requires an admin of this organisation; stating the appetite and the sample is self-service for any member. Taking the model live decides whether it may change an OUTCOME at all — a payment frozen, a grant refused — for every customer this organisation has, and that is a decision an organisation takes rather than one of its members.  A RESTATEMENT OF THE REGIME IN FORCE MINTS NOTHING and answers the version already in force. Compare the version you receive with the version you had: unchanged means the numbers were the same, which is why there is no flag for it.  Learned state survives the change. The model\'s identity covers its SHAPE — the inventory and the geometry — and not its appetite, so restating policy unlearns nothing. It also does not REPORT the learned state: what the model is is read from the model.
          * @summary State the decision regime: the appetite, the sample, and whether the model is live
-         * @param {RiskAppetiteIn} riskAppetiteIn 
+         * @param {RiskRiskAppetiteIn} riskRiskAppetiteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskSetPolicy(riskAppetiteIn: RiskAppetiteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskPolicyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSetPolicy(riskAppetiteIn, options);
+        async riskSetPolicy(riskRiskAppetiteIn: RiskRiskAppetiteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskPolicyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSetPolicy(riskRiskAppetiteIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskSetPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * State reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
+         * Reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
          * @summary Report your organisation\'s model: what it learned, and what it realised
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskState(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskModelState>> {
+        async riskState(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RiskRiskModelState>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskState(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RiskApi.riskState']?.[localVarOperationServerIndex]?.url;
@@ -641,8 +643,8 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskAdoptModel(requestParameters: RiskApiRiskAdoptModelRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskModelState> {
-            return localVarFp.riskAdoptModel(requestParameters.riskAdoptIn, options).then((request) => request(axios, basePath));
+        riskAdoptModel(requestParameters: RiskApiRiskAdoptModelRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskModelState> {
+            return localVarFp.riskAdoptModel(requestParameters.riskRiskAdoptIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Features is the feature catalogue in its two honest lenses.  The MODEL lens is the governed inventory: one entry per dimension of the model space, each carrying the typology it serves, the supervisor\'s own words for the indicator, and the published standard those words come from — so a coverage claim is checkable rather than asserted. It is the same for every organisation.  The SURFACE lens is what THIS organisation\'s own event surface actually carries, measured over the window: how many of its buckets carry each dimension at all, and what the dimension reads where it is present. A dimension present in no bucket is BLIND, and saying so is the difference between no risk and no data.
@@ -651,26 +653,26 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskFeatures(requestParameters: RiskApiRiskFeaturesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RiskCatalog> {
+        riskFeatures(requestParameters: RiskApiRiskFeaturesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskCatalog> {
             return localVarFp.riskFeatures(requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
-         * Learn records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
+         * Records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
          * @summary Teach your organisation\'s own model from its own events
          * @param {RiskApiRiskLearnRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskLearn(requestParameters: RiskApiRiskLearnRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskLearnOut> {
-            return localVarFp.riskLearn(requestParameters.riskLearnIn, options).then((request) => request(axios, basePath));
+        riskLearn(requestParameters: RiskApiRiskLearnRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskLearnOut> {
+            return localVarFp.riskLearn(requestParameters.riskRiskLearnIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Policy reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
+         * Reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
          * @summary Your organisation\'s decision-regime history, and which version is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskPolicy(options?: RawAxiosRequestConfig): AxiosPromise<RiskPolicyOut> {
+        riskPolicy(options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskPolicyOut> {
             return localVarFp.riskPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -679,28 +681,28 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskPublishModel(options?: RawAxiosRequestConfig): AxiosPromise<RiskPublishOut> {
+        riskPublishModel(options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskPublishOut> {
             return localVarFp.riskPublishModel(options).then((request) => request(axios, basePath));
         },
         /**
-         * Score judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
+         * Judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
          * @summary Score one event against your organisation\'s own model
          * @param {RiskApiRiskScoreRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskScore(requestParameters: RiskApiRiskScoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskScoreOut> {
-            return localVarFp.riskScore(requestParameters.riskScoreIn, options).then((request) => request(axios, basePath));
+        riskScore(requestParameters: RiskApiRiskScoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskScoreOut> {
+            return localVarFp.riskScore(requestParameters.riskRiskScoreIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Search runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
+         * Runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
          * @summary Search exhaustively for the model shape that fits your own history
          * @param {RiskApiRiskSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSearch(requestParameters: RiskApiRiskSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskSearchRun> {
-            return localVarFp.riskSearch(requestParameters.riskSearchIn, options).then((request) => request(axios, basePath));
+        riskSearch(requestParameters: RiskApiRiskSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskSearchRun> {
+            return localVarFp.riskSearch(requestParameters.riskRiskSearchIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads back one search run: every shape tried over this organisation\'s own history, best first, and the one that fit.  A run another organisation started is simply not there — the same 404 an unknown id gives, so the read is not a probe oracle.
@@ -709,7 +711,7 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSearchResult(requestParameters: RiskApiRiskSearchResultRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskSearchReport> {
+        riskSearchResult(requestParameters: RiskApiRiskSearchResultRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskSearchReport> {
             return localVarFp.riskSearchResult(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -719,16 +721,16 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSetPolicy(requestParameters: RiskApiRiskSetPolicyRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskPolicyOut> {
-            return localVarFp.riskSetPolicy(requestParameters.riskAppetiteIn, options).then((request) => request(axios, basePath));
+        riskSetPolicy(requestParameters: RiskApiRiskSetPolicyRequest, options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskPolicyOut> {
+            return localVarFp.riskSetPolicy(requestParameters.riskRiskAppetiteIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * State reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
+         * Reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
          * @summary Report your organisation\'s model: what it learned, and what it realised
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskState(options?: RawAxiosRequestConfig): AxiosPromise<RiskModelState> {
+        riskState(options?: RawAxiosRequestConfig): AxiosPromise<RiskRiskModelState> {
             return localVarFp.riskState(options).then((request) => request(axios, basePath));
         },
     };
@@ -742,10 +744,10 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
 export interface RiskApiRiskAdoptModelRequest {
     /**
      * 
-     * @type {RiskAdoptIn}
+     * @type {RiskRiskAdoptIn}
      * @memberof RiskApiRiskAdoptModel
      */
-    readonly riskAdoptIn: RiskAdoptIn
+    readonly riskRiskAdoptIn: RiskRiskAdoptIn
 }
 
 /**
@@ -770,10 +772,10 @@ export interface RiskApiRiskFeaturesRequest {
 export interface RiskApiRiskLearnRequest {
     /**
      * 
-     * @type {RiskLearnIn}
+     * @type {RiskRiskLearnIn}
      * @memberof RiskApiRiskLearn
      */
-    readonly riskLearnIn: RiskLearnIn
+    readonly riskRiskLearnIn: RiskRiskLearnIn
 }
 
 /**
@@ -784,10 +786,10 @@ export interface RiskApiRiskLearnRequest {
 export interface RiskApiRiskScoreRequest {
     /**
      * 
-     * @type {RiskScoreIn}
+     * @type {RiskRiskScoreIn}
      * @memberof RiskApiRiskScore
      */
-    readonly riskScoreIn: RiskScoreIn
+    readonly riskRiskScoreIn: RiskRiskScoreIn
 }
 
 /**
@@ -798,10 +800,10 @@ export interface RiskApiRiskScoreRequest {
 export interface RiskApiRiskSearchRequest {
     /**
      * 
-     * @type {RiskSearchIn}
+     * @type {RiskRiskSearchIn}
      * @memberof RiskApiRiskSearch
      */
-    readonly riskSearchIn: RiskSearchIn
+    readonly riskRiskSearchIn: RiskRiskSearchIn
 }
 
 /**
@@ -826,10 +828,10 @@ export interface RiskApiRiskSearchResultRequest {
 export interface RiskApiRiskSetPolicyRequest {
     /**
      * 
-     * @type {RiskAppetiteIn}
+     * @type {RiskRiskAppetiteIn}
      * @memberof RiskApiRiskSetPolicy
      */
-    readonly riskAppetiteIn: RiskAppetiteIn
+    readonly riskRiskAppetiteIn: RiskRiskAppetiteIn
 }
 
 /**
@@ -859,7 +861,7 @@ export class RiskApi extends BaseAPI {
      * @memberof RiskApi
      */
     public riskAdoptModel(requestParameters: RiskApiRiskAdoptModelRequest, options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).riskAdoptModel(requestParameters.riskAdoptIn, options).then((request) => request(this.axios, this.basePath));
+        return RiskApiFp(this.configuration).riskAdoptModel(requestParameters.riskRiskAdoptIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -875,7 +877,7 @@ export class RiskApi extends BaseAPI {
     }
 
     /**
-     * Learn records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
+     * Records a batch of events into the caller organisation\'s own aggregates and lets its model learn from them. It answers how many it learned from.  IT DOES NOT SCORE, AND THAT IS THE POINT. An observation is a value you record; learning is a transformation over observations; a verdict is a query against the result. This op is the first two. [ops.score] is the third, it is pure, and it is the ONE entry point to a verdict. They were one call, which meant you could not record without training and could not train without being answered — and the model ran twice over every event to produce a verdict the response carried and no caller read.  TO OBSERVE AND JUDGE, COMPOSE THE TWO, and mind the order. Score FIRST, then learn: the score is then the model\'s opinion of an event it has not yet learned from, which is the question worth asking. The other order answers for a model that has already absorbed the event it is judging.  This is the training path, and there is no job behind it: the model IS a set of mass counters over half-space trees, so learning is an increment and the model is current the instant the last event lands. Nothing from any other organisation is in it, and nothing from this organisation leaves it.  A RETRY IS INERT. The record deduplicates on the event id you send, and an event already in it moves nothing, costs nothing and is not counted — so a client that timed out can send the same batch again and its model holds what it holds. Without an id of your own there is nothing to converge on: two identical bodies are two events.
      * @summary Teach your organisation\'s own model from its own events
      * @param {RiskApiRiskLearnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -883,11 +885,11 @@ export class RiskApi extends BaseAPI {
      * @memberof RiskApi
      */
     public riskLearn(requestParameters: RiskApiRiskLearnRequest, options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).riskLearn(requestParameters.riskLearnIn, options).then((request) => request(this.axios, this.basePath));
+        return RiskApiFp(this.configuration).riskLearn(requestParameters.riskRiskLearnIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Policy reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
+     * Reports the caller organisation\'s own decision-regime history: every distinct regime it has adopted, which version is in force, and what retention has taken.  WHY IT EXISTS. Every score cites the version it was decided under ([riskScoreOut.Policy]), and the threshold that score was measured against is derived from the appetite that version states. Restate the appetite and, without this record, every earlier decision becomes unreconstructible — the cut it was judged by no longer exists anywhere. An adverse decision that cannot be explained against the policy in force when it was taken cannot be defended.  It covers ONE organisation. The history is on that organisation\'s own shelf, so another\'s versions are not filtered out of the answer — they are not in the file the answer is read from.
      * @summary Your organisation\'s decision-regime history, and which version is in force
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -909,7 +911,7 @@ export class RiskApi extends BaseAPI {
     }
 
     /**
-     * Score judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
+     * Judges one event against the caller organisation\'s OWN model and learns nothing from it. It is how a candidate is tried against real behaviour before anything depends on the answer, and it is the model\'s analogue of testing a rule.  Because it records nothing, the aggregates it reads do not include the event: the numbers are the organisation\'s history as it stands. A model still warming declines with a reason rather than answering zero, because silence must never read as a clean result.
      * @summary Score one event against your organisation\'s own model
      * @param {RiskApiRiskScoreRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -917,11 +919,11 @@ export class RiskApi extends BaseAPI {
      * @memberof RiskApi
      */
     public riskScore(requestParameters: RiskApiRiskScoreRequest, options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).riskScore(requestParameters.riskScoreIn, options).then((request) => request(this.axios, this.basePath));
+        return RiskApiFp(this.configuration).riskScore(requestParameters.riskRiskScoreIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Search runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
+     * Runs an exhaustive search for the model shape that best fits the caller organisation\'s own history, and answers 202 with the run to read back.  Every candidate is replayed over that organisation\'s OWN feature surface in its own sandbox — its own aggregates, its own model, neither of them the live one — so a run cannot move a live threshold and cannot see another organisation\'s data. The result is the learning curve for each shape and the one that fit best, ranked on how closely it honoured the stated appetite, whether it warmed at all, whether it saturated, and how much of the coordinate space it left blind.  An empty history is REFUSED rather than reported as zero alerts, because \"no alerts\" is exactly what a quiet model looks like.
      * @summary Search exhaustively for the model shape that fits your own history
      * @param {RiskApiRiskSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -929,7 +931,7 @@ export class RiskApi extends BaseAPI {
      * @memberof RiskApi
      */
     public riskSearch(requestParameters: RiskApiRiskSearchRequest, options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).riskSearch(requestParameters.riskSearchIn, options).then((request) => request(this.axios, this.basePath));
+        return RiskApiFp(this.configuration).riskSearch(requestParameters.riskRiskSearchIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -953,11 +955,11 @@ export class RiskApi extends BaseAPI {
      * @memberof RiskApi
      */
     public riskSetPolicy(requestParameters: RiskApiRiskSetPolicyRequest, options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).riskSetPolicy(requestParameters.riskAppetiteIn, options).then((request) => request(this.axios, this.basePath));
+        return RiskApiFp(this.configuration).riskSetPolicy(requestParameters.riskRiskAppetiteIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * State reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
+     * Reports the caller organisation\'s own model: what it has learned, whether it is live or still in shadow, the threshold in force, the appetite it stated beside the share it actually realised, every refusal by reason, every feature that read blind, and how much of the organisation\'s own event surface has been folded in.  It covers ONE organisation. A caller cannot learn another\'s volumes, alert rate or behaviour from it, because the state is read out of a model that holds only its own.
      * @summary Report your organisation\'s model: what it learned, and what it realised
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -22,7 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Receipt } from '../models';
+import type { ProblemDetails } from '../models';
+// @ts-ignore
+import type { X402Receipt } from '../models';
+// @ts-ignore
+import type { X402SettlementList } from '../models';
 /**
  * X402Api - axios parameter creator
  * @export
@@ -30,8 +34,52 @@ import type { Receipt } from '../models';
 export const X402ApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
-         * @summary Settlement reads one x402 payment receipt by id.
+         * Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when. A payer is the org whose ledger is debited, which for a SuperAdmin inspecting another org is still its own; a payee is the caller\'s own org. An unsettled claim is not a receipt and is never listed.
+         * @summary Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when.
+         * @param {string} [role] Role is payer — what the caller\&#39;s org paid — or payee — what it was paid. Payer when empty.
+         * @param {number} [year] Year keeps the calendar year (UTC) the payments settled in. Zero keeps every year.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getX402Settlements: async (role?: string, year?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/x402/settlements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (role !== undefined) {
+                localVarQueryParameter['role'] = role;
+            }
+
+            if (year !== undefined) {
+                localVarQueryParameter['year'] = year;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
+         * @summary Reads one x402 payment receipt by id.
          * @param {string} id ID is the settlement id from the URL — the deterministic keccak(from|nonce) key an x402 receipt is issued under (the &#x60;id&#x60; field of a Receipt, and the &#x60;transaction&#x60; of the SettlementResponse on the PAYMENT-RESPONSE header a paid request answers with).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -78,13 +126,27 @@ export const X402ApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = X402ApiAxiosParamCreator(configuration)
     return {
         /**
-         * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
-         * @summary Settlement reads one x402 payment receipt by id.
+         * Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when. A payer is the org whose ledger is debited, which for a SuperAdmin inspecting another org is still its own; a payee is the caller\'s own org. An unsettled claim is not a receipt and is never listed.
+         * @summary Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when.
+         * @param {string} [role] Role is payer — what the caller\&#39;s org paid — or payee — what it was paid. Payer when empty.
+         * @param {number} [year] Year keeps the calendar year (UTC) the payments settled in. Zero keeps every year.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getX402Settlements(role?: string, year?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<X402SettlementList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getX402Settlements(role, year, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['X402Api.getX402Settlements']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
+         * @summary Reads one x402 payment receipt by id.
          * @param {string} id ID is the settlement id from the URL — the deterministic keccak(from|nonce) key an x402 receipt is issued under (the &#x60;id&#x60; field of a Receipt, and the &#x60;transaction&#x60; of the SettlementResponse on the PAYMENT-RESPONSE header a paid request answers with).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getX402SettlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Receipt>> {
+        async getX402SettlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<X402Receipt>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getX402SettlementsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['X402Api.getX402SettlementsById']?.[localVarOperationServerIndex]?.url;
@@ -101,17 +163,48 @@ export const X402ApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = X402ApiFp(configuration)
     return {
         /**
-         * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
-         * @summary Settlement reads one x402 payment receipt by id.
+         * Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when. A payer is the org whose ledger is debited, which for a SuperAdmin inspecting another org is still its own; a payee is the caller\'s own org. An unsettled claim is not a receipt and is never listed.
+         * @summary Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when.
+         * @param {X402ApiGetX402SettlementsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getX402Settlements(requestParameters: X402ApiGetX402SettlementsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<X402SettlementList> {
+            return localVarFp.getX402Settlements(requestParameters.role, requestParameters.year, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
+         * @summary Reads one x402 payment receipt by id.
          * @param {X402ApiGetX402SettlementsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getX402SettlementsById(requestParameters: X402ApiGetX402SettlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Receipt> {
+        getX402SettlementsById(requestParameters: X402ApiGetX402SettlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<X402Receipt> {
             return localVarFp.getX402SettlementsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for getX402Settlements operation in X402Api.
+ * @export
+ * @interface X402ApiGetX402SettlementsRequest
+ */
+export interface X402ApiGetX402SettlementsRequest {
+    /**
+     * Role is payer — what the caller\&#39;s org paid — or payee — what it was paid. Payer when empty.
+     * @type {string}
+     * @memberof X402ApiGetX402Settlements
+     */
+    readonly role?: string
+
+    /**
+     * Year keeps the calendar year (UTC) the payments settled in. Zero keeps every year.
+     * @type {number}
+     * @memberof X402ApiGetX402Settlements
+     */
+    readonly year?: number
+}
 
 /**
  * Request parameters for getX402SettlementsById operation in X402Api.
@@ -135,8 +228,20 @@ export interface X402ApiGetX402SettlementsByIdRequest {
  */
 export class X402Api extends BaseAPI {
     /**
-     * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
-     * @summary Settlement reads one x402 payment receipt by id.
+     * Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when. A payer is the org whose ledger is debited, which for a SuperAdmin inspecting another org is still its own; a payee is the caller\'s own org. An unsettled claim is not a receipt and is never listed.
+     * @summary Lists the caller\'s x402 receipts, newest first: as payer, what its ledger paid; as payee, what it was paid — each settled payment with what it bought, both parties, the exact amount and when.
+     * @param {X402ApiGetX402SettlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof X402Api
+     */
+    public getX402Settlements(requestParameters: X402ApiGetX402SettlementsRequest = {}, options?: RawAxiosRequestConfig) {
+        return X402ApiFp(this.configuration).getX402Settlements(requestParameters.role, requestParameters.year, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
+     * @summary Reads one x402 payment receipt by id.
      * @param {X402ApiGetX402SettlementsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

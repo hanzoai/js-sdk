@@ -22,27 +22,29 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BucketCreateIn } from '../models';
+import type { CloudflareBucketCreateIn } from '../models';
 // @ts-ignore
-import type { D1Query } from '../models';
+import type { CloudflareD1Query } from '../models';
 // @ts-ignore
-import type { DatabaseCreateIn } from '../models';
+import type { CloudflareDatabaseCreateIn } from '../models';
 // @ts-ignore
-import type { DomainAddIn } from '../models';
+import type { CloudflareDomainAddIn } from '../models';
 // @ts-ignore
-import type { NamespaceCreateIn } from '../models';
+import type { CloudflareNamespaceCreateIn } from '../models';
+// @ts-ignore
+import type { CloudflarePagesProjectCreate } from '../models';
+// @ts-ignore
+import type { CloudflarePurgeIn } from '../models';
+// @ts-ignore
+import type { CloudflareRouteCreateIn } from '../models';
+// @ts-ignore
+import type { CloudflareSubdomainSetIn } from '../models';
+// @ts-ignore
+import type { CloudflareWorkerScriptPut } from '../models';
 // @ts-ignore
 import type { PagesDeploy } from '../models';
 // @ts-ignore
-import type { PagesProjectCreate } from '../models';
-// @ts-ignore
-import type { PurgeIn } from '../models';
-// @ts-ignore
-import type { RouteCreateIn } from '../models';
-// @ts-ignore
-import type { SubdomainSetIn } from '../models';
-// @ts-ignore
-import type { WorkerScriptPut } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * CloudflareApi - axios parameter creator
  * @export
@@ -88,8 +90,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * KVNamespaceDelete deletes a Workers KV namespace and every key in it. Requires org admin.
-         * @summary KVNamespaceDelete deletes a Workers KV namespace and every key in it.
+         * Deletes a Workers KV namespace and every key in it. Requires org admin.
+         * @summary Deletes a Workers KV namespace and every key in it.
          * @param {string} namespace Namespace is the Cloudflare KV namespace id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -126,8 +128,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * KVValueDelete removes one key from a Workers KV namespace. Requires org admin.
-         * @summary KVValueDelete removes one key from a Workers KV namespace.
+         * Removes one key from a Workers KV namespace. Requires org admin.
+         * @summary Removes one key from a Workers KV namespace.
          * @param {string} namespace Namespace is the Cloudflare KV namespace id.
          * @param {string} key Key is the key within that namespace. KV keys are broad (up to 512 bytes), so this one is escaped rather than charset-restricted.
          * @param {*} [options] Override http request option.
@@ -415,8 +417,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
-         * @summary KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account.
+         * Lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
+         * @summary Lists the Workers KV namespaces on the org\'s Cloudflare account.
          * @param {string} [page] Page is the 1-based page of namespaces to return.
          * @param {string} [perPage] PerPage is how many namespaces one page holds.
          * @param {string} [order] Order names the field to sort by, and Direction sorts asc or desc.
@@ -905,13 +907,13 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates a D1 database on the org\'s Cloudflare account.
-         * @param {DatabaseCreateIn} databaseCreateIn 
+         * @param {CloudflareDatabaseCreateIn} cloudflareDatabaseCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareD1Databases: async (databaseCreateIn: DatabaseCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseCreateIn' is not null or undefined
-            assertParamExists('postCloudflareD1Databases', 'databaseCreateIn', databaseCreateIn)
+        postCloudflareD1Databases: async (cloudflareDatabaseCreateIn: CloudflareDatabaseCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflareDatabaseCreateIn' is not null or undefined
+            assertParamExists('postCloudflareD1Databases', 'cloudflareDatabaseCreateIn', cloudflareDatabaseCreateIn)
             const localVarPath = `/v1/cloudflare/d1/databases`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -935,7 +937,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(databaseCreateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareDatabaseCreateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -946,15 +948,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
          * @summary Runs one SQL statement against a D1 database.
          * @param {string} database 
-         * @param {D1Query} d1Query 
+         * @param {CloudflareD1Query} cloudflareD1Query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareD1DatabasesByDatabaseQuery: async (database: string, d1Query: D1Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflareD1DatabasesByDatabaseQuery: async (database: string, cloudflareD1Query: CloudflareD1Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'database' is not null or undefined
             assertParamExists('postCloudflareD1DatabasesByDatabaseQuery', 'database', database)
-            // verify required parameter 'd1Query' is not null or undefined
-            assertParamExists('postCloudflareD1DatabasesByDatabaseQuery', 'd1Query', d1Query)
+            // verify required parameter 'cloudflareD1Query' is not null or undefined
+            assertParamExists('postCloudflareD1DatabasesByDatabaseQuery', 'cloudflareD1Query', cloudflareD1Query)
             const localVarPath = `/v1/cloudflare/d1/databases/{database}/query`
                 .replace(`{${"database"}}`, encodeURIComponent(String(database)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -979,7 +981,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(d1Query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareD1Query, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -987,15 +989,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
-         * @summary KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account.
-         * @param {NamespaceCreateIn} namespaceCreateIn 
+         * Creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
+         * @summary Creates a Workers KV namespace on the org\'s Cloudflare account.
+         * @param {CloudflareNamespaceCreateIn} cloudflareNamespaceCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareKvNamespaces: async (namespaceCreateIn: NamespaceCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'namespaceCreateIn' is not null or undefined
-            assertParamExists('postCloudflareKvNamespaces', 'namespaceCreateIn', namespaceCreateIn)
+        postCloudflareKvNamespaces: async (cloudflareNamespaceCreateIn: CloudflareNamespaceCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflareNamespaceCreateIn' is not null or undefined
+            assertParamExists('postCloudflareKvNamespaces', 'cloudflareNamespaceCreateIn', cloudflareNamespaceCreateIn)
             const localVarPath = `/v1/cloudflare/kv/namespaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1019,7 +1021,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(namespaceCreateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareNamespaceCreateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1029,13 +1031,13 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Creates a Cloudflare Pages project on the org\'s account. Requires org admin. Only the modeled fields reach Cloudflare, so an unmodeled key in the request is dropped rather than forwarded.
          * @summary Creates a Cloudflare Pages project on the org\'s account.
-         * @param {PagesProjectCreate} pagesProjectCreate 
+         * @param {CloudflarePagesProjectCreate} cloudflarePagesProjectCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflarePagesProjects: async (pagesProjectCreate: PagesProjectCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pagesProjectCreate' is not null or undefined
-            assertParamExists('postCloudflarePagesProjects', 'pagesProjectCreate', pagesProjectCreate)
+        postCloudflarePagesProjects: async (cloudflarePagesProjectCreate: CloudflarePagesProjectCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflarePagesProjectCreate' is not null or undefined
+            assertParamExists('postCloudflarePagesProjects', 'cloudflarePagesProjectCreate', cloudflarePagesProjectCreate)
             const localVarPath = `/v1/cloudflare/pages/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1059,7 +1061,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pagesProjectCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflarePagesProjectCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1112,15 +1114,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Attaches a custom domain to a Cloudflare Pages project. Requires org admin. Cloudflare owns validation and certificate issuance from here on.
          * @summary Attaches a custom domain to a Cloudflare Pages project.
          * @param {string} project Project is the Pages project name, from the path.
-         * @param {DomainAddIn} domainAddIn 
+         * @param {CloudflareDomainAddIn} cloudflareDomainAddIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflarePagesProjectsByProjectDomains: async (project: string, domainAddIn: DomainAddIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflarePagesProjectsByProjectDomains: async (project: string, cloudflareDomainAddIn: CloudflareDomainAddIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postCloudflarePagesProjectsByProjectDomains', 'project', project)
-            // verify required parameter 'domainAddIn' is not null or undefined
-            assertParamExists('postCloudflarePagesProjectsByProjectDomains', 'domainAddIn', domainAddIn)
+            // verify required parameter 'cloudflareDomainAddIn' is not null or undefined
+            assertParamExists('postCloudflarePagesProjectsByProjectDomains', 'cloudflareDomainAddIn', cloudflareDomainAddIn)
             const localVarPath = `/v1/cloudflare/pages/projects/{project}/domains`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1145,7 +1147,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(domainAddIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareDomainAddIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1155,13 +1157,13 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Creates an R2 bucket on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates an R2 bucket on the org\'s Cloudflare account.
-         * @param {BucketCreateIn} bucketCreateIn 
+         * @param {CloudflareBucketCreateIn} cloudflareBucketCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareR2Buckets: async (bucketCreateIn: BucketCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bucketCreateIn' is not null or undefined
-            assertParamExists('postCloudflareR2Buckets', 'bucketCreateIn', bucketCreateIn)
+        postCloudflareR2Buckets: async (cloudflareBucketCreateIn: CloudflareBucketCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflareBucketCreateIn' is not null or undefined
+            assertParamExists('postCloudflareR2Buckets', 'cloudflareBucketCreateIn', cloudflareBucketCreateIn)
             const localVarPath = `/v1/cloudflare/r2/buckets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1185,7 +1187,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(bucketCreateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareBucketCreateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1196,15 +1198,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Publishes or withdraws one Worker script on the account\'s workers.dev subdomain. Requires org admin.
          * @summary Publishes or withdraws one Worker script on the account\'s workers.dev subdomain.
          * @param {string} script Script is the Worker script name, from the path.
-         * @param {SubdomainSetIn} subdomainSetIn 
+         * @param {CloudflareSubdomainSetIn} cloudflareSubdomainSetIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareWorkersScriptsByScriptSubdomain: async (script: string, subdomainSetIn: SubdomainSetIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflareWorkersScriptsByScriptSubdomain: async (script: string, cloudflareSubdomainSetIn: CloudflareSubdomainSetIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'script' is not null or undefined
             assertParamExists('postCloudflareWorkersScriptsByScriptSubdomain', 'script', script)
-            // verify required parameter 'subdomainSetIn' is not null or undefined
-            assertParamExists('postCloudflareWorkersScriptsByScriptSubdomain', 'subdomainSetIn', subdomainSetIn)
+            // verify required parameter 'cloudflareSubdomainSetIn' is not null or undefined
+            assertParamExists('postCloudflareWorkersScriptsByScriptSubdomain', 'cloudflareSubdomainSetIn', cloudflareSubdomainSetIn)
             const localVarPath = `/v1/cloudflare/workers/scripts/{script}/subdomain`
                 .replace(`{${"script"}}`, encodeURIComponent(String(script)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1229,7 +1231,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(subdomainSetIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareSubdomainSetIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1240,15 +1242,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Binds a URL pattern in a zone to a Worker script. Requires org admin — a route is what puts a script in front of live traffic.
          * @summary Binds a URL pattern in a zone to a Worker script.
          * @param {string} zone Zone is the 32-hex Cloudflare zone id, from the path.
-         * @param {RouteCreateIn} routeCreateIn 
+         * @param {CloudflareRouteCreateIn} cloudflareRouteCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareWorkersZonesByZoneRoutes: async (zone: string, routeCreateIn: RouteCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflareWorkersZonesByZoneRoutes: async (zone: string, cloudflareRouteCreateIn: CloudflareRouteCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'zone' is not null or undefined
             assertParamExists('postCloudflareWorkersZonesByZoneRoutes', 'zone', zone)
-            // verify required parameter 'routeCreateIn' is not null or undefined
-            assertParamExists('postCloudflareWorkersZonesByZoneRoutes', 'routeCreateIn', routeCreateIn)
+            // verify required parameter 'cloudflareRouteCreateIn' is not null or undefined
+            assertParamExists('postCloudflareWorkersZonesByZoneRoutes', 'cloudflareRouteCreateIn', cloudflareRouteCreateIn)
             const localVarPath = `/v1/cloudflare/workers/zones/{zone}/routes`
                 .replace(`{${"zone"}}`, encodeURIComponent(String(zone)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1273,7 +1275,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(routeCreateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareRouteCreateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1284,15 +1286,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Drops a zone\'s Cloudflare edge cache — either the whole zone (purge_everything) or exactly the listed file URLs. Requires org admin.  Purging is the one zone-scoped WRITE this plane owns. It is not DNS — no record changes — so it does not belong on /v1/dns, and it is not a connection, so it does not belong on the integrations plane. It is a cache operation on a zone, which is what this asset plane is for. It takes the admin gate because dropping a zone\'s cache sends every subsequent request to the origin: on a site fronting a small origin that is a self-inflicted load spike, so it is a change, not a look.  Exactly one selector is required. Cloudflare treats a body with neither as a no-op and answers 200, which reads as \"purged\" to a caller that never purged anything — the failure we refuse to pass through.
          * @summary Drops a zone\'s Cloudflare edge cache — either the whole zone (purge_everything) or exactly the listed file URLs.
          * @param {string} zone Zone is the 32-hex Cloudflare zone id, from the path.
-         * @param {PurgeIn} purgeIn 
+         * @param {CloudflarePurgeIn} cloudflarePurgeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareZonesByZonePurge: async (zone: string, purgeIn: PurgeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflareZonesByZonePurge: async (zone: string, cloudflarePurgeIn: CloudflarePurgeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'zone' is not null or undefined
             assertParamExists('postCloudflareZonesByZonePurge', 'zone', zone)
-            // verify required parameter 'purgeIn' is not null or undefined
-            assertParamExists('postCloudflareZonesByZonePurge', 'purgeIn', purgeIn)
+            // verify required parameter 'cloudflarePurgeIn' is not null or undefined
+            assertParamExists('postCloudflareZonesByZonePurge', 'cloudflarePurgeIn', cloudflarePurgeIn)
             const localVarPath = `/v1/cloudflare/zones/{zone}/purge`
                 .replace(`{${"zone"}}`, encodeURIComponent(String(zone)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1317,7 +1319,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(purgeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflarePurgeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1370,15 +1372,15 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
          * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
          * @summary Uploads or replaces a module Worker script.
          * @param {string} script Script means two things on this route, and the document says so in both places it appears: the PATH segment names the Worker to publish, and the BODY field carries that Worker\&#39;s ES-module source — the code itself, never a name or a URL. A blank or absent source is refused; there is no empty Worker.
-         * @param {WorkerScriptPut} workerScriptPut 
+         * @param {CloudflareWorkerScriptPut} cloudflareWorkerScriptPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCloudflareWorkersScriptsByScript: async (script: string, workerScriptPut: WorkerScriptPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCloudflareWorkersScriptsByScript: async (script: string, cloudflareWorkerScriptPut: CloudflareWorkerScriptPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'script' is not null or undefined
             assertParamExists('putCloudflareWorkersScriptsByScript', 'script', script)
-            // verify required parameter 'workerScriptPut' is not null or undefined
-            assertParamExists('putCloudflareWorkersScriptsByScript', 'workerScriptPut', workerScriptPut)
+            // verify required parameter 'cloudflareWorkerScriptPut' is not null or undefined
+            assertParamExists('putCloudflareWorkersScriptsByScript', 'cloudflareWorkerScriptPut', cloudflareWorkerScriptPut)
             const localVarPath = `/v1/cloudflare/workers/scripts/{script}`
                 .replace(`{${"script"}}`, encodeURIComponent(String(script)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1403,7 +1405,7 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(workerScriptPut, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareWorkerScriptPut, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1434,8 +1436,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * KVNamespaceDelete deletes a Workers KV namespace and every key in it. Requires org admin.
-         * @summary KVNamespaceDelete deletes a Workers KV namespace and every key in it.
+         * Deletes a Workers KV namespace and every key in it. Requires org admin.
+         * @summary Deletes a Workers KV namespace and every key in it.
          * @param {string} namespace Namespace is the Cloudflare KV namespace id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1447,8 +1449,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * KVValueDelete removes one key from a Workers KV namespace. Requires org admin.
-         * @summary KVValueDelete removes one key from a Workers KV namespace.
+         * Removes one key from a Workers KV namespace. Requires org admin.
+         * @summary Removes one key from a Workers KV namespace.
          * @param {string} namespace Namespace is the Cloudflare KV namespace id.
          * @param {string} key Key is the key within that namespace. KV keys are broad (up to 512 bytes), so this one is escaped rather than charset-restricted.
          * @param {*} [options] Override http request option.
@@ -1543,8 +1545,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
-         * @summary KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account.
+         * Lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
+         * @summary Lists the Workers KV namespaces on the org\'s Cloudflare account.
          * @param {string} [page] Page is the 1-based page of namespaces to return.
          * @param {string} [perPage] PerPage is how many namespaces one page holds.
          * @param {string} [order] Order names the field to sort by, and Direction sorts asc or desc.
@@ -1701,12 +1703,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
         /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates a D1 database on the org\'s Cloudflare account.
-         * @param {DatabaseCreateIn} databaseCreateIn 
+         * @param {CloudflareDatabaseCreateIn} cloudflareDatabaseCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareD1Databases(databaseCreateIn: DatabaseCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareD1Databases(databaseCreateIn, options);
+        async postCloudflareD1Databases(cloudflareDatabaseCreateIn: CloudflareDatabaseCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareD1Databases(cloudflareDatabaseCreateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareD1Databases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1715,25 +1717,25 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
          * @summary Runs one SQL statement against a D1 database.
          * @param {string} database 
-         * @param {D1Query} d1Query 
+         * @param {CloudflareD1Query} cloudflareD1Query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareD1DatabasesByDatabaseQuery(database: string, d1Query: D1Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareD1DatabasesByDatabaseQuery(database, d1Query, options);
+        async postCloudflareD1DatabasesByDatabaseQuery(database: string, cloudflareD1Query: CloudflareD1Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareD1DatabasesByDatabaseQuery(database, cloudflareD1Query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareD1DatabasesByDatabaseQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
-         * @summary KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account.
-         * @param {NamespaceCreateIn} namespaceCreateIn 
+         * Creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
+         * @summary Creates a Workers KV namespace on the org\'s Cloudflare account.
+         * @param {CloudflareNamespaceCreateIn} cloudflareNamespaceCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareKvNamespaces(namespaceCreateIn: NamespaceCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareKvNamespaces(namespaceCreateIn, options);
+        async postCloudflareKvNamespaces(cloudflareNamespaceCreateIn: CloudflareNamespaceCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareKvNamespaces(cloudflareNamespaceCreateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareKvNamespaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1741,12 +1743,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
         /**
          * Creates a Cloudflare Pages project on the org\'s account. Requires org admin. Only the modeled fields reach Cloudflare, so an unmodeled key in the request is dropped rather than forwarded.
          * @summary Creates a Cloudflare Pages project on the org\'s account.
-         * @param {PagesProjectCreate} pagesProjectCreate 
+         * @param {CloudflarePagesProjectCreate} cloudflarePagesProjectCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflarePagesProjects(pagesProjectCreate: PagesProjectCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflarePagesProjects(pagesProjectCreate, options);
+        async postCloudflarePagesProjects(cloudflarePagesProjectCreate: CloudflarePagesProjectCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflarePagesProjects(cloudflarePagesProjectCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflarePagesProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1769,12 +1771,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Attaches a custom domain to a Cloudflare Pages project. Requires org admin. Cloudflare owns validation and certificate issuance from here on.
          * @summary Attaches a custom domain to a Cloudflare Pages project.
          * @param {string} project Project is the Pages project name, from the path.
-         * @param {DomainAddIn} domainAddIn 
+         * @param {CloudflareDomainAddIn} cloudflareDomainAddIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflarePagesProjectsByProjectDomains(project: string, domainAddIn: DomainAddIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflarePagesProjectsByProjectDomains(project, domainAddIn, options);
+        async postCloudflarePagesProjectsByProjectDomains(project: string, cloudflareDomainAddIn: CloudflareDomainAddIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflarePagesProjectsByProjectDomains(project, cloudflareDomainAddIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflarePagesProjectsByProjectDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1782,12 +1784,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
         /**
          * Creates an R2 bucket on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates an R2 bucket on the org\'s Cloudflare account.
-         * @param {BucketCreateIn} bucketCreateIn 
+         * @param {CloudflareBucketCreateIn} cloudflareBucketCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareR2Buckets(bucketCreateIn: BucketCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareR2Buckets(bucketCreateIn, options);
+        async postCloudflareR2Buckets(cloudflareBucketCreateIn: CloudflareBucketCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareR2Buckets(cloudflareBucketCreateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareR2Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1796,12 +1798,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Publishes or withdraws one Worker script on the account\'s workers.dev subdomain. Requires org admin.
          * @summary Publishes or withdraws one Worker script on the account\'s workers.dev subdomain.
          * @param {string} script Script is the Worker script name, from the path.
-         * @param {SubdomainSetIn} subdomainSetIn 
+         * @param {CloudflareSubdomainSetIn} cloudflareSubdomainSetIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareWorkersScriptsByScriptSubdomain(script: string, subdomainSetIn: SubdomainSetIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareWorkersScriptsByScriptSubdomain(script, subdomainSetIn, options);
+        async postCloudflareWorkersScriptsByScriptSubdomain(script: string, cloudflareSubdomainSetIn: CloudflareSubdomainSetIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareWorkersScriptsByScriptSubdomain(script, cloudflareSubdomainSetIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareWorkersScriptsByScriptSubdomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1810,12 +1812,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Binds a URL pattern in a zone to a Worker script. Requires org admin — a route is what puts a script in front of live traffic.
          * @summary Binds a URL pattern in a zone to a Worker script.
          * @param {string} zone Zone is the 32-hex Cloudflare zone id, from the path.
-         * @param {RouteCreateIn} routeCreateIn 
+         * @param {CloudflareRouteCreateIn} cloudflareRouteCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareWorkersZonesByZoneRoutes(zone: string, routeCreateIn: RouteCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareWorkersZonesByZoneRoutes(zone, routeCreateIn, options);
+        async postCloudflareWorkersZonesByZoneRoutes(zone: string, cloudflareRouteCreateIn: CloudflareRouteCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareWorkersZonesByZoneRoutes(zone, cloudflareRouteCreateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareWorkersZonesByZoneRoutes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1824,12 +1826,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Drops a zone\'s Cloudflare edge cache — either the whole zone (purge_everything) or exactly the listed file URLs. Requires org admin.  Purging is the one zone-scoped WRITE this plane owns. It is not DNS — no record changes — so it does not belong on /v1/dns, and it is not a connection, so it does not belong on the integrations plane. It is a cache operation on a zone, which is what this asset plane is for. It takes the admin gate because dropping a zone\'s cache sends every subsequent request to the origin: on a site fronting a small origin that is a self-inflicted load spike, so it is a change, not a look.  Exactly one selector is required. Cloudflare treats a body with neither as a no-op and answers 200, which reads as \"purged\" to a caller that never purged anything — the failure we refuse to pass through.
          * @summary Drops a zone\'s Cloudflare edge cache — either the whole zone (purge_everything) or exactly the listed file URLs.
          * @param {string} zone Zone is the 32-hex Cloudflare zone id, from the path.
-         * @param {PurgeIn} purgeIn 
+         * @param {CloudflarePurgeIn} cloudflarePurgeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareZonesByZonePurge(zone: string, purgeIn: PurgeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareZonesByZonePurge(zone, purgeIn, options);
+        async postCloudflareZonesByZonePurge(zone: string, cloudflarePurgeIn: CloudflarePurgeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareZonesByZonePurge(zone, cloudflarePurgeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareZonesByZonePurge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1852,12 +1854,12 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
          * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
          * @summary Uploads or replaces a module Worker script.
          * @param {string} script Script means two things on this route, and the document says so in both places it appears: the PATH segment names the Worker to publish, and the BODY field carries that Worker\&#39;s ES-module source — the code itself, never a name or a URL. A blank or absent source is refused; there is no empty Worker.
-         * @param {WorkerScriptPut} workerScriptPut 
+         * @param {CloudflareWorkerScriptPut} cloudflareWorkerScriptPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCloudflareWorkersScriptsByScript(script: string, workerScriptPut: WorkerScriptPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCloudflareWorkersScriptsByScript(script, workerScriptPut, options);
+        async putCloudflareWorkersScriptsByScript(script: string, cloudflareWorkerScriptPut: CloudflareWorkerScriptPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCloudflareWorkersScriptsByScript(script, cloudflareWorkerScriptPut, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.putCloudflareWorkersScriptsByScript']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1883,8 +1885,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.deleteCloudflareD1DatabasesByDatabase(requestParameters.database, options).then((request) => request(axios, basePath));
         },
         /**
-         * KVNamespaceDelete deletes a Workers KV namespace and every key in it. Requires org admin.
-         * @summary KVNamespaceDelete deletes a Workers KV namespace and every key in it.
+         * Deletes a Workers KV namespace and every key in it. Requires org admin.
+         * @summary Deletes a Workers KV namespace and every key in it.
          * @param {CloudflareApiDeleteCloudflareKvNamespacesByNamespaceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1893,8 +1895,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.deleteCloudflareKvNamespacesByNamespace(requestParameters.namespace, options).then((request) => request(axios, basePath));
         },
         /**
-         * KVValueDelete removes one key from a Workers KV namespace. Requires org admin.
-         * @summary KVValueDelete removes one key from a Workers KV namespace.
+         * Removes one key from a Workers KV namespace. Requires org admin.
+         * @summary Removes one key from a Workers KV namespace.
          * @param {CloudflareApiDeleteCloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1963,8 +1965,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.getCloudflareD1Databases(requestParameters.page, requestParameters.perPage, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
-         * @summary KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account.
+         * Lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
+         * @summary Lists the Workers KV namespaces on the org\'s Cloudflare account.
          * @param {CloudflareApiGetCloudflareKvNamespacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2077,7 +2079,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareD1Databases(requestParameters: CloudflareApiPostCloudflareD1DatabasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareD1Databases(requestParameters.databaseCreateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareD1Databases(requestParameters.cloudflareDatabaseCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
@@ -2087,17 +2089,17 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareD1DatabasesByDatabaseQuery(requestParameters: CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareD1DatabasesByDatabaseQuery(requestParameters.database, requestParameters.d1Query, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareD1DatabasesByDatabaseQuery(requestParameters.database, requestParameters.cloudflareD1Query, options).then((request) => request(axios, basePath));
         },
         /**
-         * KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
-         * @summary KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account.
+         * Creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
+         * @summary Creates a Workers KV namespace on the org\'s Cloudflare account.
          * @param {CloudflareApiPostCloudflareKvNamespacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postCloudflareKvNamespaces(requestParameters: CloudflareApiPostCloudflareKvNamespacesRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareKvNamespaces(requestParameters.namespaceCreateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareKvNamespaces(requestParameters.cloudflareNamespaceCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a Cloudflare Pages project on the org\'s account. Requires org admin. Only the modeled fields reach Cloudflare, so an unmodeled key in the request is dropped rather than forwarded.
@@ -2107,7 +2109,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflarePagesProjects(requestParameters: CloudflareApiPostCloudflarePagesProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflarePagesProjects(requestParameters.pagesProjectCreate, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflarePagesProjects(requestParameters.cloudflarePagesProjectCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a build and deployment of one Cloudflare Pages project on the org\'s OWN Cloudflare account, and relays Cloudflare\'s deployment record back. `branch` picks what to build; OMITTING it builds the project\'s production branch.  A body it cannot parse is IGNORED rather than refused — the deployment falls back to the production branch — which is the one rule to get right here and the reason this is not a typed op: a typed request would answer 400 where this deploys. Requires ORG ADMIN (403 otherwise), and 503 if the org has never connected a Cloudflare token.
@@ -2127,7 +2129,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflarePagesProjectsByProjectDomains(requestParameters: CloudflareApiPostCloudflarePagesProjectsByProjectDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflarePagesProjectsByProjectDomains(requestParameters.project, requestParameters.domainAddIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflarePagesProjectsByProjectDomains(requestParameters.project, requestParameters.cloudflareDomainAddIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an R2 bucket on the org\'s Cloudflare account. Requires org admin.
@@ -2137,7 +2139,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareR2Buckets(requestParameters: CloudflareApiPostCloudflareR2BucketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareR2Buckets(requestParameters.bucketCreateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareR2Buckets(requestParameters.cloudflareBucketCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes or withdraws one Worker script on the account\'s workers.dev subdomain. Requires org admin.
@@ -2147,7 +2149,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareWorkersScriptsByScriptSubdomain(requestParameters: CloudflareApiPostCloudflareWorkersScriptsByScriptSubdomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareWorkersScriptsByScriptSubdomain(requestParameters.script, requestParameters.subdomainSetIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareWorkersScriptsByScriptSubdomain(requestParameters.script, requestParameters.cloudflareSubdomainSetIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Binds a URL pattern in a zone to a Worker script. Requires org admin — a route is what puts a script in front of live traffic.
@@ -2157,7 +2159,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareWorkersZonesByZoneRoutes(requestParameters: CloudflareApiPostCloudflareWorkersZonesByZoneRoutesRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareWorkersZonesByZoneRoutes(requestParameters.zone, requestParameters.routeCreateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareWorkersZonesByZoneRoutes(requestParameters.zone, requestParameters.cloudflareRouteCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Drops a zone\'s Cloudflare edge cache — either the whole zone (purge_everything) or exactly the listed file URLs. Requires org admin.  Purging is the one zone-scoped WRITE this plane owns. It is not DNS — no record changes — so it does not belong on /v1/dns, and it is not a connection, so it does not belong on the integrations plane. It is a cache operation on a zone, which is what this asset plane is for. It takes the admin gate because dropping a zone\'s cache sends every subsequent request to the origin: on a site fronting a small origin that is a self-inflicted load spike, so it is a change, not a look.  Exactly one selector is required. Cloudflare treats a body with neither as a no-op and answers 200, which reads as \"purged\" to a caller that never purged anything — the failure we refuse to pass through.
@@ -2167,7 +2169,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         postCloudflareZonesByZonePurge(requestParameters: CloudflareApiPostCloudflareZonesByZonePurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.purgeIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.cloudflarePurgeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
@@ -2187,7 +2189,7 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         putCloudflareWorkersScriptsByScript(requestParameters: CloudflareApiPutCloudflareWorkersScriptsByScriptRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.putCloudflareWorkersScriptsByScript(requestParameters.script, requestParameters.workerScriptPut, options).then((request) => request(axios, basePath));
+            return localVarFp.putCloudflareWorkersScriptsByScript(requestParameters.script, requestParameters.cloudflareWorkerScriptPut, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2585,10 +2587,10 @@ export interface CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest {
 export interface CloudflareApiPostCloudflareD1DatabasesRequest {
     /**
      * 
-     * @type {DatabaseCreateIn}
+     * @type {CloudflareDatabaseCreateIn}
      * @memberof CloudflareApiPostCloudflareD1Databases
      */
-    readonly databaseCreateIn: DatabaseCreateIn
+    readonly cloudflareDatabaseCreateIn: CloudflareDatabaseCreateIn
 }
 
 /**
@@ -2606,10 +2608,10 @@ export interface CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest {
 
     /**
      * 
-     * @type {D1Query}
+     * @type {CloudflareD1Query}
      * @memberof CloudflareApiPostCloudflareD1DatabasesByDatabaseQuery
      */
-    readonly d1Query: D1Query
+    readonly cloudflareD1Query: CloudflareD1Query
 }
 
 /**
@@ -2620,10 +2622,10 @@ export interface CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest {
 export interface CloudflareApiPostCloudflareKvNamespacesRequest {
     /**
      * 
-     * @type {NamespaceCreateIn}
+     * @type {CloudflareNamespaceCreateIn}
      * @memberof CloudflareApiPostCloudflareKvNamespaces
      */
-    readonly namespaceCreateIn: NamespaceCreateIn
+    readonly cloudflareNamespaceCreateIn: CloudflareNamespaceCreateIn
 }
 
 /**
@@ -2634,10 +2636,10 @@ export interface CloudflareApiPostCloudflareKvNamespacesRequest {
 export interface CloudflareApiPostCloudflarePagesProjectsRequest {
     /**
      * 
-     * @type {PagesProjectCreate}
+     * @type {CloudflarePagesProjectCreate}
      * @memberof CloudflareApiPostCloudflarePagesProjects
      */
-    readonly pagesProjectCreate: PagesProjectCreate
+    readonly cloudflarePagesProjectCreate: CloudflarePagesProjectCreate
 }
 
 /**
@@ -2676,10 +2678,10 @@ export interface CloudflareApiPostCloudflarePagesProjectsByProjectDomainsRequest
 
     /**
      * 
-     * @type {DomainAddIn}
+     * @type {CloudflareDomainAddIn}
      * @memberof CloudflareApiPostCloudflarePagesProjectsByProjectDomains
      */
-    readonly domainAddIn: DomainAddIn
+    readonly cloudflareDomainAddIn: CloudflareDomainAddIn
 }
 
 /**
@@ -2690,10 +2692,10 @@ export interface CloudflareApiPostCloudflarePagesProjectsByProjectDomainsRequest
 export interface CloudflareApiPostCloudflareR2BucketsRequest {
     /**
      * 
-     * @type {BucketCreateIn}
+     * @type {CloudflareBucketCreateIn}
      * @memberof CloudflareApiPostCloudflareR2Buckets
      */
-    readonly bucketCreateIn: BucketCreateIn
+    readonly cloudflareBucketCreateIn: CloudflareBucketCreateIn
 }
 
 /**
@@ -2711,10 +2713,10 @@ export interface CloudflareApiPostCloudflareWorkersScriptsByScriptSubdomainReque
 
     /**
      * 
-     * @type {SubdomainSetIn}
+     * @type {CloudflareSubdomainSetIn}
      * @memberof CloudflareApiPostCloudflareWorkersScriptsByScriptSubdomain
      */
-    readonly subdomainSetIn: SubdomainSetIn
+    readonly cloudflareSubdomainSetIn: CloudflareSubdomainSetIn
 }
 
 /**
@@ -2732,10 +2734,10 @@ export interface CloudflareApiPostCloudflareWorkersZonesByZoneRoutesRequest {
 
     /**
      * 
-     * @type {RouteCreateIn}
+     * @type {CloudflareRouteCreateIn}
      * @memberof CloudflareApiPostCloudflareWorkersZonesByZoneRoutes
      */
-    readonly routeCreateIn: RouteCreateIn
+    readonly cloudflareRouteCreateIn: CloudflareRouteCreateIn
 }
 
 /**
@@ -2753,10 +2755,10 @@ export interface CloudflareApiPostCloudflareZonesByZonePurgeRequest {
 
     /**
      * 
-     * @type {PurgeIn}
+     * @type {CloudflarePurgeIn}
      * @memberof CloudflareApiPostCloudflareZonesByZonePurge
      */
-    readonly purgeIn: PurgeIn
+    readonly cloudflarePurgeIn: CloudflarePurgeIn
 }
 
 /**
@@ -2795,10 +2797,10 @@ export interface CloudflareApiPutCloudflareWorkersScriptsByScriptRequest {
 
     /**
      * 
-     * @type {WorkerScriptPut}
+     * @type {CloudflareWorkerScriptPut}
      * @memberof CloudflareApiPutCloudflareWorkersScriptsByScript
      */
-    readonly workerScriptPut: WorkerScriptPut
+    readonly cloudflareWorkerScriptPut: CloudflareWorkerScriptPut
 }
 
 /**
@@ -2821,8 +2823,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * KVNamespaceDelete deletes a Workers KV namespace and every key in it. Requires org admin.
-     * @summary KVNamespaceDelete deletes a Workers KV namespace and every key in it.
+     * Deletes a Workers KV namespace and every key in it. Requires org admin.
+     * @summary Deletes a Workers KV namespace and every key in it.
      * @param {CloudflareApiDeleteCloudflareKvNamespacesByNamespaceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2833,8 +2835,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * KVValueDelete removes one key from a Workers KV namespace. Requires org admin.
-     * @summary KVValueDelete removes one key from a Workers KV namespace.
+     * Removes one key from a Workers KV namespace. Requires org admin.
+     * @summary Removes one key from a Workers KV namespace.
      * @param {CloudflareApiDeleteCloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2917,8 +2919,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
-     * @summary KVNamespaceList lists the Workers KV namespaces on the org\'s Cloudflare account.
+     * Lists the Workers KV namespaces on the org\'s Cloudflare account. Any org member may read.
+     * @summary Lists the Workers KV namespaces on the org\'s Cloudflare account.
      * @param {CloudflareApiGetCloudflareKvNamespacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3054,7 +3056,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareD1Databases(requestParameters: CloudflareApiPostCloudflareD1DatabasesRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareD1Databases(requestParameters.databaseCreateIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareD1Databases(requestParameters.cloudflareDatabaseCreateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3066,19 +3068,19 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareD1DatabasesByDatabaseQuery(requestParameters: CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareD1DatabasesByDatabaseQuery(requestParameters.database, requestParameters.d1Query, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareD1DatabasesByDatabaseQuery(requestParameters.database, requestParameters.cloudflareD1Query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
-     * @summary KVNamespaceCreate creates a Workers KV namespace on the org\'s Cloudflare account.
+     * Creates a Workers KV namespace on the org\'s Cloudflare account. Requires org admin. Cloudflare mints the namespace id the value routes address.
+     * @summary Creates a Workers KV namespace on the org\'s Cloudflare account.
      * @param {CloudflareApiPostCloudflareKvNamespacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudflareApi
      */
     public postCloudflareKvNamespaces(requestParameters: CloudflareApiPostCloudflareKvNamespacesRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareKvNamespaces(requestParameters.namespaceCreateIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareKvNamespaces(requestParameters.cloudflareNamespaceCreateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3090,7 +3092,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflarePagesProjects(requestParameters: CloudflareApiPostCloudflarePagesProjectsRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflarePagesProjects(requestParameters.pagesProjectCreate, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflarePagesProjects(requestParameters.cloudflarePagesProjectCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3114,7 +3116,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflarePagesProjectsByProjectDomains(requestParameters: CloudflareApiPostCloudflarePagesProjectsByProjectDomainsRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflarePagesProjectsByProjectDomains(requestParameters.project, requestParameters.domainAddIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflarePagesProjectsByProjectDomains(requestParameters.project, requestParameters.cloudflareDomainAddIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3126,7 +3128,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareR2Buckets(requestParameters: CloudflareApiPostCloudflareR2BucketsRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareR2Buckets(requestParameters.bucketCreateIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareR2Buckets(requestParameters.cloudflareBucketCreateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3138,7 +3140,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareWorkersScriptsByScriptSubdomain(requestParameters: CloudflareApiPostCloudflareWorkersScriptsByScriptSubdomainRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareWorkersScriptsByScriptSubdomain(requestParameters.script, requestParameters.subdomainSetIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareWorkersScriptsByScriptSubdomain(requestParameters.script, requestParameters.cloudflareSubdomainSetIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3150,7 +3152,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareWorkersZonesByZoneRoutes(requestParameters: CloudflareApiPostCloudflareWorkersZonesByZoneRoutesRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareWorkersZonesByZoneRoutes(requestParameters.zone, requestParameters.routeCreateIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareWorkersZonesByZoneRoutes(requestParameters.zone, requestParameters.cloudflareRouteCreateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3162,7 +3164,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public postCloudflareZonesByZonePurge(requestParameters: CloudflareApiPostCloudflareZonesByZonePurgeRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.purgeIn, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.cloudflarePurgeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3186,7 +3188,7 @@ export class CloudflareApi extends BaseAPI {
      * @memberof CloudflareApi
      */
     public putCloudflareWorkersScriptsByScript(requestParameters: CloudflareApiPutCloudflareWorkersScriptsByScriptRequest, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).putCloudflareWorkersScriptsByScript(requestParameters.script, requestParameters.workerScriptPut, options).then((request) => request(this.axios, this.basePath));
+        return CloudflareApiFp(this.configuration).putCloudflareWorkersScriptsByScript(requestParameters.script, requestParameters.cloudflareWorkerScriptPut, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

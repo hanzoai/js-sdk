@@ -22,6 +22,10 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { Approval } from '../models';
+// @ts-ignore
+import type { IamAcceptBody } from '../models';
+// @ts-ignore
 import type { IamAccountBody } from '../models';
 // @ts-ignore
 import type { IamAnswer } from '../models';
@@ -30,9 +34,13 @@ import type { IamApplication } from '../models';
 // @ts-ignore
 import type { IamApplicationListResult } from '../models';
 // @ts-ignore
-import type { IamAssumeBody } from '../models';
-// @ts-ignore
 import type { IamAuditLog } from '../models';
+// @ts-ignore
+import type { IamAuditlogsDeleteOutput } from '../models';
+// @ts-ignore
+import type { IamAuditlogsInput } from '../models';
+// @ts-ignore
+import type { IamAuditlogsListOutput } from '../models';
 // @ts-ignore
 import type { IamCert } from '../models';
 // @ts-ignore
@@ -58,6 +66,8 @@ import type { IamDeleteResult } from '../models';
 // @ts-ignore
 import type { IamDeleteSessionOut } from '../models';
 // @ts-ignore
+import type { IamIdentifierBody } from '../models';
+// @ts-ignore
 import type { IamInput } from '../models';
 // @ts-ignore
 import type { IamInvitation } from '../models';
@@ -69,6 +79,10 @@ import type { IamInvitationsInput } from '../models';
 import type { IamInvitationsListOutput } from '../models';
 // @ts-ignore
 import type { IamKey } from '../models';
+// @ts-ignore
+import type { IamKeysDeleteResponse } from '../models';
+// @ts-ignore
+import type { IamKeysListResponse } from '../models';
 // @ts-ignore
 import type { IamListOrganizationsOutput } from '../models';
 // @ts-ignore
@@ -92,10 +106,6 @@ import type { IamPasswordBody } from '../models';
 // @ts-ignore
 import type { IamPermission } from '../models';
 // @ts-ignore
-import type { IamPermissionDeleteResponse } from '../models';
-// @ts-ignore
-import type { IamPermissionListResponse } from '../models';
-// @ts-ignore
 import type { IamPerson } from '../models';
 // @ts-ignore
 import type { IamProject } from '../models';
@@ -112,15 +122,17 @@ import type { IamProviderResult } from '../models';
 // @ts-ignore
 import type { IamRegistration } from '../models';
 // @ts-ignore
+import type { IamReleaseOutput } from '../models';
+// @ts-ignore
 import type { IamReply } from '../models';
 // @ts-ignore
 import type { IamRole } from '../models';
 // @ts-ignore
 import type { IamRolesDeleteOutput } from '../models';
 // @ts-ignore
-import type { IamRolesInput } from '../models';
-// @ts-ignore
 import type { IamRolesListOutput } from '../models';
+// @ts-ignore
+import type { IamSendOutput } from '../models';
 // @ts-ignore
 import type { IamSession } from '../models';
 // @ts-ignore
@@ -136,11 +148,15 @@ import type { IamTeamsInput } from '../models';
 // @ts-ignore
 import type { IamTeamsListOutput } from '../models';
 // @ts-ignore
+import type { IamTermsBody } from '../models';
+// @ts-ignore
 import type { IamToken } from '../models';
 // @ts-ignore
 import type { IamTokenMutation } from '../models';
 // @ts-ignore
 import type { IamTokenResult } from '../models';
+// @ts-ignore
+import type { IamTombstone } from '../models';
 // @ts-ignore
 import type { IamUpdateInput } from '../models';
 // @ts-ignore
@@ -149,10 +165,6 @@ import type { IamUpdateOrganizationInput } from '../models';
 import type { IamUpdateSessionIn } from '../models';
 // @ts-ignore
 import type { IamUser } from '../models';
-// @ts-ignore
-import type { IamUsersDeleteOutput } from '../models';
-// @ts-ignore
-import type { IamUsersListOutput } from '../models';
 // @ts-ignore
 import type { IamWebauthnCredential } from '../models';
 // @ts-ignore
@@ -167,6 +179,8 @@ import type { IamWorkspacesDeleteOutput } from '../models';
 import type { IamWorkspacesInput } from '../models';
 // @ts-ignore
 import type { IamWorkspacesListOutput } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * IamApi - axios parameter creator
  * @export
@@ -862,7 +876,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
          * @summary Removes a person from your organization.
          * @param {string} owner 
          * @param {string} name 
@@ -1209,6 +1223,40 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         getIamAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/account`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.  It reads the session cookie and nothing else, so it only ever answers the browser holding the sessions. An account forbidden or deleted since it signed in is left out. A browser with nobody signed in gets an empty list.
+         * @summary Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1598,7 +1646,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see the invitations of the organization your credentials run, and no one else\'s: your own, or one you own or administer.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
@@ -1862,7 +1910,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may read the roster of an org it belongs to, or the tenancy of a person whose account it administers, and nothing else. The bound comes from the verified credential via principal.ScopeRead, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a roster read by a stranger is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
          * @param {string} [org] Org is an organization — who may act in it.
@@ -1906,7 +1954,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1974,7 +2022,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3190,6 +3238,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Returns what holds a deleted organization\'s name: when it was deleted and who founded it. A SuperAdmin reads it before deciding to release the name.
+         * @summary Returns what holds a deleted organization\'s name: when it was deleted and who founded it.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationTombstone: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getOrganizationTombstone', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getOrganizationTombstone', 'name', name)
+            const localVarPath = `/v1/iam/organizations/tombstones/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns one provider: what it connects to and how it is configured. Its credentials come back masked.
          * @summary Returns one provider: what it connects to and how it is configured.
          * @param {string} owner 
@@ -3702,63 +3792,15 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
-         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
-         * @param {IamAssumeBody} iamAssumeBody 
-         * @param {string} [authorization] 
-         * @param {string} [xForwardedFor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAssume: async (iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamAssumeBody' is not null or undefined
-            assertParamExists('postIamAssume', 'iamAssumeBody', iamAssumeBody)
-            const localVarPath = `/v1/iam/assume`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-            if (xForwardedFor != null) {
-                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
-            }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamAssumeBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
          * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
-         * @param {IamInput} iamInput 
+         * @param {IamAuditlogsInput} iamAuditlogsInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamAuditLogs: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('postIamAuditLogs', 'iamInput', iamInput)
+        postIamAuditLogs: async (iamAuditlogsInput: IamAuditlogsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAuditlogsInput' is not null or undefined
+            assertParamExists('postIamAuditLogs', 'iamAuditlogsInput', iamAuditlogsInput)
             const localVarPath = `/v1/iam/audit-logs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3782,7 +3824,55 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAuditlogsInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers whether an account holds an email address at an application, and whether that account signs in with a password. Only an application that registers strangers answers, since its signup says as much already. The address is resolved exactly as sign-in resolves it, so the screen and the sign-in cannot disagree. A client asking faster than a person types is refused with 429.
+         * @summary Answers whether an account holds an email address at an application, and whether that account signs in with a password.
+         * @param {IamIdentifierBody} iamIdentifierBody 
+         * @param {string} [cFConnectingIP] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamAuthIdentifier: async (iamIdentifierBody: IamIdentifierBody, cFConnectingIP?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamIdentifierBody' is not null or undefined
+            assertParamExists('postIamAuthIdentifier', 'iamIdentifierBody', iamIdentifierBody)
+            const localVarPath = `/v1/iam/auth/identifier`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (cFConnectingIP != null) {
+                localVarHeaderParameter['CF-Connecting-IP'] = String(cFConnectingIP);
+            }
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamIdentifierBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3904,7 +3994,109 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.
+         * Joins the caller to an organization through an invitation, for a person who already has an account. Signing up through the invitation is the other way in (signupHandler); this one spends the same seat under the same rules.  Only the caller joins, as a member and never more; the request names nobody else. An invitation pinned to an address admits only the account holding that address, and only with a code IAM sent to it for this join — the account\'s own verified flag is not enough, because a tenant\'s identity provider can set it. An invitation pinned to a phone number or a username admits no other org\'s account this way. Joining an org the caller already belongs to succeeds and spends nothing. Every refusal is recorded, and an account refused acceptLimit times in acceptWindow is refused before anything is looked at.
+         * @summary Joins the caller to an organization through an invitation, for a person who already has an account.
+         * @param {IamAcceptBody} iamAcceptBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [contentType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamInvitationsAccept: async (iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAcceptBody' is not null or undefined
+            assertParamExists('postIamInvitationsAccept', 'iamAcceptBody', iamAcceptBody)
+            const localVarPath = `/v1/iam/invitations/accept`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (cookie != null) {
+                localVarHeaderParameter['Cookie'] = String(cookie);
+            }
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (secFetchSite != null) {
+                localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (contentType != null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAcceptBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.  The caller chooses nothing about how it goes out. It is sent through the platform application the caller\'s access token was issued to, from that application\'s org\'s email account, with a link on the identity host that issued the token — the way the inviter came in. Only the pinned address receives it.
+         * @summary Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamInvitationsByOwnerByNameSend: async (owner: string, name: string, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('postIamInvitationsByOwnerByNameSend', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postIamInvitationsByOwnerByNameSend', 'name', name)
+            const localVarPath = `/v1/iam/invitations/{owner}/{name}/send`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.  A key you create is yours: it names you as its holder and speaks for you in the organization it is filed in. Naming anyone else as its holder is refused; a SuperAdmin names the person a key is for.
          * @summary Issues an API key.
          * @param {IamKey} iamKey 
          * @param {*} [options] Override http request option.
@@ -4148,7 +4340,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4318,7 +4510,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4352,7 +4544,41 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.  A refresh returns a NEW refresh token and retires the one you sent. If a retired one is ever presented again the whole chain is revoked, on the assumption that a token which came back from the dead was copied — so a stolen refresh token buys an attacker one use and costs them the session.  Responses are never cached, by any hop.
+         * @summary Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthRefreshToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/oauth/refresh_token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has (RFC 7009 §2.1 — a public client identifies itself with client_id). A browser app or CLI is a public PKCE client and holds no secret, and that includes the public half of a registration that keeps a secret for a backend path, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it. A caller that did not prove the registration\'s secret revokes only a grant that was itself established without it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4636,63 +4862,15 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
-         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
-         * @param {IamAssumeBody} iamAssumeBody 
-         * @param {string} [authorization] 
-         * @param {string} [xForwardedFor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRelease: async (iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamAssumeBody' is not null or undefined
-            assertParamExists('postIamRelease', 'iamAssumeBody', iamAssumeBody)
-            const localVarPath = `/v1/iam/release`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-            if (xForwardedFor != null) {
-                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
-            }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamAssumeBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
-         * @param {IamRolesInput} iamRolesInput 
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamRoles: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postIamRoles', 'iamRolesInput', iamRolesInput)
+        postIamRoles: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamInput' is not null or undefined
+            assertParamExists('postIamRoles', 'iamInput', iamInput)
             const localVarPath = `/v1/iam/roles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4716,7 +4894,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4972,7 +5150,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (a member of the reserved admin org, the one predicate). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
+         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (schema.User.SuperAdmin, asked of the caller\'s own row). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here. A SuperAdmin unlinking someone else\'s method is recorded on the SuperAdmin trail.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
          * @summary Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5364,17 +5542,17 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @summary Corrects an audit entry.
          * @param {string} owner 
          * @param {string} name 
-         * @param {IamInput} iamInput 
+         * @param {IamAuditlogsInput} iamAuditlogsInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamAuditLogsByOwnerByName: async (owner: string, name: string, iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamAuditLogsByOwnerByName: async (owner: string, name: string, iamAuditlogsInput: IamAuditlogsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putIamAuditLogsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putIamAuditLogsByOwnerByName', 'name', name)
-            // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('putIamAuditLogsByOwnerByName', 'iamInput', iamInput)
+            // verify required parameter 'iamAuditlogsInput' is not null or undefined
+            assertParamExists('putIamAuditLogsByOwnerByName', 'iamAuditlogsInput', iamAuditlogsInput)
             const localVarPath = `/v1/iam/audit-logs/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5400,7 +5578,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAuditlogsInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5733,18 +5911,18 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
          * @summary Changes who is in a role, or which roles it includes.
          * @param {string} owner 
-         * @param {string} name 
-         * @param {IamRolesInput} iamRolesInput 
+         * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamRolesByOwnerByName: async (owner: string, name: string, iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamRolesByOwnerByName: async (owner: string, name: string, iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putIamRolesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putIamRolesByOwnerByName', 'name', name)
-            // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('putIamRolesByOwnerByName', 'iamRolesInput', iamRolesInput)
+            // verify required parameter 'iamInput' is not null or undefined
+            assertParamExists('putIamRolesByOwnerByName', 'iamInput', iamInput)
             const localVarPath = `/v1/iam/roles/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5770,7 +5948,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5864,7 +6042,59 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named. It is how a person who arrived by a social provider, whose account the callback already made, records the same acceptance a code sign-up records at creation. Only the caller\'s own row is reachable.
+         * @summary Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named.
+         * @param {IamTermsBody} iamTermsBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamTerms: async (iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamTermsBody' is not null or undefined
+            assertParamExists('putIamTerms', 'iamTermsBody', iamTermsBody)
+            const localVarPath = `/v1/iam/terms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (cookie != null) {
+                localVarHeaderParameter['Cookie'] = String(cookie);
+            }
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamTermsBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.  A SuperAdmin\'s account is changed only by a SuperAdmin.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {string} owner 
          * @param {string} name 
@@ -5953,6 +6183,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Frees the name of a deleted organization so it can be founded again. Deleting an organization leaves its name held, because every service keys a tenant by that name; releasing it is a SuperAdmin\'s decision, recorded on the audit trail, and it is refused while anything IAM keeps is still keyed by the name. Everything else keyed by it across the estate must be purged first.
+         * @summary Frees the name of a deleted organization so it can be founded again.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        releaseOrganizationName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('releaseOrganizationName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('releaseOrganizationName', 'name', name)
+            const localVarPath = `/v1/iam/organizations/tombstones/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6328,7 +6600,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.  A SuperAdmin\'s password, email and phone are set when the account is created and kept on every run after.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamPerson} iamPerson 
          * @param {string} [authorization] 
@@ -6468,7 +6740,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamAuditLogsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOutput>> {
+        async deleteIamAuditLogsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditlogsDeleteOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamAuditLogsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamAuditLogsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -6510,7 +6782,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamKeysByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResponse>> {
+        async deleteIamKeysByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKeysDeleteResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamKeysByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamKeysByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -6536,7 +6808,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamPermissionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermissionDeleteResponse>> {
+        async deleteIamPermissionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamPermissionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamPermissionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -6611,14 +6883,14 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
          * @summary Removes a person from your organization.
          * @param {string} owner 
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamUsersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersDeleteOutput>> {
+        async deleteIamUsersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamUsersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamUsersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -6736,6 +7008,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.  It reads the session cookie and nothing else, so it only ever answers the browser holding the sessions. An account forbidden or deleted since it signed in is left out. A browser with nobody signed in gets an empty list.
+         * @summary Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamAccounts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamAccounts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the applications in one organization, newest first — each product or site your people sign in to, with the sign-in methods and redirect URIs it allows.
          * @summary Returns the applications in one organization, newest first — each product or site your people sign in to, with the sign-in methods and redirect URIs it allows.
          * @param {string} owner 
@@ -6769,7 +7053,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamAuditLogs(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListOutput>> {
+        async getIamAuditLogs(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditlogsListOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamAuditLogs(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamAuditLogs']?.[localVarOperationServerIndex]?.url;
@@ -6856,7 +7140,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see the invitations of the organization your credentials run, and no one else\'s: your own, or one you own or administer.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
@@ -6889,7 +7173,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamKeys(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListResponse>> {
+        async getIamKeys(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKeysListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamKeys(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamKeys']?.[localVarOperationServerIndex]?.url;
@@ -6946,7 +7230,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may read the roster of an org it belongs to, or the tenancy of a person whose account it administers, and nothing else. The bound comes from the verified credential via principal.ScopeRead, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a roster read by a stranger is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
          * @param {string} [org] Org is an organization — who may act in it.
@@ -6960,7 +7244,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6984,7 +7268,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7014,7 +7298,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamPermissions(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermissionListResponse>> {
+        async getIamPermissions(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamPermissions(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamPermissions']?.[localVarOperationServerIndex]?.url;
@@ -7250,7 +7534,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamUsers(owner?: string, email?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersListOutput>> {
+        async getIamUsers(owner?: string, email?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsers(owner, email, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamUsers']?.[localVarOperationServerIndex]?.url;
@@ -7394,6 +7678,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getOrganization']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns what holds a deleted organization\'s name: when it was deleted and who founded it. A SuperAdmin reads it before deciding to release the name.
+         * @summary Returns what holds a deleted organization\'s name: when it was deleted and who founded it.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationTombstone(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTombstone>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationTombstone(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getOrganizationTombstone']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7564,31 +7862,31 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
-         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
-         * @param {IamAssumeBody} iamAssumeBody 
-         * @param {string} [authorization] 
+         * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
+         * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
+         * @param {IamAuditlogsInput} iamAuditlogsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamAuditLogs(iamAuditlogsInput: IamAuditlogsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogs(iamAuditlogsInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers whether an account holds an email address at an application, and whether that account signs in with a password. Only an application that registers strangers answers, since its signup says as much already. The address is resolved exactly as sign-in resolves it, so the screen and the sign-in cannot disagree. A client asking faster than a person types is refused with 429.
+         * @summary Answers whether an account holds an email address at an application, and whether that account signs in with a password.
+         * @param {IamIdentifierBody} iamIdentifierBody 
+         * @param {string} [cFConnectingIP] 
          * @param {string} [xForwardedFor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamAssume(iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAssume(iamAssumeBody, authorization, xForwardedFor, options);
+        async postIamAuthIdentifier(iamIdentifierBody: IamIdentifierBody, cFConnectingIP?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuthIdentifier(iamIdentifierBody, cFConnectingIP, xForwardedFor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAssume']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
-         * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
-         * @param {IamInput} iamInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAuditLogs(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogs(iamInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuthIdentifier']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7630,7 +7928,39 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.
+         * Joins the caller to an organization through an invitation, for a person who already has an account. Signing up through the invitation is the other way in (signupHandler); this one spends the same seat under the same rules.  Only the caller joins, as a member and never more; the request names nobody else. An invitation pinned to an address admits only the account holding that address, and only with a code IAM sent to it for this join — the account\'s own verified flag is not enough, because a tenant\'s identity provider can set it. An invitation pinned to a phone number or a username admits no other org\'s account this way. Joining an org the caller already belongs to succeeds and spends nothing. Every refusal is recorded, and an account refused acceptLimit times in acceptWindow is refused before anything is looked at.
+         * @summary Joins the caller to an organization through an invitation, for a person who already has an account.
+         * @param {IamAcceptBody} iamAcceptBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [contentType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamInvitationsAccept(iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsAccept(iamAcceptBody, cookie, authorization, secFetchSite, contentType, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsAccept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.  The caller chooses nothing about how it goes out. It is sent through the platform application the caller\'s access token was issued to, from that application\'s org\'s email account, with a link on the identity host that issued the token — the way the inviter came in. Only the pinned address receives it.
+         * @summary Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamInvitationsByOwnerByNameSend(owner: string, name: string, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSendOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsByOwnerByNameSend(owner, name, authorization, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsByOwnerByNameSend']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.  A key you create is yours: it names you as its holder and speaks for you in the organization it is filed in. Naming anyone else as its holder is refused; a SuperAdmin names the person a key is for.
          * @summary Issues an API key.
          * @param {IamKey} iamKey 
          * @param {*} [options] Override http request option.
@@ -7715,7 +8045,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7775,7 +8105,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7787,7 +8117,19 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.  A refresh returns a NEW refresh token and retires the one you sent. If a retired one is ever presented again the whole chain is revoked, on the assumption that a token which came back from the dead was copied — so a stolen refresh token buys an attacker one use and costs them the session.  Responses are never cached, by any hop.
+         * @summary Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamOauthRefreshToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamOauthRefreshToken(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamOauthRefreshToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has (RFC 7009 §2.1 — a public client identifies itself with client_id). A browser app or CLI is a public PKCE client and holds no secret, and that includes the public half of a registration that keeps a secret for a backend path, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it. A caller that did not prove the registration\'s secret revokes only a grant that was itself established without it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7885,29 +8227,14 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
-         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
-         * @param {IamAssumeBody} iamAssumeBody 
-         * @param {string} [authorization] 
-         * @param {string} [xForwardedFor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamRelease(iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRelease(iamAssumeBody, authorization, xForwardedFor, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRelease']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
-         * @param {IamRolesInput} iamRolesInput 
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamRoles(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRoles(iamRolesInput, options);
+        async postIamRoles(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRoles(iamInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7999,7 +8326,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (a member of the reserved admin org, the one predicate). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
+         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (schema.User.SuperAdmin, asked of the caller\'s own row). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here. A SuperAdmin unlinking someone else\'s method is recorded on the SuperAdmin trail.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
          * @summary Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8133,12 +8460,12 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @summary Corrects an audit entry.
          * @param {string} owner 
          * @param {string} name 
-         * @param {IamInput} iamInput 
+         * @param {IamAuditlogsInput} iamAuditlogsInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamAuditLogsByOwnerByName(owner: string, name: string, iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAuditLogsByOwnerByName(owner, name, iamInput, options);
+        async putIamAuditLogsByOwnerByName(owner: string, name: string, iamAuditlogsInput: IamAuditlogsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAuditLogsByOwnerByName(owner, name, iamAuditlogsInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAuditLogsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8249,13 +8576,13 @@ export const IamApiFp = function(configuration?: Configuration) {
          * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
          * @summary Changes who is in a role, or which roles it includes.
          * @param {string} owner 
-         * @param {string} name 
-         * @param {IamRolesInput} iamRolesInput 
+         * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamRolesByOwnerByName(owner: string, name: string, iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamRolesByOwnerByName(owner, name, iamRolesInput, options);
+        async putIamRolesByOwnerByName(owner: string, name: string, iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamRolesByOwnerByName(owner, name, iamInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamRolesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8289,7 +8616,23 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named. It is how a person who arrived by a social provider, whose account the callback already made, records the same acceptance a code sign-up records at creation. Only the caller\'s own row is reachable.
+         * @summary Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named.
+         * @param {IamTermsBody} iamTermsBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamTerms(iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamTerms(iamTermsBody, cookie, authorization, xForwardedFor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamTerms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.  A SuperAdmin\'s account is changed only by a SuperAdmin.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {string} owner 
          * @param {string} name 
@@ -8316,6 +8659,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putIamWorkspacesByOwnerByName(owner, name, iamWorkspacesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamWorkspacesByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Frees the name of a deleted organization so it can be founded again. Deleting an organization leaves its name held, because every service keys a tenant by that name; releasing it is a SuperAdmin\'s decision, recorded on the audit trail, and it is refused while anything IAM keeps is still keyed by the name. Everything else keyed by it across the estate must be purged first.
+         * @summary Frees the name of a deleted organization so it can be founded again.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async releaseOrganizationName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamReleaseOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.releaseOrganizationName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.releaseOrganizationName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8435,7 +8792,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.  A SuperAdmin\'s password, email and phone are set when the account is created and kept on every run after.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamPerson} iamPerson 
          * @param {string} [authorization] 
@@ -8525,7 +8882,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamAuditLogsByOwnerByName(requestParameters: IamApiDeleteIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteOutput> {
+        deleteIamAuditLogsByOwnerByName(requestParameters: IamApiDeleteIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditlogsDeleteOutput> {
             return localVarFp.deleteIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8555,7 +8912,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamKeysByOwnerByName(requestParameters: IamApiDeleteIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResponse> {
+        deleteIamKeysByOwnerByName(requestParameters: IamApiDeleteIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamKeysDeleteResponse> {
             return localVarFp.deleteIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8574,7 +8931,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamPermissionsByOwnerByName(requestParameters: IamApiDeleteIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermissionDeleteResponse> {
+        deleteIamPermissionsByOwnerByName(requestParameters: IamApiDeleteIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResponse> {
             return localVarFp.deleteIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8628,13 +8985,13 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteIamTeamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
          * @summary Removes a person from your organization.
          * @param {IamApiDeleteIamUsersByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamUsersByOwnerByName(requestParameters: IamApiDeleteIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersDeleteOutput> {
+        deleteIamUsersByOwnerByName(requestParameters: IamApiDeleteIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteOutput> {
             return localVarFp.deleteIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8717,6 +9074,15 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamAccount(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.  It reads the session cookie and nothing else, so it only ever answers the browser holding the sessions. An account forbidden or deleted since it signed in is left out. A browser with nobody signed in gets an empty list.
+         * @summary Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamAccounts(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the applications in one organization, newest first — each product or site your people sign in to, with the sign-in methods and redirect URIs it allows.
          * @summary Returns the applications in one organization, newest first — each product or site your people sign in to, with the sign-in methods and redirect URIs it allows.
          * @param {IamApiGetIamApplicationsRequest} requestParameters Request parameters.
@@ -8743,7 +9109,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamAuditLogs(requestParameters: IamApiGetIamAuditLogsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListOutput> {
+        getIamAuditLogs(requestParameters: IamApiGetIamAuditLogsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditlogsListOutput> {
             return localVarFp.getIamAuditLogs(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8806,7 +9172,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamConsent(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see the invitations of the organization your credentials run, and no one else\'s: your own, or one you own or administer.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8832,7 +9198,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamKeys(requestParameters: IamApiGetIamKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListResponse> {
+        getIamKeys(requestParameters: IamApiGetIamKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamKeysListResponse> {
             return localVarFp.getIamKeys(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8873,7 +9239,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamLinkedAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may read the roster of an org it belongs to, or the tenancy of a person whose account it administers, and nothing else. The bound comes from the verified credential via principal.ScopeRead, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a roster read by a stranger is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
          * @param {IamApiGetIamMembershipsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8883,7 +9249,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8901,7 +9267,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamOauthCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8925,7 +9291,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamPermissions(requestParameters: IamApiGetIamPermissionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamPermissionListResponse> {
+        getIamPermissions(requestParameters: IamApiGetIamPermissionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListResponse> {
             return localVarFp.getIamPermissions(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9098,7 +9464,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsers(requestParameters: IamApiGetIamUsersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersListOutput> {
+        getIamUsers(requestParameters: IamApiGetIamUsersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListOutput> {
             return localVarFp.getIamUsers(requestParameters.owner, requestParameters.email, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9203,6 +9569,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getOrganization(requestParameters: IamApiGetOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
             return localVarFp.getOrganization(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns what holds a deleted organization\'s name: when it was deleted and who founded it. A SuperAdmin reads it before deciding to release the name.
+         * @summary Returns what holds a deleted organization\'s name: when it was deleted and who founded it.
+         * @param {IamApiGetOrganizationTombstoneRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationTombstone(requestParameters: IamApiGetOrganizationTombstoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTombstone> {
+            return localVarFp.getOrganizationTombstone(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one provider: what it connects to and how it is configured. Its credentials come back masked.
@@ -9324,16 +9700,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamApplications(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
-         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
-         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
-         * @param {IamApiPostIamAssumeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAssume(requestParameters: IamApiPostIamAssumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.postIamAssume(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
          * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
          * @param {IamApiPostIamAuditLogsRequest} requestParameters Request parameters.
@@ -9341,7 +9707,17 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         postIamAuditLogs(requestParameters: IamApiPostIamAuditLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
-            return localVarFp.postIamAuditLogs(requestParameters.iamInput, options).then((request) => request(axios, basePath));
+            return localVarFp.postIamAuditLogs(requestParameters.iamAuditlogsInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers whether an account holds an email address at an application, and whether that account signs in with a password. Only an application that registers strangers answers, since its signup says as much already. The address is resolved exactly as sign-in resolves it, so the screen and the sign-in cannot disagree. A client asking faster than a person types is refused with 429.
+         * @summary Answers whether an account holds an email address at an application, and whether that account signs in with a password.
+         * @param {IamApiPostIamAuthIdentifierRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamAuthIdentifier(requestParameters: IamApiPostIamAuthIdentifierRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.postIamAuthIdentifier(requestParameters.iamIdentifierBody, requestParameters.cFConnectingIP, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation. A name already used in your organization is refused.  It registers the certificate\'s IDENTITY: its name (which is the JWKS `kid`), its algorithm, its expiry. Key material does not travel this way and cannot: the private key is not part of the Cert\'s JSON, so it is neither served here nor accepted here. It is supplied to the process by the deployment, under the name registered here (internal/keyring). Staging a rotation is therefore two halves — this call names the key, and the deployment provides it.
@@ -9373,7 +9749,27 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamInvitations(requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.
+         * Joins the caller to an organization through an invitation, for a person who already has an account. Signing up through the invitation is the other way in (signupHandler); this one spends the same seat under the same rules.  Only the caller joins, as a member and never more; the request names nobody else. An invitation pinned to an address admits only the account holding that address, and only with a code IAM sent to it for this join — the account\'s own verified flag is not enough, because a tenant\'s identity provider can set it. An invitation pinned to a phone number or a username admits no other org\'s account this way. Joining an org the caller already belongs to succeeds and spends nothing. Every refusal is recorded, and an account refused acceptLimit times in acceptWindow is refused before anything is looked at.
+         * @summary Joins the caller to an organization through an invitation, for a person who already has an account.
+         * @param {IamApiPostIamInvitationsAcceptRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamInvitationsAccept(requestParameters: IamApiPostIamInvitationsAcceptRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.contentType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.  The caller chooses nothing about how it goes out. It is sent through the platform application the caller\'s access token was issued to, from that application\'s org\'s email account, with a link on the identity host that issued the token — the way the inviter came in. Only the pinned address receives it.
+         * @summary Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.
+         * @param {IamApiPostIamInvitationsByOwnerByNameSendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamInvitationsByOwnerByNameSend(requestParameters: IamApiPostIamInvitationsByOwnerByNameSendRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamSendOutput> {
+            return localVarFp.postIamInvitationsByOwnerByNameSend(requestParameters.owner, requestParameters.name, requestParameters.authorization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.  A key you create is yours: it names you as its holder and speaks for you in the organization it is filed in. Naming anyone else as its holder is refused; a SuperAdmin names the person a key is for.
          * @summary Issues an API key.
          * @param {IamApiPostIamKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -9437,7 +9833,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamMfaSetupInitiate(options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9482,7 +9878,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthIntrospect(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9491,7 +9887,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthLogout(options).then((request) => request(axios, basePath));
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.  A refresh returns a NEW refresh token and retires the one you sent. If a retired one is ever presented again the whole chain is revoked, on the assumption that a token which came back from the dead was copied — so a stolen refresh token buys an attacker one use and costs them the session.  Responses are never cached, by any hop.
+         * @summary Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthRefreshToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamOauthRefreshToken(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has (RFC 7009 §2.1 — a public client identifies itself with client_id). A browser app or CLI is a public PKCE client and holds no secret, and that includes the public half of a registration that keeps a secret for a backend path, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it. A caller that did not prove the registration\'s secret revokes only a grant that was itself established without it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9565,16 +9970,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamRegistryToken(options).then((request) => request(axios, basePath));
         },
         /**
-         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
-         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
-         * @param {IamApiPostIamReleaseRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRelease(requestParameters: IamApiPostIamReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.postIamRelease(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
          * @param {IamApiPostIamRolesRequest} requestParameters Request parameters.
@@ -9582,7 +9977,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         postIamRoles(requestParameters: IamApiPostIamRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
-            return localVarFp.postIamRoles(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
+            return localVarFp.postIamRoles(requestParameters.iamInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions a person from your identity provider — how a new hire gets an account here automatically when they are added over there.  Takes an administrator. Making someone an administrator takes more than that, so an IdP integration cannot escalate anyone by setting a flag.
@@ -9650,7 +10045,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamTokensIssue(options).then((request) => request(axios, basePath));
         },
         /**
-         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (a member of the reserved admin org, the one predicate). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
+         * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (schema.User.SuperAdmin, asked of the caller\'s own row). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here. A SuperAdmin unlinking someone else\'s method is recorded on the SuperAdmin trail.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
          * @summary Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9752,7 +10147,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         putIamAuditLogsByOwnerByName(requestParameters: IamApiPutIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
-            return localVarFp.putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(axios, basePath));
+            return localVarFp.putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamAuditlogsInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.  A PUT here is a METADATA edit — display name, expiry, provider. It overlays only the fields the request actually SET onto the loaded row: a field the JSON omits (or leaves at its zero value) keeps what the row holds, rather than blanking it. That is load-bearing, not a nicety. A read serves the public Certificate (Mask hides only PrivateKey and AccessSecret), so a client that reads a cert, changes one field, and writes it back sends the masked halves empty and every other field it did not touch at its zero value — and the old full-struct overlay wrote all of those blanks back. Blanking CryptoAlgorithm alone drops the cert from the JWKS (oidc.Publishes turns false), so every token under its `kid` stops verifying; blanking Provider/Account/ExpireTime breaks ACME renewal and expiry — all from a request that only meant to rename it. Absent-or-zero means \"unchanged\", so the deployment (key) and a rotation (cert) remain the only way key or published material changes; the metadata API cannot clear it.  The overlay is generic — it copies every set field, so a field nobody has added yet is carried without a line here — and leaves three things the request may not move: the bound Model (id, createdAt, key, snapshot), the natural key (owner/name address the row, they do not mutate it), and the creation stamp.
@@ -9831,7 +10226,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         putIamRolesByOwnerByName(requestParameters: IamApiPutIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
-            return localVarFp.putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
+            return localVarFp.putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
@@ -9854,7 +10249,17 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamTeamsByName(requestParameters.name, requestParameters.iamTeamsInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named. It is how a person who arrived by a social provider, whose account the callback already made, records the same acceptance a code sign-up records at creation. Only the caller\'s own row is reachable.
+         * @summary Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named.
+         * @param {IamApiPutIamTermsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamTerms(requestParameters: IamApiPutIamTermsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.  A SuperAdmin\'s account is changed only by a SuperAdmin.
          * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
          * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -9872,6 +10277,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         putIamWorkspacesByOwnerByName(requestParameters: IamApiPutIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspace> {
             return localVarFp.putIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Frees the name of a deleted organization so it can be founded again. Deleting an organization leaves its name held, because every service keys a tenant by that name; releasing it is a SuperAdmin\'s decision, recorded on the audit trail, and it is refused while anything IAM keeps is still keyed by the name. Everything else keyed by it across the estate must be purged first.
+         * @summary Frees the name of a deleted organization so it can be founded again.
+         * @param {IamApiReleaseOrganizationNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        releaseOrganizationName(requestParameters: IamApiReleaseOrganizationNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamReleaseOutput> {
+            return localVarFp.releaseOrganizationName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
@@ -9954,7 +10369,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.upsertApplication(requestParameters.iamRegistration, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.  A SuperAdmin\'s password, email and phone are set when the account is created and kept on every run after.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -10975,6 +11390,27 @@ export interface IamApiGetOrganizationRequest {
 }
 
 /**
+ * Request parameters for getOrganizationTombstone operation in IamApi.
+ * @export
+ * @interface IamApiGetOrganizationTombstoneRequest
+ */
+export interface IamApiGetOrganizationTombstoneRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetOrganizationTombstone
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetOrganizationTombstone
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for getProvider operation in IamApi.
  * @export
  * @interface IamApiGetProviderRequest
@@ -11213,34 +11649,6 @@ export interface IamApiPostIamApplicationsRequest {
 }
 
 /**
- * Request parameters for postIamAssume operation in IamApi.
- * @export
- * @interface IamApiPostIamAssumeRequest
- */
-export interface IamApiPostIamAssumeRequest {
-    /**
-     * 
-     * @type {IamAssumeBody}
-     * @memberof IamApiPostIamAssume
-     */
-    readonly iamAssumeBody: IamAssumeBody
-
-    /**
-     * 
-     * @type {string}
-     * @memberof IamApiPostIamAssume
-     */
-    readonly authorization?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof IamApiPostIamAssume
-     */
-    readonly xForwardedFor?: string
-}
-
-/**
  * Request parameters for postIamAuditLogs operation in IamApi.
  * @export
  * @interface IamApiPostIamAuditLogsRequest
@@ -11248,10 +11656,38 @@ export interface IamApiPostIamAssumeRequest {
 export interface IamApiPostIamAuditLogsRequest {
     /**
      * 
-     * @type {IamInput}
+     * @type {IamAuditlogsInput}
      * @memberof IamApiPostIamAuditLogs
      */
-    readonly iamInput: IamInput
+    readonly iamAuditlogsInput: IamAuditlogsInput
+}
+
+/**
+ * Request parameters for postIamAuthIdentifier operation in IamApi.
+ * @export
+ * @interface IamApiPostIamAuthIdentifierRequest
+ */
+export interface IamApiPostIamAuthIdentifierRequest {
+    /**
+     * 
+     * @type {IamIdentifierBody}
+     * @memberof IamApiPostIamAuthIdentifier
+     */
+    readonly iamIdentifierBody: IamIdentifierBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamAuthIdentifier
+     */
+    readonly cFConnectingIP?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamAuthIdentifier
+     */
+    readonly xForwardedFor?: string
 }
 
 /**
@@ -11280,6 +11716,76 @@ export interface IamApiPostIamInvitationsRequest {
      * @memberof IamApiPostIamInvitations
      */
     readonly iamInvitationsInput: IamInvitationsInput
+}
+
+/**
+ * Request parameters for postIamInvitationsAccept operation in IamApi.
+ * @export
+ * @interface IamApiPostIamInvitationsAcceptRequest
+ */
+export interface IamApiPostIamInvitationsAcceptRequest {
+    /**
+     * 
+     * @type {IamAcceptBody}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly iamAcceptBody: IamAcceptBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly cookie?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly secFetchSite?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly contentType?: string
+}
+
+/**
+ * Request parameters for postIamInvitationsByOwnerByNameSend operation in IamApi.
+ * @export
+ * @interface IamApiPostIamInvitationsByOwnerByNameSendRequest
+ */
+export interface IamApiPostIamInvitationsByOwnerByNameSendRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsByOwnerByNameSend
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsByOwnerByNameSend
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsByOwnerByNameSend
+     */
+    readonly authorization?: string
 }
 
 /**
@@ -11325,34 +11831,6 @@ export interface IamApiPostIamProjectsRequest {
 }
 
 /**
- * Request parameters for postIamRelease operation in IamApi.
- * @export
- * @interface IamApiPostIamReleaseRequest
- */
-export interface IamApiPostIamReleaseRequest {
-    /**
-     * 
-     * @type {IamAssumeBody}
-     * @memberof IamApiPostIamRelease
-     */
-    readonly iamAssumeBody: IamAssumeBody
-
-    /**
-     * 
-     * @type {string}
-     * @memberof IamApiPostIamRelease
-     */
-    readonly authorization?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof IamApiPostIamRelease
-     */
-    readonly xForwardedFor?: string
-}
-
-/**
  * Request parameters for postIamRoles operation in IamApi.
  * @export
  * @interface IamApiPostIamRolesRequest
@@ -11360,10 +11838,10 @@ export interface IamApiPostIamReleaseRequest {
 export interface IamApiPostIamRolesRequest {
     /**
      * 
-     * @type {IamRolesInput}
+     * @type {IamInput}
      * @memberof IamApiPostIamRoles
      */
-    readonly iamRolesInput: IamRolesInput
+    readonly iamInput: IamInput
 }
 
 /**
@@ -11521,10 +11999,10 @@ export interface IamApiPutIamAuditLogsByOwnerByNameRequest {
 
     /**
      * 
-     * @type {IamInput}
+     * @type {IamAuditlogsInput}
      * @memberof IamApiPutIamAuditLogsByOwnerByName
      */
-    readonly iamInput: IamInput
+    readonly iamAuditlogsInput: IamAuditlogsInput
 }
 
 /**
@@ -11709,7 +12187,7 @@ export interface IamApiPutIamRolesByOwnerByNameRequest {
     readonly owner: string
 
     /**
-     * 
+     * Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
      * @type {string}
      * @memberof IamApiPutIamRolesByOwnerByName
      */
@@ -11717,10 +12195,10 @@ export interface IamApiPutIamRolesByOwnerByNameRequest {
 
     /**
      * 
-     * @type {IamRolesInput}
+     * @type {IamInput}
      * @memberof IamApiPutIamRolesByOwnerByName
      */
-    readonly iamRolesInput: IamRolesInput
+    readonly iamInput: IamInput
 }
 
 /**
@@ -11763,6 +12241,41 @@ export interface IamApiPutIamTeamsByNameRequest {
      * @memberof IamApiPutIamTeamsByName
      */
     readonly iamTeamsInput: IamTeamsInput
+}
+
+/**
+ * Request parameters for putIamTerms operation in IamApi.
+ * @export
+ * @interface IamApiPutIamTermsRequest
+ */
+export interface IamApiPutIamTermsRequest {
+    /**
+     * 
+     * @type {IamTermsBody}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly iamTermsBody: IamTermsBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly cookie?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly xForwardedFor?: string
 }
 
 /**
@@ -11819,6 +12332,27 @@ export interface IamApiPutIamWorkspacesByOwnerByNameRequest {
      * @memberof IamApiPutIamWorkspacesByOwnerByName
      */
     readonly iamWorkspacesInput: IamWorkspacesInput
+}
+
+/**
+ * Request parameters for releaseOrganizationName operation in IamApi.
+ * @export
+ * @interface IamApiReleaseOrganizationNameRequest
+ */
+export interface IamApiReleaseOrganizationNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiReleaseOrganizationName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiReleaseOrganizationName
+     */
+    readonly name: string
 }
 
 /**
@@ -12249,7 +12783,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+     * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
      * @summary Removes a person from your organization.
      * @param {IamApiDeleteIamUsersByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12353,6 +12887,17 @@ export class IamApi extends BaseAPI {
      */
     public getIamAccount(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamAccount(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.  It reads the session cookie and nothing else, so it only ever answers the browser holding the sessions. An account forbidden or deleted since it signed in is left out. A browser with nobody signed in gets an empty list.
+     * @summary Returns the people signed in on this browser, the most recent sign-in first — what the sign-in page lists when an application asks the person to choose an account.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamAccounts(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamAccounts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12463,7 +13008,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
+     * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see the invitations of the organization your credentials run, and no one else\'s: your own, or one you own or administer.
      * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
      * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12544,7 +13089,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via principal.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
+     * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may read the roster of an org it belongs to, or the tenancy of a person whose account it administers, and nothing else. The bound comes from the verified credential via principal.ScopeRead, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a roster read by a stranger is a customer roster leak.
      * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
      * @param {IamApiGetIamMembershipsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12556,7 +13101,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
      * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12578,7 +13123,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12946,6 +13491,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Returns what holds a deleted organization\'s name: when it was deleted and who founded it. A SuperAdmin reads it before deciding to release the name.
+     * @summary Returns what holds a deleted organization\'s name: when it was deleted and who founded it.
+     * @param {IamApiGetOrganizationTombstoneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getOrganizationTombstone(requestParameters: IamApiGetOrganizationTombstoneRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getOrganizationTombstone(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns one provider: what it connects to and how it is configured. Its credentials come back masked.
      * @summary Returns one provider: what it connects to and how it is configured.
      * @param {IamApiGetProviderRequest} requestParameters Request parameters.
@@ -13089,18 +13646,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
-     * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
-     * @param {IamApiPostIamAssumeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAssume(requestParameters: IamApiPostIamAssumeRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAssume(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
      * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
      * @param {IamApiPostIamAuditLogsRequest} requestParameters Request parameters.
@@ -13109,7 +13654,19 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public postIamAuditLogs(requestParameters: IamApiPostIamAuditLogsRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAuditLogs(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).postIamAuditLogs(requestParameters.iamAuditlogsInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers whether an account holds an email address at an application, and whether that account signs in with a password. Only an application that registers strangers answers, since its signup says as much already. The address is resolved exactly as sign-in resolves it, so the screen and the sign-in cannot disagree. A client asking faster than a person types is refused with 429.
+     * @summary Answers whether an account holds an email address at an application, and whether that account signs in with a password.
+     * @param {IamApiPostIamAuthIdentifierRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamAuthIdentifier(requestParameters: IamApiPostIamAuthIdentifierRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamAuthIdentifier(requestParameters.iamIdentifierBody, requestParameters.cFConnectingIP, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13148,7 +13705,31 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.
+     * Joins the caller to an organization through an invitation, for a person who already has an account. Signing up through the invitation is the other way in (signupHandler); this one spends the same seat under the same rules.  Only the caller joins, as a member and never more; the request names nobody else. An invitation pinned to an address admits only the account holding that address, and only with a code IAM sent to it for this join — the account\'s own verified flag is not enough, because a tenant\'s identity provider can set it. An invitation pinned to a phone number or a username admits no other org\'s account this way. Joining an org the caller already belongs to succeeds and spends nothing. Every refusal is recorded, and an account refused acceptLimit times in acceptWindow is refused before anything is looked at.
+     * @summary Joins the caller to an organization through an invitation, for a person who already has an account.
+     * @param {IamApiPostIamInvitationsAcceptRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamInvitationsAccept(requestParameters: IamApiPostIamInvitationsAcceptRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.  The caller chooses nothing about how it goes out. It is sent through the platform application the caller\'s access token was issued to, from that application\'s org\'s email account, with a link on the identity host that issued the token — the way the inviter came in. Only the pinned address receives it.
+     * @summary Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.
+     * @param {IamApiPostIamInvitationsByOwnerByNameSendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamInvitationsByOwnerByNameSend(requestParameters: IamApiPostIamInvitationsByOwnerByNameSendRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamInvitationsByOwnerByNameSend(requestParameters.owner, requestParameters.name, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.  A key you create is yours: it names you as its holder and speaks for you in the organization it is filed in. Naming anyone else as its holder is refused; a SuperAdmin names the person a key is for.
      * @summary Issues an API key.
      * @param {IamApiPostIamKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13226,7 +13807,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
      * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13281,7 +13862,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13292,7 +13873,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+     * Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.  A refresh returns a NEW refresh token and retires the one you sent. If a retired one is ever presented again the whole chain is revoked, on the assumption that a token which came back from the dead was copied — so a stolen refresh token buys an attacker one use and costs them the session.  Responses are never cached, by any hop.
+     * @summary Exchanges what your application is holding for the tokens it needs — the one-time code from a finished sign-in, a refresh token, or your own client credentials when the caller is a program rather than a person.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamOauthRefreshToken(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamOauthRefreshToken(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has (RFC 7009 §2.1 — a public client identifies itself with client_id). A browser app or CLI is a public PKCE client and holds no secret, and that includes the public half of a registration that keeps a secret for a backend path, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it. A caller that did not prove the registration\'s secret revokes only a grant that was itself established without it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend.
      * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13382,18 +13974,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
-     * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
-     * @param {IamApiPostIamReleaseRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamRelease(requestParameters: IamApiPostIamReleaseRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRelease(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
      * @summary Makes a role — a named group of people that permissions are granted to.
      * @param {IamApiPostIamRolesRequest} requestParameters Request parameters.
@@ -13402,7 +13982,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public postIamRoles(requestParameters: IamApiPostIamRolesRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRoles(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).postIamRoles(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13485,7 +14065,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (a member of the reserved admin org, the one predicate). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
+     * Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person. Their account and every other way they sign in are untouched. Two principals may do it, and only two: the account holder itself, and a SuperAdmin (schema.User.SuperAdmin, asked of the caller\'s own row). An ORG ADMIN deliberately may NOT — unlinking is not tenant administration, it is unpicking someone\'s own sign-in method, so the generic org-admin rule is the wrong answer here. A SuperAdmin unlinking someone else\'s method is recorded on the SuperAdmin trail.  A holder unlinking itself must also be permitted by the application — the provider link\'s CanUnlink flag — so an organization that mandates federated sign-in cannot have its users strand themselves. A SuperAdmin is not bound by that flag; it is the platform\'s own recovery path. Fail-closed throughout.
      * @summary Disconnects one sign-in identity from an account, so that provider can no longer be used to sign in as that person.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13608,7 +14188,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public putIamAuditLogsByOwnerByName(requestParameters: IamApiPutIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamAuditlogsInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13703,7 +14283,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public putIamRolesByOwnerByName(requestParameters: IamApiPutIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13731,7 +14311,19 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+     * Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named. It is how a person who arrived by a social provider, whose account the callback already made, records the same acceptance a code sign-up records at creation. Only the caller\'s own row is reachable.
+     * @summary Records that the signed-in caller accepted the terms and the acceptable use policy, at the versions named.
+     * @param {IamApiPutIamTermsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamTerms(requestParameters: IamApiPutIamTermsRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.  A SuperAdmin\'s account is changed only by a SuperAdmin.
      * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
      * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13752,6 +14344,18 @@ export class IamApi extends BaseAPI {
      */
     public putIamWorkspacesByOwnerByName(requestParameters: IamApiPutIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).putIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Frees the name of a deleted organization so it can be founded again. Deleting an organization leaves its name held, because every service keys a tenant by that name; releasing it is a SuperAdmin\'s decision, recorded on the audit trail, and it is refused while anything IAM keeps is still keyed by the name. Everything else keyed by it across the estate must be purged first.
+     * @summary Frees the name of a deleted organization so it can be founded again.
+     * @param {IamApiReleaseOrganizationNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public releaseOrganizationName(requestParameters: IamApiReleaseOrganizationNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).releaseOrganizationName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13851,7 +14455,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
+     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.  A SuperAdmin\'s password, email and phone are set when the account is created and kept on every run after.
      * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
      * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

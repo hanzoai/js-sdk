@@ -31,9 +31,9 @@ export interface O11yLabel {
     'key'?: O11yTelemetryFieldKey;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof O11yLabel
      */
-    'value'?: object;
+    'value'?: any;
 }
 

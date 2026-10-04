@@ -28,9 +28,9 @@ export interface O11yO11yTable {
     'columns'?: Array<string>;
     /**
      * Rows are the result rows, each as long as Columns.
-     * @type {Array<Array<object>>}
+     * @type {Array<Array<any>>}
      * @memberof O11yO11yTable
      */
-    'rows'?: Array<Array<object>>;
+    'rows'?: Array<Array<any>>;
 }
 

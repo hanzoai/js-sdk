@@ -31,10 +31,10 @@ export interface O11yIntegrationAssets {
     'alerts'?: Array<any>;
     /**
      * 
-     * @type {Array<{ [key: string]: object; }>}
+     * @type {Array<{ [key: string]: any; }>}
      * @memberof O11yIntegrationAssets
      */
-    'dashboards'?: Array<{ [key: string]: object; }>;
+    'dashboards'?: Array<{ [key: string]: any; }>;
     /**
      * 
      * @type {O11yLogsAssets}

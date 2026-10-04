@@ -22,25 +22,27 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AccountList } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { CreateAccountIn } from '../models';
+import type { WalletAccountList } from '../models';
 // @ts-ignore
-import type { CreateWalletIn } from '../models';
+import type { WalletCreateAccountIn } from '../models';
 // @ts-ignore
-import type { SafeProposal } from '../models';
+import type { WalletCreateWalletIn } from '../models';
 // @ts-ignore
-import type { SafeTxIn } from '../models';
+import type { WalletSafeProposal } from '../models';
 // @ts-ignore
-import type { SignIn } from '../models';
+import type { WalletSafeTxIn } from '../models';
 // @ts-ignore
-import type { Signature } from '../models';
+import type { WalletSignIn } from '../models';
 // @ts-ignore
-import type { Wallet } from '../models';
+import type { WalletSignature } from '../models';
 // @ts-ignore
-import type { WalletAccount } from '../models';
+import type { WalletWallet } from '../models';
 // @ts-ignore
-import type { WalletList } from '../models';
+import type { WalletWalletAccount } from '../models';
+// @ts-ignore
+import type { WalletWalletList } from '../models';
 /**
  * WalletApi - axios parameter creator
  * @export
@@ -171,13 +173,13 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Provisions a new signing identity under one of the caller org\'s accounts and answers the stored wallet including its on-chain address. The custody backend generates the key material — a KMS-sealed secp256k1 key, an MPC threshold key on the ring, or a Safe smart wallet owned by one — and the HANDLE to it is kept server-side and never returned. A custody kind the deployment has not wired fails CLOSED with 503: a signature is never fabricated. The wallet is scoped to the org, the caller\'s ambient project, and optionally an agent and the named account; those narrowings are what its key ref is derived from, so each must be a url-safe segment.
          * @summary Provisions a new signing identity under one of the caller org\'s accounts and answers the stored wallet including its on-chain address.
-         * @param {CreateWalletIn} createWalletIn 
+         * @param {WalletCreateWalletIn} walletCreateWalletIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWallet: async (createWalletIn: CreateWalletIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createWalletIn' is not null or undefined
-            assertParamExists('postWallet', 'createWalletIn', createWalletIn)
+        postWallet: async (walletCreateWalletIn: WalletCreateWalletIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletCreateWalletIn' is not null or undefined
+            assertParamExists('postWallet', 'walletCreateWalletIn', walletCreateWalletIn)
             const localVarPath = `/v1/wallet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -201,7 +203,7 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createWalletIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(walletCreateWalletIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -211,13 +213,13 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Opens a named wallet account for the caller\'s org. An account is a GROUPING of wallets, not a key or a balance: wallets are created under one and can be listed by it. The org is stamped by the server from the validated principal, so a request can never open an account in another tenant.
          * @summary Opens a named wallet account for the caller\'s org.
-         * @param {CreateAccountIn} createAccountIn 
+         * @param {WalletCreateAccountIn} walletCreateAccountIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletAccounts: async (createAccountIn: CreateAccountIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createAccountIn' is not null or undefined
-            assertParamExists('postWalletAccounts', 'createAccountIn', createAccountIn)
+        postWalletAccounts: async (walletCreateAccountIn: WalletCreateAccountIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletCreateAccountIn' is not null or undefined
+            assertParamExists('postWalletAccounts', 'walletCreateAccountIn', walletCreateAccountIn)
             const localVarPath = `/v1/wallet/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -241,7 +243,7 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createAccountIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(walletCreateAccountIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -290,15 +292,15 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
          * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
          * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
          * @param {string} id 
-         * @param {SignIn} signIn 
+         * @param {WalletSignIn} walletSignIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletByIdSign: async (id: string, signIn: SignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postWalletByIdSign: async (id: string, walletSignIn: WalletSignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postWalletByIdSign', 'id', id)
-            // verify required parameter 'signIn' is not null or undefined
-            assertParamExists('postWalletByIdSign', 'signIn', signIn)
+            // verify required parameter 'walletSignIn' is not null or undefined
+            assertParamExists('postWalletByIdSign', 'walletSignIn', walletSignIn)
             const localVarPath = `/v1/wallet/{id}/sign`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -323,7 +325,7 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(signIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(walletSignIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -334,15 +336,15 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
          * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
          * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
          * @param {string} id 
-         * @param {SafeTxIn} safeTxIn 
+         * @param {WalletSafeTxIn} walletSafeTxIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletByIdTransactions: async (id: string, safeTxIn: SafeTxIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postWalletByIdTransactions: async (id: string, walletSafeTxIn: WalletSafeTxIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postWalletByIdTransactions', 'id', id)
-            // verify required parameter 'safeTxIn' is not null or undefined
-            assertParamExists('postWalletByIdTransactions', 'safeTxIn', safeTxIn)
+            // verify required parameter 'walletSafeTxIn' is not null or undefined
+            assertParamExists('postWalletByIdTransactions', 'walletSafeTxIn', walletSafeTxIn)
             const localVarPath = `/v1/wallet/{id}/transactions`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -367,7 +369,7 @@ export const WalletApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(safeTxIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(walletSafeTxIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -393,7 +395,7 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWallet(project?: string, agent?: string, account?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletList>> {
+        async getWallet(project?: string, agent?: string, account?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWalletList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWallet(project, agent, account, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.getWallet']?.[localVarOperationServerIndex]?.url;
@@ -405,7 +407,7 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWalletAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountList>> {
+        async getWalletAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletAccountList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWalletAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.getWalletAccounts']?.[localVarOperationServerIndex]?.url;
@@ -418,7 +420,7 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWalletById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Wallet>> {
+        async getWalletById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWallet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWalletById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.getWalletById']?.[localVarOperationServerIndex]?.url;
@@ -427,12 +429,12 @@ export const WalletApiFp = function(configuration?: Configuration) {
         /**
          * Provisions a new signing identity under one of the caller org\'s accounts and answers the stored wallet including its on-chain address. The custody backend generates the key material — a KMS-sealed secp256k1 key, an MPC threshold key on the ring, or a Safe smart wallet owned by one — and the HANDLE to it is kept server-side and never returned. A custody kind the deployment has not wired fails CLOSED with 503: a signature is never fabricated. The wallet is scoped to the org, the caller\'s ambient project, and optionally an agent and the named account; those narrowings are what its key ref is derived from, so each must be a url-safe segment.
          * @summary Provisions a new signing identity under one of the caller org\'s accounts and answers the stored wallet including its on-chain address.
-         * @param {CreateWalletIn} createWalletIn 
+         * @param {WalletCreateWalletIn} walletCreateWalletIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWallet(createWalletIn: CreateWalletIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Wallet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWallet(createWalletIn, options);
+        async postWallet(walletCreateWalletIn: WalletCreateWalletIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWallet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWallet(walletCreateWalletIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.postWallet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -440,12 +442,12 @@ export const WalletApiFp = function(configuration?: Configuration) {
         /**
          * Opens a named wallet account for the caller\'s org. An account is a GROUPING of wallets, not a key or a balance: wallets are created under one and can be listed by it. The org is stamped by the server from the validated principal, so a request can never open an account in another tenant.
          * @summary Opens a named wallet account for the caller\'s org.
-         * @param {CreateAccountIn} createAccountIn 
+         * @param {WalletCreateAccountIn} walletCreateAccountIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWalletAccounts(createAccountIn: CreateAccountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletAccount>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletAccounts(createAccountIn, options);
+        async postWalletAccounts(walletCreateAccountIn: WalletCreateAccountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWalletAccount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletAccounts(walletCreateAccountIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.postWalletAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -457,7 +459,7 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWalletByIdKeys(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Wallet>> {
+        async postWalletByIdKeys(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWallet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletByIdKeys(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.postWalletByIdKeys']?.[localVarOperationServerIndex]?.url;
@@ -467,12 +469,12 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
          * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
          * @param {string} id 
-         * @param {SignIn} signIn 
+         * @param {WalletSignIn} walletSignIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWalletByIdSign(id: string, signIn: SignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Signature>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletByIdSign(id, signIn, options);
+        async postWalletByIdSign(id: string, walletSignIn: WalletSignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletSignature>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletByIdSign(id, walletSignIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.postWalletByIdSign']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -481,12 +483,12 @@ export const WalletApiFp = function(configuration?: Configuration) {
          * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
          * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
          * @param {string} id 
-         * @param {SafeTxIn} safeTxIn 
+         * @param {WalletSafeTxIn} walletSafeTxIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWalletByIdTransactions(id: string, safeTxIn: SafeTxIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SafeProposal>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletByIdTransactions(id, safeTxIn, options);
+        async postWalletByIdTransactions(id: string, walletSafeTxIn: WalletSafeTxIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletSafeProposal>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWalletByIdTransactions(id, walletSafeTxIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletApi.postWalletByIdTransactions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -508,7 +510,7 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWallet(requestParameters: WalletApiGetWalletRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WalletList> {
+        getWallet(requestParameters: WalletApiGetWalletRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WalletWalletList> {
             return localVarFp.getWallet(requestParameters.project, requestParameters.agent, requestParameters.account, options).then((request) => request(axios, basePath));
         },
         /**
@@ -517,7 +519,7 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWalletAccounts(options?: RawAxiosRequestConfig): AxiosPromise<AccountList> {
+        getWalletAccounts(options?: RawAxiosRequestConfig): AxiosPromise<WalletAccountList> {
             return localVarFp.getWalletAccounts(options).then((request) => request(axios, basePath));
         },
         /**
@@ -527,7 +529,7 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWalletById(requestParameters: WalletApiGetWalletByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Wallet> {
+        getWalletById(requestParameters: WalletApiGetWalletByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletWallet> {
             return localVarFp.getWalletById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -537,8 +539,8 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWallet(requestParameters: WalletApiPostWalletRequest, options?: RawAxiosRequestConfig): AxiosPromise<Wallet> {
-            return localVarFp.postWallet(requestParameters.createWalletIn, options).then((request) => request(axios, basePath));
+        postWallet(requestParameters: WalletApiPostWalletRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletWallet> {
+            return localVarFp.postWallet(requestParameters.walletCreateWalletIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens a named wallet account for the caller\'s org. An account is a GROUPING of wallets, not a key or a balance: wallets are created under one and can be listed by it. The org is stamped by the server from the validated principal, so a request can never open an account in another tenant.
@@ -547,8 +549,8 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletAccounts(requestParameters: WalletApiPostWalletAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletAccount> {
-            return localVarFp.postWalletAccounts(requestParameters.createAccountIn, options).then((request) => request(axios, basePath));
+        postWalletAccounts(requestParameters: WalletApiPostWalletAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletWalletAccount> {
+            return localVarFp.postWalletAccounts(requestParameters.walletCreateAccountIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Rolls one wallet\'s signing material through its own custody backend and answers the wallet with whatever address that produced. For KMS custody a fresh secp256k1 key is generated and sealed, which CHANGES the address — funds and approvals at the old address do not move. For a Safe the address is counterfactual and the owner shares are ring-managed, so rotation is a no-op and the address is unchanged. A backend that is not configured fails closed with 503 rather than leaving the wallet half-rotated.
@@ -557,7 +559,7 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletByIdKeys(requestParameters: WalletApiPostWalletByIdKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<Wallet> {
+        postWalletByIdKeys(requestParameters: WalletApiPostWalletByIdKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletWallet> {
             return localVarFp.postWalletByIdKeys(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -567,8 +569,8 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletByIdSign(requestParameters: WalletApiPostWalletByIdSignRequest, options?: RawAxiosRequestConfig): AxiosPromise<Signature> {
-            return localVarFp.postWalletByIdSign(requestParameters.id, requestParameters.signIn, options).then((request) => request(axios, basePath));
+        postWalletByIdSign(requestParameters: WalletApiPostWalletByIdSignRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletSignature> {
+            return localVarFp.postWalletByIdSign(requestParameters.id, requestParameters.walletSignIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
@@ -577,8 +579,8 @@ export const WalletApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWalletByIdTransactions(requestParameters: WalletApiPostWalletByIdTransactionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SafeProposal> {
-            return localVarFp.postWalletByIdTransactions(requestParameters.id, requestParameters.safeTxIn, options).then((request) => request(axios, basePath));
+        postWalletByIdTransactions(requestParameters: WalletApiPostWalletByIdTransactionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<WalletSafeProposal> {
+            return localVarFp.postWalletByIdTransactions(requestParameters.id, requestParameters.walletSafeTxIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -633,10 +635,10 @@ export interface WalletApiGetWalletByIdRequest {
 export interface WalletApiPostWalletRequest {
     /**
      * 
-     * @type {CreateWalletIn}
+     * @type {WalletCreateWalletIn}
      * @memberof WalletApiPostWallet
      */
-    readonly createWalletIn: CreateWalletIn
+    readonly walletCreateWalletIn: WalletCreateWalletIn
 }
 
 /**
@@ -647,10 +649,10 @@ export interface WalletApiPostWalletRequest {
 export interface WalletApiPostWalletAccountsRequest {
     /**
      * 
-     * @type {CreateAccountIn}
+     * @type {WalletCreateAccountIn}
      * @memberof WalletApiPostWalletAccounts
      */
-    readonly createAccountIn: CreateAccountIn
+    readonly walletCreateAccountIn: WalletCreateAccountIn
 }
 
 /**
@@ -682,10 +684,10 @@ export interface WalletApiPostWalletByIdSignRequest {
 
     /**
      * 
-     * @type {SignIn}
+     * @type {WalletSignIn}
      * @memberof WalletApiPostWalletByIdSign
      */
-    readonly signIn: SignIn
+    readonly walletSignIn: WalletSignIn
 }
 
 /**
@@ -703,10 +705,10 @@ export interface WalletApiPostWalletByIdTransactionsRequest {
 
     /**
      * 
-     * @type {SafeTxIn}
+     * @type {WalletSafeTxIn}
      * @memberof WalletApiPostWalletByIdTransactions
      */
-    readonly safeTxIn: SafeTxIn
+    readonly walletSafeTxIn: WalletSafeTxIn
 }
 
 /**
@@ -760,7 +762,7 @@ export class WalletApi extends BaseAPI {
      * @memberof WalletApi
      */
     public postWallet(requestParameters: WalletApiPostWalletRequest, options?: RawAxiosRequestConfig) {
-        return WalletApiFp(this.configuration).postWallet(requestParameters.createWalletIn, options).then((request) => request(this.axios, this.basePath));
+        return WalletApiFp(this.configuration).postWallet(requestParameters.walletCreateWalletIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -772,7 +774,7 @@ export class WalletApi extends BaseAPI {
      * @memberof WalletApi
      */
     public postWalletAccounts(requestParameters: WalletApiPostWalletAccountsRequest, options?: RawAxiosRequestConfig) {
-        return WalletApiFp(this.configuration).postWalletAccounts(requestParameters.createAccountIn, options).then((request) => request(this.axios, this.basePath));
+        return WalletApiFp(this.configuration).postWalletAccounts(requestParameters.walletCreateAccountIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -796,7 +798,7 @@ export class WalletApi extends BaseAPI {
      * @memberof WalletApi
      */
     public postWalletByIdSign(requestParameters: WalletApiPostWalletByIdSignRequest, options?: RawAxiosRequestConfig) {
-        return WalletApiFp(this.configuration).postWalletByIdSign(requestParameters.id, requestParameters.signIn, options).then((request) => request(this.axios, this.basePath));
+        return WalletApiFp(this.configuration).postWalletByIdSign(requestParameters.id, requestParameters.walletSignIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -808,7 +810,7 @@ export class WalletApi extends BaseAPI {
      * @memberof WalletApi
      */
     public postWalletByIdTransactions(requestParameters: WalletApiPostWalletByIdTransactionsRequest, options?: RawAxiosRequestConfig) {
-        return WalletApiFp(this.configuration).postWalletByIdTransactions(requestParameters.id, requestParameters.safeTxIn, options).then((request) => request(this.axios, this.basePath));
+        return WalletApiFp(this.configuration).postWalletByIdTransactions(requestParameters.id, requestParameters.walletSafeTxIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BaseHealth } from '../models';
+import type { BaseBaseHealth } from '../models';
 // @ts-ignore
-import type { BaseView } from '../models';
+import type { BaseBaseView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * BaseApi - axios parameter creator
  * @export
@@ -153,7 +155,7 @@ export const BaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBaseBases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BaseView>>> {
+        async getBaseBases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BaseBaseView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseBases(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseBases']?.[localVarOperationServerIndex]?.url;
@@ -166,7 +168,7 @@ export const BaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBaseBasesByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseView>> {
+        async getBaseBasesByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseBaseView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseBasesByOrg(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseBasesByOrg']?.[localVarOperationServerIndex]?.url;
@@ -178,7 +180,7 @@ export const BaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBaseHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseHealth>> {
+        async getBaseHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseBaseHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseHealth']?.[localVarOperationServerIndex]?.url;
@@ -200,7 +202,7 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBaseBases(options?: RawAxiosRequestConfig): AxiosPromise<Array<BaseView>> {
+        getBaseBases(options?: RawAxiosRequestConfig): AxiosPromise<Array<BaseBaseView>> {
             return localVarFp.getBaseBases(options).then((request) => request(axios, basePath));
         },
         /**
@@ -210,7 +212,7 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBaseBasesByOrg(requestParameters: BaseApiGetBaseBasesByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<BaseView> {
+        getBaseBasesByOrg(requestParameters: BaseApiGetBaseBasesByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<BaseBaseView> {
             return localVarFp.getBaseBasesByOrg(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
@@ -219,7 +221,7 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBaseHealth(options?: RawAxiosRequestConfig): AxiosPromise<BaseHealth> {
+        getBaseHealth(options?: RawAxiosRequestConfig): AxiosPromise<BaseBaseHealth> {
             return localVarFp.getBaseHealth(options).then((request) => request(axios, basePath));
         },
     };

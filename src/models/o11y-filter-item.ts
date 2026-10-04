@@ -37,9 +37,9 @@ export interface O11yFilterItem {
     'op'?: string;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof O11yFilterItem
      */
-    'value'?: object;
+    'value'?: any;
 }
 

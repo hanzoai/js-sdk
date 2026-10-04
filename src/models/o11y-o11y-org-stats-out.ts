@@ -22,10 +22,10 @@
 export interface O11yO11yOrgStatsOut {
     /**
      * Data are the statistics, keyed by the reporter\'s own counter names.
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yO11yOrgStatsOut
      */
-    'data'?: { [key: string]: object; };
+    'data'?: { [key: string]: any; };
     /**
      * Status is \"success\".
      * @type {string}

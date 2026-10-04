@@ -22,27 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ActionsView } from '../models';
+import type { GuideActionsView } from '../models';
 // @ts-ignore
-import type { AnalyticsView } from '../models';
+import type { GuideAnalyticsView } from '../models';
 // @ts-ignore
-import type { BlueprintVersionsView } from '../models';
+import type { GuideChatRequest } from '../models';
 // @ts-ignore
-import type { BlueprintView } from '../models';
+import type { GuideChatResponse } from '../models';
 // @ts-ignore
-import type { ChatRequest } from '../models';
+import type { GuideCorpusView } from '../models';
 // @ts-ignore
-import type { ChatResponse } from '../models';
+import type { GuideCurriculumView } from '../models';
 // @ts-ignore
-import type { CorpusView } from '../models';
+import type { GuideOverviewView } from '../models';
 // @ts-ignore
-import type { CurriculumView } from '../models';
+import type { GuideProfileResponse } from '../models';
 // @ts-ignore
-import type { OverviewView } from '../models';
+import type { GuideSuggestResponse } from '../models';
 // @ts-ignore
-import type { ProfileResponse } from '../models';
-// @ts-ignore
-import type { SuggestResponse } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * GuideApi - axios parameter creator
  * @export
@@ -84,8 +82,8 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
-         * @summary Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
+         * Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
+         * @summary Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -152,81 +150,13 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
-         * @summary Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
+         * Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
+         * @summary Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getGuideAnalytics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/analytics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts. It is the SuperAdmin authoring view of the platform blueprint, so it is refused 403 for anyone else, including a per-org admin: the brand blueprint is shared platform content, not a per-customer surface.
-         * @summary Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/guide/blueprint`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane. Metadata only: the documents are not returned. SuperAdmin only, like the rest of this plane. The history is listable even when the current stored document no longer parses, so a schema-drifted row can still be diagnosed.
-         * @summary Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGuideBlueprintVersions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/guide/blueprint/versions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -288,8 +218,8 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
-         * @summary Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
+         * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
+         * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -322,8 +252,8 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
-         * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
+         * Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
+         * @summary Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
          * @param {string} [category] Category filters to tactics in exactly this category.
          * @param {string} [stage] Stage previews the corpus at a chosen growth stage (research|formed|launched|activated|scaling), overriding the org\&#39;s observed one. An unknown value is ignored and the observed stage stands.
          * @param {string} [workload] Workload filters to tactics with exactly this workload.
@@ -371,8 +301,8 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
-         * @summary Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
+         * Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
+         * @summary Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -405,57 +335,15 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
-         * @summary Edit — or retire — one item of the brand blueprint
-         * @param {string} collection 
-         * @param {string} id 
+         * Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
+         * @summary Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
+         * @param {GuideChatRequest} guideChatRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchGuideBlueprintByCollectionById: async (collection: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'collection' is not null or undefined
-            assertParamExists('patchGuideBlueprintByCollectionById', 'collection', collection)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchGuideBlueprintByCollectionById', 'id', id)
-            const localVarPath = `/v1/guide/blueprint/{collection}/{id}`
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
-         * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
-         * @param {ChatRequest} chatRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postGuideChat: async (chatRequest: ChatRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists('postGuideChat', 'chatRequest', chatRequest)
+        postGuideChat: async (guideChatRequest: GuideChatRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'guideChatRequest' is not null or undefined
+            assertParamExists('postGuideChat', 'guideChatRequest', guideChatRequest)
             const localVarPath = `/v1/guide/chat`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -479,7 +367,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(guideChatRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -487,7 +375,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
+         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 401 without a principal and 403 without an org.
          * @summary Have the Business AI actually do the step for you
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -677,41 +565,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
-         * @summary Publish a new version of the brand blueprint
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putGuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/guide/blueprint`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org; 403 without one. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
+         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -760,19 +614,19 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
+        async deleteGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideCurriculumView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGuideCurriculum(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.deleteGuideCurriculum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
-         * @summary Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
+         * Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
+         * @summary Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuide(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+        async getGuide(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideOverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuide(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuide']?.[localVarOperationServerIndex]?.url;
@@ -784,46 +638,22 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideActions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsView>> {
+        async getGuideActions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideActionsView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideActions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideActions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
-         * @summary Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
+         * Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
+         * @summary Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideAnalytics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsView>> {
+        async getGuideAnalytics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideAnalyticsView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideAnalytics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideAnalytics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts. It is the SuperAdmin authoring view of the platform blueprint, so it is refused 403 for anyone else, including a per-org admin: the brand blueprint is shared platform content, not a per-customer surface.
-         * @summary Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideBlueprint(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideBlueprint']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane. Metadata only: the documents are not returned. SuperAdmin only, like the rest of this plane. The history is listable even when the current stored document no longer parses, so a schema-drifted row can still be diagnosed.
-         * @summary Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGuideBlueprintVersions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintVersionsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideBlueprintVersions(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideBlueprintVersions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -832,80 +662,66 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
+        async getGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideCurriculumView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideCurriculum(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideCurriculum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
-         * @summary Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
+         * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
+         * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileResponse>> {
+        async getGuideProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideProfileResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideProfile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideProfile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
-         * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
+         * Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
+         * @summary Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
          * @param {string} [category] Category filters to tactics in exactly this category.
          * @param {string} [stage] Stage previews the corpus at a chosen growth stage (research|formed|launched|activated|scaling), overriding the org\&#39;s observed one. An unknown value is ignored and the observed stage stands.
          * @param {string} [workload] Workload filters to tactics with exactly this workload.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideStrategies(category?: string, stage?: string, workload?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CorpusView>> {
+        async getGuideStrategies(category?: string, stage?: string, workload?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideCorpusView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideStrategies(category, stage, workload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideStrategies']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
-         * @summary Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
+         * Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
+         * @summary Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGuideSuggest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuggestResponse>> {
+        async getGuideSuggest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideSuggestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideSuggest(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideSuggest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
-         * @summary Edit — or retire — one item of the brand blueprint
-         * @param {string} collection 
-         * @param {string} id 
+         * Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
+         * @summary Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
+         * @param {GuideChatRequest} guideChatRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchGuideBlueprintByCollectionById(collection: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchGuideBlueprintByCollectionById(collection, id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.patchGuideBlueprintByCollectionById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
-         * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
-         * @param {ChatRequest} chatRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postGuideChat(chatRequest: ChatRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideChat(chatRequest, options);
+        async postGuideChat(guideChatRequest: GuideChatRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideChatResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideChat(guideChatRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideChat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
+         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 401 without a principal and 403 without an org.
          * @summary Have the Business AI actually do the step for you
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -924,7 +740,7 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+        async postGuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideOverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdDone(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdDone']?.[localVarOperationServerIndex]?.url;
@@ -937,7 +753,7 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+        async postGuideStepsByIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideOverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdReset(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdReset']?.[localVarOperationServerIndex]?.url;
@@ -950,7 +766,7 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+        async postGuideStepsByIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideOverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdSkip(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdSkip']?.[localVarOperationServerIndex]?.url;
@@ -963,26 +779,14 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+        async postGuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideOverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdStart(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
-         * @summary Publish a new version of the brand blueprint
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putGuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putGuideBlueprint(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.putGuideBlueprint']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org; 403 without one. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
+         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1009,16 +813,16 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
+        deleteGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<GuideCurriculumView> {
             return localVarFp.deleteGuideCurriculum(options).then((request) => request(axios, basePath));
         },
         /**
-         * Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
-         * @summary Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
+         * Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
+         * @summary Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuide(options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+        getGuide(options?: RawAxiosRequestConfig): AxiosPromise<GuideOverviewView> {
             return localVarFp.getGuide(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1027,35 +831,17 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideActions(options?: RawAxiosRequestConfig): AxiosPromise<ActionsView> {
+        getGuideActions(options?: RawAxiosRequestConfig): AxiosPromise<GuideActionsView> {
             return localVarFp.getGuideActions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
-         * @summary Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
+         * Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
+         * @summary Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideAnalytics(options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsView> {
+        getGuideAnalytics(options?: RawAxiosRequestConfig): AxiosPromise<GuideAnalyticsView> {
             return localVarFp.getGuideAnalytics(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts. It is the SuperAdmin authoring view of the platform blueprint, so it is refused 403 for anyone else, including a per-org admin: the brand blueprint is shared platform content, not a per-customer surface.
-         * @summary Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintView> {
-            return localVarFp.getGuideBlueprint(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane. Metadata only: the documents are not returned. SuperAdmin only, like the rest of this plane. The history is listable even when the current stored document no longer parses, so a schema-drifted row can still be diagnosed.
-         * @summary Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGuideBlueprintVersions(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintVersionsView> {
-            return localVarFp.getGuideBlueprintVersions(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the journey the caller\'s org is actually running, and whether it comes from the org\'s OWN override (custom) or from the platform default — the brand blueprint, else the embedded fixture.
@@ -1063,59 +849,49 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
+        getGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<GuideCurriculumView> {
             return localVarFp.getGuideCurriculum(options).then((request) => request(axios, basePath));
         },
         /**
-         * Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
-         * @summary Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
+         * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
+         * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideProfile(options?: RawAxiosRequestConfig): AxiosPromise<ProfileResponse> {
+        getGuideProfile(options?: RawAxiosRequestConfig): AxiosPromise<GuideProfileResponse> {
             return localVarFp.getGuideProfile(options).then((request) => request(axios, basePath));
         },
         /**
-         * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
-         * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
+         * Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
+         * @summary Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
          * @param {GuideApiGetGuideStrategiesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideStrategies(requestParameters: GuideApiGetGuideStrategiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CorpusView> {
+        getGuideStrategies(requestParameters: GuideApiGetGuideStrategiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GuideCorpusView> {
             return localVarFp.getGuideStrategies(requestParameters.category, requestParameters.stage, requestParameters.workload, options).then((request) => request(axios, basePath));
         },
         /**
-         * Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
-         * @summary Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
+         * Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
+         * @summary Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGuideSuggest(options?: RawAxiosRequestConfig): AxiosPromise<SuggestResponse> {
+        getGuideSuggest(options?: RawAxiosRequestConfig): AxiosPromise<GuideSuggestResponse> {
             return localVarFp.getGuideSuggest(options).then((request) => request(axios, basePath));
         },
         /**
-         * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
-         * @summary Edit — or retire — one item of the brand blueprint
-         * @param {GuideApiPatchGuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchGuideBlueprintByCollectionById(requestParameters: GuideApiPatchGuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchGuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
-         * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
+         * Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
+         * @summary Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
          * @param {GuideApiPostGuideChatRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideChat(requestParameters: GuideApiPostGuideChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatResponse> {
-            return localVarFp.postGuideChat(requestParameters.chatRequest, options).then((request) => request(axios, basePath));
+        postGuideChat(requestParameters: GuideApiPostGuideChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideChatResponse> {
+            return localVarFp.postGuideChat(requestParameters.guideChatRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
+         * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 401 without a principal and 403 without an org.
          * @summary Have the Business AI actually do the step for you
          * @param {GuideApiPostGuideStepsByIdDoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1131,7 +907,7 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+        postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideOverviewView> {
             return localVarFp.postGuideStepsByIdDone(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1141,7 +917,7 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdReset(requestParameters: GuideApiPostGuideStepsByIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+        postGuideStepsByIdReset(requestParameters: GuideApiPostGuideStepsByIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideOverviewView> {
             return localVarFp.postGuideStepsByIdReset(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1151,7 +927,7 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdSkip(requestParameters: GuideApiPostGuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+        postGuideStepsByIdSkip(requestParameters: GuideApiPostGuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideOverviewView> {
             return localVarFp.postGuideStepsByIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1161,20 +937,11 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+        postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideOverviewView> {
             return localVarFp.postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
-         * @summary Publish a new version of the brand blueprint
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putGuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putGuideBlueprint(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org; 403 without one. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
+         * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1214,27 +981,6 @@ export interface GuideApiGetGuideStrategiesRequest {
 }
 
 /**
- * Request parameters for patchGuideBlueprintByCollectionById operation in GuideApi.
- * @export
- * @interface GuideApiPatchGuideBlueprintByCollectionByIdRequest
- */
-export interface GuideApiPatchGuideBlueprintByCollectionByIdRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof GuideApiPatchGuideBlueprintByCollectionById
-     */
-    readonly collection: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof GuideApiPatchGuideBlueprintByCollectionById
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for postGuideChat operation in GuideApi.
  * @export
  * @interface GuideApiPostGuideChatRequest
@@ -1242,10 +988,10 @@ export interface GuideApiPatchGuideBlueprintByCollectionByIdRequest {
 export interface GuideApiPostGuideChatRequest {
     /**
      * 
-     * @type {ChatRequest}
+     * @type {GuideChatRequest}
      * @memberof GuideApiPostGuideChat
      */
-    readonly chatRequest: ChatRequest
+    readonly guideChatRequest: GuideChatRequest
 }
 
 /**
@@ -1337,8 +1083,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
-     * @summary Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
+     * Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
+     * @summary Returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
@@ -1359,36 +1105,14 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
-     * @summary Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
+     * Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
+     * @summary Returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
     public getGuideAnalytics(options?: RawAxiosRequestConfig) {
         return GuideApiFp(this.configuration).getGuideAnalytics(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts. It is the SuperAdmin authoring view of the platform blueprint, so it is refused 403 for anyone else, including a per-org admin: the brand blueprint is shared platform content, not a per-customer surface.
-     * @summary Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public getGuideBlueprint(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getGuideBlueprint(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane. Metadata only: the documents are not returned. SuperAdmin only, like the rest of this plane. The history is listable even when the current stored document no longer parses, so a schema-drifted row can still be diagnosed.
-     * @summary Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public getGuideBlueprintVersions(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getGuideBlueprintVersions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1403,8 +1127,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
-     * @summary Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
+     * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
+     * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
@@ -1414,8 +1138,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
-     * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
+     * Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
+     * @summary Returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
      * @param {GuideApiGetGuideStrategiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1426,8 +1150,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
-     * @summary Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
+     * Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
+     * @summary Returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
@@ -1437,31 +1161,19 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
-     * @summary Edit — or retire — one item of the brand blueprint
-     * @param {GuideApiPatchGuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public patchGuideBlueprintByCollectionById(requestParameters: GuideApiPatchGuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).patchGuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
-     * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
+     * Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
+     * @summary Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
      * @param {GuideApiPostGuideChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
     public postGuideChat(requestParameters: GuideApiPostGuideChatRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postGuideChat(requestParameters.chatRequest, options).then((request) => request(this.axios, this.basePath));
+        return GuideApiFp(this.configuration).postGuideChat(requestParameters.guideChatRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
+     * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 401 without a principal and 403 without an org.
      * @summary Have the Business AI actually do the step for you
      * @param {GuideApiPostGuideStepsByIdDoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1521,18 +1233,7 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
-     * @summary Publish a new version of the brand blueprint
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public putGuideBlueprint(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).putGuideBlueprint(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org; 403 without one. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
+     * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
      * @summary Replace your org\'s journey with a curriculum you author
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

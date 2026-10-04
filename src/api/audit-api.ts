@@ -22,7 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { TrailPage } from '../models';
+import type { AuditTrailPage } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * AuditApi - axios parameter creator
  * @export
@@ -30,8 +32,8 @@ import type { TrailPage } from '../models';
 export const AuditApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
-         * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
+         * Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
+         * @summary Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
          * @param {string} [sub] Sub narrows the trail to one actor — the validated subject that made the request. Blank means every actor in the org.
          * @param {string} [action] Action narrows it to one action name, e.g. \&quot;machine.create\&quot;.
          * @param {string} [resource] Resource narrows it to one resource TYPE, e.g. \&quot;apikey\&quot;.
@@ -119,8 +121,8 @@ export const AuditApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuditApiAxiosParamCreator(configuration)
     return {
         /**
-         * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
-         * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
+         * Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
+         * @summary Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
          * @param {string} [sub] Sub narrows the trail to one actor — the validated subject that made the request. Blank means every actor in the org.
          * @param {string} [action] Action narrows it to one action name, e.g. \&quot;machine.create\&quot;.
          * @param {string} [resource] Resource narrows it to one resource TYPE, e.g. \&quot;apikey\&quot;.
@@ -133,7 +135,7 @@ export const AuditApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAudit(sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrailPage>> {
+        async getAudit(sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuditTrailPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAudit(sub, action, resource, resourceId, result, since, until, pageSize, p, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuditApi.getAudit']?.[localVarOperationServerIndex]?.url;
@@ -150,13 +152,13 @@ export const AuditApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = AuditApiFp(configuration)
     return {
         /**
-         * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
-         * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
+         * Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
+         * @summary Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
          * @param {AuditApiGetAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAudit(requestParameters: AuditApiGetAuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrailPage> {
+        getAudit(requestParameters: AuditApiGetAuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AuditTrailPage> {
             return localVarFp.getAudit(requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(axios, basePath));
         },
     };
@@ -240,8 +242,8 @@ export interface AuditApiGetAuditRequest {
  */
 export class AuditApi extends BaseAPI {
     /**
-     * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
-     * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
+     * Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
+     * @summary Reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
      * @param {AuditApiGetAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

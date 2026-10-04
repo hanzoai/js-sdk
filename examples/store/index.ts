@@ -22,7 +22,7 @@ const name = `example-store-${Date.now()}`;
 async function main() {
   const kv = new ProvisioningApi(config());
 
-  await kv.postProvisioningKv({ provisionRequest: { name } });
+  await kv.postProvisioningKv({ provisioningProvisionRequest: { name } });
   console.log(`provisioned ${name}`);
 
   try {

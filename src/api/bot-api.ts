@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BotRoster } from '../models';
+import type { BotBotRoster } from '../models';
 // @ts-ignore
-import type { BotRuns } from '../models';
+import type { BotBotRuns } from '../models';
 // @ts-ignore
-import type { BotStopped } from '../models';
+import type { BotBotStopped } from '../models';
 // @ts-ignore
-import type { BotSync } from '../models';
+import type { BotBotSync } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * BotApi - axios parameter creator
  * @export
@@ -70,8 +72,8 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
-         * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
+         * Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
+         * @summary Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -138,42 +140,8 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
-         * @summary Answers 501 to every call: launching a bot run is not implemented.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBotRuns: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/bot/runs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * Terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Terminates one of the caller org\'s own bot runs and reports its terminal state.
          * @param {string} runId RunID is the run to stop, as the bot runtime named it. It is read from the URL — the &#x60;{runId}&#x60; segment the router matched on — and a body carrying a different id cannot redirect the stop.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -225,19 +193,19 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotMembers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRoster>> {
+        async getBotMembers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotBotRoster>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotMembers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotApi.getBotMembers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
-         * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
+         * Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
+         * @summary Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotRuns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRuns>> {
+        async getBotRuns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotBotRuns>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotRuns(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotApi.getBotRuns']?.[localVarOperationServerIndex]?.url;
@@ -249,32 +217,20 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBotMembersSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotSync>> {
+        async postBotMembersSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotBotSync>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBotMembersSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotApi.postBotMembersSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
-         * @summary Answers 501 to every call: launching a bot run is not implemented.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postBotRuns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotRuns(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.postBotRuns']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * Terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Terminates one of the caller org\'s own bot runs and reports its terminal state.
          * @param {string} runId RunID is the run to stop, as the bot runtime named it. It is read from the URL — the &#x60;{runId}&#x60; segment the router matched on — and a body carrying a different id cannot redirect the stop.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBotRunsByRunidStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotStopped>> {
+        async postBotRunsByRunidStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotBotStopped>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBotRunsByRunidStop(runId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotApi.postBotRunsByRunidStop']?.[localVarOperationServerIndex]?.url;
@@ -296,16 +252,16 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotMembers(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
+        getBotMembers(options?: RawAxiosRequestConfig): AxiosPromise<BotBotRoster> {
             return localVarFp.getBotMembers(options).then((request) => request(axios, basePath));
         },
         /**
-         * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
-         * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
+         * Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
+         * @summary Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotRuns(options?: RawAxiosRequestConfig): AxiosPromise<BotRuns> {
+        getBotRuns(options?: RawAxiosRequestConfig): AxiosPromise<BotBotRuns> {
             return localVarFp.getBotRuns(options).then((request) => request(axios, basePath));
         },
         /**
@@ -314,26 +270,17 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBotMembersSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
+        postBotMembersSync(options?: RawAxiosRequestConfig): AxiosPromise<BotBotSync> {
             return localVarFp.postBotMembersSync(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
-         * @summary Answers 501 to every call: launching a bot run is not implemented.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBotRuns(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBotRuns(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * Terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Terminates one of the caller org\'s own bot runs and reports its terminal state.
          * @param {BotApiPostBotRunsByRunidStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBotRunsByRunidStop(requestParameters: BotApiPostBotRunsByRunidStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotStopped> {
+        postBotRunsByRunidStop(requestParameters: BotApiPostBotRunsByRunidStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotBotStopped> {
             return localVarFp.postBotRunsByRunidStop(requestParameters.runId, options).then((request) => request(axios, basePath));
         },
     };
@@ -372,8 +319,8 @@ export class BotApi extends BaseAPI {
     }
 
     /**
-     * List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
-     * @summary List returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
+     * Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.  The org is ALWAYS the validated principal\'s org, NEVER a request field, and it is what scopes the runtime\'s answer — so one tenant can never enumerate another\'s runs. A runtime that cannot answer is an error, not an empty list: [] would tell the caller \"your org has no runs\", which is a different claim from \"we could not ask\", and the difference is the whole reason this endpoint exists.
+     * @summary Returns the caller org\'s live bot runs, read from the bot runtime and projected into the console contract with each run\'s live session URL derived here.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
@@ -394,19 +341,8 @@ export class BotApi extends BaseAPI {
     }
 
     /**
-     * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
-     * @summary Answers 501 to every call: launching a bot run is not implemented.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotApi
-     */
-    public postBotRuns(options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).postBotRuns(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-     * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+     * Terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+     * @summary Terminates one of the caller org\'s own bot runs and reports its terminal state.
      * @param {BotApiPostBotRunsByRunidStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

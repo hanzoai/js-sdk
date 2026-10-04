@@ -24,23 +24,31 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { CaptureResult } from '../models';
 // @ts-ignore
-import type { ErrorList } from '../models';
+import type { EventDisputeIn } from '../models';
 // @ts-ignore
-import type { EventList } from '../models';
+import type { EventEconomicDispute } from '../models';
 // @ts-ignore
-import type { HealthReport } from '../models';
+import type { EventEconomics } from '../models';
 // @ts-ignore
-import type { InsightsStatus } from '../models';
+import type { EventErrorList } from '../models';
 // @ts-ignore
-import type { Overview } from '../models';
+import type { EventEventList } from '../models';
+// @ts-ignore
+import type { EventHealthReport } from '../models';
+// @ts-ignore
+import type { EventInsightsStatus } from '../models';
+// @ts-ignore
+import type { EventOverview } from '../models';
+// @ts-ignore
+import type { EventTimeseries } from '../models';
+// @ts-ignore
+import type { EventTop } from '../models';
 // @ts-ignore
 import type { PostEventRequest } from '../models';
 // @ts-ignore
+import type { ProblemDetails } from '../models';
+// @ts-ignore
 import type { ReplayBody } from '../models';
-// @ts-ignore
-import type { Timeseries } from '../models';
-// @ts-ignore
-import type { Top } from '../models';
 /**
  * EventApi - axios parameter creator
  * @export
@@ -48,8 +56,69 @@ import type { Top } from '../models';
 export const EventApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
-         * @summary Errors returns the caller org\'s most recently captured errors, newest first.
+         * Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @summary Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @param {number} year Year is the calendar year to read, UTC.
+         * @param {string} [counterparty] Counterparty keeps only payments with this org on the other side.
+         * @param {string} [rail] Rail keeps only payments that moved on this rail.
+         * @param {string} [cursor] Cursor continues from the next of the page before; empty starts the year.
+         * @param {number} [limit] Limit is how many events to answer, default 100 and at most 1000.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventEconomic: async (year: number, counterparty?: string, rail?: string, cursor?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'year' is not null or undefined
+            assertParamExists('getEventEconomic', 'year', year)
+            const localVarPath = `/v1/event/economic`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (year !== undefined) {
+                localVarQueryParameter['year'] = year;
+            }
+
+            if (counterparty !== undefined) {
+                localVarQueryParameter['counterparty'] = counterparty;
+            }
+
+            if (rail !== undefined) {
+                localVarQueryParameter['rail'] = rail;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s most recently captured errors, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -87,8 +156,8 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Health reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. This endpoint used to report the read half only, and answered 200/ok while every POST /v1/event failed on a stream that could not bind: a total ingest outage behind a green probe. A readiness gate here now gates on the write path too.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
-         * @summary Health reports whether the event plane can take a write and the warehouse can answer a read.
+         * Reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. A readiness gate on this endpoint therefore gates on the write path as well as the read path: it answers ready only when POST /v1/event can publish.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
+         * @summary Reports whether the event plane can take a write and the warehouse can answer a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -121,7 +190,7 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
@@ -194,8 +263,8 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Overview returns the caller org\'s analytics KPIs for one time window.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
@@ -243,6 +312,44 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Answers a transparent 1x1 GIF and records one page view for the project whose publishable key names the address:      <img src=\"https://api.hanzo.ai/v1/event/pixel/pk-….gif\" alt=\"\" width=\"1\" height=\"1\">  The page is `?u=` when given, else the Referer. The visitor is stamped from the request like every event, is one visitor for a day, and carries no cookie. Do-not-track and a developer\'s own machine record nothing. The image is answered whatever happened to the view, with no-store.
+         * @summary A site\'s default pixel — a page view from an image, for a page that runs no script
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventPixelByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getEventPixelByKey', 'key', key)
+            const localVarPath = `/v1/event/pixel/{key}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event/tag.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
          * @summary The Hanzo event tag — the one-line install for a surface with no bundler
          * @param {*} [options] Override http request option.
@@ -277,8 +384,8 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
+         * Returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s LLM usage over time as an evenly-spaced series.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
@@ -326,8 +433,8 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
@@ -418,18 +525,16 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Accepts the CURRENT Sentry wire — the framed envelope a modern SDK posts, carrying its items in one request — so an application already instrumented with Sentry reports into Hanzo\'s error tracking by pointing its DSN here and changing nothing else.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK envelope ingest — errors and traces from an unmodified Sentry client
-         * @param {string} project 
-         * @param {File} [body] 
+         * Records that the caller\'s org disputes one payment it is party to — for the org\'s admins. A dispute is a record both parties read beside the payment, and it changes nothing about it: the amount, the parties and the tax year stay as the rail stated them, because only the rail that moved the money restates a payment.
+         * @summary Records that the caller\'s org disputes one payment it is party to — for the org\'s admins.
+         * @param {EventDisputeIn} eventDisputeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEventByProjectEnvelope: async (project: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'project' is not null or undefined
-            assertParamExists('postEventByProjectEnvelope', 'project', project)
-            const localVarPath = `/v1/event/{project}/envelope`
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+        postEventEconomicDispute: async (eventDisputeIn: EventDisputeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'eventDisputeIn' is not null or undefined
+            assertParamExists('postEventEconomicDispute', 'eventDisputeIn', eventDisputeIn)
+            const localVarPath = `/v1/event/economic/dispute`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -447,54 +552,12 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Accepts the LEGACY Sentry wire: one event per request, what an SDK predating envelopes sends. Same handler, same credential, same destination as the envelope endpoint — kept open so an old client reports without being upgraded first. New instrumentation has no reason to choose it.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK store ingest — the legacy single-event wire
-         * @param {string} project 
-         * @param {File} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postEventByProjectStore: async (project: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'project' is not null or undefined
-            assertParamExists('postEventByProjectStore', 'project', project)
-            const localVarPath = `/v1/event/{project}/store`
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(eventDisputeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -550,38 +613,55 @@ export const EventApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EventApiAxiosParamCreator(configuration)
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
-         * @summary Errors returns the caller org\'s most recently captured errors, newest first.
+         * Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @summary Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @param {number} year Year is the calendar year to read, UTC.
+         * @param {string} [counterparty] Counterparty keeps only payments with this org on the other side.
+         * @param {string} [rail] Rail keeps only payments that moved on this rail.
+         * @param {string} [cursor] Cursor continues from the next of the page before; empty starts the year.
+         * @param {number} [limit] Limit is how many events to answer, default 100 and at most 1000.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEventEconomic(year: number, counterparty?: string, rail?: string, cursor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventEconomics>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventEconomic(year, counterparty, rail, cursor, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EventApi.getEventEconomic']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s most recently captured errors, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventErrors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ErrorList>> {
+        async getEventErrors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventErrorList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventErrors(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventErrors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. This endpoint used to report the read half only, and answered 200/ok while every POST /v1/event failed on a stream that could not bind: a total ingest outage behind a green probe. A readiness gate here now gates on the write path too.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
-         * @summary Health reports whether the event plane can take a write and the warehouse can answer a read.
+         * Reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. A readiness gate on this endpoint therefore gates on the write path as well as the read path: it answers ready only when POST /v1/event can publish.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
+         * @summary Reports whether the event plane can take a write and the warehouse can answer a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthReport>> {
+        async getEventHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventHealthReport>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventInsightsEvents(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventList>> {
+        async getEventInsightsEvents(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventEventList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventInsightsEvents(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventInsightsEvents']?.[localVarOperationServerIndex]?.url;
@@ -593,25 +673,38 @@ export const EventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventInsightsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InsightsStatus>> {
+        async getEventInsightsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventInsightsStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventInsightsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventInsightsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Overview returns the caller org\'s analytics KPIs for one time window.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventOverview(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overview>> {
+        async getEventOverview(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventOverview>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventOverview(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventOverview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a transparent 1x1 GIF and records one page view for the project whose publishable key names the address:      <img src=\"https://api.hanzo.ai/v1/event/pixel/pk-….gif\" alt=\"\" width=\"1\" height=\"1\">  The page is `?u=` when given, else the Referer. The visitor is stamped from the request like every event, is one visitor for a day, and carries no cookie. Do-not-track and a developer\'s own machine record nothing. The image is answered whatever happened to the view, with no-store.
+         * @summary A site\'s default pixel — a page view from an image, for a page that runs no script
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEventPixelByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventPixelByKey(key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EventApi.getEventPixelByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -627,23 +720,23 @@ export const EventApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
+         * Returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s LLM usage over time as an evenly-spaced series.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventTimeseries(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Timeseries>> {
+        async getEventTimeseries(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventTimeseries>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventTimeseries(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventTimeseries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
@@ -651,7 +744,7 @@ export const EventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventTop(range?: string, start?: string, end?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Top>> {
+        async getEventTop(range?: string, start?: string, end?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventTop>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEventTop(range, start, end, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventTop']?.[localVarOperationServerIndex]?.url;
@@ -671,31 +764,16 @@ export const EventApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Accepts the CURRENT Sentry wire — the framed envelope a modern SDK posts, carrying its items in one request — so an application already instrumented with Sentry reports into Hanzo\'s error tracking by pointing its DSN here and changing nothing else.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK envelope ingest — errors and traces from an unmodified Sentry client
-         * @param {string} project 
-         * @param {File} [body] 
+         * Records that the caller\'s org disputes one payment it is party to — for the org\'s admins. A dispute is a record both parties read beside the payment, and it changes nothing about it: the amount, the parties and the tax year stay as the rail stated them, because only the rail that moved the money restates a payment.
+         * @summary Records that the caller\'s org disputes one payment it is party to — for the org\'s admins.
+         * @param {EventDisputeIn} eventDisputeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEventByProjectEnvelope(project: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEventByProjectEnvelope(project, body, options);
+        async postEventEconomicDispute(eventDisputeIn: EventDisputeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventEconomicDispute>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEventEconomicDispute(eventDisputeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EventApi.postEventByProjectEnvelope']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Accepts the LEGACY Sentry wire: one event per request, what an SDK predating envelopes sends. Same handler, same credential, same destination as the envelope endpoint — kept open so an old client reports without being upgraded first. New instrumentation has no reason to choose it.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK store ingest — the legacy single-event wire
-         * @param {string} project 
-         * @param {File} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postEventByProjectStore(project: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEventByProjectStore(project, body, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EventApi.postEventByProjectStore']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EventApi.postEventEconomicDispute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -722,32 +800,42 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = EventApiFp(configuration)
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
-         * @summary Errors returns the caller org\'s most recently captured errors, newest first.
+         * Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @summary Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+         * @param {EventApiGetEventEconomicRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventEconomic(requestParameters: EventApiGetEventEconomicRequest, options?: RawAxiosRequestConfig): AxiosPromise<EventEconomics> {
+            return localVarFp.getEventEconomic(requestParameters.year, requestParameters.counterparty, requestParameters.rail, requestParameters.cursor, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s most recently captured errors, newest first.
          * @param {EventApiGetEventErrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventErrors(requestParameters: EventApiGetEventErrorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ErrorList> {
+        getEventErrors(requestParameters: EventApiGetEventErrorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventErrorList> {
             return localVarFp.getEventErrors(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. This endpoint used to report the read half only, and answered 200/ok while every POST /v1/event failed on a stream that could not bind: a total ingest outage behind a green probe. A readiness gate here now gates on the write path too.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
-         * @summary Health reports whether the event plane can take a write and the warehouse can answer a read.
+         * Reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. A readiness gate on this endpoint therefore gates on the write path as well as the read path: it answers ready only when POST /v1/event can publish.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
+         * @summary Reports whether the event plane can take a write and the warehouse can answer a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventHealth(options?: RawAxiosRequestConfig): AxiosPromise<HealthReport> {
+        getEventHealth(options?: RawAxiosRequestConfig): AxiosPromise<EventHealthReport> {
             return localVarFp.getEventHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {EventApiGetEventInsightsEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventInsightsEvents(requestParameters: EventApiGetEventInsightsEventsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventList> {
+        getEventInsightsEvents(requestParameters: EventApiGetEventInsightsEventsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventEventList> {
             return localVarFp.getEventInsightsEvents(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -756,18 +844,28 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventInsightsHealth(options?: RawAxiosRequestConfig): AxiosPromise<InsightsStatus> {
+        getEventInsightsHealth(options?: RawAxiosRequestConfig): AxiosPromise<EventInsightsStatus> {
             return localVarFp.getEventInsightsHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Overview returns the caller org\'s analytics KPIs for one time window.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {EventApiGetEventOverviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventOverview(requestParameters: EventApiGetEventOverviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Overview> {
+        getEventOverview(requestParameters: EventApiGetEventOverviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventOverview> {
             return localVarFp.getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a transparent 1x1 GIF and records one page view for the project whose publishable key names the address:      <img src=\"https://api.hanzo.ai/v1/event/pixel/pk-….gif\" alt=\"\" width=\"1\" height=\"1\">  The page is `?u=` when given, else the Referer. The visitor is stamped from the request like every event, is one visitor for a day, and carries no cookie. Do-not-track and a developer\'s own machine record nothing. The image is answered whatever happened to the view, with no-store.
+         * @summary A site\'s default pixel — a page view from an image, for a page that runs no script
+         * @param {EventApiGetEventPixelByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventPixelByKey(requestParameters: EventApiGetEventPixelByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getEventPixelByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event/tag.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
@@ -779,23 +877,23 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEventTagJs(options).then((request) => request(axios, basePath));
         },
         /**
-         * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
+         * Returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s LLM usage over time as an evenly-spaced series.
          * @param {EventApiGetEventTimeseriesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventTimeseries(requestParameters: EventApiGetEventTimeseriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Timeseries> {
+        getEventTimeseries(requestParameters: EventApiGetEventTimeseriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventTimeseries> {
             return localVarFp.getEventTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
-         * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-         * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {EventApiGetEventTopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventTop(requestParameters: EventApiGetEventTopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Top> {
+        getEventTop(requestParameters: EventApiGetEventTopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventTop> {
             return localVarFp.getEventTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -809,24 +907,14 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postEvent(requestParameters.postEventRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Accepts the CURRENT Sentry wire — the framed envelope a modern SDK posts, carrying its items in one request — so an application already instrumented with Sentry reports into Hanzo\'s error tracking by pointing its DSN here and changing nothing else.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK envelope ingest — errors and traces from an unmodified Sentry client
-         * @param {EventApiPostEventByProjectEnvelopeRequest} requestParameters Request parameters.
+         * Records that the caller\'s org disputes one payment it is party to — for the org\'s admins. A dispute is a record both parties read beside the payment, and it changes nothing about it: the amount, the parties and the tax year stay as the rail stated them, because only the rail that moved the money restates a payment.
+         * @summary Records that the caller\'s org disputes one payment it is party to — for the org\'s admins.
+         * @param {EventApiPostEventEconomicDisputeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEventByProjectEnvelope(requestParameters: EventApiPostEventByProjectEnvelopeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postEventByProjectEnvelope(requestParameters.project, requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Accepts the LEGACY Sentry wire: one event per request, what an SDK predating envelopes sends. Same handler, same credential, same destination as the envelope endpoint — kept open so an old client reports without being upgraded first. New instrumentation has no reason to choose it.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-         * @summary Sentry SDK store ingest — the legacy single-event wire
-         * @param {EventApiPostEventByProjectStoreRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postEventByProjectStore(requestParameters: EventApiPostEventByProjectStoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postEventByProjectStore(requestParameters.project, requestParameters.body, options).then((request) => request(axios, basePath));
+        postEventEconomicDispute(requestParameters: EventApiPostEventEconomicDisputeRequest, options?: RawAxiosRequestConfig): AxiosPromise<EventEconomicDispute> {
+            return localVarFp.postEventEconomicDispute(requestParameters.eventDisputeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Accepts a batch of rrweb events from a browser recorder and hands it to the session-replay pipeline, which stores the recording and derives the session summary a player reads back.  ONE REQUEST IS ONE BATCH, and it is all-or-nothing: the recording is made durable before this answers, so a 200 {\"accepted\":1} means stored and never \"buffered somewhere\". There is no partial count, because a half-written recording is not a recording.  `sessionId` is REQUIRED and bounded — at most 70 characters of ASCII letters, digits or \'-\'. It is the key every batch of one visit is grouped and ordered by, so an id outside that grammar is refused 400 here rather than accepted and dropped further down. `windowId` separates two tabs of one session and `distinctId` attributes the recording to a person; both are optional. `events` is the rrweb batch, each element a raw eventWithTime object, carried VERBATIM — the summary (click, keypress and mouse-activity counts, size) is derived downstream from exactly these bytes, so nothing is re-encoded or dropped.  THE CALLER\'S CREDENTIAL DECIDES THE TENANT, and the body never does: the recording lands in the org the presented credential resolves to. It takes the SAME credentials as /v1/event — a validated bearer, an org API key, or a publishable pk- key on Authorization: Bearer, x-hanzo-ingest-key or ?ingest_key= — so a browser bundle already holding a pk- for events needs nothing new to record. A caller that presents nothing is 401 `ingest_key_required`; one whose key resolves to no project is 403 `ingest_key_unknown`; a reduced principal (a Hanzo Team space token) is 403 `insufficient_capability`, because a full-fidelity screen recording has no projected form that is safe for a guest to write into a host org.  BOUNDS: 413 over 512 KiB of body, and that is the only bound on one batch — a recorder is expected to chunk a long session rather than send it whole, and the cap is the size one message can carry rather than an arbitrary number. 503 when the pipeline cannot take the batch: honest unavailability the caller can retry, never a 200 over a discarded recording.
@@ -840,6 +928,48 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for getEventEconomic operation in EventApi.
+ * @export
+ * @interface EventApiGetEventEconomicRequest
+ */
+export interface EventApiGetEventEconomicRequest {
+    /**
+     * Year is the calendar year to read, UTC.
+     * @type {number}
+     * @memberof EventApiGetEventEconomic
+     */
+    readonly year: number
+
+    /**
+     * Counterparty keeps only payments with this org on the other side.
+     * @type {string}
+     * @memberof EventApiGetEventEconomic
+     */
+    readonly counterparty?: string
+
+    /**
+     * Rail keeps only payments that moved on this rail.
+     * @type {string}
+     * @memberof EventApiGetEventEconomic
+     */
+    readonly rail?: string
+
+    /**
+     * Cursor continues from the next of the page before; empty starts the year.
+     * @type {string}
+     * @memberof EventApiGetEventEconomic
+     */
+    readonly cursor?: string
+
+    /**
+     * Limit is how many events to answer, default 100 and at most 1000.
+     * @type {number}
+     * @memberof EventApiGetEventEconomic
+     */
+    readonly limit?: number
+}
 
 /**
  * Request parameters for getEventErrors operation in EventApi.
@@ -895,6 +1025,20 @@ export interface EventApiGetEventOverviewRequest {
      * @memberof EventApiGetEventOverview
      */
     readonly end?: string
+}
+
+/**
+ * Request parameters for getEventPixelByKey operation in EventApi.
+ * @export
+ * @interface EventApiGetEventPixelByKeyRequest
+ */
+export interface EventApiGetEventPixelByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventApiGetEventPixelByKey
+     */
+    readonly key: string
 }
 
 /**
@@ -975,45 +1119,17 @@ export interface EventApiPostEventRequest {
 }
 
 /**
- * Request parameters for postEventByProjectEnvelope operation in EventApi.
+ * Request parameters for postEventEconomicDispute operation in EventApi.
  * @export
- * @interface EventApiPostEventByProjectEnvelopeRequest
+ * @interface EventApiPostEventEconomicDisputeRequest
  */
-export interface EventApiPostEventByProjectEnvelopeRequest {
+export interface EventApiPostEventEconomicDisputeRequest {
     /**
      * 
-     * @type {string}
-     * @memberof EventApiPostEventByProjectEnvelope
+     * @type {EventDisputeIn}
+     * @memberof EventApiPostEventEconomicDispute
      */
-    readonly project: string
-
-    /**
-     * 
-     * @type {File}
-     * @memberof EventApiPostEventByProjectEnvelope
-     */
-    readonly body?: File
-}
-
-/**
- * Request parameters for postEventByProjectStore operation in EventApi.
- * @export
- * @interface EventApiPostEventByProjectStoreRequest
- */
-export interface EventApiPostEventByProjectStoreRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof EventApiPostEventByProjectStore
-     */
-    readonly project: string
-
-    /**
-     * 
-     * @type {File}
-     * @memberof EventApiPostEventByProjectStore
-     */
-    readonly body?: File
+    readonly eventDisputeIn: EventDisputeIn
 }
 
 /**
@@ -1038,8 +1154,20 @@ export interface EventApiPostEventReplayRequest {
  */
 export class EventApi extends BaseAPI {
     /**
-     * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
-     * @summary Errors returns the caller org\'s most recently captured errors, newest first.
+     * Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+     * @summary Returns, oldest first and paged, the payments the caller\'s org made or received in a year, with the ones a correction restates named and what either party disputes — for the org\'s admins.
+     * @param {EventApiGetEventEconomicRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventApi
+     */
+    public getEventEconomic(requestParameters: EventApiGetEventEconomicRequest, options?: RawAxiosRequestConfig) {
+        return EventApiFp(this.configuration).getEventEconomic(requestParameters.year, requestParameters.counterparty, requestParameters.rail, requestParameters.cursor, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 401 without a validated bearer, 503 when the warehouse is unreachable.
+     * @summary Returns the caller org\'s most recently captured errors, newest first.
      * @param {EventApiGetEventErrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1050,8 +1178,8 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Health reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. This endpoint used to report the read half only, and answered 200/ok while every POST /v1/event failed on a stream that could not bind: a total ingest outage behind a green probe. A readiness gate here now gates on the write path too.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
-     * @summary Health reports whether the event plane can take a write and the warehouse can answer a read.
+     * Reports whether the event plane can take a write and the warehouse can answer a read.  It reports the analytics subsystem\'s own liveness in BOTH directions: plane is the event plane it WRITES (the bus and the JetStream stream every accepted event is published to, both named in the report), and datastore is the warehouse it READS, with each read lens\'s table reported as it is provisioned (the LLM usage ledger and the product-event table).  EITHER ONE DOWN IS A 503, and the report says WHICH — they are probed independently and never collapse into a single bit. A readiness gate on this endpoint therefore gates on the write path as well as the read path: it answers ready only when POST /v1/event can publish.  plane.ready IS A REAL PROBE and walks the ingest path itself — the same connection and the same stream a publish uses — so it cannot answer ready while a publish would 503. plane.reason carries the plane\'s own error text when it is false.  datastore IS NOT PROBED WITH A QUERY. It is the state of the process\'s own shared client — established, and not since closed — so a warehouse accepting connections and failing reads still reports true. Degraded CARRIES the report (status, the failing half, reason) as its body rather than an error envelope, so a gate reads the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status: a lens reported available:false answers honest-empty rather than erroring, so a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is reported whenever the warehouse is REACHABLE — including on a report degraded by the plane, where the tables genuinely were probed — and is absent only when the warehouse is not, having nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence and stream presence only, never a row and never an event.
+     * @summary Reports whether the event plane can take a write and the warehouse can answer a read.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EventApi
@@ -1061,7 +1189,7 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+     * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
      * @summary Returns the caller org\'s most recent product events, newest first.
      * @param {EventApiGetEventInsightsEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1084,8 +1212,8 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-     * @summary Overview returns the caller org\'s analytics KPIs for one time window.
+     * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+     * @summary Returns the caller org\'s analytics KPIs for one time window.
      * @param {EventApiGetEventOverviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1093,6 +1221,18 @@ export class EventApi extends BaseAPI {
      */
     public getEventOverview(requestParameters: EventApiGetEventOverviewRequest = {}, options?: RawAxiosRequestConfig) {
         return EventApiFp(this.configuration).getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a transparent 1x1 GIF and records one page view for the project whose publishable key names the address:      <img src=\"https://api.hanzo.ai/v1/event/pixel/pk-….gif\" alt=\"\" width=\"1\" height=\"1\">  The page is `?u=` when given, else the Referer. The visitor is stamped from the request like every event, is one visitor for a day, and carries no cookie. Do-not-track and a developer\'s own machine record nothing. The image is answered whatever happened to the view, with no-store.
+     * @summary A site\'s default pixel — a page view from an image, for a page that runs no script
+     * @param {EventApiGetEventPixelByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventApi
+     */
+    public getEventPixelByKey(requestParameters: EventApiGetEventPixelByKeyRequest, options?: RawAxiosRequestConfig) {
+        return EventApiFp(this.configuration).getEventPixelByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1107,8 +1247,8 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-     * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
+     * Returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+     * @summary Returns the caller org\'s LLM usage over time as an evenly-spaced series.
      * @param {EventApiGetEventTimeseriesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1119,8 +1259,8 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
-     * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
+     * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+     * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
      * @param {EventApiGetEventTopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1143,27 +1283,15 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Accepts the CURRENT Sentry wire — the framed envelope a modern SDK posts, carrying its items in one request — so an application already instrumented with Sentry reports into Hanzo\'s error tracking by pointing its DSN here and changing nothing else.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-     * @summary Sentry SDK envelope ingest — errors and traces from an unmodified Sentry client
-     * @param {EventApiPostEventByProjectEnvelopeRequest} requestParameters Request parameters.
+     * Records that the caller\'s org disputes one payment it is party to — for the org\'s admins. A dispute is a record both parties read beside the payment, and it changes nothing about it: the amount, the parties and the tax year stay as the rail stated them, because only the rail that moved the money restates a payment.
+     * @summary Records that the caller\'s org disputes one payment it is party to — for the org\'s admins.
+     * @param {EventApiPostEventEconomicDisputeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EventApi
      */
-    public postEventByProjectEnvelope(requestParameters: EventApiPostEventByProjectEnvelopeRequest, options?: RawAxiosRequestConfig) {
-        return EventApiFp(this.configuration).postEventByProjectEnvelope(requestParameters.project, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Accepts the LEGACY Sentry wire: one event per request, what an SDK predating envelopes sends. Same handler, same credential, same destination as the envelope endpoint — kept open so an old client reports without being upgraded first. New instrumentation has no reason to choose it.  CLOUD ROUTES IT AND READS NONE OF IT. The body is relayed byte-for-byte to the observability plane, which parses the wire, verifies the credential and answers; this endpoint declares no response shape because it does not know one. A deployment with no observability plane mounted answers 503.  THE CREDENTIAL IS A SENTRY DSN KEY, NOT A HANZO PRINCIPAL. This is one of the few writes on the platform that carries no bearer and no org header by design — a Sentry SDK has neither — and it is exempt from the principal gate for that reason. The observability plane verifies the DSN key itself, fail-closed: a request without a valid one is refused there, never admitted here. Presenting a Hanzo bearer instead does nothing.  `project` IS THE DSN\'S PROJECT ID — the identifier in the DSN the SDK was configured with, and what the tenant is derived from. It is NOT a Hanzo IAM project and NOT a todo project key. Only these two ingest paths map through: no observability READ API is reachable by any other suffix under this prefix.
-     * @summary Sentry SDK store ingest — the legacy single-event wire
-     * @param {EventApiPostEventByProjectStoreRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EventApi
-     */
-    public postEventByProjectStore(requestParameters: EventApiPostEventByProjectStoreRequest, options?: RawAxiosRequestConfig) {
-        return EventApiFp(this.configuration).postEventByProjectStore(requestParameters.project, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    public postEventEconomicDispute(requestParameters: EventApiPostEventEconomicDisputeRequest, options?: RawAxiosRequestConfig) {
+        return EventApiFp(this.configuration).postEventEconomicDispute(requestParameters.eventDisputeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

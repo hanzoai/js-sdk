@@ -45,11 +45,11 @@ export interface O11yO11yFeature {
      */
     'name'?: string;
     /**
-     * ResolvedValue is the value resolved for the caller\'s org.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yFeature
      */
-    'resolvedValue'?: object;
+    'resolvedValue'?: any;
     /**
      * Stage is the flag\'s lifecycle stage, e.g. stable.
      * @type {string}
@@ -58,9 +58,9 @@ export interface O11yO11yFeature {
     'stage'?: string;
     /**
      * Variants are the flag\'s possible values, by variant name.
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yO11yFeature
      */
-    'variants'?: { [key: string]: object; };
+    'variants'?: { [key: string]: any; };
 }
 

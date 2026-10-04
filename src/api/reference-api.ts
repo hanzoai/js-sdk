@@ -22,23 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ClearReferenceOut } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ReferenceOut } from '../models';
+import type { ReferenceClearReferenceOut } from '../models';
 // @ts-ignore
-import type { ReferenceSetsOut } from '../models';
+import type { ReferenceReferenceOut } from '../models';
 // @ts-ignore
-import type { RefreshReferenceIn } from '../models';
+import type { ReferenceReferenceSetsOut } from '../models';
 // @ts-ignore
-import type { RefreshReferenceOut } from '../models';
+import type { ReferenceResolveReferenceIn } from '../models';
 // @ts-ignore
-import type { ResolveReferenceIn } from '../models';
+import type { ReferenceResolveReferenceOut } from '../models';
 // @ts-ignore
-import type { ResolveReferenceOut } from '../models';
+import type { ReferenceSetReferenceIn } from '../models';
 // @ts-ignore
-import type { SetReferenceIn } from '../models';
-// @ts-ignore
-import type { SetReferenceOut } from '../models';
+import type { ReferenceSetReferenceOut } from '../models';
 /**
  * ReferenceApi - axios parameter creator
  * @export
@@ -171,55 +169,15 @@ export const ReferenceApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Takes a new version of one set. SuperAdmin only.  It is platform work, not tenant work: it writes the shared baseline every organisation reads, so it is gated to the platform\'s own identity. Nothing here can write an organisation\'s overrides, and nothing an organisation sends can reach this route.  Idempotent. A version is the content digest of what was taken, so refreshing an unchanged publisher writes no rows and reports unchanged. Resumable: a run that died half-way is continued from where it stopped rather than restarted.  A set whose source needs a licence we do not hold is refused with the reason, rather than being quietly skipped.
-         * @summary Takes a new version of one set.
-         * @param {RefreshReferenceIn} refreshReferenceIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        riskRefreshReference: async (refreshReferenceIn: RefreshReferenceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'refreshReferenceIn' is not null or undefined
-            assertParamExists('riskRefreshReference', 'refreshReferenceIn', refreshReferenceIn)
-            const localVarPath = `/v1/reference/refresh`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(refreshReferenceIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Looks keys up against the reference plane.  Your organisation\'s own overrides are consulted FIRST and win outright; the shared baseline answers everything they do not cover. Every answer names the version that produced it, when that version was current and whether it is stale, so a decision can record exactly what it consulted.  Read Refusal before reading Hit. A set that has never loaded, one held by the component that screens against it, and one whose source needs a licence we do not hold all answer with a refusal — and a miss on a refusing set means nothing is known, not that the key is clean.
          * @summary Looks keys up against the reference plane.
-         * @param {ResolveReferenceIn} resolveReferenceIn 
+         * @param {ReferenceResolveReferenceIn} referenceResolveReferenceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskResolveReference: async (resolveReferenceIn: ResolveReferenceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'resolveReferenceIn' is not null or undefined
-            assertParamExists('riskResolveReference', 'resolveReferenceIn', resolveReferenceIn)
+        riskResolveReference: async (referenceResolveReferenceIn: ReferenceResolveReferenceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'referenceResolveReferenceIn' is not null or undefined
+            assertParamExists('riskResolveReference', 'referenceResolveReferenceIn', referenceResolveReferenceIn)
             const localVarPath = `/v1/reference/resolve`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -243,7 +201,7 @@ export const ReferenceApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(resolveReferenceIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(referenceResolveReferenceIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -254,15 +212,15 @@ export const ReferenceApiAxiosParamCreator = function (configuration?: Configura
          * Writes your organisation\'s own allow and deny entries over a set.  Idempotent on the key: writing the same entry twice is one entry, and writing it again replaces the verdict and the note. The whole batch is one transaction, so a batch that would cross the per-set bound writes nothing rather than half of itself — a half-applied deny list is worse than a refused one, because nobody can tell which half applied.  Your entries are held in your organisation\'s own store and are never visible to another organisation, and they never change what any other organisation sees. The shared baseline is not writable from here at all.
          * @summary Writes your organisation\'s own allow and deny entries over a set.
          * @param {string} set 
-         * @param {SetReferenceIn} setReferenceIn 
+         * @param {ReferenceSetReferenceIn} referenceSetReferenceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSetReference: async (set: string, setReferenceIn: SetReferenceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        riskSetReference: async (set: string, referenceSetReferenceIn: ReferenceSetReferenceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'set' is not null or undefined
             assertParamExists('riskSetReference', 'set', set)
-            // verify required parameter 'setReferenceIn' is not null or undefined
-            assertParamExists('riskSetReference', 'setReferenceIn', setReferenceIn)
+            // verify required parameter 'referenceSetReferenceIn' is not null or undefined
+            assertParamExists('riskSetReference', 'referenceSetReferenceIn', referenceSetReferenceIn)
             const localVarPath = `/v1/reference/{set}`
                 .replace(`{${"set"}}`, encodeURIComponent(String(set)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -287,7 +245,7 @@ export const ReferenceApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(setReferenceIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(referenceSetReferenceIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -312,7 +270,7 @@ export const ReferenceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskClearReference(set: string, key?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClearReferenceOut>> {
+        async riskClearReference(set: string, key?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceClearReferenceOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskClearReference(set, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskClearReference']?.[localVarOperationServerIndex]?.url;
@@ -327,7 +285,7 @@ export const ReferenceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskReference(set: string, after?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceOut>> {
+        async riskReference(set: string, after?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceReferenceOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskReference(set, after, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskReference']?.[localVarOperationServerIndex]?.url;
@@ -339,34 +297,21 @@ export const ReferenceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskReferenceSets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceSetsOut>> {
+        async riskReferenceSets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceReferenceSetsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.riskReferenceSets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskReferenceSets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes a new version of one set. SuperAdmin only.  It is platform work, not tenant work: it writes the shared baseline every organisation reads, so it is gated to the platform\'s own identity. Nothing here can write an organisation\'s overrides, and nothing an organisation sends can reach this route.  Idempotent. A version is the content digest of what was taken, so refreshing an unchanged publisher writes no rows and reports unchanged. Resumable: a run that died half-way is continued from where it stopped rather than restarted.  A set whose source needs a licence we do not hold is refused with the reason, rather than being quietly skipped.
-         * @summary Takes a new version of one set.
-         * @param {RefreshReferenceIn} refreshReferenceIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async riskRefreshReference(refreshReferenceIn: RefreshReferenceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshReferenceOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskRefreshReference(refreshReferenceIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskRefreshReference']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Looks keys up against the reference plane.  Your organisation\'s own overrides are consulted FIRST and win outright; the shared baseline answers everything they do not cover. Every answer names the version that produced it, when that version was current and whether it is stale, so a decision can record exactly what it consulted.  Read Refusal before reading Hit. A set that has never loaded, one held by the component that screens against it, and one whose source needs a licence we do not hold all answer with a refusal — and a miss on a refusing set means nothing is known, not that the key is clean.
          * @summary Looks keys up against the reference plane.
-         * @param {ResolveReferenceIn} resolveReferenceIn 
+         * @param {ReferenceResolveReferenceIn} referenceResolveReferenceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskResolveReference(resolveReferenceIn: ResolveReferenceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolveReferenceOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskResolveReference(resolveReferenceIn, options);
+        async riskResolveReference(referenceResolveReferenceIn: ReferenceResolveReferenceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceResolveReferenceOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskResolveReference(referenceResolveReferenceIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskResolveReference']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -375,12 +320,12 @@ export const ReferenceApiFp = function(configuration?: Configuration) {
          * Writes your organisation\'s own allow and deny entries over a set.  Idempotent on the key: writing the same entry twice is one entry, and writing it again replaces the verdict and the note. The whole batch is one transaction, so a batch that would cross the per-set bound writes nothing rather than half of itself — a half-applied deny list is worse than a refused one, because nobody can tell which half applied.  Your entries are held in your organisation\'s own store and are never visible to another organisation, and they never change what any other organisation sees. The shared baseline is not writable from here at all.
          * @summary Writes your organisation\'s own allow and deny entries over a set.
          * @param {string} set 
-         * @param {SetReferenceIn} setReferenceIn 
+         * @param {ReferenceSetReferenceIn} referenceSetReferenceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async riskSetReference(set: string, setReferenceIn: SetReferenceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetReferenceOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSetReference(set, setReferenceIn, options);
+        async riskSetReference(set: string, referenceSetReferenceIn: ReferenceSetReferenceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceSetReferenceOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.riskSetReference(set, referenceSetReferenceIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReferenceApi.riskSetReference']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -402,7 +347,7 @@ export const ReferenceApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskClearReference(requestParameters: ReferenceApiRiskClearReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClearReferenceOut> {
+        riskClearReference(requestParameters: ReferenceApiRiskClearReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferenceClearReferenceOut> {
             return localVarFp.riskClearReference(requestParameters.set, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -412,7 +357,7 @@ export const ReferenceApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskReference(requestParameters: ReferenceApiRiskReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferenceOut> {
+        riskReference(requestParameters: ReferenceApiRiskReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferenceReferenceOut> {
             return localVarFp.riskReference(requestParameters.set, requestParameters.after, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -421,18 +366,8 @@ export const ReferenceApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskReferenceSets(options?: RawAxiosRequestConfig): AxiosPromise<ReferenceSetsOut> {
+        riskReferenceSets(options?: RawAxiosRequestConfig): AxiosPromise<ReferenceReferenceSetsOut> {
             return localVarFp.riskReferenceSets(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a new version of one set. SuperAdmin only.  It is platform work, not tenant work: it writes the shared baseline every organisation reads, so it is gated to the platform\'s own identity. Nothing here can write an organisation\'s overrides, and nothing an organisation sends can reach this route.  Idempotent. A version is the content digest of what was taken, so refreshing an unchanged publisher writes no rows and reports unchanged. Resumable: a run that died half-way is continued from where it stopped rather than restarted.  A set whose source needs a licence we do not hold is refused with the reason, rather than being quietly skipped.
-         * @summary Takes a new version of one set.
-         * @param {ReferenceApiRiskRefreshReferenceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        riskRefreshReference(requestParameters: ReferenceApiRiskRefreshReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshReferenceOut> {
-            return localVarFp.riskRefreshReference(requestParameters.refreshReferenceIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Looks keys up against the reference plane.  Your organisation\'s own overrides are consulted FIRST and win outright; the shared baseline answers everything they do not cover. Every answer names the version that produced it, when that version was current and whether it is stale, so a decision can record exactly what it consulted.  Read Refusal before reading Hit. A set that has never loaded, one held by the component that screens against it, and one whose source needs a licence we do not hold all answer with a refusal — and a miss on a refusing set means nothing is known, not that the key is clean.
@@ -441,8 +376,8 @@ export const ReferenceApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskResolveReference(requestParameters: ReferenceApiRiskResolveReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResolveReferenceOut> {
-            return localVarFp.riskResolveReference(requestParameters.resolveReferenceIn, options).then((request) => request(axios, basePath));
+        riskResolveReference(requestParameters: ReferenceApiRiskResolveReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferenceResolveReferenceOut> {
+            return localVarFp.riskResolveReference(requestParameters.referenceResolveReferenceIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes your organisation\'s own allow and deny entries over a set.  Idempotent on the key: writing the same entry twice is one entry, and writing it again replaces the verdict and the note. The whole batch is one transaction, so a batch that would cross the per-set bound writes nothing rather than half of itself — a half-applied deny list is worse than a refused one, because nobody can tell which half applied.  Your entries are held in your organisation\'s own store and are never visible to another organisation, and they never change what any other organisation sees. The shared baseline is not writable from here at all.
@@ -451,8 +386,8 @@ export const ReferenceApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        riskSetReference(requestParameters: ReferenceApiRiskSetReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetReferenceOut> {
-            return localVarFp.riskSetReference(requestParameters.set, requestParameters.setReferenceIn, options).then((request) => request(axios, basePath));
+        riskSetReference(requestParameters: ReferenceApiRiskSetReferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferenceSetReferenceOut> {
+            return localVarFp.riskSetReference(requestParameters.set, requestParameters.referenceSetReferenceIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -507,20 +442,6 @@ export interface ReferenceApiRiskReferenceRequest {
 }
 
 /**
- * Request parameters for riskRefreshReference operation in ReferenceApi.
- * @export
- * @interface ReferenceApiRiskRefreshReferenceRequest
- */
-export interface ReferenceApiRiskRefreshReferenceRequest {
-    /**
-     * 
-     * @type {RefreshReferenceIn}
-     * @memberof ReferenceApiRiskRefreshReference
-     */
-    readonly refreshReferenceIn: RefreshReferenceIn
-}
-
-/**
  * Request parameters for riskResolveReference operation in ReferenceApi.
  * @export
  * @interface ReferenceApiRiskResolveReferenceRequest
@@ -528,10 +449,10 @@ export interface ReferenceApiRiskRefreshReferenceRequest {
 export interface ReferenceApiRiskResolveReferenceRequest {
     /**
      * 
-     * @type {ResolveReferenceIn}
+     * @type {ReferenceResolveReferenceIn}
      * @memberof ReferenceApiRiskResolveReference
      */
-    readonly resolveReferenceIn: ResolveReferenceIn
+    readonly referenceResolveReferenceIn: ReferenceResolveReferenceIn
 }
 
 /**
@@ -549,10 +470,10 @@ export interface ReferenceApiRiskSetReferenceRequest {
 
     /**
      * 
-     * @type {SetReferenceIn}
+     * @type {ReferenceSetReferenceIn}
      * @memberof ReferenceApiRiskSetReference
      */
-    readonly setReferenceIn: SetReferenceIn
+    readonly referenceSetReferenceIn: ReferenceSetReferenceIn
 }
 
 /**
@@ -598,18 +519,6 @@ export class ReferenceApi extends BaseAPI {
     }
 
     /**
-     * Takes a new version of one set. SuperAdmin only.  It is platform work, not tenant work: it writes the shared baseline every organisation reads, so it is gated to the platform\'s own identity. Nothing here can write an organisation\'s overrides, and nothing an organisation sends can reach this route.  Idempotent. A version is the content digest of what was taken, so refreshing an unchanged publisher writes no rows and reports unchanged. Resumable: a run that died half-way is continued from where it stopped rather than restarted.  A set whose source needs a licence we do not hold is refused with the reason, rather than being quietly skipped.
-     * @summary Takes a new version of one set.
-     * @param {ReferenceApiRiskRefreshReferenceRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReferenceApi
-     */
-    public riskRefreshReference(requestParameters: ReferenceApiRiskRefreshReferenceRequest, options?: RawAxiosRequestConfig) {
-        return ReferenceApiFp(this.configuration).riskRefreshReference(requestParameters.refreshReferenceIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Looks keys up against the reference plane.  Your organisation\'s own overrides are consulted FIRST and win outright; the shared baseline answers everything they do not cover. Every answer names the version that produced it, when that version was current and whether it is stale, so a decision can record exactly what it consulted.  Read Refusal before reading Hit. A set that has never loaded, one held by the component that screens against it, and one whose source needs a licence we do not hold all answer with a refusal — and a miss on a refusing set means nothing is known, not that the key is clean.
      * @summary Looks keys up against the reference plane.
      * @param {ReferenceApiRiskResolveReferenceRequest} requestParameters Request parameters.
@@ -618,7 +527,7 @@ export class ReferenceApi extends BaseAPI {
      * @memberof ReferenceApi
      */
     public riskResolveReference(requestParameters: ReferenceApiRiskResolveReferenceRequest, options?: RawAxiosRequestConfig) {
-        return ReferenceApiFp(this.configuration).riskResolveReference(requestParameters.resolveReferenceIn, options).then((request) => request(this.axios, this.basePath));
+        return ReferenceApiFp(this.configuration).riskResolveReference(requestParameters.referenceResolveReferenceIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -630,7 +539,7 @@ export class ReferenceApi extends BaseAPI {
      * @memberof ReferenceApi
      */
     public riskSetReference(requestParameters: ReferenceApiRiskSetReferenceRequest, options?: RawAxiosRequestConfig) {
-        return ReferenceApiFp(this.configuration).riskSetReference(requestParameters.set, requestParameters.setReferenceIn, options).then((request) => request(this.axios, this.basePath));
+        return ReferenceApiFp(this.configuration).riskSetReference(requestParameters.set, requestParameters.referenceSetReferenceIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

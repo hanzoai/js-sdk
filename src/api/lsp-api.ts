@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Answer } from '../models';
+import type { LspAnswer } from '../models';
 // @ts-ignore
-import type { Query } from '../models';
+import type { LspQuery } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LspApi - axios parameter creator
  * @export
@@ -34,13 +36,13 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
          * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspComplete: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postLspComplete', 'query', query)
+        postLspComplete: async (lspQuery: LspQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lspQuery' is not null or undefined
+            assertParamExists('postLspComplete', 'lspQuery', lspQuery)
             const localVarPath = `/v1/lsp/complete`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,7 +66,7 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lspQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -74,13 +76,13 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
          * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspDiagnostics: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postLspDiagnostics', 'query', query)
+        postLspDiagnostics: async (lspQuery: LspQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lspQuery' is not null or undefined
+            assertParamExists('postLspDiagnostics', 'lspQuery', lspQuery)
             const localVarPath = `/v1/lsp/diagnostics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,7 +106,7 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lspQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -114,13 +116,13 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
          * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspHover: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postLspHover', 'query', query)
+        postLspHover: async (lspQuery: LspQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lspQuery' is not null or undefined
+            assertParamExists('postLspHover', 'lspQuery', lspQuery)
             const localVarPath = `/v1/lsp/hover`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -144,7 +146,7 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lspQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -154,13 +156,13 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
          * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspLocate: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postLspLocate', 'query', query)
+        postLspLocate: async (lspQuery: LspQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lspQuery' is not null or undefined
+            assertParamExists('postLspLocate', 'lspQuery', lspQuery)
             const localVarPath = `/v1/lsp/locate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -184,7 +186,7 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lspQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -194,13 +196,13 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
          * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspSymbols: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postLspSymbols', 'query', query)
+        postLspSymbols: async (lspQuery: LspQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lspQuery' is not null or undefined
+            assertParamExists('postLspSymbols', 'lspQuery', lspQuery)
             const localVarPath = `/v1/lsp/symbols`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -224,7 +226,7 @@ export const LspApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lspQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -244,12 +246,12 @@ export const LspApiFp = function(configuration?: Configuration) {
         /**
          * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
          * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLspComplete(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspComplete(query, options);
+        async postLspComplete(lspQuery: LspQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LspAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspComplete(lspQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LspApi.postLspComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -257,12 +259,12 @@ export const LspApiFp = function(configuration?: Configuration) {
         /**
          * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
          * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLspDiagnostics(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspDiagnostics(query, options);
+        async postLspDiagnostics(lspQuery: LspQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LspAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspDiagnostics(lspQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LspApi.postLspDiagnostics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -270,12 +272,12 @@ export const LspApiFp = function(configuration?: Configuration) {
         /**
          * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
          * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLspHover(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspHover(query, options);
+        async postLspHover(lspQuery: LspQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LspAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspHover(lspQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LspApi.postLspHover']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -283,12 +285,12 @@ export const LspApiFp = function(configuration?: Configuration) {
         /**
          * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
          * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLspLocate(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspLocate(query, options);
+        async postLspLocate(lspQuery: LspQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LspAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspLocate(lspQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LspApi.postLspLocate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -296,12 +298,12 @@ export const LspApiFp = function(configuration?: Configuration) {
         /**
          * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
          * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {Query} query 
+         * @param {LspQuery} lspQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLspSymbols(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspSymbols(query, options);
+        async postLspSymbols(lspQuery: LspQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LspAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLspSymbols(lspQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LspApi.postLspSymbols']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -323,8 +325,8 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspComplete(requestParameters: LspApiPostLspCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postLspComplete(requestParameters.query, options).then((request) => request(axios, basePath));
+        postLspComplete(requestParameters: LspApiPostLspCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<LspAnswer> {
+            return localVarFp.postLspComplete(requestParameters.lspQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
@@ -333,8 +335,8 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspDiagnostics(requestParameters: LspApiPostLspDiagnosticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postLspDiagnostics(requestParameters.query, options).then((request) => request(axios, basePath));
+        postLspDiagnostics(requestParameters: LspApiPostLspDiagnosticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LspAnswer> {
+            return localVarFp.postLspDiagnostics(requestParameters.lspQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
@@ -343,8 +345,8 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspHover(requestParameters: LspApiPostLspHoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postLspHover(requestParameters.query, options).then((request) => request(axios, basePath));
+        postLspHover(requestParameters: LspApiPostLspHoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<LspAnswer> {
+            return localVarFp.postLspHover(requestParameters.lspQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
@@ -353,8 +355,8 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspLocate(requestParameters: LspApiPostLspLocateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postLspLocate(requestParameters.query, options).then((request) => request(axios, basePath));
+        postLspLocate(requestParameters: LspApiPostLspLocateRequest, options?: RawAxiosRequestConfig): AxiosPromise<LspAnswer> {
+            return localVarFp.postLspLocate(requestParameters.lspQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
@@ -363,8 +365,8 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLspSymbols(requestParameters: LspApiPostLspSymbolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postLspSymbols(requestParameters.query, options).then((request) => request(axios, basePath));
+        postLspSymbols(requestParameters: LspApiPostLspSymbolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LspAnswer> {
+            return localVarFp.postLspSymbols(requestParameters.lspQuery, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -377,10 +379,10 @@ export const LspApiFactory = function (configuration?: Configuration, basePath?:
 export interface LspApiPostLspCompleteRequest {
     /**
      * 
-     * @type {Query}
+     * @type {LspQuery}
      * @memberof LspApiPostLspComplete
      */
-    readonly query: Query
+    readonly lspQuery: LspQuery
 }
 
 /**
@@ -391,10 +393,10 @@ export interface LspApiPostLspCompleteRequest {
 export interface LspApiPostLspDiagnosticsRequest {
     /**
      * 
-     * @type {Query}
+     * @type {LspQuery}
      * @memberof LspApiPostLspDiagnostics
      */
-    readonly query: Query
+    readonly lspQuery: LspQuery
 }
 
 /**
@@ -405,10 +407,10 @@ export interface LspApiPostLspDiagnosticsRequest {
 export interface LspApiPostLspHoverRequest {
     /**
      * 
-     * @type {Query}
+     * @type {LspQuery}
      * @memberof LspApiPostLspHover
      */
-    readonly query: Query
+    readonly lspQuery: LspQuery
 }
 
 /**
@@ -419,10 +421,10 @@ export interface LspApiPostLspHoverRequest {
 export interface LspApiPostLspLocateRequest {
     /**
      * 
-     * @type {Query}
+     * @type {LspQuery}
      * @memberof LspApiPostLspLocate
      */
-    readonly query: Query
+    readonly lspQuery: LspQuery
 }
 
 /**
@@ -433,10 +435,10 @@ export interface LspApiPostLspLocateRequest {
 export interface LspApiPostLspSymbolsRequest {
     /**
      * 
-     * @type {Query}
+     * @type {LspQuery}
      * @memberof LspApiPostLspSymbols
      */
-    readonly query: Query
+    readonly lspQuery: LspQuery
 }
 
 /**
@@ -455,7 +457,7 @@ export class LspApi extends BaseAPI {
      * @memberof LspApi
      */
     public postLspComplete(requestParameters: LspApiPostLspCompleteRequest, options?: RawAxiosRequestConfig) {
-        return LspApiFp(this.configuration).postLspComplete(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+        return LspApiFp(this.configuration).postLspComplete(requestParameters.lspQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -467,7 +469,7 @@ export class LspApi extends BaseAPI {
      * @memberof LspApi
      */
     public postLspDiagnostics(requestParameters: LspApiPostLspDiagnosticsRequest, options?: RawAxiosRequestConfig) {
-        return LspApiFp(this.configuration).postLspDiagnostics(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+        return LspApiFp(this.configuration).postLspDiagnostics(requestParameters.lspQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -479,7 +481,7 @@ export class LspApi extends BaseAPI {
      * @memberof LspApi
      */
     public postLspHover(requestParameters: LspApiPostLspHoverRequest, options?: RawAxiosRequestConfig) {
-        return LspApiFp(this.configuration).postLspHover(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+        return LspApiFp(this.configuration).postLspHover(requestParameters.lspQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -491,7 +493,7 @@ export class LspApi extends BaseAPI {
      * @memberof LspApi
      */
     public postLspLocate(requestParameters: LspApiPostLspLocateRequest, options?: RawAxiosRequestConfig) {
-        return LspApiFp(this.configuration).postLspLocate(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+        return LspApiFp(this.configuration).postLspLocate(requestParameters.lspQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -503,7 +505,7 @@ export class LspApi extends BaseAPI {
      * @memberof LspApi
      */
     public postLspSymbols(requestParameters: LspApiPostLspSymbolsRequest, options?: RawAxiosRequestConfig) {
-        return LspApiFp(this.configuration).postLspSymbols(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+        return LspApiFp(this.configuration).postLspSymbols(requestParameters.lspQuery, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

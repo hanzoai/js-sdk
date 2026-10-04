@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { FlowCreate } from '../models';
+import type { FlowFlowCreate } from '../models';
 // @ts-ignore
-import type { FlowRun } from '../models';
+import type { FlowFlowRun } from '../models';
 // @ts-ignore
-import type { FlowStatus } from '../models';
+import type { FlowFlowStatus } from '../models';
 // @ts-ignore
-import type { FlowUpdate } from '../models';
+import type { FlowFlowUpdate } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * FlowApi - axios parameter creator
  * @export
@@ -74,8 +76,8 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
-         * @summary Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component.
+         * Reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
+         * @summary Reads one workflow\'s recorded runs: every component build with its result, keyed by component.
          * @param {string} [workflow] Workflow is the UUID of the workflow whose run records to read. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -113,8 +115,8 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Status reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
-         * @summary Status reports whether the flow service is reachable and which version it runs.
+         * Reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
+         * @summary Reports whether the flow service is reachable and which version it runs.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -147,8 +149,8 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Workflows lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
-         * @summary Workflows lists the caller\'s workflows, paged.
+         * Lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
+         * @summary Lists the caller\'s workflows, paged.
          * @param {string} [page] Page is the 1-based page of workflows to return.
          * @param {string} [size] Size is how many workflows one page holds (the product caps it at 100).
          * @param {*} [options] Override http request option.
@@ -191,8 +193,8 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Workflow reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
-         * @summary Workflow reads one of the caller\'s workflows — the full record, graph included.
+         * Reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
+         * @summary Reads one of the caller\'s workflows — the full record, graph included.
          * @param {string} workflow Workflow is the workflow\&#39;s UUID, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -232,15 +234,15 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
          * Patches one of the caller\'s workflows: name, description, graph, or the locked flag — only the stated fields move. Ownership is verified before the patch reaches the product.
          * @summary Patches one of the caller\'s workflows: name, description, graph, or the locked flag — only the stated fields move.
          * @param {string} workflow Workflow is the workflow\&#39;s UUID, taken from the path.
-         * @param {FlowUpdate} flowUpdate 
+         * @param {FlowFlowUpdate} flowFlowUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchFlowWorkflowsByWorkflow: async (workflow: string, flowUpdate: FlowUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchFlowWorkflowsByWorkflow: async (workflow: string, flowFlowUpdate: FlowFlowUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workflow' is not null or undefined
             assertParamExists('patchFlowWorkflowsByWorkflow', 'workflow', workflow)
-            // verify required parameter 'flowUpdate' is not null or undefined
-            assertParamExists('patchFlowWorkflowsByWorkflow', 'flowUpdate', flowUpdate)
+            // verify required parameter 'flowFlowUpdate' is not null or undefined
+            assertParamExists('patchFlowWorkflowsByWorkflow', 'flowFlowUpdate', flowFlowUpdate)
             const localVarPath = `/v1/flow/workflows/{workflow}`
                 .replace(`{${"workflow"}}`, encodeURIComponent(String(workflow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -265,7 +267,7 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(flowUpdate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(flowFlowUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -273,15 +275,15 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
-         * @summary Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
-         * @param {FlowRun} flowRun 
+         * Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
+         * @summary Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
+         * @param {FlowFlowRun} flowFlowRun 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFlowRuns: async (flowRun: FlowRun, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'flowRun' is not null or undefined
-            assertParamExists('postFlowRuns', 'flowRun', flowRun)
+        postFlowRuns: async (flowFlowRun: FlowFlowRun, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flowFlowRun' is not null or undefined
+            assertParamExists('postFlowRuns', 'flowFlowRun', flowFlowRun)
             const localVarPath = `/v1/flow/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -305,7 +307,7 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(flowRun, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(flowFlowRun, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -315,13 +317,13 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Creates a workflow in the caller\'s org. The org\'s project id is pinned server-side from the validated principal — there is no field by which a caller could place a workflow in another org.
          * @summary Creates a workflow in the caller\'s org.
-         * @param {FlowCreate} flowCreate 
+         * @param {FlowFlowCreate} flowFlowCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFlowWorkflows: async (flowCreate: FlowCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'flowCreate' is not null or undefined
-            assertParamExists('postFlowWorkflows', 'flowCreate', flowCreate)
+        postFlowWorkflows: async (flowFlowCreate: FlowFlowCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flowFlowCreate' is not null or undefined
+            assertParamExists('postFlowWorkflows', 'flowFlowCreate', flowFlowCreate)
             const localVarPath = `/v1/flow/workflows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -345,7 +347,7 @@ export const FlowApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(flowCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(flowFlowCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -376,8 +378,8 @@ export const FlowApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
-         * @summary Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component.
+         * Reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
+         * @summary Reads one workflow\'s recorded runs: every component build with its result, keyed by component.
          * @param {string} [workflow] Workflow is the UUID of the workflow whose run records to read. It rides the query string.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -389,20 +391,20 @@ export const FlowApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Status reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
-         * @summary Status reports whether the flow service is reachable and which version it runs.
+         * Reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
+         * @summary Reports whether the flow service is reachable and which version it runs.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlowStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowStatus>> {
+        async getFlowStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowFlowStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFlowStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlowApi.getFlowStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Workflows lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
-         * @summary Workflows lists the caller\'s workflows, paged.
+         * Lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
+         * @summary Lists the caller\'s workflows, paged.
          * @param {string} [page] Page is the 1-based page of workflows to return.
          * @param {string} [size] Size is how many workflows one page holds (the product caps it at 100).
          * @param {*} [options] Override http request option.
@@ -415,8 +417,8 @@ export const FlowApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Workflow reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
-         * @summary Workflow reads one of the caller\'s workflows — the full record, graph included.
+         * Reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
+         * @summary Reads one of the caller\'s workflows — the full record, graph included.
          * @param {string} workflow Workflow is the workflow\&#39;s UUID, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -431,25 +433,25 @@ export const FlowApiFp = function(configuration?: Configuration) {
          * Patches one of the caller\'s workflows: name, description, graph, or the locked flag — only the stated fields move. Ownership is verified before the patch reaches the product.
          * @summary Patches one of the caller\'s workflows: name, description, graph, or the locked flag — only the stated fields move.
          * @param {string} workflow Workflow is the workflow\&#39;s UUID, taken from the path.
-         * @param {FlowUpdate} flowUpdate 
+         * @param {FlowFlowUpdate} flowFlowUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchFlowWorkflowsByWorkflow(workflow: string, flowUpdate: FlowUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchFlowWorkflowsByWorkflow(workflow, flowUpdate, options);
+        async patchFlowWorkflowsByWorkflow(workflow: string, flowFlowUpdate: FlowFlowUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchFlowWorkflowsByWorkflow(workflow, flowFlowUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlowApi.patchFlowWorkflowsByWorkflow']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
-         * @summary Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
-         * @param {FlowRun} flowRun 
+         * Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
+         * @summary Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
+         * @param {FlowFlowRun} flowFlowRun 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFlowRuns(flowRun: FlowRun, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlowRuns(flowRun, options);
+        async postFlowRuns(flowFlowRun: FlowFlowRun, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlowRuns(flowFlowRun, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlowApi.postFlowRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -457,12 +459,12 @@ export const FlowApiFp = function(configuration?: Configuration) {
         /**
          * Creates a workflow in the caller\'s org. The org\'s project id is pinned server-side from the validated principal — there is no field by which a caller could place a workflow in another org.
          * @summary Creates a workflow in the caller\'s org.
-         * @param {FlowCreate} flowCreate 
+         * @param {FlowFlowCreate} flowFlowCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFlowWorkflows(flowCreate: FlowCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlowWorkflows(flowCreate, options);
+        async postFlowWorkflows(flowFlowCreate: FlowFlowCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlowWorkflows(flowFlowCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlowApi.postFlowWorkflows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -488,8 +490,8 @@ export const FlowApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteFlowWorkflowsByWorkflow(requestParameters.workflow, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
-         * @summary Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component.
+         * Reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
+         * @summary Reads one workflow\'s recorded runs: every component build with its result, keyed by component.
          * @param {FlowApiGetFlowRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -498,17 +500,17 @@ export const FlowApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getFlowRuns(requestParameters.workflow, options).then((request) => request(axios, basePath));
         },
         /**
-         * Status reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
-         * @summary Status reports whether the flow service is reachable and which version it runs.
+         * Reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
+         * @summary Reports whether the flow service is reachable and which version it runs.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlowStatus(options?: RawAxiosRequestConfig): AxiosPromise<FlowStatus> {
+        getFlowStatus(options?: RawAxiosRequestConfig): AxiosPromise<FlowFlowStatus> {
             return localVarFp.getFlowStatus(options).then((request) => request(axios, basePath));
         },
         /**
-         * Workflows lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
-         * @summary Workflows lists the caller\'s workflows, paged.
+         * Lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
+         * @summary Lists the caller\'s workflows, paged.
          * @param {FlowApiGetFlowWorkflowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -517,8 +519,8 @@ export const FlowApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getFlowWorkflows(requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
-         * Workflow reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
-         * @summary Workflow reads one of the caller\'s workflows — the full record, graph included.
+         * Reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
+         * @summary Reads one of the caller\'s workflows — the full record, graph included.
          * @param {FlowApiGetFlowWorkflowsByWorkflowRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -534,17 +536,17 @@ export const FlowApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         patchFlowWorkflowsByWorkflow(requestParameters: FlowApiPatchFlowWorkflowsByWorkflowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.patchFlowWorkflowsByWorkflow(requestParameters.workflow, requestParameters.flowUpdate, options).then((request) => request(axios, basePath));
+            return localVarFp.patchFlowWorkflowsByWorkflow(requestParameters.workflow, requestParameters.flowFlowUpdate, options).then((request) => request(axios, basePath));
         },
         /**
-         * Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
-         * @summary Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
+         * Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
+         * @summary Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
          * @param {FlowApiPostFlowRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postFlowRuns(requestParameters: FlowApiPostFlowRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postFlowRuns(requestParameters.flowRun, options).then((request) => request(axios, basePath));
+            return localVarFp.postFlowRuns(requestParameters.flowFlowRun, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a workflow in the caller\'s org. The org\'s project id is pinned server-side from the validated principal — there is no field by which a caller could place a workflow in another org.
@@ -554,7 +556,7 @@ export const FlowApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         postFlowWorkflows(requestParameters: FlowApiPostFlowWorkflowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postFlowWorkflows(requestParameters.flowCreate, options).then((request) => request(axios, basePath));
+            return localVarFp.postFlowWorkflows(requestParameters.flowFlowCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -637,10 +639,10 @@ export interface FlowApiPatchFlowWorkflowsByWorkflowRequest {
 
     /**
      * 
-     * @type {FlowUpdate}
+     * @type {FlowFlowUpdate}
      * @memberof FlowApiPatchFlowWorkflowsByWorkflow
      */
-    readonly flowUpdate: FlowUpdate
+    readonly flowFlowUpdate: FlowFlowUpdate
 }
 
 /**
@@ -651,10 +653,10 @@ export interface FlowApiPatchFlowWorkflowsByWorkflowRequest {
 export interface FlowApiPostFlowRunsRequest {
     /**
      * 
-     * @type {FlowRun}
+     * @type {FlowFlowRun}
      * @memberof FlowApiPostFlowRuns
      */
-    readonly flowRun: FlowRun
+    readonly flowFlowRun: FlowFlowRun
 }
 
 /**
@@ -665,10 +667,10 @@ export interface FlowApiPostFlowRunsRequest {
 export interface FlowApiPostFlowWorkflowsRequest {
     /**
      * 
-     * @type {FlowCreate}
+     * @type {FlowFlowCreate}
      * @memberof FlowApiPostFlowWorkflows
      */
-    readonly flowCreate: FlowCreate
+    readonly flowFlowCreate: FlowFlowCreate
 }
 
 /**
@@ -691,8 +693,8 @@ export class FlowApi extends BaseAPI {
     }
 
     /**
-     * Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
-     * @summary Runs reads one workflow\'s recorded runs: every component build with its result, keyed by component.
+     * Reads one workflow\'s recorded runs: every component build with its result, keyed by component. Ownership is verified first — run records never cross the org boundary.
+     * @summary Reads one workflow\'s recorded runs: every component build with its result, keyed by component.
      * @param {FlowApiGetFlowRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -703,8 +705,8 @@ export class FlowApi extends BaseAPI {
     }
 
     /**
-     * Status reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
-     * @summary Status reports whether the flow service is reachable and which version it runs.
+     * Reports whether the flow service is reachable and which version it runs. It is the product\'s own /health and /v1/version composed — an honest lens for \"is the workflow plane up\", never a fabricated ok.
+     * @summary Reports whether the flow service is reachable and which version it runs.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlowApi
@@ -714,8 +716,8 @@ export class FlowApi extends BaseAPI {
     }
 
     /**
-     * Workflows lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
-     * @summary Workflows lists the caller\'s workflows, paged.
+     * Lists the caller\'s workflows, paged. The list is scoped server-side to the org\'s project — the page can only ever hold the caller\'s own workflows.
+     * @summary Lists the caller\'s workflows, paged.
      * @param {FlowApiGetFlowWorkflowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -726,8 +728,8 @@ export class FlowApi extends BaseAPI {
     }
 
     /**
-     * Workflow reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
-     * @summary Workflow reads one of the caller\'s workflows — the full record, graph included.
+     * Reads one of the caller\'s workflows — the full record, graph included. A workflow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
+     * @summary Reads one of the caller\'s workflows — the full record, graph included.
      * @param {FlowApiGetFlowWorkflowsByWorkflowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -746,19 +748,19 @@ export class FlowApi extends BaseAPI {
      * @memberof FlowApi
      */
     public patchFlowWorkflowsByWorkflow(requestParameters: FlowApiPatchFlowWorkflowsByWorkflowRequest, options?: RawAxiosRequestConfig) {
-        return FlowApiFp(this.configuration).patchFlowWorkflowsByWorkflow(requestParameters.workflow, requestParameters.flowUpdate, options).then((request) => request(this.axios, this.basePath));
+        return FlowApiFp(this.configuration).patchFlowWorkflowsByWorkflow(requestParameters.workflow, requestParameters.flowFlowUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
-     * @summary Run executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
+     * Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs. A graph whose components fail reports the product\'s own error. Runs are bounded by the product\'s five-minute sync ceiling.
+     * @summary Executes one of the caller\'s workflows synchronously: the graph runs in the flow service and the response carries the run\'s session and outputs.
      * @param {FlowApiPostFlowRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlowApi
      */
     public postFlowRuns(requestParameters: FlowApiPostFlowRunsRequest, options?: RawAxiosRequestConfig) {
-        return FlowApiFp(this.configuration).postFlowRuns(requestParameters.flowRun, options).then((request) => request(this.axios, this.basePath));
+        return FlowApiFp(this.configuration).postFlowRuns(requestParameters.flowFlowRun, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -770,7 +772,7 @@ export class FlowApi extends BaseAPI {
      * @memberof FlowApi
      */
     public postFlowWorkflows(requestParameters: FlowApiPostFlowWorkflowsRequest, options?: RawAxiosRequestConfig) {
-        return FlowApiFp(this.configuration).postFlowWorkflows(requestParameters.flowCreate, options).then((request) => request(this.axios, this.basePath));
+        return FlowApiFp(this.configuration).postFlowWorkflows(requestParameters.flowFlowCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

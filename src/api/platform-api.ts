@@ -22,63 +22,77 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AddDomainReq } from '../models';
+import type { DeclareReq } from '../models';
 // @ts-ignore
-import type { AppView } from '../models';
+import type { DeclareResp } from '../models';
 // @ts-ignore
-import type { BuildBoard } from '../models';
+import type { PlatformAddDomainReq } from '../models';
 // @ts-ignore
-import type { CDApp } from '../models';
+import type { PlatformAppMove } from '../models';
 // @ts-ignore
-import type { CdResp } from '../models';
+import type { PlatformAppOut } from '../models';
 // @ts-ignore
-import type { CreateAppReq } from '../models';
+import type { PlatformAppView } from '../models';
 // @ts-ignore
-import type { Declaration } from '../models';
+import type { PlatformBuildBoard } from '../models';
 // @ts-ignore
-import type { DeclaredResp } from '../models';
+import type { PlatformCDApp } from '../models';
 // @ts-ignore
-import type { DeployLogs } from '../models';
+import type { PlatformCdResp } from '../models';
 // @ts-ignore
-import type { DeployReq } from '../models';
+import type { PlatformCreateAppReq } from '../models';
 // @ts-ignore
-import type { DeploymentView } from '../models';
+import type { PlatformDeclaration } from '../models';
 // @ts-ignore
-import type { DomainView } from '../models';
+import type { PlatformDeclaredResp } from '../models';
 // @ts-ignore
-import type { DriftBoard } from '../models';
+import type { PlatformDeployLogs } from '../models';
 // @ts-ignore
-import type { EnvironmentBoard } from '../models';
+import type { PlatformDeployReq } from '../models';
 // @ts-ignore
-import type { PipelineBoard } from '../models';
+import type { PlatformDeploymentView } from '../models';
 // @ts-ignore
-import type { PreviewReq } from '../models';
+import type { PlatformDomainView } from '../models';
 // @ts-ignore
-import type { PreviewView } from '../models';
+import type { PlatformDriftBoard } from '../models';
 // @ts-ignore
-import type { ProjectView } from '../models';
+import type { PlatformEnvironmentBoard } from '../models';
 // @ts-ignore
-import type { PromoteReq } from '../models';
+import type { PlatformPipelineBoard } from '../models';
 // @ts-ignore
-import type { Readiness } from '../models';
+import type { PlatformPreviewReq } from '../models';
 // @ts-ignore
-import type { ReleaseBoard } from '../models';
+import type { PlatformPreviewView } from '../models';
 // @ts-ignore
-import type { RestartRef } from '../models';
+import type { PlatformProjectBoard } from '../models';
 // @ts-ignore
-import type { Restarted } from '../models';
+import type { PlatformProjectCreate } from '../models';
 // @ts-ignore
-import type { RollbackReq } from '../models';
+import type { PlatformProjectRename } from '../models';
 // @ts-ignore
-import type { RunReq } from '../models';
+import type { PlatformProjectView } from '../models';
 // @ts-ignore
-import type { RunView } from '../models';
+import type { PlatformProjectWrite } from '../models';
 // @ts-ignore
-import type { RunnerBuildReq } from '../models';
+import type { PlatformPromoteReq } from '../models';
 // @ts-ignore
-import type { RunnerBuildResp } from '../models';
+import type { PlatformReadiness } from '../models';
 // @ts-ignore
-import type { SetEnvReq } from '../models';
+import type { PlatformReleaseBoard } from '../models';
+// @ts-ignore
+import type { PlatformRollbackReq } from '../models';
+// @ts-ignore
+import type { PlatformRunReq } from '../models';
+// @ts-ignore
+import type { PlatformRunView } from '../models';
+// @ts-ignore
+import type { PlatformRunnerBuildReq } from '../models';
+// @ts-ignore
+import type { PlatformRunnerBuildResp } from '../models';
+// @ts-ignore
+import type { PlatformSetEnvReq } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * PlatformApi - axios parameter creator
  * @export
@@ -86,7 +100,60 @@ import type { SetEnvReq } from '../models';
 export const PlatformApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
+         * Folds a project into another.  An app always belongs to exactly one project, so a project ends by moving its apps: `into` names the existing project they move to, and the project is gone once no file names it. One commit to `hanzoai/universe`; `mode` as for create. 404 when `into` is not a project.
+         * @summary Folds a project into another.
+         * @param {string} project Project is the project to delete, from the path.
+         * @param {string} [into] Into is the existing project its apps move into. Required: an app always belongs to exactly one project.
+         * @param {string} [org] Org names the projects\&#39; owner, defaulting to the caller\&#39;s own scope.
+         * @param {string} [mode] Mode is &#x60;branch&#x60; (the default) or &#x60;commit&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePlatformProjectsByProject: async (project: string, into?: string, org?: string, mode?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('deletePlatformProjectsByProject', 'project', project)
+            const localVarPath = `/v1/platform/projects/{project}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (into !== undefined) {
+                localVarQueryParameter['into'] = into;
+            }
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
+            if (mode !== undefined) {
+                localVarQueryParameter['mode'] = mode;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 401 without one.
          * @summary Deletes an application and tears down what it runs.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -128,7 +195,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
+         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 401 without one.
          * @summary Detaches a hostname and releases the claim.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -174,7 +241,45 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * Answers one build: its status, and for a failed build the reason.  A build belongs to the organization its credential names, so it is read by the credential that could have asked for it, and another organization\'s build is 404 rather than 403: whether an id exists is not said to anyone it is not for.
+         * @summary Answers one build: its status, and for a failed build the reason.
+         * @param {string} id ID is the build\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBuildById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBuildById', 'id', id)
+            const localVarPath = `/v1/build/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
          * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
          * @param {string} [org] Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
          * @param {*} [options] Override http request option.
@@ -299,7 +404,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took, followed by its site builds: a project in the org\'s own code workspace built from its repository in a sandbox, newest first. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Requires a validated principal; 401 without one.
          * @summary Returns real build records for your org.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -367,41 +472,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Answers 501. The forge\'s Actions runs need a Forgejo API client and this deployment has none; an empty run list would be indistinguishable from a forge with no runs.
-         * @summary Continuous integration (not wired)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformCi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/ci`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 401 without one.
          * @summary Returns your deploy targets, and what is running on each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -566,7 +637,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 401 without one.
          * @summary Returns one build-and-deploy pipeline per app, with its latest run.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -600,12 +671,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
-         * @summary Returns your org\'s projects, each with how many apps live under it.
+         * Answers every project the caller may see, with how its apps stand.  A project is the `partOf` its apps\' values files name, so this is the declaration inventory grouped by that key, joined per app with CD\'s reconciliation, the pods the cluster runs and the newest release the registry publishes, and folded into counts: apps, namespaces, sync, health and drift. Declarations that name no project are listed separately, because each one is drift in git.  A SuperAdmin sees every owner\'s projects, the platform\'s own among them; an org admin sees only its own org\'s. `org` narrows a SuperAdmin to one owner. A plane that cannot be read leaves its counts at unknown and says why in cdUnavailable or clusterUnavailable; it never empties the board. A values file that does not parse is listed in unreadable and costs only its own row.
+         * @summary Answers every project the caller may see, with how its apps stand.
+         * @param {string} [org] Org names whose projects to read. Omitted, a SuperAdmin reads every owner\&#39;s and anyone else reads their own; naming another org is an act-as only a SuperAdmin has, and naming a platform directory reads the platform\&#39;s own.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjects: async (org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -622,6 +694,10 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -634,13 +710,14 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
-         * @summary Returns one project and its app count.
+         * Answers one project and every app in it.  Each app carries its declaration — image, hosts, replicas, the KMS paths it reads (never a value) — together with the CD Application reconciling it, what its pods run, the newest release its registry publishes, and the drift between those four. 404 when no declaration in the caller\'s scope names the project.
+         * @summary Answers one project and every app in it.
          * @param {string} project Project is the project\&#39;s name, from the path.
+         * @param {string} [org] Org names the project\&#39;s owner, defaulting to the caller\&#39;s own scope — which for a SuperAdmin whose home is a brand org is the platform\&#39;s.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProject: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProject: async (project: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('getPlatformProjectsByProject', 'project', project)
             const localVarPath = `/v1/platform/projects/{project}`
@@ -660,6 +737,10 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -672,7 +753,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
+         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 401 without one.
          * @summary Returns the applications in one project, with what the cluster says about them.
          * @param {string} project Project is the project\&#39;s name, from the path.
          * @param {*} [options] Override http request option.
@@ -710,7 +791,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
+         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 401 without one.
          * @summary Returns one application, with its live phase, health and secret sync.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -752,7 +833,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
+         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 401 without one.
          * @summary Returns an app\'s deployment history.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -794,7 +875,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
+         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 401 without one.
          * @summary Returns one deployment of one app.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -840,7 +921,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
+         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 401 without one.
          * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -886,7 +967,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
+         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 401 without one.
          * @summary Returns every hostname this app answers on.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -928,7 +1009,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 401 without one.
          * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -962,54 +1043,16 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
-         * @summary Deploy an app through cd.hanzo.ai
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {PlatformRunnerBuildReq} platformRunnerBuildReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/apps`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
-         * @summary Rolls a platform service\'s pods, in a named environment.
-         * @param {string} app App is the service\&#39;s CR name, from the path. It must be a DNS-1123 label.
-         * @param {RestartRef} restartRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformFleetByAppDeploy: async (app: string, restartRef: RestartRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'app' is not null or undefined
-            assertParamExists('postPlatformFleetByAppDeploy', 'app', app)
-            // verify required parameter 'restartRef' is not null or undefined
-            assertParamExists('postPlatformFleetByAppDeploy', 'restartRef', restartRef)
-            const localVarPath = `/v1/platform/fleet/{app}/deploy`
-                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+        postBuild: async (platformRunnerBuildReq: PlatformRunnerBuildReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'platformRunnerBuildReq' is not null or undefined
+            assertParamExists('postBuild', 'platformRunnerBuildReq', platformRunnerBuildReq)
+            const localVarPath = `/v1/build`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1032,7 +1075,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(restartRef, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformRunnerBuildReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1040,18 +1083,96 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
-         * @summary Creates an application from a git repo or a container image.
-         * @param {string} project Project is the project to create the application under, from the path.
-         * @param {CreateAppReq} createAppReq 
+         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `repo` is a GitHub repository — `owner/name` or `https://github.com/owner/name` — or another https clone URL. A GitHub repository must be one the caller may see: their own connected GitHub, or the installations their org holds for an org admin (the same set `GET /v1/provider/github/repos` lists); anything else is 404. It is built at the name GitHub gives it now, from `ref`, which defaults to its default branch. Any other URL is an org admin\'s to build.  `partOf` names the project the app belongs to, and defaults to the app\'s own name.  Every member of the org may deploy; WHERE it lands is the difference. An org admin commits to universe main and CD applies it — in one call, naming the tag its own build will push, which CD pulls once the build lands. Anyone else opens a review: the declaration is pushed to `deploy/<namespace>/<name>/<tag>`, `declaration.review` is the link that opens the pull request, and nothing deploys until it is merged. `mode` may say `branch` to make an admin\'s deploy a review too; a non-admin naming `commit` is refused, never downgraded.  A member\'s deploy is bounded by who asked: one build at a time and never the org\'s last build slot, which is kept for its admins; ten deploys an hour; five open review branches. Past a bound it answers 429. A review branch is deleted once main declares its tag, or after seven days unmerged; `notice` says so, and that the public `env` values the branch carries are cleartext in universe, where deleting the branch does not unpublish them.  A release of an image an earlier call built (`tag` given) is proven pullable before main is pointed at it — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it. That release is an org admin\'s: a member\'s deploy always builds, and carries public `env` only — a sealed value would write the running app\'s secrets before the review is merged, so a member naming one is refused.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
+         * @summary Deploy an app through cd.hanzo.ai
+         * @param {DeclareReq} [declareReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectApps: async (project: string, createAppReq: CreateAppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformApps: async (declareReq?: DeclareReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/apps`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(declareReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a project from the apps it starts with.  A project is the `partOf` its apps\' values files name, so creating one names it on the listed apps: one commit to `hanzoai/universe` that moves each file\'s `partOf` scalar and touches nothing else. There is no empty project; to start one with a new app, create the app with `partOf` (POST /v1/platform/apps).  `mode` is `branch` (the default: a review branch, nothing deploys) or `commit` (main). A `partOf` change relabels the app\'s pods, so the sync that applies it rolls them. 409 when the name already names apps — move apps into an existing project with PUT /v1/platform/apps/{app}/project. An org admin changes its own org\'s projects; the platform\'s own, and another org\'s, are SuperAdmin.
+         * @summary Creates a project from the apps it starts with.
+         * @param {PlatformProjectCreate} platformProjectCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformProjects: async (platformProjectCreate: PlatformProjectCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'platformProjectCreate' is not null or undefined
+            assertParamExists('postPlatformProjects', 'platformProjectCreate', platformProjectCreate)
+            const localVarPath = `/v1/platform/projects`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProjectCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 401 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
+         * @summary Creates an application from a git repo or a container image.
+         * @param {string} project Project is the project to create the application under, from the path.
+         * @param {PlatformCreateAppReq} platformCreateAppReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformProjectsByProjectApps: async (project: string, platformCreateAppReq: PlatformCreateAppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectApps', 'project', project)
-            // verify required parameter 'createAppReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectApps', 'createAppReq', createAppReq)
+            // verify required parameter 'platformCreateAppReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectApps', 'platformCreateAppReq', platformCreateAppReq)
             const localVarPath = `/v1/platform/projects/{project}/apps`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1076,7 +1197,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createAppReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformCreateAppReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1084,21 +1205,21 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
+         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 401 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
          * @summary Deploys the app — building it first if it comes from git.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {DeployReq} deployReq 
+         * @param {PlatformDeployReq} platformDeployReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppDeploy: async (project: string, app: string, deployReq: DeployReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppDeploy: async (project: string, app: string, platformDeployReq: PlatformDeployReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'app', app)
-            // verify required parameter 'deployReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'deployReq', deployReq)
+            // verify required parameter 'platformDeployReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'platformDeployReq', platformDeployReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deploy`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1124,7 +1245,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(deployReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformDeployReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1132,21 +1253,21 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
+         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 401 without one.
          * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {AddDomainReq} addDomainReq 
+         * @param {PlatformAddDomainReq} platformAddDomainReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, addDomainReq: AddDomainReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, platformAddDomainReq: PlatformAddDomainReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'app', app)
-            // verify required parameter 'addDomainReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'addDomainReq', addDomainReq)
+            // verify required parameter 'platformAddDomainReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'platformAddDomainReq', platformAddDomainReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1172,7 +1293,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(addDomainReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformAddDomainReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1180,7 +1301,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
+         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 401 without one.
          * @summary Checks a custom domain\'s DNS and turns it on if it passes.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1226,21 +1347,21 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
+         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 401 without one.
          * @summary Puts a branch on its own URL.
          * @param {string} project Project is the project the parent application lives under, from the path.
          * @param {string} app App is the parent application\&#39;s slug, from the path.
-         * @param {PreviewReq} previewReq 
+         * @param {PlatformPreviewReq} platformPreviewReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppPreview: async (project: string, app: string, previewReq: PreviewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppPreview: async (project: string, app: string, platformPreviewReq: PlatformPreviewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'app', app)
-            // verify required parameter 'previewReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'previewReq', previewReq)
+            // verify required parameter 'platformPreviewReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'platformPreviewReq', platformPreviewReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/preview`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1266,7 +1387,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(previewReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformPreviewReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1274,21 +1395,21 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
+         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 401 without one.
          * @summary Promotes an already-built release to the app.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {PromoteReq} promoteReq 
+         * @param {PlatformPromoteReq} platformPromoteReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppPromote: async (project: string, app: string, promoteReq: PromoteReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppPromote: async (project: string, app: string, platformPromoteReq: PlatformPromoteReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'app', app)
-            // verify required parameter 'promoteReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'promoteReq', promoteReq)
+            // verify required parameter 'platformPromoteReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'platformPromoteReq', platformPromoteReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/promote`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1314,7 +1435,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(promoteReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformPromoteReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1322,21 +1443,21 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
+         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 401 without one.
          * @summary Goes back to the previous release.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {RollbackReq} rollbackReq 
+         * @param {PlatformRollbackReq} platformRollbackReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppRollback: async (project: string, app: string, rollbackReq: RollbackReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppRollback: async (project: string, app: string, platformRollbackReq: PlatformRollbackReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'app', app)
-            // verify required parameter 'rollbackReq' is not null or undefined
-            assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'rollbackReq', rollbackReq)
+            // verify required parameter 'platformRollbackReq' is not null or undefined
+            assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'platformRollbackReq', platformRollbackReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/rollback`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1362,7 +1483,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rollbackReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformRollbackReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1370,7 +1491,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
+         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 401 without one.
          * @summary Starts a stopped app back up.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1412,7 +1533,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
+         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 401 without one.
          * @summary Stops an app without deleting it.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1454,15 +1575,15 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 401 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
          * @summary Runs a container image and gives back a URL.
-         * @param {RunReq} runReq 
+         * @param {PlatformRunReq} platformRunReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformRun: async (runReq: RunReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'runReq' is not null or undefined
-            assertParamExists('postPlatformRun', 'runReq', runReq)
+        postPlatformRun: async (platformRunReq: PlatformRunReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'platformRunReq' is not null or undefined
+            assertParamExists('postPlatformRun', 'platformRunReq', platformRunReq)
             const localVarPath = `/v1/platform/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1486,7 +1607,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(runReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformRunReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1494,16 +1615,20 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
-         * @summary Triggers a native build — an image, or the binaries a repo declares.
-         * @param {RunnerBuildReq} runnerBuildReq 
+         * Moves an app to a project.  It sets the declaration\'s `partOf` — in its cluster overlay when the overlay sets the key, else in its values file — and nothing else. Naming a project nothing names yet creates it. `org` is the values directory the app lives in; `mode` as for create.
+         * @summary Moves an app to a project.
+         * @param {string} app App is the declaration\&#39;s name, from the path.
+         * @param {PlatformAppMove} platformAppMove 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformRunner: async (runnerBuildReq: RunnerBuildReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'runnerBuildReq' is not null or undefined
-            assertParamExists('postPlatformRunner', 'runnerBuildReq', runnerBuildReq)
-            const localVarPath = `/v1/platform/runner`;
+        putPlatformAppsByAppProject: async (app: string, platformAppMove: PlatformAppMove, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('putPlatformAppsByAppProject', 'app', app)
+            // verify required parameter 'platformAppMove' is not null or undefined
+            assertParamExists('putPlatformAppsByAppProject', 'platformAppMove', platformAppMove)
+            const localVarPath = `/v1/platform/apps/{app}/project`
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1511,7 +1636,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1526,7 +1651,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(runnerBuildReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformAppMove, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1534,21 +1659,65 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
-         * @summary Replaces an app\'s environment variables.
-         * @param {string} project Project is the project the application lives under, from the path.
-         * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {SetEnvReq} setEnvReq 
+         * Renames a project.  It rewrites `partOf` on every declaration that names the project, in one commit to `hanzoai/universe`. 409 when the new name is already a project: fold into it with DELETE /v1/platform/projects/{project}?into=. `mode` as for create.
+         * @summary Renames a project.
+         * @param {string} project Project is the project to rename, from the path.
+         * @param {PlatformProjectRename} platformProjectRename 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putPlatformProjectsByProjectAppsByAppEnv: async (project: string, app: string, setEnvReq: SetEnvReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putPlatformProjectsByProject: async (project: string, platformProjectRename: PlatformProjectRename, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('putPlatformProjectsByProject', 'project', project)
+            // verify required parameter 'platformProjectRename' is not null or undefined
+            assertParamExists('putPlatformProjectsByProject', 'platformProjectRename', platformProjectRename)
+            const localVarPath = `/v1/platform/projects/{project}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProjectRename, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 401 without one.
+         * @summary Replaces an app\'s environment variables.
+         * @param {string} project Project is the project the application lives under, from the path.
+         * @param {string} app App is the application\&#39;s slug, from the path.
+         * @param {PlatformSetEnvReq} platformSetEnvReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putPlatformProjectsByProjectAppsByAppEnv: async (project: string, app: string, platformSetEnvReq: PlatformSetEnvReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
             assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'project', project)
             // verify required parameter 'app' is not null or undefined
             assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'app', app)
-            // verify required parameter 'setEnvReq' is not null or undefined
-            assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'setEnvReq', setEnvReq)
+            // verify required parameter 'platformSetEnvReq' is not null or undefined
+            assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'platformSetEnvReq', platformSetEnvReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/env`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1574,7 +1743,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(setEnvReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformSetEnvReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1592,7 +1761,23 @@ export const PlatformApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PlatformApiAxiosParamCreator(configuration)
     return {
         /**
-         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
+         * Folds a project into another.  An app always belongs to exactly one project, so a project ends by moving its apps: `into` names the existing project they move to, and the project is gone once no file names it. One commit to `hanzoai/universe`; `mode` as for create. 404 when `into` is not a project.
+         * @summary Folds a project into another.
+         * @param {string} project Project is the project to delete, from the path.
+         * @param {string} [into] Into is the existing project its apps move into. Required: an app always belongs to exactly one project.
+         * @param {string} [org] Org names the projects\&#39; owner, defaulting to the caller\&#39;s own scope.
+         * @param {string} [mode] Mode is &#x60;branch&#x60; (the default) or &#x60;commit&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePlatformProjectsByProject(project: string, into?: string, org?: string, mode?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectWrite>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformProjectsByProject(project, into, org, mode, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 401 without one.
          * @summary Deletes an application and tears down what it runs.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1606,7 +1791,7 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
+         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 401 without one.
          * @summary Detaches a hostname and releases the claim.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1621,13 +1806,26 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * Answers one build: its status, and for a failed build the reason.  A build belongs to the organization its credential names, so it is read by the credential that could have asked for it, and another organization\'s build is 404 rather than 403: whether an id exists is not said to anyone it is not for.
+         * @summary Answers one build: its status, and for a failed build the reason.
+         * @param {string} id ID is the build\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBuildById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformRunnerBuildResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBuildById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getBuildById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
          * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
          * @param {string} [org] Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformApps(org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclaredResp>> {
+        async getPlatformApps(org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeclaredResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformApps(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformApps']?.[localVarOperationServerIndex]?.url;
@@ -1641,7 +1839,7 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformAppsByApp(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Declaration>> {
+        async getPlatformAppsByApp(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeclaration>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByApp(app, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByApp']?.[localVarOperationServerIndex]?.url;
@@ -1655,19 +1853,19 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformAppsByAppCd(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CDApp>> {
+        async getPlatformAppsByAppCd(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformCDApp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByAppCd(app, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByAppCd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took, followed by its site builds: a project in the org\'s own code workspace built from its repository in a sandbox, newest first. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Requires a validated principal; 401 without one.
          * @summary Returns real build records for your org.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformBuilds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildBoard>> {
+        async getPlatformBuilds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformBuildBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformBuilds(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformBuilds']?.[localVarOperationServerIndex]?.url;
@@ -1679,31 +1877,19 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CdResp>> {
+        async getPlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformCdResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCd(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 501. The forge\'s Actions runs need a Forgejo API client and this deployment has none; an empty run list would be indistinguishable from a forge with no runs.
-         * @summary Continuous integration (not wired)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformCi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCi(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCi']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 401 without one.
          * @summary Returns your deploy targets, and what is running on each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformEnvironments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentBoard>> {
+        async getPlatformEnvironments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformEnvironmentBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformEnvironments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformEnvironments']?.[localVarOperationServerIndex]?.url;
@@ -1719,7 +1905,7 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformFleet(env?: string, health?: string, org?: string, drift?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DriftBoard>> {
+        async getPlatformFleet(env?: string, health?: string, org?: string, drift?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDriftBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformFleet(env, health, org, drift, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformFleet']?.[localVarOperationServerIndex]?.url;
@@ -1733,7 +1919,7 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformFleetByApp(app: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+        async getPlatformFleetByApp(app: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformFleetByApp(app, env, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformFleetByApp']?.[localVarOperationServerIndex]?.url;
@@ -1745,92 +1931,94 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Readiness>> {
+        async getPlatformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformReadiness>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 401 without one.
          * @summary Returns one build-and-deploy pipeline per app, with its latest run.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformPipelines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineBoard>> {
+        async getPlatformPipelines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformPipelineBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformPipelines(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformPipelines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
-         * @summary Returns your org\'s projects, each with how many apps live under it.
+         * Answers every project the caller may see, with how its apps stand.  A project is the `partOf` its apps\' values files name, so this is the declaration inventory grouped by that key, joined per app with CD\'s reconciliation, the pods the cluster runs and the newest release the registry publishes, and folded into counts: apps, namespaces, sync, health and drift. Declarations that name no project are listed separately, because each one is drift in git.  A SuperAdmin sees every owner\'s projects, the platform\'s own among them; an org admin sees only its own org\'s. `org` narrows a SuperAdmin to one owner. A plane that cannot be read leaves its counts at unknown and says why in cdUnavailable or clusterUnavailable; it never empties the board. A values file that does not parse is listed in unreadable and costs only its own row.
+         * @summary Answers every project the caller may see, with how its apps stand.
+         * @param {string} [org] Org names whose projects to read. Omitted, a SuperAdmin reads every owner\&#39;s and anyone else reads their own; naming another org is an act-as only a SuperAdmin has, and naming a platform directory reads the platform\&#39;s own.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjects(options);
+        async getPlatformProjects(org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjects(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
-         * @summary Returns one project and its app count.
+         * Answers one project and every app in it.  Each app carries its declaration — image, hosts, replicas, the KMS paths it reads (never a value) — together with the CD Application reconciling it, what its pods run, the newest release its registry publishes, and the drift between those four. 404 when no declaration in the caller\'s scope names the project.
+         * @summary Answers one project and every app in it.
          * @param {string} project Project is the project\&#39;s name, from the path.
+         * @param {string} [org] Org names the project\&#39;s owner, defaulting to the caller\&#39;s own scope — which for a SuperAdmin whose home is a brand org is the platform\&#39;s.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProject(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProject(project, options);
+        async getPlatformProjectsByProject(project: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProject(project, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
+         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 401 without one.
          * @summary Returns the applications in one project, with what the cluster says about them.
          * @param {string} project Project is the project\&#39;s name, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectApps(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AppView>>> {
+        async getPlatformProjectsByProjectApps(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformAppOut>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectApps(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
+         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 401 without one.
          * @summary Returns one application, with its live phase, health and secret sync.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+        async getPlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByApp(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
+         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 401 without one.
          * @summary Returns an app\'s deployment history.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectAppsByAppDeployments(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeploymentView>>> {
+        async getPlatformProjectsByProjectAppsByAppDeployments(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformDeploymentView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeployments(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
+         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 401 without one.
          * @summary Returns one deployment of one app.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1838,14 +2026,14 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectAppsByAppDeploymentsById(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
+        async getPlatformProjectsByProjectAppsByAppDeploymentsById(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeploymentView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeploymentsById(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeploymentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
+         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 401 without one.
          * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1853,110 +2041,123 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployLogs>> {
+        async getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeployLogs>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
+         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 401 without one.
          * @summary Returns every hostname this app answers on.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DomainView>>> {
+        async getPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformDomainView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDomains(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 401 without one.
          * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseBoard>> {
+        async getPlatformReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformReleaseBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformReleases(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
-         * @summary Deploy an app through cd.hanzo.ai
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {PlatformRunnerBuildReq} platformRunnerBuildReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformApps(options);
+        async postBuild(platformRunnerBuildReq: PlatformRunnerBuildReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformRunnerBuildResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBuild(platformRunnerBuildReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postBuild']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `repo` is a GitHub repository — `owner/name` or `https://github.com/owner/name` — or another https clone URL. A GitHub repository must be one the caller may see: their own connected GitHub, or the installations their org holds for an org admin (the same set `GET /v1/provider/github/repos` lists); anything else is 404. It is built at the name GitHub gives it now, from `ref`, which defaults to its default branch. Any other URL is an org admin\'s to build.  `partOf` names the project the app belongs to, and defaults to the app\'s own name.  Every member of the org may deploy; WHERE it lands is the difference. An org admin commits to universe main and CD applies it — in one call, naming the tag its own build will push, which CD pulls once the build lands. Anyone else opens a review: the declaration is pushed to `deploy/<namespace>/<name>/<tag>`, `declaration.review` is the link that opens the pull request, and nothing deploys until it is merged. `mode` may say `branch` to make an admin\'s deploy a review too; a non-admin naming `commit` is refused, never downgraded.  A member\'s deploy is bounded by who asked: one build at a time and never the org\'s last build slot, which is kept for its admins; ten deploys an hour; five open review branches. Past a bound it answers 429. A review branch is deleted once main declares its tag, or after seven days unmerged; `notice` says so, and that the public `env` values the branch carries are cleartext in universe, where deleting the branch does not unpublish them.  A release of an image an earlier call built (`tag` given) is proven pullable before main is pointed at it — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it. That release is an org admin\'s: a member\'s deploy always builds, and carries public `env` only — a sealed value would write the running app\'s secrets before the review is merged, so a member naming one is refused.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
+         * @summary Deploy an app through cd.hanzo.ai
+         * @param {DeclareReq} [declareReq] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPlatformApps(declareReq?: DeclareReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclareResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformApps(declareReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
-         * @summary Rolls a platform service\'s pods, in a named environment.
-         * @param {string} app App is the service\&#39;s CR name, from the path. It must be a DNS-1123 label.
-         * @param {RestartRef} restartRef 
+         * Creates a project from the apps it starts with.  A project is the `partOf` its apps\' values files name, so creating one names it on the listed apps: one commit to `hanzoai/universe` that moves each file\'s `partOf` scalar and touches nothing else. There is no empty project; to start one with a new app, create the app with `partOf` (POST /v1/platform/apps).  `mode` is `branch` (the default: a review branch, nothing deploys) or `commit` (main). A `partOf` change relabels the app\'s pods, so the sync that applies it rolls them. 409 when the name already names apps — move apps into an existing project with PUT /v1/platform/apps/{app}/project. An org admin changes its own org\'s projects; the platform\'s own, and another org\'s, are SuperAdmin.
+         * @summary Creates a project from the apps it starts with.
+         * @param {PlatformProjectCreate} platformProjectCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformFleetByAppDeploy(app: string, restartRef: RestartRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Restarted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformFleetByAppDeploy(app, restartRef, options);
+        async postPlatformProjects(platformProjectCreate: PlatformProjectCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectWrite>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjects(platformProjectCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformFleetByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
+         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 401 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
          * @summary Creates an application from a git repo or a container image.
          * @param {string} project Project is the project to create the application under, from the path.
-         * @param {CreateAppReq} createAppReq 
+         * @param {PlatformCreateAppReq} platformCreateAppReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectApps(project: string, createAppReq: CreateAppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectApps(project, createAppReq, options);
+        async postPlatformProjectsByProjectApps(project: string, platformCreateAppReq: PlatformCreateAppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectApps(project, platformCreateAppReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
+         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 401 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
          * @summary Deploys the app — building it first if it comes from git.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {DeployReq} deployReq 
+         * @param {PlatformDeployReq} platformDeployReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppDeploy(project: string, app: string, deployReq: DeployReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDeploy(project, app, deployReq, options);
+        async postPlatformProjectsByProjectAppsByAppDeploy(project: string, app: string, platformDeployReq: PlatformDeployReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDeploy(project, app, platformDeployReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
+         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 401 without one.
          * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {AddDomainReq} addDomainReq 
+         * @param {PlatformAddDomainReq} platformAddDomainReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, addDomainReq: AddDomainReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDomains(project, app, addDomainReq, options);
+        async postPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, platformAddDomainReq: PlatformAddDomainReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDomainView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDomains(project, app, platformAddDomainReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
+         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 401 without one.
          * @summary Checks a custom domain\'s DNS and turns it on if it passes.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
@@ -1964,122 +2165,137 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
+        async postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDomainView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(project, app, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
+         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 401 without one.
          * @summary Puts a branch on its own URL.
          * @param {string} project Project is the project the parent application lives under, from the path.
          * @param {string} app App is the parent application\&#39;s slug, from the path.
-         * @param {PreviewReq} previewReq 
+         * @param {PlatformPreviewReq} platformPreviewReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppPreview(project: string, app: string, previewReq: PreviewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PreviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPreview(project, app, previewReq, options);
+        async postPlatformProjectsByProjectAppsByAppPreview(project: string, app: string, platformPreviewReq: PlatformPreviewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformPreviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPreview(project, app, platformPreviewReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppPreview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
+         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 401 without one.
          * @summary Promotes an already-built release to the app.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {PromoteReq} promoteReq 
+         * @param {PlatformPromoteReq} platformPromoteReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppPromote(project: string, app: string, promoteReq: PromoteReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPromote(project, app, promoteReq, options);
+        async postPlatformProjectsByProjectAppsByAppPromote(project: string, app: string, platformPromoteReq: PlatformPromoteReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPromote(project, app, platformPromoteReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppPromote']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
+         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 401 without one.
          * @summary Goes back to the previous release.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {RollbackReq} rollbackReq 
+         * @param {PlatformRollbackReq} platformRollbackReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppRollback(project: string, app: string, rollbackReq: RollbackReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppRollback(project, app, rollbackReq, options);
+        async postPlatformProjectsByProjectAppsByAppRollback(project: string, app: string, platformRollbackReq: PlatformRollbackReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformDeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppRollback(project, app, platformRollbackReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppRollback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
+         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 401 without one.
          * @summary Starts a stopped app back up.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppStart(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+        async postPlatformProjectsByProjectAppsByAppStart(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppStart(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
+         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 401 without one.
          * @summary Stops an app without deleting it.
          * @param {string} project Project is the project the application lives under, from the path.
          * @param {string} app App is the application\&#39;s slug, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformProjectsByProjectAppsByAppStop(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+        async postPlatformProjectsByProjectAppsByAppStop(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppStop(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 401 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
          * @summary Runs a container image and gives back a URL.
-         * @param {RunReq} runReq 
+         * @param {PlatformRunReq} platformRunReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformRun(runReq: RunReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformRun(runReq, options);
+        async postPlatformRun(platformRunReq: PlatformRunReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformRunView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformRun(platformRunReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
-         * @summary Triggers a native build — an image, or the binaries a repo declares.
-         * @param {RunnerBuildReq} runnerBuildReq 
+         * Moves an app to a project.  It sets the declaration\'s `partOf` — in its cluster overlay when the overlay sets the key, else in its values file — and nothing else. Naming a project nothing names yet creates it. `org` is the values directory the app lives in; `mode` as for create.
+         * @summary Moves an app to a project.
+         * @param {string} app App is the declaration\&#39;s name, from the path.
+         * @param {PlatformAppMove} platformAppMove 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformRunner(runnerBuildReq: RunnerBuildReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerBuildResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformRunner(runnerBuildReq, options);
+        async putPlatformAppsByAppProject(app: string, platformAppMove: PlatformAppMove, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectWrite>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPlatformAppsByAppProject(app, platformAppMove, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformRunner']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.putPlatformAppsByAppProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
-         * @summary Replaces an app\'s environment variables.
-         * @param {string} project Project is the project the application lives under, from the path.
-         * @param {string} app App is the application\&#39;s slug, from the path.
-         * @param {SetEnvReq} setEnvReq 
+         * Renames a project.  It rewrites `partOf` on every declaration that names the project, in one commit to `hanzoai/universe`. 409 when the new name is already a project: fold into it with DELETE /v1/platform/projects/{project}?into=. `mode` as for create.
+         * @summary Renames a project.
+         * @param {string} project Project is the project to rename, from the path.
+         * @param {PlatformProjectRename} platformProjectRename 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putPlatformProjectsByProjectAppsByAppEnv(project: string, app: string, setEnvReq: SetEnvReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putPlatformProjectsByProjectAppsByAppEnv(project, app, setEnvReq, options);
+        async putPlatformProjectsByProject(project: string, platformProjectRename: PlatformProjectRename, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectWrite>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPlatformProjectsByProject(project, platformProjectRename, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.putPlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 401 without one.
+         * @summary Replaces an app\'s environment variables.
+         * @param {string} project Project is the project the application lives under, from the path.
+         * @param {string} app App is the application\&#39;s slug, from the path.
+         * @param {PlatformSetEnvReq} platformSetEnvReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putPlatformProjectsByProjectAppsByAppEnv(project: string, app: string, platformSetEnvReq: PlatformSetEnvReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPlatformProjectsByProjectAppsByAppEnv(project, app, platformSetEnvReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.putPlatformProjectsByProjectAppsByAppEnv']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2095,7 +2311,17 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = PlatformApiFp(configuration)
     return {
         /**
-         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
+         * Folds a project into another.  An app always belongs to exactly one project, so a project ends by moving its apps: `into` names the existing project they move to, and the project is gone once no file names it. One commit to `hanzoai/universe`; `mode` as for create. 404 when `into` is not a project.
+         * @summary Folds a project into another.
+         * @param {PlatformApiDeletePlatformProjectsByProjectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePlatformProjectsByProject(requestParameters: PlatformApiDeletePlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectWrite> {
+            return localVarFp.deletePlatformProjectsByProject(requestParameters.project, requestParameters.into, requestParameters.org, requestParameters.mode, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 401 without one.
          * @summary Deletes an application and tears down what it runs.
          * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2105,7 +2331,7 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deletePlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
+         * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 401 without one.
          * @summary Detaches a hostname and releases the claim.
          * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2115,13 +2341,23 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * Answers one build: its status, and for a failed build the reason.  A build belongs to the organization its credential names, so it is read by the credential that could have asked for it, and another organization\'s build is 404 rather than 403: whether an id exists is not said to anyone it is not for.
+         * @summary Answers one build: its status, and for a failed build the reason.
+         * @param {PlatformApiGetBuildByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBuildById(requestParameters: PlatformApiGetBuildByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformRunnerBuildResp> {
+            return localVarFp.getBuildById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
          * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
          * @param {PlatformApiGetPlatformAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformApps(requestParameters: PlatformApiGetPlatformAppsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DeclaredResp> {
+        getPlatformApps(requestParameters: PlatformApiGetPlatformAppsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeclaredResp> {
             return localVarFp.getPlatformApps(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2131,7 +2367,7 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<Declaration> {
+        getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeclaration> {
             return localVarFp.getPlatformAppsByApp(requestParameters.app, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2141,16 +2377,16 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CDApp> {
+        getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformCDApp> {
             return localVarFp.getPlatformAppsByAppCd(requestParameters.app, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took, followed by its site builds: a project in the org\'s own code workspace built from its repository in a sandbox, newest first. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Requires a validated principal; 401 without one.
          * @summary Returns real build records for your org.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformBuilds(options?: RawAxiosRequestConfig): AxiosPromise<BuildBoard> {
+        getPlatformBuilds(options?: RawAxiosRequestConfig): AxiosPromise<PlatformBuildBoard> {
             return localVarFp.getPlatformBuilds(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2159,25 +2395,16 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<CdResp> {
+        getPlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<PlatformCdResp> {
             return localVarFp.getPlatformCd(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 501. The forge\'s Actions runs need a Forgejo API client and this deployment has none; an empty run list would be indistinguishable from a forge with no runs.
-         * @summary Continuous integration (not wired)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformCi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getPlatformCi(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 401 without one.
          * @summary Returns your deploy targets, and what is running on each.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformEnvironments(options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentBoard> {
+        getPlatformEnvironments(options?: RawAxiosRequestConfig): AxiosPromise<PlatformEnvironmentBoard> {
             return localVarFp.getPlatformEnvironments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2187,7 +2414,7 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformFleet(requestParameters: PlatformApiGetPlatformFleetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DriftBoard> {
+        getPlatformFleet(requestParameters: PlatformApiGetPlatformFleetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDriftBoard> {
             return localVarFp.getPlatformFleet(requestParameters.env, requestParameters.health, requestParameters.org, requestParameters.drift, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2197,7 +2424,7 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformFleetByApp(requestParameters: PlatformApiGetPlatformFleetByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+        getPlatformFleetByApp(requestParameters: PlatformApiGetPlatformFleetByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppView> {
             return localVarFp.getPlatformFleetByApp(requestParameters.app, requestParameters.env, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2206,247 +2433,304 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<Readiness> {
+        getPlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<PlatformReadiness> {
             return localVarFp.getPlatformHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 401 without one.
          * @summary Returns one build-and-deploy pipeline per app, with its latest run.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformPipelines(options?: RawAxiosRequestConfig): AxiosPromise<PipelineBoard> {
+        getPlatformPipelines(options?: RawAxiosRequestConfig): AxiosPromise<PlatformPipelineBoard> {
             return localVarFp.getPlatformPipelines(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
-         * @summary Returns your org\'s projects, each with how many apps live under it.
+         * Answers every project the caller may see, with how its apps stand.  A project is the `partOf` its apps\' values files name, so this is the declaration inventory grouped by that key, joined per app with CD\'s reconciliation, the pods the cluster runs and the newest release the registry publishes, and folded into counts: apps, namespaces, sync, health and drift. Declarations that name no project are listed separately, because each one is drift in git.  A SuperAdmin sees every owner\'s projects, the platform\'s own among them; an org admin sees only its own org\'s. `org` narrows a SuperAdmin to one owner. A plane that cannot be read leaves its counts at unknown and says why in cdUnavailable or clusterUnavailable; it never empties the board. A values file that does not parse is listed in unreadable and costs only its own row.
+         * @summary Answers every project the caller may see, with how its apps stand.
+         * @param {PlatformApiGetPlatformProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjects(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectView>> {
-            return localVarFp.getPlatformProjects(options).then((request) => request(axios, basePath));
+        getPlatformProjects(requestParameters: PlatformApiGetPlatformProjectsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectBoard> {
+            return localVarFp.getPlatformProjects(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
-         * @summary Returns one project and its app count.
+         * Answers one project and every app in it.  Each app carries its declaration — image, hosts, replicas, the KMS paths it reads (never a value) — together with the CD Application reconciling it, what its pods run, the newest release its registry publishes, and the drift between those four. 404 when no declaration in the caller\'s scope names the project.
+         * @summary Answers one project and every app in it.
          * @param {PlatformApiGetPlatformProjectsByProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProject(requestParameters: PlatformApiGetPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectView> {
-            return localVarFp.getPlatformProjectsByProject(requestParameters.project, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProject(requestParameters: PlatformApiGetPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectView> {
+            return localVarFp.getPlatformProjectsByProject(requestParameters.project, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
+         * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 401 without one.
          * @summary Returns the applications in one project, with what the cluster says about them.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectApps(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<AppView>> {
+        getPlatformProjectsByProjectApps(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlatformAppOut>> {
             return localVarFp.getPlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
+         * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 401 without one.
          * @summary Returns one application, with its live phase, health and secret sync.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+        getPlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppOut> {
             return localVarFp.getPlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
+         * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 401 without one.
          * @summary Returns an app\'s deployment history.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DeploymentView>> {
+        getPlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlatformDeploymentView>> {
             return localVarFp.getPlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
+         * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 401 without one.
          * @summary Returns one deployment of one app.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
+        getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeploymentView> {
             return localVarFp.getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
+         * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 401 without one.
          * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployLogs> {
+        getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeployLogs> {
             return localVarFp.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
+         * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 401 without one.
          * @summary Returns every hostname this app answers on.
          * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DomainView>> {
+        getPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlatformDomainView>> {
             return localVarFp.getPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 401 without one.
          * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformReleases(options?: RawAxiosRequestConfig): AxiosPromise<ReleaseBoard> {
+        getPlatformReleases(options?: RawAxiosRequestConfig): AxiosPromise<PlatformReleaseBoard> {
             return localVarFp.getPlatformReleases(options).then((request) => request(axios, basePath));
         },
         /**
-         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {PlatformApiPostBuildRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBuild(requestParameters: PlatformApiPostBuildRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformRunnerBuildResp> {
+            return localVarFp.postBuild(requestParameters.platformRunnerBuildReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `repo` is a GitHub repository — `owner/name` or `https://github.com/owner/name` — or another https clone URL. A GitHub repository must be one the caller may see: their own connected GitHub, or the installations their org holds for an org admin (the same set `GET /v1/provider/github/repos` lists); anything else is 404. It is built at the name GitHub gives it now, from `ref`, which defaults to its default branch. Any other URL is an org admin\'s to build.  `partOf` names the project the app belongs to, and defaults to the app\'s own name.  Every member of the org may deploy; WHERE it lands is the difference. An org admin commits to universe main and CD applies it — in one call, naming the tag its own build will push, which CD pulls once the build lands. Anyone else opens a review: the declaration is pushed to `deploy/<namespace>/<name>/<tag>`, `declaration.review` is the link that opens the pull request, and nothing deploys until it is merged. `mode` may say `branch` to make an admin\'s deploy a review too; a non-admin naming `commit` is refused, never downgraded.  A member\'s deploy is bounded by who asked: one build at a time and never the org\'s last build slot, which is kept for its admins; ten deploys an hour; five open review branches. Past a bound it answers 429. A review branch is deleted once main declares its tag, or after seven days unmerged; `notice` says so, and that the public `env` values the branch carries are cleartext in universe, where deleting the branch does not unpublish them.  A release of an image an earlier call built (`tag` given) is proven pullable before main is pointed at it — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it. That release is an org admin\'s: a member\'s deploy always builds, and carries public `env` only — a sealed value would write the running app\'s secrets before the review is merged, so a member naming one is refused.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
          * @summary Deploy an app through cd.hanzo.ai
+         * @param {PlatformApiPostPlatformAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postPlatformApps(options).then((request) => request(axios, basePath));
+        postPlatformApps(requestParameters: PlatformApiPostPlatformAppsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DeclareResp> {
+            return localVarFp.postPlatformApps(requestParameters.declareReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
-         * @summary Rolls a platform service\'s pods, in a named environment.
-         * @param {PlatformApiPostPlatformFleetByAppDeployRequest} requestParameters Request parameters.
+         * Creates a project from the apps it starts with.  A project is the `partOf` its apps\' values files name, so creating one names it on the listed apps: one commit to `hanzoai/universe` that moves each file\'s `partOf` scalar and touches nothing else. There is no empty project; to start one with a new app, create the app with `partOf` (POST /v1/platform/apps).  `mode` is `branch` (the default: a review branch, nothing deploys) or `commit` (main). A `partOf` change relabels the app\'s pods, so the sync that applies it rolls them. 409 when the name already names apps — move apps into an existing project with PUT /v1/platform/apps/{app}/project. An org admin changes its own org\'s projects; the platform\'s own, and another org\'s, are SuperAdmin.
+         * @summary Creates a project from the apps it starts with.
+         * @param {PlatformApiPostPlatformProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Restarted> {
-            return localVarFp.postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(axios, basePath));
+        postPlatformProjects(requestParameters: PlatformApiPostPlatformProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectWrite> {
+            return localVarFp.postPlatformProjects(requestParameters.platformProjectCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
+         * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 401 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
          * @summary Creates an application from a git repo or a container image.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectApps(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectApps(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppOut> {
+            return localVarFp.postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.platformCreateAppReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
+         * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 401 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
          * @summary Deploys the app — building it first if it comes from git.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.platformDeployReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
+         * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 401 without one.
          * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
-            return localVarFp.postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDomainView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.platformAddDomainReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
+         * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 401 without one.
          * @summary Checks a custom domain\'s DNS and turns it on if it passes.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
+        postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDomainView> {
             return localVarFp.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
+         * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 401 without one.
          * @summary Puts a branch on its own URL.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PreviewView> {
-            return localVarFp.postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformPreviewView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.platformPreviewReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
+         * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 401 without one.
          * @summary Promotes an already-built release to the app.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.platformPromoteReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
+         * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 401 without one.
          * @summary Goes back to the previous release.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformDeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.platformRollbackReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
+         * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 401 without one.
          * @summary Starts a stopped app back up.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+        postPlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppOut> {
             return localVarFp.postPlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
+         * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 401 without one.
          * @summary Stops an app without deleting it.
          * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+        postPlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppOut> {
             return localVarFp.postPlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 401 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
          * @summary Runs a container image and gives back a URL.
          * @param {PlatformApiPostPlatformRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformRun(requestParameters: PlatformApiPostPlatformRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunView> {
-            return localVarFp.postPlatformRun(requestParameters.runReq, options).then((request) => request(axios, basePath));
+        postPlatformRun(requestParameters: PlatformApiPostPlatformRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformRunView> {
+            return localVarFp.postPlatformRun(requestParameters.platformRunReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
-         * @summary Triggers a native build — an image, or the binaries a repo declares.
-         * @param {PlatformApiPostPlatformRunnerRequest} requestParameters Request parameters.
+         * Moves an app to a project.  It sets the declaration\'s `partOf` — in its cluster overlay when the overlay sets the key, else in its values file — and nothing else. Naming a project nothing names yet creates it. `org` is the values directory the app lives in; `mode` as for create.
+         * @summary Moves an app to a project.
+         * @param {PlatformApiPutPlatformAppsByAppProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformRunner(requestParameters: PlatformApiPostPlatformRunnerRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerBuildResp> {
-            return localVarFp.postPlatformRunner(requestParameters.runnerBuildReq, options).then((request) => request(axios, basePath));
+        putPlatformAppsByAppProject(requestParameters: PlatformApiPutPlatformAppsByAppProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectWrite> {
+            return localVarFp.putPlatformAppsByAppProject(requestParameters.app, requestParameters.platformAppMove, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
+         * Renames a project.  It rewrites `partOf` on every declaration that names the project, in one commit to `hanzoai/universe`. 409 when the new name is already a project: fold into it with DELETE /v1/platform/projects/{project}?into=. `mode` as for create.
+         * @summary Renames a project.
+         * @param {PlatformApiPutPlatformProjectsByProjectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putPlatformProjectsByProject(requestParameters: PlatformApiPutPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectWrite> {
+            return localVarFp.putPlatformProjectsByProject(requestParameters.project, requestParameters.platformProjectRename, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 401 without one.
          * @summary Replaces an app\'s environment variables.
          * @param {PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putPlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(axios, basePath));
+        putPlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppOut> {
+            return localVarFp.putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.platformSetEnvReq, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for deletePlatformProjectsByProject operation in PlatformApi.
+ * @export
+ * @interface PlatformApiDeletePlatformProjectsByProjectRequest
+ */
+export interface PlatformApiDeletePlatformProjectsByProjectRequest {
+    /**
+     * Project is the project to delete, from the path.
+     * @type {string}
+     * @memberof PlatformApiDeletePlatformProjectsByProject
+     */
+    readonly project: string
+
+    /**
+     * Into is the existing project its apps move into. Required: an app always belongs to exactly one project.
+     * @type {string}
+     * @memberof PlatformApiDeletePlatformProjectsByProject
+     */
+    readonly into?: string
+
+    /**
+     * Org names the projects\&#39; owner, defaulting to the caller\&#39;s own scope.
+     * @type {string}
+     * @memberof PlatformApiDeletePlatformProjectsByProject
+     */
+    readonly org?: string
+
+    /**
+     * Mode is &#x60;branch&#x60; (the default) or &#x60;commit&#x60;.
+     * @type {string}
+     * @memberof PlatformApiDeletePlatformProjectsByProject
+     */
+    readonly mode?: string
+}
 
 /**
  * Request parameters for deletePlatformProjectsByProjectAppsByApp operation in PlatformApi.
@@ -2495,6 +2779,20 @@ export interface PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHos
      * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHost
      */
     readonly host: string
+}
+
+/**
+ * Request parameters for getBuildById operation in PlatformApi.
+ * @export
+ * @interface PlatformApiGetBuildByIdRequest
+ */
+export interface PlatformApiGetBuildByIdRequest {
+    /**
+     * ID is the build\&#39;s id, from the path.
+     * @type {string}
+     * @memberof PlatformApiGetBuildById
+     */
+    readonly id: string
 }
 
 /**
@@ -2610,6 +2908,20 @@ export interface PlatformApiGetPlatformFleetByAppRequest {
 }
 
 /**
+ * Request parameters for getPlatformProjects operation in PlatformApi.
+ * @export
+ * @interface PlatformApiGetPlatformProjectsRequest
+ */
+export interface PlatformApiGetPlatformProjectsRequest {
+    /**
+     * Org names whose projects to read. Omitted, a SuperAdmin reads every owner\&#39;s and anyone else reads their own; naming another org is an act-as only a SuperAdmin has, and naming a platform directory reads the platform\&#39;s own.
+     * @type {string}
+     * @memberof PlatformApiGetPlatformProjects
+     */
+    readonly org?: string
+}
+
+/**
  * Request parameters for getPlatformProjectsByProject operation in PlatformApi.
  * @export
  * @interface PlatformApiGetPlatformProjectsByProjectRequest
@@ -2621,6 +2933,13 @@ export interface PlatformApiGetPlatformProjectsByProjectRequest {
      * @memberof PlatformApiGetPlatformProjectsByProject
      */
     readonly project: string
+
+    /**
+     * Org names the project\&#39;s owner, defaulting to the caller\&#39;s own scope — which for a SuperAdmin whose home is a brand org is the platform\&#39;s.
+     * @type {string}
+     * @memberof PlatformApiGetPlatformProjectsByProject
+     */
+    readonly org?: string
 }
 
 /**
@@ -2757,24 +3076,45 @@ export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest 
 }
 
 /**
- * Request parameters for postPlatformFleetByAppDeploy operation in PlatformApi.
+ * Request parameters for postBuild operation in PlatformApi.
  * @export
- * @interface PlatformApiPostPlatformFleetByAppDeployRequest
+ * @interface PlatformApiPostBuildRequest
  */
-export interface PlatformApiPostPlatformFleetByAppDeployRequest {
-    /**
-     * App is the service\&#39;s CR name, from the path. It must be a DNS-1123 label.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformFleetByAppDeploy
-     */
-    readonly app: string
-
+export interface PlatformApiPostBuildRequest {
     /**
      * 
-     * @type {RestartRef}
-     * @memberof PlatformApiPostPlatformFleetByAppDeploy
+     * @type {PlatformRunnerBuildReq}
+     * @memberof PlatformApiPostBuild
      */
-    readonly restartRef: RestartRef
+    readonly platformRunnerBuildReq: PlatformRunnerBuildReq
+}
+
+/**
+ * Request parameters for postPlatformApps operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPostPlatformAppsRequest
+ */
+export interface PlatformApiPostPlatformAppsRequest {
+    /**
+     * 
+     * @type {DeclareReq}
+     * @memberof PlatformApiPostPlatformApps
+     */
+    readonly declareReq?: DeclareReq
+}
+
+/**
+ * Request parameters for postPlatformProjects operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPostPlatformProjectsRequest
+ */
+export interface PlatformApiPostPlatformProjectsRequest {
+    /**
+     * 
+     * @type {PlatformProjectCreate}
+     * @memberof PlatformApiPostPlatformProjects
+     */
+    readonly platformProjectCreate: PlatformProjectCreate
 }
 
 /**
@@ -2792,10 +3132,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsRequest {
 
     /**
      * 
-     * @type {CreateAppReq}
+     * @type {PlatformCreateAppReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectApps
      */
-    readonly createAppReq: CreateAppReq
+    readonly platformCreateAppReq: PlatformCreateAppReq
 }
 
 /**
@@ -2820,10 +3160,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest 
 
     /**
      * 
-     * @type {DeployReq}
+     * @type {PlatformDeployReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDeploy
      */
-    readonly deployReq: DeployReq
+    readonly platformDeployReq: PlatformDeployReq
 }
 
 /**
@@ -2848,10 +3188,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest
 
     /**
      * 
-     * @type {AddDomainReq}
+     * @type {PlatformAddDomainReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomains
      */
-    readonly addDomainReq: AddDomainReq
+    readonly platformAddDomainReq: PlatformAddDomainReq
 }
 
 /**
@@ -2904,10 +3244,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest
 
     /**
      * 
-     * @type {PreviewReq}
+     * @type {PlatformPreviewReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPreview
      */
-    readonly previewReq: PreviewReq
+    readonly platformPreviewReq: PlatformPreviewReq
 }
 
 /**
@@ -2932,10 +3272,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest
 
     /**
      * 
-     * @type {PromoteReq}
+     * @type {PlatformPromoteReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPromote
      */
-    readonly promoteReq: PromoteReq
+    readonly platformPromoteReq: PlatformPromoteReq
 }
 
 /**
@@ -2960,10 +3300,10 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackReques
 
     /**
      * 
-     * @type {RollbackReq}
+     * @type {PlatformRollbackReq}
      * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppRollback
      */
-    readonly rollbackReq: RollbackReq
+    readonly platformRollbackReq: PlatformRollbackReq
 }
 
 /**
@@ -3016,24 +3356,52 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest {
 export interface PlatformApiPostPlatformRunRequest {
     /**
      * 
-     * @type {RunReq}
+     * @type {PlatformRunReq}
      * @memberof PlatformApiPostPlatformRun
      */
-    readonly runReq: RunReq
+    readonly platformRunReq: PlatformRunReq
 }
 
 /**
- * Request parameters for postPlatformRunner operation in PlatformApi.
+ * Request parameters for putPlatformAppsByAppProject operation in PlatformApi.
  * @export
- * @interface PlatformApiPostPlatformRunnerRequest
+ * @interface PlatformApiPutPlatformAppsByAppProjectRequest
  */
-export interface PlatformApiPostPlatformRunnerRequest {
+export interface PlatformApiPutPlatformAppsByAppProjectRequest {
+    /**
+     * App is the declaration\&#39;s name, from the path.
+     * @type {string}
+     * @memberof PlatformApiPutPlatformAppsByAppProject
+     */
+    readonly app: string
+
     /**
      * 
-     * @type {RunnerBuildReq}
-     * @memberof PlatformApiPostPlatformRunner
+     * @type {PlatformAppMove}
+     * @memberof PlatformApiPutPlatformAppsByAppProject
      */
-    readonly runnerBuildReq: RunnerBuildReq
+    readonly platformAppMove: PlatformAppMove
+}
+
+/**
+ * Request parameters for putPlatformProjectsByProject operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPutPlatformProjectsByProjectRequest
+ */
+export interface PlatformApiPutPlatformProjectsByProjectRequest {
+    /**
+     * Project is the project to rename, from the path.
+     * @type {string}
+     * @memberof PlatformApiPutPlatformProjectsByProject
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {PlatformProjectRename}
+     * @memberof PlatformApiPutPlatformProjectsByProject
+     */
+    readonly platformProjectRename: PlatformProjectRename
 }
 
 /**
@@ -3058,10 +3426,10 @@ export interface PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest {
 
     /**
      * 
-     * @type {SetEnvReq}
+     * @type {PlatformSetEnvReq}
      * @memberof PlatformApiPutPlatformProjectsByProjectAppsByAppEnv
      */
-    readonly setEnvReq: SetEnvReq
+    readonly platformSetEnvReq: PlatformSetEnvReq
 }
 
 /**
@@ -3072,7 +3440,19 @@ export interface PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest {
  */
 export class PlatformApi extends BaseAPI {
     /**
-     * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
+     * Folds a project into another.  An app always belongs to exactly one project, so a project ends by moving its apps: `into` names the existing project they move to, and the project is gone once no file names it. One commit to `hanzoai/universe`; `mode` as for create. 404 when `into` is not a project.
+     * @summary Folds a project into another.
+     * @param {PlatformApiDeletePlatformProjectsByProjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public deletePlatformProjectsByProject(requestParameters: PlatformApiDeletePlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformProjectsByProject(requestParameters.project, requestParameters.into, requestParameters.org, requestParameters.mode, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 401 without one.
      * @summary Deletes an application and tears down what it runs.
      * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3084,7 +3464,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
+     * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 401 without one.
      * @summary Detaches a hostname and releases the claim.
      * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3096,7 +3476,19 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+     * Answers one build: its status, and for a failed build the reason.  A build belongs to the organization its credential names, so it is read by the credential that could have asked for it, and another organization\'s build is 404 rather than 403: whether an id exists is not said to anyone it is not for.
+     * @summary Answers one build: its status, and for a failed build the reason.
+     * @param {PlatformApiGetBuildByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getBuildById(requestParameters: PlatformApiGetBuildByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getBuildById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
      * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
      * @param {PlatformApiGetPlatformAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3132,7 +3524,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+     * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took, followed by its site builds: a project in the org\'s own code workspace built from its repository in a sandbox, newest first. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Requires a validated principal; 401 without one.
      * @summary Returns real build records for your org.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3154,18 +3546,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Answers 501. The forge\'s Actions runs need a Forgejo API client and this deployment has none; an empty run list would be indistinguishable from a forge with no runs.
-     * @summary Continuous integration (not wired)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformCi(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformCi(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+     * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 401 without one.
      * @summary Returns your deploy targets, and what is running on each.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3211,7 +3592,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+     * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 401 without one.
      * @summary Returns one build-and-deploy pipeline per app, with its latest run.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3222,30 +3603,31 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
-     * @summary Returns your org\'s projects, each with how many apps live under it.
+     * Answers every project the caller may see, with how its apps stand.  A project is the `partOf` its apps\' values files name, so this is the declaration inventory grouped by that key, joined per app with CD\'s reconciliation, the pods the cluster runs and the newest release the registry publishes, and folded into counts: apps, namespaces, sync, health and drift. Declarations that name no project are listed separately, because each one is drift in git.  A SuperAdmin sees every owner\'s projects, the platform\'s own among them; an org admin sees only its own org\'s. `org` narrows a SuperAdmin to one owner. A plane that cannot be read leaves its counts at unknown and says why in cdUnavailable or clusterUnavailable; it never empties the board. A values file that does not parse is listed in unreadable and costs only its own row.
+     * @summary Answers every project the caller may see, with how its apps stand.
+     * @param {PlatformApiGetPlatformProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getPlatformProjects(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformProjects(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjects(requestParameters: PlatformApiGetPlatformProjectsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjects(requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
-     * @summary Returns one project and its app count.
+     * Answers one project and every app in it.  Each app carries its declaration — image, hosts, replicas, the KMS paths it reads (never a value) — together with the CD Application reconciling it, what its pods run, the newest release its registry publishes, and the drift between those four. 404 when no declaration in the caller\'s scope names the project.
+     * @summary Answers one project and every app in it.
      * @param {PlatformApiGetPlatformProjectsByProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
     public getPlatformProjectsByProject(requestParameters: PlatformApiGetPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformProjectsByProject(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProject(requestParameters.project, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
+     * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 401 without one.
      * @summary Returns the applications in one project, with what the cluster says about them.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3257,7 +3639,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
+     * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 401 without one.
      * @summary Returns one application, with its live phase, health and secret sync.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3269,7 +3651,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
+     * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 401 without one.
      * @summary Returns an app\'s deployment history.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3281,7 +3663,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
+     * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 401 without one.
      * @summary Returns one deployment of one app.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3293,7 +3675,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
+     * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 401 without one.
      * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3305,7 +3687,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
+     * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 401 without one.
      * @summary Returns every hostname this app answers on.
      * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3317,7 +3699,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+     * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 401 without one.
      * @summary Returns the versions that actually reached the cluster.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3328,30 +3710,43 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
+     * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+     * @summary Triggers a native build — an image, or the binaries a repo declares.
+     * @param {PlatformApiPostBuildRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public postBuild(requestParameters: PlatformApiPostBuildRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postBuild(requestParameters.platformRunnerBuildReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `repo` is a GitHub repository — `owner/name` or `https://github.com/owner/name` — or another https clone URL. A GitHub repository must be one the caller may see: their own connected GitHub, or the installations their org holds for an org admin (the same set `GET /v1/provider/github/repos` lists); anything else is 404. It is built at the name GitHub gives it now, from `ref`, which defaults to its default branch. Any other URL is an org admin\'s to build.  `partOf` names the project the app belongs to, and defaults to the app\'s own name.  Every member of the org may deploy; WHERE it lands is the difference. An org admin commits to universe main and CD applies it — in one call, naming the tag its own build will push, which CD pulls once the build lands. Anyone else opens a review: the declaration is pushed to `deploy/<namespace>/<name>/<tag>`, `declaration.review` is the link that opens the pull request, and nothing deploys until it is merged. `mode` may say `branch` to make an admin\'s deploy a review too; a non-admin naming `commit` is refused, never downgraded.  A member\'s deploy is bounded by who asked: one build at a time and never the org\'s last build slot, which is kept for its admins; ten deploys an hour; five open review branches. Past a bound it answers 429. A review branch is deleted once main declares its tag, or after seven days unmerged; `notice` says so, and that the public `env` values the branch carries are cleartext in universe, where deleting the branch does not unpublish them.  A release of an image an earlier call built (`tag` given) is proven pullable before main is pointed at it — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it. That release is an org admin\'s: a member\'s deploy always builds, and carries public `env` only — a sealed value would write the running app\'s secrets before the review is merged, so a member naming one is refused.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
      * @summary Deploy an app through cd.hanzo.ai
+     * @param {PlatformApiPostPlatformAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postPlatformApps(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformApps(options).then((request) => request(this.axios, this.basePath));
+    public postPlatformApps(requestParameters: PlatformApiPostPlatformAppsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformApps(requestParameters.declareReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
-     * @summary Rolls a platform service\'s pods, in a named environment.
-     * @param {PlatformApiPostPlatformFleetByAppDeployRequest} requestParameters Request parameters.
+     * Creates a project from the apps it starts with.  A project is the `partOf` its apps\' values files name, so creating one names it on the listed apps: one commit to `hanzoai/universe` that moves each file\'s `partOf` scalar and touches nothing else. There is no empty project; to start one with a new app, create the app with `partOf` (POST /v1/platform/apps).  `mode` is `branch` (the default: a review branch, nothing deploys) or `commit` (main). A `partOf` change relabels the app\'s pods, so the sync that applies it rolls them. 409 when the name already names apps — move apps into an existing project with PUT /v1/platform/apps/{app}/project. An org admin changes its own org\'s projects; the platform\'s own, and another org\'s, are SuperAdmin.
+     * @summary Creates a project from the apps it starts with.
+     * @param {PlatformApiPostPlatformProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjects(requestParameters: PlatformApiPostPlatformProjectsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjects(requestParameters.platformProjectCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
+     * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 401 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
      * @summary Creates an application from a git repo or a container image.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3359,11 +3754,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectApps(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.platformCreateAppReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
+     * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 401 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
      * @summary Deploys the app — building it first if it comes from git.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3371,11 +3766,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.platformDeployReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
+     * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 401 without one.
      * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3383,11 +3778,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.platformAddDomainReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
+     * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 401 without one.
      * @summary Checks a custom domain\'s DNS and turns it on if it passes.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3399,7 +3794,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
+     * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 401 without one.
      * @summary Puts a branch on its own URL.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3407,11 +3802,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.platformPreviewReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
+     * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 401 without one.
      * @summary Promotes an already-built release to the app.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3419,11 +3814,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.platformPromoteReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
+     * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 401 without one.
      * @summary Goes back to the previous release.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3431,11 +3826,11 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.platformRollbackReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
+     * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 401 without one.
      * @summary Starts a stopped app back up.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3447,7 +3842,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
+     * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 401 without one.
      * @summary Stops an app without deleting it.
      * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3459,7 +3854,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+     * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 401 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
      * @summary Runs a container image and gives back a URL.
      * @param {PlatformApiPostPlatformRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3467,23 +3862,35 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public postPlatformRun(requestParameters: PlatformApiPostPlatformRunRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformRun(requestParameters.runReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).postPlatformRun(requestParameters.platformRunReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
-     * @summary Triggers a native build — an image, or the binaries a repo declares.
-     * @param {PlatformApiPostPlatformRunnerRequest} requestParameters Request parameters.
+     * Moves an app to a project.  It sets the declaration\'s `partOf` — in its cluster overlay when the overlay sets the key, else in its values file — and nothing else. Naming a project nothing names yet creates it. `org` is the values directory the app lives in; `mode` as for create.
+     * @summary Moves an app to a project.
+     * @param {PlatformApiPutPlatformAppsByAppProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postPlatformRunner(requestParameters: PlatformApiPostPlatformRunnerRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformRunner(requestParameters.runnerBuildReq, options).then((request) => request(this.axios, this.basePath));
+    public putPlatformAppsByAppProject(requestParameters: PlatformApiPutPlatformAppsByAppProjectRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).putPlatformAppsByAppProject(requestParameters.app, requestParameters.platformAppMove, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
+     * Renames a project.  It rewrites `partOf` on every declaration that names the project, in one commit to `hanzoai/universe`. 409 when the new name is already a project: fold into it with DELETE /v1/platform/projects/{project}?into=. `mode` as for create.
+     * @summary Renames a project.
+     * @param {PlatformApiPutPlatformProjectsByProjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public putPlatformProjectsByProject(requestParameters: PlatformApiPutPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).putPlatformProjectsByProject(requestParameters.project, requestParameters.platformProjectRename, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 401 without one.
      * @summary Replaces an app\'s environment variables.
      * @param {PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3491,7 +3898,7 @@ export class PlatformApi extends BaseAPI {
      * @memberof PlatformApi
      */
     public putPlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.platformSetEnvReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -22,10 +22,10 @@
 export interface O11yO11yEventIn {
     /**
      * Attributes are free-form event properties.
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yO11yEventIn
      */
-    'attributes'?: { [key: string]: object; };
+    'attributes'?: { [key: string]: any; };
     /**
      * EventName names the event; required for track events.
      * @type {string}

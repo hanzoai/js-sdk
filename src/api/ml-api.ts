@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { MlCreate } from '../models';
+import type { MlMlCreate } from '../models';
 // @ts-ignore
-import type { MlResource } from '../models';
+import type { MlMlResource } from '../models';
 // @ts-ignore
-import type { MlResourceList } from '../models';
+import type { MlMlResourceList } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * MlApi - axios parameter creator
  * @export
@@ -218,13 +220,13 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
          * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
-         * @param {MlCreate} mlCreate 
+         * @param {MlMlCreate} mlMlCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMlModels: async (mlCreate: MlCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'mlCreate' is not null or undefined
-            assertParamExists('postMlModels', 'mlCreate', mlCreate)
+        postMlModels: async (mlMlCreate: MlMlCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mlMlCreate' is not null or undefined
+            assertParamExists('postMlModels', 'mlMlCreate', mlMlCreate)
             const localVarPath = `/v1/ml/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -248,7 +250,7 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mlCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(mlMlCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -334,7 +336,7 @@ export const MlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMlModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResourceList>> {
+        async getMlModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlMlResourceList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMlModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.getMlModels']?.[localVarOperationServerIndex]?.url;
@@ -347,7 +349,7 @@ export const MlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMlModelsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResource>> {
+        async getMlModelsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlMlResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMlModelsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.getMlModelsByName']?.[localVarOperationServerIndex]?.url;
@@ -369,12 +371,12 @@ export const MlApiFp = function(configuration?: Configuration) {
         /**
          * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
          * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
-         * @param {MlCreate} mlCreate 
+         * @param {MlMlCreate} mlMlCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMlModels(mlCreate: MlCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMlModels(mlCreate, options);
+        async postMlModels(mlMlCreate: MlMlCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlMlResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMlModels(mlMlCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.postMlModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -427,7 +429,7 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMlModels(options?: RawAxiosRequestConfig): AxiosPromise<MlResourceList> {
+        getMlModels(options?: RawAxiosRequestConfig): AxiosPromise<MlMlResourceList> {
             return localVarFp.getMlModels(options).then((request) => request(axios, basePath));
         },
         /**
@@ -437,7 +439,7 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMlModelsByName(requestParameters: MlApiGetMlModelsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlResource> {
+        getMlModelsByName(requestParameters: MlApiGetMlModelsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlMlResource> {
             return localVarFp.getMlModelsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -457,8 +459,8 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMlModels(requestParameters: MlApiPostMlModelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlResource> {
-            return localVarFp.postMlModels(requestParameters.mlCreate, options).then((request) => request(axios, basePath));
+        postMlModels(requestParameters: MlApiPostMlModelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlMlResource> {
+            return localVarFp.postMlModels(requestParameters.mlMlCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
@@ -523,10 +525,10 @@ export interface MlApiPatchMlModelsByNameRequest {
 export interface MlApiPostMlModelsRequest {
     /**
      * 
-     * @type {MlCreate}
+     * @type {MlMlCreate}
      * @memberof MlApiPostMlModels
      */
-    readonly mlCreate: MlCreate
+    readonly mlMlCreate: MlMlCreate
 }
 
 /**
@@ -617,7 +619,7 @@ export class MlApi extends BaseAPI {
      * @memberof MlApi
      */
     public postMlModels(requestParameters: MlApiPostMlModelsRequest, options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).postMlModels(requestParameters.mlCreate, options).then((request) => request(this.axios, this.basePath));
+        return MlApiFp(this.configuration).postMlModels(requestParameters.mlMlCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

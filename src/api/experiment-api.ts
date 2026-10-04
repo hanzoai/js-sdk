@@ -22,21 +22,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Analysis } from '../models';
+import type { ExperimentAnalysis } from '../models';
 // @ts-ignore
-import type { AnalyzeQuery } from '../models';
+import type { ExperimentAnalyzeQuery } from '../models';
 // @ts-ignore
-import type { Assignment } from '../models';
+import type { ExperimentAssignment } from '../models';
 // @ts-ignore
-import type { CreateBody } from '../models';
+import type { ExperimentCreateBody } from '../models';
 // @ts-ignore
-import type { DecideBody } from '../models';
+import type { ExperimentDecideBody } from '../models';
 // @ts-ignore
-import type { ExperimentList } from '../models';
+import type { ExperimentExperimentList } from '../models';
 // @ts-ignore
-import type { Health } from '../models';
+import type { ExperimentHealth } from '../models';
 // @ts-ignore
-import type { Trial } from '../models';
+import type { ExperimentTrial } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * ExperimentApi - axios parameter creator
  * @export
@@ -202,13 +204,13 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Registers a controlled experiment AND puts its assignment flag live, in that order, so the arms start bucketing subjects the moment this returns 201 — the flag is created active at 100% rollout, with each variant weighted as declared. There is no separate start call; creating IS starting.  A variant carries an opaque payload this primitive never interprets: a feature config, an ad-creative id, a subject line, a model id.  Requires a validated principal, and refuses without one. The org and project are taken from that principal and the creator is stamped from the credential — none of the three is a body field, so an experiment cannot be filed against another tenant. An id already used in this project is a conflict, never a silent overwrite: re-creating would stomp the assignment flag of a run in progress.  It fails closed on the flag write. An experiment whose assignment flag does not exist would assign nobody, so if that write fails nothing is registered.
          * @summary Registers a controlled experiment AND puts its assignment flag live, in that order, so the arms start bucketing subjects the moment this returns 201 — the flag is created active at 100% rollout, with each variant weighted as declared.
-         * @param {CreateBody} createBody 
+         * @param {ExperimentCreateBody} experimentCreateBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperiment: async (createBody: CreateBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createBody' is not null or undefined
-            assertParamExists('postExperiment', 'createBody', createBody)
+        postExperiment: async (experimentCreateBody: ExperimentCreateBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'experimentCreateBody' is not null or undefined
+            assertParamExists('postExperiment', 'experimentCreateBody', experimentCreateBody)
             const localVarPath = `/v1/experiment`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -232,7 +234,7 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createBody, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(experimentCreateBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -243,15 +245,15 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
          * Is per-variant conversion, lift and statistical significance against the control arm.  It reads per-subject outcomes from the analytics plane over a window, folds them into per-variant samples, and returns each arm\'s exposed count, conversions, rate, lift versus control, two-proportion z, two-tailed p-value and whether it clears alpha. Arms with no data still appear with zero exposed, so the read is complete over the experiment\'s declared arms; the control arm sorts first. The pooled-variance estimator is used and the p-value is exact; a degenerate comparison (an empty arm, no variance) answers z 0 and p 1 — not significant, never an error.  Only EXPOSED subjects are counted, and each is joined to its arm by re-evaluating the assignment flag AT ANALYSIS TIME — not from what was in force during the window. That is the one rule to get right: analyzing an experiment after its winner has been promoted re-buckets every subject into the promoted arm, collapsing the control to zero exposed and making the result meaningless. Read the analysis before deciding. A subject the flag cannot place is dropped rather than allowed to poison the fold.  The winner in the response is ADVISORY — the significant, control-beating arm with the highest rate, or empty when inconclusive. It promotes nothing; the decision is a separate, explicit act.  Every plane read is scoped to the caller\'s org. Per-variant samples are also written to the research evidence plane as immutable ab rows, best-effort: the analysis is still returned if that write fails, because the samples are recomputable, and the failure is logged rather than swallowed.
          * @summary Is per-variant conversion, lift and statistical significance against the control arm.
          * @param {string} id ID is the experiment the URL names.
-         * @param {AnalyzeQuery} analyzeQuery 
+         * @param {ExperimentAnalyzeQuery} experimentAnalyzeQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperimentByIdAnalyze: async (id: string, analyzeQuery: AnalyzeQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExperimentByIdAnalyze: async (id: string, experimentAnalyzeQuery: ExperimentAnalyzeQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postExperimentByIdAnalyze', 'id', id)
-            // verify required parameter 'analyzeQuery' is not null or undefined
-            assertParamExists('postExperimentByIdAnalyze', 'analyzeQuery', analyzeQuery)
+            // verify required parameter 'experimentAnalyzeQuery' is not null or undefined
+            assertParamExists('postExperimentByIdAnalyze', 'experimentAnalyzeQuery', experimentAnalyzeQuery)
             const localVarPath = `/v1/experiment/{id}/analyze`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -276,7 +278,7 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(analyzeQuery, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(experimentAnalyzeQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -287,15 +289,15 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
          * Promotes one variant to the whole rollout and records who decided.  It rewrites the assignment flag so the named winner serves 100% of the rollout and every other arm 0%, preserving the flag\'s targeting groups and payloads, then stamps the experiment decided with the winner, the deciding credential and the time. This is a production behaviour change that takes effect immediately for every subject the flag evaluates.  It requires an ORG ADMIN of the caller\'s own org — a stricter gate than the rest of this surface, matching the flags write plane, because promoting is a flag write. The admin check runs AFTER the experiment is found, so a caller from another tenant is answered not-found rather than forbidden and learns nothing about what exists.  An experiment whose assignment flag has gone missing is a conflict rather than a silent no-op — there is nothing to promote.  Deciding is NOT terminal. A second call re-promotes a different variant and re-stamps the row; the status stays decided and the previous winner is overwritten with no record that it was ever chosen. Nothing here reverts the flag to its original weights either, so an experiment cannot be un-decided through this route — restoring a split means writing the flag definition back through the flags plane.
          * @summary Promotes one variant to the whole rollout and records who decided.
          * @param {string} id 
-         * @param {DecideBody} decideBody 
+         * @param {ExperimentDecideBody} experimentDecideBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperimentByIdDecide: async (id: string, decideBody: DecideBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExperimentByIdDecide: async (id: string, experimentDecideBody: ExperimentDecideBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postExperimentByIdDecide', 'id', id)
-            // verify required parameter 'decideBody' is not null or undefined
-            assertParamExists('postExperimentByIdDecide', 'decideBody', decideBody)
+            // verify required parameter 'experimentDecideBody' is not null or undefined
+            assertParamExists('postExperimentByIdDecide', 'experimentDecideBody', experimentDecideBody)
             const localVarPath = `/v1/experiment/{id}/decide`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -320,7 +322,7 @@ export const ExperimentApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(decideBody, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(experimentDecideBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -343,7 +345,7 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExperiment(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentList>> {
+        async getExperiment(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentExperimentList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExperiment(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.getExperiment']?.[localVarOperationServerIndex]?.url;
@@ -356,7 +358,7 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExperimentById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Trial>> {
+        async getExperimentById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentTrial>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExperimentById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.getExperimentById']?.[localVarOperationServerIndex]?.url;
@@ -371,7 +373,7 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExperimentByIdAssign(id: string, subject: string, props?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Assignment>> {
+        async getExperimentByIdAssign(id: string, subject: string, props?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentAssignment>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExperimentByIdAssign(id, subject, props, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.getExperimentByIdAssign']?.[localVarOperationServerIndex]?.url;
@@ -383,7 +385,7 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExperimentHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Health>> {
+        async getExperimentHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExperimentHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.getExperimentHealth']?.[localVarOperationServerIndex]?.url;
@@ -392,12 +394,12 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
         /**
          * Registers a controlled experiment AND puts its assignment flag live, in that order, so the arms start bucketing subjects the moment this returns 201 — the flag is created active at 100% rollout, with each variant weighted as declared. There is no separate start call; creating IS starting.  A variant carries an opaque payload this primitive never interprets: a feature config, an ad-creative id, a subject line, a model id.  Requires a validated principal, and refuses without one. The org and project are taken from that principal and the creator is stamped from the credential — none of the three is a body field, so an experiment cannot be filed against another tenant. An id already used in this project is a conflict, never a silent overwrite: re-creating would stomp the assignment flag of a run in progress.  It fails closed on the flag write. An experiment whose assignment flag does not exist would assign nobody, so if that write fails nothing is registered.
          * @summary Registers a controlled experiment AND puts its assignment flag live, in that order, so the arms start bucketing subjects the moment this returns 201 — the flag is created active at 100% rollout, with each variant weighted as declared.
-         * @param {CreateBody} createBody 
+         * @param {ExperimentCreateBody} experimentCreateBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExperiment(createBody: CreateBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Trial>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperiment(createBody, options);
+        async postExperiment(experimentCreateBody: ExperimentCreateBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentTrial>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperiment(experimentCreateBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.postExperiment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -406,12 +408,12 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * Is per-variant conversion, lift and statistical significance against the control arm.  It reads per-subject outcomes from the analytics plane over a window, folds them into per-variant samples, and returns each arm\'s exposed count, conversions, rate, lift versus control, two-proportion z, two-tailed p-value and whether it clears alpha. Arms with no data still appear with zero exposed, so the read is complete over the experiment\'s declared arms; the control arm sorts first. The pooled-variance estimator is used and the p-value is exact; a degenerate comparison (an empty arm, no variance) answers z 0 and p 1 — not significant, never an error.  Only EXPOSED subjects are counted, and each is joined to its arm by re-evaluating the assignment flag AT ANALYSIS TIME — not from what was in force during the window. That is the one rule to get right: analyzing an experiment after its winner has been promoted re-buckets every subject into the promoted arm, collapsing the control to zero exposed and making the result meaningless. Read the analysis before deciding. A subject the flag cannot place is dropped rather than allowed to poison the fold.  The winner in the response is ADVISORY — the significant, control-beating arm with the highest rate, or empty when inconclusive. It promotes nothing; the decision is a separate, explicit act.  Every plane read is scoped to the caller\'s org. Per-variant samples are also written to the research evidence plane as immutable ab rows, best-effort: the analysis is still returned if that write fails, because the samples are recomputable, and the failure is logged rather than swallowed.
          * @summary Is per-variant conversion, lift and statistical significance against the control arm.
          * @param {string} id ID is the experiment the URL names.
-         * @param {AnalyzeQuery} analyzeQuery 
+         * @param {ExperimentAnalyzeQuery} experimentAnalyzeQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExperimentByIdAnalyze(id: string, analyzeQuery: AnalyzeQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Analysis>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperimentByIdAnalyze(id, analyzeQuery, options);
+        async postExperimentByIdAnalyze(id: string, experimentAnalyzeQuery: ExperimentAnalyzeQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentAnalysis>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperimentByIdAnalyze(id, experimentAnalyzeQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.postExperimentByIdAnalyze']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -420,12 +422,12 @@ export const ExperimentApiFp = function(configuration?: Configuration) {
          * Promotes one variant to the whole rollout and records who decided.  It rewrites the assignment flag so the named winner serves 100% of the rollout and every other arm 0%, preserving the flag\'s targeting groups and payloads, then stamps the experiment decided with the winner, the deciding credential and the time. This is a production behaviour change that takes effect immediately for every subject the flag evaluates.  It requires an ORG ADMIN of the caller\'s own org — a stricter gate than the rest of this surface, matching the flags write plane, because promoting is a flag write. The admin check runs AFTER the experiment is found, so a caller from another tenant is answered not-found rather than forbidden and learns nothing about what exists.  An experiment whose assignment flag has gone missing is a conflict rather than a silent no-op — there is nothing to promote.  Deciding is NOT terminal. A second call re-promotes a different variant and re-stamps the row; the status stays decided and the previous winner is overwritten with no record that it was ever chosen. Nothing here reverts the flag to its original weights either, so an experiment cannot be un-decided through this route — restoring a split means writing the flag definition back through the flags plane.
          * @summary Promotes one variant to the whole rollout and records who decided.
          * @param {string} id 
-         * @param {DecideBody} decideBody 
+         * @param {ExperimentDecideBody} experimentDecideBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExperimentByIdDecide(id: string, decideBody: DecideBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Trial>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperimentByIdDecide(id, decideBody, options);
+        async postExperimentByIdDecide(id: string, experimentDecideBody: ExperimentDecideBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentTrial>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExperimentByIdDecide(id, experimentDecideBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExperimentApi.postExperimentByIdDecide']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -446,7 +448,7 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExperiment(options?: RawAxiosRequestConfig): AxiosPromise<ExperimentList> {
+        getExperiment(options?: RawAxiosRequestConfig): AxiosPromise<ExperimentExperimentList> {
             return localVarFp.getExperiment(options).then((request) => request(axios, basePath));
         },
         /**
@@ -456,7 +458,7 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExperimentById(requestParameters: ExperimentApiGetExperimentByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Trial> {
+        getExperimentById(requestParameters: ExperimentApiGetExperimentByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentTrial> {
             return localVarFp.getExperimentById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -466,7 +468,7 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExperimentByIdAssign(requestParameters: ExperimentApiGetExperimentByIdAssignRequest, options?: RawAxiosRequestConfig): AxiosPromise<Assignment> {
+        getExperimentByIdAssign(requestParameters: ExperimentApiGetExperimentByIdAssignRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentAssignment> {
             return localVarFp.getExperimentByIdAssign(requestParameters.id, requestParameters.subject, requestParameters.props, options).then((request) => request(axios, basePath));
         },
         /**
@@ -475,7 +477,7 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExperimentHealth(options?: RawAxiosRequestConfig): AxiosPromise<Health> {
+        getExperimentHealth(options?: RawAxiosRequestConfig): AxiosPromise<ExperimentHealth> {
             return localVarFp.getExperimentHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -485,8 +487,8 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperiment(requestParameters: ExperimentApiPostExperimentRequest, options?: RawAxiosRequestConfig): AxiosPromise<Trial> {
-            return localVarFp.postExperiment(requestParameters.createBody, options).then((request) => request(axios, basePath));
+        postExperiment(requestParameters: ExperimentApiPostExperimentRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentTrial> {
+            return localVarFp.postExperiment(requestParameters.experimentCreateBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Is per-variant conversion, lift and statistical significance against the control arm.  It reads per-subject outcomes from the analytics plane over a window, folds them into per-variant samples, and returns each arm\'s exposed count, conversions, rate, lift versus control, two-proportion z, two-tailed p-value and whether it clears alpha. Arms with no data still appear with zero exposed, so the read is complete over the experiment\'s declared arms; the control arm sorts first. The pooled-variance estimator is used and the p-value is exact; a degenerate comparison (an empty arm, no variance) answers z 0 and p 1 — not significant, never an error.  Only EXPOSED subjects are counted, and each is joined to its arm by re-evaluating the assignment flag AT ANALYSIS TIME — not from what was in force during the window. That is the one rule to get right: analyzing an experiment after its winner has been promoted re-buckets every subject into the promoted arm, collapsing the control to zero exposed and making the result meaningless. Read the analysis before deciding. A subject the flag cannot place is dropped rather than allowed to poison the fold.  The winner in the response is ADVISORY — the significant, control-beating arm with the highest rate, or empty when inconclusive. It promotes nothing; the decision is a separate, explicit act.  Every plane read is scoped to the caller\'s org. Per-variant samples are also written to the research evidence plane as immutable ab rows, best-effort: the analysis is still returned if that write fails, because the samples are recomputable, and the failure is logged rather than swallowed.
@@ -495,8 +497,8 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperimentByIdAnalyze(requestParameters: ExperimentApiPostExperimentByIdAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Analysis> {
-            return localVarFp.postExperimentByIdAnalyze(requestParameters.id, requestParameters.analyzeQuery, options).then((request) => request(axios, basePath));
+        postExperimentByIdAnalyze(requestParameters: ExperimentApiPostExperimentByIdAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentAnalysis> {
+            return localVarFp.postExperimentByIdAnalyze(requestParameters.id, requestParameters.experimentAnalyzeQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Promotes one variant to the whole rollout and records who decided.  It rewrites the assignment flag so the named winner serves 100% of the rollout and every other arm 0%, preserving the flag\'s targeting groups and payloads, then stamps the experiment decided with the winner, the deciding credential and the time. This is a production behaviour change that takes effect immediately for every subject the flag evaluates.  It requires an ORG ADMIN of the caller\'s own org — a stricter gate than the rest of this surface, matching the flags write plane, because promoting is a flag write. The admin check runs AFTER the experiment is found, so a caller from another tenant is answered not-found rather than forbidden and learns nothing about what exists.  An experiment whose assignment flag has gone missing is a conflict rather than a silent no-op — there is nothing to promote.  Deciding is NOT terminal. A second call re-promotes a different variant and re-stamps the row; the status stays decided and the previous winner is overwritten with no record that it was ever chosen. Nothing here reverts the flag to its original weights either, so an experiment cannot be un-decided through this route — restoring a split means writing the flag definition back through the flags plane.
@@ -505,8 +507,8 @@ export const ExperimentApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExperimentByIdDecide(requestParameters: ExperimentApiPostExperimentByIdDecideRequest, options?: RawAxiosRequestConfig): AxiosPromise<Trial> {
-            return localVarFp.postExperimentByIdDecide(requestParameters.id, requestParameters.decideBody, options).then((request) => request(axios, basePath));
+        postExperimentByIdDecide(requestParameters: ExperimentApiPostExperimentByIdDecideRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentTrial> {
+            return localVarFp.postExperimentByIdDecide(requestParameters.id, requestParameters.experimentDecideBody, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -561,10 +563,10 @@ export interface ExperimentApiGetExperimentByIdAssignRequest {
 export interface ExperimentApiPostExperimentRequest {
     /**
      * 
-     * @type {CreateBody}
+     * @type {ExperimentCreateBody}
      * @memberof ExperimentApiPostExperiment
      */
-    readonly createBody: CreateBody
+    readonly experimentCreateBody: ExperimentCreateBody
 }
 
 /**
@@ -582,10 +584,10 @@ export interface ExperimentApiPostExperimentByIdAnalyzeRequest {
 
     /**
      * 
-     * @type {AnalyzeQuery}
+     * @type {ExperimentAnalyzeQuery}
      * @memberof ExperimentApiPostExperimentByIdAnalyze
      */
-    readonly analyzeQuery: AnalyzeQuery
+    readonly experimentAnalyzeQuery: ExperimentAnalyzeQuery
 }
 
 /**
@@ -603,10 +605,10 @@ export interface ExperimentApiPostExperimentByIdDecideRequest {
 
     /**
      * 
-     * @type {DecideBody}
+     * @type {ExperimentDecideBody}
      * @memberof ExperimentApiPostExperimentByIdDecide
      */
-    readonly decideBody: DecideBody
+    readonly experimentDecideBody: ExperimentDecideBody
 }
 
 /**
@@ -671,7 +673,7 @@ export class ExperimentApi extends BaseAPI {
      * @memberof ExperimentApi
      */
     public postExperiment(requestParameters: ExperimentApiPostExperimentRequest, options?: RawAxiosRequestConfig) {
-        return ExperimentApiFp(this.configuration).postExperiment(requestParameters.createBody, options).then((request) => request(this.axios, this.basePath));
+        return ExperimentApiFp(this.configuration).postExperiment(requestParameters.experimentCreateBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -683,7 +685,7 @@ export class ExperimentApi extends BaseAPI {
      * @memberof ExperimentApi
      */
     public postExperimentByIdAnalyze(requestParameters: ExperimentApiPostExperimentByIdAnalyzeRequest, options?: RawAxiosRequestConfig) {
-        return ExperimentApiFp(this.configuration).postExperimentByIdAnalyze(requestParameters.id, requestParameters.analyzeQuery, options).then((request) => request(this.axios, this.basePath));
+        return ExperimentApiFp(this.configuration).postExperimentByIdAnalyze(requestParameters.id, requestParameters.experimentAnalyzeQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -695,7 +697,7 @@ export class ExperimentApi extends BaseAPI {
      * @memberof ExperimentApi
      */
     public postExperimentByIdDecide(requestParameters: ExperimentApiPostExperimentByIdDecideRequest, options?: RawAxiosRequestConfig) {
-        return ExperimentApiFp(this.configuration).postExperimentByIdDecide(requestParameters.id, requestParameters.decideBody, options).then((request) => request(this.axios, this.basePath));
+        return ExperimentApiFp(this.configuration).postExperimentByIdDecide(requestParameters.id, requestParameters.experimentDecideBody, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

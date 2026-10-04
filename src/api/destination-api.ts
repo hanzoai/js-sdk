@@ -22,13 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { DestinationDisconnected } from '../models';
+import type { DestinationDestinationDisconnected } from '../models';
 // @ts-ignore
-import type { DestinationList } from '../models';
+import type { DestinationDestinationList } from '../models';
+// @ts-ignore
+import type { DestinationDestinationStatus } from '../models';
+// @ts-ignore
+import type { DestinationDestinationTest } from '../models';
 // @ts-ignore
 import type { DestinationStatus } from '../models';
 // @ts-ignore
-import type { DestinationTest } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * DestinationApi - axios parameter creator
  * @export
@@ -38,7 +42,7 @@ export const DestinationApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
          * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,7 +114,7 @@ export const DestinationApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
          * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -188,9 +192,9 @@ export const DestinationApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
-         * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said. Where the platform can check one without recording it, it is a lead and nothing is kept: GA4 answers from its validation server, Google Ads validates without importing, and Meta files it under the connection\'s Test Event Code (and is refused without one). Anywhere else it is a page view. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
+         * @summary Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -238,11 +242,11 @@ export const DestinationApiFp = function(configuration?: Configuration) {
         /**
          * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
          * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDestinationByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDisconnected>> {
+        async deleteDestinationByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDestinationDisconnected>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDestinationByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DestinationApi.deleteDestinationByPlatform']?.[localVarOperationServerIndex]?.url;
@@ -254,7 +258,7 @@ export const DestinationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDestination(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationList>> {
+        async getDestination(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDestinationList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDestination(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DestinationApi.getDestination']?.[localVarOperationServerIndex]?.url;
@@ -263,11 +267,11 @@ export const DestinationApiFp = function(configuration?: Configuration) {
         /**
          * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
          * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDestinationByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
+        async getDestinationByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDestinationStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDestinationByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DestinationApi.getDestinationByPlatform']?.[localVarOperationServerIndex]?.url;
@@ -288,13 +292,13 @@ export const DestinationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
-         * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+         * Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said. Where the platform can check one without recording it, it is a lead and nothing is kept: GA4 answers from its validation server, Google Ads validates without importing, and Meta files it under the connection\'s Test Event Code (and is refused without one). Anywhere else it is a page view. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
+         * @summary Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said.
+         * @param {string} platform Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDestinationByPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationTest>> {
+        async postDestinationByPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDestinationTest>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDestinationByPlatformTest(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DestinationApi.postDestinationByPlatformTest']?.[localVarOperationServerIndex]?.url;
@@ -317,7 +321,7 @@ export const DestinationApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDestinationByPlatform(requestParameters: DestinationApiDeleteDestinationByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDisconnected> {
+        deleteDestinationByPlatform(requestParameters: DestinationApiDeleteDestinationByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDestinationDisconnected> {
             return localVarFp.deleteDestinationByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
@@ -326,7 +330,7 @@ export const DestinationApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDestination(options?: RawAxiosRequestConfig): AxiosPromise<DestinationList> {
+        getDestination(options?: RawAxiosRequestConfig): AxiosPromise<DestinationDestinationList> {
             return localVarFp.getDestination(options).then((request) => request(axios, basePath));
         },
         /**
@@ -336,7 +340,7 @@ export const DestinationApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDestinationByPlatform(requestParameters: DestinationApiGetDestinationByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
+        getDestinationByPlatform(requestParameters: DestinationApiGetDestinationByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDestinationStatus> {
             return localVarFp.getDestinationByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
@@ -350,13 +354,13 @@ export const DestinationApiFactory = function (configuration?: Configuration, ba
             return localVarFp.postDestinationByPlatform(requestParameters.platform, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
-         * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
+         * Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said. Where the platform can check one without recording it, it is a lead and nothing is kept: GA4 answers from its validation server, Google Ads validates without importing, and Meta files it under the connection\'s Test Event Code (and is refused without one). Anywhere else it is a page view. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
+         * @summary Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said.
          * @param {DestinationApiPostDestinationByPlatformTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDestinationByPlatformTest(requestParameters: DestinationApiPostDestinationByPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationTest> {
+        postDestinationByPlatformTest(requestParameters: DestinationApiPostDestinationByPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDestinationTest> {
             return localVarFp.postDestinationByPlatformTest(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
     };
@@ -369,7 +373,7 @@ export const DestinationApiFactory = function (configuration?: Configuration, ba
  */
 export interface DestinationApiDeleteDestinationByPlatformRequest {
     /**
-     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
      * @type {string}
      * @memberof DestinationApiDeleteDestinationByPlatform
      */
@@ -383,7 +387,7 @@ export interface DestinationApiDeleteDestinationByPlatformRequest {
  */
 export interface DestinationApiGetDestinationByPlatformRequest {
     /**
-     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
      * @type {string}
      * @memberof DestinationApiGetDestinationByPlatform
      */
@@ -418,7 +422,7 @@ export interface DestinationApiPostDestinationByPlatformRequest {
  */
 export interface DestinationApiPostDestinationByPlatformTestRequest {
     /**
-     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights | analytics.
+     * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | insights.
      * @type {string}
      * @memberof DestinationApiPostDestinationByPlatformTest
      */
@@ -480,8 +484,8 @@ export class DestinationApi extends BaseAPI {
     }
 
     /**
-     * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
-     * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
+     * Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said. Where the platform can check one without recording it, it is a lead and nothing is kept: GA4 answers from its validation server, Google Ads validates without importing, and Meta files it under the connection\'s Test Event Code (and is refused without one). Anywhere else it is a page view. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
+     * @summary Sends ONE synthetic conversion through the connected destination end to end and reports what the platform said.
      * @param {DestinationApiPostDestinationByPlatformTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

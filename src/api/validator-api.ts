@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ChallengeView } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SlotView } from '../models';
+import type { ValidatorChallengeView } from '../models';
 // @ts-ignore
-import type { ValidatorClaim } from '../models';
+import type { ValidatorSlotView } from '../models';
 // @ts-ignore
-import type { ValidatorList } from '../models';
+import type { ValidatorValidatorClaim } from '../models';
+// @ts-ignore
+import type { ValidatorValidatorList } from '../models';
 /**
  * ValidatorApi - axios parameter creator
  * @export
@@ -154,13 +156,13 @@ export const ValidatorApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Claims a validator slot and provisions its node, after proving the caller\'s wallet owns the slot\'s NFT.  The pipeline, all server-enforced: burn the single-use challenge (so a replayed or forged nonce dies before any chain read), recover the signer from the message this server rebuilds, require that wallet to hold Validator-tier GenesisNFT #tokenId on Ethereum mainnet, generate a fresh luxd staking identity and seal it into KMS, write a LuxNetwork CR for a NEW node, and ENQUEUE an owner-gated registration. The registration is never auto-submitted to any P-Chain — the owner co-signs it out of band — and the stake weight is set at co-sign time, never derived from the NFT.  It fails CLOSED at every gate: a bad signature, a non-owner, a non-tier slot or an unavailable KMS all leave no claim persisted and no key material exposed. Re-claiming a slot this org already holds re-applies the node CR and returns 200 with the existing identity (keys and NodeID are stable); a slot held by another org is 409. A cluster-less deployment still claims the slot, seals the keys and queues the registration, reporting the node as \"node_pending\".
          * @summary Claims a validator slot and provisions its node, after proving the caller\'s wallet owns the slot\'s NFT.
-         * @param {ValidatorClaim} validatorClaim 
+         * @param {ValidatorValidatorClaim} validatorValidatorClaim 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postValidator: async (validatorClaim: ValidatorClaim, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'validatorClaim' is not null or undefined
-            assertParamExists('postValidator', 'validatorClaim', validatorClaim)
+        postValidator: async (validatorValidatorClaim: ValidatorValidatorClaim, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'validatorValidatorClaim' is not null or undefined
+            assertParamExists('postValidator', 'validatorValidatorClaim', validatorValidatorClaim)
             const localVarPath = `/v1/validator`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -184,7 +186,7 @@ export const ValidatorApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(validatorClaim, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(validatorValidatorClaim, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -208,7 +210,7 @@ export const ValidatorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValidator(limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidatorList>> {
+        async getValidator(limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidatorValidatorList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getValidator(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ValidatorApi.getValidator']?.[localVarOperationServerIndex]?.url;
@@ -221,7 +223,7 @@ export const ValidatorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValidatorByTokenid(tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlotView>> {
+        async getValidatorByTokenid(tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidatorSlotView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getValidatorByTokenid(tokenId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ValidatorApi.getValidatorByTokenid']?.[localVarOperationServerIndex]?.url;
@@ -234,7 +236,7 @@ export const ValidatorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValidatorChallenge(tokenId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChallengeView>> {
+        async getValidatorChallenge(tokenId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidatorChallengeView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getValidatorChallenge(tokenId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ValidatorApi.getValidatorChallenge']?.[localVarOperationServerIndex]?.url;
@@ -243,12 +245,12 @@ export const ValidatorApiFp = function(configuration?: Configuration) {
         /**
          * Claims a validator slot and provisions its node, after proving the caller\'s wallet owns the slot\'s NFT.  The pipeline, all server-enforced: burn the single-use challenge (so a replayed or forged nonce dies before any chain read), recover the signer from the message this server rebuilds, require that wallet to hold Validator-tier GenesisNFT #tokenId on Ethereum mainnet, generate a fresh luxd staking identity and seal it into KMS, write a LuxNetwork CR for a NEW node, and ENQUEUE an owner-gated registration. The registration is never auto-submitted to any P-Chain — the owner co-signs it out of band — and the stake weight is set at co-sign time, never derived from the NFT.  It fails CLOSED at every gate: a bad signature, a non-owner, a non-tier slot or an unavailable KMS all leave no claim persisted and no key material exposed. Re-claiming a slot this org already holds re-applies the node CR and returns 200 with the existing identity (keys and NodeID are stable); a slot held by another org is 409. A cluster-less deployment still claims the slot, seals the keys and queues the registration, reporting the node as \"node_pending\".
          * @summary Claims a validator slot and provisions its node, after proving the caller\'s wallet owns the slot\'s NFT.
-         * @param {ValidatorClaim} validatorClaim 
+         * @param {ValidatorValidatorClaim} validatorValidatorClaim 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postValidator(validatorClaim: ValidatorClaim, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlotView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postValidator(validatorClaim, options);
+        async postValidator(validatorValidatorClaim: ValidatorValidatorClaim, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidatorSlotView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postValidator(validatorValidatorClaim, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ValidatorApi.postValidator']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -270,7 +272,7 @@ export const ValidatorApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValidator(requestParameters: ValidatorApiGetValidatorRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ValidatorList> {
+        getValidator(requestParameters: ValidatorApiGetValidatorRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ValidatorValidatorList> {
             return localVarFp.getValidator(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -280,7 +282,7 @@ export const ValidatorApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValidatorByTokenid(requestParameters: ValidatorApiGetValidatorByTokenidRequest, options?: RawAxiosRequestConfig): AxiosPromise<SlotView> {
+        getValidatorByTokenid(requestParameters: ValidatorApiGetValidatorByTokenidRequest, options?: RawAxiosRequestConfig): AxiosPromise<ValidatorSlotView> {
             return localVarFp.getValidatorByTokenid(requestParameters.tokenId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -290,7 +292,7 @@ export const ValidatorApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValidatorChallenge(requestParameters: ValidatorApiGetValidatorChallengeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChallengeView> {
+        getValidatorChallenge(requestParameters: ValidatorApiGetValidatorChallengeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ValidatorChallengeView> {
             return localVarFp.getValidatorChallenge(requestParameters.tokenId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -300,8 +302,8 @@ export const ValidatorApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postValidator(requestParameters: ValidatorApiPostValidatorRequest, options?: RawAxiosRequestConfig): AxiosPromise<SlotView> {
-            return localVarFp.postValidator(requestParameters.validatorClaim, options).then((request) => request(axios, basePath));
+        postValidator(requestParameters: ValidatorApiPostValidatorRequest, options?: RawAxiosRequestConfig): AxiosPromise<ValidatorSlotView> {
+            return localVarFp.postValidator(requestParameters.validatorValidatorClaim, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -356,10 +358,10 @@ export interface ValidatorApiGetValidatorChallengeRequest {
 export interface ValidatorApiPostValidatorRequest {
     /**
      * 
-     * @type {ValidatorClaim}
+     * @type {ValidatorValidatorClaim}
      * @memberof ValidatorApiPostValidator
      */
-    readonly validatorClaim: ValidatorClaim
+    readonly validatorValidatorClaim: ValidatorValidatorClaim
 }
 
 /**
@@ -414,7 +416,7 @@ export class ValidatorApi extends BaseAPI {
      * @memberof ValidatorApi
      */
     public postValidator(requestParameters: ValidatorApiPostValidatorRequest, options?: RawAxiosRequestConfig) {
-        return ValidatorApiFp(this.configuration).postValidator(requestParameters.validatorClaim, options).then((request) => request(this.axios, this.basePath));
+        return ValidatorApiFp(this.configuration).postValidator(requestParameters.validatorValidatorClaim, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

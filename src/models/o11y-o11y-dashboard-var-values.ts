@@ -22,9 +22,9 @@
 export interface O11yO11yDashboardVarValues {
     /**
      * VariableValues are the values, in the order the query produced them.
-     * @type {Array<object>}
+     * @type {Array<any>}
      * @memberof O11yO11yDashboardVarValues
      */
-    'variableValues'?: Array<object>;
+    'variableValues'?: Array<any>;
 }
 

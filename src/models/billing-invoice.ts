@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { InvoiceLineItem } from './invoice-line-item';
+import type { BillingInvoiceLine } from './billing-invoice-line';
 
 /**
  * 
@@ -24,154 +24,76 @@ import type { InvoiceLineItem } from './invoice-line-item';
  */
 export interface BillingInvoice {
     /**
-     * 
+     * AmountDueCents is what remains collectible.
      * @type {number}
      * @memberof BillingInvoice
      */
-    'amountDue'?: number;
+    'amountDueCents'?: number;
     /**
-     * 
+     * AmountPaidCents is what has been collected so far.
      * @type {number}
      * @memberof BillingInvoice
      */
-    'amountPaid'?: number;
+    'amountPaidCents'?: number;
     /**
-     * 
-     * @type {number}
-     * @memberof BillingInvoice
-     */
-    'attemptCount'?: number;
-    /**
-     * 
+     * CreatedAt is when the draft was raised, RFC3339.
      * @type {string}
      * @memberof BillingInvoice
      */
     'createdAt'?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof BillingInvoice
-     */
-    'creditApplied'?: number;
-    /**
-     * 
+     * Currency is the ISO 4217 code.
      * @type {string}
      * @memberof BillingInvoice
      */
     'currency'?: string;
     /**
-     * 
+     * CustomerEmail is where it is sent.
      * @type {string}
      * @memberof BillingInvoice
      */
     'customerEmail'?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof BillingInvoice
-     */
-    'discount'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'dueDate'?: string;
-    /**
-     * 
+     * ID is the invoice id — what the issue, collect and void ops address.
      * @type {string}
      * @memberof BillingInvoice
      */
     'id'?: string;
     /**
-     * LineItems carries no omitempty and is never allocated empty, because the wire it reproduces sends `null` for an invoice with no lines. An empty array there would be a different answer to \"were there lines\".
-     * @type {Array<InvoiceLineItem>}
+     * Lines are the charges on the invoice.
+     * @type {Array<BillingInvoiceLine>}
      * @memberof BillingInvoice
      */
-    'lineItems'?: Array<InvoiceLineItem>;
+    'lines'?: Array<BillingInvoiceLine>;
     /**
-     * 
-     * @type {number}
-     * @memberof BillingInvoice
-     */
-    'number'?: number;
-    /**
-     * 
+     * Number is the human-facing invoice number, e.g. \"INV-0042\". A draft has none; issuing assigns it.
      * @type {string}
      * @memberof BillingInvoice
      */
-    'numberStr'?: string;
+    'number'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'paidAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'paymentMethod'?: string;
-    /**
-     * 
+     * PaymentRef is the processor reference for the collection, once paid.
      * @type {string}
      * @memberof BillingInvoice
      */
     'paymentRef'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'periodEnd'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'periodStart'?: string;
-    /**
-     * 
+     * Status is draft, open, paid, void or uncollectible. A draft is not collectible; issuing moves it to open.
      * @type {string}
      * @memberof BillingInvoice
      */
     'status'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'subscriptionId'?: string;
-    /**
-     * 
+     * SubtotalCents is the sum of the lines.
      * @type {number}
      * @memberof BillingInvoice
      */
-    'subtotal'?: number;
+    'subtotalCents'?: number;
     /**
-     * 
-     * @type {number}
-     * @memberof BillingInvoice
-     */
-    'tax'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'updatedAt'?: string;
-    /**
-     * 
+     * UserID is the customer billed.
      * @type {string}
      * @memberof BillingInvoice
      */
     'userId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInvoice
-     */
-    'voidedAt'?: string;
 }
 

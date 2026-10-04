@@ -28,10 +28,10 @@ export interface AiResponsesTool {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {any}
      * @memberof AiResponsesTool
      */
-    'format'?: string;
+    'format'?: any;
     /**
      * 
      * @type {string}
@@ -40,10 +40,10 @@ export interface AiResponsesTool {
     'name'?: string;
     /**
      * 
-     * @type {string}
+     * @type {any}
      * @memberof AiResponsesTool
      */
-    'parameters'?: string;
+    'parameters'?: any;
     /**
      * 
      * @type {boolean}

@@ -22,7 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { EngineStatus } from '../models';
+import type { EngineEngineStatus } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * EngineApi - axios parameter creator
  * @export
@@ -30,7 +32,7 @@ import type { EngineStatus } from '../models';
 export const EngineApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Model reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
+         * Reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
          * @summary Read one model\'s load state on the serving runtime
          * @param {string} [model] Model is the model id to inspect, exactly as the model list reports it.
          * @param {*} [options] Override http request option.
@@ -69,7 +71,7 @@ export const EngineApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Models lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
+         * Lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
          * @summary List the models the serving runtime holds, with each one\'s load state
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -103,7 +105,7 @@ export const EngineApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Status reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
+         * Reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
          * @summary Whether the serving runtime is reachable, and which build it runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -137,7 +139,7 @@ export const EngineApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * System reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
+         * Reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
          * @summary The serving host\'s own inventory: devices, memory and build capabilities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -181,7 +183,7 @@ export const EngineApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EngineApiAxiosParamCreator(configuration)
     return {
         /**
-         * Model reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
+         * Reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
          * @summary Read one model\'s load state on the serving runtime
          * @param {string} [model] Model is the model id to inspect, exactly as the model list reports it.
          * @param {*} [options] Override http request option.
@@ -194,7 +196,7 @@ export const EngineApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Models lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
+         * Lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
          * @summary List the models the serving runtime holds, with each one\'s load state
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -206,19 +208,19 @@ export const EngineApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Status reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
+         * Reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
          * @summary Whether the serving runtime is reachable, and which build it runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async engineStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EngineStatus>> {
+        async engineStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EngineEngineStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.engineStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EngineApi.engineStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * System reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
+         * Reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
          * @summary The serving host\'s own inventory: devices, memory and build capabilities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -240,7 +242,7 @@ export const EngineApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = EngineApiFp(configuration)
     return {
         /**
-         * Model reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
+         * Reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
          * @summary Read one model\'s load state on the serving runtime
          * @param {EngineApiEngineModelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -250,7 +252,7 @@ export const EngineApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.engineModel(requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
-         * Models lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
+         * Lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
          * @summary List the models the serving runtime holds, with each one\'s load state
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -259,16 +261,16 @@ export const EngineApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.engineModels(options).then((request) => request(axios, basePath));
         },
         /**
-         * Status reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
+         * Reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
          * @summary Whether the serving runtime is reachable, and which build it runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        engineStatus(options?: RawAxiosRequestConfig): AxiosPromise<EngineStatus> {
+        engineStatus(options?: RawAxiosRequestConfig): AxiosPromise<EngineEngineStatus> {
             return localVarFp.engineStatus(options).then((request) => request(axios, basePath));
         },
         /**
-         * System reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
+         * Reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
          * @summary The serving host\'s own inventory: devices, memory and build capabilities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -301,7 +303,7 @@ export interface EngineApiEngineModelRequest {
  */
 export class EngineApi extends BaseAPI {
     /**
-     * Model reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
+     * Reads one model\'s load state — loaded, unloading, or not_found, as the engine itself reports it.
      * @summary Read one model\'s load state on the serving runtime
      * @param {EngineApiEngineModelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -313,7 +315,7 @@ export class EngineApi extends BaseAPI {
     }
 
     /**
-     * Models lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
+     * Lists the models the engine serves, each with its load state — the server\'s own model table (its standard list envelope, load status included), relayed verbatim.
      * @summary List the models the serving runtime holds, with each one\'s load state
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -324,7 +326,7 @@ export class EngineApi extends BaseAPI {
     }
 
     /**
-     * Status reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
+     * Reports whether the engine deployment is reachable and which build revision it runs — an honest lens for \"is the serving runtime up\", never a fabricated ok.
      * @summary Whether the serving runtime is reachable, and which build it runs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -335,7 +337,7 @@ export class EngineApi extends BaseAPI {
     }
 
     /**
-     * System reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
+     * Reads the engine host\'s inventory: OS, CPU, memory, every accelerator device with its VRAM and compute capability, and the build\'s capabilities (CUDA/Metal/flash-attention) — the real hardware under the serving runtime, relayed verbatim.
      * @summary The serving host\'s own inventory: devices, memory and build capabilities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

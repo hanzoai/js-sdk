@@ -34,6 +34,12 @@ export interface AiModelInfo {
     'access'?: AiModelAccessInfo;
     /**
      * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
+    'canonical_slug'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof AiModelInfo
      */

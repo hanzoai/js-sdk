@@ -24,91 +24,91 @@ import type { ProjectsUploadGrant } from './projects-upload-grant';
  */
 export interface ProjectsDeployment {
     /**
-     * Bucket is the object-store bucket its files were written to.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'bucket'?: string;
     /**
-     * Bytes is their total size in bytes.
+     * 
      * @type {number}
      * @memberof ProjectsDeployment
      */
     'bytes'?: number;
     /**
-     * Commit is the revision that was built, for a deployment that came from a repository. Absent for an uploaded artifact, which has no revision.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'commit'?: string;
     /**
-     * CreatedAt is when the deployment was queued, as Unix seconds.
+     * 
      * @type {number}
      * @memberof ProjectsDeployment
      */
     'createdAt'?: number;
     /**
-     * Files is how many objects the deployment published.
+     * 
      * @type {number}
      * @memberof ProjectsDeployment
      */
     'files'?: number;
     /**
-     * ID identifies this one deployment attempt, and is what CI quotes back to complete it.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'id'?: string;
     /**
-     * LiveURL is where this deployment serves, once it is live.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'liveUrl'?: string;
     /**
-     * Message is what happened, in words — the build\'s own note, or on a failure why it failed.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'message'?: string;
     /**
-     * Prefix is the key prefix within that bucket holding EXACTLY this deployment\'s objects — the unit an upload grant is scoped to, so a grant for one deployment cannot write over another.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'prefix'?: string;
     /**
-     * ProjectID is the project this deployment belongs to.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'projectId'?: string;
     /**
-     * Source is what caused the deployment — a git push, an uploaded artifact, a generated site.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'source'?: string;
     /**
-     * Status is where the attempt got to — queued, live, or failed. A deployment that is live is not necessarily the one SERVING: the project\'s own currentDeploymentId says which is.
+     * 
      * @type {string}
      * @memberof ProjectsDeployment
      */
     'status'?: string;
     /**
-     * UpdatedAt is when it last changed state, as Unix seconds — so the gap between the two is how long the build took.
+     * 
      * @type {number}
      * @memberof ProjectsDeployment
      */
     'updatedAt'?: number;
     /**
-     * Upload is the prefix-scoped, short-lived S3 write grant handed to CI with a queued git deployment, so it needs no bucket credential (grant.go). Present ONLY on the 202 that creates the deployment — it is never stored and never replayed on a later read, so a grant cannot outlive the build it was minted for by being fetched again.
+     * 
      * @type {ProjectsUploadGrant}
      * @memberof ProjectsDeployment
      */
     'upload'?: ProjectsUploadGrant;
     /**
-     * Version counts deployments of this project from 1, so the history reads as an ordered sequence rather than by timestamp. It is per project, not global.
+     * 
      * @type {number}
      * @memberof ProjectsDeployment
      */

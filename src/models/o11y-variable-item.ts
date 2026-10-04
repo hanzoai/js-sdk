@@ -28,9 +28,9 @@ export interface O11yVariableItem {
     'type'?: any;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof O11yVariableItem
      */
-    'value'?: object;
+    'value'?: any;
 }
 

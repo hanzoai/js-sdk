@@ -21,31 +21,31 @@
  */
 export interface IndexEnqueued {
     /**
-     * EnqueuedAt is when the task was recorded, RFC 3339 — which is also when it completed.
+     * 
      * @type {string}
      * @memberof IndexEnqueued
      */
     'enqueuedAt'?: string;
     /**
-     * IndexUID names the index the write landed in.
+     * 
      * @type {string}
      * @memberof IndexEnqueued
      */
     'indexUid'?: string;
     /**
-     * Status is always `enqueued`, for dialect compatibility. The work is already done.
+     * 
      * @type {string}
      * @memberof IndexEnqueued
      */
     'status'?: string;
     /**
-     * TaskUID identifies the task for a client that polls it. Polling resolves immediately.
+     * 
      * @type {number}
      * @memberof IndexEnqueued
      */
     'taskUid'?: number;
     /**
-     * Type is the dialect\'s name for the kind of write: indexCreation, indexDeletion, settingsUpdate, documentAdditionOrUpdate, documentDeletion.
+     * 
      * @type {string}
      * @memberof IndexEnqueued
      */

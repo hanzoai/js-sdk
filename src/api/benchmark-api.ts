@@ -22,29 +22,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Admission } from '../models';
+import type { BenchmarkAdmission } from '../models';
 // @ts-ignore
-import type { BenchmarkCatalog } from '../models';
+import type { BenchmarkBenchmarkCatalog } from '../models';
 // @ts-ignore
-import type { ClaimsOut } from '../models';
+import type { BenchmarkClaimsOut } from '../models';
 // @ts-ignore
-import type { HistoryOut } from '../models';
+import type { BenchmarkHistoryOut } from '../models';
 // @ts-ignore
-import type { Leaderboard } from '../models';
+import type { BenchmarkLeaderboard } from '../models';
 // @ts-ignore
-import type { Pairing } from '../models';
+import type { BenchmarkPairing } from '../models';
 // @ts-ignore
-import type { Preset } from '../models';
+import type { BenchmarkPreset } from '../models';
 // @ts-ignore
-import type { PresetAccepted } from '../models';
+import type { BenchmarkPresetAccepted } from '../models';
 // @ts-ignore
-import type { PresetList } from '../models';
+import type { BenchmarkPresetList } from '../models';
 // @ts-ignore
-import type { PutClaimsIn } from '../models';
+import type { BenchmarkPutClaimsIn } from '../models';
 // @ts-ignore
-import type { PutClaimsOut } from '../models';
+import type { BenchmarkPutClaimsOut } from '../models';
 // @ts-ignore
-import type { Suite } from '../models';
+import type { BenchmarkSuite } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * BenchmarkApi - axios parameter creator
  * @export
@@ -86,17 +88,18 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered. It answers the operator\'s question — what does this arena currently believe someone else reported, and did we ship that or fix it.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
-         * @summary Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered.
+         * Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.  Anyone reads the public claims. A signed-in caller also reads its own org\'s private ones. No caller reads another org\'s private claims — a SuperAdmin acting in that org included, since acting in an org is not membership of it. Rows under org \"admin\" are the platform\'s own curated readings: the compiled seed and any correction a SuperAdmin wrote.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
+         * @summary Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.
          * @param {string} [benchmark] Benchmark filters to one benchmark id. Empty returns every benchmark.
          * @param {string} [model] Model filters to one model. Empty returns every model.
          * @param {string} [provider] Provider filters to one lab or leaderboard — the way to read what a single source claims across every model it covers.
          * @param {string} [source] Source filters to one citation, which is the finest grain there is: a source is what makes two claims about one model independent rather than a restatement of each other.
          * @param {string} [protocol] Protocol filters by HOW a claim was scored, so provider cards can be read apart from third parties running their own harness.
+         * @param {string} [org] Org filters to the claims one org made; \&quot;admin\&quot; reads the platform\&#39;s own. It narrows what the caller may already read and never widens it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkClaims: async (benchmark?: string, model?: string, provider?: string, source?: string, protocol?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarkClaims: async (benchmark?: string, model?: string, provider?: string, source?: string, protocol?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/benchmark/claims`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -131,6 +134,10 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
 
             if (protocol !== undefined) {
                 localVarQueryParameter['Protocol'] = protocol;
+            }
+
+            if (org !== undefined) {
+                localVarQueryParameter['Org'] = org;
             }
 
 
@@ -242,7 +249,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
+         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  Published, Claims, Spread and Mean read the platform\'s own public claims (org \"admin\") and nothing else, whoever asks. Other orgs\' claims are at /v1/benchmark/claims, labelled, and never on this board.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
          * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
          * @param {string} [benchmark] Benchmark is the catalog id to read, defaulting to gpqa_diamond.
          * @param {*} [options] Override http request option.
@@ -315,15 +322,15 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Records published claims: one to correct a number, many to import a leaderboard. Every row must carry a Source, because a claim without its citation is a number nobody can check — and an unattributed number in the published plane is indistinguishable from a measurement, which is the one confusion this whole surface is built to prevent.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
-         * @summary Records published claims: one to correct a number, many to import a leaderboard.
-         * @param {PutClaimsIn} putClaimsIn 
+         * Records claims for the caller\'s org: one to correct a number, many to import a leaderboard. Any signed-in caller may write; a caller with no verified principal is refused 401.  The org and the author are the verified caller\'s. Nothing in the body names either, and a body that tries is not read. Claims are private to that org unless visibility is \"public\". Writing as org \"admin\" curates the leaderboard, so it takes a SuperAdmin; anyone else acting there is refused 403, and the refusal is audited.  Every row must carry a Source, because a claim without its citation is a number nobody can check, and a benchmark id from /catalog, because an unknown id would sit in the store invisible to every read. A row names its benchmark, model, provider and protocol in at most 128 characters each, cites a source of at most 2048 bytes, and scores a percentage from 0 to 100; a row outside that is rejected by number.  A request carries at most 500 rows in at most 1 MiB (413 past either), and an org writes at most 2000 rows per UTC day (429 past that, and nothing from the request is written).  The trail takes the call\'s intent, naming every row, BEFORE the first row lands; a trail that cannot take it answers 503 and nothing is written. A second record then names which rows were stored and which failed.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
+         * @summary Records claims for the caller\'s org: one to correct a number, many to import a leaderboard.
+         * @param {BenchmarkPutClaimsIn} benchmarkPutClaimsIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkClaims: async (putClaimsIn: PutClaimsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'putClaimsIn' is not null or undefined
-            assertParamExists('postBenchmarkClaims', 'putClaimsIn', putClaimsIn)
+        postBenchmarkClaims: async (benchmarkPutClaimsIn: BenchmarkPutClaimsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'benchmarkPutClaimsIn' is not null or undefined
+            assertParamExists('postBenchmarkClaims', 'benchmarkPutClaimsIn', benchmarkPutClaimsIn)
             const localVarPath = `/v1/benchmark/claims`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -347,7 +354,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(putClaimsIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(benchmarkPutClaimsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -355,15 +362,15 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Any signed-in caller may compose; a caller with no verified principal is refused 401. Owner is the caller\'s verified org whatever the body says, so a blend is never checked or echoed as another org\'s.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
          * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
-         * @param {Preset} preset 
+         * @param {BenchmarkPreset} benchmarkPreset 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkPresets: async (preset: Preset, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'preset' is not null or undefined
-            assertParamExists('postBenchmarkPresets', 'preset', preset)
+        postBenchmarkPresets: async (benchmarkPreset: BenchmarkPreset, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'benchmarkPreset' is not null or undefined
+            assertParamExists('postBenchmarkPresets', 'benchmarkPreset', benchmarkPreset)
             const localVarPath = `/v1/benchmark/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -387,7 +394,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(preset, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(benchmarkPreset, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -395,15 +402,15 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Any signed-in caller may ask; a caller with no verified principal is refused 401. The receipt names the caller\'s verified org and user — nothing in the body names either — and stores nothing.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
          * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
-         * @param {Suite} suite 
+         * @param {BenchmarkSuite} benchmarkSuite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkRuns: async (suite: Suite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'suite' is not null or undefined
-            assertParamExists('postBenchmarkRuns', 'suite', suite)
+        postBenchmarkRuns: async (benchmarkSuite: BenchmarkSuite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'benchmarkSuite' is not null or undefined
+            assertParamExists('postBenchmarkRuns', 'benchmarkSuite', benchmarkSuite)
             const localVarPath = `/v1/benchmark/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -427,7 +434,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(suite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(benchmarkSuite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -450,25 +457,26 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkCatalog>> {
+        async getBenchmarkCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkBenchmarkCatalog>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered. It answers the operator\'s question — what does this arena currently believe someone else reported, and did we ship that or fix it.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
-         * @summary Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered.
+         * Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.  Anyone reads the public claims. A signed-in caller also reads its own org\'s private ones. No caller reads another org\'s private claims — a SuperAdmin acting in that org included, since acting in an org is not membership of it. Rows under org \"admin\" are the platform\'s own curated readings: the compiled seed and any correction a SuperAdmin wrote.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
+         * @summary Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.
          * @param {string} [benchmark] Benchmark filters to one benchmark id. Empty returns every benchmark.
          * @param {string} [model] Model filters to one model. Empty returns every model.
          * @param {string} [provider] Provider filters to one lab or leaderboard — the way to read what a single source claims across every model it covers.
          * @param {string} [source] Source filters to one citation, which is the finest grain there is: a source is what makes two claims about one model independent rather than a restatement of each other.
          * @param {string} [protocol] Protocol filters by HOW a claim was scored, so provider cards can be read apart from third parties running their own harness.
+         * @param {string} [org] Org filters to the claims one org made; \&quot;admin\&quot; reads the platform\&#39;s own. It narrows what the caller may already read and never widens it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkClaims(benchmark?: string, model?: string, provider?: string, source?: string, protocol?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClaimsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkClaims(benchmark, model, provider, source, protocol, options);
+        async getBenchmarkClaims(benchmark?: string, model?: string, provider?: string, source?: string, protocol?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkClaimsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkClaims(benchmark, model, provider, source, protocol, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkClaims']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -482,7 +490,7 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkCompare(a: string, b: string, benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pairing>> {
+        async getBenchmarkCompare(a: string, b: string, benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkPairing>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkCompare(a, b, benchmark, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkCompare']?.[localVarOperationServerIndex]?.url;
@@ -496,20 +504,20 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkHistory(benchmark?: string, model?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HistoryOut>> {
+        async getBenchmarkHistory(benchmark?: string, model?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkHistoryOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkHistory(benchmark, model, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkHistory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
+         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  Published, Claims, Spread and Mean read the platform\'s own public claims (org \"admin\") and nothing else, whoever asks. Other orgs\' claims are at /v1/benchmark/claims, labelled, and never on this board.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
          * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
          * @param {string} [benchmark] Benchmark is the catalog id to read, defaulting to gpqa_diamond.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkLeaderboard(benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Leaderboard>> {
+        async getBenchmarkLeaderboard(benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkLeaderboard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkLeaderboard(benchmark, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkLeaderboard']?.[localVarOperationServerIndex]?.url;
@@ -521,47 +529,47 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarkPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetList>> {
+        async getBenchmarkPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkPresetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkPresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkPresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records published claims: one to correct a number, many to import a leaderboard. Every row must carry a Source, because a claim without its citation is a number nobody can check — and an unattributed number in the published plane is indistinguishable from a measurement, which is the one confusion this whole surface is built to prevent.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
-         * @summary Records published claims: one to correct a number, many to import a leaderboard.
-         * @param {PutClaimsIn} putClaimsIn 
+         * Records claims for the caller\'s org: one to correct a number, many to import a leaderboard. Any signed-in caller may write; a caller with no verified principal is refused 401.  The org and the author are the verified caller\'s. Nothing in the body names either, and a body that tries is not read. Claims are private to that org unless visibility is \"public\". Writing as org \"admin\" curates the leaderboard, so it takes a SuperAdmin; anyone else acting there is refused 403, and the refusal is audited.  Every row must carry a Source, because a claim without its citation is a number nobody can check, and a benchmark id from /catalog, because an unknown id would sit in the store invisible to every read. A row names its benchmark, model, provider and protocol in at most 128 characters each, cites a source of at most 2048 bytes, and scores a percentage from 0 to 100; a row outside that is rejected by number.  A request carries at most 500 rows in at most 1 MiB (413 past either), and an org writes at most 2000 rows per UTC day (429 past that, and nothing from the request is written).  The trail takes the call\'s intent, naming every row, BEFORE the first row lands; a trail that cannot take it answers 503 and nothing is written. A second record then names which rows were stored and which failed.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
+         * @summary Records claims for the caller\'s org: one to correct a number, many to import a leaderboard.
+         * @param {BenchmarkPutClaimsIn} benchmarkPutClaimsIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBenchmarkClaims(putClaimsIn: PutClaimsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutClaimsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkClaims(putClaimsIn, options);
+        async postBenchmarkClaims(benchmarkPutClaimsIn: BenchmarkPutClaimsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkPutClaimsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkClaims(benchmarkPutClaimsIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postBenchmarkClaims']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Any signed-in caller may compose; a caller with no verified principal is refused 401. Owner is the caller\'s verified org whatever the body says, so a blend is never checked or echoed as another org\'s.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
          * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
-         * @param {Preset} preset 
+         * @param {BenchmarkPreset} benchmarkPreset 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBenchmarkPresets(preset: Preset, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetAccepted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkPresets(preset, options);
+        async postBenchmarkPresets(benchmarkPreset: BenchmarkPreset, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkPresetAccepted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkPresets(benchmarkPreset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postBenchmarkPresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Any signed-in caller may ask; a caller with no verified principal is refused 401. The receipt names the caller\'s verified org and user — nothing in the body names either — and stores nothing.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
          * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
-         * @param {Suite} suite 
+         * @param {BenchmarkSuite} benchmarkSuite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBenchmarkRuns(suite: Suite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Admission>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkRuns(suite, options);
+        async postBenchmarkRuns(benchmarkSuite: BenchmarkSuite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkAdmission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkRuns(benchmarkSuite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postBenchmarkRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -582,18 +590,18 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkCatalog(options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkCatalog> {
+        getBenchmarkCatalog(options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkBenchmarkCatalog> {
             return localVarFp.getBenchmarkCatalog(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered. It answers the operator\'s question — what does this arena currently believe someone else reported, and did we ship that or fix it.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
-         * @summary Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered.
+         * Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.  Anyone reads the public claims. A signed-in caller also reads its own org\'s private ones. No caller reads another org\'s private claims — a SuperAdmin acting in that org included, since acting in an org is not membership of it. Rows under org \"admin\" are the platform\'s own curated readings: the compiled seed and any correction a SuperAdmin wrote.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
+         * @summary Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.
          * @param {BenchmarkApiGetBenchmarkClaimsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkClaims(requestParameters: BenchmarkApiGetBenchmarkClaimsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ClaimsOut> {
-            return localVarFp.getBenchmarkClaims(requestParameters.benchmark, requestParameters.model, requestParameters.provider, requestParameters.source, requestParameters.protocol, options).then((request) => request(axios, basePath));
+        getBenchmarkClaims(requestParameters: BenchmarkApiGetBenchmarkClaimsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkClaimsOut> {
+            return localVarFp.getBenchmarkClaims(requestParameters.benchmark, requestParameters.model, requestParameters.provider, requestParameters.source, requestParameters.protocol, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the ONLY valid arm-vs-arm test: it pairs the two models on the items BOTH completed, and answers rescue and damage counts with an exact-McNemar p.  Pairing is what prevents the subset artifact — comparing one model\'s easy subset against another\'s full run — so n_common, not either arm\'s own coverage, is the number to read this by.  Both a and b are required. The benchmark defaults to gpqa_diamond.
@@ -602,7 +610,7 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkCompare(requestParameters: BenchmarkApiGetBenchmarkCompareRequest, options?: RawAxiosRequestConfig): AxiosPromise<Pairing> {
+        getBenchmarkCompare(requestParameters: BenchmarkApiGetBenchmarkCompareRequest, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkPairing> {
             return localVarFp.getBenchmarkCompare(requestParameters.a, requestParameters.b, requestParameters.benchmark, options).then((request) => request(axios, basePath));
         },
         /**
@@ -612,17 +620,17 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkHistory(requestParameters: BenchmarkApiGetBenchmarkHistoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HistoryOut> {
+        getBenchmarkHistory(requestParameters: BenchmarkApiGetBenchmarkHistoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkHistoryOut> {
             return localVarFp.getBenchmarkHistory(requestParameters.benchmark, requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
+         * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  Published, Claims, Spread and Mean read the platform\'s own public claims (org \"admin\") and nothing else, whoever asks. Other orgs\' claims are at /v1/benchmark/claims, labelled, and never on this board.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
          * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
          * @param {BenchmarkApiGetBenchmarkLeaderboardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkLeaderboard(requestParameters: BenchmarkApiGetBenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Leaderboard> {
+        getBenchmarkLeaderboard(requestParameters: BenchmarkApiGetBenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkLeaderboard> {
             return localVarFp.getBenchmarkLeaderboard(requestParameters.benchmark, options).then((request) => request(axios, basePath));
         },
         /**
@@ -631,38 +639,38 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarkPresets(options?: RawAxiosRequestConfig): AxiosPromise<PresetList> {
+        getBenchmarkPresets(options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkPresetList> {
             return localVarFp.getBenchmarkPresets(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records published claims: one to correct a number, many to import a leaderboard. Every row must carry a Source, because a claim without its citation is a number nobody can check — and an unattributed number in the published plane is indistinguishable from a measurement, which is the one confusion this whole surface is built to prevent.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
-         * @summary Records published claims: one to correct a number, many to import a leaderboard.
+         * Records claims for the caller\'s org: one to correct a number, many to import a leaderboard. Any signed-in caller may write; a caller with no verified principal is refused 401.  The org and the author are the verified caller\'s. Nothing in the body names either, and a body that tries is not read. Claims are private to that org unless visibility is \"public\". Writing as org \"admin\" curates the leaderboard, so it takes a SuperAdmin; anyone else acting there is refused 403, and the refusal is audited.  Every row must carry a Source, because a claim without its citation is a number nobody can check, and a benchmark id from /catalog, because an unknown id would sit in the store invisible to every read. A row names its benchmark, model, provider and protocol in at most 128 characters each, cites a source of at most 2048 bytes, and scores a percentage from 0 to 100; a row outside that is rejected by number.  A request carries at most 500 rows in at most 1 MiB (413 past either), and an org writes at most 2000 rows per UTC day (429 past that, and nothing from the request is written).  The trail takes the call\'s intent, naming every row, BEFORE the first row lands; a trail that cannot take it answers 503 and nothing is written. A second record then names which rows were stored and which failed.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
+         * @summary Records claims for the caller\'s org: one to correct a number, many to import a leaderboard.
          * @param {BenchmarkApiPostBenchmarkClaimsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkClaims(requestParameters: BenchmarkApiPostBenchmarkClaimsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutClaimsOut> {
-            return localVarFp.postBenchmarkClaims(requestParameters.putClaimsIn, options).then((request) => request(axios, basePath));
+        postBenchmarkClaims(requestParameters: BenchmarkApiPostBenchmarkClaimsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkPutClaimsOut> {
+            return localVarFp.postBenchmarkClaims(requestParameters.benchmarkPutClaimsIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Any signed-in caller may compose; a caller with no verified principal is refused 401. Owner is the caller\'s verified org whatever the body says, so a blend is never checked or echoed as another org\'s.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
          * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
          * @param {BenchmarkApiPostBenchmarkPresetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkPresets(requestParameters: BenchmarkApiPostBenchmarkPresetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PresetAccepted> {
-            return localVarFp.postBenchmarkPresets(requestParameters.preset, options).then((request) => request(axios, basePath));
+        postBenchmarkPresets(requestParameters: BenchmarkApiPostBenchmarkPresetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkPresetAccepted> {
+            return localVarFp.postBenchmarkPresets(requestParameters.benchmarkPreset, options).then((request) => request(axios, basePath));
         },
         /**
-         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Any signed-in caller may ask; a caller with no verified principal is refused 401. The receipt names the caller\'s verified org and user — nothing in the body names either — and stores nothing.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
          * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
          * @param {BenchmarkApiPostBenchmarkRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBenchmarkRuns(requestParameters: BenchmarkApiPostBenchmarkRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Admission> {
-            return localVarFp.postBenchmarkRuns(requestParameters.suite, options).then((request) => request(axios, basePath));
+        postBenchmarkRuns(requestParameters: BenchmarkApiPostBenchmarkRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkAdmission> {
+            return localVarFp.postBenchmarkRuns(requestParameters.benchmarkSuite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -707,6 +715,13 @@ export interface BenchmarkApiGetBenchmarkClaimsRequest {
      * @memberof BenchmarkApiGetBenchmarkClaims
      */
     readonly protocol?: string
+
+    /**
+     * Org filters to the claims one org made; \&quot;admin\&quot; reads the platform\&#39;s own. It narrows what the caller may already read and never widens it.
+     * @type {string}
+     * @memberof BenchmarkApiGetBenchmarkClaims
+     */
+    readonly org?: string
 }
 
 /**
@@ -780,10 +795,10 @@ export interface BenchmarkApiGetBenchmarkLeaderboardRequest {
 export interface BenchmarkApiPostBenchmarkClaimsRequest {
     /**
      * 
-     * @type {PutClaimsIn}
+     * @type {BenchmarkPutClaimsIn}
      * @memberof BenchmarkApiPostBenchmarkClaims
      */
-    readonly putClaimsIn: PutClaimsIn
+    readonly benchmarkPutClaimsIn: BenchmarkPutClaimsIn
 }
 
 /**
@@ -794,10 +809,10 @@ export interface BenchmarkApiPostBenchmarkClaimsRequest {
 export interface BenchmarkApiPostBenchmarkPresetsRequest {
     /**
      * 
-     * @type {Preset}
+     * @type {BenchmarkPreset}
      * @memberof BenchmarkApiPostBenchmarkPresets
      */
-    readonly preset: Preset
+    readonly benchmarkPreset: BenchmarkPreset
 }
 
 /**
@@ -808,10 +823,10 @@ export interface BenchmarkApiPostBenchmarkPresetsRequest {
 export interface BenchmarkApiPostBenchmarkRunsRequest {
     /**
      * 
-     * @type {Suite}
+     * @type {BenchmarkSuite}
      * @memberof BenchmarkApiPostBenchmarkRuns
      */
-    readonly suite: Suite
+    readonly benchmarkSuite: BenchmarkSuite
 }
 
 /**
@@ -833,15 +848,15 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered. It answers the operator\'s question — what does this arena currently believe someone else reported, and did we ship that or fix it.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
-     * @summary Lists the effective published claims: what the leaderboard will use for each (benchmark, model) after the seed, the import and any stored correction are layered.
+     * Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.  Anyone reads the public claims. A signed-in caller also reads its own org\'s private ones. No caller reads another org\'s private claims — a SuperAdmin acting in that org included, since acting in an org is not membership of it. Rows under org \"admin\" are the platform\'s own curated readings: the compiled seed and any correction a SuperAdmin wrote.  Effective values only. The history of a key lives in the append-only file and is not what this op is for; a list that returned every superseded row would make the common question the hard one.
+     * @summary Lists the effective claims the caller may read, each labelled with the org that made it and the user who recorded it.
      * @param {BenchmarkApiGetBenchmarkClaimsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
     public getBenchmarkClaims(requestParameters: BenchmarkApiGetBenchmarkClaimsRequest = {}, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).getBenchmarkClaims(requestParameters.benchmark, requestParameters.model, requestParameters.provider, requestParameters.source, requestParameters.protocol, options).then((request) => request(this.axios, this.basePath));
+        return BenchmarkApiFp(this.configuration).getBenchmarkClaims(requestParameters.benchmark, requestParameters.model, requestParameters.provider, requestParameters.source, requestParameters.protocol, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -869,7 +884,7 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
+     * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  Published, Claims, Spread and Mean read the platform\'s own public claims (org \"admin\") and nothing else, whoever asks. Other orgs\' claims are at /v1/benchmark/claims, labelled, and never on this board.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
      * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
      * @param {BenchmarkApiGetBenchmarkLeaderboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -892,19 +907,19 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * Records published claims: one to correct a number, many to import a leaderboard. Every row must carry a Source, because a claim without its citation is a number nobody can check — and an unattributed number in the published plane is indistinguishable from a measurement, which is the one confusion this whole surface is built to prevent.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
-     * @summary Records published claims: one to correct a number, many to import a leaderboard.
+     * Records claims for the caller\'s org: one to correct a number, many to import a leaderboard. Any signed-in caller may write; a caller with no verified principal is refused 401.  The org and the author are the verified caller\'s. Nothing in the body names either, and a body that tries is not read. Claims are private to that org unless visibility is \"public\". Writing as org \"admin\" curates the leaderboard, so it takes a SuperAdmin; anyone else acting there is refused 403, and the refusal is audited.  Every row must carry a Source, because a claim without its citation is a number nobody can check, and a benchmark id from /catalog, because an unknown id would sit in the store invisible to every read. A row names its benchmark, model, provider and protocol in at most 128 characters each, cites a source of at most 2048 bytes, and scores a percentage from 0 to 100; a row outside that is rejected by number.  A request carries at most 500 rows in at most 1 MiB (413 past either), and an org writes at most 2000 rows per UTC day (429 past that, and nothing from the request is written).  The trail takes the call\'s intent, naming every row, BEFORE the first row lands; a trail that cannot take it answers 503 and nothing is written. A second record then names which rows were stored and which failed.  Writes are append-only, so this never destroys the value it replaces. A vendor restating a score leaves both rows on disk, which is how the restating itself becomes visible.
+     * @summary Records claims for the caller\'s org: one to correct a number, many to import a leaderboard.
      * @param {BenchmarkApiPostBenchmarkClaimsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
     public postBenchmarkClaims(requestParameters: BenchmarkApiPostBenchmarkClaimsRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).postBenchmarkClaims(requestParameters.putClaimsIn, options).then((request) => request(this.axios, this.basePath));
+        return BenchmarkApiFp(this.configuration).postBenchmarkClaims(requestParameters.benchmarkPutClaimsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+     * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Any signed-in caller may compose; a caller with no verified principal is refused 401. Owner is the caller\'s verified org whatever the body says, so a blend is never checked or echoed as another org\'s.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
      * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
      * @param {BenchmarkApiPostBenchmarkPresetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -912,11 +927,11 @@ export class BenchmarkApi extends BaseAPI {
      * @memberof BenchmarkApi
      */
     public postBenchmarkPresets(requestParameters: BenchmarkApiPostBenchmarkPresetsRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).postBenchmarkPresets(requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
+        return BenchmarkApiFp(this.configuration).postBenchmarkPresets(requestParameters.benchmarkPreset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+     * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Any signed-in caller may ask; a caller with no verified principal is refused 401. The receipt names the caller\'s verified org and user — nothing in the body names either — and stores nothing.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
      * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
      * @param {BenchmarkApiPostBenchmarkRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -924,7 +939,7 @@ export class BenchmarkApi extends BaseAPI {
      * @memberof BenchmarkApi
      */
     public postBenchmarkRuns(requestParameters: BenchmarkApiPostBenchmarkRunsRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).postBenchmarkRuns(requestParameters.suite, options).then((request) => request(this.axios, this.basePath));
+        return BenchmarkApiFp(this.configuration).postBenchmarkRuns(requestParameters.benchmarkSuite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

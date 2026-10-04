@@ -22,13 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ProvisionRequest } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ProvisionResult } from '../models';
+import type { ProvisioningProvisionRequest } from '../models';
 // @ts-ignore
-import type { ProvisionedResource } from '../models';
+import type { ProvisioningProvisionResult } from '../models';
 // @ts-ignore
-import type { ProvisionedSummary } from '../models';
+import type { ProvisioningProvisionedResource } from '../models';
+// @ts-ignore
+import type { ProvisioningProvisionedSummary } from '../models';
 /**
  * ProvisioningApi - axios parameter creator
  * @export
@@ -74,8 +76,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropDocDB deprovisions one Hanzo DocDB database.
+         * Deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo DocDB database.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -112,8 +114,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropKV deprovisions one Hanzo KV store.
+         * Deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo KV store.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -226,8 +228,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
-         * @summary DropSQL deprovisions one Hanzo SQL database.
+         * Deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
+         * @summary Deprovisions one Hanzo SQL database.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -374,8 +376,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * ListDocDB lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
-         * @summary ListDocDB lists the caller org\'s Hanzo DocDB document databases.
+         * Lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
+         * @summary Lists the caller org\'s Hanzo DocDB document databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -408,8 +410,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
+         * Returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo DocDB database\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -446,8 +448,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * ListKV lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
-         * @summary ListKV lists the caller org\'s Hanzo KV stores.
+         * Lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
+         * @summary Lists the caller org\'s Hanzo KV stores.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -480,8 +482,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetKV returns one Hanzo KV store\'s metadata.
+         * Returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo KV store\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -662,8 +664,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * ListSQL lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
-         * @summary ListSQL lists the caller org\'s Hanzo SQL databases.
+         * Lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
+         * @summary Lists the caller org\'s Hanzo SQL databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -696,8 +698,8 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
-         * @summary GetSQL returns one Hanzo SQL database\'s metadata.
+         * Returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
+         * @summary Returns one Hanzo SQL database\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -808,13 +810,13 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
         /**
          * Launches your org\'s OWN Hanzo Datastore instance and answers with its `datastore://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
          * @summary Launches your org\'s OWN Hanzo Datastore instance and answers with its `datastore://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningDatastore: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningDatastore', 'provisionRequest', provisionRequest)
+        postProvisioningDatastore: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningDatastore', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/datastore`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -838,7 +840,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -846,15 +848,15 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningDocdb: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningDocdb', 'provisionRequest', provisionRequest)
+        postProvisioningDocdb: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningDocdb', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/docdb`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -878,7 +880,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -886,15 +888,15 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningKv: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningKv', 'provisionRequest', provisionRequest)
+        postProvisioningKv: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningKv', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/kv`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -918,7 +920,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -928,13 +930,13 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
         /**
          * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.
          * @summary Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningS3: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningS3', 'provisionRequest', provisionRequest)
+        postProvisioningS3: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningS3', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/s3`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -958,7 +960,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -968,13 +970,13 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
         /**
          * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.
          * @summary Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningSearch: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningSearch', 'provisionRequest', provisionRequest)
+        postProvisioningSearch: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningSearch', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -998,7 +1000,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1006,15 +1008,15 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningSql: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningSql', 'provisionRequest', provisionRequest)
+        postProvisioningSql: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningSql', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/sql`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1038,7 +1040,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1048,13 +1050,13 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
         /**
          * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.
          * @summary Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningVector: async (provisionRequest: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provisionRequest' is not null or undefined
-            assertParamExists('postProvisioningVector', 'provisionRequest', provisionRequest)
+        postProvisioningVector: async (provisioningProvisionRequest: ProvisioningProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provisioningProvisionRequest' is not null or undefined
+            assertParamExists('postProvisioningVector', 'provisioningProvisionRequest', provisioningProvisionRequest)
             const localVarPath = `/v1/provisioning/vector`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1078,7 +1080,7 @@ export const ProvisioningApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(provisioningProvisionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1109,8 +1111,8 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropDocDB deprovisions one Hanzo DocDB database.
+         * Deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo DocDB database.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1122,8 +1124,8 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropKV deprovisions one Hanzo KV store.
+         * Deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo KV store.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1161,8 +1163,8 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
-         * @summary DropSQL deprovisions one Hanzo SQL database.
+         * Deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
+         * @summary Deprovisions one Hanzo SQL database.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1192,7 +1194,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningDatastore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningDatastore']?.[localVarOperationServerIndex]?.url;
@@ -1205,57 +1207,57 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningDatastoreByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningDatastoreByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningDatastoreByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningDatastoreByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListDocDB lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
-         * @summary ListDocDB lists the caller org\'s Hanzo DocDB document databases.
+         * Lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
+         * @summary Lists the caller org\'s Hanzo DocDB document databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningDocdb(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningDocdb(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningDocdb(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningDocdb']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
+         * Returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo DocDB database\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningDocdbByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningDocdbByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningDocdbByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningDocdbByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListKV lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
-         * @summary ListKV lists the caller org\'s Hanzo KV stores.
+         * Lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
+         * @summary Lists the caller org\'s Hanzo KV stores.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningKv(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningKv(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningKv(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningKv']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetKV returns one Hanzo KV store\'s metadata.
+         * Returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo KV store\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningKvByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningKvByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningKvByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningKvByName']?.[localVarOperationServerIndex]?.url;
@@ -1267,7 +1269,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningS3(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningS3(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningS3(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningS3']?.[localVarOperationServerIndex]?.url;
@@ -1280,7 +1282,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningS3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningS3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningS3ByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningS3ByName']?.[localVarOperationServerIndex]?.url;
@@ -1292,7 +1294,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningSearch']?.[localVarOperationServerIndex]?.url;
@@ -1305,32 +1307,32 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningSearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningSearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningSearchByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningSearchByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListSQL lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
-         * @summary ListSQL lists the caller org\'s Hanzo SQL databases.
+         * Lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
+         * @summary Lists the caller org\'s Hanzo SQL databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningSql(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningSql(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningSql(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningSql']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
-         * @summary GetSQL returns one Hanzo SQL database\'s metadata.
+         * Returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
+         * @summary Returns one Hanzo SQL database\'s metadata.
          * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningSqlByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningSqlByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningSqlByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningSqlByName']?.[localVarOperationServerIndex]?.url;
@@ -1342,7 +1344,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningVector(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+        async getProvisioningVector(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisioningProvisionedSummary>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningVector(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningVector']?.[localVarOperationServerIndex]?.url;
@@ -1355,7 +1357,7 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvisioningVectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+        async getProvisioningVectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionedResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProvisioningVectorByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.getProvisioningVectorByName']?.[localVarOperationServerIndex]?.url;
@@ -1364,38 +1366,38 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
         /**
          * Launches your org\'s OWN Hanzo Datastore instance and answers with its `datastore://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
          * @summary Launches your org\'s OWN Hanzo Datastore instance and answers with its `datastore://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningDatastore(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningDatastore(provisionRequest, options);
+        async postProvisioningDatastore(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningDatastore(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningDatastore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningDocdb(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningDocdb(provisionRequest, options);
+        async postProvisioningDocdb(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningDocdb(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningDocdb']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningKv(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningKv(provisionRequest, options);
+        async postProvisioningKv(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningKv(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningKv']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1403,12 +1405,12 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
         /**
          * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.
          * @summary Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningS3(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningS3(provisionRequest, options);
+        async postProvisioningS3(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningS3(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningS3']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1416,25 +1418,25 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
         /**
          * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.
          * @summary Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningSearch(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningSearch(provisionRequest, options);
+        async postProvisioningSearch(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningSearch(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
-         * @param {ProvisionRequest} provisionRequest 
+         * Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningSql(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningSql(provisionRequest, options);
+        async postProvisioningSql(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningSql(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningSql']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1442,12 +1444,12 @@ export const ProvisioningApiFp = function(configuration?: Configuration) {
         /**
          * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.
          * @summary Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.
-         * @param {ProvisionRequest} provisionRequest 
+         * @param {ProvisioningProvisionRequest} provisioningProvisionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProvisioningVector(provisionRequest: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningVector(provisionRequest, options);
+        async postProvisioningVector(provisioningProvisionRequest: ProvisioningProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisioningProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProvisioningVector(provisioningProvisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProvisioningApi.postProvisioningVector']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1473,8 +1475,8 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteProvisioningDatastoreByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropDocDB deprovisions one Hanzo DocDB database.
+         * Deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo DocDB database.
          * @param {ProvisioningApiDeleteProvisioningDocdbByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1483,8 +1485,8 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteProvisioningDocdbByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary DropKV deprovisions one Hanzo KV store.
+         * Deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+         * @summary Deprovisions one Hanzo KV store.
          * @param {ProvisioningApiDeleteProvisioningKvByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1513,8 +1515,8 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteProvisioningSearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
-         * @summary DropSQL deprovisions one Hanzo SQL database.
+         * Deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
+         * @summary Deprovisions one Hanzo SQL database.
          * @param {ProvisioningApiDeleteProvisioningSqlByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1538,7 +1540,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningDatastore(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningDatastore(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningDatastore(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1548,45 +1550,45 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningDatastoreByName(requestParameters: ProvisioningApiGetProvisioningDatastoreByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningDatastoreByName(requestParameters: ProvisioningApiGetProvisioningDatastoreByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningDatastoreByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * ListDocDB lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
-         * @summary ListDocDB lists the caller org\'s Hanzo DocDB document databases.
+         * Lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
+         * @summary Lists the caller org\'s Hanzo DocDB document databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningDocdb(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningDocdb(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningDocdb(options).then((request) => request(axios, basePath));
         },
         /**
-         * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
+         * Returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo DocDB database\'s metadata.
          * @param {ProvisioningApiGetProvisioningDocdbByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningDocdbByName(requestParameters: ProvisioningApiGetProvisioningDocdbByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningDocdbByName(requestParameters: ProvisioningApiGetProvisioningDocdbByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningDocdbByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * ListKV lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
-         * @summary ListKV lists the caller org\'s Hanzo KV stores.
+         * Lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
+         * @summary Lists the caller org\'s Hanzo KV stores.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningKv(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningKv(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningKv(options).then((request) => request(axios, basePath));
         },
         /**
-         * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-         * @summary GetKV returns one Hanzo KV store\'s metadata.
+         * Returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+         * @summary Returns one Hanzo KV store\'s metadata.
          * @param {ProvisioningApiGetProvisioningKvByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningKvByName(requestParameters: ProvisioningApiGetProvisioningKvByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningKvByName(requestParameters: ProvisioningApiGetProvisioningKvByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningKvByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1595,7 +1597,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningS3(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningS3(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningS3(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1605,7 +1607,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningS3ByName(requestParameters: ProvisioningApiGetProvisioningS3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningS3ByName(requestParameters: ProvisioningApiGetProvisioningS3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningS3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1614,7 +1616,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningSearch(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningSearch(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningSearch(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1624,26 +1626,26 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningSearchByName(requestParameters: ProvisioningApiGetProvisioningSearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningSearchByName(requestParameters: ProvisioningApiGetProvisioningSearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningSearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * ListSQL lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
-         * @summary ListSQL lists the caller org\'s Hanzo SQL databases.
+         * Lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
+         * @summary Lists the caller org\'s Hanzo SQL databases.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningSql(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningSql(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningSql(options).then((request) => request(axios, basePath));
         },
         /**
-         * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
-         * @summary GetSQL returns one Hanzo SQL database\'s metadata.
+         * Returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
+         * @summary Returns one Hanzo SQL database\'s metadata.
          * @param {ProvisioningApiGetProvisioningSqlByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningSqlByName(requestParameters: ProvisioningApiGetProvisioningSqlByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningSqlByName(requestParameters: ProvisioningApiGetProvisioningSqlByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningSqlByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1652,7 +1654,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningVector(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+        getProvisioningVector(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisioningProvisionedSummary>> {
             return localVarFp.getProvisioningVector(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1662,7 +1664,7 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvisioningVectorByName(requestParameters: ProvisioningApiGetProvisioningVectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+        getProvisioningVectorByName(requestParameters: ProvisioningApiGetProvisioningVectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionedResource> {
             return localVarFp.getProvisioningVectorByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1672,28 +1674,28 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningDatastore(requestParameters: ProvisioningApiPostProvisioningDatastoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningDatastore(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningDatastore(requestParameters: ProvisioningApiPostProvisioningDatastoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningDatastore(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
+         * Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
          * @param {ProvisioningApiPostProvisioningDocdbRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningDocdb(requestParameters: ProvisioningApiPostProvisioningDocdbRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningDocdb(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningDocdb(requestParameters: ProvisioningApiPostProvisioningDocdbRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningDocdb(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
+         * Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
          * @param {ProvisioningApiPostProvisioningKvRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningKv(requestParameters: ProvisioningApiPostProvisioningKvRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningKv(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningKv(requestParameters: ProvisioningApiPostProvisioningKvRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningKv(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.
@@ -1702,8 +1704,8 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningS3(requestParameters: ProvisioningApiPostProvisioningS3Request, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningS3(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningS3(requestParameters: ProvisioningApiPostProvisioningS3Request, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningS3(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.
@@ -1712,18 +1714,18 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningSearch(requestParameters: ProvisioningApiPostProvisioningSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningSearch(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningSearch(requestParameters: ProvisioningApiPostProvisioningSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningSearch(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
-         * @summary CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
+         * Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
+         * @summary Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
          * @param {ProvisioningApiPostProvisioningSqlRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningSql(requestParameters: ProvisioningApiPostProvisioningSqlRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningSql(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningSql(requestParameters: ProvisioningApiPostProvisioningSqlRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningSql(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.
@@ -1732,8 +1734,8 @@ export const ProvisioningApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProvisioningVector(requestParameters: ProvisioningApiPostProvisioningVectorRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postProvisioningVector(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postProvisioningVector(requestParameters: ProvisioningApiPostProvisioningVectorRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisioningProvisionResult> {
+            return localVarFp.postProvisioningVector(requestParameters.provisioningProvisionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1942,10 +1944,10 @@ export interface ProvisioningApiGetProvisioningVectorByNameRequest {
 export interface ProvisioningApiPostProvisioningDatastoreRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningDatastore
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -1956,10 +1958,10 @@ export interface ProvisioningApiPostProvisioningDatastoreRequest {
 export interface ProvisioningApiPostProvisioningDocdbRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningDocdb
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -1970,10 +1972,10 @@ export interface ProvisioningApiPostProvisioningDocdbRequest {
 export interface ProvisioningApiPostProvisioningKvRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningKv
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -1984,10 +1986,10 @@ export interface ProvisioningApiPostProvisioningKvRequest {
 export interface ProvisioningApiPostProvisioningS3Request {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningS3
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -1998,10 +2000,10 @@ export interface ProvisioningApiPostProvisioningS3Request {
 export interface ProvisioningApiPostProvisioningSearchRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningSearch
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -2012,10 +2014,10 @@ export interface ProvisioningApiPostProvisioningSearchRequest {
 export interface ProvisioningApiPostProvisioningSqlRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningSql
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -2026,10 +2028,10 @@ export interface ProvisioningApiPostProvisioningSqlRequest {
 export interface ProvisioningApiPostProvisioningVectorRequest {
     /**
      * 
-     * @type {ProvisionRequest}
+     * @type {ProvisioningProvisionRequest}
      * @memberof ProvisioningApiPostProvisioningVector
      */
-    readonly provisionRequest: ProvisionRequest
+    readonly provisioningProvisionRequest: ProvisioningProvisionRequest
 }
 
 /**
@@ -2052,8 +2054,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-     * @summary DropDocDB deprovisions one Hanzo DocDB database.
+     * Deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+     * @summary Deprovisions one Hanzo DocDB database.
      * @param {ProvisioningApiDeleteProvisioningDocdbByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2064,8 +2066,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
-     * @summary DropKV deprovisions one Hanzo KV store.
+     * Deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
+     * @summary Deprovisions one Hanzo KV store.
      * @param {ProvisioningApiDeleteProvisioningKvByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2100,8 +2102,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
-     * @summary DropSQL deprovisions one Hanzo SQL database.
+     * Deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
+     * @summary Deprovisions one Hanzo SQL database.
      * @param {ProvisioningApiDeleteProvisioningSqlByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2147,8 +2149,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * ListDocDB lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
-     * @summary ListDocDB lists the caller org\'s Hanzo DocDB document databases.
+     * Lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
+     * @summary Lists the caller org\'s Hanzo DocDB document databases.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
@@ -2158,8 +2160,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-     * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
+     * Returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+     * @summary Returns one Hanzo DocDB database\'s metadata.
      * @param {ProvisioningApiGetProvisioningDocdbByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2170,8 +2172,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * ListKV lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
-     * @summary ListKV lists the caller org\'s Hanzo KV stores.
+     * Lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
+     * @summary Lists the caller org\'s Hanzo KV stores.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
@@ -2181,8 +2183,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
-     * @summary GetKV returns one Hanzo KV store\'s metadata.
+     * Returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
+     * @summary Returns one Hanzo KV store\'s metadata.
      * @param {ProvisioningApiGetProvisioningKvByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2239,8 +2241,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * ListSQL lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
-     * @summary ListSQL lists the caller org\'s Hanzo SQL databases.
+     * Lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
+     * @summary Lists the caller org\'s Hanzo SQL databases.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
@@ -2250,8 +2252,8 @@ export class ProvisioningApi extends BaseAPI {
     }
 
     /**
-     * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
-     * @summary GetSQL returns one Hanzo SQL database\'s metadata.
+     * Returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
+     * @summary Returns one Hanzo SQL database\'s metadata.
      * @param {ProvisioningApiGetProvisioningSqlByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2293,31 +2295,31 @@ export class ProvisioningApi extends BaseAPI {
      * @memberof ProvisioningApi
      */
     public postProvisioningDatastore(requestParameters: ProvisioningApiPostProvisioningDatastoreRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningDatastore(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningDatastore(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-     * @summary CreateDocDB launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
+     * Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string. It speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+     * @summary Launches your org\'s OWN document-database instance and answers with its `mongodb://` connection string.
      * @param {ProvisioningApiPostProvisioningDocdbRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
      */
     public postProvisioningDocdb(requestParameters: ProvisioningApiPostProvisioningDocdbRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningDocdb(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningDocdb(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
-     * @summary CreateKV launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
+     * Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster this fails closed with 503 rather than handing back a shared one.
+     * @summary Launches your org\'s OWN key-value instance and answers with its `kv://` connection string.
      * @param {ProvisioningApiPostProvisioningKvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
      */
     public postProvisioningKv(requestParameters: ProvisioningApiPostProvisioningKvRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningKv(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningKv(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2329,7 +2331,7 @@ export class ProvisioningApi extends BaseAPI {
      * @memberof ProvisioningApi
      */
     public postProvisioningS3(requestParameters: ProvisioningApiPostProvisioningS3Request, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningS3(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningS3(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2341,19 +2343,19 @@ export class ProvisioningApi extends BaseAPI {
      * @memberof ProvisioningApi
      */
     public postProvisioningSearch(requestParameters: ProvisioningApiPostProvisioningSearchRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningSearch(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningSearch(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
-     * @summary CreateSQL launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
+     * Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.  The instance is yours alone — a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.
+     * @summary Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string.
      * @param {ProvisioningApiPostProvisioningSqlRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvisioningApi
      */
     public postProvisioningSql(requestParameters: ProvisioningApiPostProvisioningSqlRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningSql(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningSql(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2365,7 +2367,7 @@ export class ProvisioningApi extends BaseAPI {
      * @memberof ProvisioningApi
      */
     public postProvisioningVector(requestParameters: ProvisioningApiPostProvisioningVectorRequest, options?: RawAxiosRequestConfig) {
-        return ProvisioningApiFp(this.configuration).postProvisioningVector(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProvisioningApiFp(this.configuration).postProvisioningVector(requestParameters.provisioningProvisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

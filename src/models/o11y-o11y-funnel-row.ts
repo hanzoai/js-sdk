@@ -22,10 +22,10 @@
 export interface O11yO11yFunnelRow {
     /**
      * Data are the row\'s columns, keyed by column name.
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yO11yFunnelRow
      */
-    'data'?: { [key: string]: object; };
+    'data'?: { [key: string]: any; };
     /**
      * Timestamp is the row\'s time.
      * @type {string}

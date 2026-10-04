@@ -22,19 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { DocType } from '../models';
+import type { FrameworkDocType } from '../models';
 // @ts-ignore
-import type { DocTypeList } from '../models';
+import type { FrameworkDocTypeList } from '../models';
 // @ts-ignore
-import type { DocumentList } from '../models';
+import type { FrameworkDocumentList } from '../models';
 // @ts-ignore
-import type { Install } from '../models';
+import type { FrameworkInstall } from '../models';
 // @ts-ignore
-import type { ModuleList } from '../models';
+import type { FrameworkModuleList } from '../models';
 // @ts-ignore
-import type { ModuleState } from '../models';
+import type { FrameworkModuleState } from '../models';
 // @ts-ignore
-import type { SummaryView } from '../models';
+import type { FrameworkSummaryView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * FrameworkApi - axios parameter creator
  * @export
@@ -524,13 +526,13 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it. Manager-only — on a fresh org the first caller to administer it is seeded as its System Manager, after which only a System Manager (or a platform admin) may define. Answers 201.
          * @summary Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it.
-         * @param {DocType} docType 
+         * @param {FrameworkDocType} frameworkDocType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFrameworkDoctypes: async (docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'docType' is not null or undefined
-            assertParamExists('postFrameworkDoctypes', 'docType', docType)
+        postFrameworkDoctypes: async (frameworkDocType: FrameworkDocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'frameworkDocType' is not null or undefined
+            assertParamExists('postFrameworkDoctypes', 'frameworkDocType', frameworkDocType)
             const localVarPath = `/v1/framework/doctypes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -554,7 +556,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(docType, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(frameworkDocType, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -645,15 +647,15 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body. The name in the URL is authoritative over the body\'s, and documents already stored under the DocType are left intact. Manager-only.
          * @summary Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body.
          * @param {string} name 
-         * @param {DocType} docType 
+         * @param {FrameworkDocType} frameworkDocType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putFrameworkDoctypesByName: async (name: string, docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putFrameworkDoctypesByName: async (name: string, frameworkDocType: FrameworkDocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putFrameworkDoctypesByName', 'name', name)
-            // verify required parameter 'docType' is not null or undefined
-            assertParamExists('putFrameworkDoctypesByName', 'docType', docType)
+            // verify required parameter 'frameworkDocType' is not null or undefined
+            assertParamExists('putFrameworkDoctypesByName', 'frameworkDocType', frameworkDocType)
             const localVarPath = `/v1/framework/doctypes/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -678,7 +680,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(docType, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(frameworkDocType, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -733,7 +735,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentList>> {
+        async getFrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocumentList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctype(doctype, filters, fields, orderBy, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
@@ -747,7 +749,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getFrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctypeByName(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
@@ -759,7 +761,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkDoctypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocTypeList>> {
+        async getFrameworkDoctypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocTypeList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkDoctypes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
@@ -772,7 +774,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
+        async getFrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocType>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkDoctypesByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
@@ -784,7 +786,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkModules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleList>> {
+        async getFrameworkModules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkModuleList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkModules(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkModules']?.[localVarOperationServerIndex]?.url;
@@ -797,7 +799,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkModulesByModule(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleState>> {
+        async getFrameworkModulesByModule(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkModuleState>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkModulesByModule(module, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkModulesByModule']?.[localVarOperationServerIndex]?.url;
@@ -809,7 +811,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryView>> {
+        async getFrameworkSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkSummaryView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkSummary']?.[localVarOperationServerIndex]?.url;
@@ -836,7 +838,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFrameworkByDoctypeByNameCancel(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async postFrameworkByDoctypeByNameCancel(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkByDoctypeByNameCancel(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkByDoctypeByNameCancel']?.[localVarOperationServerIndex]?.url;
@@ -850,7 +852,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFrameworkByDoctypeByNameSubmit(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async postFrameworkByDoctypeByNameSubmit(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkByDoctypeByNameSubmit(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkByDoctypeByNameSubmit']?.[localVarOperationServerIndex]?.url;
@@ -859,12 +861,12 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it. Manager-only — on a fresh org the first caller to administer it is seeded as its System Manager, after which only a System Manager (or a platform admin) may define. Answers 201.
          * @summary Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it.
-         * @param {DocType} docType 
+         * @param {FrameworkDocType} frameworkDocType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFrameworkDoctypes(docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkDoctypes(docType, options);
+        async postFrameworkDoctypes(frameworkDocType: FrameworkDocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocType>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkDoctypes(frameworkDocType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -876,7 +878,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFrameworkModulesByModuleInstall(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Install>> {
+        async postFrameworkModulesByModuleInstall(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkInstall>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkModulesByModuleInstall(module, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkModulesByModuleInstall']?.[localVarOperationServerIndex]?.url;
@@ -900,12 +902,12 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body. The name in the URL is authoritative over the body\'s, and documents already stored under the DocType are left intact. Manager-only.
          * @summary Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body.
          * @param {string} name 
-         * @param {DocType} docType 
+         * @param {FrameworkDocType} frameworkDocType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putFrameworkDoctypesByName(name: string, docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putFrameworkDoctypesByName(name, docType, options);
+        async putFrameworkDoctypesByName(name: string, frameworkDocType: FrameworkDocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocType>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putFrameworkDoctypesByName(name, frameworkDocType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.putFrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -947,7 +949,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocumentList> {
+        getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocumentList> {
             return localVarFp.getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -957,7 +959,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkByDoctypeByName(requestParameters: FrameworkApiGetFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getFrameworkByDoctypeByName(requestParameters: FrameworkApiGetFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -966,7 +968,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkDoctypes(options?: RawAxiosRequestConfig): AxiosPromise<DocTypeList> {
+        getFrameworkDoctypes(options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocTypeList> {
             return localVarFp.getFrameworkDoctypes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -976,7 +978,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkDoctypesByName(requestParameters: FrameworkApiGetFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
+        getFrameworkDoctypesByName(requestParameters: FrameworkApiGetFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocType> {
             return localVarFp.getFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -985,7 +987,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkModules(options?: RawAxiosRequestConfig): AxiosPromise<ModuleList> {
+        getFrameworkModules(options?: RawAxiosRequestConfig): AxiosPromise<FrameworkModuleList> {
             return localVarFp.getFrameworkModules(options).then((request) => request(axios, basePath));
         },
         /**
@@ -995,7 +997,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModuleState> {
+        getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkModuleState> {
             return localVarFp.getFrameworkModulesByModule(requestParameters.module, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1004,7 +1006,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkSummary(options?: RawAxiosRequestConfig): AxiosPromise<SummaryView> {
+        getFrameworkSummary(options?: RawAxiosRequestConfig): AxiosPromise<FrameworkSummaryView> {
             return localVarFp.getFrameworkSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1024,7 +1026,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        postFrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.postFrameworkByDoctypeByNameCancel(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1034,7 +1036,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        postFrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.postFrameworkByDoctypeByNameSubmit(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1044,8 +1046,8 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFrameworkDoctypes(requestParameters: FrameworkApiPostFrameworkDoctypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
-            return localVarFp.postFrameworkDoctypes(requestParameters.docType, options).then((request) => request(axios, basePath));
+        postFrameworkDoctypes(requestParameters: FrameworkApiPostFrameworkDoctypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocType> {
+            return localVarFp.postFrameworkDoctypes(requestParameters.frameworkDocType, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
@@ -1054,7 +1056,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostFrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Install> {
+        postFrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostFrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkInstall> {
             return localVarFp.postFrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1074,8 +1076,8 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putFrameworkDoctypesByName(requestParameters: FrameworkApiPutFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
-            return localVarFp.putFrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(axios, basePath));
+        putFrameworkDoctypesByName(requestParameters: FrameworkApiPutFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocType> {
+            return localVarFp.putFrameworkDoctypesByName(requestParameters.name, requestParameters.frameworkDocType, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1270,10 +1272,10 @@ export interface FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest {
 export interface FrameworkApiPostFrameworkDoctypesRequest {
     /**
      * 
-     * @type {DocType}
+     * @type {FrameworkDocType}
      * @memberof FrameworkApiPostFrameworkDoctypes
      */
-    readonly docType: DocType
+    readonly frameworkDocType: FrameworkDocType
 }
 
 /**
@@ -1326,10 +1328,10 @@ export interface FrameworkApiPutFrameworkDoctypesByNameRequest {
 
     /**
      * 
-     * @type {DocType}
+     * @type {FrameworkDocType}
      * @memberof FrameworkApiPutFrameworkDoctypesByName
      */
-    readonly docType: DocType
+    readonly frameworkDocType: FrameworkDocType
 }
 
 /**
@@ -1489,7 +1491,7 @@ export class FrameworkApi extends BaseAPI {
      * @memberof FrameworkApi
      */
     public postFrameworkDoctypes(requestParameters: FrameworkApiPostFrameworkDoctypesRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postFrameworkDoctypes(requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
+        return FrameworkApiFp(this.configuration).postFrameworkDoctypes(requestParameters.frameworkDocType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1525,7 +1527,7 @@ export class FrameworkApi extends BaseAPI {
      * @memberof FrameworkApi
      */
     public putFrameworkDoctypesByName(requestParameters: FrameworkApiPutFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).putFrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
+        return FrameworkApiFp(this.configuration).putFrameworkDoctypesByName(requestParameters.name, requestParameters.frameworkDocType, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

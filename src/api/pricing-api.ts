@@ -22,29 +22,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { EnablementBoard } from '../models';
+import type { PricingCard } from '../models';
 // @ts-ignore
-import type { EnablementOptRef } from '../models';
+import type { PricingEnablementBoard } from '../models';
 // @ts-ignore
-import type { PricingHealth } from '../models';
+import type { PricingEnablementOptRef } from '../models';
 // @ts-ignore
-import type { PricingModelList } from '../models';
+import type { PricingPricingHealth } from '../models';
 // @ts-ignore
-import type { PricingPlanList } from '../models';
+import type { PricingPricingModelList } from '../models';
 // @ts-ignore
-import type { PricingPresetList } from '../models';
+import type { PricingPricingPlanList } from '../models';
 // @ts-ignore
-import type { PricingProviderList } from '../models';
+import type { PricingPricingPresetList } from '../models';
 // @ts-ignore
-import type { PricingRegionList } from '../models';
+import type { PricingPricingProviderList } from '../models';
 // @ts-ignore
-import type { PricingSyncOut } from '../models';
+import type { PricingPricingRegionList } from '../models';
 // @ts-ignore
-import type { PricingTierList } from '../models';
+import type { PricingPricingTierList } from '../models';
 // @ts-ignore
-import type { PricingToolList } from '../models';
+import type { PricingPricingToolList } from '../models';
 // @ts-ignore
-import type { UserEnablementItem } from '../models';
+import type { PricingUserEnablementItem } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * PricingApi - axios parameter creator
  * @export
@@ -528,8 +530,8 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Health reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the pricing subsystem is mounted and serving.
+         * Reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the pricing subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -872,8 +874,42 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
-         * @summary Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+         * Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.  FOUR COMPONENTS, and every charge is one of them — model inference, computer, web tools and media generation. Two are quoted before they run, so an agent is refused before it breaches its budget; two are booked from what they used, because neither a provider\'s charge nor a render\'s cost is knowable in advance.  EVERY AMOUNT IS INTEGER MICRO-USD (1 USD = 1,000,000), stated once in `unit`, and each rate says what one unit of it is in `per`. The compute rates are per HOUR because that is the unit a span is priced in — rate × seconds / 3600 — and because a GiB-second is four and a half micro-USD, which no integer holds.  The rates are the ones the ledger books: each is resolved through the same authority the metering path reads, falling back to the same compiled floor. A rate of zero is a price and not an absence — a paused computer, a computer\'s creation, the interfaces and a seat all cost nothing by design.
+         * @summary Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPricingTariff: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/pricing/tariff`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.  The two WEB rows are priced from the rate card rather than from the catalog, because those are the rows the platform charges by the call and a published number that is also a charged one has exactly one home (see tariff.go). Read them as integer micro-USD at /v1/pricing/tariff; the decimal here is the display this list has always carried.
+         * @summary Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -908,13 +944,13 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
          * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {EnablementOptRef} enablementOptRef 
+         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPricingEnablementOptin: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'enablementOptRef' is not null or undefined
-            assertParamExists('postPricingEnablementOptin', 'enablementOptRef', enablementOptRef)
+        postPricingEnablementOptin: async (pricingEnablementOptRef: PricingEnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pricingEnablementOptRef' is not null or undefined
+            assertParamExists('postPricingEnablementOptin', 'pricingEnablementOptRef', pricingEnablementOptRef)
             const localVarPath = `/v1/pricing/enablement/optin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -938,7 +974,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(enablementOptRef, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pricingEnablementOptRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -948,13 +984,13 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {EnablementOptRef} enablementOptRef 
+         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPricingEnablementOptout: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'enablementOptRef' is not null or undefined
-            assertParamExists('postPricingEnablementOptout', 'enablementOptRef', enablementOptRef)
+        postPricingEnablementOptout: async (pricingEnablementOptRef: PricingEnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pricingEnablementOptRef' is not null or undefined
+            assertParamExists('postPricingEnablementOptout', 'pricingEnablementOptRef', pricingEnablementOptRef)
             const localVarPath = `/v1/pricing/enablement/optout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -978,41 +1014,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(enablementOptRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with. The fetch runs in Go and the markup transform in the pricing bundle. SuperAdmin only; every other caller is refused.
-         * @summary Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/pricing/sync`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pricingEnablementOptRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1035,7 +1037,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricing(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricing']?.[localVarOperationServerIndex]?.url;
@@ -1047,7 +1049,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingBase(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingBase(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingBase(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingBase']?.[localVarOperationServerIndex]?.url;
@@ -1059,7 +1061,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingBlockchain(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingBlockchain']?.[localVarOperationServerIndex]?.url;
@@ -1071,7 +1073,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloud(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloud']?.[localVarOperationServerIndex]?.url;
@@ -1083,7 +1085,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingCloudPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingCloudPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudPlans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudPlans']?.[localVarOperationServerIndex]?.url;
@@ -1095,7 +1097,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingCloudRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingRegionList>> {
+        async getPricingCloudRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingRegionList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudRegions']?.[localVarOperationServerIndex]?.url;
@@ -1107,7 +1109,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingCloudStorage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingCloudStorage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudStorage(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudStorage']?.[localVarOperationServerIndex]?.url;
@@ -1119,7 +1121,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingCompute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingCompute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCompute(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCompute']?.[localVarOperationServerIndex]?.url;
@@ -1131,7 +1133,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingComputePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPresetList>> {
+        async getPricingComputePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPresetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingComputePresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingComputePresets']?.[localVarOperationServerIndex]?.url;
@@ -1143,7 +1145,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingDatastore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingDatastore']?.[localVarOperationServerIndex]?.url;
@@ -1155,7 +1157,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingEnablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnablementBoard>> {
+        async getPricingEnablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingEnablementBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingEnablement(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingEnablement']?.[localVarOperationServerIndex]?.url;
@@ -1167,7 +1169,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingFeatured(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+        async getPricingFeatured(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingModelList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingFeatured(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingFeatured']?.[localVarOperationServerIndex]?.url;
@@ -1179,7 +1181,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingFree(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+        async getPricingFree(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingModelList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingFree(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingFree']?.[localVarOperationServerIndex]?.url;
@@ -1191,19 +1193,19 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingTierList>> {
+        async getPricingGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingTierList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingGpu(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingGpu']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the pricing subsystem is mounted and serving.
+         * Reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the pricing subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingHealth>> {
+        async getPricingHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingHealth']?.[localVarOperationServerIndex]?.url;
@@ -1215,7 +1217,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingIam(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingIam(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingIam(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingIam']?.[localVarOperationServerIndex]?.url;
@@ -1228,7 +1230,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingModelByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingModelByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModelByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingModelByName']?.[localVarOperationServerIndex]?.url;
@@ -1240,7 +1242,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+        async getPricingModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingModelList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingModels']?.[localVarOperationServerIndex]?.url;
@@ -1252,7 +1254,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingPaas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingPaas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingPaas(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingPaas']?.[localVarOperationServerIndex]?.url;
@@ -1264,7 +1266,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingPolicy']?.[localVarOperationServerIndex]?.url;
@@ -1276,7 +1278,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingProviderList>> {
+        async getPricingProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingProviderList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingProviders']?.[localVarOperationServerIndex]?.url;
@@ -1288,7 +1290,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingServices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingServices']?.[localVarOperationServerIndex]?.url;
@@ -1300,7 +1302,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+        async getPricingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingPlanList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingSubscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingSubscriptions']?.[localVarOperationServerIndex]?.url;
@@ -1312,19 +1314,31 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getPricingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
-         * @summary Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+         * Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.  FOUR COMPONENTS, and every charge is one of them — model inference, computer, web tools and media generation. Two are quoted before they run, so an agent is refused before it breaches its budget; two are booked from what they used, because neither a provider\'s charge nor a render\'s cost is knowable in advance.  EVERY AMOUNT IS INTEGER MICRO-USD (1 USD = 1,000,000), stated once in `unit`, and each rate says what one unit of it is in `per`. The compute rates are per HOUR because that is the unit a span is priced in — rate × seconds / 3600 — and because a GiB-second is four and a half micro-USD, which no integer holds.  The rates are the ones the ledger books: each is resolved through the same authority the metering path reads, falling back to the same compiled floor. A rate of zero is a price and not an absence — a paused computer, a computer\'s creation, the interfaces and a seat all cost nothing by design.
+         * @summary Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingToolList>> {
+        async getPricingTariff(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingCard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingTariff(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingTariff']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.  The two WEB rows are priced from the rate card rather than from the catalog, because those are the rows the platform charges by the call and a published number that is also a charged one has exactly one home (see tariff.go). Read them as integer micro-USD at /v1/pricing/tariff; the decimal here is the display this list has always carried.
+         * @summary Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPricingTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingToolList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingTools(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingTools']?.[localVarOperationServerIndex]?.url;
@@ -1333,12 +1347,12 @@ export const PricingApiFp = function(configuration?: Configuration) {
         /**
          * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
          * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {EnablementOptRef} enablementOptRef 
+         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPricingEnablementOptin(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptin(enablementOptRef, options);
+        async postPricingEnablementOptin(pricingEnablementOptRef: PricingEnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingUserEnablementItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptin(pricingEnablementOptRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingEnablementOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1346,26 +1360,14 @@ export const PricingApiFp = function(configuration?: Configuration) {
         /**
          * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {EnablementOptRef} enablementOptRef 
+         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPricingEnablementOptout(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptout(enablementOptRef, options);
+        async postPricingEnablementOptout(pricingEnablementOptRef: PricingEnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingUserEnablementItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptout(pricingEnablementOptRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingEnablementOptout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with. The fetch runs in Go and the markup transform in the pricing bundle. SuperAdmin only; every other caller is refused.
-         * @summary Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPricingSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingSyncOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingSync(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1384,7 +1386,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricing(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricing(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricing(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1393,7 +1395,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingBase(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingBase(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingBase(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1402,7 +1404,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingBlockchain(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1411,7 +1413,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingCloud(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingCloud(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingCloud(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1420,7 +1422,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingCloudPlans(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingCloudPlans(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingCloudPlans(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1429,7 +1431,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingCloudRegions(options?: RawAxiosRequestConfig): AxiosPromise<PricingRegionList> {
+        getPricingCloudRegions(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingRegionList> {
             return localVarFp.getPricingCloudRegions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1438,7 +1440,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingCloudStorage(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingCloudStorage(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingCloudStorage(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1447,7 +1449,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingCompute(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingCompute(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingCompute(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1456,7 +1458,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingComputePresets(options?: RawAxiosRequestConfig): AxiosPromise<PricingPresetList> {
+        getPricingComputePresets(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPresetList> {
             return localVarFp.getPricingComputePresets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1465,7 +1467,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingDatastore(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingDatastore(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingDatastore(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1474,7 +1476,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingEnablement(options?: RawAxiosRequestConfig): AxiosPromise<EnablementBoard> {
+        getPricingEnablement(options?: RawAxiosRequestConfig): AxiosPromise<PricingEnablementBoard> {
             return localVarFp.getPricingEnablement(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1483,7 +1485,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingFeatured(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+        getPricingFeatured(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingModelList> {
             return localVarFp.getPricingFeatured(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1492,7 +1494,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingFree(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+        getPricingFree(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingModelList> {
             return localVarFp.getPricingFree(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1501,16 +1503,16 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingGpu(options?: RawAxiosRequestConfig): AxiosPromise<PricingTierList> {
+        getPricingGpu(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingTierList> {
             return localVarFp.getPricingGpu(options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
-         * @summary Health reports that the pricing subsystem is mounted and serving.
+         * Reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
+         * @summary Reports that the pricing subsystem is mounted and serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingHealth(options?: RawAxiosRequestConfig): AxiosPromise<PricingHealth> {
+        getPricingHealth(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingHealth> {
             return localVarFp.getPricingHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1519,7 +1521,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingIam(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingIam(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingIam(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1529,7 +1531,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingModelByName(requestParameters: PricingApiGetPricingModelByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingModelByName(requestParameters: PricingApiGetPricingModelByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1538,7 +1540,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingModels(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+        getPricingModels(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingModelList> {
             return localVarFp.getPricingModels(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1547,7 +1549,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingPaas(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingPaas(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingPaas(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1556,7 +1558,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingPolicy(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingPolicy(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1565,7 +1567,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingProviders(options?: RawAxiosRequestConfig): AxiosPromise<PricingProviderList> {
+        getPricingProviders(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingProviderList> {
             return localVarFp.getPricingProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1574,7 +1576,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingServices(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingServices(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingServices(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1583,7 +1585,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+        getPricingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingPlanList> {
             return localVarFp.getPricingSubscriptions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1592,16 +1594,25 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingSummary(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getPricingSummary(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getPricingSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
-         * @summary Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+         * Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.  FOUR COMPONENTS, and every charge is one of them — model inference, computer, web tools and media generation. Two are quoted before they run, so an agent is refused before it breaches its budget; two are booked from what they used, because neither a provider\'s charge nor a render\'s cost is knowable in advance.  EVERY AMOUNT IS INTEGER MICRO-USD (1 USD = 1,000,000), stated once in `unit`, and each rate says what one unit of it is in `per`. The compute rates are per HOUR because that is the unit a span is priced in — rate × seconds / 3600 — and because a GiB-second is four and a half micro-USD, which no integer holds.  The rates are the ones the ledger books: each is resolved through the same authority the metering path reads, falling back to the same compiled floor. A rate of zero is a price and not an absence — a paused computer, a computer\'s creation, the interfaces and a seat all cost nothing by design.
+         * @summary Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingTools(options?: RawAxiosRequestConfig): AxiosPromise<PricingToolList> {
+        getPricingTariff(options?: RawAxiosRequestConfig): AxiosPromise<PricingCard> {
+            return localVarFp.getPricingTariff(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.  The two WEB rows are priced from the rate card rather than from the catalog, because those are the rows the platform charges by the call and a published number that is also a charged one has exactly one home (see tariff.go). Read them as integer micro-USD at /v1/pricing/tariff; the decimal here is the display this list has always carried.
+         * @summary Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPricingTools(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingToolList> {
             return localVarFp.getPricingTools(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1611,8 +1622,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPricingEnablementOptin(requestParameters: PricingApiPostPricingEnablementOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
-            return localVarFp.postPricingEnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
+        postPricingEnablementOptin(requestParameters: PricingApiPostPricingEnablementOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<PricingUserEnablementItem> {
+            return localVarFp.postPricingEnablementOptin(requestParameters.pricingEnablementOptRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
@@ -1621,17 +1632,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPricingEnablementOptout(requestParameters: PricingApiPostPricingEnablementOptoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
-            return localVarFp.postPricingEnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with. The fetch runs in Go and the markup transform in the pricing bundle. SuperAdmin only; every other caller is refused.
-         * @summary Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingSync(options?: RawAxiosRequestConfig): AxiosPromise<PricingSyncOut> {
-            return localVarFp.postPricingSync(options).then((request) => request(axios, basePath));
+        postPricingEnablementOptout(requestParameters: PricingApiPostPricingEnablementOptoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PricingUserEnablementItem> {
+            return localVarFp.postPricingEnablementOptout(requestParameters.pricingEnablementOptRef, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1658,10 +1660,10 @@ export interface PricingApiGetPricingModelByNameRequest {
 export interface PricingApiPostPricingEnablementOptinRequest {
     /**
      * 
-     * @type {EnablementOptRef}
+     * @type {PricingEnablementOptRef}
      * @memberof PricingApiPostPricingEnablementOptin
      */
-    readonly enablementOptRef: EnablementOptRef
+    readonly pricingEnablementOptRef: PricingEnablementOptRef
 }
 
 /**
@@ -1672,10 +1674,10 @@ export interface PricingApiPostPricingEnablementOptinRequest {
 export interface PricingApiPostPricingEnablementOptoutRequest {
     /**
      * 
-     * @type {EnablementOptRef}
+     * @type {PricingEnablementOptRef}
      * @memberof PricingApiPostPricingEnablementOptout
      */
-    readonly enablementOptRef: EnablementOptRef
+    readonly pricingEnablementOptRef: PricingEnablementOptRef
 }
 
 /**
@@ -1840,8 +1842,8 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Health reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
-     * @summary Health reports that the pricing subsystem is mounted and serving.
+     * Reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
+     * @summary Reports that the pricing subsystem is mounted and serving.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
@@ -1951,8 +1953,19 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
-     * @summary Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
+     * Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.  FOUR COMPONENTS, and every charge is one of them — model inference, computer, web tools and media generation. Two are quoted before they run, so an agent is refused before it breaches its budget; two are booked from what they used, because neither a provider\'s charge nor a render\'s cost is knowable in advance.  EVERY AMOUNT IS INTEGER MICRO-USD (1 USD = 1,000,000), stated once in `unit`, and each rate says what one unit of it is in `per`. The compute rates are per HOUR because that is the unit a span is priced in — rate × seconds / 3600 — and because a GiB-second is four and a half micro-USD, which no integer holds.  The rates are the ones the ledger books: each is resolved through the same authority the metering path reads, falling back to the same compiled floor. A rate of zero is a price and not an absence — a paused computer, a computer\'s creation, the interfaces and a seat all cost nothing by design.
+     * @summary Returns the platform\'s rate card: what a bill is made of, what each part costs, and the completion windows a request may ask for.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PricingApi
+     */
+    public getPricingTariff(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingTariff(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.  The two WEB rows are priced from the rate card rather than from the catalog, because those are the rows the platform charges by the call and a published number that is also a charged one has exactly one home (see tariff.go). Read them as integer micro-USD at /v1/pricing/tariff; the decimal here is the display this list has always carried.
+     * @summary Returns the per-use tool prices — web search, web fetch, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
@@ -1970,7 +1983,7 @@ export class PricingApi extends BaseAPI {
      * @memberof PricingApi
      */
     public postPricingEnablementOptin(requestParameters: PricingApiPostPricingEnablementOptinRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postPricingEnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
+        return PricingApiFp(this.configuration).postPricingEnablementOptin(requestParameters.pricingEnablementOptRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1982,18 +1995,7 @@ export class PricingApi extends BaseAPI {
      * @memberof PricingApi
      */
     public postPricingEnablementOptout(requestParameters: PricingApiPostPricingEnablementOptoutRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postPricingEnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with. The fetch runs in Go and the markup transform in the pricing bundle. SuperAdmin only; every other caller is refused.
-     * @summary Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PricingApi
-     */
-    public postPricingSync(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postPricingSync(options).then((request) => request(this.axios, this.basePath));
+        return PricingApiFp(this.configuration).postPricingEnablementOptout(requestParameters.pricingEnablementOptRef, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

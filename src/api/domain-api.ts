@@ -22,21 +22,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Holdings } from '../models';
+import type { DomainHoldings } from '../models';
 // @ts-ignore
-import type { Order } from '../models';
+import type { DomainOrder } from '../models';
 // @ts-ignore
-import type { QuoteList } from '../models';
+import type { DomainQuoteList } from '../models';
 // @ts-ignore
-import type { Reachability } from '../models';
+import type { DomainReachability } from '../models';
 // @ts-ignore
-import type { RegisterResult } from '../models';
+import type { DomainRegisterResult } from '../models';
 // @ts-ignore
-import type { RenewReq } from '../models';
+import type { DomainRenewReq } from '../models';
 // @ts-ignore
-import type { RenewResult } from '../models';
+import type { DomainRenewResult } from '../models';
 // @ts-ignore
-import type { TransferReq } from '../models';
+import type { DomainTransferReq } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * DomainApi - axios parameter creator
  * @export
@@ -44,7 +46,7 @@ import type { TransferReq } from '../models';
 export const DomainApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
+         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
          * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
          * @param {string} domain Domain is one name, or several comma-separated, to check in one call. Names are lowercased. It is required.
          * @param {*} [options] Override http request option.
@@ -85,7 +87,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 403 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
+         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 401 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
          * @summary Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -153,7 +155,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
+         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
          * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
          * @param {string} q Q is the keyword to build names from. It is required.
          * @param {string} [tld] TLD narrows the search to a comma-separated set of top-level domains.
@@ -201,13 +203,13 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Buys a domain for your org and answers the ownership record together with the quote it was bought at.  The order of operations is the product guarantee: quote, refuse anything unpurchasable or unpriced, AUTHORIZE the org\'s prepaid balance, provision the authoritative zone in Hanzo DNS, register at the registrar already pointing at Hanzo\'s nameservers, and only then CAPTURE the charge and record ownership. A registrar failure therefore leaves the balance untouched — the org is never billed for a domain it did not get.  It requires a validated principal; that principal\'s org owns the domain and is the ledger the charge lands on. Re-buying a name the org already holds is 409, not a second purchase.  Refusals are distinct on purpose: 402 when the prepaid balance cannot cover the quoted price, 409 when the name is not available, 503 when the deployment has no registrar credentials, and the registrar\'s own message with its own 4xx — or 502 for its 5xx — when it rejects the purchase. Zone provisioning is best-effort: if the zone service is down the domain is still registered against Hanzo\'s nameservers and the zone reconciles afterwards, rather than the purchase failing.
          * @summary Buys a domain for your org and answers the ownership record together with the quote it was bought at.
-         * @param {Order} order 
+         * @param {DomainOrder} domainOrder 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainRegister: async (order: Order, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'order' is not null or undefined
-            assertParamExists('postDomainRegister', 'order', order)
+        postDomainRegister: async (domainOrder: DomainOrder, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'domainOrder' is not null or undefined
+            assertParamExists('postDomainRegister', 'domainOrder', domainOrder)
             const localVarPath = `/v1/domain/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -231,7 +233,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(order, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(domainOrder, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -241,13 +243,13 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.  Ownership is the gate: a name the caller\'s org does not hold is 404, so a renewal can never reach another tenant\'s domain.  The price is re-quoted at the CURRENT renewal rate rather than the one paid at purchase. If the registrar returns no renewal price the org\'s original price is charged instead, so a renewal is never accidentally free. The balance is authorized before the registrar is called and captured after it confirms — 402 when the prepaid balance cannot cover it, 503 when the deployment has no registrar credentials. Requires a validated principal.
          * @summary Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.
-         * @param {RenewReq} renewReq 
+         * @param {DomainRenewReq} domainRenewReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainRenew: async (renewReq: RenewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'renewReq' is not null or undefined
-            assertParamExists('postDomainRenew', 'renewReq', renewReq)
+        postDomainRenew: async (domainRenewReq: DomainRenewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'domainRenewReq' is not null or undefined
+            assertParamExists('postDomainRenew', 'domainRenewReq', domainRenewReq)
             const localVarPath = `/v1/domain/renew`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -271,7 +273,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(renewReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(domainRenewReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -281,13 +283,13 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.  It is priced and charged exactly like a registration: authorize the org\'s prepaid balance, ask the registrar for the transfer, capture only after the registrar accepts. A name the registrar will not price is 409, an insufficient balance is 402, and a deployment with no registrar credentials is 503.  It requires a validated principal; the ownership record is written under that org as soon as the registrar ACCEPTS the request, which is not the same instant the transfer completes at the losing registrar. Unlike a registration this does not provision a zone, so the record carries this deployment\'s configured nameservers.
          * @summary Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.
-         * @param {TransferReq} transferReq 
+         * @param {DomainTransferReq} domainTransferReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainTransfer: async (transferReq: TransferReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'transferReq' is not null or undefined
-            assertParamExists('postDomainTransfer', 'transferReq', transferReq)
+        postDomainTransfer: async (domainTransferReq: DomainTransferReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'domainTransferReq' is not null or undefined
+            assertParamExists('postDomainTransfer', 'domainTransferReq', domainTransferReq)
             const localVarPath = `/v1/domain/transfer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -311,7 +313,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(transferReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(domainTransferReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -329,25 +331,25 @@ export const DomainApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DomainApiAxiosParamCreator(configuration)
     return {
         /**
-         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
+         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
          * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
          * @param {string} domain Domain is one name, or several comma-separated, to check in one call. Names are lowercased. It is required.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDomainAvailability(domain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
+        async getDomainAvailability(domain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainQuoteList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainAvailability(domain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainAvailability']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 403 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
+         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 401 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
          * @summary Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDomainDomains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Holdings>> {
+        async getDomainDomains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainHoldings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainDomains(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainDomains']?.[localVarOperationServerIndex]?.url;
@@ -359,21 +361,21 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDomainHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Reachability>> {
+        async getDomainHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainReachability>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
+         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
          * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
          * @param {string} q Q is the keyword to build names from. It is required.
          * @param {string} [tld] TLD narrows the search to a comma-separated set of top-level domains.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDomainSearch(q: string, tld?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
+        async getDomainSearch(q: string, tld?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainQuoteList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainSearch(q, tld, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainSearch']?.[localVarOperationServerIndex]?.url;
@@ -382,12 +384,12 @@ export const DomainApiFp = function(configuration?: Configuration) {
         /**
          * Buys a domain for your org and answers the ownership record together with the quote it was bought at.  The order of operations is the product guarantee: quote, refuse anything unpurchasable or unpriced, AUTHORIZE the org\'s prepaid balance, provision the authoritative zone in Hanzo DNS, register at the registrar already pointing at Hanzo\'s nameservers, and only then CAPTURE the charge and record ownership. A registrar failure therefore leaves the balance untouched — the org is never billed for a domain it did not get.  It requires a validated principal; that principal\'s org owns the domain and is the ledger the charge lands on. Re-buying a name the org already holds is 409, not a second purchase.  Refusals are distinct on purpose: 402 when the prepaid balance cannot cover the quoted price, 409 when the name is not available, 503 when the deployment has no registrar credentials, and the registrar\'s own message with its own 4xx — or 502 for its 5xx — when it rejects the purchase. Zone provisioning is best-effort: if the zone service is down the domain is still registered against Hanzo\'s nameservers and the zone reconciles afterwards, rather than the purchase failing.
          * @summary Buys a domain for your org and answers the ownership record together with the quote it was bought at.
-         * @param {Order} order 
+         * @param {DomainOrder} domainOrder 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDomainRegister(order: Order, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRegister(order, options);
+        async postDomainRegister(domainOrder: DomainOrder, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainRegisterResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRegister(domainOrder, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainRegister']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -395,12 +397,12 @@ export const DomainApiFp = function(configuration?: Configuration) {
         /**
          * Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.  Ownership is the gate: a name the caller\'s org does not hold is 404, so a renewal can never reach another tenant\'s domain.  The price is re-quoted at the CURRENT renewal rate rather than the one paid at purchase. If the registrar returns no renewal price the org\'s original price is charged instead, so a renewal is never accidentally free. The balance is authorized before the registrar is called and captured after it confirms — 402 when the prepaid balance cannot cover it, 503 when the deployment has no registrar credentials. Requires a validated principal.
          * @summary Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.
-         * @param {RenewReq} renewReq 
+         * @param {DomainRenewReq} domainRenewReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDomainRenew(renewReq: RenewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RenewResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRenew(renewReq, options);
+        async postDomainRenew(domainRenewReq: DomainRenewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainRenewResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRenew(domainRenewReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainRenew']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -408,12 +410,12 @@ export const DomainApiFp = function(configuration?: Configuration) {
         /**
          * Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.  It is priced and charged exactly like a registration: authorize the org\'s prepaid balance, ask the registrar for the transfer, capture only after the registrar accepts. A name the registrar will not price is 409, an insufficient balance is 402, and a deployment with no registrar credentials is 503.  It requires a validated principal; the ownership record is written under that org as soon as the registrar ACCEPTS the request, which is not the same instant the transfer completes at the losing registrar. Unlike a registration this does not provision a zone, so the record carries this deployment\'s configured nameservers.
          * @summary Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.
-         * @param {TransferReq} transferReq 
+         * @param {DomainTransferReq} domainTransferReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDomainTransfer(transferReq: TransferReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainTransfer(transferReq, options);
+        async postDomainTransfer(domainTransferReq: DomainTransferReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainRegisterResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainTransfer(domainTransferReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainTransfer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -429,22 +431,22 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = DomainApiFp(configuration)
     return {
         /**
-         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
+         * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
          * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
          * @param {DomainApiGetDomainAvailabilityRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDomainAvailability(requestParameters: DomainApiGetDomainAvailabilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
+        getDomainAvailability(requestParameters: DomainApiGetDomainAvailabilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainQuoteList> {
             return localVarFp.getDomainAvailability(requestParameters.domain, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 403 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
+         * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 401 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
          * @summary Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDomainDomains(options?: RawAxiosRequestConfig): AxiosPromise<Holdings> {
+        getDomainDomains(options?: RawAxiosRequestConfig): AxiosPromise<DomainHoldings> {
             return localVarFp.getDomainDomains(options).then((request) => request(axios, basePath));
         },
         /**
@@ -453,17 +455,17 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDomainHealth(options?: RawAxiosRequestConfig): AxiosPromise<Reachability> {
+        getDomainHealth(options?: RawAxiosRequestConfig): AxiosPromise<DomainReachability> {
             return localVarFp.getDomainHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
+         * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
          * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
          * @param {DomainApiGetDomainSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDomainSearch(requestParameters: DomainApiGetDomainSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
+        getDomainSearch(requestParameters: DomainApiGetDomainSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainQuoteList> {
             return localVarFp.getDomainSearch(requestParameters.q, requestParameters.tld, options).then((request) => request(axios, basePath));
         },
         /**
@@ -473,8 +475,8 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainRegister(requestParameters: DomainApiPostDomainRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
-            return localVarFp.postDomainRegister(requestParameters.order, options).then((request) => request(axios, basePath));
+        postDomainRegister(requestParameters: DomainApiPostDomainRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainRegisterResult> {
+            return localVarFp.postDomainRegister(requestParameters.domainOrder, options).then((request) => request(axios, basePath));
         },
         /**
          * Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.  Ownership is the gate: a name the caller\'s org does not hold is 404, so a renewal can never reach another tenant\'s domain.  The price is re-quoted at the CURRENT renewal rate rather than the one paid at purchase. If the registrar returns no renewal price the org\'s original price is charged instead, so a renewal is never accidentally free. The balance is authorized before the registrar is called and captured after it confirms — 402 when the prepaid balance cannot cover it, 503 when the deployment has no registrar credentials. Requires a validated principal.
@@ -483,8 +485,8 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainRenew(requestParameters: DomainApiPostDomainRenewRequest, options?: RawAxiosRequestConfig): AxiosPromise<RenewResult> {
-            return localVarFp.postDomainRenew(requestParameters.renewReq, options).then((request) => request(axios, basePath));
+        postDomainRenew(requestParameters: DomainApiPostDomainRenewRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainRenewResult> {
+            return localVarFp.postDomainRenew(requestParameters.domainRenewReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.  It is priced and charged exactly like a registration: authorize the org\'s prepaid balance, ask the registrar for the transfer, capture only after the registrar accepts. A name the registrar will not price is 409, an insufficient balance is 402, and a deployment with no registrar credentials is 503.  It requires a validated principal; the ownership record is written under that org as soon as the registrar ACCEPTS the request, which is not the same instant the transfer completes at the losing registrar. Unlike a registration this does not provision a zone, so the record carries this deployment\'s configured nameservers.
@@ -493,8 +495,8 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDomainTransfer(requestParameters: DomainApiPostDomainTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
-            return localVarFp.postDomainTransfer(requestParameters.transferReq, options).then((request) => request(axios, basePath));
+        postDomainTransfer(requestParameters: DomainApiPostDomainTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainRegisterResult> {
+            return localVarFp.postDomainTransfer(requestParameters.domainTransferReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -542,10 +544,10 @@ export interface DomainApiGetDomainSearchRequest {
 export interface DomainApiPostDomainRegisterRequest {
     /**
      * 
-     * @type {Order}
+     * @type {DomainOrder}
      * @memberof DomainApiPostDomainRegister
      */
-    readonly order: Order
+    readonly domainOrder: DomainOrder
 }
 
 /**
@@ -556,10 +558,10 @@ export interface DomainApiPostDomainRegisterRequest {
 export interface DomainApiPostDomainRenewRequest {
     /**
      * 
-     * @type {RenewReq}
+     * @type {DomainRenewReq}
      * @memberof DomainApiPostDomainRenew
      */
-    readonly renewReq: RenewReq
+    readonly domainRenewReq: DomainRenewReq
 }
 
 /**
@@ -570,10 +572,10 @@ export interface DomainApiPostDomainRenewRequest {
 export interface DomainApiPostDomainTransferRequest {
     /**
      * 
-     * @type {TransferReq}
+     * @type {DomainTransferReq}
      * @memberof DomainApiPostDomainTransfer
      */
-    readonly transferReq: TransferReq
+    readonly domainTransferReq: DomainTransferReq
 }
 
 /**
@@ -584,7 +586,7 @@ export interface DomainApiPostDomainTransferRequest {
  */
 export class DomainApi extends BaseAPI {
     /**
-     * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
+     * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
      * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
      * @param {DomainApiGetDomainAvailabilityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -596,7 +598,7 @@ export class DomainApi extends BaseAPI {
     }
 
     /**
-     * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 403 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
+     * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 401 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
      * @summary Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -618,7 +620,7 @@ export class DomainApi extends BaseAPI {
     }
 
     /**
-     * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
+     * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 401 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
      * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
      * @param {DomainApiGetDomainSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -638,7 +640,7 @@ export class DomainApi extends BaseAPI {
      * @memberof DomainApi
      */
     public postDomainRegister(requestParameters: DomainApiPostDomainRegisterRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postDomainRegister(requestParameters.order, options).then((request) => request(this.axios, this.basePath));
+        return DomainApiFp(this.configuration).postDomainRegister(requestParameters.domainOrder, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -650,7 +652,7 @@ export class DomainApi extends BaseAPI {
      * @memberof DomainApi
      */
     public postDomainRenew(requestParameters: DomainApiPostDomainRenewRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postDomainRenew(requestParameters.renewReq, options).then((request) => request(this.axios, this.basePath));
+        return DomainApiFp(this.configuration).postDomainRenew(requestParameters.domainRenewReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -662,7 +664,7 @@ export class DomainApi extends BaseAPI {
      * @memberof DomainApi
      */
     public postDomainTransfer(requestParameters: DomainApiPostDomainTransferRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postDomainTransfer(requestParameters.transferReq, options).then((request) => request(this.axios, this.basePath));
+        return DomainApiFp(this.configuration).postDomainTransfer(requestParameters.domainTransferReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

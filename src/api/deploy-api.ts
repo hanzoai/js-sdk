@@ -22,33 +22,27 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ArgoApp } from '../models';
+import type { DeployArgoApp } from '../models';
 // @ts-ignore
-import type { ArgoAppList } from '../models';
+import type { DeployArgoAppList } from '../models';
 // @ts-ignore
-import type { ArgoClusterList } from '../models';
+import type { DeployArgoClusterList } from '../models';
 // @ts-ignore
-import type { ArgoProjectList } from '../models';
+import type { DeployArgoProjectList } from '../models';
 // @ts-ignore
-import type { ArgoRevisionMetadata } from '../models';
+import type { DeployArgoRevisionMetadata } from '../models';
 // @ts-ignore
-import type { ArgoSyncWindows } from '../models';
+import type { DeployArgoSyncWindows } from '../models';
 // @ts-ignore
-import type { ArgoTree } from '../models';
+import type { DeployArgoTree } from '../models';
 // @ts-ignore
-import type { ConsoleSettings } from '../models';
+import type { DeployDeployHealth } from '../models';
 // @ts-ignore
-import type { DeployHealth } from '../models';
+import type { DeploySessionEnded } from '../models';
 // @ts-ignore
-import type { GitOpsPlane } from '../models';
+import type { DeploySessionUser } from '../models';
 // @ts-ignore
-import type { ReconcileReport } from '../models';
-// @ts-ignore
-import type { SessionEnded } from '../models';
-// @ts-ignore
-import type { SessionUser } from '../models';
-// @ts-ignore
-import type { VersionMessage } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * DeployApi - axios parameter creator
  * @export
@@ -246,40 +240,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
-         * @summary Finish the sign-in round trip and mint the console session
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/deploy/callback`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it. The in-cluster destination is always present, so an empty fleet still answers one cluster, and no cluster credential can appear — the projected type physically has no config field.  It is TENANT-SCOPED and reads the SAME App CRs the applications list reads: a platform SuperAdmin counts the whole fleet, a validated org member counts only its own org\'s applications, anyone else is refused.
          * @summary Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it.
          * @param {*} [options] Override http request option.
@@ -314,42 +274,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.  This is the layer ABOVE the application board, and the two disagree in exactly the case an operator most needs to see: main carries a new image pin, CD has not applied that commit yet, so every App CR still declares the old tag and the application board is legitimately \"Synced\" while the deploy has not landed. Only the applied revision here can show that.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster. That is a FACT about the cluster rather than a failure of the request, so the caller can say \"no CD plane here\" instead of rendering an error it cannot act on; a genuine transport or RBAC failure still errors.  Read-only, and platform SuperAdmin only: the CD plane is fleet infrastructure with no tenant dimension. This view observes CD and never drives it — the sync policy is automated with self-heal, and the actionable verb an operator has is the per-application reconcile at POST /v1/deploy/applications/{name}/sync.
-         * @summary Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployGitops: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/deploy/gitops`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
-         * @summary Health reports whether this deployment can observe the delivery plane.
+         * Reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -484,40 +410,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.  Every value is a CONSTANT of this projection rather than configuration read from anywhere: the SPA\'s own login form is reported disabled and its OIDC config null because Hanzo IAM owns identity at the edge and this console\'s sign-in is GET /v1/deploy/login, and every argocd feature the projection does not implement — status badges, Dex connectors, config-management plugins, kustomize versions, the exec terminal, apps-in-any-namespace, the hydrator, sync-with-replace — is reported off. Platform SuperAdmin only.
-         * @summary Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeploySettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/deploy/settings`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
          * @summary Live application fleet updates as Server-Sent Events
          * @param {*} [options] Override http request option.
@@ -590,40 +482,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns the argocd VersionMessage the dashboard SPA reads at bootstrap. There is no argocd binary behind this plane — it is a projection over operator App CRs — so the fields say so rather than describing a build: Version names the projection, BuildDate is the moment this response was generated, and Compiler/Platform/GoVersion are the constants the SPA tolerates rather than facts about this process. Platform SuperAdmin only.
-         * @summary Returns the argocd VersionMessage the dashboard SPA reads at bootstrap.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/deploy/version`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
          * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
          * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
@@ -634,44 +492,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postDeployApplicationsByNameRollback', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}/rollback`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
-         * @summary Asks the operator to reconcile ONE application now.
-         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployApplicationsByNameSync: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('postDeployApplicationsByNameSync', 'name', name)
-            const localVarPath = `/v1/deploy/applications/{name}/sync`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -733,40 +553,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Renders the configured git source and applies it to the cluster, once.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployReconcile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/deploy/reconcile`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -783,7 +569,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoAppList>> {
+        async getDeployApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoAppList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplications(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplications']?.[localVarOperationServerIndex]?.url;
@@ -796,7 +582,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployApplicationsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
+        async getDeployApplicationsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoApp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByName']?.[localVarOperationServerIndex]?.url;
@@ -809,7 +595,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoTree>> {
+        async getDeployApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoTree>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameResourceTree(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
@@ -823,7 +609,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployApplicationsByNameRevisionsByRevisionMetadata(name: string, revision: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoRevisionMetadata>> {
+        async getDeployApplicationsByNameRevisionsByRevisionMetadata(name: string, revision: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoRevisionMetadata>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameRevisionsByRevisionMetadata(name, revision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameRevisionsByRevisionMetadata']?.[localVarOperationServerIndex]?.url;
@@ -836,22 +622,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployApplicationsByNameSyncwindows(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoSyncWindows>> {
+        async getDeployApplicationsByNameSyncwindows(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoSyncWindows>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameSyncwindows(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameSyncwindows']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
-         * @summary Finish the sign-in round trip and mint the console session
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeployCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployCallback(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -860,31 +634,19 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoClusterList>> {
+        async getDeployClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoClusterList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployClusters(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployClusters']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.  This is the layer ABOVE the application board, and the two disagree in exactly the case an operator most needs to see: main carries a new image pin, CD has not applied that commit yet, so every App CR still declares the old tag and the application board is legitimately \"Synced\" while the deploy has not landed. Only the applied revision here can show that.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster. That is a FACT about the cluster rather than a failure of the request, so the caller can say \"no CD plane here\" instead of rendering an error it cannot act on; a genuine transport or RBAC failure still errors.  Read-only, and platform SuperAdmin only: the CD plane is fleet infrastructure with no tenant dimension. This view observes CD and never drives it — the sync policy is automated with self-heal, and the actionable verb an operator has is the per-application reconcile at POST /v1/deploy/applications/{name}/sync.
-         * @summary Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.
+         * Reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployGitops(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitOpsPlane>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployGitops(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployGitops']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
-         * @summary Health reports whether this deployment can observe the delivery plane.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployHealth>> {
+        async getDeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployDeployHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployHealth']?.[localVarOperationServerIndex]?.url;
@@ -908,7 +670,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoProjectList>> {
+        async getDeployProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoProjectList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployProjects']?.[localVarOperationServerIndex]?.url;
@@ -920,22 +682,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeploySessionUserinfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionUser>> {
+        async getDeploySessionUserinfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploySessionUser>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeploySessionUserinfo(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeploySessionUserinfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.  Every value is a CONSTANT of this projection rather than configuration read from anywhere: the SPA\'s own login form is reported disabled and its OIDC config null because Hanzo IAM owns identity at the edge and this console\'s sign-in is GET /v1/deploy/login, and every argocd feature the projection does not implement — status badges, Dex connectors, config-management plugins, kustomize versions, the exec terminal, apps-in-any-namespace, the hydrator, sync-with-replace — is reported off. Platform SuperAdmin only.
-         * @summary Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeploySettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeploySettings(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeploySettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -964,41 +714,16 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the argocd VersionMessage the dashboard SPA reads at bootstrap. There is no argocd binary behind this plane — it is a projection over operator App CRs — so the fields say so rather than describing a build: Version names the projection, BuildDate is the moment this response was generated, and Compiler/Platform/GoVersion are the constants the SPA tolerates rather than facts about this process. Platform SuperAdmin only.
-         * @summary Returns the argocd VersionMessage the dashboard SPA reads at bootstrap.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeployVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VersionMessage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployVersion(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployVersion']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
          * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
          * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
+        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoApp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameRollback(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameRollback']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
-         * @summary Asks the operator to reconcile ONE application now.
-         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postDeployApplicationsByNameSync(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameSync(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1007,22 +732,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionEnded>> {
+        async postDeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploySessionEnded>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployLogout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployLogout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Renders the configured git source and applies it to the cluster, once.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postDeployReconcile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReconcileReport>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployReconcile(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployReconcile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1041,7 +754,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployApplications(options?: RawAxiosRequestConfig): AxiosPromise<ArgoAppList> {
+        getDeployApplications(options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoAppList> {
             return localVarFp.getDeployApplications(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1051,7 +764,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployApplicationsByName(requestParameters: DeployApiGetDeployApplicationsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
+        getDeployApplicationsByName(requestParameters: DeployApiGetDeployApplicationsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoApp> {
             return localVarFp.getDeployApplicationsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1061,7 +774,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoTree> {
+        getDeployApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoTree> {
             return localVarFp.getDeployApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1071,7 +784,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoRevisionMetadata> {
+        getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoRevisionMetadata> {
             return localVarFp.getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters.name, requestParameters.revision, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1081,17 +794,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetDeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoSyncWindows> {
+        getDeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetDeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoSyncWindows> {
             return localVarFp.getDeployApplicationsByNameSyncwindows(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
-         * @summary Finish the sign-in round trip and mint the console session
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getDeployCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it. The in-cluster destination is always present, so an empty fleet still answers one cluster, and no cluster credential can appear — the projected type physically has no config field.  It is TENANT-SCOPED and reads the SAME App CRs the applications list reads: a platform SuperAdmin counts the whole fleet, a validated org member counts only its own org\'s applications, anyone else is refused.
@@ -1099,25 +803,16 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployClusters(options?: RawAxiosRequestConfig): AxiosPromise<ArgoClusterList> {
+        getDeployClusters(options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoClusterList> {
             return localVarFp.getDeployClusters(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.  This is the layer ABOVE the application board, and the two disagree in exactly the case an operator most needs to see: main carries a new image pin, CD has not applied that commit yet, so every App CR still declares the old tag and the application board is legitimately \"Synced\" while the deploy has not landed. Only the applied revision here can show that.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster. That is a FACT about the cluster rather than a failure of the request, so the caller can say \"no CD plane here\" instead of rendering an error it cannot act on; a genuine transport or RBAC failure still errors.  Read-only, and platform SuperAdmin only: the CD plane is fleet infrastructure with no tenant dimension. This view observes CD and never drives it — the sync policy is automated with self-heal, and the actionable verb an operator has is the per-application reconcile at POST /v1/deploy/applications/{name}/sync.
-         * @summary Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.
+         * Reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployGitops(options?: RawAxiosRequestConfig): AxiosPromise<GitOpsPlane> {
-            return localVarFp.getDeployGitops(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
-         * @summary Health reports whether this deployment can observe the delivery plane.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<DeployHealth> {
+        getDeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<DeployDeployHealth> {
             return localVarFp.getDeployHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1135,7 +830,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployProjects(options?: RawAxiosRequestConfig): AxiosPromise<ArgoProjectList> {
+        getDeployProjects(options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoProjectList> {
             return localVarFp.getDeployProjects(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1144,17 +839,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeploySessionUserinfo(options?: RawAxiosRequestConfig): AxiosPromise<SessionUser> {
+        getDeploySessionUserinfo(options?: RawAxiosRequestConfig): AxiosPromise<DeploySessionUser> {
             return localVarFp.getDeploySessionUserinfo(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.  Every value is a CONSTANT of this projection rather than configuration read from anywhere: the SPA\'s own login form is reported disabled and its OIDC config null because Hanzo IAM owns identity at the edge and this console\'s sign-in is GET /v1/deploy/login, and every argocd feature the projection does not implement — status badges, Dex connectors, config-management plugins, kustomize versions, the exec terminal, apps-in-any-namespace, the hydrator, sync-with-replace — is reported off. Platform SuperAdmin only.
-         * @summary Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeploySettings(options?: RawAxiosRequestConfig): AxiosPromise<ConsoleSettings> {
-            return localVarFp.getDeploySettings(options).then((request) => request(axios, basePath));
         },
         /**
          * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
@@ -1176,33 +862,14 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getDeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the argocd VersionMessage the dashboard SPA reads at bootstrap. There is no argocd binary behind this plane — it is a projection over operator App CRs — so the fields say so rather than describing a build: Version names the projection, BuildDate is the moment this response was generated, and Compiler/Platform/GoVersion are the constants the SPA tolerates rather than facts about this process. Platform SuperAdmin only.
-         * @summary Returns the argocd VersionMessage the dashboard SPA reads at bootstrap.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployVersion(options?: RawAxiosRequestConfig): AxiosPromise<VersionMessage> {
-            return localVarFp.getDeployVersion(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
          * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
          * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
+        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoApp> {
             return localVarFp.postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
-         * @summary Asks the operator to reconcile ONE application now.
-         * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
-            return localVarFp.postDeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
@@ -1210,17 +877,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<SessionEnded> {
+        postDeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<DeploySessionEnded> {
             return localVarFp.postDeployLogout(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Renders the configured git source and applies it to the cluster, once.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployReconcile(options?: RawAxiosRequestConfig): AxiosPromise<ReconcileReport> {
-            return localVarFp.postDeployReconcile(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1317,20 +975,6 @@ export interface DeployApiPostDeployApplicationsByNameRollbackRequest {
 }
 
 /**
- * Request parameters for postDeployApplicationsByNameSync operation in DeployApi.
- * @export
- * @interface DeployApiPostDeployApplicationsByNameSyncRequest
- */
-export interface DeployApiPostDeployApplicationsByNameSyncRequest {
-    /**
-     * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-     * @type {string}
-     * @memberof DeployApiPostDeployApplicationsByNameSync
-     */
-    readonly name: string
-}
-
-/**
  * DeployApi - object-oriented interface
  * @export
  * @class DeployApi
@@ -1397,17 +1041,6 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
-     * @summary Finish the sign-in round trip and mint the console session
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public getDeployCallback(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getDeployCallback(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it. The in-cluster destination is always present, so an empty fleet still answers one cluster, and no cluster credential can appear — the projected type physically has no config field.  It is TENANT-SCOPED and reads the SAME App CRs the applications list reads: a platform SuperAdmin counts the whole fleet, a validated org member counts only its own org\'s applications, anyone else is refused.
      * @summary Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it.
      * @param {*} [options] Override http request option.
@@ -1419,19 +1052,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.  This is the layer ABOVE the application board, and the two disagree in exactly the case an operator most needs to see: main carries a new image pin, CD has not applied that commit yet, so every App CR still declares the old tag and the application board is legitimately \"Synced\" while the deploy has not landed. Only the applied revision here can show that.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster. That is a FACT about the cluster rather than a failure of the request, so the caller can say \"no CD plane here\" instead of rendering an error it cannot act on; a genuine transport or RBAC failure still errors.  Read-only, and platform SuperAdmin only: the CD plane is fleet infrastructure with no tenant dimension. This view observes CD and never drives it — the sync policy is automated with self-heal, and the actionable verb an operator has is the per-application reconcile at POST /v1/deploy/applications/{name}/sync.
-     * @summary Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public getDeployGitops(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getDeployGitops(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
-     * @summary Health reports whether this deployment can observe the delivery plane.
+     * Reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+     * @summary Reports whether this deployment can observe the delivery plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1474,17 +1096,6 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.  Every value is a CONSTANT of this projection rather than configuration read from anywhere: the SPA\'s own login form is reported disabled and its OIDC config null because Hanzo IAM owns identity at the edge and this console\'s sign-in is GET /v1/deploy/login, and every argocd feature the projection does not implement — status badges, Dex connectors, config-management plugins, kustomize versions, the exec terminal, apps-in-any-namespace, the hydrator, sync-with-replace — is reported off. Platform SuperAdmin only.
-     * @summary Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public getDeploySettings(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getDeploySettings(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
      * @summary Live application fleet updates as Server-Sent Events
      * @param {*} [options] Override http request option.
@@ -1508,17 +1119,6 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Returns the argocd VersionMessage the dashboard SPA reads at bootstrap. There is no argocd binary behind this plane — it is a projection over operator App CRs — so the fields say so rather than describing a build: Version names the projection, BuildDate is the moment this response was generated, and Compiler/Platform/GoVersion are the constants the SPA tolerates rather than facts about this process. Platform SuperAdmin only.
-     * @summary Returns the argocd VersionMessage the dashboard SPA reads at bootstrap.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public getDeployVersion(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getDeployVersion(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
      * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
      * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
@@ -1531,18 +1131,6 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
-     * @summary Asks the operator to reconcile ONE application now.
-     * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postDeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
      * @summary Ends the console session on this host.
      * @param {*} [options] Override http request option.
@@ -1551,17 +1139,6 @@ export class DeployApi extends BaseAPI {
      */
     public postDeployLogout(options?: RawAxiosRequestConfig) {
         return DeployApiFp(this.configuration).postDeployLogout(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-     * @summary Renders the configured git source and applies it to the cluster, once.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public postDeployReconcile(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postDeployReconcile(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

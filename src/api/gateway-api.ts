@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Policy } from '../models';
+import type { GatewayPolicy } from '../models';
 // @ts-ignore
-import type { TrafficView } from '../models';
+import type { GatewayTrafficView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * GatewayApi - axios parameter creator
  * @export
@@ -32,7 +34,7 @@ import type { TrafficView } from '../models';
 export const GatewayApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Traffic reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
+         * Reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
          * @summary Report who is calling this org\'s API right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -66,8 +68,8 @@ export const GatewayApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
-         * @summary Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
+         * Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
+         * @summary Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -100,15 +102,15 @@ export const GatewayApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
-         * @summary Write updates one policy scope and returns the policy in force after the write.
-         * @param {Policy} policy 
+         * Updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
+         * @summary Updates one policy scope and returns the policy in force after the write.
+         * @param {GatewayPolicy} gatewayPolicy 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putGatewayConfig: async (policy: Policy, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'policy' is not null or undefined
-            assertParamExists('putGatewayConfig', 'policy', policy)
+        putGatewayConfig: async (gatewayPolicy: GatewayPolicy, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gatewayPolicy' is not null or undefined
+            assertParamExists('putGatewayConfig', 'gatewayPolicy', gatewayPolicy)
             const localVarPath = `/v1/gateway/config`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -132,7 +134,7 @@ export const GatewayApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(policy, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gatewayPolicy, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -150,38 +152,38 @@ export const GatewayApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GatewayApiAxiosParamCreator(configuration)
     return {
         /**
-         * Traffic reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
+         * Reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
          * @summary Report who is calling this org\'s API right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayTraffic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrafficView>> {
+        async gatewayTraffic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GatewayTrafficView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayTraffic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GatewayApi.gatewayTraffic']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
-         * @summary Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
+         * Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
+         * @summary Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGatewayConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
+        async getGatewayConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GatewayPolicy>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGatewayConfig(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GatewayApi.getGatewayConfig']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
-         * @summary Write updates one policy scope and returns the policy in force after the write.
-         * @param {Policy} policy 
+         * Updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
+         * @summary Updates one policy scope and returns the policy in force after the write.
+         * @param {GatewayPolicy} gatewayPolicy 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putGatewayConfig(policy: Policy, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putGatewayConfig(policy, options);
+        async putGatewayConfig(gatewayPolicy: GatewayPolicy, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GatewayPolicy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putGatewayConfig(gatewayPolicy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GatewayApi.putGatewayConfig']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -197,32 +199,32 @@ export const GatewayApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = GatewayApiFp(configuration)
     return {
         /**
-         * Traffic reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
+         * Reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
          * @summary Report who is calling this org\'s API right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayTraffic(options?: RawAxiosRequestConfig): AxiosPromise<TrafficView> {
+        gatewayTraffic(options?: RawAxiosRequestConfig): AxiosPromise<GatewayTrafficView> {
             return localVarFp.gatewayTraffic(options).then((request) => request(axios, basePath));
         },
         /**
-         * Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
-         * @summary Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
+         * Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
+         * @summary Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGatewayConfig(options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
+        getGatewayConfig(options?: RawAxiosRequestConfig): AxiosPromise<GatewayPolicy> {
             return localVarFp.getGatewayConfig(options).then((request) => request(axios, basePath));
         },
         /**
-         * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
-         * @summary Write updates one policy scope and returns the policy in force after the write.
+         * Updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
+         * @summary Updates one policy scope and returns the policy in force after the write.
          * @param {GatewayApiPutGatewayConfigRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putGatewayConfig(requestParameters: GatewayApiPutGatewayConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
-            return localVarFp.putGatewayConfig(requestParameters.policy, options).then((request) => request(axios, basePath));
+        putGatewayConfig(requestParameters: GatewayApiPutGatewayConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<GatewayPolicy> {
+            return localVarFp.putGatewayConfig(requestParameters.gatewayPolicy, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -235,10 +237,10 @@ export const GatewayApiFactory = function (configuration?: Configuration, basePa
 export interface GatewayApiPutGatewayConfigRequest {
     /**
      * 
-     * @type {Policy}
+     * @type {GatewayPolicy}
      * @memberof GatewayApiPutGatewayConfig
      */
-    readonly policy: Policy
+    readonly gatewayPolicy: GatewayPolicy
 }
 
 /**
@@ -249,7 +251,7 @@ export interface GatewayApiPutGatewayConfigRequest {
  */
 export class GatewayApi extends BaseAPI {
     /**
-     * Traffic reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
+     * Reports who is calling this organization\'s API right now: the request count for the last minute split by AGENCY LANE — agent, human, bot, unknown — and the busiest callers behind it, each with its request count, its authentication-failure count, how many distinct paths it touched, and any verdict currently held against it.  The lane split is the answer to the question a generic bot filter cannot answer: which of this traffic is the customer\'s own automation and which is somebody working through a list. It is computed from credentials we issued, not from the client\'s self-description, so a scraper cannot move itself into the agent lane by editing a header.  A validated caller appears as a FINGERPRINT — a one-way, per-process digest. It is stable enough to recognise the same caller across a minute and cannot be turned back into a key, so this report is safe to read, screenshot and paste.  It also reports what the sensor\'s own ceilings are doing (strain, tracked, ceiling, refused) and how many screens the scorer did not answer (unscored), so a control that has stopped measuring or a judge that has stopped answering is a number here rather than a quiet day.  Scoped to the caller\'s own validated organization. A SuperAdmin may inspect a specific tenant with ?org=<slug>, or the lane that has no tenant — every caller the identity boundary could not validate — with an empty ?org=.
      * @summary Report who is calling this org\'s API right now
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -260,8 +262,8 @@ export class GatewayApi extends BaseAPI {
     }
 
     /**
-     * Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
-     * @summary Read returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
+     * Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist. A SuperAdmin may inspect a specific tenant\'s effective policy with ?org=<slug>.
+     * @summary Returns the EFFECTIVE edge policy the caller is subject to: the platform CORS allowlist and pre-auth per-IP flood cap in force, plus the caller\'s own authenticated rate ceiling, edge-cache TTLs and accepted-method allowlist.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GatewayApi
@@ -271,15 +273,15 @@ export class GatewayApi extends BaseAPI {
     }
 
     /**
-     * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
-     * @summary Write updates one policy scope and returns the policy in force after the write.
+     * Updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
+     * @summary Updates one policy scope and returns the policy in force after the write.
      * @param {GatewayApiPutGatewayConfigRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GatewayApi
      */
     public putGatewayConfig(requestParameters: GatewayApiPutGatewayConfigRequest, options?: RawAxiosRequestConfig) {
-        return GatewayApiFp(this.configuration).putGatewayConfig(requestParameters.policy, options).then((request) => request(this.axios, this.basePath));
+        return GatewayApiFp(this.configuration).putGatewayConfig(requestParameters.gatewayPolicy, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

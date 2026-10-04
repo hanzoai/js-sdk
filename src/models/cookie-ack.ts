@@ -21,7 +21,7 @@
  */
 export interface CookieAck {
     /**
-     * Result is true when the cookie was written or cleared.
+     * 
      * @type {boolean}
      * @memberof CookieAck
      */

@@ -28,12 +28,12 @@ import type { O11yOtelSpanRef } from './o11y-otel-span-ref';
 export interface O11yWaterfallSpan {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yWaterfallSpan
      */
-    'attributes'?: { [key: string]: object; };
+    'attributes'?: { [key: string]: any; };
     /**
-     * Calculated fields https://o11y.io/docs/traces-management/guides/derived-fields-spans
+     * Calculated fields, derived from the span\'s attributes.
      * @type {string}
      * @memberof O11yWaterfallSpan
      */

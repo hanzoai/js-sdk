@@ -22,23 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { IngressMiddlewares } from '../models';
+import type { IngressIngressMiddlewares } from '../models';
 // @ts-ignore
-import type { IngressRoutes } from '../models';
+import type { IngressIngressRoutes } from '../models';
 // @ts-ignore
-import type { IngressServices } from '../models';
+import type { IngressIngressServices } from '../models';
 // @ts-ignore
-import type { IngressStatus } from '../models';
+import type { IngressIngressStatus } from '../models';
 // @ts-ignore
-import type { IngressTLS } from '../models';
+import type { IngressIngressTLS } from '../models';
 // @ts-ignore
-import type { Middleware } from '../models';
+import type { IngressMiddleware } from '../models';
 // @ts-ignore
-import type { Route } from '../models';
+import type { IngressRoute } from '../models';
 // @ts-ignore
-import type { TLSConfig } from '../models';
+import type { IngressTLSConfig } from '../models';
 // @ts-ignore
-import type { Upstream } from '../models';
+import type { IngressUpstream } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * IngressApi - axios parameter creator
  * @export
@@ -376,8 +378,8 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
-         * @summary Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * @summary Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -410,8 +412,8 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
-         * @summary GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * @summary Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -446,13 +448,13 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
          * @summary Creates or replaces one edge transform and hot-applies it.
-         * @param {Middleware} middleware 
+         * @param {IngressMiddleware} ingressMiddleware 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressMiddlewares: async (middleware: Middleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'middleware' is not null or undefined
-            assertParamExists('postIngressMiddlewares', 'middleware', middleware)
+        postIngressMiddlewares: async (ingressMiddleware: IngressMiddleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ingressMiddleware' is not null or undefined
+            assertParamExists('postIngressMiddlewares', 'ingressMiddleware', ingressMiddleware)
             const localVarPath = `/v1/ingress/middlewares`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -476,7 +478,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(middleware, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressMiddleware, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -486,13 +488,13 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
          * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
-         * @param {Route} route 
+         * @param {IngressRoute} ingressRoute 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressRoutes: async (route: Route, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'route' is not null or undefined
-            assertParamExists('postIngressRoutes', 'route', route)
+        postIngressRoutes: async (ingressRoute: IngressRoute, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ingressRoute' is not null or undefined
+            assertParamExists('postIngressRoutes', 'ingressRoute', ingressRoute)
             const localVarPath = `/v1/ingress/routes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -516,7 +518,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(route, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressRoute, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -526,13 +528,13 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
-         * @param {Upstream} upstream 
+         * @param {IngressUpstream} ingressUpstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressServices: async (upstream: Upstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'upstream' is not null or undefined
-            assertParamExists('postIngressServices', 'upstream', upstream)
+        postIngressServices: async (ingressUpstream: IngressUpstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ingressUpstream' is not null or undefined
+            assertParamExists('postIngressServices', 'ingressUpstream', ingressUpstream)
             const localVarPath = `/v1/ingress/services`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -556,7 +558,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(upstream, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressUpstream, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -567,15 +569,15 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
          * @summary Creates or replaces one edge transform and hot-applies it.
          * @param {string} id ID identifies the transform within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Middleware} middleware 
+         * @param {IngressMiddleware} ingressMiddleware 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressMiddlewaresById: async (id: string, middleware: Middleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIngressMiddlewaresById: async (id: string, ingressMiddleware: IngressMiddleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putIngressMiddlewaresById', 'id', id)
-            // verify required parameter 'middleware' is not null or undefined
-            assertParamExists('putIngressMiddlewaresById', 'middleware', middleware)
+            // verify required parameter 'ingressMiddleware' is not null or undefined
+            assertParamExists('putIngressMiddlewaresById', 'ingressMiddleware', ingressMiddleware)
             const localVarPath = `/v1/ingress/middlewares/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -600,7 +602,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(middleware, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressMiddleware, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -611,15 +613,15 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
          * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
          * @param {string} id ID identifies the route within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one.
-         * @param {Route} route 
+         * @param {IngressRoute} ingressRoute 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressRoutesById: async (id: string, route: Route, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIngressRoutesById: async (id: string, ingressRoute: IngressRoute, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putIngressRoutesById', 'id', id)
-            // verify required parameter 'route' is not null or undefined
-            assertParamExists('putIngressRoutesById', 'route', route)
+            // verify required parameter 'ingressRoute' is not null or undefined
+            assertParamExists('putIngressRoutesById', 'ingressRoute', ingressRoute)
             const localVarPath = `/v1/ingress/routes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -644,7 +646,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(route, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressRoute, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -655,15 +657,15 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
          * @param {string} id ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Upstream} upstream 
+         * @param {IngressUpstream} ingressUpstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressServicesById: async (id: string, upstream: Upstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIngressServicesById: async (id: string, ingressUpstream: IngressUpstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putIngressServicesById', 'id', id)
-            // verify required parameter 'upstream' is not null or undefined
-            assertParamExists('putIngressServicesById', 'upstream', upstream)
+            // verify required parameter 'ingressUpstream' is not null or undefined
+            assertParamExists('putIngressServicesById', 'ingressUpstream', ingressUpstream)
             const localVarPath = `/v1/ingress/services/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -688,7 +690,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(upstream, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressUpstream, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -696,15 +698,15 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
-         * @summary PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
-         * @param {TLSConfig} tLSConfig 
+         * Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
+         * @summary Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
+         * @param {IngressTLSConfig} ingressTLSConfig 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressTls: async (tLSConfig: TLSConfig, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tLSConfig' is not null or undefined
-            assertParamExists('putIngressTls', 'tLSConfig', tLSConfig)
+        putIngressTls: async (ingressTLSConfig: IngressTLSConfig, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ingressTLSConfig' is not null or undefined
+            assertParamExists('putIngressTls', 'ingressTLSConfig', ingressTLSConfig)
             const localVarPath = `/v1/ingress/tls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -728,7 +730,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tLSConfig, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ingressTLSConfig, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -790,7 +792,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressMiddlewares(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressMiddlewares>> {
+        async getIngressMiddlewares(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressIngressMiddlewares>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressMiddlewares(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressMiddlewares']?.[localVarOperationServerIndex]?.url;
@@ -803,7 +805,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressMiddlewaresById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
+        async getIngressMiddlewaresById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressMiddleware>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressMiddlewaresById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressMiddlewaresById']?.[localVarOperationServerIndex]?.url;
@@ -815,7 +817,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressRoutes>> {
+        async getIngressRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressIngressRoutes>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressRoutes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressRoutes']?.[localVarOperationServerIndex]?.url;
@@ -828,7 +830,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressRoutesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
+        async getIngressRoutesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressRoute>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressRoutesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressRoutesById']?.[localVarOperationServerIndex]?.url;
@@ -840,7 +842,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressServices>> {
+        async getIngressServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressIngressServices>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressServices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressServices']?.[localVarOperationServerIndex]?.url;
@@ -853,31 +855,31 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
+        async getIngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressUpstream>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressServicesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
-         * @summary Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * @summary Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressStatus>> {
+        async getIngressStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressIngressStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
-         * @summary GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * @summary Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIngressTls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressTLS>> {
+        async getIngressTls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressIngressTLS>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressTls(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getIngressTls']?.[localVarOperationServerIndex]?.url;
@@ -886,12 +888,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
         /**
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
          * @summary Creates or replaces one edge transform and hot-applies it.
-         * @param {Middleware} middleware 
+         * @param {IngressMiddleware} ingressMiddleware 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIngressMiddlewares(middleware: Middleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressMiddlewares(middleware, options);
+        async postIngressMiddlewares(ingressMiddleware: IngressMiddleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressMiddleware>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressMiddlewares(ingressMiddleware, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.postIngressMiddlewares']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -899,12 +901,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
         /**
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
          * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
-         * @param {Route} route 
+         * @param {IngressRoute} ingressRoute 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIngressRoutes(route: Route, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressRoutes(route, options);
+        async postIngressRoutes(ingressRoute: IngressRoute, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressRoute>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressRoutes(ingressRoute, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.postIngressRoutes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -912,12 +914,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
-         * @param {Upstream} upstream 
+         * @param {IngressUpstream} ingressUpstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIngressServices(upstream: Upstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressServices(upstream, options);
+        async postIngressServices(ingressUpstream: IngressUpstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressUpstream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIngressServices(ingressUpstream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.postIngressServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -926,12 +928,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
          * @summary Creates or replaces one edge transform and hot-applies it.
          * @param {string} id ID identifies the transform within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Middleware} middleware 
+         * @param {IngressMiddleware} ingressMiddleware 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIngressMiddlewaresById(id: string, middleware: Middleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressMiddlewaresById(id, middleware, options);
+        async putIngressMiddlewaresById(id: string, ingressMiddleware: IngressMiddleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressMiddleware>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressMiddlewaresById(id, ingressMiddleware, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.putIngressMiddlewaresById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -940,12 +942,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
          * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
          * @param {string} id ID identifies the route within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one.
-         * @param {Route} route 
+         * @param {IngressRoute} ingressRoute 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIngressRoutesById(id: string, route: Route, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressRoutesById(id, route, options);
+        async putIngressRoutesById(id: string, ingressRoute: IngressRoute, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressRoute>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressRoutesById(id, ingressRoute, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.putIngressRoutesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -954,25 +956,25 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
          * @param {string} id ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Upstream} upstream 
+         * @param {IngressUpstream} ingressUpstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIngressServicesById(id: string, upstream: Upstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressServicesById(id, upstream, options);
+        async putIngressServicesById(id: string, ingressUpstream: IngressUpstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressUpstream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressServicesById(id, ingressUpstream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.putIngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
-         * @summary PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
-         * @param {TLSConfig} tLSConfig 
+         * Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
+         * @summary Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
+         * @param {IngressTLSConfig} ingressTLSConfig 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIngressTls(tLSConfig: TLSConfig, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TLSConfig>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressTls(tLSConfig, options);
+        async putIngressTls(ingressTLSConfig: IngressTLSConfig, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressTLSConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIngressTls(ingressTLSConfig, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.putIngressTls']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1023,7 +1025,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressMiddlewares(options?: RawAxiosRequestConfig): AxiosPromise<IngressMiddlewares> {
+        getIngressMiddlewares(options?: RawAxiosRequestConfig): AxiosPromise<IngressIngressMiddlewares> {
             return localVarFp.getIngressMiddlewares(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1033,7 +1035,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressMiddlewaresById(requestParameters: IngressApiGetIngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
+        getIngressMiddlewaresById(requestParameters: IngressApiGetIngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressMiddleware> {
             return localVarFp.getIngressMiddlewaresById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1042,7 +1044,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressRoutes(options?: RawAxiosRequestConfig): AxiosPromise<IngressRoutes> {
+        getIngressRoutes(options?: RawAxiosRequestConfig): AxiosPromise<IngressIngressRoutes> {
             return localVarFp.getIngressRoutes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1052,7 +1054,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressRoutesById(requestParameters: IngressApiGetIngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
+        getIngressRoutesById(requestParameters: IngressApiGetIngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressRoute> {
             return localVarFp.getIngressRoutesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1061,7 +1063,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressServices(options?: RawAxiosRequestConfig): AxiosPromise<IngressServices> {
+        getIngressServices(options?: RawAxiosRequestConfig): AxiosPromise<IngressIngressServices> {
             return localVarFp.getIngressServices(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1071,25 +1073,25 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressServicesById(requestParameters: IngressApiGetIngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
+        getIngressServicesById(requestParameters: IngressApiGetIngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressUpstream> {
             return localVarFp.getIngressServicesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
-         * @summary Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+         * @summary Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressStatus(options?: RawAxiosRequestConfig): AxiosPromise<IngressStatus> {
+        getIngressStatus(options?: RawAxiosRequestConfig): AxiosPromise<IngressIngressStatus> {
             return localVarFp.getIngressStatus(options).then((request) => request(axios, basePath));
         },
         /**
-         * GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
-         * @summary GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+         * @summary Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIngressTls(options?: RawAxiosRequestConfig): AxiosPromise<IngressTLS> {
+        getIngressTls(options?: RawAxiosRequestConfig): AxiosPromise<IngressIngressTLS> {
             return localVarFp.getIngressTls(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1099,8 +1101,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressMiddlewares(requestParameters: IngressApiPostIngressMiddlewaresRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
-            return localVarFp.postIngressMiddlewares(requestParameters.middleware, options).then((request) => request(axios, basePath));
+        postIngressMiddlewares(requestParameters: IngressApiPostIngressMiddlewaresRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressMiddleware> {
+            return localVarFp.postIngressMiddlewares(requestParameters.ingressMiddleware, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
@@ -1109,8 +1111,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressRoutes(requestParameters: IngressApiPostIngressRoutesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
-            return localVarFp.postIngressRoutes(requestParameters.route, options).then((request) => request(axios, basePath));
+        postIngressRoutes(requestParameters: IngressApiPostIngressRoutesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressRoute> {
+            return localVarFp.postIngressRoutes(requestParameters.ingressRoute, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
@@ -1119,8 +1121,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIngressServices(requestParameters: IngressApiPostIngressServicesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
-            return localVarFp.postIngressServices(requestParameters.upstream, options).then((request) => request(axios, basePath));
+        postIngressServices(requestParameters: IngressApiPostIngressServicesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressUpstream> {
+            return localVarFp.postIngressServices(requestParameters.ingressUpstream, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
@@ -1129,8 +1131,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressMiddlewaresById(requestParameters: IngressApiPutIngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
-            return localVarFp.putIngressMiddlewaresById(requestParameters.id, requestParameters.middleware, options).then((request) => request(axios, basePath));
+        putIngressMiddlewaresById(requestParameters: IngressApiPutIngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressMiddleware> {
+            return localVarFp.putIngressMiddlewaresById(requestParameters.id, requestParameters.ingressMiddleware, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
@@ -1139,8 +1141,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressRoutesById(requestParameters: IngressApiPutIngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
-            return localVarFp.putIngressRoutesById(requestParameters.id, requestParameters.route, options).then((request) => request(axios, basePath));
+        putIngressRoutesById(requestParameters: IngressApiPutIngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressRoute> {
+            return localVarFp.putIngressRoutesById(requestParameters.id, requestParameters.ingressRoute, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
@@ -1149,18 +1151,18 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressServicesById(requestParameters: IngressApiPutIngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
-            return localVarFp.putIngressServicesById(requestParameters.id, requestParameters.upstream, options).then((request) => request(axios, basePath));
+        putIngressServicesById(requestParameters: IngressApiPutIngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressUpstream> {
+            return localVarFp.putIngressServicesById(requestParameters.id, requestParameters.ingressUpstream, options).then((request) => request(axios, basePath));
         },
         /**
-         * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
-         * @summary PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
+         * Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
+         * @summary Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
          * @param {IngressApiPutIngressTlsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIngressTls(requestParameters: IngressApiPutIngressTlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TLSConfig> {
-            return localVarFp.putIngressTls(requestParameters.tLSConfig, options).then((request) => request(axios, basePath));
+        putIngressTls(requestParameters: IngressApiPutIngressTlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngressTLSConfig> {
+            return localVarFp.putIngressTls(requestParameters.ingressTLSConfig, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1257,10 +1259,10 @@ export interface IngressApiGetIngressServicesByIdRequest {
 export interface IngressApiPostIngressMiddlewaresRequest {
     /**
      * 
-     * @type {Middleware}
+     * @type {IngressMiddleware}
      * @memberof IngressApiPostIngressMiddlewares
      */
-    readonly middleware: Middleware
+    readonly ingressMiddleware: IngressMiddleware
 }
 
 /**
@@ -1271,10 +1273,10 @@ export interface IngressApiPostIngressMiddlewaresRequest {
 export interface IngressApiPostIngressRoutesRequest {
     /**
      * 
-     * @type {Route}
+     * @type {IngressRoute}
      * @memberof IngressApiPostIngressRoutes
      */
-    readonly route: Route
+    readonly ingressRoute: IngressRoute
 }
 
 /**
@@ -1285,10 +1287,10 @@ export interface IngressApiPostIngressRoutesRequest {
 export interface IngressApiPostIngressServicesRequest {
     /**
      * 
-     * @type {Upstream}
+     * @type {IngressUpstream}
      * @memberof IngressApiPostIngressServices
      */
-    readonly upstream: Upstream
+    readonly ingressUpstream: IngressUpstream
 }
 
 /**
@@ -1306,10 +1308,10 @@ export interface IngressApiPutIngressMiddlewaresByIdRequest {
 
     /**
      * 
-     * @type {Middleware}
+     * @type {IngressMiddleware}
      * @memberof IngressApiPutIngressMiddlewaresById
      */
-    readonly middleware: Middleware
+    readonly ingressMiddleware: IngressMiddleware
 }
 
 /**
@@ -1327,10 +1329,10 @@ export interface IngressApiPutIngressRoutesByIdRequest {
 
     /**
      * 
-     * @type {Route}
+     * @type {IngressRoute}
      * @memberof IngressApiPutIngressRoutesById
      */
-    readonly route: Route
+    readonly ingressRoute: IngressRoute
 }
 
 /**
@@ -1348,10 +1350,10 @@ export interface IngressApiPutIngressServicesByIdRequest {
 
     /**
      * 
-     * @type {Upstream}
+     * @type {IngressUpstream}
      * @memberof IngressApiPutIngressServicesById
      */
-    readonly upstream: Upstream
+    readonly ingressUpstream: IngressUpstream
 }
 
 /**
@@ -1362,10 +1364,10 @@ export interface IngressApiPutIngressServicesByIdRequest {
 export interface IngressApiPutIngressTlsRequest {
     /**
      * 
-     * @type {TLSConfig}
+     * @type {IngressTLSConfig}
      * @memberof IngressApiPutIngressTls
      */
-    readonly tLSConfig: TLSConfig
+    readonly ingressTLSConfig: IngressTLSConfig
 }
 
 /**
@@ -1481,8 +1483,8 @@ export class IngressApi extends BaseAPI {
     }
 
     /**
-     * Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
-     * @summary Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+     * Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
+     * @summary Reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
@@ -1492,8 +1494,8 @@ export class IngressApi extends BaseAPI {
     }
 
     /**
-     * GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
-     * @summary GetTLS returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+     * Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
+     * @summary Returns the caller org\'s ACME intent together with the edge-wide TLS facts it lands in: which role this instance runs in, whether its listeners are bound, every host the ACME HostPolicy will issue a certificate for (the union across ALL orgs of TLS-marked routes and configured extraHosts, because one process holds one certificate cache), and the ACME directory and account email the process was started with.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
@@ -1511,7 +1513,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public postIngressMiddlewares(requestParameters: IngressApiPostIngressMiddlewaresRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).postIngressMiddlewares(requestParameters.middleware, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).postIngressMiddlewares(requestParameters.ingressMiddleware, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1523,7 +1525,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public postIngressRoutes(requestParameters: IngressApiPostIngressRoutesRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).postIngressRoutes(requestParameters.route, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).postIngressRoutes(requestParameters.ingressRoute, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1535,7 +1537,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public postIngressServices(requestParameters: IngressApiPostIngressServicesRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).postIngressServices(requestParameters.upstream, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).postIngressServices(requestParameters.ingressUpstream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1547,7 +1549,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public putIngressMiddlewaresById(requestParameters: IngressApiPutIngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putIngressMiddlewaresById(requestParameters.id, requestParameters.middleware, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).putIngressMiddlewaresById(requestParameters.id, requestParameters.ingressMiddleware, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1559,7 +1561,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public putIngressRoutesById(requestParameters: IngressApiPutIngressRoutesByIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putIngressRoutesById(requestParameters.id, requestParameters.route, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).putIngressRoutesById(requestParameters.id, requestParameters.ingressRoute, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1571,19 +1573,19 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public putIngressServicesById(requestParameters: IngressApiPutIngressServicesByIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putIngressServicesById(requestParameters.id, requestParameters.upstream, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).putIngressServicesById(requestParameters.id, requestParameters.ingressUpstream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
-     * @summary PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
+     * Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
+     * @summary Replaces the caller org\'s ACME intent and hot-applies what can be hot-applied.
      * @param {IngressApiPutIngressTlsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
     public putIngressTls(requestParameters: IngressApiPutIngressTlsRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putIngressTls(requestParameters.tLSConfig, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).putIngressTls(requestParameters.ingressTLSConfig, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

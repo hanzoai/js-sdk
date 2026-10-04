@@ -22,7 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { PrefsView } from '../models';
+import type { PrefPrefsView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * PrefApi - axios parameter creator
  * @export
@@ -113,7 +115,7 @@ export const PrefApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPref(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PrefsView>> {
+        async getPref(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PrefPrefsView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPref(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PrefApi.getPref']?.[localVarOperationServerIndex]?.url;
@@ -147,7 +149,7 @@ export const PrefApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPref(options?: RawAxiosRequestConfig): AxiosPromise<PrefsView> {
+        getPref(options?: RawAxiosRequestConfig): AxiosPromise<PrefPrefsView> {
             return localVarFp.getPref(options).then((request) => request(axios, basePath));
         },
         /**

@@ -22,23 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BoardPage } from '../models';
+import type { ContentBoardPage } from '../models';
 // @ts-ignore
-import type { ChannelList } from '../models';
+import type { ContentChannelList } from '../models';
 // @ts-ignore
-import type { GenerateInput } from '../models';
+import type { ContentGenerateInput } from '../models';
 // @ts-ignore
-import type { GenerateResult } from '../models';
+import type { ContentGenerateResult } from '../models';
 // @ts-ignore
-import type { PublishInput } from '../models';
+import type { ContentPublishInput } from '../models';
 // @ts-ignore
-import type { PublishResult } from '../models';
+import type { ContentPublishResult } from '../models';
 // @ts-ignore
-import type { StateGraph } from '../models';
+import type { ContentStateGraph } from '../models';
 // @ts-ignore
-import type { TransitionIn } from '../models';
+import type { ContentTransitionIn } from '../models';
 // @ts-ignore
-import type { TransitionResult } from '../models';
+import type { ContentTransitionResult } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * ContentApi - axios parameter creator
  * @export
@@ -172,17 +174,17 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
          * @param {string} doctype DocType is the content type to act on, from the path.
          * @param {string} name Name is the document to act on, from the path.
-         * @param {TransitionIn} transitionIn 
+         * @param {ContentTransitionIn} contentTransitionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentByDoctypeByNameTransition: async (doctype: string, name: string, transitionIn: TransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postContentByDoctypeByNameTransition: async (doctype: string, name: string, contentTransitionIn: ContentTransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
             assertParamExists('postContentByDoctypeByNameTransition', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postContentByDoctypeByNameTransition', 'name', name)
-            // verify required parameter 'transitionIn' is not null or undefined
-            assertParamExists('postContentByDoctypeByNameTransition', 'transitionIn', transitionIn)
+            // verify required parameter 'contentTransitionIn' is not null or undefined
+            assertParamExists('postContentByDoctypeByNameTransition', 'contentTransitionIn', contentTransitionIn)
             const localVarPath = `/v1/content/{doctype}/{name}/transition`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -208,7 +210,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(transitionIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(contentTransitionIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -216,15 +218,15 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
-         * @summary Draft a piece of marketing content and file it in the CMS as a draft.
-         * @param {GenerateInput} generateInput 
+         * Draft a provider of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 401. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * @summary Draft a provider of marketing content and file it in the CMS as a draft.
+         * @param {ContentGenerateInput} contentGenerateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentGenerate: async (generateInput: GenerateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'generateInput' is not null or undefined
-            assertParamExists('postContentGenerate', 'generateInput', generateInput)
+        postContentGenerate: async (contentGenerateInput: ContentGenerateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contentGenerateInput' is not null or undefined
+            assertParamExists('postContentGenerate', 'contentGenerateInput', contentGenerateInput)
             const localVarPath = `/v1/content/generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -248,7 +250,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(generateInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(contentGenerateInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -258,13 +260,13 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
          * @summary Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome.
-         * @param {PublishInput} publishInput 
+         * @param {ContentPublishInput} contentPublishInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentPublish: async (publishInput: PublishInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'publishInput' is not null or undefined
-            assertParamExists('postContentPublish', 'publishInput', publishInput)
+        postContentPublish: async (contentPublishInput: ContentPublishInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contentPublishInput' is not null or undefined
+            assertParamExists('postContentPublish', 'contentPublishInput', contentPublishInput)
             const localVarPath = `/v1/content/publish`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -288,7 +290,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(publishInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(contentPublishInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -315,7 +317,7 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentBoard(status?: string, project?: string, doctype?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardPage>> {
+        async getContentBoard(status?: string, project?: string, doctype?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentBoardPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentBoard(status, project, doctype, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentBoard']?.[localVarOperationServerIndex]?.url;
@@ -327,7 +329,7 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentChannels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChannelList>> {
+        async getContentChannels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentChannelList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentChannels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentChannels']?.[localVarOperationServerIndex]?.url;
@@ -339,7 +341,7 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentLifecycle(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StateGraph>> {
+        async getContentLifecycle(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentStateGraph>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentLifecycle(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentLifecycle']?.[localVarOperationServerIndex]?.url;
@@ -350,25 +352,25 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
          * @param {string} doctype DocType is the content type to act on, from the path.
          * @param {string} name Name is the document to act on, from the path.
-         * @param {TransitionIn} transitionIn 
+         * @param {ContentTransitionIn} contentTransitionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postContentByDoctypeByNameTransition(doctype: string, name: string, transitionIn: TransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransitionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentByDoctypeByNameTransition(doctype, name, transitionIn, options);
+        async postContentByDoctypeByNameTransition(doctype: string, name: string, contentTransitionIn: ContentTransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentTransitionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentByDoctypeByNameTransition(doctype, name, contentTransitionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentByDoctypeByNameTransition']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
-         * @summary Draft a piece of marketing content and file it in the CMS as a draft.
-         * @param {GenerateInput} generateInput 
+         * Draft a provider of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 401. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * @summary Draft a provider of marketing content and file it in the CMS as a draft.
+         * @param {ContentGenerateInput} contentGenerateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postContentGenerate(generateInput: GenerateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentGenerate(generateInput, options);
+        async postContentGenerate(contentGenerateInput: ContentGenerateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentGenerateResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentGenerate(contentGenerateInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentGenerate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -376,12 +378,12 @@ export const ContentApiFp = function(configuration?: Configuration) {
         /**
          * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
          * @summary Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome.
-         * @param {PublishInput} publishInput 
+         * @param {ContentPublishInput} contentPublishInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postContentPublish(publishInput: PublishInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublishResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentPublish(publishInput, options);
+        async postContentPublish(contentPublishInput: ContentPublishInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContentPublishResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentPublish(contentPublishInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -403,7 +405,7 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentBoard(requestParameters: ContentApiGetContentBoardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardPage> {
+        getContentBoard(requestParameters: ContentApiGetContentBoardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContentBoardPage> {
             return localVarFp.getContentBoard(requestParameters.status, requestParameters.project, requestParameters.doctype, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -412,7 +414,7 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentChannels(options?: RawAxiosRequestConfig): AxiosPromise<ChannelList> {
+        getContentChannels(options?: RawAxiosRequestConfig): AxiosPromise<ContentChannelList> {
             return localVarFp.getContentChannels(options).then((request) => request(axios, basePath));
         },
         /**
@@ -421,7 +423,7 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentLifecycle(options?: RawAxiosRequestConfig): AxiosPromise<StateGraph> {
+        getContentLifecycle(options?: RawAxiosRequestConfig): AxiosPromise<ContentStateGraph> {
             return localVarFp.getContentLifecycle(options).then((request) => request(axios, basePath));
         },
         /**
@@ -431,18 +433,18 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentByDoctypeByNameTransition(requestParameters: ContentApiPostContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TransitionResult> {
-            return localVarFp.postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(axios, basePath));
+        postContentByDoctypeByNameTransition(requestParameters: ContentApiPostContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContentTransitionResult> {
+            return localVarFp.postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.contentTransitionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
-         * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+         * Draft a provider of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 401. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * @summary Draft a provider of marketing content and file it in the CMS as a draft.
          * @param {ContentApiPostContentGenerateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentGenerate(requestParameters: ContentApiPostContentGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<GenerateResult> {
-            return localVarFp.postContentGenerate(requestParameters.generateInput, options).then((request) => request(axios, basePath));
+        postContentGenerate(requestParameters: ContentApiPostContentGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContentGenerateResult> {
+            return localVarFp.postContentGenerate(requestParameters.contentGenerateInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
@@ -451,8 +453,8 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postContentPublish(requestParameters: ContentApiPostContentPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<PublishResult> {
-            return localVarFp.postContentPublish(requestParameters.publishInput, options).then((request) => request(axios, basePath));
+        postContentPublish(requestParameters: ContentApiPostContentPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContentPublishResult> {
+            return localVarFp.postContentPublish(requestParameters.contentPublishInput, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -514,10 +516,10 @@ export interface ContentApiPostContentByDoctypeByNameTransitionRequest {
 
     /**
      * 
-     * @type {TransitionIn}
+     * @type {ContentTransitionIn}
      * @memberof ContentApiPostContentByDoctypeByNameTransition
      */
-    readonly transitionIn: TransitionIn
+    readonly contentTransitionIn: ContentTransitionIn
 }
 
 /**
@@ -528,10 +530,10 @@ export interface ContentApiPostContentByDoctypeByNameTransitionRequest {
 export interface ContentApiPostContentGenerateRequest {
     /**
      * 
-     * @type {GenerateInput}
+     * @type {ContentGenerateInput}
      * @memberof ContentApiPostContentGenerate
      */
-    readonly generateInput: GenerateInput
+    readonly contentGenerateInput: ContentGenerateInput
 }
 
 /**
@@ -542,10 +544,10 @@ export interface ContentApiPostContentGenerateRequest {
 export interface ContentApiPostContentPublishRequest {
     /**
      * 
-     * @type {PublishInput}
+     * @type {ContentPublishInput}
      * @memberof ContentApiPostContentPublish
      */
-    readonly publishInput: PublishInput
+    readonly contentPublishInput: ContentPublishInput
 }
 
 /**
@@ -598,19 +600,19 @@ export class ContentApi extends BaseAPI {
      * @memberof ContentApi
      */
     public postContentByDoctypeByNameTransition(requestParameters: ContentApiPostContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(this.axios, this.basePath));
+        return ContentApiFp(this.configuration).postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.contentTransitionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
-     * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+     * Draft a provider of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 401. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+     * @summary Draft a provider of marketing content and file it in the CMS as a draft.
      * @param {ContentApiPostContentGenerateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
     public postContentGenerate(requestParameters: ContentApiPostContentGenerateRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postContentGenerate(requestParameters.generateInput, options).then((request) => request(this.axios, this.basePath));
+        return ContentApiFp(this.configuration).postContentGenerate(requestParameters.contentGenerateInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -622,7 +624,7 @@ export class ContentApi extends BaseAPI {
      * @memberof ContentApi
      */
     public postContentPublish(requestParameters: ContentApiPostContentPublishRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postContentPublish(requestParameters.publishInput, options).then((request) => request(this.axios, this.basePath));
+        return ContentApiFp(this.configuration).postContentPublish(requestParameters.contentPublishInput, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

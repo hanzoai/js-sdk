@@ -22,35 +22,37 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AccList } from '../models';
+import type { ComplianceAccList } from '../models';
 // @ts-ignore
-import type { AccView } from '../models';
+import type { ComplianceAccView } from '../models';
 // @ts-ignore
-import type { AccreditationDecision } from '../models';
+import type { ComplianceAccreditationDecision } from '../models';
 // @ts-ignore
-import type { AccreditationReq } from '../models';
+import type { ComplianceAccreditationReq } from '../models';
 // @ts-ignore
-import type { AuditList } from '../models';
+import type { ComplianceAuditList } from '../models';
 // @ts-ignore
-import type { CheckList } from '../models';
+import type { ComplianceCheckList } from '../models';
 // @ts-ignore
-import type { CheckView } from '../models';
+import type { ComplianceCheckView } from '../models';
 // @ts-ignore
-import type { HealthView } from '../models';
+import type { ComplianceHealthView } from '../models';
 // @ts-ignore
-import type { RecordList } from '../models';
+import type { ComplianceRecordList } from '../models';
 // @ts-ignore
-import type { StatusView } from '../models';
+import type { ComplianceStatusView } from '../models';
 // @ts-ignore
-import type { Subject } from '../models';
+import type { ComplianceSubject } from '../models';
 // @ts-ignore
-import type { SubjectList } from '../models';
+import type { ComplianceSubjectList } from '../models';
 // @ts-ignore
-import type { SubjectReq } from '../models';
+import type { ComplianceSubjectReq } from '../models';
 // @ts-ignore
-import type { VerificationDecision } from '../models';
+import type { ComplianceVerificationDecision } from '../models';
 // @ts-ignore
-import type { VerificationReq } from '../models';
+import type { ComplianceVerificationReq } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * ComplianceApi - axios parameter creator
  * @export
@@ -135,7 +137,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 401, no configured audit store a 501.
          * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {string} [result] Result filters rows by outcome result: success, deny, or error; empty means all.
          * @param {*} [options] Override http request option.
@@ -174,8 +176,8 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Health reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
-         * @summary Health reports subsystem liveness and the wired verification provider.
+         * Reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
+         * @summary Reports subsystem liveness and the wired verification provider.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -437,13 +439,13 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Records an ASSERTED accreditation state for a subject — the subject\'s own assertion, with no verifier. Every CONFIRMED state (provider_verified, reviewer_confirmed) and every rejected/expired state is a DECISION recorded via the decision endpoint, attributed to the reviewer — a create can never stamp a confirmation. The underlying figures (income, net worth) are never stored; only the method, category, and state.
          * @summary Records an ASSERTED accreditation state for a subject — the subject\'s own assertion, with no verifier.
-         * @param {AccreditationReq} accreditationReq 
+         * @param {ComplianceAccreditationReq} complianceAccreditationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceAccreditation: async (accreditationReq: AccreditationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accreditationReq' is not null or undefined
-            assertParamExists('postComplianceAccreditation', 'accreditationReq', accreditationReq)
+        postComplianceAccreditation: async (complianceAccreditationReq: ComplianceAccreditationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'complianceAccreditationReq' is not null or undefined
+            assertParamExists('postComplianceAccreditation', 'complianceAccreditationReq', complianceAccreditationReq)
             const localVarPath = `/v1/compliance/accreditation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -467,7 +469,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(accreditationReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(complianceAccreditationReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -478,15 +480,15 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry. ROLE-GATED (an org admin or platform reviewer) and ATTRIBUTED: the reviewer\'s identity is recorded as ReviewerSub and audited. Human-in-the-loop: the platform never confirms on its own, and even a provider_verified state carries the reviewer who recorded it.
          * @summary Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry.
          * @param {string} id ID is the accreditation record to decide, from the path.
-         * @param {AccreditationDecision} accreditationDecision 
+         * @param {ComplianceAccreditationDecision} complianceAccreditationDecision 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceAccreditationByIdDecision: async (id: string, accreditationDecision: AccreditationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postComplianceAccreditationByIdDecision: async (id: string, complianceAccreditationDecision: ComplianceAccreditationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postComplianceAccreditationByIdDecision', 'id', id)
-            // verify required parameter 'accreditationDecision' is not null or undefined
-            assertParamExists('postComplianceAccreditationByIdDecision', 'accreditationDecision', accreditationDecision)
+            // verify required parameter 'complianceAccreditationDecision' is not null or undefined
+            assertParamExists('postComplianceAccreditationByIdDecision', 'complianceAccreditationDecision', complianceAccreditationDecision)
             const localVarPath = `/v1/compliance/accreditation/{id}/decision`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -511,7 +513,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(accreditationDecision, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(complianceAccreditationDecision, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -521,13 +523,13 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty. The subject\'s contact PII (name/email) is sealed at rest and returned only to the owning org; downstream records reference the subject by opaque id.
          * @summary Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty.
-         * @param {SubjectReq} subjectReq 
+         * @param {ComplianceSubjectReq} complianceSubjectReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceSubjects: async (subjectReq: SubjectReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'subjectReq' is not null or undefined
-            assertParamExists('postComplianceSubjects', 'subjectReq', subjectReq)
+        postComplianceSubjects: async (complianceSubjectReq: ComplianceSubjectReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'complianceSubjectReq' is not null or undefined
+            assertParamExists('postComplianceSubjects', 'complianceSubjectReq', complianceSubjectReq)
             const localVarPath = `/v1/compliance/subjects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -551,7 +553,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(subjectReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(complianceSubjectReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -561,13 +563,13 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Begins a KYC/KYB verification of a subject through the wired provider — an existing subject by id, or one created inline from the request. The returned status is provider-reported and never terminal on a fresh start: starting a verification can never yield a verified record, and a provider error is a 502, never a verification.
          * @summary Begins a KYC/KYB verification of a subject through the wired provider — an existing subject by id, or one created inline from the request.
-         * @param {VerificationReq} verificationReq 
+         * @param {ComplianceVerificationReq} complianceVerificationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceVerifications: async (verificationReq: VerificationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'verificationReq' is not null or undefined
-            assertParamExists('postComplianceVerifications', 'verificationReq', verificationReq)
+        postComplianceVerifications: async (complianceVerificationReq: ComplianceVerificationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'complianceVerificationReq' is not null or undefined
+            assertParamExists('postComplianceVerifications', 'complianceVerificationReq', complianceVerificationReq)
             const localVarPath = `/v1/compliance/verifications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -591,7 +593,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(verificationReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(complianceVerificationReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -602,15 +604,15 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider_verified (a provider decision is the provider\'s to report, via the webhook or a reconcile), and it is ROLE-GATED (an org admin or platform reviewer) AND ATTRIBUTED (the reviewer\'s user id is DecidedBy), so a manual pass is always accountable.
          * @summary Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired.
          * @param {string} id ID is the verification to decide, from the path.
-         * @param {VerificationDecision} verificationDecision 
+         * @param {ComplianceVerificationDecision} complianceVerificationDecision 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceVerificationsByIdDecision: async (id: string, verificationDecision: VerificationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postComplianceVerificationsByIdDecision: async (id: string, complianceVerificationDecision: ComplianceVerificationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postComplianceVerificationsByIdDecision', 'id', id)
-            // verify required parameter 'verificationDecision' is not null or undefined
-            assertParamExists('postComplianceVerificationsByIdDecision', 'verificationDecision', verificationDecision)
+            // verify required parameter 'complianceVerificationDecision' is not null or undefined
+            assertParamExists('postComplianceVerificationsByIdDecision', 'complianceVerificationDecision', complianceVerificationDecision)
             const localVarPath = `/v1/compliance/verifications/{id}/decision`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -635,7 +637,7 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(verificationDecision, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(complianceVerificationDecision, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -731,7 +733,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceAccreditation(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccList>> {
+        async getComplianceAccreditation(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceAccList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceAccreditation(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceAccreditation']?.[localVarOperationServerIndex]?.url;
@@ -744,32 +746,32 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceAccreditationById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
+        async getComplianceAccreditationById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceAccView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceAccreditationById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceAccreditationById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 401, no configured audit store a 501.
          * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {string} [result] Result filters rows by outcome result: success, deny, or error; empty means all.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceAudit(result?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuditList>> {
+        async getComplianceAudit(result?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceAuditList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceAudit(result, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceAudit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
-         * @summary Health reports subsystem liveness and the wired verification provider.
+         * Reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
+         * @summary Reports subsystem liveness and the wired verification provider.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthView>> {
+        async getComplianceHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceHealthView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceHealth']?.[localVarOperationServerIndex]?.url;
@@ -782,7 +784,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceRecords(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecordList>> {
+        async getComplianceRecords(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceRecordList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceRecords(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceRecords']?.[localVarOperationServerIndex]?.url;
@@ -794,7 +796,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatusView>> {
+        async getComplianceStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceStatusView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceStatus']?.[localVarOperationServerIndex]?.url;
@@ -807,7 +809,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceSubjects(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubjectList>> {
+        async getComplianceSubjects(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceSubjectList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceSubjects(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceSubjects']?.[localVarOperationServerIndex]?.url;
@@ -820,7 +822,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceSubjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subject>> {
+        async getComplianceSubjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceSubject>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceSubjectsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceSubjectsById']?.[localVarOperationServerIndex]?.url;
@@ -833,7 +835,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceVerifications(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckList>> {
+        async getComplianceVerifications(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceCheckList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceVerifications(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceVerifications']?.[localVarOperationServerIndex]?.url;
@@ -846,7 +848,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComplianceVerificationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
+        async getComplianceVerificationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceCheckView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getComplianceVerificationsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getComplianceVerificationsById']?.[localVarOperationServerIndex]?.url;
@@ -855,12 +857,12 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
         /**
          * Records an ASSERTED accreditation state for a subject — the subject\'s own assertion, with no verifier. Every CONFIRMED state (provider_verified, reviewer_confirmed) and every rejected/expired state is a DECISION recorded via the decision endpoint, attributed to the reviewer — a create can never stamp a confirmation. The underlying figures (income, net worth) are never stored; only the method, category, and state.
          * @summary Records an ASSERTED accreditation state for a subject — the subject\'s own assertion, with no verifier.
-         * @param {AccreditationReq} accreditationReq 
+         * @param {ComplianceAccreditationReq} complianceAccreditationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceAccreditation(accreditationReq: AccreditationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceAccreditation(accreditationReq, options);
+        async postComplianceAccreditation(complianceAccreditationReq: ComplianceAccreditationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceAccView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceAccreditation(complianceAccreditationReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceAccreditation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -869,12 +871,12 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry. ROLE-GATED (an org admin or platform reviewer) and ATTRIBUTED: the reviewer\'s identity is recorded as ReviewerSub and audited. Human-in-the-loop: the platform never confirms on its own, and even a provider_verified state carries the reviewer who recorded it.
          * @summary Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry.
          * @param {string} id ID is the accreditation record to decide, from the path.
-         * @param {AccreditationDecision} accreditationDecision 
+         * @param {ComplianceAccreditationDecision} complianceAccreditationDecision 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceAccreditationByIdDecision(id: string, accreditationDecision: AccreditationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceAccreditationByIdDecision(id, accreditationDecision, options);
+        async postComplianceAccreditationByIdDecision(id: string, complianceAccreditationDecision: ComplianceAccreditationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceAccView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceAccreditationByIdDecision(id, complianceAccreditationDecision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceAccreditationByIdDecision']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -882,12 +884,12 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
         /**
          * Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty. The subject\'s contact PII (name/email) is sealed at rest and returned only to the owning org; downstream records reference the subject by opaque id.
          * @summary Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty.
-         * @param {SubjectReq} subjectReq 
+         * @param {ComplianceSubjectReq} complianceSubjectReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceSubjects(subjectReq: SubjectReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceSubjects(subjectReq, options);
+        async postComplianceSubjects(complianceSubjectReq: ComplianceSubjectReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceSubject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceSubjects(complianceSubjectReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceSubjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -895,12 +897,12 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
         /**
          * Begins a KYC/KYB verification of a subject through the wired provider — an existing subject by id, or one created inline from the request. The returned status is provider-reported and never terminal on a fresh start: starting a verification can never yield a verified record, and a provider error is a 502, never a verification.
          * @summary Begins a KYC/KYB verification of a subject through the wired provider — an existing subject by id, or one created inline from the request.
-         * @param {VerificationReq} verificationReq 
+         * @param {ComplianceVerificationReq} complianceVerificationReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceVerifications(verificationReq: VerificationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceVerifications(verificationReq, options);
+        async postComplianceVerifications(complianceVerificationReq: ComplianceVerificationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceCheckView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceVerifications(complianceVerificationReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceVerifications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -909,12 +911,12 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider_verified (a provider decision is the provider\'s to report, via the webhook or a reconcile), and it is ROLE-GATED (an org admin or platform reviewer) AND ATTRIBUTED (the reviewer\'s user id is DecidedBy), so a manual pass is always accountable.
          * @summary Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired.
          * @param {string} id ID is the verification to decide, from the path.
-         * @param {VerificationDecision} verificationDecision 
+         * @param {ComplianceVerificationDecision} complianceVerificationDecision 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceVerificationsByIdDecision(id: string, verificationDecision: VerificationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceVerificationsByIdDecision(id, verificationDecision, options);
+        async postComplianceVerificationsByIdDecision(id: string, complianceVerificationDecision: ComplianceVerificationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceCheckView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceVerificationsByIdDecision(id, complianceVerificationDecision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceVerificationsByIdDecision']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -926,7 +928,7 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postComplianceVerificationsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
+        async postComplianceVerificationsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ComplianceCheckView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postComplianceVerificationsByIdRefresh(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postComplianceVerificationsByIdRefresh']?.[localVarOperationServerIndex]?.url;
@@ -961,7 +963,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceAccreditation(requestParameters: ComplianceApiGetComplianceAccreditationRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccList> {
+        getComplianceAccreditation(requestParameters: ComplianceApiGetComplianceAccreditationRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceAccList> {
             return localVarFp.getComplianceAccreditation(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -971,26 +973,26 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceAccreditationById(requestParameters: ComplianceApiGetComplianceAccreditationByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
+        getComplianceAccreditationById(requestParameters: ComplianceApiGetComplianceAccreditationByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceAccView> {
             return localVarFp.getComplianceAccreditationById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 401, no configured audit store a 501.
          * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {ComplianceApiGetComplianceAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceAudit(requestParameters: ComplianceApiGetComplianceAuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AuditList> {
+        getComplianceAudit(requestParameters: ComplianceApiGetComplianceAuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceAuditList> {
             return localVarFp.getComplianceAudit(requestParameters.result, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
-         * @summary Health reports subsystem liveness and the wired verification provider.
+         * Reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
+         * @summary Reports subsystem liveness and the wired verification provider.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceHealth(options?: RawAxiosRequestConfig): AxiosPromise<HealthView> {
+        getComplianceHealth(options?: RawAxiosRequestConfig): AxiosPromise<ComplianceHealthView> {
             return localVarFp.getComplianceHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1000,7 +1002,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceRecords(requestParameters: ComplianceApiGetComplianceRecordsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RecordList> {
+        getComplianceRecords(requestParameters: ComplianceApiGetComplianceRecordsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceRecordList> {
             return localVarFp.getComplianceRecords(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1009,7 +1011,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceStatus(options?: RawAxiosRequestConfig): AxiosPromise<StatusView> {
+        getComplianceStatus(options?: RawAxiosRequestConfig): AxiosPromise<ComplianceStatusView> {
             return localVarFp.getComplianceStatus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1019,7 +1021,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceSubjects(requestParameters: ComplianceApiGetComplianceSubjectsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SubjectList> {
+        getComplianceSubjects(requestParameters: ComplianceApiGetComplianceSubjectsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceSubjectList> {
             return localVarFp.getComplianceSubjects(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1029,7 +1031,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceSubjectsById(requestParameters: ComplianceApiGetComplianceSubjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subject> {
+        getComplianceSubjectsById(requestParameters: ComplianceApiGetComplianceSubjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceSubject> {
             return localVarFp.getComplianceSubjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1039,7 +1041,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceVerifications(requestParameters: ComplianceApiGetComplianceVerificationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CheckList> {
+        getComplianceVerifications(requestParameters: ComplianceApiGetComplianceVerificationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceCheckList> {
             return localVarFp.getComplianceVerifications(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1049,7 +1051,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComplianceVerificationsById(requestParameters: ComplianceApiGetComplianceVerificationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
+        getComplianceVerificationsById(requestParameters: ComplianceApiGetComplianceVerificationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceCheckView> {
             return localVarFp.getComplianceVerificationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1059,8 +1061,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceAccreditation(requestParameters: ComplianceApiPostComplianceAccreditationRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
-            return localVarFp.postComplianceAccreditation(requestParameters.accreditationReq, options).then((request) => request(axios, basePath));
+        postComplianceAccreditation(requestParameters: ComplianceApiPostComplianceAccreditationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceAccView> {
+            return localVarFp.postComplianceAccreditation(requestParameters.complianceAccreditationReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry. ROLE-GATED (an org admin or platform reviewer) and ATTRIBUTED: the reviewer\'s identity is recorded as ReviewerSub and audited. Human-in-the-loop: the platform never confirms on its own, and even a provider_verified state carries the reviewer who recorded it.
@@ -1069,8 +1071,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceAccreditationByIdDecision(requestParameters: ComplianceApiPostComplianceAccreditationByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
-            return localVarFp.postComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(axios, basePath));
+        postComplianceAccreditationByIdDecision(requestParameters: ComplianceApiPostComplianceAccreditationByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceAccView> {
+            return localVarFp.postComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.complianceAccreditationDecision, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty. The subject\'s contact PII (name/email) is sealed at rest and returned only to the owning org; downstream records reference the subject by opaque id.
@@ -1079,8 +1081,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceSubjects(requestParameters: ComplianceApiPostComplianceSubjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subject> {
-            return localVarFp.postComplianceSubjects(requestParameters.subjectReq, options).then((request) => request(axios, basePath));
+        postComplianceSubjects(requestParameters: ComplianceApiPostComplianceSubjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceSubject> {
+            return localVarFp.postComplianceSubjects(requestParameters.complianceSubjectReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Begins a KYC/KYB verification of a subject through the wired provider — an existing subject by id, or one created inline from the request. The returned status is provider-reported and never terminal on a fresh start: starting a verification can never yield a verified record, and a provider error is a 502, never a verification.
@@ -1089,8 +1091,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceVerifications(requestParameters: ComplianceApiPostComplianceVerificationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
-            return localVarFp.postComplianceVerifications(requestParameters.verificationReq, options).then((request) => request(axios, basePath));
+        postComplianceVerifications(requestParameters: ComplianceApiPostComplianceVerificationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceCheckView> {
+            return localVarFp.postComplianceVerifications(requestParameters.complianceVerificationReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider_verified (a provider decision is the provider\'s to report, via the webhook or a reconcile), and it is ROLE-GATED (an org admin or platform reviewer) AND ATTRIBUTED (the reviewer\'s user id is DecidedBy), so a manual pass is always accountable.
@@ -1099,8 +1101,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceVerificationsByIdDecision(requestParameters: ComplianceApiPostComplianceVerificationsByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
-            return localVarFp.postComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(axios, basePath));
+        postComplianceVerificationsByIdDecision(requestParameters: ComplianceApiPostComplianceVerificationsByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceCheckView> {
+            return localVarFp.postComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.complianceVerificationDecision, options).then((request) => request(axios, basePath));
         },
         /**
          * Polls the wired provider for its current decision and records it, ATTRIBUTED to the provider — the internal PULL reconcile. For the Manual provider the check stays pending; for a hosted provider it reflects the provider\'s settled status. A poll error is a 502, never a verification.
@@ -1109,7 +1111,7 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postComplianceVerificationsByIdRefresh(requestParameters: ComplianceApiPostComplianceVerificationsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
+        postComplianceVerificationsByIdRefresh(requestParameters: ComplianceApiPostComplianceVerificationsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<ComplianceCheckView> {
             return localVarFp.postComplianceVerificationsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1244,10 +1246,10 @@ export interface ComplianceApiGetComplianceVerificationsByIdRequest {
 export interface ComplianceApiPostComplianceAccreditationRequest {
     /**
      * 
-     * @type {AccreditationReq}
+     * @type {ComplianceAccreditationReq}
      * @memberof ComplianceApiPostComplianceAccreditation
      */
-    readonly accreditationReq: AccreditationReq
+    readonly complianceAccreditationReq: ComplianceAccreditationReq
 }
 
 /**
@@ -1265,10 +1267,10 @@ export interface ComplianceApiPostComplianceAccreditationByIdDecisionRequest {
 
     /**
      * 
-     * @type {AccreditationDecision}
+     * @type {ComplianceAccreditationDecision}
      * @memberof ComplianceApiPostComplianceAccreditationByIdDecision
      */
-    readonly accreditationDecision: AccreditationDecision
+    readonly complianceAccreditationDecision: ComplianceAccreditationDecision
 }
 
 /**
@@ -1279,10 +1281,10 @@ export interface ComplianceApiPostComplianceAccreditationByIdDecisionRequest {
 export interface ComplianceApiPostComplianceSubjectsRequest {
     /**
      * 
-     * @type {SubjectReq}
+     * @type {ComplianceSubjectReq}
      * @memberof ComplianceApiPostComplianceSubjects
      */
-    readonly subjectReq: SubjectReq
+    readonly complianceSubjectReq: ComplianceSubjectReq
 }
 
 /**
@@ -1293,10 +1295,10 @@ export interface ComplianceApiPostComplianceSubjectsRequest {
 export interface ComplianceApiPostComplianceVerificationsRequest {
     /**
      * 
-     * @type {VerificationReq}
+     * @type {ComplianceVerificationReq}
      * @memberof ComplianceApiPostComplianceVerifications
      */
-    readonly verificationReq: VerificationReq
+    readonly complianceVerificationReq: ComplianceVerificationReq
 }
 
 /**
@@ -1314,10 +1316,10 @@ export interface ComplianceApiPostComplianceVerificationsByIdDecisionRequest {
 
     /**
      * 
-     * @type {VerificationDecision}
+     * @type {ComplianceVerificationDecision}
      * @memberof ComplianceApiPostComplianceVerificationsByIdDecision
      */
-    readonly verificationDecision: VerificationDecision
+    readonly complianceVerificationDecision: ComplianceVerificationDecision
 }
 
 /**
@@ -1366,7 +1368,7 @@ export class ComplianceApi extends BaseAPI {
     }
 
     /**
-     * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+     * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 401, no configured audit store a 501.
      * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
      * @param {ComplianceApiGetComplianceAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1378,8 +1380,8 @@ export class ComplianceApi extends BaseAPI {
     }
 
     /**
-     * Health reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
-     * @summary Health reports subsystem liveness and the wired verification provider.
+     * Reports subsystem liveness and the wired verification provider. Fail-open on purpose: it never probes the external provider, so a provider outage cannot fail liveness.
+     * @summary Reports subsystem liveness and the wired verification provider.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
@@ -1468,7 +1470,7 @@ export class ComplianceApi extends BaseAPI {
      * @memberof ComplianceApi
      */
     public postComplianceAccreditation(requestParameters: ComplianceApiPostComplianceAccreditationRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postComplianceAccreditation(requestParameters.accreditationReq, options).then((request) => request(this.axios, this.basePath));
+        return ComplianceApiFp(this.configuration).postComplianceAccreditation(requestParameters.complianceAccreditationReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1480,7 +1482,7 @@ export class ComplianceApi extends BaseAPI {
      * @memberof ComplianceApi
      */
     public postComplianceAccreditationByIdDecision(requestParameters: ComplianceApiPostComplianceAccreditationByIdDecisionRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(this.axios, this.basePath));
+        return ComplianceApiFp(this.configuration).postComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.complianceAccreditationDecision, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1492,7 +1494,7 @@ export class ComplianceApi extends BaseAPI {
      * @memberof ComplianceApi
      */
     public postComplianceSubjects(requestParameters: ComplianceApiPostComplianceSubjectsRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postComplianceSubjects(requestParameters.subjectReq, options).then((request) => request(this.axios, this.basePath));
+        return ComplianceApiFp(this.configuration).postComplianceSubjects(requestParameters.complianceSubjectReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1504,7 +1506,7 @@ export class ComplianceApi extends BaseAPI {
      * @memberof ComplianceApi
      */
     public postComplianceVerifications(requestParameters: ComplianceApiPostComplianceVerificationsRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postComplianceVerifications(requestParameters.verificationReq, options).then((request) => request(this.axios, this.basePath));
+        return ComplianceApiFp(this.configuration).postComplianceVerifications(requestParameters.complianceVerificationReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1516,7 +1518,7 @@ export class ComplianceApi extends BaseAPI {
      * @memberof ComplianceApi
      */
     public postComplianceVerificationsByIdDecision(requestParameters: ComplianceApiPostComplianceVerificationsByIdDecisionRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(this.axios, this.basePath));
+        return ComplianceApiFp(this.configuration).postComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.complianceVerificationDecision, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

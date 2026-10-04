@@ -33,11 +33,11 @@ export interface O11yO11yPreference {
      */
     'allowedValues'?: Array<string>;
     /**
-     * DefaultValue is the value before anyone set one.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yPreference
      */
-    'defaultValue'?: object;
+    'defaultValue'?: any;
     /**
      * Description says what the preference does.
      * @type {string}
@@ -51,11 +51,11 @@ export interface O11yO11yPreference {
      */
     'name'?: string;
     /**
-     * Value is the current value.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yPreference
      */
-    'value'?: object;
+    'value'?: any;
     /**
      * ValueType is the JSON type a value must have — string, integer, float or boolean.
      * @type {string}

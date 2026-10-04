@@ -21,11 +21,11 @@
  */
 export interface O11yQueryEnvelope {
     /**
-     * Spec is the deferred decoding of the query if any.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yQueryEnvelope
      */
-    'spec'?: object;
+    'spec'?: any;
     /**
      * 
      * @type {any}

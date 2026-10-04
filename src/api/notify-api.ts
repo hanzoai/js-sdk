@@ -22,15 +22,63 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { NotifyHealth } from '../models';
+import type { NotifyNotifyCredential } from '../models';
 // @ts-ignore
-import type { NotifySend } from '../models';
+import type { NotifyNotifyHealth } from '../models';
+// @ts-ignore
+import type { NotifyNotifySend } from '../models';
+// @ts-ignore
+import type { NotifyNotifyStored } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * NotifyApi - axios parameter creator
  * @export
  */
 export const NotifyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Removes one of your org\'s notify provider credentials.  The value is forgotten in KMS. A provider missing a key it cannot send without is no longer picked for its channel, and a send that pins it fails with the key it lacks. Removing a key that is not set succeeds, since what was asked for is already true. Org admin only.
+         * @summary Removes one of your org\'s notify provider credentials.
+         * @param {string} provider Provider is the delivery provider the credential is for.
+         * @param {string} key Key is the credential\&#39;s name within that provider.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNotifyCredentialsByProviderByKey: async (provider: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('deleteNotifyCredentialsByProviderByKey', 'provider', provider)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('deleteNotifyCredentialsByProviderByKey', 'key', key)
+            const localVarPath = `/v1/notify/credentials/{provider}/{key}`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Reports that the notify send surface is mounted.  It is a pure liveness probe: it answers 200 whenever this subsystem is mounted and checks nothing downstream, so an \"ok\" here says the routes are reachable, not that any provider credential is configured. The body is notifyd\'s verbatim, so probes and clients that keyed on the standalone service keep working unchanged.
          * @summary Reports that the notify send surface is mounted.
@@ -68,13 +116,13 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Delivers one transactional message by email or SMS through the caller org\'s own provider credential.  The channel comes from the body — sms or email — and the provider credential is read from KMS at orgs/<org>/notify/<service>/<key>, never from the environment. The org is the validated principal\'s, never a client-supplied value, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {message_id,status} outcome, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
          * @summary Delivers one transactional message by email or SMS through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postNotifySend: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postNotifySend', 'notifySend', notifySend)
+        postNotifySend: async (notifyNotifySend: NotifyNotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'notifyNotifySend' is not null or undefined
+            assertParamExists('postNotifySend', 'notifyNotifySend', notifyNotifySend)
             const localVarPath = `/v1/notify/send`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -98,7 +146,7 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(notifySend, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyNotifySend, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -108,13 +156,13 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Delivers one transactional email through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org; an unauthenticated caller gets 401. Subject is carried on the email channel only.
          * @summary Delivers one transactional email through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postNotifySendEmail: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postNotifySendEmail', 'notifySend', notifySend)
+        postNotifySendEmail: async (notifyNotifySend: NotifyNotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'notifyNotifySend' is not null or undefined
+            assertParamExists('postNotifySendEmail', 'notifyNotifySend', notifyNotifySend)
             const localVarPath = `/v1/notify/send/email`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -138,7 +186,7 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(notifySend, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyNotifySend, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -148,13 +196,13 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Delivers one transactional SMS through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org; an unauthenticated caller gets 401.
          * @summary Delivers one transactional SMS through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postNotifySendSms: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postNotifySendSms', 'notifySend', notifySend)
+        postNotifySendSms: async (notifyNotifySend: NotifyNotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'notifyNotifySend' is not null or undefined
+            assertParamExists('postNotifySendSms', 'notifyNotifySend', notifyNotifySend)
             const localVarPath = `/v1/notify/send/sms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -178,7 +226,55 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(notifySend, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyNotifySend, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sets one of your org\'s notify provider credentials.  The value is sealed in KMS under your org and read by notify alone, at the moment it sends; no route answers it back, this one included. Setting a key that is already set replaces it, which is how a credential is rotated, and the next send uses the new value. The key must be one the provider reads — Twilio\'s account-sid, auth-token and from-number, say — and anything else is a 400 naming the keys it does read. An unknown provider is a 404.  Org admin only: a credential set here is what every message the org sends goes out with.
+         * @summary Sets one of your org\'s notify provider credentials.
+         * @param {string} provider Provider is the delivery provider the credential is for: twilio, plivo, twilio_email or mail.
+         * @param {string} key Key is one of the credentials that provider reads, such as auth-token or smtp-host. A key the provider does not read is refused.
+         * @param {NotifyNotifyCredential} notifyNotifyCredential 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putNotifyCredentialsByProviderByKey: async (provider: string, key: string, notifyNotifyCredential: NotifyNotifyCredential, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('putNotifyCredentialsByProviderByKey', 'provider', provider)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('putNotifyCredentialsByProviderByKey', 'key', key)
+            // verify required parameter 'notifyNotifyCredential' is not null or undefined
+            assertParamExists('putNotifyCredentialsByProviderByKey', 'notifyNotifyCredential', notifyNotifyCredential)
+            const localVarPath = `/v1/notify/credentials/{provider}/{key}`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyNotifyCredential, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -196,12 +292,26 @@ export const NotifyApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = NotifyApiAxiosParamCreator(configuration)
     return {
         /**
+         * Removes one of your org\'s notify provider credentials.  The value is forgotten in KMS. A provider missing a key it cannot send without is no longer picked for its channel, and a send that pins it fails with the key it lacks. Removing a key that is not set succeeds, since what was asked for is already true. Org admin only.
+         * @summary Removes one of your org\'s notify provider credentials.
+         * @param {string} provider Provider is the delivery provider the credential is for.
+         * @param {string} key Key is the credential\&#39;s name within that provider.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteNotifyCredentialsByProviderByKey(provider: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteNotifyCredentialsByProviderByKey(provider, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.deleteNotifyCredentialsByProviderByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reports that the notify send surface is mounted.  It is a pure liveness probe: it answers 200 whenever this subsystem is mounted and checks nothing downstream, so an \"ok\" here says the routes are reachable, not that any provider credential is configured. The body is notifyd\'s verbatim, so probes and clients that keyed on the standalone service keep working unchanged.
          * @summary Reports that the notify send surface is mounted.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getNotifyHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyHealth>> {
+        async getNotifyHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyNotifyHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifyHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.getNotifyHealth']?.[localVarOperationServerIndex]?.url;
@@ -210,12 +320,12 @@ export const NotifyApiFp = function(configuration?: Configuration) {
         /**
          * Delivers one transactional message by email or SMS through the caller org\'s own provider credential.  The channel comes from the body — sms or email — and the provider credential is read from KMS at orgs/<org>/notify/<service>/<key>, never from the environment. The org is the validated principal\'s, never a client-supplied value, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {message_id,status} outcome, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
          * @summary Delivers one transactional message by email or SMS through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postNotifySend(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySend(notifySend, options);
+        async postNotifySend(notifyNotifySend: NotifyNotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySend(notifyNotifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -223,12 +333,12 @@ export const NotifyApiFp = function(configuration?: Configuration) {
         /**
          * Delivers one transactional email through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org; an unauthenticated caller gets 401. Subject is carried on the email channel only.
          * @summary Delivers one transactional email through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postNotifySendEmail(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendEmail(notifySend, options);
+        async postNotifySendEmail(notifyNotifySend: NotifyNotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendEmail(notifyNotifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySendEmail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -236,14 +346,29 @@ export const NotifyApiFp = function(configuration?: Configuration) {
         /**
          * Delivers one transactional SMS through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org; an unauthenticated caller gets 401.
          * @summary Delivers one transactional SMS through the caller org\'s own provider credential.
-         * @param {NotifySend} notifySend 
+         * @param {NotifyNotifySend} notifyNotifySend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postNotifySendSms(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendSms(notifySend, options);
+        async postNotifySendSms(notifyNotifySend: NotifyNotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendSms(notifyNotifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySendSms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets one of your org\'s notify provider credentials.  The value is sealed in KMS under your org and read by notify alone, at the moment it sends; no route answers it back, this one included. Setting a key that is already set replaces it, which is how a credential is rotated, and the next send uses the new value. The key must be one the provider reads — Twilio\'s account-sid, auth-token and from-number, say — and anything else is a 400 naming the keys it does read. An unknown provider is a 404.  Org admin only: a credential set here is what every message the org sends goes out with.
+         * @summary Sets one of your org\'s notify provider credentials.
+         * @param {string} provider Provider is the delivery provider the credential is for: twilio, plivo, twilio_email or mail.
+         * @param {string} key Key is one of the credentials that provider reads, such as auth-token or smtp-host. A key the provider does not read is refused.
+         * @param {NotifyNotifyCredential} notifyNotifyCredential 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putNotifyCredentialsByProviderByKey(provider: string, key: string, notifyNotifyCredential: NotifyNotifyCredential, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyNotifyStored>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putNotifyCredentialsByProviderByKey(provider, key, notifyNotifyCredential, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.putNotifyCredentialsByProviderByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -257,12 +382,22 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = NotifyApiFp(configuration)
     return {
         /**
+         * Removes one of your org\'s notify provider credentials.  The value is forgotten in KMS. A provider missing a key it cannot send without is no longer picked for its channel, and a send that pins it fails with the key it lacks. Removing a key that is not set succeeds, since what was asked for is already true. Org admin only.
+         * @summary Removes one of your org\'s notify provider credentials.
+         * @param {NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNotifyCredentialsByProviderByKey(requestParameters: NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteNotifyCredentialsByProviderByKey(requestParameters.provider, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reports that the notify send surface is mounted.  It is a pure liveness probe: it answers 200 whenever this subsystem is mounted and checks nothing downstream, so an \"ok\" here says the routes are reachable, not that any provider credential is configured. The body is notifyd\'s verbatim, so probes and clients that keyed on the standalone service keep working unchanged.
          * @summary Reports that the notify send surface is mounted.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNotifyHealth(options?: RawAxiosRequestConfig): AxiosPromise<NotifyHealth> {
+        getNotifyHealth(options?: RawAxiosRequestConfig): AxiosPromise<NotifyNotifyHealth> {
             return localVarFp.getNotifyHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -273,7 +408,7 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         postNotifySend(requestParameters: NotifyApiPostNotifySendRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postNotifySend(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+            return localVarFp.postNotifySend(requestParameters.notifyNotifySend, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one transactional email through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org; an unauthenticated caller gets 401. Subject is carried on the email channel only.
@@ -283,7 +418,7 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         postNotifySendEmail(requestParameters: NotifyApiPostNotifySendEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postNotifySendEmail(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+            return localVarFp.postNotifySendEmail(requestParameters.notifyNotifySend, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one transactional SMS through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org; an unauthenticated caller gets 401.
@@ -293,10 +428,41 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         postNotifySendSms(requestParameters: NotifyApiPostNotifySendSmsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postNotifySendSms(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+            return localVarFp.postNotifySendSms(requestParameters.notifyNotifySend, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets one of your org\'s notify provider credentials.  The value is sealed in KMS under your org and read by notify alone, at the moment it sends; no route answers it back, this one included. Setting a key that is already set replaces it, which is how a credential is rotated, and the next send uses the new value. The key must be one the provider reads — Twilio\'s account-sid, auth-token and from-number, say — and anything else is a 400 naming the keys it does read. An unknown provider is a 404.  Org admin only: a credential set here is what every message the org sends goes out with.
+         * @summary Sets one of your org\'s notify provider credentials.
+         * @param {NotifyApiPutNotifyCredentialsByProviderByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putNotifyCredentialsByProviderByKey(requestParameters: NotifyApiPutNotifyCredentialsByProviderByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<NotifyNotifyStored> {
+            return localVarFp.putNotifyCredentialsByProviderByKey(requestParameters.provider, requestParameters.key, requestParameters.notifyNotifyCredential, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for deleteNotifyCredentialsByProviderByKey operation in NotifyApi.
+ * @export
+ * @interface NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest
+ */
+export interface NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest {
+    /**
+     * Provider is the delivery provider the credential is for.
+     * @type {string}
+     * @memberof NotifyApiDeleteNotifyCredentialsByProviderByKey
+     */
+    readonly provider: string
+
+    /**
+     * Key is the credential\&#39;s name within that provider.
+     * @type {string}
+     * @memberof NotifyApiDeleteNotifyCredentialsByProviderByKey
+     */
+    readonly key: string
+}
 
 /**
  * Request parameters for postNotifySend operation in NotifyApi.
@@ -306,10 +472,10 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
 export interface NotifyApiPostNotifySendRequest {
     /**
      * 
-     * @type {NotifySend}
+     * @type {NotifyNotifySend}
      * @memberof NotifyApiPostNotifySend
      */
-    readonly notifySend: NotifySend
+    readonly notifyNotifySend: NotifyNotifySend
 }
 
 /**
@@ -320,10 +486,10 @@ export interface NotifyApiPostNotifySendRequest {
 export interface NotifyApiPostNotifySendEmailRequest {
     /**
      * 
-     * @type {NotifySend}
+     * @type {NotifyNotifySend}
      * @memberof NotifyApiPostNotifySendEmail
      */
-    readonly notifySend: NotifySend
+    readonly notifyNotifySend: NotifyNotifySend
 }
 
 /**
@@ -334,10 +500,38 @@ export interface NotifyApiPostNotifySendEmailRequest {
 export interface NotifyApiPostNotifySendSmsRequest {
     /**
      * 
-     * @type {NotifySend}
+     * @type {NotifyNotifySend}
      * @memberof NotifyApiPostNotifySendSms
      */
-    readonly notifySend: NotifySend
+    readonly notifyNotifySend: NotifyNotifySend
+}
+
+/**
+ * Request parameters for putNotifyCredentialsByProviderByKey operation in NotifyApi.
+ * @export
+ * @interface NotifyApiPutNotifyCredentialsByProviderByKeyRequest
+ */
+export interface NotifyApiPutNotifyCredentialsByProviderByKeyRequest {
+    /**
+     * Provider is the delivery provider the credential is for: twilio, plivo, twilio_email or mail.
+     * @type {string}
+     * @memberof NotifyApiPutNotifyCredentialsByProviderByKey
+     */
+    readonly provider: string
+
+    /**
+     * Key is one of the credentials that provider reads, such as auth-token or smtp-host. A key the provider does not read is refused.
+     * @type {string}
+     * @memberof NotifyApiPutNotifyCredentialsByProviderByKey
+     */
+    readonly key: string
+
+    /**
+     * 
+     * @type {NotifyNotifyCredential}
+     * @memberof NotifyApiPutNotifyCredentialsByProviderByKey
+     */
+    readonly notifyNotifyCredential: NotifyNotifyCredential
 }
 
 /**
@@ -347,6 +541,18 @@ export interface NotifyApiPostNotifySendSmsRequest {
  * @extends {BaseAPI}
  */
 export class NotifyApi extends BaseAPI {
+    /**
+     * Removes one of your org\'s notify provider credentials.  The value is forgotten in KMS. A provider missing a key it cannot send without is no longer picked for its channel, and a send that pins it fails with the key it lacks. Removing a key that is not set succeeds, since what was asked for is already true. Org admin only.
+     * @summary Removes one of your org\'s notify provider credentials.
+     * @param {NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotifyApi
+     */
+    public deleteNotifyCredentialsByProviderByKey(requestParameters: NotifyApiDeleteNotifyCredentialsByProviderByKeyRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).deleteNotifyCredentialsByProviderByKey(requestParameters.provider, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Reports that the notify send surface is mounted.  It is a pure liveness probe: it answers 200 whenever this subsystem is mounted and checks nothing downstream, so an \"ok\" here says the routes are reachable, not that any provider credential is configured. The body is notifyd\'s verbatim, so probes and clients that keyed on the standalone service keep working unchanged.
      * @summary Reports that the notify send surface is mounted.
@@ -367,7 +573,7 @@ export class NotifyApi extends BaseAPI {
      * @memberof NotifyApi
      */
     public postNotifySend(requestParameters: NotifyApiPostNotifySendRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postNotifySend(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+        return NotifyApiFp(this.configuration).postNotifySend(requestParameters.notifyNotifySend, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -379,7 +585,7 @@ export class NotifyApi extends BaseAPI {
      * @memberof NotifyApi
      */
     public postNotifySendEmail(requestParameters: NotifyApiPostNotifySendEmailRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postNotifySendEmail(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+        return NotifyApiFp(this.configuration).postNotifySendEmail(requestParameters.notifyNotifySend, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -391,7 +597,19 @@ export class NotifyApi extends BaseAPI {
      * @memberof NotifyApi
      */
     public postNotifySendSms(requestParameters: NotifyApiPostNotifySendSmsRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postNotifySendSms(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+        return NotifyApiFp(this.configuration).postNotifySendSms(requestParameters.notifyNotifySend, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets one of your org\'s notify provider credentials.  The value is sealed in KMS under your org and read by notify alone, at the moment it sends; no route answers it back, this one included. Setting a key that is already set replaces it, which is how a credential is rotated, and the next send uses the new value. The key must be one the provider reads — Twilio\'s account-sid, auth-token and from-number, say — and anything else is a 400 naming the keys it does read. An unknown provider is a 404.  Org admin only: a credential set here is what every message the org sends goes out with.
+     * @summary Sets one of your org\'s notify provider credentials.
+     * @param {NotifyApiPutNotifyCredentialsByProviderByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotifyApi
+     */
+    public putNotifyCredentialsByProviderByKey(requestParameters: NotifyApiPutNotifyCredentialsByProviderByKeyRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).putNotifyCredentialsByProviderByKey(requestParameters.provider, requestParameters.key, requestParameters.notifyNotifyCredential, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

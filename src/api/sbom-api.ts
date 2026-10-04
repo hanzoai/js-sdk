@@ -22,11 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { SbomHealth } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SbomIngest } from '../models';
-// @ts-ignore
-import type { SbomIngested } from '../models';
+import type { SbomSbomHealth } from '../models';
 /**
  * SbomApi - axios parameter creator
  * @export
@@ -67,46 +65,6 @@ export const SbomApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
-         * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-         * @param {SbomIngest} sbomIngest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postSbom: async (sbomIngest: SbomIngest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'sbomIngest' is not null or undefined
-            assertParamExists('postSbom', 'sbomIngest', sbomIngest)
-            const localVarPath = `/v1/sbom`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(sbomIngest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -123,23 +81,10 @@ export const SbomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSbomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomHealth>> {
+        async getSbomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomSbomHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSbomHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SbomApi.getSbomHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
-         * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-         * @param {SbomIngest} sbomIngest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postSbom(sbomIngest: SbomIngest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomIngested>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSbom(sbomIngest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SbomApi.postSbom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -158,35 +103,11 @@ export const SbomApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSbomHealth(options?: RawAxiosRequestConfig): AxiosPromise<SbomHealth> {
+        getSbomHealth(options?: RawAxiosRequestConfig): AxiosPromise<SbomSbomHealth> {
             return localVarFp.getSbomHealth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
-         * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-         * @param {SbomApiPostSbomRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postSbom(requestParameters: SbomApiPostSbomRequest, options?: RawAxiosRequestConfig): AxiosPromise<SbomIngested> {
-            return localVarFp.postSbom(requestParameters.sbomIngest, options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * Request parameters for postSbom operation in SbomApi.
- * @export
- * @interface SbomApiPostSbomRequest
- */
-export interface SbomApiPostSbomRequest {
-    /**
-     * 
-     * @type {SbomIngest}
-     * @memberof SbomApiPostSbom
-     */
-    readonly sbomIngest: SbomIngest
-}
 
 /**
  * SbomApi - object-oriented interface
@@ -204,18 +125,6 @@ export class SbomApi extends BaseAPI {
      */
     public getSbomHealth(options?: RawAxiosRequestConfig) {
         return SbomApiFp(this.configuration).getSbomHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
-     * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-     * @param {SbomApiPostSbomRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SbomApi
-     */
-    public postSbom(requestParameters: SbomApiPostSbomRequest, options?: RawAxiosRequestConfig) {
-        return SbomApiFp(this.configuration).postSbom(requestParameters.sbomIngest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

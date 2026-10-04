@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yFormatOptions } from './o11y-format-options';
+import type { O11yCompositeQuery } from './o11y-composite-query';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yQuerybuildertypesv5CompositeQuery } from './o11y-querybuildertypesv5-composite-query';
+import type { O11yFormatOptions } from './o11y-format-options';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { O11yVariableItem } from './o11y-variable-item';
@@ -31,10 +31,10 @@ import type { O11yVariableItem } from './o11y-variable-item';
 export interface O11yO11yQueryRangePreviewIn {
     /**
      * 
-     * @type {O11yQuerybuildertypesv5CompositeQuery}
+     * @type {O11yCompositeQuery}
      * @memberof O11yO11yQueryRangePreviewIn
      */
-    'compositeQuery'?: O11yQuerybuildertypesv5CompositeQuery;
+    'compositeQuery'?: O11yCompositeQuery;
     /**
      * 
      * @type {number}

@@ -28,10 +28,10 @@ export interface IamReply {
     'action'?: string;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof IamReply
      */
-    'data'?: object;
+    'data'?: any;
     /**
      * 
      * @type {string}

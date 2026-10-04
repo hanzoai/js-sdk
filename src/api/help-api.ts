@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { HelpArticle } from '../models';
+import type { HelpHelpArticle } from '../models';
 // @ts-ignore
-import type { HelpArticleList } from '../models';
+import type { HelpHelpArticleList } from '../models';
 // @ts-ignore
-import type { HelpCategoryList } from '../models';
+import type { HelpHelpCategoryList } from '../models';
 // @ts-ignore
-import type { HelpTicketFiled } from '../models';
+import type { HelpHelpTicketFiled } from '../models';
 // @ts-ignore
-import type { HelpTicketIntake } from '../models';
+import type { HelpHelpTicketIntake } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * HelpApi - axios parameter creator
  * @export
@@ -38,7 +40,7 @@ import type { HelpTicketIntake } from '../models';
 export const HelpApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
+         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404, and one whose center has not installed the Help model answers an empty list.
          * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
          * @param {string} [category] Category narrows the list to one knowledge-base section, matched against the article\&#39;s category by exact name. Empty lists every section.
          * @param {number} [limit] Limit caps how many articles are returned. Anything that is not a positive integer uses 50, and values above 200 are clamped to 200.
@@ -120,7 +122,7 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
+         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error — as is a center that has not installed the Help model.
          * @summary Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -156,13 +158,13 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Files a customer support ticket into the public help center. It creates the ticket (status Open, source portal) with the customer\'s message on the description, then records that same message as the opening entry of the ticket\'s conversation thread; the description carries it regardless, so failing to write that entry loses nothing. Answers 201 with an opaque reference.  A deployment with no help center answers 404, one whose center has not installed the Help model answers 503, and a body over 64 KiB answers 413 — in that order, which is the order the route has always decided them in.
          * @summary Files a customer support ticket into the public help center.
-         * @param {HelpTicketIntake} helpTicketIntake 
+         * @param {HelpHelpTicketIntake} helpHelpTicketIntake 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postHelpTickets: async (helpTicketIntake: HelpTicketIntake, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'helpTicketIntake' is not null or undefined
-            assertParamExists('postHelpTickets', 'helpTicketIntake', helpTicketIntake)
+        postHelpTickets: async (helpHelpTicketIntake: HelpHelpTicketIntake, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helpHelpTicketIntake' is not null or undefined
+            assertParamExists('postHelpTickets', 'helpHelpTicketIntake', helpHelpTicketIntake)
             const localVarPath = `/v1/help/tickets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -186,7 +188,7 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(helpTicketIntake, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(helpHelpTicketIntake, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -204,14 +206,14 @@ export const HelpApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HelpApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
+         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404, and one whose center has not installed the Help model answers an empty list.
          * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
          * @param {string} [category] Category narrows the list to one knowledge-base section, matched against the article\&#39;s category by exact name. Empty lists every section.
          * @param {number} [limit] Limit caps how many articles are returned. Anything that is not a positive integer uses 50, and values above 200 are clamped to 200.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHelpArticles(category?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticleList>> {
+        async getHelpArticles(category?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpHelpArticleList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpArticles(category, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpArticles']?.[localVarOperationServerIndex]?.url;
@@ -224,19 +226,19 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHelpArticlesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticle>> {
+        async getHelpArticlesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpHelpArticle>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpArticlesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpArticlesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
+         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error — as is a center that has not installed the Help model.
          * @summary Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHelpCategories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpCategoryList>> {
+        async getHelpCategories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpHelpCategoryList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpCategories(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpCategories']?.[localVarOperationServerIndex]?.url;
@@ -245,12 +247,12 @@ export const HelpApiFp = function(configuration?: Configuration) {
         /**
          * Files a customer support ticket into the public help center. It creates the ticket (status Open, source portal) with the customer\'s message on the description, then records that same message as the opening entry of the ticket\'s conversation thread; the description carries it regardless, so failing to write that entry loses nothing. Answers 201 with an opaque reference.  A deployment with no help center answers 404, one whose center has not installed the Help model answers 503, and a body over 64 KiB answers 413 — in that order, which is the order the route has always decided them in.
          * @summary Files a customer support ticket into the public help center.
-         * @param {HelpTicketIntake} helpTicketIntake 
+         * @param {HelpHelpTicketIntake} helpHelpTicketIntake 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postHelpTickets(helpTicketIntake: HelpTicketIntake, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpTicketFiled>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postHelpTickets(helpTicketIntake, options);
+        async postHelpTickets(helpHelpTicketIntake: HelpHelpTicketIntake, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpHelpTicketFiled>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postHelpTickets(helpHelpTicketIntake, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelpApi.postHelpTickets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -266,13 +268,13 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = HelpApiFp(configuration)
     return {
         /**
-         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
+         * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404, and one whose center has not installed the Help model answers an empty list.
          * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
          * @param {HelpApiGetHelpArticlesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHelpArticles(requestParameters: HelpApiGetHelpArticlesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticleList> {
+        getHelpArticles(requestParameters: HelpApiGetHelpArticlesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HelpHelpArticleList> {
             return localVarFp.getHelpArticles(requestParameters.category, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -282,16 +284,16 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHelpArticlesBySlug(requestParameters: HelpApiGetHelpArticlesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticle> {
+        getHelpArticlesBySlug(requestParameters: HelpApiGetHelpArticlesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpHelpArticle> {
             return localVarFp.getHelpArticlesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
+         * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error — as is a center that has not installed the Help model.
          * @summary Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHelpCategories(options?: RawAxiosRequestConfig): AxiosPromise<HelpCategoryList> {
+        getHelpCategories(options?: RawAxiosRequestConfig): AxiosPromise<HelpHelpCategoryList> {
             return localVarFp.getHelpCategories(options).then((request) => request(axios, basePath));
         },
         /**
@@ -301,8 +303,8 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postHelpTickets(requestParameters: HelpApiPostHelpTicketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpTicketFiled> {
-            return localVarFp.postHelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(axios, basePath));
+        postHelpTickets(requestParameters: HelpApiPostHelpTicketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpHelpTicketFiled> {
+            return localVarFp.postHelpTickets(requestParameters.helpHelpTicketIntake, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -350,10 +352,10 @@ export interface HelpApiGetHelpArticlesBySlugRequest {
 export interface HelpApiPostHelpTicketsRequest {
     /**
      * 
-     * @type {HelpTicketIntake}
+     * @type {HelpHelpTicketIntake}
      * @memberof HelpApiPostHelpTickets
      */
-    readonly helpTicketIntake: HelpTicketIntake
+    readonly helpHelpTicketIntake: HelpHelpTicketIntake
 }
 
 /**
@@ -364,7 +366,7 @@ export interface HelpApiPostHelpTicketsRequest {
  */
 export class HelpApi extends BaseAPI {
     /**
-     * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
+     * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404, and one whose center has not installed the Help model answers an empty list.
      * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
      * @param {HelpApiGetHelpArticlesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -388,7 +390,7 @@ export class HelpApi extends BaseAPI {
     }
 
     /**
-     * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
+     * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error — as is a center that has not installed the Help model.
      * @summary Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -407,7 +409,7 @@ export class HelpApi extends BaseAPI {
      * @memberof HelpApi
      */
     public postHelpTickets(requestParameters: HelpApiPostHelpTicketsRequest, options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).postHelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(this.axios, this.basePath));
+        return HelpApiFp(this.configuration).postHelpTickets(requestParameters.helpHelpTicketIntake, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

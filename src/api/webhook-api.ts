@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CreateEndpointIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { DeliveryList } from '../models';
+import type { WebhookCreateEndpointIn } from '../models';
 // @ts-ignore
-import type { Endpoint } from '../models';
+import type { WebhookDeliveryList } from '../models';
 // @ts-ignore
-import type { EndpointList } from '../models';
+import type { WebhookEndpoint } from '../models';
 // @ts-ignore
-import type { TestResult } from '../models';
+import type { WebhookEndpointList } from '../models';
 // @ts-ignore
-import type { UpdateEndpointIn } from '../models';
+import type { WebhookTestResult } from '../models';
+// @ts-ignore
+import type { WebhookUpdateEndpointIn } from '../models';
 /**
  * WebhookApi - axios parameter creator
  * @export
@@ -200,13 +202,13 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Registers a new webhook subscription for the caller\'s org and answers 201 with the endpoint INCLUDING its freshly minted signing secret. This is one of only two responses that ever carry that secret (the other is rotate) — store it now, because no later read returns it. The org is stamped by the server from the validated principal, so a body can never register an endpoint in another tenant.
          * @summary Registers a new webhook subscription for the caller\'s org and answers 201 with the endpoint INCLUDING its freshly minted signing secret.
-         * @param {CreateEndpointIn} createEndpointIn 
+         * @param {WebhookCreateEndpointIn} webhookCreateEndpointIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWebhook: async (createEndpointIn: CreateEndpointIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createEndpointIn' is not null or undefined
-            assertParamExists('postWebhook', 'createEndpointIn', createEndpointIn)
+        postWebhook: async (webhookCreateEndpointIn: WebhookCreateEndpointIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'webhookCreateEndpointIn' is not null or undefined
+            assertParamExists('postWebhook', 'webhookCreateEndpointIn', webhookCreateEndpointIn)
             const localVarPath = `/v1/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -230,7 +232,7 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createEndpointIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookCreateEndpointIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -317,15 +319,15 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
          * Replaces the editable fields of one of the caller org\'s endpoints — url, events, status and description — and answers the stored row with its secret redacted. It is a full replace, not a patch: an omitted field is written as its empty value, and an omitted or empty events list resubscribes the endpoint to EVERY event. The signing secret and the creation time are immutable here; rotate the secret with POST /v1/webhook/{id}/secret.
          * @summary Replaces the editable fields of one of the caller org\'s endpoints — url, events, status and description — and answers the stored row with its secret redacted.
          * @param {string} id 
-         * @param {UpdateEndpointIn} updateEndpointIn 
+         * @param {WebhookUpdateEndpointIn} webhookUpdateEndpointIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putWebhookById: async (id: string, updateEndpointIn: UpdateEndpointIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putWebhookById: async (id: string, webhookUpdateEndpointIn: WebhookUpdateEndpointIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putWebhookById', 'id', id)
-            // verify required parameter 'updateEndpointIn' is not null or undefined
-            assertParamExists('putWebhookById', 'updateEndpointIn', updateEndpointIn)
+            // verify required parameter 'webhookUpdateEndpointIn' is not null or undefined
+            assertParamExists('putWebhookById', 'webhookUpdateEndpointIn', webhookUpdateEndpointIn)
             const localVarPath = `/v1/webhook/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -350,7 +352,7 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateEndpointIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookUpdateEndpointIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -386,7 +388,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EndpointList>> {
+        async getWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEndpointList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.getWebhook']?.[localVarOperationServerIndex]?.url;
@@ -399,7 +401,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWebhookById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Endpoint>> {
+        async getWebhookById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEndpoint>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWebhookById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.getWebhookById']?.[localVarOperationServerIndex]?.url;
@@ -414,7 +416,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWebhookByIdDeliveries(id: string, limit?: number, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeliveryList>> {
+        async getWebhookByIdDeliveries(id: string, limit?: number, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookDeliveryList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWebhookByIdDeliveries(id, limit, status, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.getWebhookByIdDeliveries']?.[localVarOperationServerIndex]?.url;
@@ -423,12 +425,12 @@ export const WebhookApiFp = function(configuration?: Configuration) {
         /**
          * Registers a new webhook subscription for the caller\'s org and answers 201 with the endpoint INCLUDING its freshly minted signing secret. This is one of only two responses that ever carry that secret (the other is rotate) — store it now, because no later read returns it. The org is stamped by the server from the validated principal, so a body can never register an endpoint in another tenant.
          * @summary Registers a new webhook subscription for the caller\'s org and answers 201 with the endpoint INCLUDING its freshly minted signing secret.
-         * @param {CreateEndpointIn} createEndpointIn 
+         * @param {WebhookCreateEndpointIn} webhookCreateEndpointIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWebhook(createEndpointIn: CreateEndpointIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Endpoint>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWebhook(createEndpointIn, options);
+        async postWebhook(webhookCreateEndpointIn: WebhookCreateEndpointIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEndpoint>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWebhook(webhookCreateEndpointIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.postWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -440,7 +442,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWebhookByIdSecret(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Endpoint>> {
+        async postWebhookByIdSecret(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEndpoint>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postWebhookByIdSecret(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.postWebhookByIdSecret']?.[localVarOperationServerIndex]?.url;
@@ -453,7 +455,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWebhookByIdTest(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResult>> {
+        async postWebhookByIdTest(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookTestResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postWebhookByIdTest(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.postWebhookByIdTest']?.[localVarOperationServerIndex]?.url;
@@ -463,12 +465,12 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * Replaces the editable fields of one of the caller org\'s endpoints — url, events, status and description — and answers the stored row with its secret redacted. It is a full replace, not a patch: an omitted field is written as its empty value, and an omitted or empty events list resubscribes the endpoint to EVERY event. The signing secret and the creation time are immutable here; rotate the secret with POST /v1/webhook/{id}/secret.
          * @summary Replaces the editable fields of one of the caller org\'s endpoints — url, events, status and description — and answers the stored row with its secret redacted.
          * @param {string} id 
-         * @param {UpdateEndpointIn} updateEndpointIn 
+         * @param {WebhookUpdateEndpointIn} webhookUpdateEndpointIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putWebhookById(id: string, updateEndpointIn: UpdateEndpointIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Endpoint>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putWebhookById(id, updateEndpointIn, options);
+        async putWebhookById(id: string, webhookUpdateEndpointIn: WebhookUpdateEndpointIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEndpoint>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putWebhookById(id, webhookUpdateEndpointIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.putWebhookById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -499,7 +501,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWebhook(options?: RawAxiosRequestConfig): AxiosPromise<EndpointList> {
+        getWebhook(options?: RawAxiosRequestConfig): AxiosPromise<WebhookEndpointList> {
             return localVarFp.getWebhook(options).then((request) => request(axios, basePath));
         },
         /**
@@ -509,7 +511,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWebhookById(requestParameters: WebhookApiGetWebhookByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Endpoint> {
+        getWebhookById(requestParameters: WebhookApiGetWebhookByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEndpoint> {
             return localVarFp.getWebhookById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -519,7 +521,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWebhookByIdDeliveries(requestParameters: WebhookApiGetWebhookByIdDeliveriesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeliveryList> {
+        getWebhookByIdDeliveries(requestParameters: WebhookApiGetWebhookByIdDeliveriesRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookDeliveryList> {
             return localVarFp.getWebhookByIdDeliveries(requestParameters.id, requestParameters.limit, requestParameters.status, options).then((request) => request(axios, basePath));
         },
         /**
@@ -529,8 +531,8 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWebhook(requestParameters: WebhookApiPostWebhookRequest, options?: RawAxiosRequestConfig): AxiosPromise<Endpoint> {
-            return localVarFp.postWebhook(requestParameters.createEndpointIn, options).then((request) => request(axios, basePath));
+        postWebhook(requestParameters: WebhookApiPostWebhookRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEndpoint> {
+            return localVarFp.postWebhook(requestParameters.webhookCreateEndpointIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints a NEW HMAC signing secret for the endpoint and answers the endpoint WITH it — the only other response besides create that ever carries a secret. The old secret stops working the instant this returns: every subsequent delivery signs with the new one, with no overlap window. Call it when the subscriber is ready to swap the value on its side, not before.
@@ -539,7 +541,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWebhookByIdSecret(requestParameters: WebhookApiPostWebhookByIdSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<Endpoint> {
+        postWebhookByIdSecret(requestParameters: WebhookApiPostWebhookByIdSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEndpoint> {
             return localVarFp.postWebhookByIdSecret(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -549,7 +551,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWebhookByIdTest(requestParameters: WebhookApiPostWebhookByIdTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<TestResult> {
+        postWebhookByIdTest(requestParameters: WebhookApiPostWebhookByIdTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookTestResult> {
             return localVarFp.postWebhookByIdTest(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -559,8 +561,8 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putWebhookById(requestParameters: WebhookApiPutWebhookByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Endpoint> {
-            return localVarFp.putWebhookById(requestParameters.id, requestParameters.updateEndpointIn, options).then((request) => request(axios, basePath));
+        putWebhookById(requestParameters: WebhookApiPutWebhookByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEndpoint> {
+            return localVarFp.putWebhookById(requestParameters.id, requestParameters.webhookUpdateEndpointIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -629,10 +631,10 @@ export interface WebhookApiGetWebhookByIdDeliveriesRequest {
 export interface WebhookApiPostWebhookRequest {
     /**
      * 
-     * @type {CreateEndpointIn}
+     * @type {WebhookCreateEndpointIn}
      * @memberof WebhookApiPostWebhook
      */
-    readonly createEndpointIn: CreateEndpointIn
+    readonly webhookCreateEndpointIn: WebhookCreateEndpointIn
 }
 
 /**
@@ -678,10 +680,10 @@ export interface WebhookApiPutWebhookByIdRequest {
 
     /**
      * 
-     * @type {UpdateEndpointIn}
+     * @type {WebhookUpdateEndpointIn}
      * @memberof WebhookApiPutWebhookById
      */
-    readonly updateEndpointIn: UpdateEndpointIn
+    readonly webhookUpdateEndpointIn: WebhookUpdateEndpointIn
 }
 
 /**
@@ -747,7 +749,7 @@ export class WebhookApi extends BaseAPI {
      * @memberof WebhookApi
      */
     public postWebhook(requestParameters: WebhookApiPostWebhookRequest, options?: RawAxiosRequestConfig) {
-        return WebhookApiFp(this.configuration).postWebhook(requestParameters.createEndpointIn, options).then((request) => request(this.axios, this.basePath));
+        return WebhookApiFp(this.configuration).postWebhook(requestParameters.webhookCreateEndpointIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -783,7 +785,7 @@ export class WebhookApi extends BaseAPI {
      * @memberof WebhookApi
      */
     public putWebhookById(requestParameters: WebhookApiPutWebhookByIdRequest, options?: RawAxiosRequestConfig) {
-        return WebhookApiFp(this.configuration).putWebhookById(requestParameters.id, requestParameters.updateEndpointIn, options).then((request) => request(this.axios, this.basePath));
+        return WebhookApiFp(this.configuration).putWebhookById(requestParameters.id, requestParameters.webhookUpdateEndpointIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

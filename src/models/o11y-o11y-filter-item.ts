@@ -36,10 +36,10 @@ export interface O11yO11yFilterItem {
      */
     'op'?: string;
     /**
-     * Value is what it is tested against; its type follows the attribute\'s.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yFilterItem
      */
-    'value'?: object;
+    'value'?: any;
 }
 

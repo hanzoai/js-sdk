@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { DashResp } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ReportReq } from '../models';
+import type { UsageDashResp } from '../models';
 // @ts-ignore
-import type { ReportResp } from '../models';
+import type { UsageReportReq } from '../models';
 // @ts-ignore
-import type { UsageAnalyticsAccess } from '../models';
+import type { UsageReportResp } from '../models';
 // @ts-ignore
-import type { UsageAnalyticsView } from '../models';
+import type { UsageUsageAnalyticsAccess } from '../models';
 // @ts-ignore
-import type { UsageSummary } from '../models';
+import type { UsageUsageAnalyticsView } from '../models';
+// @ts-ignore
+import type { UsageUsageSummary } from '../models';
 /**
  * UsageApi - axios parameter creator
  * @export
@@ -238,13 +240,13 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
-         * @param {ReportReq} reportReq 
+         * @param {UsageReportReq} usageReportReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postUsage: async (reportReq: ReportReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'reportReq' is not null or undefined
-            assertParamExists('postUsage', 'reportReq', reportReq)
+        postUsage: async (usageReportReq: UsageReportReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'usageReportReq' is not null or undefined
+            assertParamExists('postUsage', 'usageReportReq', usageReportReq)
             const localVarPath = `/v1/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -268,7 +270,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(reportReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(usageReportReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -295,7 +297,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsageAnalytics(end?: string, plan?: string, range?: string, start?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsView>> {
+        async getUsageAnalytics(end?: string, plan?: string, range?: string, start?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageUsageAnalyticsView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageAnalytics(end, plan, range, start, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageAnalytics']?.[localVarOperationServerIndex]?.url;
@@ -308,7 +310,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsageAnalyticsAccess(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsAccess>> {
+        async getUsageAnalyticsAccess(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageUsageAnalyticsAccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageAnalyticsAccess(plan, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageAnalyticsAccess']?.[localVarOperationServerIndex]?.url;
@@ -324,7 +326,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsageSamples(account?: string, provider?: string, range?: string, window?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashResp>> {
+        async getUsageSamples(account?: string, provider?: string, range?: string, window?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageDashResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageSamples(account, provider, range, window, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageSamples']?.[localVarOperationServerIndex]?.url;
@@ -339,7 +341,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsageSummary(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
+        async getUsageSummary(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageUsageSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageSummary(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageSummary']?.[localVarOperationServerIndex]?.url;
@@ -348,12 +350,12 @@ export const UsageApiFp = function(configuration?: Configuration) {
         /**
          * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
-         * @param {ReportReq} reportReq 
+         * @param {UsageReportReq} usageReportReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postUsage(reportReq: ReportReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postUsage(reportReq, options);
+        async postUsage(usageReportReq: UsageReportReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageReportResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postUsage(usageReportReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.postUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -375,7 +377,7 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsageAnalytics(requestParameters: UsageApiGetUsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsView> {
+        getUsageAnalytics(requestParameters: UsageApiGetUsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageUsageAnalyticsView> {
             return localVarFp.getUsageAnalytics(requestParameters.end, requestParameters.plan, requestParameters.range, requestParameters.start, options).then((request) => request(axios, basePath));
         },
         /**
@@ -385,7 +387,7 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsAccess> {
+        getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageUsageAnalyticsAccess> {
             return localVarFp.getUsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(axios, basePath));
         },
         /**
@@ -395,7 +397,7 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsageSamples(requestParameters: UsageApiGetUsageSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashResp> {
+        getUsageSamples(requestParameters: UsageApiGetUsageSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageDashResp> {
             return localVarFp.getUsageSamples(requestParameters.account, requestParameters.provider, requestParameters.range, requestParameters.window, options).then((request) => request(axios, basePath));
         },
         /**
@@ -405,7 +407,7 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsageSummary(requestParameters: UsageApiGetUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageSummary> {
+        getUsageSummary(requestParameters: UsageApiGetUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageUsageSummary> {
             return localVarFp.getUsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
@@ -415,8 +417,8 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportResp> {
-            return localVarFp.postUsage(requestParameters.reportReq, options).then((request) => request(axios, basePath));
+        postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<UsageReportResp> {
+            return localVarFp.postUsage(requestParameters.usageReportReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -541,10 +543,10 @@ export interface UsageApiGetUsageSummaryRequest {
 export interface UsageApiPostUsageRequest {
     /**
      * 
-     * @type {ReportReq}
+     * @type {UsageReportReq}
      * @memberof UsageApiPostUsage
      */
-    readonly reportReq: ReportReq
+    readonly usageReportReq: UsageReportReq
 }
 
 /**
@@ -611,7 +613,7 @@ export class UsageApi extends BaseAPI {
      * @memberof UsageApi
      */
     public postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).postUsage(requestParameters.reportReq, options).then((request) => request(this.axios, this.basePath));
+        return UsageApiFp(this.configuration).postUsage(requestParameters.usageReportReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

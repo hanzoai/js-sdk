@@ -22,10 +22,10 @@
 export interface O11yEvent {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yEvent
      */
-    'attributeMap'?: { [key: string]: object; };
+    'attributeMap'?: { [key: string]: any; };
     /**
      * 
      * @type {boolean}

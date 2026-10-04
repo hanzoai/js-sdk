@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yCompositeQuery } from './o11y-composite-query';
+import type { O11yV3CompositeQuery } from './o11y-v3-composite-query';
 
 /**
  * 
@@ -25,10 +25,10 @@ import type { O11yCompositeQuery } from './o11y-composite-query';
 export interface O11yQueryRangeParamsV3 {
     /**
      * 
-     * @type {O11yCompositeQuery}
+     * @type {O11yV3CompositeQuery}
      * @memberof O11yQueryRangeParamsV3
      */
-    'compositeQuery'?: O11yCompositeQuery;
+    'compositeQuery'?: O11yV3CompositeQuery;
     /**
      * 
      * @type {number}
@@ -61,9 +61,9 @@ export interface O11yQueryRangeParamsV3 {
     'step'?: number;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yQueryRangeParamsV3
      */
-    'variables'?: { [key: string]: object; };
+    'variables'?: { [key: string]: any; };
 }
 

@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AdCampaign } from '../models';
+import type { AdAdCampaign } from '../models';
 // @ts-ignore
-import type { AdSummary } from '../models';
+import type { AdAdSummary } from '../models';
 // @ts-ignore
-import type { CampaignInput } from '../models';
+import type { AdCampaignInput } from '../models';
 // @ts-ignore
-import type { CampaignList } from '../models';
+import type { AdCampaignList } from '../models';
 // @ts-ignore
-import type { UpdateCampaignIn } from '../models';
+import type { AdUpdateCampaignIn } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * AdApi - axios parameter creator
  * @export
@@ -194,13 +196,13 @@ export const AdApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Registers a new ad campaign for the caller\'s org and answers 201 with the stored row. It only records the campaign — nothing is sent to the ad network until POST /v1/ad/campaigns/{id}/launch runs it. The org is stamped by the server from the validated principal, so a body can never place a campaign in another tenant.
          * @summary Registers a new ad campaign for the caller\'s org and answers 201 with the stored row.
-         * @param {CampaignInput} campaignInput 
+         * @param {AdCampaignInput} adCampaignInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAdCampaigns: async (campaignInput: CampaignInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'campaignInput' is not null or undefined
-            assertParamExists('postAdCampaigns', 'campaignInput', campaignInput)
+        postAdCampaigns: async (adCampaignInput: AdCampaignInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adCampaignInput' is not null or undefined
+            assertParamExists('postAdCampaigns', 'adCampaignInput', adCampaignInput)
             const localVarPath = `/v1/ad/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -224,7 +226,7 @@ export const AdApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(campaignInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(adCampaignInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -273,15 +275,15 @@ export const AdApiAxiosParamCreator = function (configuration?: Configuration) {
          * Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row. It is a full replace, not a patch: every field is written from the request, so an omitted one is cleared. externalId is launch-owned and is never touched here, so editing a campaign cannot break its link to a live provider execution.
          * @summary Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row.
          * @param {string} id 
-         * @param {UpdateCampaignIn} updateCampaignIn 
+         * @param {AdUpdateCampaignIn} adUpdateCampaignIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdCampaignsById: async (id: string, updateCampaignIn: UpdateCampaignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdCampaignsById: async (id: string, adUpdateCampaignIn: AdUpdateCampaignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putAdCampaignsById', 'id', id)
-            // verify required parameter 'updateCampaignIn' is not null or undefined
-            assertParamExists('putAdCampaignsById', 'updateCampaignIn', updateCampaignIn)
+            // verify required parameter 'adUpdateCampaignIn' is not null or undefined
+            assertParamExists('putAdCampaignsById', 'adUpdateCampaignIn', adUpdateCampaignIn)
             const localVarPath = `/v1/ad/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -306,7 +308,7 @@ export const AdApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateCampaignIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(adUpdateCampaignIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -344,7 +346,7 @@ export const AdApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdCampaigns(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignList>> {
+        async getAdCampaigns(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaignList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdCampaigns(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdApi.getAdCampaigns']?.[localVarOperationServerIndex]?.url;
@@ -357,7 +359,7 @@ export const AdApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
+        async getAdCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdAdCampaign>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdApi.getAdCampaignsById']?.[localVarOperationServerIndex]?.url;
@@ -369,7 +371,7 @@ export const AdApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdSummary>> {
+        async getAdSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdAdSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdApi.getAdSummary']?.[localVarOperationServerIndex]?.url;
@@ -378,12 +380,12 @@ export const AdApiFp = function(configuration?: Configuration) {
         /**
          * Registers a new ad campaign for the caller\'s org and answers 201 with the stored row. It only records the campaign — nothing is sent to the ad network until POST /v1/ad/campaigns/{id}/launch runs it. The org is stamped by the server from the validated principal, so a body can never place a campaign in another tenant.
          * @summary Registers a new ad campaign for the caller\'s org and answers 201 with the stored row.
-         * @param {CampaignInput} campaignInput 
+         * @param {AdCampaignInput} adCampaignInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAdCampaigns(campaignInput: CampaignInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdCampaigns(campaignInput, options);
+        async postAdCampaigns(adCampaignInput: AdCampaignInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdAdCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdCampaigns(adCampaignInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdApi.postAdCampaigns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -405,12 +407,12 @@ export const AdApiFp = function(configuration?: Configuration) {
          * Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row. It is a full replace, not a patch: every field is written from the request, so an omitted one is cleared. externalId is launch-owned and is never touched here, so editing a campaign cannot break its link to a live provider execution.
          * @summary Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row.
          * @param {string} id 
-         * @param {UpdateCampaignIn} updateCampaignIn 
+         * @param {AdUpdateCampaignIn} adUpdateCampaignIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdCampaignsById(id: string, updateCampaignIn: UpdateCampaignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdCampaignsById(id, updateCampaignIn, options);
+        async putAdCampaignsById(id: string, adUpdateCampaignIn: AdUpdateCampaignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdAdCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdCampaignsById(id, adUpdateCampaignIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdApi.putAdCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -442,7 +444,7 @@ export const AdApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdCampaigns(requestParameters: AdApiGetAdCampaignsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignList> {
+        getAdCampaigns(requestParameters: AdApiGetAdCampaignsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaignList> {
             return localVarFp.getAdCampaigns(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -452,7 +454,7 @@ export const AdApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdCampaignsById(requestParameters: AdApiGetAdCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
+        getAdCampaignsById(requestParameters: AdApiGetAdCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdAdCampaign> {
             return localVarFp.getAdCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -461,7 +463,7 @@ export const AdApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdSummary(options?: RawAxiosRequestConfig): AxiosPromise<AdSummary> {
+        getAdSummary(options?: RawAxiosRequestConfig): AxiosPromise<AdAdSummary> {
             return localVarFp.getAdSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -471,8 +473,8 @@ export const AdApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAdCampaigns(requestParameters: AdApiPostAdCampaignsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
-            return localVarFp.postAdCampaigns(requestParameters.campaignInput, options).then((request) => request(axios, basePath));
+        postAdCampaigns(requestParameters: AdApiPostAdCampaignsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdAdCampaign> {
+            return localVarFp.postAdCampaigns(requestParameters.adCampaignInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
@@ -491,8 +493,8 @@ export const AdApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdCampaignsById(requestParameters: AdApiPutAdCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
-            return localVarFp.putAdCampaignsById(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(axios, basePath));
+        putAdCampaignsById(requestParameters: AdApiPutAdCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdAdCampaign> {
+            return localVarFp.putAdCampaignsById(requestParameters.id, requestParameters.adUpdateCampaignIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -554,10 +556,10 @@ export interface AdApiGetAdCampaignsByIdRequest {
 export interface AdApiPostAdCampaignsRequest {
     /**
      * 
-     * @type {CampaignInput}
+     * @type {AdCampaignInput}
      * @memberof AdApiPostAdCampaigns
      */
-    readonly campaignInput: CampaignInput
+    readonly adCampaignInput: AdCampaignInput
 }
 
 /**
@@ -589,10 +591,10 @@ export interface AdApiPutAdCampaignsByIdRequest {
 
     /**
      * 
-     * @type {UpdateCampaignIn}
+     * @type {AdUpdateCampaignIn}
      * @memberof AdApiPutAdCampaignsById
      */
-    readonly updateCampaignIn: UpdateCampaignIn
+    readonly adUpdateCampaignIn: AdUpdateCampaignIn
 }
 
 /**
@@ -658,7 +660,7 @@ export class AdApi extends BaseAPI {
      * @memberof AdApi
      */
     public postAdCampaigns(requestParameters: AdApiPostAdCampaignsRequest, options?: RawAxiosRequestConfig) {
-        return AdApiFp(this.configuration).postAdCampaigns(requestParameters.campaignInput, options).then((request) => request(this.axios, this.basePath));
+        return AdApiFp(this.configuration).postAdCampaigns(requestParameters.adCampaignInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -682,7 +684,7 @@ export class AdApi extends BaseAPI {
      * @memberof AdApi
      */
     public putAdCampaignsById(requestParameters: AdApiPutAdCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AdApiFp(this.configuration).putAdCampaignsById(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(this.axios, this.basePath));
+        return AdApiFp(this.configuration).putAdCampaignsById(requestParameters.id, requestParameters.adUpdateCampaignIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -22,65 +22,67 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CaptableCompany } from '../models';
+import type { CaptableCaptableCompany } from '../models';
 // @ts-ignore
-import type { CaptableCompanyUpdate } from '../models';
+import type { CaptableCaptableCompanyUpdate } from '../models';
 // @ts-ignore
-import type { CaptableConvertibleIn } from '../models';
+import type { CaptableCaptableConvertibleIn } from '../models';
 // @ts-ignore
-import type { CaptableCreated } from '../models';
+import type { CaptableCaptableCreated } from '../models';
 // @ts-ignore
-import type { CaptableDeleted } from '../models';
+import type { CaptableCaptableDeleted } from '../models';
 // @ts-ignore
-import type { CaptableEquityPlanIn } from '../models';
+import type { CaptableCaptableEquityPlanIn } from '../models';
 // @ts-ignore
-import type { CaptableEquityPlans } from '../models';
+import type { CaptableCaptableEquityPlans } from '../models';
 // @ts-ignore
-import type { CaptableInvested } from '../models';
+import type { CaptableCaptableInvested } from '../models';
 // @ts-ignore
-import type { CaptableInvestmentIn } from '../models';
+import type { CaptableCaptableInvestmentIn } from '../models';
 // @ts-ignore
-import type { CaptableInvestments } from '../models';
+import type { CaptableCaptableInvestments } from '../models';
 // @ts-ignore
-import type { CaptableNotes } from '../models';
+import type { CaptableCaptableNotes } from '../models';
 // @ts-ignore
-import type { CaptableOptionIn } from '../models';
+import type { CaptableCaptableOptionIn } from '../models';
 // @ts-ignore
-import type { CaptableOptions } from '../models';
+import type { CaptableCaptableOptions } from '../models';
 // @ts-ignore
-import type { CaptableRoundCloseRequest } from '../models';
+import type { CaptableCaptableRoundCloseRequest } from '../models';
 // @ts-ignore
-import type { CaptableRoundDetail } from '../models';
+import type { CaptableCaptableRoundDetail } from '../models';
 // @ts-ignore
-import type { CaptableRoundIn } from '../models';
+import type { CaptableCaptableRoundIn } from '../models';
 // @ts-ignore
-import type { CaptableRounds } from '../models';
+import type { CaptableCaptableRounds } from '../models';
 // @ts-ignore
-import type { CaptableSafeIn } from '../models';
+import type { CaptableCaptableSafeIn } from '../models';
 // @ts-ignore
-import type { CaptableSafes } from '../models';
+import type { CaptableCaptableSafes } from '../models';
 // @ts-ignore
-import type { CaptableShareClass } from '../models';
+import type { CaptableCaptableShareClass } from '../models';
 // @ts-ignore
-import type { CaptableShareClassAmend } from '../models';
+import type { CaptableCaptableShareClassAmend } from '../models';
 // @ts-ignore
-import type { CaptableShareClassIn } from '../models';
+import type { CaptableCaptableShareClassIn } from '../models';
 // @ts-ignore
-import type { CaptableShareIn } from '../models';
+import type { CaptableCaptableShareIn } from '../models';
 // @ts-ignore
-import type { CaptableShareTransfer } from '../models';
+import type { CaptableCaptableShareTransfer } from '../models';
 // @ts-ignore
-import type { CaptableShares } from '../models';
+import type { CaptableCaptableShares } from '../models';
 // @ts-ignore
-import type { CaptableStakeholder } from '../models';
+import type { CaptableCaptableStakeholder } from '../models';
 // @ts-ignore
-import type { CaptableStakeholderPatch } from '../models';
+import type { CaptableCaptableStakeholderPatch } from '../models';
 // @ts-ignore
-import type { CaptableSummary } from '../models';
+import type { CaptableCaptableSummary } from '../models';
 // @ts-ignore
-import type { CaptableTransferred } from '../models';
+import type { CaptableCaptableTransferred } from '../models';
 // @ts-ignore
-import type { CaptableUpdated } from '../models';
+import type { CaptableCaptableUpdated } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * CaptableApi - axios parameter creator
  * @export
@@ -693,15 +695,15 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
          * @summary Replaces one share class\'s terms.
          * @param {string} id ID addresses the resource. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which row is written whatever a body claims.
-         * @param {CaptableShareClassAmend} captableShareClassAmend 
+         * @param {CaptableCaptableShareClassAmend} captableCaptableShareClassAmend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchCaptableClassesById: async (id: string, captableShareClassAmend: CaptableShareClassAmend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCaptableClassesById: async (id: string, captableCaptableShareClassAmend: CaptableCaptableShareClassAmend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('patchCaptableClassesById', 'id', id)
-            // verify required parameter 'captableShareClassAmend' is not null or undefined
-            assertParamExists('patchCaptableClassesById', 'captableShareClassAmend', captableShareClassAmend)
+            // verify required parameter 'captableCaptableShareClassAmend' is not null or undefined
+            assertParamExists('patchCaptableClassesById', 'captableCaptableShareClassAmend', captableCaptableShareClassAmend)
             const localVarPath = `/v1/captable/classes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -726,7 +728,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableShareClassAmend, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableShareClassAmend, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -737,15 +739,15 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
          * @summary Changes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to update. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableStakeholderPatch} captableStakeholderPatch 
+         * @param {CaptableCaptableStakeholderPatch} captableCaptableStakeholderPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchCaptableStakeholdersById: async (id: string, captableStakeholderPatch: CaptableStakeholderPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCaptableStakeholdersById: async (id: string, captableCaptableStakeholderPatch: CaptableCaptableStakeholderPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('patchCaptableStakeholdersById', 'id', id)
-            // verify required parameter 'captableStakeholderPatch' is not null or undefined
-            assertParamExists('patchCaptableStakeholdersById', 'captableStakeholderPatch', captableStakeholderPatch)
+            // verify required parameter 'captableCaptableStakeholderPatch' is not null or undefined
+            assertParamExists('patchCaptableStakeholdersById', 'captableCaptableStakeholderPatch', captableCaptableStakeholderPatch)
             const localVarPath = `/v1/captable/stakeholders/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -770,7 +772,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableStakeholderPatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableStakeholderPatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -780,13 +782,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
          * @summary Defines a new class of shares.
-         * @param {CaptableShareClassIn} captableShareClassIn 
+         * @param {CaptableCaptableShareClassIn} captableCaptableShareClassIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableClasses: async (captableShareClassIn: CaptableShareClassIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableShareClassIn' is not null or undefined
-            assertParamExists('postCaptableClasses', 'captableShareClassIn', captableShareClassIn)
+        postCaptableClasses: async (captableCaptableShareClassIn: CaptableCaptableShareClassIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableShareClassIn' is not null or undefined
+            assertParamExists('postCaptableClasses', 'captableCaptableShareClassIn', captableCaptableShareClassIn)
             const localVarPath = `/v1/captable/classes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -810,7 +812,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableShareClassIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableShareClassIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -820,13 +822,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Records a convertible note.
          * @summary Records a convertible note.
-         * @param {CaptableConvertibleIn} captableConvertibleIn 
+         * @param {CaptableCaptableConvertibleIn} captableCaptableConvertibleIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableConvertibles: async (captableConvertibleIn: CaptableConvertibleIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableConvertibleIn' is not null or undefined
-            assertParamExists('postCaptableConvertibles', 'captableConvertibleIn', captableConvertibleIn)
+        postCaptableConvertibles: async (captableCaptableConvertibleIn: CaptableCaptableConvertibleIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableConvertibleIn' is not null or undefined
+            assertParamExists('postCaptableConvertibles', 'captableCaptableConvertibleIn', captableCaptableConvertibleIn)
             const localVarPath = `/v1/captable/convertibles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -850,7 +852,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableConvertibleIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableConvertibleIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -860,13 +862,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Grants options to a stakeholder from an equity plan.
          * @summary Grants options to a stakeholder from an equity plan.
-         * @param {CaptableOptionIn} captableOptionIn 
+         * @param {CaptableCaptableOptionIn} captableCaptableOptionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableOptions: async (captableOptionIn: CaptableOptionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableOptionIn' is not null or undefined
-            assertParamExists('postCaptableOptions', 'captableOptionIn', captableOptionIn)
+        postCaptableOptions: async (captableCaptableOptionIn: CaptableCaptableOptionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableOptionIn' is not null or undefined
+            assertParamExists('postCaptableOptions', 'captableCaptableOptionIn', captableCaptableOptionIn)
             const localVarPath = `/v1/captable/options`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -890,7 +892,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableOptionIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableOptionIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -900,13 +902,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Opens an equity plan that options are granted from.
          * @summary Opens an equity plan that options are granted from.
-         * @param {CaptableEquityPlanIn} captableEquityPlanIn 
+         * @param {CaptableCaptableEquityPlanIn} captableCaptableEquityPlanIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptablePlans: async (captableEquityPlanIn: CaptableEquityPlanIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableEquityPlanIn' is not null or undefined
-            assertParamExists('postCaptablePlans', 'captableEquityPlanIn', captableEquityPlanIn)
+        postCaptablePlans: async (captableCaptableEquityPlanIn: CaptableCaptableEquityPlanIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableEquityPlanIn' is not null or undefined
+            assertParamExists('postCaptablePlans', 'captableCaptableEquityPlanIn', captableCaptableEquityPlanIn)
             const localVarPath = `/v1/captable/plans`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -930,7 +932,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableEquityPlanIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableEquityPlanIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -940,13 +942,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
          * @summary Opens a priced round that investments can be added to.
-         * @param {CaptableRoundIn} captableRoundIn 
+         * @param {CaptableCaptableRoundIn} captableCaptableRoundIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRounds: async (captableRoundIn: CaptableRoundIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableRoundIn' is not null or undefined
-            assertParamExists('postCaptableRounds', 'captableRoundIn', captableRoundIn)
+        postCaptableRounds: async (captableCaptableRoundIn: CaptableCaptableRoundIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableRoundIn' is not null or undefined
+            assertParamExists('postCaptableRounds', 'captableCaptableRoundIn', captableCaptableRoundIn)
             const localVarPath = `/v1/captable/rounds`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -970,7 +972,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableRoundIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableRoundIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -981,15 +983,15 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
          * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
          * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
+         * @param {CaptableCaptableRoundCloseRequest} captableCaptableRoundCloseRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRoundsByIdClose: async (id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCaptableRoundsByIdClose: async (id: string, captableCaptableRoundCloseRequest: CaptableCaptableRoundCloseRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postCaptableRoundsByIdClose', 'id', id)
-            // verify required parameter 'captableRoundCloseRequest' is not null or undefined
-            assertParamExists('postCaptableRoundsByIdClose', 'captableRoundCloseRequest', captableRoundCloseRequest)
+            // verify required parameter 'captableCaptableRoundCloseRequest' is not null or undefined
+            assertParamExists('postCaptableRoundsByIdClose', 'captableCaptableRoundCloseRequest', captableCaptableRoundCloseRequest)
             const localVarPath = `/v1/captable/rounds/{id}/close`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1014,7 +1016,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableRoundCloseRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableRoundCloseRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1025,15 +1027,15 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
          * @summary Records one investor\'s money into an open round.
          * @param {string} id ID is the round to invest in. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which round is written whatever a body claims.
-         * @param {CaptableInvestmentIn} captableInvestmentIn 
+         * @param {CaptableCaptableInvestmentIn} captableCaptableInvestmentIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRoundsByIdInvestments: async (id: string, captableInvestmentIn: CaptableInvestmentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCaptableRoundsByIdInvestments: async (id: string, captableCaptableInvestmentIn: CaptableCaptableInvestmentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postCaptableRoundsByIdInvestments', 'id', id)
-            // verify required parameter 'captableInvestmentIn' is not null or undefined
-            assertParamExists('postCaptableRoundsByIdInvestments', 'captableInvestmentIn', captableInvestmentIn)
+            // verify required parameter 'captableCaptableInvestmentIn' is not null or undefined
+            assertParamExists('postCaptableRoundsByIdInvestments', 'captableCaptableInvestmentIn', captableCaptableInvestmentIn)
             const localVarPath = `/v1/captable/rounds/{id}/investments`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1058,7 +1060,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableInvestmentIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableInvestmentIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1068,13 +1070,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Records a SAFE — a simple agreement for future equity.
          * @summary Records a SAFE — a simple agreement for future equity.
-         * @param {CaptableSafeIn} captableSafeIn 
+         * @param {CaptableCaptableSafeIn} captableCaptableSafeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableSafes: async (captableSafeIn: CaptableSafeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableSafeIn' is not null or undefined
-            assertParamExists('postCaptableSafes', 'captableSafeIn', captableSafeIn)
+        postCaptableSafes: async (captableCaptableSafeIn: CaptableCaptableSafeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableSafeIn' is not null or undefined
+            assertParamExists('postCaptableSafes', 'captableCaptableSafeIn', captableCaptableSafeIn)
             const localVarPath = `/v1/captable/safes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1098,7 +1100,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableSafeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableSafeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1108,13 +1110,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
          * @summary Issues a share certificate to a stakeholder.
-         * @param {CaptableShareIn} captableShareIn 
+         * @param {CaptableCaptableShareIn} captableCaptableShareIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableShares: async (captableShareIn: CaptableShareIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableShareIn' is not null or undefined
-            assertParamExists('postCaptableShares', 'captableShareIn', captableShareIn)
+        postCaptableShares: async (captableCaptableShareIn: CaptableCaptableShareIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableShareIn' is not null or undefined
+            assertParamExists('postCaptableShares', 'captableCaptableShareIn', captableCaptableShareIn)
             const localVarPath = `/v1/captable/shares`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1138,7 +1140,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableShareIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableShareIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1148,13 +1150,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
          * @summary Moves shares from one stakeholder to another.
-         * @param {CaptableShareTransfer} captableShareTransfer 
+         * @param {CaptableCaptableShareTransfer} captableCaptableShareTransfer 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableSharesTransfer: async (captableShareTransfer: CaptableShareTransfer, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableShareTransfer' is not null or undefined
-            assertParamExists('postCaptableSharesTransfer', 'captableShareTransfer', captableShareTransfer)
+        postCaptableSharesTransfer: async (captableCaptableShareTransfer: CaptableCaptableShareTransfer, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableShareTransfer' is not null or undefined
+            assertParamExists('postCaptableSharesTransfer', 'captableCaptableShareTransfer', captableCaptableShareTransfer)
             const localVarPath = `/v1/captable/shares/transfer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1178,7 +1180,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableShareTransfer, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableShareTransfer, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1222,13 +1224,13 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
          * @summary Sets the caller org\'s company name and incorporation details.
-         * @param {CaptableCompanyUpdate} captableCompanyUpdate 
+         * @param {CaptableCaptableCompanyUpdate} captableCaptableCompanyUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCaptableCompany: async (captableCompanyUpdate: CaptableCompanyUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'captableCompanyUpdate' is not null or undefined
-            assertParamExists('putCaptableCompany', 'captableCompanyUpdate', captableCompanyUpdate)
+        putCaptableCompany: async (captableCaptableCompanyUpdate: CaptableCaptableCompanyUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'captableCaptableCompanyUpdate' is not null or undefined
+            assertParamExists('putCaptableCompany', 'captableCaptableCompanyUpdate', captableCaptableCompanyUpdate)
             const localVarPath = `/v1/captable/company`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1252,7 +1254,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableCompanyUpdate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(captableCaptableCompanyUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1276,7 +1278,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCaptableConvertiblesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+        async deleteCaptableConvertiblesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCaptableConvertiblesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteCaptableConvertiblesById']?.[localVarOperationServerIndex]?.url;
@@ -1289,7 +1291,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCaptableOptionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+        async deleteCaptableOptionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCaptableOptionsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteCaptableOptionsById']?.[localVarOperationServerIndex]?.url;
@@ -1302,7 +1304,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCaptableSafesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+        async deleteCaptableSafesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCaptableSafesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteCaptableSafesById']?.[localVarOperationServerIndex]?.url;
@@ -1315,7 +1317,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCaptableSharesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+        async deleteCaptableSharesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCaptableSharesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteCaptableSharesById']?.[localVarOperationServerIndex]?.url;
@@ -1328,7 +1330,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCaptableStakeholdersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+        async deleteCaptableStakeholdersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCaptableStakeholdersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteCaptableStakeholdersById']?.[localVarOperationServerIndex]?.url;
@@ -1340,7 +1342,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableClasses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CaptableShareClass>>> {
+        async getCaptableClasses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CaptableCaptableShareClass>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableClasses(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableClasses']?.[localVarOperationServerIndex]?.url;
@@ -1352,7 +1354,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableCompany(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCompany>> {
+        async getCaptableCompany(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCompany>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableCompany(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableCompany']?.[localVarOperationServerIndex]?.url;
@@ -1364,7 +1366,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableConvertibles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableNotes>> {
+        async getCaptableConvertibles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableNotes>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableConvertibles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableConvertibles']?.[localVarOperationServerIndex]?.url;
@@ -1376,7 +1378,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableInvestments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableInvestments>> {
+        async getCaptableInvestments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableInvestments>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableInvestments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableInvestments']?.[localVarOperationServerIndex]?.url;
@@ -1388,7 +1390,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableOptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableOptions>> {
+        async getCaptableOptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableOptions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableOptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableOptions']?.[localVarOperationServerIndex]?.url;
@@ -1400,7 +1402,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptablePlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableEquityPlans>> {
+        async getCaptablePlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableEquityPlans>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptablePlans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptablePlans']?.[localVarOperationServerIndex]?.url;
@@ -1412,7 +1414,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableRounds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableRounds>> {
+        async getCaptableRounds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableRounds>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableRounds(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableRounds']?.[localVarOperationServerIndex]?.url;
@@ -1425,7 +1427,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableRoundsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableRoundDetail>> {
+        async getCaptableRoundsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableRoundDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableRoundsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableRoundsById']?.[localVarOperationServerIndex]?.url;
@@ -1437,7 +1439,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableSafes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableSafes>> {
+        async getCaptableSafes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableSafes>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableSafes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableSafes']?.[localVarOperationServerIndex]?.url;
@@ -1449,7 +1451,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableShares(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableShares>> {
+        async getCaptableShares(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableShares>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableShares(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableShares']?.[localVarOperationServerIndex]?.url;
@@ -1461,7 +1463,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableStakeholders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CaptableStakeholder>>> {
+        async getCaptableStakeholders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CaptableCaptableStakeholder>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableStakeholders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableStakeholders']?.[localVarOperationServerIndex]?.url;
@@ -1473,7 +1475,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCaptableSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableSummary>> {
+        async getCaptableSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCaptableSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.getCaptableSummary']?.[localVarOperationServerIndex]?.url;
@@ -1483,12 +1485,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
          * @summary Replaces one share class\'s terms.
          * @param {string} id ID addresses the resource. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which row is written whatever a body claims.
-         * @param {CaptableShareClassAmend} captableShareClassAmend 
+         * @param {CaptableCaptableShareClassAmend} captableCaptableShareClassAmend 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchCaptableClassesById(id: string, captableShareClassAmend: CaptableShareClassAmend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCaptableClassesById(id, captableShareClassAmend, options);
+        async patchCaptableClassesById(id: string, captableCaptableShareClassAmend: CaptableCaptableShareClassAmend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCaptableClassesById(id, captableCaptableShareClassAmend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.patchCaptableClassesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1497,12 +1499,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
          * @summary Changes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to update. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableStakeholderPatch} captableStakeholderPatch 
+         * @param {CaptableCaptableStakeholderPatch} captableCaptableStakeholderPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchCaptableStakeholdersById(id: string, captableStakeholderPatch: CaptableStakeholderPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCaptableStakeholdersById(id, captableStakeholderPatch, options);
+        async patchCaptableStakeholdersById(id: string, captableCaptableStakeholderPatch: CaptableCaptableStakeholderPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCaptableStakeholdersById(id, captableCaptableStakeholderPatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.patchCaptableStakeholdersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1510,12 +1512,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
          * @summary Defines a new class of shares.
-         * @param {CaptableShareClassIn} captableShareClassIn 
+         * @param {CaptableCaptableShareClassIn} captableCaptableShareClassIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableClasses(captableShareClassIn: CaptableShareClassIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableClasses(captableShareClassIn, options);
+        async postCaptableClasses(captableCaptableShareClassIn: CaptableCaptableShareClassIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableClasses(captableCaptableShareClassIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableClasses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1523,12 +1525,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Records a convertible note.
          * @summary Records a convertible note.
-         * @param {CaptableConvertibleIn} captableConvertibleIn 
+         * @param {CaptableCaptableConvertibleIn} captableCaptableConvertibleIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableConvertibles(captableConvertibleIn: CaptableConvertibleIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableConvertibles(captableConvertibleIn, options);
+        async postCaptableConvertibles(captableCaptableConvertibleIn: CaptableCaptableConvertibleIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableConvertibles(captableCaptableConvertibleIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableConvertibles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1536,12 +1538,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Grants options to a stakeholder from an equity plan.
          * @summary Grants options to a stakeholder from an equity plan.
-         * @param {CaptableOptionIn} captableOptionIn 
+         * @param {CaptableCaptableOptionIn} captableCaptableOptionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableOptions(captableOptionIn: CaptableOptionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableOptions(captableOptionIn, options);
+        async postCaptableOptions(captableCaptableOptionIn: CaptableCaptableOptionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableOptions(captableCaptableOptionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableOptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1549,12 +1551,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Opens an equity plan that options are granted from.
          * @summary Opens an equity plan that options are granted from.
-         * @param {CaptableEquityPlanIn} captableEquityPlanIn 
+         * @param {CaptableCaptableEquityPlanIn} captableCaptableEquityPlanIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptablePlans(captableEquityPlanIn: CaptableEquityPlanIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptablePlans(captableEquityPlanIn, options);
+        async postCaptablePlans(captableCaptableEquityPlanIn: CaptableCaptableEquityPlanIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptablePlans(captableCaptableEquityPlanIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptablePlans']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1562,12 +1564,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
          * @summary Opens a priced round that investments can be added to.
-         * @param {CaptableRoundIn} captableRoundIn 
+         * @param {CaptableCaptableRoundIn} captableCaptableRoundIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableRounds(captableRoundIn: CaptableRoundIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRounds(captableRoundIn, options);
+        async postCaptableRounds(captableCaptableRoundIn: CaptableCaptableRoundIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRounds(captableCaptableRoundIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableRounds']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1576,12 +1578,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
          * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
          * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
+         * @param {CaptableCaptableRoundCloseRequest} captableCaptableRoundCloseRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableRoundsByIdClose(id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRoundsByIdClose(id, captableRoundCloseRequest, options);
+        async postCaptableRoundsByIdClose(id: string, captableCaptableRoundCloseRequest: CaptableCaptableRoundCloseRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRoundsByIdClose(id, captableCaptableRoundCloseRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableRoundsByIdClose']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1590,12 +1592,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
          * @summary Records one investor\'s money into an open round.
          * @param {string} id ID is the round to invest in. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which round is written whatever a body claims.
-         * @param {CaptableInvestmentIn} captableInvestmentIn 
+         * @param {CaptableCaptableInvestmentIn} captableCaptableInvestmentIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableRoundsByIdInvestments(id: string, captableInvestmentIn: CaptableInvestmentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableInvested>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRoundsByIdInvestments(id, captableInvestmentIn, options);
+        async postCaptableRoundsByIdInvestments(id: string, captableCaptableInvestmentIn: CaptableCaptableInvestmentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableInvested>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableRoundsByIdInvestments(id, captableCaptableInvestmentIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableRoundsByIdInvestments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1603,12 +1605,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Records a SAFE — a simple agreement for future equity.
          * @summary Records a SAFE — a simple agreement for future equity.
-         * @param {CaptableSafeIn} captableSafeIn 
+         * @param {CaptableCaptableSafeIn} captableCaptableSafeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableSafes(captableSafeIn: CaptableSafeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableSafes(captableSafeIn, options);
+        async postCaptableSafes(captableCaptableSafeIn: CaptableCaptableSafeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableSafes(captableCaptableSafeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableSafes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1616,12 +1618,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
          * @summary Issues a share certificate to a stakeholder.
-         * @param {CaptableShareIn} captableShareIn 
+         * @param {CaptableCaptableShareIn} captableCaptableShareIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableShares(captableShareIn: CaptableShareIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableShares(captableShareIn, options);
+        async postCaptableShares(captableCaptableShareIn: CaptableCaptableShareIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableShares(captableCaptableShareIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableShares']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1629,12 +1631,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
          * @summary Moves shares from one stakeholder to another.
-         * @param {CaptableShareTransfer} captableShareTransfer 
+         * @param {CaptableCaptableShareTransfer} captableCaptableShareTransfer 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCaptableSharesTransfer(captableShareTransfer: CaptableShareTransfer, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableTransferred>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableSharesTransfer(captableShareTransfer, options);
+        async postCaptableSharesTransfer(captableCaptableShareTransfer: CaptableCaptableShareTransfer, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableTransferred>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCaptableSharesTransfer(captableCaptableShareTransfer, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.postCaptableSharesTransfer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1654,12 +1656,12 @@ export const CaptableApiFp = function(configuration?: Configuration) {
         /**
          * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
          * @summary Sets the caller org\'s company name and incorporation details.
-         * @param {CaptableCompanyUpdate} captableCompanyUpdate 
+         * @param {CaptableCaptableCompanyUpdate} captableCaptableCompanyUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCaptableCompany(captableCompanyUpdate: CaptableCompanyUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCaptableCompany(captableCompanyUpdate, options);
+        async putCaptableCompany(captableCaptableCompanyUpdate: CaptableCaptableCompanyUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableCaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCaptableCompany(captableCaptableCompanyUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CaptableApi.putCaptableCompany']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1681,7 +1683,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCaptableConvertiblesById(requestParameters: CaptableApiDeleteCaptableConvertiblesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+        deleteCaptableConvertiblesById(requestParameters: CaptableApiDeleteCaptableConvertiblesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableDeleted> {
             return localVarFp.deleteCaptableConvertiblesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1691,7 +1693,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCaptableOptionsById(requestParameters: CaptableApiDeleteCaptableOptionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+        deleteCaptableOptionsById(requestParameters: CaptableApiDeleteCaptableOptionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableDeleted> {
             return localVarFp.deleteCaptableOptionsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1701,7 +1703,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCaptableSafesById(requestParameters: CaptableApiDeleteCaptableSafesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+        deleteCaptableSafesById(requestParameters: CaptableApiDeleteCaptableSafesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableDeleted> {
             return localVarFp.deleteCaptableSafesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1711,7 +1713,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCaptableSharesById(requestParameters: CaptableApiDeleteCaptableSharesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+        deleteCaptableSharesById(requestParameters: CaptableApiDeleteCaptableSharesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableDeleted> {
             return localVarFp.deleteCaptableSharesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1721,7 +1723,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCaptableStakeholdersById(requestParameters: CaptableApiDeleteCaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+        deleteCaptableStakeholdersById(requestParameters: CaptableApiDeleteCaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableDeleted> {
             return localVarFp.deleteCaptableStakeholdersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1730,7 +1732,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableClasses(options?: RawAxiosRequestConfig): AxiosPromise<Array<CaptableShareClass>> {
+        getCaptableClasses(options?: RawAxiosRequestConfig): AxiosPromise<Array<CaptableCaptableShareClass>> {
             return localVarFp.getCaptableClasses(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1739,7 +1741,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableCompany(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCompany> {
+        getCaptableCompany(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCompany> {
             return localVarFp.getCaptableCompany(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1748,7 +1750,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableConvertibles(options?: RawAxiosRequestConfig): AxiosPromise<CaptableNotes> {
+        getCaptableConvertibles(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableNotes> {
             return localVarFp.getCaptableConvertibles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1757,7 +1759,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableInvestments(options?: RawAxiosRequestConfig): AxiosPromise<CaptableInvestments> {
+        getCaptableInvestments(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableInvestments> {
             return localVarFp.getCaptableInvestments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1766,7 +1768,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableOptions(options?: RawAxiosRequestConfig): AxiosPromise<CaptableOptions> {
+        getCaptableOptions(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableOptions> {
             return localVarFp.getCaptableOptions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1775,7 +1777,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptablePlans(options?: RawAxiosRequestConfig): AxiosPromise<CaptableEquityPlans> {
+        getCaptablePlans(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableEquityPlans> {
             return localVarFp.getCaptablePlans(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1784,7 +1786,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableRounds(options?: RawAxiosRequestConfig): AxiosPromise<CaptableRounds> {
+        getCaptableRounds(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableRounds> {
             return localVarFp.getCaptableRounds(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1794,7 +1796,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableRoundsById(requestParameters: CaptableApiGetCaptableRoundsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableRoundDetail> {
+        getCaptableRoundsById(requestParameters: CaptableApiGetCaptableRoundsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableRoundDetail> {
             return localVarFp.getCaptableRoundsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1803,7 +1805,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableSafes(options?: RawAxiosRequestConfig): AxiosPromise<CaptableSafes> {
+        getCaptableSafes(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableSafes> {
             return localVarFp.getCaptableSafes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1812,7 +1814,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableShares(options?: RawAxiosRequestConfig): AxiosPromise<CaptableShares> {
+        getCaptableShares(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableShares> {
             return localVarFp.getCaptableShares(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1821,7 +1823,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableStakeholders(options?: RawAxiosRequestConfig): AxiosPromise<Array<CaptableStakeholder>> {
+        getCaptableStakeholders(options?: RawAxiosRequestConfig): AxiosPromise<Array<CaptableCaptableStakeholder>> {
             return localVarFp.getCaptableStakeholders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1830,7 +1832,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCaptableSummary(options?: RawAxiosRequestConfig): AxiosPromise<CaptableSummary> {
+        getCaptableSummary(options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableSummary> {
             return localVarFp.getCaptableSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1840,8 +1842,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchCaptableClassesById(requestParameters: CaptableApiPatchCaptableClassesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.patchCaptableClassesById(requestParameters.id, requestParameters.captableShareClassAmend, options).then((request) => request(axios, basePath));
+        patchCaptableClassesById(requestParameters: CaptableApiPatchCaptableClassesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableUpdated> {
+            return localVarFp.patchCaptableClassesById(requestParameters.id, requestParameters.captableCaptableShareClassAmend, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
@@ -1850,8 +1852,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchCaptableStakeholdersById(requestParameters: CaptableApiPatchCaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.patchCaptableStakeholdersById(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(axios, basePath));
+        patchCaptableStakeholdersById(requestParameters: CaptableApiPatchCaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableUpdated> {
+            return localVarFp.patchCaptableStakeholdersById(requestParameters.id, requestParameters.captableCaptableStakeholderPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
@@ -1860,8 +1862,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableClasses(requestParameters: CaptableApiPostCaptableClassesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableClasses(requestParameters.captableShareClassIn, options).then((request) => request(axios, basePath));
+        postCaptableClasses(requestParameters: CaptableApiPostCaptableClassesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableClasses(requestParameters.captableCaptableShareClassIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a convertible note.
@@ -1870,8 +1872,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableConvertibles(requestParameters: CaptableApiPostCaptableConvertiblesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableConvertibles(requestParameters.captableConvertibleIn, options).then((request) => request(axios, basePath));
+        postCaptableConvertibles(requestParameters: CaptableApiPostCaptableConvertiblesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableConvertibles(requestParameters.captableCaptableConvertibleIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Grants options to a stakeholder from an equity plan.
@@ -1880,8 +1882,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableOptions(requestParameters: CaptableApiPostCaptableOptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableOptions(requestParameters.captableOptionIn, options).then((request) => request(axios, basePath));
+        postCaptableOptions(requestParameters: CaptableApiPostCaptableOptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableOptions(requestParameters.captableCaptableOptionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens an equity plan that options are granted from.
@@ -1890,8 +1892,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptablePlans(requestParameters: CaptableApiPostCaptablePlansRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptablePlans(requestParameters.captableEquityPlanIn, options).then((request) => request(axios, basePath));
+        postCaptablePlans(requestParameters: CaptableApiPostCaptablePlansRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptablePlans(requestParameters.captableCaptableEquityPlanIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
@@ -1900,8 +1902,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRounds(requestParameters: CaptableApiPostCaptableRoundsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableRounds(requestParameters.captableRoundIn, options).then((request) => request(axios, basePath));
+        postCaptableRounds(requestParameters: CaptableApiPostCaptableRoundsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableRounds(requestParameters.captableCaptableRoundIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
@@ -1910,8 +1912,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRoundsByIdClose(requestParameters: CaptableApiPostCaptableRoundsByIdCloseRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.postCaptableRoundsByIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(axios, basePath));
+        postCaptableRoundsByIdClose(requestParameters: CaptableApiPostCaptableRoundsByIdCloseRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableUpdated> {
+            return localVarFp.postCaptableRoundsByIdClose(requestParameters.id, requestParameters.captableCaptableRoundCloseRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
@@ -1920,8 +1922,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableRoundsByIdInvestments(requestParameters: CaptableApiPostCaptableRoundsByIdInvestmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableInvested> {
-            return localVarFp.postCaptableRoundsByIdInvestments(requestParameters.id, requestParameters.captableInvestmentIn, options).then((request) => request(axios, basePath));
+        postCaptableRoundsByIdInvestments(requestParameters: CaptableApiPostCaptableRoundsByIdInvestmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableInvested> {
+            return localVarFp.postCaptableRoundsByIdInvestments(requestParameters.id, requestParameters.captableCaptableInvestmentIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a SAFE — a simple agreement for future equity.
@@ -1930,8 +1932,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableSafes(requestParameters: CaptableApiPostCaptableSafesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableSafes(requestParameters.captableSafeIn, options).then((request) => request(axios, basePath));
+        postCaptableSafes(requestParameters: CaptableApiPostCaptableSafesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableSafes(requestParameters.captableCaptableSafeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
@@ -1940,8 +1942,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableShares(requestParameters: CaptableApiPostCaptableSharesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCreated> {
-            return localVarFp.postCaptableShares(requestParameters.captableShareIn, options).then((request) => request(axios, basePath));
+        postCaptableShares(requestParameters: CaptableApiPostCaptableSharesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableCreated> {
+            return localVarFp.postCaptableShares(requestParameters.captableCaptableShareIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
@@ -1950,8 +1952,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCaptableSharesTransfer(requestParameters: CaptableApiPostCaptableSharesTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableTransferred> {
-            return localVarFp.postCaptableSharesTransfer(requestParameters.captableShareTransfer, options).then((request) => request(axios, basePath));
+        postCaptableSharesTransfer(requestParameters: CaptableApiPostCaptableSharesTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableTransferred> {
+            return localVarFp.postCaptableSharesTransfer(requestParameters.captableCaptableShareTransfer, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
@@ -1969,8 +1971,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCaptableCompany(requestParameters: CaptableApiPutCaptableCompanyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.putCaptableCompany(requestParameters.captableCompanyUpdate, options).then((request) => request(axios, basePath));
+        putCaptableCompany(requestParameters: CaptableApiPutCaptableCompanyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableCaptableUpdated> {
+            return localVarFp.putCaptableCompany(requestParameters.captableCaptableCompanyUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2074,10 +2076,10 @@ export interface CaptableApiPatchCaptableClassesByIdRequest {
 
     /**
      * 
-     * @type {CaptableShareClassAmend}
+     * @type {CaptableCaptableShareClassAmend}
      * @memberof CaptableApiPatchCaptableClassesById
      */
-    readonly captableShareClassAmend: CaptableShareClassAmend
+    readonly captableCaptableShareClassAmend: CaptableCaptableShareClassAmend
 }
 
 /**
@@ -2095,10 +2097,10 @@ export interface CaptableApiPatchCaptableStakeholdersByIdRequest {
 
     /**
      * 
-     * @type {CaptableStakeholderPatch}
+     * @type {CaptableCaptableStakeholderPatch}
      * @memberof CaptableApiPatchCaptableStakeholdersById
      */
-    readonly captableStakeholderPatch: CaptableStakeholderPatch
+    readonly captableCaptableStakeholderPatch: CaptableCaptableStakeholderPatch
 }
 
 /**
@@ -2109,10 +2111,10 @@ export interface CaptableApiPatchCaptableStakeholdersByIdRequest {
 export interface CaptableApiPostCaptableClassesRequest {
     /**
      * 
-     * @type {CaptableShareClassIn}
+     * @type {CaptableCaptableShareClassIn}
      * @memberof CaptableApiPostCaptableClasses
      */
-    readonly captableShareClassIn: CaptableShareClassIn
+    readonly captableCaptableShareClassIn: CaptableCaptableShareClassIn
 }
 
 /**
@@ -2123,10 +2125,10 @@ export interface CaptableApiPostCaptableClassesRequest {
 export interface CaptableApiPostCaptableConvertiblesRequest {
     /**
      * 
-     * @type {CaptableConvertibleIn}
+     * @type {CaptableCaptableConvertibleIn}
      * @memberof CaptableApiPostCaptableConvertibles
      */
-    readonly captableConvertibleIn: CaptableConvertibleIn
+    readonly captableCaptableConvertibleIn: CaptableCaptableConvertibleIn
 }
 
 /**
@@ -2137,10 +2139,10 @@ export interface CaptableApiPostCaptableConvertiblesRequest {
 export interface CaptableApiPostCaptableOptionsRequest {
     /**
      * 
-     * @type {CaptableOptionIn}
+     * @type {CaptableCaptableOptionIn}
      * @memberof CaptableApiPostCaptableOptions
      */
-    readonly captableOptionIn: CaptableOptionIn
+    readonly captableCaptableOptionIn: CaptableCaptableOptionIn
 }
 
 /**
@@ -2151,10 +2153,10 @@ export interface CaptableApiPostCaptableOptionsRequest {
 export interface CaptableApiPostCaptablePlansRequest {
     /**
      * 
-     * @type {CaptableEquityPlanIn}
+     * @type {CaptableCaptableEquityPlanIn}
      * @memberof CaptableApiPostCaptablePlans
      */
-    readonly captableEquityPlanIn: CaptableEquityPlanIn
+    readonly captableCaptableEquityPlanIn: CaptableCaptableEquityPlanIn
 }
 
 /**
@@ -2165,10 +2167,10 @@ export interface CaptableApiPostCaptablePlansRequest {
 export interface CaptableApiPostCaptableRoundsRequest {
     /**
      * 
-     * @type {CaptableRoundIn}
+     * @type {CaptableCaptableRoundIn}
      * @memberof CaptableApiPostCaptableRounds
      */
-    readonly captableRoundIn: CaptableRoundIn
+    readonly captableCaptableRoundIn: CaptableCaptableRoundIn
 }
 
 /**
@@ -2186,10 +2188,10 @@ export interface CaptableApiPostCaptableRoundsByIdCloseRequest {
 
     /**
      * 
-     * @type {CaptableRoundCloseRequest}
+     * @type {CaptableCaptableRoundCloseRequest}
      * @memberof CaptableApiPostCaptableRoundsByIdClose
      */
-    readonly captableRoundCloseRequest: CaptableRoundCloseRequest
+    readonly captableCaptableRoundCloseRequest: CaptableCaptableRoundCloseRequest
 }
 
 /**
@@ -2207,10 +2209,10 @@ export interface CaptableApiPostCaptableRoundsByIdInvestmentsRequest {
 
     /**
      * 
-     * @type {CaptableInvestmentIn}
+     * @type {CaptableCaptableInvestmentIn}
      * @memberof CaptableApiPostCaptableRoundsByIdInvestments
      */
-    readonly captableInvestmentIn: CaptableInvestmentIn
+    readonly captableCaptableInvestmentIn: CaptableCaptableInvestmentIn
 }
 
 /**
@@ -2221,10 +2223,10 @@ export interface CaptableApiPostCaptableRoundsByIdInvestmentsRequest {
 export interface CaptableApiPostCaptableSafesRequest {
     /**
      * 
-     * @type {CaptableSafeIn}
+     * @type {CaptableCaptableSafeIn}
      * @memberof CaptableApiPostCaptableSafes
      */
-    readonly captableSafeIn: CaptableSafeIn
+    readonly captableCaptableSafeIn: CaptableCaptableSafeIn
 }
 
 /**
@@ -2235,10 +2237,10 @@ export interface CaptableApiPostCaptableSafesRequest {
 export interface CaptableApiPostCaptableSharesRequest {
     /**
      * 
-     * @type {CaptableShareIn}
+     * @type {CaptableCaptableShareIn}
      * @memberof CaptableApiPostCaptableShares
      */
-    readonly captableShareIn: CaptableShareIn
+    readonly captableCaptableShareIn: CaptableCaptableShareIn
 }
 
 /**
@@ -2249,10 +2251,10 @@ export interface CaptableApiPostCaptableSharesRequest {
 export interface CaptableApiPostCaptableSharesTransferRequest {
     /**
      * 
-     * @type {CaptableShareTransfer}
+     * @type {CaptableCaptableShareTransfer}
      * @memberof CaptableApiPostCaptableSharesTransfer
      */
-    readonly captableShareTransfer: CaptableShareTransfer
+    readonly captableCaptableShareTransfer: CaptableCaptableShareTransfer
 }
 
 /**
@@ -2263,10 +2265,10 @@ export interface CaptableApiPostCaptableSharesTransferRequest {
 export interface CaptableApiPutCaptableCompanyRequest {
     /**
      * 
-     * @type {CaptableCompanyUpdate}
+     * @type {CaptableCaptableCompanyUpdate}
      * @memberof CaptableApiPutCaptableCompany
      */
-    readonly captableCompanyUpdate: CaptableCompanyUpdate
+    readonly captableCaptableCompanyUpdate: CaptableCaptableCompanyUpdate
 }
 
 /**
@@ -2478,7 +2480,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public patchCaptableClassesById(requestParameters: CaptableApiPatchCaptableClassesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).patchCaptableClassesById(requestParameters.id, requestParameters.captableShareClassAmend, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).patchCaptableClassesById(requestParameters.id, requestParameters.captableCaptableShareClassAmend, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2490,7 +2492,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public patchCaptableStakeholdersById(requestParameters: CaptableApiPatchCaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).patchCaptableStakeholdersById(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).patchCaptableStakeholdersById(requestParameters.id, requestParameters.captableCaptableStakeholderPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2502,7 +2504,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableClasses(requestParameters: CaptableApiPostCaptableClassesRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableClasses(requestParameters.captableShareClassIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableClasses(requestParameters.captableCaptableShareClassIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2514,7 +2516,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableConvertibles(requestParameters: CaptableApiPostCaptableConvertiblesRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableConvertibles(requestParameters.captableConvertibleIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableConvertibles(requestParameters.captableCaptableConvertibleIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2526,7 +2528,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableOptions(requestParameters: CaptableApiPostCaptableOptionsRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableOptions(requestParameters.captableOptionIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableOptions(requestParameters.captableCaptableOptionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2538,7 +2540,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptablePlans(requestParameters: CaptableApiPostCaptablePlansRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptablePlans(requestParameters.captableEquityPlanIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptablePlans(requestParameters.captableCaptableEquityPlanIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2550,7 +2552,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableRounds(requestParameters: CaptableApiPostCaptableRoundsRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableRounds(requestParameters.captableRoundIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableRounds(requestParameters.captableCaptableRoundIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2562,7 +2564,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableRoundsByIdClose(requestParameters: CaptableApiPostCaptableRoundsByIdCloseRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableRoundsByIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableRoundsByIdClose(requestParameters.id, requestParameters.captableCaptableRoundCloseRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2574,7 +2576,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableRoundsByIdInvestments(requestParameters: CaptableApiPostCaptableRoundsByIdInvestmentsRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableRoundsByIdInvestments(requestParameters.id, requestParameters.captableInvestmentIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableRoundsByIdInvestments(requestParameters.id, requestParameters.captableCaptableInvestmentIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2586,7 +2588,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableSafes(requestParameters: CaptableApiPostCaptableSafesRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableSafes(requestParameters.captableSafeIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableSafes(requestParameters.captableCaptableSafeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2598,7 +2600,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableShares(requestParameters: CaptableApiPostCaptableSharesRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableShares(requestParameters.captableShareIn, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableShares(requestParameters.captableCaptableShareIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2610,7 +2612,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public postCaptableSharesTransfer(requestParameters: CaptableApiPostCaptableSharesTransferRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postCaptableSharesTransfer(requestParameters.captableShareTransfer, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).postCaptableSharesTransfer(requestParameters.captableCaptableShareTransfer, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2633,7 +2635,7 @@ export class CaptableApi extends BaseAPI {
      * @memberof CaptableApi
      */
     public putCaptableCompany(requestParameters: CaptableApiPutCaptableCompanyRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).putCaptableCompany(requestParameters.captableCompanyUpdate, options).then((request) => request(this.axios, this.basePath));
+        return CaptableApiFp(this.configuration).putCaptableCompany(requestParameters.captableCaptableCompanyUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

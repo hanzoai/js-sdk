@@ -34,10 +34,10 @@ export interface O11yO11yTraceSpanWindow {
     'endTimestampMillis'?: number;
     /**
      * Events are the rows, each positionally matching Columns.
-     * @type {Array<Array<object>>}
+     * @type {Array<Array<any>>}
      * @memberof O11yO11yTraceSpanWindow
      */
-    'events'?: Array<Array<object>>;
+    'events'?: Array<Array<any>>;
     /**
      * IsSubTree says the window is a subtree of the trace rather than the whole of it.
      * @type {boolean}

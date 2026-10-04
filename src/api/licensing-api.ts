@@ -40,13 +40,11 @@ import type { LicensingReleaseAsset } from '../models';
 // @ts-ignore
 import type { LicensingReleaseList } from '../models';
 // @ts-ignore
-import type { LicensingRevokeRequest } from '../models';
-// @ts-ignore
-import type { LicensingRevokeResponse } from '../models';
-// @ts-ignore
 import type { LicensingVerifyRequest } from '../models';
 // @ts-ignore
 import type { LicensingVerifyResponse } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LicensingApi - axios parameter creator
  * @export
@@ -101,7 +99,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since the KMS is reached only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
+         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since KMS is read only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
          * @summary Health reports which signer this deployment mints with, and in which env.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -135,7 +133,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -169,7 +167,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -315,7 +313,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
+         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed, with the production key KMS holds. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
          * @param {LicensingIssueRequest} licensingIssueRequest 
          * @param {*} [options] Override http request option.
@@ -348,86 +346,6 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(licensingIssueRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
-         * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {LicensingRelease} licensingRelease 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postLicensingReleases: async (licensingRelease: LicensingRelease, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'licensingRelease' is not null or undefined
-            assertParamExists('postLicensingReleases', 'licensingRelease', licensingRelease)
-            const localVarPath = `/v1/licensing/releases`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(licensingRelease, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
-         * @summary Revoke turns off tokens that have already been issued.
-         * @param {LicensingRevokeRequest} licensingRevokeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postLicensingRevoke: async (licensingRevokeRequest: LicensingRevokeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'licensingRevokeRequest' is not null or undefined
-            assertParamExists('postLicensingRevoke', 'licensingRevokeRequest', licensingRevokeRequest)
-            const localVarPath = `/v1/licensing/revoke`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(licensingRevokeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -500,7 +418,7 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since the KMS is reached only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
+         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since KMS is read only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
          * @summary Health reports which signer this deployment mints with, and in which env.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -512,7 +430,7 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -524,7 +442,7 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -574,7 +492,7 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
+         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed, with the production key KMS holds. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
          * @param {LicensingIssueRequest} licensingIssueRequest 
          * @param {*} [options] Override http request option.
@@ -584,32 +502,6 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingIssue(licensingIssueRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingIssue']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
-         * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {LicensingRelease} licensingRelease 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postLicensingReleases(licensingRelease: LicensingRelease, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingReleases(licensingRelease, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingReleases']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
-         * @summary Revoke turns off tokens that have already been issued.
-         * @param {LicensingRevokeRequest} licensingRevokeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postLicensingRevoke(licensingRevokeRequest: LicensingRevokeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingRevokeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingRevoke(licensingRevokeRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -646,7 +538,7 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getLicensingDownloadByRelease(requestParameters.release, requestParameters.xLicenseToken, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since the KMS is reached only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
+         * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since KMS is read only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
          * @summary Health reports which signer this deployment mints with, and in which env.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -655,7 +547,7 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getLicensingHealthz(options).then((request) => request(axios, basePath));
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -664,7 +556,7 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getLicensingJwks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+         * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
          * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -702,7 +594,7 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postLicensingFingerprint(requestParameters.licensingFingerprintRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
+         * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed, with the production key KMS holds. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
          * @param {LicensingApiPostLicensingIssueRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -710,26 +602,6 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
          */
         postLicensingIssue(requestParameters: LicensingApiPostLicensingIssueRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingIssueResponse> {
             return localVarFp.postLicensingIssue(requestParameters.licensingIssueRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
-         * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {LicensingApiPostLicensingReleasesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postLicensingReleases(requestParameters: LicensingApiPostLicensingReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingRelease> {
-            return localVarFp.postLicensingReleases(requestParameters.licensingRelease, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
-         * @summary Revoke turns off tokens that have already been issued.
-         * @param {LicensingApiPostLicensingRevokeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postLicensingRevoke(requestParameters: LicensingApiPostLicensingRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingRevokeResponse> {
-            return localVarFp.postLicensingRevoke(requestParameters.licensingRevokeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.  It is UNAUTHENTICATED and always answers 200 — a bad token is `valid:false` with a reason rather than an error status, because \"is this token good\" is a question anyone may ask about a credential they already hold and the answer is the same either way. It is also OPTIONAL: the engine verifies OFFLINE against the published public key (GET /v1/licensing/pubkey) and needs this endpoint only to learn about revocation, so an outage here never stops a paid customer working.
@@ -815,34 +687,6 @@ export interface LicensingApiPostLicensingIssueRequest {
 }
 
 /**
- * Request parameters for postLicensingReleases operation in LicensingApi.
- * @export
- * @interface LicensingApiPostLicensingReleasesRequest
- */
-export interface LicensingApiPostLicensingReleasesRequest {
-    /**
-     * 
-     * @type {LicensingRelease}
-     * @memberof LicensingApiPostLicensingReleases
-     */
-    readonly licensingRelease: LicensingRelease
-}
-
-/**
- * Request parameters for postLicensingRevoke operation in LicensingApi.
- * @export
- * @interface LicensingApiPostLicensingRevokeRequest
- */
-export interface LicensingApiPostLicensingRevokeRequest {
-    /**
-     * 
-     * @type {LicensingRevokeRequest}
-     * @memberof LicensingApiPostLicensingRevoke
-     */
-    readonly licensingRevokeRequest: LicensingRevokeRequest
-}
-
-/**
  * Request parameters for postLicensingVerify operation in LicensingApi.
  * @export
  * @interface LicensingApiPostLicensingVerifyRequest
@@ -876,7 +720,7 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since the KMS is reached only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
+     * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since KMS is read only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
      * @summary Health reports which signer this deployment mints with, and in which env.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -887,7 +731,7 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+     * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
      * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -898,7 +742,7 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
+     * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half lives in KMS, so nothing served here is a secret. `provider` names where that half lives: `\"kms\"` is the production key every engine embeds; `\"local\"` is a development key, and a token signed by one is not a production credential.
      * @summary Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -944,7 +788,7 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
+     * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed, with the production key KMS holds. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
      * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
      * @param {LicensingApiPostLicensingIssueRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -953,30 +797,6 @@ export class LicensingApi extends BaseAPI {
      */
     public postLicensingIssue(requestParameters: LicensingApiPostLicensingIssueRequest, options?: RawAxiosRequestConfig) {
         return LicensingApiFp(this.configuration).postLicensingIssue(requestParameters.licensingIssueRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
-     * @summary Publishes a signed binary release, answering 201 Created.
-     * @param {LicensingApiPostLicensingReleasesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LicensingApi
-     */
-    public postLicensingReleases(requestParameters: LicensingApiPostLicensingReleasesRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postLicensingReleases(requestParameters.licensingRelease, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
-     * @summary Revoke turns off tokens that have already been issued.
-     * @param {LicensingApiPostLicensingRevokeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LicensingApi
-     */
-    public postLicensingRevoke(requestParameters: LicensingApiPostLicensingRevokeRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postLicensingRevoke(requestParameters.licensingRevokeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -22,25 +22,55 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { GraphAssertIn } from '../models';
+import type { GraphGraphAnswerIn } from '../models';
 // @ts-ignore
-import type { GraphAssertOut } from '../models';
+import type { GraphGraphAnswerOut } from '../models';
 // @ts-ignore
-import type { GraphNeighborsIn } from '../models';
+import type { GraphGraphAssertIn } from '../models';
 // @ts-ignore
-import type { GraphNeighborsOut } from '../models';
+import type { GraphGraphAssertOut } from '../models';
+// @ts-ignore
+import type { GraphGraphCommunitiesIn } from '../models';
+// @ts-ignore
+import type { GraphGraphCommunitiesOut } from '../models';
+// @ts-ignore
+import type { GraphGraphDeriveIn } from '../models';
+// @ts-ignore
+import type { GraphGraphDeriveOut } from '../models';
+// @ts-ignore
+import type { GraphGraphDiffIn } from '../models';
+// @ts-ignore
+import type { GraphGraphDiffOut } from '../models';
+// @ts-ignore
+import type { GraphGraphEraseIn } from '../models';
+// @ts-ignore
+import type { GraphGraphEraseOut } from '../models';
+// @ts-ignore
+import type { GraphGraphExtractOut } from '../models';
+// @ts-ignore
+import type { GraphGraphNeighborsIn } from '../models';
+// @ts-ignore
+import type { GraphGraphNeighborsOut } from '../models';
+// @ts-ignore
+import type { GraphGraphPathIn } from '../models';
+// @ts-ignore
+import type { GraphGraphPathOut } from '../models';
+// @ts-ignore
+import type { GraphGraphReadOut } from '../models';
+// @ts-ignore
+import type { GraphGraphResolveIn } from '../models';
+// @ts-ignore
+import type { GraphGraphResolveOut } from '../models';
+// @ts-ignore
+import type { GraphGraphSourceIn } from '../models';
+// @ts-ignore
+import type { GraphGraphVocabularyOut } from '../models';
 // @ts-ignore
 import type { GraphQLIn } from '../models';
 // @ts-ignore
 import type { GraphQLOut } from '../models';
 // @ts-ignore
-import type { GraphReadOut } from '../models';
-// @ts-ignore
-import type { GraphResolveIn } from '../models';
-// @ts-ignore
-import type { GraphResolveOut } from '../models';
-// @ts-ignore
-import type { GraphVocabularyOut } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * GraphApi - axios parameter creator
  * @export
@@ -48,15 +78,55 @@ import type { GraphVocabularyOut } from '../models';
 export const GraphApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Assert what is true of an entity
-         * @param {GraphAssertIn} graphAssertIn 
+         * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
+         * @summary Answers a question from the whole graph and cites the assertions it rests on.
+         * @param {GraphGraphAnswerIn} graphGraphAnswerIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphAssert: async (graphAssertIn: GraphAssertIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'graphAssertIn' is not null or undefined
-            assertParamExists('graphAssert', 'graphAssertIn', graphAssertIn)
+        graphAnswer: async (graphGraphAnswerIn: GraphGraphAnswerIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphAnswerIn' is not null or undefined
+            assertParamExists('graphAnswer', 'graphGraphAnswerIn', graphGraphAnswerIn)
+            const localVarPath = `/v1/graph/answer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphAnswerIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
+         * @summary Records a batch of assertions and counts what became of each.
+         * @param {GraphGraphAssertIn} graphGraphAssertIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphAssert: async (graphGraphAssertIn: GraphGraphAssertIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphAssertIn' is not null or undefined
+            assertParamExists('graphAssert', 'graphGraphAssertIn', graphGraphAssertIn)
             const localVarPath = `/v1/graph`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -80,7 +150,7 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(graphAssertIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphAssertIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -88,15 +158,255 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Walk the edges from a seed set, bounded
-         * @param {GraphNeighborsIn} graphNeighborsIn 
+         * Partitions the edge graph into sets of entities more densely connected to each other than to the rest.  The graph is the one a walk reads, direction dropped, and the partition is deterministic: the same graph at the same point numbers the same communities.  Time: as_of and as_known place the graph that is partitioned; either absent is now.
+         * @summary Partitions the edge graph into sets of entities more densely connected to each other than to the rest.
+         * @param {GraphGraphCommunitiesIn} graphGraphCommunitiesIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphNeighbors: async (graphNeighborsIn: GraphNeighborsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'graphNeighborsIn' is not null or undefined
-            assertParamExists('graphNeighbors', 'graphNeighborsIn', graphNeighborsIn)
+        graphCommunities: async (graphGraphCommunitiesIn: GraphGraphCommunitiesIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphCommunitiesIn' is not null or undefined
+            assertParamExists('graphCommunities', 'graphGraphCommunitiesIn', graphGraphCommunitiesIn)
+            const localVarPath = `/v1/graph/communities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphCommunitiesIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
+         * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
+         * @param {GraphGraphDeriveIn} graphGraphDeriveIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphDerive: async (graphGraphDeriveIn: GraphGraphDeriveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphDeriveIn' is not null or undefined
+            assertParamExists('graphDerive', 'graphGraphDeriveIn', graphGraphDeriveIn)
+            const localVarPath = `/v1/graph/derive`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphDeriveIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports what came into force, was superseded and was retracted between two points.  Each point is resolved as resolve would, never read off the rows in between. A version that loses the order is invisible here as it is there, and one that repeats what held is agreement, not change.  Time: a point is an as_of and an as_known instant, from and from_known against to and to_known. Hold the known instants equal for what happened in the world; hold the valid instants equal for what the record learned. to and to_known default to now, from to to and from_known to to_known, and the two points must differ.
+         * @summary Reports what came into force, was superseded and was retracted between two points.
+         * @param {GraphGraphDiffIn} graphGraphDiffIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphDiff: async (graphGraphDiffIn: GraphGraphDiffIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphDiffIn' is not null or undefined
+            assertParamExists('graphDiff', 'graphGraphDiffIn', graphGraphDiffIn)
+            const localVarPath = `/v1/graph/diff`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphDiffIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes every assertion that names an entity and returns a receipt.  It requires an admin of the organization it acts in; platform sudo is not enough, so erasure is never cross-tenant. Nothing is removed while a matching assertion is under litigation hold (409) or where the erasure cannot be recorded (503). The audit trail keeps who, when, why, how many and the receipt\'s digest, never the entity, and holds it before the erasure commits.  Time: erasure is the one act outside the two times. The rows go at every as_of and as_known, so no past read recovers them.
+         * @summary Removes every assertion that names an entity and returns a receipt.
+         * @param {GraphGraphEraseIn} graphGraphEraseIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphErase: async (graphGraphEraseIn: GraphGraphEraseIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphEraseIn' is not null or undefined
+            assertParamExists('graphErase', 'graphGraphEraseIn', graphGraphEraseIn)
+            const localVarPath = `/v1/graph/erase`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphEraseIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads the relations a source states and returns them, recording nothing.  A line `relation:: value` states one; a value written `[[key]]` names an entity and makes the relation an edge. The subject is the nearest heading above the line, or the request\'s subject until a heading names one.  What filing would refuse is returned apart, in refused: a declaration from a caller who is not an admin of the organization, and what the declared schema refuses, checked against the store and against the types and declarations the document itself states that the caller may file.  Time: it records nothing and takes no as_of or as_known; the schema is checked as of now.
+         * @summary Reads the relations a source states and returns them, recording nothing.
+         * @param {GraphGraphSourceIn} graphGraphSourceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphExtract: async (graphGraphSourceIn: GraphGraphSourceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphSourceIn' is not null or undefined
+            assertParamExists('graphExtract', 'graphGraphSourceIn', graphGraphSourceIn)
+            const localVarPath = `/v1/graph/extract`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphSourceIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads a source and records what it states, through the same admission as assert.  Each assertion\'s evidence is the section that stated it, `<source>#<section>`, so the same source at the same at records one set of rows however often it is delivered. What extract reports refused is not recorded; it is counted as refused, with its reason, in the order the document states it. A source stating no relation is refused whole.  Time: at is the valid time of every assertion recorded, which an as_of read is bounded by; each becomes knowable at the write, so a read with an earlier as_known does not see it.
+         * @summary Reads a source and records what it states, through the same admission as assert.
+         * @param {GraphGraphSourceIn} graphGraphSourceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphIngest: async (graphGraphSourceIn: GraphGraphSourceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphSourceIn' is not null or undefined
+            assertParamExists('graphIngest', 'graphGraphSourceIn', graphGraphSourceIn)
+            const localVarPath = `/v1/graph/ingest`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphSourceIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Walks the in-force edges from a set of seeds and lists every entity reached, bounded.  Only the edge that holds at the point is a hop: a superseded or retracted edge is not, and neither is a property.  Time: as_of walks the graph as it stood at that instant and as_known as this plane knew it then; either absent is now.
+         * @summary Walks the in-force edges from a set of seeds and lists every entity reached, bounded.
+         * @param {GraphGraphNeighborsIn} graphGraphNeighborsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphNeighbors: async (graphGraphNeighborsIn: GraphGraphNeighborsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphNeighborsIn' is not null or undefined
+            assertParamExists('graphNeighbors', 'graphGraphNeighborsIn', graphGraphNeighborsIn)
             const localVarPath = `/v1/graph/neighbors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,7 +430,7 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(graphNeighborsIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphNeighborsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -128,17 +438,58 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Read the assertions this organization has recorded
+         * Finds the shortest chain of in-force edges from one entity to another.  It is the walk behind neighbors stopped at a goal: the same bound and the same rule for which edge is in force. A causal chain is this op with relations naming the relations that mean cause, such as caused_by and influenced.  Time: as_of and as_known place the graph the path is found in; either absent is now.
+         * @summary Finds the shortest chain of in-force edges from one entity to another.
+         * @param {GraphGraphPathIn} graphGraphPathIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphPath: async (graphGraphPathIn: GraphGraphPathIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphPathIn' is not null or undefined
+            assertParamExists('graphPath', 'graphGraphPathIn', graphGraphPathIn)
+            const localVarPath = `/v1/graph/path`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphPathIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the assertions recorded, every version, oldest first.  It resolves nothing: a superseded claim and the one that superseded it both appear.  Time: as_of keeps statements begun by that instant of the world and as_known keeps what this plane had heard by then; either absent is no bound.
+         * @summary Lists the assertions recorded, every version, oldest first.
          * @param {string} [entity] Entity narrows to what was asserted ABOUT one entity. Absent matches every entity.
          * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
-         * @param {string} [value] Value narrows to assertions pointing AT one value, which is how the edges into an entity are read.
-         * @param {string} [asOf] AsOf bounds the read to what was knowable at an instant, RFC 3339. Absent reads everything this plane holds.
+         * @param {string} [value] Value narrows to assertions pointing AT one value, which is how the edges into an entity are read. A property\&#39;s scalar is matched byte for byte and an edge\&#39;s value by its key, folded as every key is.
+         * @param {string} [asOf] AsOf bounds the read to statements begun by an instant of the world, RFC 3339. Absent reads every instant.
+         * @param {string} [asKnown] AsKnown bounds the read to what this plane had heard by an instant, RFC 3339. Absent reads everything it holds.
          * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphRead: async (entity?: string, relation?: string, value?: string, asOf?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        graphRead: async (entity?: string, relation?: string, value?: string, asOf?: string, asKnown?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/graph`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -171,6 +522,10 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['as_of'] = asOf;
             }
 
+            if (asKnown !== undefined) {
+                localVarQueryParameter['as_known'] = asKnown;
+            }
+
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
@@ -187,15 +542,15 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary What is in force about an entity as of an instant, and what disagreed
-         * @param {GraphResolveIn} graphResolveIn 
+         * Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.  The winner is the holding statement begun most recently, then the strongest under the rule vocabulary names. A relation that holds many values answers each; a disagreement is reported as contested, never resolved into silence.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard; either absent is now.
+         * @summary Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.
+         * @param {GraphGraphResolveIn} graphGraphResolveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphResolve: async (graphResolveIn: GraphResolveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'graphResolveIn' is not null or undefined
-            assertParamExists('graphResolve', 'graphResolveIn', graphResolveIn)
+        graphResolve: async (graphGraphResolveIn: GraphGraphResolveIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphResolveIn' is not null or undefined
+            assertParamExists('graphResolve', 'graphGraphResolveIn', graphGraphResolveIn)
             const localVarPath = `/v1/graph/resolve`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -219,7 +574,7 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(graphResolveIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphResolveIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -227,16 +582,19 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
-         * @summary Find assertions by their text rather than by an entity key
-         * @param {string} [q] Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
+         * Finds assertions by their words, where read finds them by their keys, best match first.  Every word must match, as a prefix. The answer is ordered by bm25, which weighs a word by how rare it is and a row by how much of it the words are, so a limit keeps the best matches rather than the oldest. It resolves nothing, so a match may be a claim later corrected; ask resolve about what it finds.  Time: as_of and as_known bound it exactly as they bound read; either absent is no bound.
+         * @summary Finds assertions by their words, where read finds them by their keys, best match first.
+         * @param {string} q Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
          * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
-         * @param {string} [asOf] AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+         * @param {string} [asOf] AsOf bounds the search to statements begun by an instant of the world, RFC 3339. Absent searches every instant.
+         * @param {string} [asKnown] AsKnown bounds the search to what this plane had heard by an instant, RFC 3339. Absent searches everything it holds.
          * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphSearch: async (q?: string, relation?: string, asOf?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        graphSearch: async (q: string, relation?: string, asOf?: string, asKnown?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'q' is not null or undefined
+            assertParamExists('graphSearch', 'q', q)
             const localVarPath = `/v1/graph/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -265,6 +623,10 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['as_of'] = asOf;
             }
 
+            if (asKnown !== undefined) {
+                localVarQueryParameter['as_known'] = asKnown;
+            }
+
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
@@ -281,8 +643,8 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary The relations in use, and the rule that resolves a conflict
+         * Lists the relations in use, the schema declared for them and the rule that settles a conflict.  Time: it takes no as_of or as_known; the schema is the one in force now.
+         * @summary Lists the relations in use, the schema declared for them and the rule that settles a conflict.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -363,84 +725,190 @@ export const GraphApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GraphApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Assert what is true of an entity
-         * @param {GraphAssertIn} graphAssertIn 
+         * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
+         * @summary Answers a question from the whole graph and cites the assertions it rests on.
+         * @param {GraphGraphAnswerIn} graphGraphAnswerIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphAssert(graphAssertIn: GraphAssertIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphAssertOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.graphAssert(graphAssertIn, options);
+        async graphAnswer(graphGraphAnswerIn: GraphGraphAnswerIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphAnswerOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphAnswer(graphGraphAnswerIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphAnswer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
+         * @summary Records a batch of assertions and counts what became of each.
+         * @param {GraphGraphAssertIn} graphGraphAssertIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphAssert(graphGraphAssertIn: GraphGraphAssertIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphAssertOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphAssert(graphGraphAssertIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphAssert']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Walk the edges from a seed set, bounded
-         * @param {GraphNeighborsIn} graphNeighborsIn 
+         * Partitions the edge graph into sets of entities more densely connected to each other than to the rest.  The graph is the one a walk reads, direction dropped, and the partition is deterministic: the same graph at the same point numbers the same communities.  Time: as_of and as_known place the graph that is partitioned; either absent is now.
+         * @summary Partitions the edge graph into sets of entities more densely connected to each other than to the rest.
+         * @param {GraphGraphCommunitiesIn} graphGraphCommunitiesIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphNeighbors(graphNeighborsIn: GraphNeighborsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphNeighborsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.graphNeighbors(graphNeighborsIn, options);
+        async graphCommunities(graphGraphCommunitiesIn: GraphGraphCommunitiesIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphCommunitiesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphCommunities(graphGraphCommunitiesIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphCommunities']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
+         * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
+         * @param {GraphGraphDeriveIn} graphGraphDeriveIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphDerive(graphGraphDeriveIn: GraphGraphDeriveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphDeriveOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphDerive(graphGraphDeriveIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphDerive']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reports what came into force, was superseded and was retracted between two points.  Each point is resolved as resolve would, never read off the rows in between. A version that loses the order is invisible here as it is there, and one that repeats what held is agreement, not change.  Time: a point is an as_of and an as_known instant, from and from_known against to and to_known. Hold the known instants equal for what happened in the world; hold the valid instants equal for what the record learned. to and to_known default to now, from to to and from_known to to_known, and the two points must differ.
+         * @summary Reports what came into force, was superseded and was retracted between two points.
+         * @param {GraphGraphDiffIn} graphGraphDiffIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphDiff(graphGraphDiffIn: GraphGraphDiffIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphDiffOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphDiff(graphGraphDiffIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphDiff']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes every assertion that names an entity and returns a receipt.  It requires an admin of the organization it acts in; platform sudo is not enough, so erasure is never cross-tenant. Nothing is removed while a matching assertion is under litigation hold (409) or where the erasure cannot be recorded (503). The audit trail keeps who, when, why, how many and the receipt\'s digest, never the entity, and holds it before the erasure commits.  Time: erasure is the one act outside the two times. The rows go at every as_of and as_known, so no past read recovers them.
+         * @summary Removes every assertion that names an entity and returns a receipt.
+         * @param {GraphGraphEraseIn} graphGraphEraseIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphErase(graphGraphEraseIn: GraphGraphEraseIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphEraseOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphErase(graphGraphEraseIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphErase']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads the relations a source states and returns them, recording nothing.  A line `relation:: value` states one; a value written `[[key]]` names an entity and makes the relation an edge. The subject is the nearest heading above the line, or the request\'s subject until a heading names one.  What filing would refuse is returned apart, in refused: a declaration from a caller who is not an admin of the organization, and what the declared schema refuses, checked against the store and against the types and declarations the document itself states that the caller may file.  Time: it records nothing and takes no as_of or as_known; the schema is checked as of now.
+         * @summary Reads the relations a source states and returns them, recording nothing.
+         * @param {GraphGraphSourceIn} graphGraphSourceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphExtract(graphGraphSourceIn: GraphGraphSourceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphExtractOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphExtract(graphGraphSourceIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphExtract']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads a source and records what it states, through the same admission as assert.  Each assertion\'s evidence is the section that stated it, `<source>#<section>`, so the same source at the same at records one set of rows however often it is delivered. What extract reports refused is not recorded; it is counted as refused, with its reason, in the order the document states it. A source stating no relation is refused whole.  Time: at is the valid time of every assertion recorded, which an as_of read is bounded by; each becomes knowable at the write, so a read with an earlier as_known does not see it.
+         * @summary Reads a source and records what it states, through the same admission as assert.
+         * @param {GraphGraphSourceIn} graphGraphSourceIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphIngest(graphGraphSourceIn: GraphGraphSourceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphAssertOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphIngest(graphGraphSourceIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphIngest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Walks the in-force edges from a set of seeds and lists every entity reached, bounded.  Only the edge that holds at the point is a hop: a superseded or retracted edge is not, and neither is a property.  Time: as_of walks the graph as it stood at that instant and as_known as this plane knew it then; either absent is now.
+         * @summary Walks the in-force edges from a set of seeds and lists every entity reached, bounded.
+         * @param {GraphGraphNeighborsIn} graphGraphNeighborsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphNeighbors(graphGraphNeighborsIn: GraphGraphNeighborsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphNeighborsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphNeighbors(graphGraphNeighborsIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphNeighbors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Read the assertions this organization has recorded
+         * Finds the shortest chain of in-force edges from one entity to another.  It is the walk behind neighbors stopped at a goal: the same bound and the same rule for which edge is in force. A causal chain is this op with relations naming the relations that mean cause, such as caused_by and influenced.  Time: as_of and as_known place the graph the path is found in; either absent is now.
+         * @summary Finds the shortest chain of in-force edges from one entity to another.
+         * @param {GraphGraphPathIn} graphGraphPathIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphPath(graphGraphPathIn: GraphGraphPathIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphPathOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphPath(graphGraphPathIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphPath']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the assertions recorded, every version, oldest first.  It resolves nothing: a superseded claim and the one that superseded it both appear.  Time: as_of keeps statements begun by that instant of the world and as_known keeps what this plane had heard by then; either absent is no bound.
+         * @summary Lists the assertions recorded, every version, oldest first.
          * @param {string} [entity] Entity narrows to what was asserted ABOUT one entity. Absent matches every entity.
          * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
-         * @param {string} [value] Value narrows to assertions pointing AT one value, which is how the edges into an entity are read.
-         * @param {string} [asOf] AsOf bounds the read to what was knowable at an instant, RFC 3339. Absent reads everything this plane holds.
+         * @param {string} [value] Value narrows to assertions pointing AT one value, which is how the edges into an entity are read. A property\&#39;s scalar is matched byte for byte and an edge\&#39;s value by its key, folded as every key is.
+         * @param {string} [asOf] AsOf bounds the read to statements begun by an instant of the world, RFC 3339. Absent reads every instant.
+         * @param {string} [asKnown] AsKnown bounds the read to what this plane had heard by an instant, RFC 3339. Absent reads everything it holds.
          * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphRead(entity?: string, relation?: string, value?: string, asOf?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphReadOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.graphRead(entity, relation, value, asOf, limit, options);
+        async graphRead(entity?: string, relation?: string, value?: string, asOf?: string, asKnown?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphReadOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphRead(entity, relation, value, asOf, asKnown, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphRead']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary What is in force about an entity as of an instant, and what disagreed
-         * @param {GraphResolveIn} graphResolveIn 
+         * Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.  The winner is the holding statement begun most recently, then the strongest under the rule vocabulary names. A relation that holds many values answers each; a disagreement is reported as contested, never resolved into silence.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard; either absent is now.
+         * @summary Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.
+         * @param {GraphGraphResolveIn} graphGraphResolveIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphResolve(graphResolveIn: GraphResolveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphResolveOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.graphResolve(graphResolveIn, options);
+        async graphResolve(graphGraphResolveIn: GraphGraphResolveIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphResolveOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphResolve(graphGraphResolveIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphResolve']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
-         * @summary Find assertions by their text rather than by an entity key
-         * @param {string} [q] Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
+         * Finds assertions by their words, where read finds them by their keys, best match first.  Every word must match, as a prefix. The answer is ordered by bm25, which weighs a word by how rare it is and a row by how much of it the words are, so a limit keeps the best matches rather than the oldest. It resolves nothing, so a match may be a claim later corrected; ask resolve about what it finds.  Time: as_of and as_known bound it exactly as they bound read; either absent is no bound.
+         * @summary Finds assertions by their words, where read finds them by their keys, best match first.
+         * @param {string} q Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
          * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
-         * @param {string} [asOf] AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+         * @param {string} [asOf] AsOf bounds the search to statements begun by an instant of the world, RFC 3339. Absent searches every instant.
+         * @param {string} [asKnown] AsKnown bounds the search to what this plane had heard by an instant, RFC 3339. Absent searches everything it holds.
          * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphSearch(q?: string, relation?: string, asOf?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphReadOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.graphSearch(q, relation, asOf, limit, options);
+        async graphSearch(q: string, relation?: string, asOf?: string, asKnown?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphReadOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphSearch(q, relation, asOf, asKnown, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary The relations in use, and the rule that resolves a conflict
+         * Lists the relations in use, the schema declared for them and the rule that settles a conflict.  Time: it takes no as_of or as_known; the schema is the one in force now.
+         * @summary Lists the relations in use, the schema declared for them and the rule that settles a conflict.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async graphVocabulary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphVocabularyOut>> {
+        async graphVocabulary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphVocabularyOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.graphVocabulary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphVocabulary']?.[localVarOperationServerIndex]?.url;
@@ -470,62 +938,142 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = GraphApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Assert what is true of an entity
+         * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
+         * @summary Answers a question from the whole graph and cites the assertions it rests on.
+         * @param {GraphApiGraphAnswerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphAnswer(requestParameters: GraphApiGraphAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphAnswerOut> {
+            return localVarFp.graphAnswer(requestParameters.graphGraphAnswerIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
+         * @summary Records a batch of assertions and counts what became of each.
          * @param {GraphApiGraphAssertRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphAssert(requestParameters: GraphApiGraphAssertRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphAssertOut> {
-            return localVarFp.graphAssert(requestParameters.graphAssertIn, options).then((request) => request(axios, basePath));
+        graphAssert(requestParameters: GraphApiGraphAssertRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphAssertOut> {
+            return localVarFp.graphAssert(requestParameters.graphGraphAssertIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Walk the edges from a seed set, bounded
+         * Partitions the edge graph into sets of entities more densely connected to each other than to the rest.  The graph is the one a walk reads, direction dropped, and the partition is deterministic: the same graph at the same point numbers the same communities.  Time: as_of and as_known place the graph that is partitioned; either absent is now.
+         * @summary Partitions the edge graph into sets of entities more densely connected to each other than to the rest.
+         * @param {GraphApiGraphCommunitiesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphCommunities(requestParameters: GraphApiGraphCommunitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphCommunitiesOut> {
+            return localVarFp.graphCommunities(requestParameters.graphGraphCommunitiesIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
+         * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
+         * @param {GraphApiGraphDeriveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphDerive(requestParameters: GraphApiGraphDeriveRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphDeriveOut> {
+            return localVarFp.graphDerive(requestParameters.graphGraphDeriveIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports what came into force, was superseded and was retracted between two points.  Each point is resolved as resolve would, never read off the rows in between. A version that loses the order is invisible here as it is there, and one that repeats what held is agreement, not change.  Time: a point is an as_of and an as_known instant, from and from_known against to and to_known. Hold the known instants equal for what happened in the world; hold the valid instants equal for what the record learned. to and to_known default to now, from to to and from_known to to_known, and the two points must differ.
+         * @summary Reports what came into force, was superseded and was retracted between two points.
+         * @param {GraphApiGraphDiffRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphDiff(requestParameters: GraphApiGraphDiffRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphDiffOut> {
+            return localVarFp.graphDiff(requestParameters.graphGraphDiffIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes every assertion that names an entity and returns a receipt.  It requires an admin of the organization it acts in; platform sudo is not enough, so erasure is never cross-tenant. Nothing is removed while a matching assertion is under litigation hold (409) or where the erasure cannot be recorded (503). The audit trail keeps who, when, why, how many and the receipt\'s digest, never the entity, and holds it before the erasure commits.  Time: erasure is the one act outside the two times. The rows go at every as_of and as_known, so no past read recovers them.
+         * @summary Removes every assertion that names an entity and returns a receipt.
+         * @param {GraphApiGraphEraseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphErase(requestParameters: GraphApiGraphEraseRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphEraseOut> {
+            return localVarFp.graphErase(requestParameters.graphGraphEraseIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads the relations a source states and returns them, recording nothing.  A line `relation:: value` states one; a value written `[[key]]` names an entity and makes the relation an edge. The subject is the nearest heading above the line, or the request\'s subject until a heading names one.  What filing would refuse is returned apart, in refused: a declaration from a caller who is not an admin of the organization, and what the declared schema refuses, checked against the store and against the types and declarations the document itself states that the caller may file.  Time: it records nothing and takes no as_of or as_known; the schema is checked as of now.
+         * @summary Reads the relations a source states and returns them, recording nothing.
+         * @param {GraphApiGraphExtractRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphExtract(requestParameters: GraphApiGraphExtractRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphExtractOut> {
+            return localVarFp.graphExtract(requestParameters.graphGraphSourceIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads a source and records what it states, through the same admission as assert.  Each assertion\'s evidence is the section that stated it, `<source>#<section>`, so the same source at the same at records one set of rows however often it is delivered. What extract reports refused is not recorded; it is counted as refused, with its reason, in the order the document states it. A source stating no relation is refused whole.  Time: at is the valid time of every assertion recorded, which an as_of read is bounded by; each becomes knowable at the write, so a read with an earlier as_known does not see it.
+         * @summary Reads a source and records what it states, through the same admission as assert.
+         * @param {GraphApiGraphIngestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphIngest(requestParameters: GraphApiGraphIngestRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphAssertOut> {
+            return localVarFp.graphIngest(requestParameters.graphGraphSourceIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Walks the in-force edges from a set of seeds and lists every entity reached, bounded.  Only the edge that holds at the point is a hop: a superseded or retracted edge is not, and neither is a property.  Time: as_of walks the graph as it stood at that instant and as_known as this plane knew it then; either absent is now.
+         * @summary Walks the in-force edges from a set of seeds and lists every entity reached, bounded.
          * @param {GraphApiGraphNeighborsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphNeighbors(requestParameters: GraphApiGraphNeighborsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphNeighborsOut> {
-            return localVarFp.graphNeighbors(requestParameters.graphNeighborsIn, options).then((request) => request(axios, basePath));
+        graphNeighbors(requestParameters: GraphApiGraphNeighborsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphNeighborsOut> {
+            return localVarFp.graphNeighbors(requestParameters.graphGraphNeighborsIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Read the assertions this organization has recorded
+         * Finds the shortest chain of in-force edges from one entity to another.  It is the walk behind neighbors stopped at a goal: the same bound and the same rule for which edge is in force. A causal chain is this op with relations naming the relations that mean cause, such as caused_by and influenced.  Time: as_of and as_known place the graph the path is found in; either absent is now.
+         * @summary Finds the shortest chain of in-force edges from one entity to another.
+         * @param {GraphApiGraphPathRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphPath(requestParameters: GraphApiGraphPathRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphPathOut> {
+            return localVarFp.graphPath(requestParameters.graphGraphPathIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the assertions recorded, every version, oldest first.  It resolves nothing: a superseded claim and the one that superseded it both appear.  Time: as_of keeps statements begun by that instant of the world and as_known keeps what this plane had heard by then; either absent is no bound.
+         * @summary Lists the assertions recorded, every version, oldest first.
          * @param {GraphApiGraphReadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphRead(requestParameters: GraphApiGraphReadRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphReadOut> {
-            return localVarFp.graphRead(requestParameters.entity, requestParameters.relation, requestParameters.value, requestParameters.asOf, requestParameters.limit, options).then((request) => request(axios, basePath));
+        graphRead(requestParameters: GraphApiGraphReadRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphReadOut> {
+            return localVarFp.graphRead(requestParameters.entity, requestParameters.relation, requestParameters.value, requestParameters.asOf, requestParameters.asKnown, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary What is in force about an entity as of an instant, and what disagreed
+         * Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.  The winner is the holding statement begun most recently, then the strongest under the rule vocabulary names. A relation that holds many values answers each; a disagreement is reported as contested, never resolved into silence.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard; either absent is now.
+         * @summary Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.
          * @param {GraphApiGraphResolveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphResolve(requestParameters: GraphApiGraphResolveRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphResolveOut> {
-            return localVarFp.graphResolve(requestParameters.graphResolveIn, options).then((request) => request(axios, basePath));
+        graphResolve(requestParameters: GraphApiGraphResolveRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphResolveOut> {
+            return localVarFp.graphResolve(requestParameters.graphGraphResolveIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
-         * @summary Find assertions by their text rather than by an entity key
+         * Finds assertions by their words, where read finds them by their keys, best match first.  Every word must match, as a prefix. The answer is ordered by bm25, which weighs a word by how rare it is and a row by how much of it the words are, so a limit keeps the best matches rather than the oldest. It resolves nothing, so a match may be a claim later corrected; ask resolve about what it finds.  Time: as_of and as_known bound it exactly as they bound read; either absent is no bound.
+         * @summary Finds assertions by their words, where read finds them by their keys, best match first.
          * @param {GraphApiGraphSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphSearch(requestParameters: GraphApiGraphSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphReadOut> {
-            return localVarFp.graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.limit, options).then((request) => request(axios, basePath));
+        graphSearch(requestParameters: GraphApiGraphSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphReadOut> {
+            return localVarFp.graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.asKnown, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary The relations in use, and the rule that resolves a conflict
+         * Lists the relations in use, the schema declared for them and the rule that settles a conflict.  Time: it takes no as_of or as_known; the schema is the one in force now.
+         * @summary Lists the relations in use, the schema declared for them and the rule that settles a conflict.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        graphVocabulary(options?: RawAxiosRequestConfig): AxiosPromise<GraphVocabularyOut> {
+        graphVocabulary(options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphVocabularyOut> {
             return localVarFp.graphVocabulary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -542,6 +1090,20 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
+ * Request parameters for graphAnswer operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphAnswerRequest
+ */
+export interface GraphApiGraphAnswerRequest {
+    /**
+     * 
+     * @type {GraphGraphAnswerIn}
+     * @memberof GraphApiGraphAnswer
+     */
+    readonly graphGraphAnswerIn: GraphGraphAnswerIn
+}
+
+/**
  * Request parameters for graphAssert operation in GraphApi.
  * @export
  * @interface GraphApiGraphAssertRequest
@@ -549,10 +1111,94 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
 export interface GraphApiGraphAssertRequest {
     /**
      * 
-     * @type {GraphAssertIn}
+     * @type {GraphGraphAssertIn}
      * @memberof GraphApiGraphAssert
      */
-    readonly graphAssertIn: GraphAssertIn
+    readonly graphGraphAssertIn: GraphGraphAssertIn
+}
+
+/**
+ * Request parameters for graphCommunities operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphCommunitiesRequest
+ */
+export interface GraphApiGraphCommunitiesRequest {
+    /**
+     * 
+     * @type {GraphGraphCommunitiesIn}
+     * @memberof GraphApiGraphCommunities
+     */
+    readonly graphGraphCommunitiesIn: GraphGraphCommunitiesIn
+}
+
+/**
+ * Request parameters for graphDerive operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphDeriveRequest
+ */
+export interface GraphApiGraphDeriveRequest {
+    /**
+     * 
+     * @type {GraphGraphDeriveIn}
+     * @memberof GraphApiGraphDerive
+     */
+    readonly graphGraphDeriveIn: GraphGraphDeriveIn
+}
+
+/**
+ * Request parameters for graphDiff operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphDiffRequest
+ */
+export interface GraphApiGraphDiffRequest {
+    /**
+     * 
+     * @type {GraphGraphDiffIn}
+     * @memberof GraphApiGraphDiff
+     */
+    readonly graphGraphDiffIn: GraphGraphDiffIn
+}
+
+/**
+ * Request parameters for graphErase operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphEraseRequest
+ */
+export interface GraphApiGraphEraseRequest {
+    /**
+     * 
+     * @type {GraphGraphEraseIn}
+     * @memberof GraphApiGraphErase
+     */
+    readonly graphGraphEraseIn: GraphGraphEraseIn
+}
+
+/**
+ * Request parameters for graphExtract operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphExtractRequest
+ */
+export interface GraphApiGraphExtractRequest {
+    /**
+     * 
+     * @type {GraphGraphSourceIn}
+     * @memberof GraphApiGraphExtract
+     */
+    readonly graphGraphSourceIn: GraphGraphSourceIn
+}
+
+/**
+ * Request parameters for graphIngest operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphIngestRequest
+ */
+export interface GraphApiGraphIngestRequest {
+    /**
+     * 
+     * @type {GraphGraphSourceIn}
+     * @memberof GraphApiGraphIngest
+     */
+    readonly graphGraphSourceIn: GraphGraphSourceIn
 }
 
 /**
@@ -563,10 +1209,24 @@ export interface GraphApiGraphAssertRequest {
 export interface GraphApiGraphNeighborsRequest {
     /**
      * 
-     * @type {GraphNeighborsIn}
+     * @type {GraphGraphNeighborsIn}
      * @memberof GraphApiGraphNeighbors
      */
-    readonly graphNeighborsIn: GraphNeighborsIn
+    readonly graphGraphNeighborsIn: GraphGraphNeighborsIn
+}
+
+/**
+ * Request parameters for graphPath operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphPathRequest
+ */
+export interface GraphApiGraphPathRequest {
+    /**
+     * 
+     * @type {GraphGraphPathIn}
+     * @memberof GraphApiGraphPath
+     */
+    readonly graphGraphPathIn: GraphGraphPathIn
 }
 
 /**
@@ -590,18 +1250,25 @@ export interface GraphApiGraphReadRequest {
     readonly relation?: string
 
     /**
-     * Value narrows to assertions pointing AT one value, which is how the edges into an entity are read.
+     * Value narrows to assertions pointing AT one value, which is how the edges into an entity are read. A property\&#39;s scalar is matched byte for byte and an edge\&#39;s value by its key, folded as every key is.
      * @type {string}
      * @memberof GraphApiGraphRead
      */
     readonly value?: string
 
     /**
-     * AsOf bounds the read to what was knowable at an instant, RFC 3339. Absent reads everything this plane holds.
+     * AsOf bounds the read to statements begun by an instant of the world, RFC 3339. Absent reads every instant.
      * @type {string}
      * @memberof GraphApiGraphRead
      */
     readonly asOf?: string
+
+    /**
+     * AsKnown bounds the read to what this plane had heard by an instant, RFC 3339. Absent reads everything it holds.
+     * @type {string}
+     * @memberof GraphApiGraphRead
+     */
+    readonly asKnown?: string
 
     /**
      * Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
@@ -619,10 +1286,10 @@ export interface GraphApiGraphReadRequest {
 export interface GraphApiGraphResolveRequest {
     /**
      * 
-     * @type {GraphResolveIn}
+     * @type {GraphGraphResolveIn}
      * @memberof GraphApiGraphResolve
      */
-    readonly graphResolveIn: GraphResolveIn
+    readonly graphGraphResolveIn: GraphGraphResolveIn
 }
 
 /**
@@ -636,7 +1303,7 @@ export interface GraphApiGraphSearchRequest {
      * @type {string}
      * @memberof GraphApiGraphSearch
      */
-    readonly q?: string
+    readonly q: string
 
     /**
      * Relation narrows to one relation. Absent matches every relation.
@@ -646,11 +1313,18 @@ export interface GraphApiGraphSearchRequest {
     readonly relation?: string
 
     /**
-     * AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+     * AsOf bounds the search to statements begun by an instant of the world, RFC 3339. Absent searches every instant.
      * @type {string}
      * @memberof GraphApiGraphSearch
      */
     readonly asOf?: string
+
+    /**
+     * AsKnown bounds the search to what this plane had heard by an instant, RFC 3339. Absent searches everything it holds.
+     * @type {string}
+     * @memberof GraphApiGraphSearch
+     */
+    readonly asKnown?: string
 
     /**
      * Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
@@ -682,68 +1356,164 @@ export interface GraphApiPostGraphGraphqlRequest {
  */
 export class GraphApi extends BaseAPI {
     /**
-     * 
-     * @summary Assert what is true of an entity
+     * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
+     * @summary Answers a question from the whole graph and cites the assertions it rests on.
+     * @param {GraphApiGraphAnswerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphAnswer(requestParameters: GraphApiGraphAnswerRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphAnswer(requestParameters.graphGraphAnswerIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
+     * @summary Records a batch of assertions and counts what became of each.
      * @param {GraphApiGraphAssertRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi
      */
     public graphAssert(requestParameters: GraphApiGraphAssertRequest, options?: RawAxiosRequestConfig) {
-        return GraphApiFp(this.configuration).graphAssert(requestParameters.graphAssertIn, options).then((request) => request(this.axios, this.basePath));
+        return GraphApiFp(this.configuration).graphAssert(requestParameters.graphGraphAssertIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary Walk the edges from a seed set, bounded
+     * Partitions the edge graph into sets of entities more densely connected to each other than to the rest.  The graph is the one a walk reads, direction dropped, and the partition is deterministic: the same graph at the same point numbers the same communities.  Time: as_of and as_known place the graph that is partitioned; either absent is now.
+     * @summary Partitions the edge graph into sets of entities more densely connected to each other than to the rest.
+     * @param {GraphApiGraphCommunitiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphCommunities(requestParameters: GraphApiGraphCommunitiesRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphCommunities(requestParameters.graphGraphCommunitiesIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
+     * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
+     * @param {GraphApiGraphDeriveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphDerive(requestParameters: GraphApiGraphDeriveRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphDerive(requestParameters.graphGraphDeriveIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports what came into force, was superseded and was retracted between two points.  Each point is resolved as resolve would, never read off the rows in between. A version that loses the order is invisible here as it is there, and one that repeats what held is agreement, not change.  Time: a point is an as_of and an as_known instant, from and from_known against to and to_known. Hold the known instants equal for what happened in the world; hold the valid instants equal for what the record learned. to and to_known default to now, from to to and from_known to to_known, and the two points must differ.
+     * @summary Reports what came into force, was superseded and was retracted between two points.
+     * @param {GraphApiGraphDiffRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphDiff(requestParameters: GraphApiGraphDiffRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphDiff(requestParameters.graphGraphDiffIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes every assertion that names an entity and returns a receipt.  It requires an admin of the organization it acts in; platform sudo is not enough, so erasure is never cross-tenant. Nothing is removed while a matching assertion is under litigation hold (409) or where the erasure cannot be recorded (503). The audit trail keeps who, when, why, how many and the receipt\'s digest, never the entity, and holds it before the erasure commits.  Time: erasure is the one act outside the two times. The rows go at every as_of and as_known, so no past read recovers them.
+     * @summary Removes every assertion that names an entity and returns a receipt.
+     * @param {GraphApiGraphEraseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphErase(requestParameters: GraphApiGraphEraseRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphErase(requestParameters.graphGraphEraseIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads the relations a source states and returns them, recording nothing.  A line `relation:: value` states one; a value written `[[key]]` names an entity and makes the relation an edge. The subject is the nearest heading above the line, or the request\'s subject until a heading names one.  What filing would refuse is returned apart, in refused: a declaration from a caller who is not an admin of the organization, and what the declared schema refuses, checked against the store and against the types and declarations the document itself states that the caller may file.  Time: it records nothing and takes no as_of or as_known; the schema is checked as of now.
+     * @summary Reads the relations a source states and returns them, recording nothing.
+     * @param {GraphApiGraphExtractRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphExtract(requestParameters: GraphApiGraphExtractRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphExtract(requestParameters.graphGraphSourceIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads a source and records what it states, through the same admission as assert.  Each assertion\'s evidence is the section that stated it, `<source>#<section>`, so the same source at the same at records one set of rows however often it is delivered. What extract reports refused is not recorded; it is counted as refused, with its reason, in the order the document states it. A source stating no relation is refused whole.  Time: at is the valid time of every assertion recorded, which an as_of read is bounded by; each becomes knowable at the write, so a read with an earlier as_known does not see it.
+     * @summary Reads a source and records what it states, through the same admission as assert.
+     * @param {GraphApiGraphIngestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphIngest(requestParameters: GraphApiGraphIngestRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphIngest(requestParameters.graphGraphSourceIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Walks the in-force edges from a set of seeds and lists every entity reached, bounded.  Only the edge that holds at the point is a hop: a superseded or retracted edge is not, and neither is a property.  Time: as_of walks the graph as it stood at that instant and as_known as this plane knew it then; either absent is now.
+     * @summary Walks the in-force edges from a set of seeds and lists every entity reached, bounded.
      * @param {GraphApiGraphNeighborsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi
      */
     public graphNeighbors(requestParameters: GraphApiGraphNeighborsRequest, options?: RawAxiosRequestConfig) {
-        return GraphApiFp(this.configuration).graphNeighbors(requestParameters.graphNeighborsIn, options).then((request) => request(this.axios, this.basePath));
+        return GraphApiFp(this.configuration).graphNeighbors(requestParameters.graphGraphNeighborsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary Read the assertions this organization has recorded
+     * Finds the shortest chain of in-force edges from one entity to another.  It is the walk behind neighbors stopped at a goal: the same bound and the same rule for which edge is in force. A causal chain is this op with relations naming the relations that mean cause, such as caused_by and influenced.  Time: as_of and as_known place the graph the path is found in; either absent is now.
+     * @summary Finds the shortest chain of in-force edges from one entity to another.
+     * @param {GraphApiGraphPathRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphPath(requestParameters: GraphApiGraphPathRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphPath(requestParameters.graphGraphPathIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the assertions recorded, every version, oldest first.  It resolves nothing: a superseded claim and the one that superseded it both appear.  Time: as_of keeps statements begun by that instant of the world and as_known keeps what this plane had heard by then; either absent is no bound.
+     * @summary Lists the assertions recorded, every version, oldest first.
      * @param {GraphApiGraphReadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi
      */
     public graphRead(requestParameters: GraphApiGraphReadRequest = {}, options?: RawAxiosRequestConfig) {
-        return GraphApiFp(this.configuration).graphRead(requestParameters.entity, requestParameters.relation, requestParameters.value, requestParameters.asOf, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return GraphApiFp(this.configuration).graphRead(requestParameters.entity, requestParameters.relation, requestParameters.value, requestParameters.asOf, requestParameters.asKnown, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary What is in force about an entity as of an instant, and what disagreed
+     * Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.  The winner is the holding statement begun most recently, then the strongest under the rule vocabulary names. A relation that holds many values answers each; a disagreement is reported as contested, never resolved into silence.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard; either absent is now.
+     * @summary Answers what holds for one entity and relation at a point, winner first, with every weaker account that disagreed.
      * @param {GraphApiGraphResolveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi
      */
     public graphResolve(requestParameters: GraphApiGraphResolveRequest, options?: RawAxiosRequestConfig) {
-        return GraphApiFp(this.configuration).graphResolve(requestParameters.graphResolveIn, options).then((request) => request(this.axios, this.basePath));
+        return GraphApiFp(this.configuration).graphResolve(requestParameters.graphGraphResolveIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
-     * @summary Find assertions by their text rather than by an entity key
+     * Finds assertions by their words, where read finds them by their keys, best match first.  Every word must match, as a prefix. The answer is ordered by bm25, which weighs a word by how rare it is and a row by how much of it the words are, so a limit keeps the best matches rather than the oldest. It resolves nothing, so a match may be a claim later corrected; ask resolve about what it finds.  Time: as_of and as_known bound it exactly as they bound read; either absent is no bound.
+     * @summary Finds assertions by their words, where read finds them by their keys, best match first.
      * @param {GraphApiGraphSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi
      */
-    public graphSearch(requestParameters: GraphApiGraphSearchRequest = {}, options?: RawAxiosRequestConfig) {
-        return GraphApiFp(this.configuration).graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public graphSearch(requestParameters: GraphApiGraphSearchRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.asKnown, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary The relations in use, and the rule that resolves a conflict
+     * Lists the relations in use, the schema declared for them and the rule that settles a conflict.  Time: it takes no as_of or as_known; the schema is the one in force now.
+     * @summary Lists the relations in use, the schema declared for them and the rule that settles a conflict.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GraphApi

@@ -21,25 +21,25 @@
  */
 export interface DestinationField {
     /**
-     * a sample value of the right shape (\"G-XXXXXXX\"), when one helps
+     * 
      * @type {string}
      * @memberof DestinationField
      */
     'example'?: string;
     /**
-     * the camelCase key on both the connect body and the stored config
+     * 
      * @type {string}
      * @memberof DestinationField
      */
     'key'?: string;
     /**
-     * human label for the console card\'s input
+     * 
      * @type {string}
      * @memberof DestinationField
      */
     'label'?: string;
     /**
-     * when true, a connect that leaves it empty is refused 400
+     * 
      * @type {boolean}
      * @memberof DestinationField
      */

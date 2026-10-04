@@ -22,10 +22,10 @@
 export interface IamListResponse {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<any>}
      * @memberof IamListResponse
      */
-    'Resources'?: Array<object>;
+    'Resources'?: Array<any>;
     /**
      * 
      * @type {number}

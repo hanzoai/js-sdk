@@ -22,29 +22,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { DocumentPage } from '../models';
+import type { LegalDocumentPage } from '../models';
 // @ts-ignore
-import type { DocumentReply } from '../models';
+import type { LegalDocumentReply } from '../models';
 // @ts-ignore
-import type { FilingPage } from '../models';
+import type { LegalFilingPage } from '../models';
 // @ts-ignore
-import type { FilingReply } from '../models';
+import type { LegalFilingReply } from '../models';
 // @ts-ignore
-import type { FilingRequest } from '../models';
+import type { LegalFilingRequest } from '../models';
 // @ts-ignore
-import type { GenerateRequest } from '../models';
+import type { LegalGenerateRequest } from '../models';
 // @ts-ignore
-import type { LegalHealth } from '../models';
+import type { LegalLegalHealth } from '../models';
 // @ts-ignore
-import type { SignReply } from '../models';
+import type { LegalSignReply } from '../models';
 // @ts-ignore
-import type { SignRequest } from '../models';
+import type { LegalSignRequest } from '../models';
 // @ts-ignore
-import type { TemplateCatalog } from '../models';
+import type { LegalTemplateCatalog } from '../models';
 // @ts-ignore
-import type { TemplateOverride } from '../models';
+import type { LegalTemplateOverride } from '../models';
 // @ts-ignore
-import type { TemplateReply } from '../models';
+import type { LegalTemplateReply } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LegalApi - axios parameter creator
  * @export
@@ -276,13 +278,13 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Renders a document from a template and the caller\'s own merge data, seals it in the org\'s store, and returns it with its rendered body.  The render is PURE and deterministic — no clock, no I/O — so the same template version and the same data always produce identical bytes, which is what makes a generated contract reproducible. It fails CLOSED on a missing merge field: there is no blank-filled contract, only a 400 naming the fields that were absent. When the template is counsel-review the rendered body opens with the counsel notice, which no caller can suppress.  The document is a DRAFT. Hanzo Legal manages documents; it does not give legal advice and does not determine that a document is valid or sufficient.
          * @summary Renders a document from a template and the caller\'s own merge data, seals it in the org\'s store, and returns it with its rendered body.
-         * @param {GenerateRequest} generateRequest 
+         * @param {LegalGenerateRequest} legalGenerateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalDocuments: async (generateRequest: GenerateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'generateRequest' is not null or undefined
-            assertParamExists('postLegalDocuments', 'generateRequest', generateRequest)
+        postLegalDocuments: async (legalGenerateRequest: LegalGenerateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'legalGenerateRequest' is not null or undefined
+            assertParamExists('postLegalDocuments', 'legalGenerateRequest', legalGenerateRequest)
             const localVarPath = `/v1/legal/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -306,7 +308,7 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(generateRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(legalGenerateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -317,15 +319,15 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
          * Opens an e-signature request over one document and moves it to out_for_signature, returning the provider\'s reference for the request.  The provider is whatever this deployment has wired. The honest default is \"manual\": the request is recorded and the org fulfils it out of band — nothing here fabricates a signature, and the stub never reports itself complete.
          * @summary Opens an e-signature request over one document and moves it to out_for_signature, returning the provider\'s reference for the request.
          * @param {string} id ID is the document to send for signature, from the path.
-         * @param {SignRequest} signRequest 
+         * @param {LegalSignRequest} legalSignRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalDocumentsByIdSign: async (id: string, signRequest: SignRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLegalDocumentsByIdSign: async (id: string, legalSignRequest: LegalSignRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('postLegalDocumentsByIdSign', 'id', id)
-            // verify required parameter 'signRequest' is not null or undefined
-            assertParamExists('postLegalDocumentsByIdSign', 'signRequest', signRequest)
+            // verify required parameter 'legalSignRequest' is not null or undefined
+            assertParamExists('postLegalDocumentsByIdSign', 'legalSignRequest', legalSignRequest)
             const localVarPath = `/v1/legal/documents/{id}/sign`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -350,7 +352,7 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(signRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(legalSignRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -358,7 +360,7 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (401 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
          * @summary Record that a generated document\'s signature request completed
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -398,13 +400,13 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Records a filing of one or more of the org\'s documents with a state or agency, and returns the tracking record.  It is a TRACKING record, not an autonomous filing. With no filing partner wired the honest status is \"manual\" and the note says so: the documents were generated for signature, and the org files them through its registered agent. Nothing here invents a filing id it does not have.  Every document id must belong to the caller\'s org; one that does not is a 404 naming it, so a filing can never reach across tenants.
          * @summary Records a filing of one or more of the org\'s documents with a state or agency, and returns the tracking record.
-         * @param {FilingRequest} filingRequest 
+         * @param {LegalFilingRequest} legalFilingRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalFilings: async (filingRequest: FilingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'filingRequest' is not null or undefined
-            assertParamExists('postLegalFilings', 'filingRequest', filingRequest)
+        postLegalFilings: async (legalFilingRequest: LegalFilingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'legalFilingRequest' is not null or undefined
+            assertParamExists('postLegalFilings', 'legalFilingRequest', legalFilingRequest)
             const localVarPath = `/v1/legal/filings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -428,7 +430,7 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(filingRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(legalFilingRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -439,15 +441,15 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
          * Saves the org\'s own version of a template — a custom NDA, a house MSA — and returns it with its new version number. It takes effect for that org only; other orgs keep the built-in.  Two boundaries cannot be crossed here. Overriding a built-in INHERITS its category and its counsel-review posture, which can be raised but never dropped; and a formation or equity template is counsel-review whatever the caller sends, so no org can generate a securities-class document without the notice.  The body is validated on save, not at generation: a template that references an UNDECLARED merge field is refused with 400 rather than stored and rendered blank into a contract months later.
          * @summary Saves the org\'s own version of a template — a custom NDA, a house MSA — and returns it with its new version number.
          * @param {string} id ID is the template to override, from the path. Overriding a built-in id inherits that built-in\&#39;s category, title and counsel-review posture.
-         * @param {TemplateOverride} templateOverride 
+         * @param {LegalTemplateOverride} legalTemplateOverride 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLegalTemplatesById: async (id: string, templateOverride: TemplateOverride, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putLegalTemplatesById: async (id: string, legalTemplateOverride: LegalTemplateOverride, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putLegalTemplatesById', 'id', id)
-            // verify required parameter 'templateOverride' is not null or undefined
-            assertParamExists('putLegalTemplatesById', 'templateOverride', templateOverride)
+            // verify required parameter 'legalTemplateOverride' is not null or undefined
+            assertParamExists('putLegalTemplatesById', 'legalTemplateOverride', legalTemplateOverride)
             const localVarPath = `/v1/legal/templates/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -472,7 +474,7 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(templateOverride, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(legalTemplateOverride, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -496,7 +498,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalDocuments(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentPage>> {
+        async getLegalDocuments(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalDocumentPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalDocuments(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalDocuments']?.[localVarOperationServerIndex]?.url;
@@ -509,7 +511,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalDocumentsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentReply>> {
+        async getLegalDocumentsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalDocumentReply>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalDocumentsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalDocumentsById']?.[localVarOperationServerIndex]?.url;
@@ -522,7 +524,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalFilings(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingPage>> {
+        async getLegalFilings(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalFilingPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalFilings(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalFilings']?.[localVarOperationServerIndex]?.url;
@@ -534,7 +536,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalHealth>> {
+        async getLegalHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalLegalHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalHealth']?.[localVarOperationServerIndex]?.url;
@@ -546,7 +548,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateCatalog>> {
+        async getLegalTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalTemplateCatalog>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalTemplates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalTemplates']?.[localVarOperationServerIndex]?.url;
@@ -559,7 +561,7 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLegalTemplatesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateReply>> {
+        async getLegalTemplatesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalTemplateReply>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLegalTemplatesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.getLegalTemplatesById']?.[localVarOperationServerIndex]?.url;
@@ -568,12 +570,12 @@ export const LegalApiFp = function(configuration?: Configuration) {
         /**
          * Renders a document from a template and the caller\'s own merge data, seals it in the org\'s store, and returns it with its rendered body.  The render is PURE and deterministic — no clock, no I/O — so the same template version and the same data always produce identical bytes, which is what makes a generated contract reproducible. It fails CLOSED on a missing merge field: there is no blank-filled contract, only a 400 naming the fields that were absent. When the template is counsel-review the rendered body opens with the counsel notice, which no caller can suppress.  The document is a DRAFT. Hanzo Legal manages documents; it does not give legal advice and does not determine that a document is valid or sufficient.
          * @summary Renders a document from a template and the caller\'s own merge data, seals it in the org\'s store, and returns it with its rendered body.
-         * @param {GenerateRequest} generateRequest 
+         * @param {LegalGenerateRequest} legalGenerateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLegalDocuments(generateRequest: GenerateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentReply>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalDocuments(generateRequest, options);
+        async postLegalDocuments(legalGenerateRequest: LegalGenerateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalDocumentReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalDocuments(legalGenerateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.postLegalDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -582,18 +584,18 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * Opens an e-signature request over one document and moves it to out_for_signature, returning the provider\'s reference for the request.  The provider is whatever this deployment has wired. The honest default is \"manual\": the request is recorded and the org fulfils it out of band — nothing here fabricates a signature, and the stub never reports itself complete.
          * @summary Opens an e-signature request over one document and moves it to out_for_signature, returning the provider\'s reference for the request.
          * @param {string} id ID is the document to send for signature, from the path.
-         * @param {SignRequest} signRequest 
+         * @param {LegalSignRequest} legalSignRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLegalDocumentsByIdSign(id: string, signRequest: SignRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignReply>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalDocumentsByIdSign(id, signRequest, options);
+        async postLegalDocumentsByIdSign(id: string, legalSignRequest: LegalSignRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalSignReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalDocumentsByIdSign(id, legalSignRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.postLegalDocumentsByIdSign']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (401 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
          * @summary Record that a generated document\'s signature request completed
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -608,12 +610,12 @@ export const LegalApiFp = function(configuration?: Configuration) {
         /**
          * Records a filing of one or more of the org\'s documents with a state or agency, and returns the tracking record.  It is a TRACKING record, not an autonomous filing. With no filing partner wired the honest status is \"manual\" and the note says so: the documents were generated for signature, and the org files them through its registered agent. Nothing here invents a filing id it does not have.  Every document id must belong to the caller\'s org; one that does not is a 404 naming it, so a filing can never reach across tenants.
          * @summary Records a filing of one or more of the org\'s documents with a state or agency, and returns the tracking record.
-         * @param {FilingRequest} filingRequest 
+         * @param {LegalFilingRequest} legalFilingRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLegalFilings(filingRequest: FilingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingReply>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalFilings(filingRequest, options);
+        async postLegalFilings(legalFilingRequest: LegalFilingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalFilingReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLegalFilings(legalFilingRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.postLegalFilings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -622,12 +624,12 @@ export const LegalApiFp = function(configuration?: Configuration) {
          * Saves the org\'s own version of a template — a custom NDA, a house MSA — and returns it with its new version number. It takes effect for that org only; other orgs keep the built-in.  Two boundaries cannot be crossed here. Overriding a built-in INHERITS its category and its counsel-review posture, which can be raised but never dropped; and a formation or equity template is counsel-review whatever the caller sends, so no org can generate a securities-class document without the notice.  The body is validated on save, not at generation: a template that references an UNDECLARED merge field is refused with 400 rather than stored and rendered blank into a contract months later.
          * @summary Saves the org\'s own version of a template — a custom NDA, a house MSA — and returns it with its new version number.
          * @param {string} id ID is the template to override, from the path. Overriding a built-in id inherits that built-in\&#39;s category, title and counsel-review posture.
-         * @param {TemplateOverride} templateOverride 
+         * @param {LegalTemplateOverride} legalTemplateOverride 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putLegalTemplatesById(id: string, templateOverride: TemplateOverride, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateReply>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putLegalTemplatesById(id, templateOverride, options);
+        async putLegalTemplatesById(id: string, legalTemplateOverride: LegalTemplateOverride, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LegalTemplateReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putLegalTemplatesById(id, legalTemplateOverride, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LegalApi.putLegalTemplatesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -649,7 +651,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalDocuments(requestParameters: LegalApiGetLegalDocumentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DocumentPage> {
+        getLegalDocuments(requestParameters: LegalApiGetLegalDocumentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LegalDocumentPage> {
             return localVarFp.getLegalDocuments(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -659,7 +661,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalDocumentsById(requestParameters: LegalApiGetLegalDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocumentReply> {
+        getLegalDocumentsById(requestParameters: LegalApiGetLegalDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalDocumentReply> {
             return localVarFp.getLegalDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -669,7 +671,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalFilings(requestParameters: LegalApiGetLegalFilingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FilingPage> {
+        getLegalFilings(requestParameters: LegalApiGetLegalFilingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LegalFilingPage> {
             return localVarFp.getLegalFilings(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -678,7 +680,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalHealth(options?: RawAxiosRequestConfig): AxiosPromise<LegalHealth> {
+        getLegalHealth(options?: RawAxiosRequestConfig): AxiosPromise<LegalLegalHealth> {
             return localVarFp.getLegalHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -687,7 +689,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalTemplates(options?: RawAxiosRequestConfig): AxiosPromise<TemplateCatalog> {
+        getLegalTemplates(options?: RawAxiosRequestConfig): AxiosPromise<LegalTemplateCatalog> {
             return localVarFp.getLegalTemplates(options).then((request) => request(axios, basePath));
         },
         /**
@@ -697,7 +699,7 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLegalTemplatesById(requestParameters: LegalApiGetLegalTemplatesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TemplateReply> {
+        getLegalTemplatesById(requestParameters: LegalApiGetLegalTemplatesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalTemplateReply> {
             return localVarFp.getLegalTemplatesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -707,8 +709,8 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalDocuments(requestParameters: LegalApiPostLegalDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocumentReply> {
-            return localVarFp.postLegalDocuments(requestParameters.generateRequest, options).then((request) => request(axios, basePath));
+        postLegalDocuments(requestParameters: LegalApiPostLegalDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalDocumentReply> {
+            return localVarFp.postLegalDocuments(requestParameters.legalGenerateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens an e-signature request over one document and moves it to out_for_signature, returning the provider\'s reference for the request.  The provider is whatever this deployment has wired. The honest default is \"manual\": the request is recorded and the org fulfils it out of band — nothing here fabricates a signature, and the stub never reports itself complete.
@@ -717,11 +719,11 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalDocumentsByIdSign(requestParameters: LegalApiPostLegalDocumentsByIdSignRequest, options?: RawAxiosRequestConfig): AxiosPromise<SignReply> {
-            return localVarFp.postLegalDocumentsByIdSign(requestParameters.id, requestParameters.signRequest, options).then((request) => request(axios, basePath));
+        postLegalDocumentsByIdSign(requestParameters: LegalApiPostLegalDocumentsByIdSignRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalSignReply> {
+            return localVarFp.postLegalDocumentsByIdSign(requestParameters.id, requestParameters.legalSignRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (401 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
          * @summary Record that a generated document\'s signature request completed
          * @param {LegalApiPostLegalDocumentsByIdSignCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -737,8 +739,8 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLegalFilings(requestParameters: LegalApiPostLegalFilingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FilingReply> {
-            return localVarFp.postLegalFilings(requestParameters.filingRequest, options).then((request) => request(axios, basePath));
+        postLegalFilings(requestParameters: LegalApiPostLegalFilingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalFilingReply> {
+            return localVarFp.postLegalFilings(requestParameters.legalFilingRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Saves the org\'s own version of a template — a custom NDA, a house MSA — and returns it with its new version number. It takes effect for that org only; other orgs keep the built-in.  Two boundaries cannot be crossed here. Overriding a built-in INHERITS its category and its counsel-review posture, which can be raised but never dropped; and a formation or equity template is counsel-review whatever the caller sends, so no org can generate a securities-class document without the notice.  The body is validated on save, not at generation: a template that references an UNDECLARED merge field is refused with 400 rather than stored and rendered blank into a contract months later.
@@ -747,8 +749,8 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLegalTemplatesById(requestParameters: LegalApiPutLegalTemplatesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TemplateReply> {
-            return localVarFp.putLegalTemplatesById(requestParameters.id, requestParameters.templateOverride, options).then((request) => request(axios, basePath));
+        putLegalTemplatesById(requestParameters: LegalApiPutLegalTemplatesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LegalTemplateReply> {
+            return localVarFp.putLegalTemplatesById(requestParameters.id, requestParameters.legalTemplateOverride, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -817,10 +819,10 @@ export interface LegalApiGetLegalTemplatesByIdRequest {
 export interface LegalApiPostLegalDocumentsRequest {
     /**
      * 
-     * @type {GenerateRequest}
+     * @type {LegalGenerateRequest}
      * @memberof LegalApiPostLegalDocuments
      */
-    readonly generateRequest: GenerateRequest
+    readonly legalGenerateRequest: LegalGenerateRequest
 }
 
 /**
@@ -838,10 +840,10 @@ export interface LegalApiPostLegalDocumentsByIdSignRequest {
 
     /**
      * 
-     * @type {SignRequest}
+     * @type {LegalSignRequest}
      * @memberof LegalApiPostLegalDocumentsByIdSign
      */
-    readonly signRequest: SignRequest
+    readonly legalSignRequest: LegalSignRequest
 }
 
 /**
@@ -866,10 +868,10 @@ export interface LegalApiPostLegalDocumentsByIdSignCompleteRequest {
 export interface LegalApiPostLegalFilingsRequest {
     /**
      * 
-     * @type {FilingRequest}
+     * @type {LegalFilingRequest}
      * @memberof LegalApiPostLegalFilings
      */
-    readonly filingRequest: FilingRequest
+    readonly legalFilingRequest: LegalFilingRequest
 }
 
 /**
@@ -887,10 +889,10 @@ export interface LegalApiPutLegalTemplatesByIdRequest {
 
     /**
      * 
-     * @type {TemplateOverride}
+     * @type {LegalTemplateOverride}
      * @memberof LegalApiPutLegalTemplatesById
      */
-    readonly templateOverride: TemplateOverride
+    readonly legalTemplateOverride: LegalTemplateOverride
 }
 
 /**
@@ -979,7 +981,7 @@ export class LegalApi extends BaseAPI {
      * @memberof LegalApi
      */
     public postLegalDocuments(requestParameters: LegalApiPostLegalDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return LegalApiFp(this.configuration).postLegalDocuments(requestParameters.generateRequest, options).then((request) => request(this.axios, this.basePath));
+        return LegalApiFp(this.configuration).postLegalDocuments(requestParameters.legalGenerateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -991,11 +993,11 @@ export class LegalApi extends BaseAPI {
      * @memberof LegalApi
      */
     public postLegalDocumentsByIdSign(requestParameters: LegalApiPostLegalDocumentsByIdSignRequest, options?: RawAxiosRequestConfig) {
-        return LegalApiFp(this.configuration).postLegalDocumentsByIdSign(requestParameters.id, requestParameters.signRequest, options).then((request) => request(this.axios, this.basePath));
+        return LegalApiFp(this.configuration).postLegalDocumentsByIdSign(requestParameters.id, requestParameters.legalSignRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+     * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (401 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
      * @summary Record that a generated document\'s signature request completed
      * @param {LegalApiPostLegalDocumentsByIdSignCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1015,7 +1017,7 @@ export class LegalApi extends BaseAPI {
      * @memberof LegalApi
      */
     public postLegalFilings(requestParameters: LegalApiPostLegalFilingsRequest, options?: RawAxiosRequestConfig) {
-        return LegalApiFp(this.configuration).postLegalFilings(requestParameters.filingRequest, options).then((request) => request(this.axios, this.basePath));
+        return LegalApiFp(this.configuration).postLegalFilings(requestParameters.legalFilingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1027,7 +1029,7 @@ export class LegalApi extends BaseAPI {
      * @memberof LegalApi
      */
     public putLegalTemplatesById(requestParameters: LegalApiPutLegalTemplatesByIdRequest, options?: RawAxiosRequestConfig) {
-        return LegalApiFp(this.configuration).putLegalTemplatesById(requestParameters.id, requestParameters.templateOverride, options).then((request) => request(this.axios, this.basePath));
+        return LegalApiFp(this.configuration).putLegalTemplatesById(requestParameters.id, requestParameters.legalTemplateOverride, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

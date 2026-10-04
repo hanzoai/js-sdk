@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yCompositeQuery } from './o11y-composite-query';
+import type { O11yV3CompositeQuery } from './o11y-v3-composite-query';
 
 /**
  * 
@@ -31,10 +31,10 @@ export interface O11ySavedView {
     'category'?: string;
     /**
      * 
-     * @type {O11yCompositeQuery}
+     * @type {O11yV3CompositeQuery}
      * @memberof O11ySavedView
      */
-    'compositeQuery'?: O11yCompositeQuery;
+    'compositeQuery'?: O11yV3CompositeQuery;
     /**
      * 
      * @type {string}

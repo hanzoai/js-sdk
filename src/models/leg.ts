@@ -21,19 +21,19 @@
  */
 export interface Leg {
     /**
-     * Account is the chart-of-accounts number this side posts to, e.g. \"5300\".
+     * 
      * @type {string}
      * @memberof Leg
      */
     'account'?: string;
     /**
-     * Credit is the leg\'s credit in exact cents. Set this or Debit, not both.
+     * 
      * @type {number}
      * @memberof Leg
      */
     'credit'?: number;
     /**
-     * Debit is the leg\'s debit in exact cents. Set this or Credit, not both.
+     * 
      * @type {number}
      * @memberof Leg
      */

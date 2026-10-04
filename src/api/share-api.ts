@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { EnableResp } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SharesOut } from '../models';
+import type { ShareEnableResp } from '../models';
+// @ts-ignore
+import type { ShareSharesOut } from '../models';
 /**
  * ShareApi - axios parameter creator
  * @export
@@ -66,8 +68,8 @@ export const ShareApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -115,19 +117,19 @@ export const ShareApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getShare(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharesOut>> {
+        async getShare(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShareSharesOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getShare(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ShareApi.getShare']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postShareEnable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnableResp>> {
+        async postShareEnable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShareEnableResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postShareEnable(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ShareApi.postShareEnable']?.[localVarOperationServerIndex]?.url;
@@ -149,16 +151,16 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getShare(options?: RawAxiosRequestConfig): AxiosPromise<SharesOut> {
+        getShare(options?: RawAxiosRequestConfig): AxiosPromise<ShareSharesOut> {
             return localVarFp.getShare(options).then((request) => request(axios, basePath));
         },
         /**
-         * Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postShareEnable(options?: RawAxiosRequestConfig): AxiosPromise<EnableResp> {
+        postShareEnable(options?: RawAxiosRequestConfig): AxiosPromise<ShareEnableResp> {
             return localVarFp.postShareEnable(options).then((request) => request(axios, basePath));
         },
     };
@@ -183,8 +185,8 @@ export class ShareApi extends BaseAPI {
     }
 
     /**
-     * Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-     * @summary Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+     * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+     * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ShareApi

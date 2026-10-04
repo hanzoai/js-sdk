@@ -36,10 +36,10 @@ export interface O11yO11yQueueFilterRule {
      */
     'op'?: string;
     /**
-     * Value is the operand; its JSON type follows the attribute\'s dataType.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yQueueFilterRule
      */
-    'value'?: object;
+    'value'?: any;
 }
 

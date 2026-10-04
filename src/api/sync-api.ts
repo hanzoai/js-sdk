@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { PatchSyncIn } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { SyncList } from '../models';
+import type { SyncPatchSyncIn } from '../models';
 // @ts-ignore
-import type { SyncQueued } from '../models';
+import type { SyncSyncList } from '../models';
 // @ts-ignore
-import type { SyncReq } from '../models';
+import type { SyncSyncQueued } from '../models';
 // @ts-ignore
-import type { SyncView } from '../models';
+import type { SyncSyncReq } from '../models';
+// @ts-ignore
+import type { SyncSyncView } from '../models';
 /**
  * SyncApi - axios parameter creator
  * @export
@@ -38,8 +40,8 @@ import type { SyncView } from '../models';
 export const SyncApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
-         * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
+         * Removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
+         * @summary Removes one sync and tears down the outbound mirror it derived, answering 204.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -76,8 +78,8 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,8 +112,8 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
-         * @summary Get returns one sync by id.
+         * Returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
+         * @summary Returns one sync by id.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -148,18 +150,18 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
-         * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
+         * Updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
+         * @summary Updates one sync\'s mutable policy — direction, trigger and actor — in place.
          * @param {string} id ID is the sync to update, from the path.
-         * @param {PatchSyncIn} patchSyncIn 
+         * @param {SyncPatchSyncIn} syncPatchSyncIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchSyncById: async (id: string, patchSyncIn: PatchSyncIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchSyncById: async (id: string, syncPatchSyncIn: SyncPatchSyncIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('patchSyncById', 'id', id)
-            // verify required parameter 'patchSyncIn' is not null or undefined
-            assertParamExists('patchSyncById', 'patchSyncIn', patchSyncIn)
+            // verify required parameter 'syncPatchSyncIn' is not null or undefined
+            assertParamExists('patchSyncById', 'syncPatchSyncIn', syncPatchSyncIn)
             const localVarPath = `/v1/sync/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,7 +186,7 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(patchSyncIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(syncPatchSyncIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -192,15 +194,15 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
-         * @summary Create declares a sync between two endpoints and returns it.
-         * @param {SyncReq} syncReq 
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * @summary Declares a sync between two endpoints and returns it.
+         * @param {SyncSyncReq} syncSyncReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSync: async (syncReq: SyncReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'syncReq' is not null or undefined
-            assertParamExists('postSync', 'syncReq', syncReq)
+        postSync: async (syncSyncReq: SyncSyncReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'syncSyncReq' is not null or undefined
+            assertParamExists('postSync', 'syncSyncReq', syncSyncReq)
             const localVarPath = `/v1/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -224,7 +226,7 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(syncReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(syncSyncReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -232,8 +234,8 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
-         * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
+         * Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
+         * @summary Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -280,8 +282,8 @@ export const SyncApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SyncApiAxiosParamCreator(configuration)
     return {
         /**
-         * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
-         * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
+         * Removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
+         * @summary Removes one sync and tears down the outbound mirror it derived, answering 204.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -293,65 +295,65 @@ export const SyncApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncList>> {
+        async getSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncSyncList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SyncApi.getSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
-         * @summary Get returns one sync by id.
+         * Returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
+         * @summary Returns one sync by id.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSyncById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
+        async getSyncById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncSyncView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSyncById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SyncApi.getSyncById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
-         * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
+         * Updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
+         * @summary Updates one sync\'s mutable policy — direction, trigger and actor — in place.
          * @param {string} id ID is the sync to update, from the path.
-         * @param {PatchSyncIn} patchSyncIn 
+         * @param {SyncPatchSyncIn} syncPatchSyncIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchSyncById(id: string, patchSyncIn: PatchSyncIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchSyncById(id, patchSyncIn, options);
+        async patchSyncById(id: string, syncPatchSyncIn: SyncPatchSyncIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncSyncView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchSyncById(id, syncPatchSyncIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SyncApi.patchSyncById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
-         * @summary Create declares a sync between two endpoints and returns it.
-         * @param {SyncReq} syncReq 
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * @summary Declares a sync between two endpoints and returns it.
+         * @param {SyncSyncReq} syncSyncReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSync(syncReq: SyncReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSync(syncReq, options);
+        async postSync(syncSyncReq: SyncSyncReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncSyncView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSync(syncSyncReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SyncApi.postSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
-         * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
+         * Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
+         * @summary Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
          * @param {string} id ID is the sync to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSyncByIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncQueued>> {
+        async postSyncByIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncSyncQueued>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSyncByIdRun(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SyncApi.postSyncByIdRun']?.[localVarOperationServerIndex]?.url;
@@ -368,8 +370,8 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = SyncApiFp(configuration)
     return {
         /**
-         * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
-         * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
+         * Removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
+         * @summary Removes one sync and tears down the outbound mirror it derived, answering 204.
          * @param {SyncApiDeleteSyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -378,52 +380,52 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteSyncById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-         * @summary List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+         * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+         * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSync(options?: RawAxiosRequestConfig): AxiosPromise<SyncList> {
+        getSync(options?: RawAxiosRequestConfig): AxiosPromise<SyncSyncList> {
             return localVarFp.getSync(options).then((request) => request(axios, basePath));
         },
         /**
-         * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
-         * @summary Get returns one sync by id.
+         * Returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
+         * @summary Returns one sync by id.
          * @param {SyncApiGetSyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSyncById(requestParameters: SyncApiGetSyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
+        getSyncById(requestParameters: SyncApiGetSyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncSyncView> {
             return localVarFp.getSyncById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
-         * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
+         * Updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
+         * @summary Updates one sync\'s mutable policy — direction, trigger and actor — in place.
          * @param {SyncApiPatchSyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchSyncById(requestParameters: SyncApiPatchSyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
-            return localVarFp.patchSyncById(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(axios, basePath));
+        patchSyncById(requestParameters: SyncApiPatchSyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncSyncView> {
+            return localVarFp.patchSyncById(requestParameters.id, requestParameters.syncPatchSyncIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
-         * @summary Create declares a sync between two endpoints and returns it.
+         * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+         * @summary Declares a sync between two endpoints and returns it.
          * @param {SyncApiPostSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSync(requestParameters: SyncApiPostSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
-            return localVarFp.postSync(requestParameters.syncReq, options).then((request) => request(axios, basePath));
+        postSync(requestParameters: SyncApiPostSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncSyncView> {
+            return localVarFp.postSync(requestParameters.syncSyncReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
-         * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
+         * Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
+         * @summary Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
          * @param {SyncApiPostSyncByIdRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSyncByIdRun(requestParameters: SyncApiPostSyncByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncQueued> {
+        postSyncByIdRun(requestParameters: SyncApiPostSyncByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncSyncQueued> {
             return localVarFp.postSyncByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
@@ -472,10 +474,10 @@ export interface SyncApiPatchSyncByIdRequest {
 
     /**
      * 
-     * @type {PatchSyncIn}
+     * @type {SyncPatchSyncIn}
      * @memberof SyncApiPatchSyncById
      */
-    readonly patchSyncIn: PatchSyncIn
+    readonly syncPatchSyncIn: SyncPatchSyncIn
 }
 
 /**
@@ -486,10 +488,10 @@ export interface SyncApiPatchSyncByIdRequest {
 export interface SyncApiPostSyncRequest {
     /**
      * 
-     * @type {SyncReq}
+     * @type {SyncSyncReq}
      * @memberof SyncApiPostSync
      */
-    readonly syncReq: SyncReq
+    readonly syncSyncReq: SyncSyncReq
 }
 
 /**
@@ -514,8 +516,8 @@ export interface SyncApiPostSyncByIdRunRequest {
  */
 export class SyncApi extends BaseAPI {
     /**
-     * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
-     * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
+     * Removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
+     * @summary Removes one sync and tears down the outbound mirror it derived, answering 204.
      * @param {SyncApiDeleteSyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -526,8 +528,8 @@ export class SyncApi extends BaseAPI {
     }
 
     /**
-     * List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
-     * @summary List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled.
+     * Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
+     * @summary Returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, the time it last reconciled, and for a repo link its native copy on the forge — the address to clone it from, its default branch and whether it is in step.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
@@ -537,8 +539,8 @@ export class SyncApi extends BaseAPI {
     }
 
     /**
-     * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
-     * @summary Get returns one sync by id.
+     * Returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
+     * @summary Returns one sync by id.
      * @param {SyncApiGetSyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -549,32 +551,32 @@ export class SyncApi extends BaseAPI {
     }
 
     /**
-     * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
-     * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
+     * Updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
+     * @summary Updates one sync\'s mutable policy — direction, trigger and actor — in place.
      * @param {SyncApiPatchSyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
     public patchSyncById(requestParameters: SyncApiPatchSyncByIdRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).patchSyncById(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(this.axios, this.basePath));
+        return SyncApiFp(this.configuration).patchSyncById(requestParameters.id, requestParameters.syncPatchSyncIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
-     * @summary Create declares a sync between two endpoints and returns it.
+     * Declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. A source naming only a GitHub account (https://github.com/<account>) links the whole account: every repository the org\'s GitHub installation grants on it gets a repo link of its own, with this link\'s direction and trigger, and so does every repository created there later. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
+     * @summary Declares a sync between two endpoints and returns it.
      * @param {SyncApiPostSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
     public postSync(requestParameters: SyncApiPostSyncRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).postSync(requestParameters.syncReq, options).then((request) => request(this.axios, this.basePath));
+        return SyncApiFp(this.configuration).postSync(requestParameters.syncSyncReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
-     * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
+     * Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
+     * @summary Reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
      * @param {SyncApiPostSyncByIdRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

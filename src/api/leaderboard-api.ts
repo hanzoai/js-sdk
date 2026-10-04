@@ -22,19 +22,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ActivityView } from '../models';
+import type { LeaderboardActivityView } from '../models';
 // @ts-ignore
-import type { LeaderboardView } from '../models';
+import type { LeaderboardLeaderboardView } from '../models';
 // @ts-ignore
-import type { OptinView } from '../models';
+import type { LeaderboardOptinView } from '../models';
 // @ts-ignore
-import type { OrgOptinReq } from '../models';
+import type { LeaderboardOrgOptinReq } from '../models';
 // @ts-ignore
-import type { OrgOptinView } from '../models';
+import type { LeaderboardOrgOptinView } from '../models';
 // @ts-ignore
-import type { UserOptinReq } from '../models';
+import type { LeaderboardUserOptinReq } from '../models';
 // @ts-ignore
-import type { UserOptinView } from '../models';
+import type { LeaderboardUserOptinView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LeaderboardApi - axios parameter creator
  * @export
@@ -42,8 +44,8 @@ import type { UserOptinView } from '../models';
 export const LeaderboardApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
+         * Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
+         * @summary Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
          * @param {string} [scope] Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
          * @param {string} [metric] Metric is the value ranked: tokens (default), requests, or cost.
          * @param {string} [period] Period is the window ranked: day, week, month (default) or all.
@@ -96,8 +98,8 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
+         * Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
+         * @summary Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
          * @param {string} [subject] Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
          * @param {string} [id] ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
          * @param {string} [from] From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
@@ -186,13 +188,13 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
          * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UserOptinReq} userOptinReq 
+         * @param {LeaderboardUserOptinReq} leaderboardUserOptinReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLeaderboardOptin: async (userOptinReq: UserOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userOptinReq' is not null or undefined
-            assertParamExists('putLeaderboardOptin', 'userOptinReq', userOptinReq)
+        putLeaderboardOptin: async (leaderboardUserOptinReq: LeaderboardUserOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'leaderboardUserOptinReq' is not null or undefined
+            assertParamExists('putLeaderboardOptin', 'leaderboardUserOptinReq', leaderboardUserOptinReq)
             const localVarPath = `/v1/leaderboard/optin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -216,7 +218,7 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userOptinReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(leaderboardUserOptinReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -226,13 +228,13 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
          * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {OrgOptinReq} orgOptinReq 
+         * @param {LeaderboardOrgOptinReq} leaderboardOrgOptinReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLeaderboardOptinOrg: async (orgOptinReq: OrgOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgOptinReq' is not null or undefined
-            assertParamExists('putLeaderboardOptinOrg', 'orgOptinReq', orgOptinReq)
+        putLeaderboardOptinOrg: async (leaderboardOrgOptinReq: LeaderboardOrgOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'leaderboardOrgOptinReq' is not null or undefined
+            assertParamExists('putLeaderboardOptinOrg', 'leaderboardOrgOptinReq', leaderboardOrgOptinReq)
             const localVarPath = `/v1/leaderboard/optin/org`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -256,7 +258,7 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(orgOptinReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(leaderboardOrgOptinReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -274,8 +276,8 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LeaderboardApiAxiosParamCreator(configuration)
     return {
         /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
+         * Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
+         * @summary Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
          * @param {string} [scope] Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
          * @param {string} [metric] Metric is the value ranked: tokens (default), requests, or cost.
          * @param {string} [period] Period is the window ranked: day, week, month (default) or all.
@@ -283,15 +285,15 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLeaderboard(scope?: string, metric?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardView>> {
+        async getLeaderboard(scope?: string, metric?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardLeaderboardView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboard(scope, metric, period, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
+         * Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
+         * @summary Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
          * @param {string} [subject] Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
          * @param {string} [id] ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
          * @param {string} [from] From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
@@ -299,7 +301,7 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLeaderboardActivity(subject?: string, id?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityView>> {
+        async getLeaderboardActivity(subject?: string, id?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardActivityView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardActivity(subject, id, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardActivity']?.[localVarOperationServerIndex]?.url;
@@ -311,7 +313,7 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLeaderboardOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OptinView>> {
+        async getLeaderboardOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardOptinView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardOptin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
@@ -320,12 +322,12 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
         /**
          * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
          * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UserOptinReq} userOptinReq 
+         * @param {LeaderboardUserOptinReq} leaderboardUserOptinReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putLeaderboardOptin(userOptinReq: UserOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putLeaderboardOptin(userOptinReq, options);
+        async putLeaderboardOptin(leaderboardUserOptinReq: LeaderboardUserOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardUserOptinView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putLeaderboardOptin(leaderboardUserOptinReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.putLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -333,12 +335,12 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
         /**
          * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
          * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {OrgOptinReq} orgOptinReq 
+         * @param {LeaderboardOrgOptinReq} leaderboardOrgOptinReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putLeaderboardOptinOrg(orgOptinReq: OrgOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrgOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putLeaderboardOptinOrg(orgOptinReq, options);
+        async putLeaderboardOptinOrg(leaderboardOrgOptinReq: LeaderboardOrgOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardOrgOptinView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putLeaderboardOptinOrg(leaderboardOrgOptinReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.putLeaderboardOptinOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -354,23 +356,23 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
     const localVarFp = LeaderboardApiFp(configuration)
     return {
         /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
+         * Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
+         * @summary Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
          * @param {LeaderboardApiGetLeaderboardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLeaderboard(requestParameters: LeaderboardApiGetLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardView> {
+        getLeaderboard(requestParameters: LeaderboardApiGetLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardLeaderboardView> {
             return localVarFp.getLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
+         * Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
+         * @summary Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
          * @param {LeaderboardApiGetLeaderboardActivityRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLeaderboardActivity(requestParameters: LeaderboardApiGetLeaderboardActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActivityView> {
+        getLeaderboardActivity(requestParameters: LeaderboardApiGetLeaderboardActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardActivityView> {
             return localVarFp.getLeaderboardActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
@@ -379,7 +381,7 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<OptinView> {
+        getLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardOptinView> {
             return localVarFp.getLeaderboardOptin(options).then((request) => request(axios, basePath));
         },
         /**
@@ -389,8 +391,8 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLeaderboardOptin(requestParameters: LeaderboardApiPutLeaderboardOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserOptinView> {
-            return localVarFp.putLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(axios, basePath));
+        putLeaderboardOptin(requestParameters: LeaderboardApiPutLeaderboardOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardUserOptinView> {
+            return localVarFp.putLeaderboardOptin(requestParameters.leaderboardUserOptinReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
@@ -399,8 +401,8 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putLeaderboardOptinOrg(requestParameters: LeaderboardApiPutLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrgOptinView> {
-            return localVarFp.putLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(axios, basePath));
+        putLeaderboardOptinOrg(requestParameters: LeaderboardApiPutLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardOrgOptinView> {
+            return localVarFp.putLeaderboardOptinOrg(requestParameters.leaderboardOrgOptinReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -483,10 +485,10 @@ export interface LeaderboardApiGetLeaderboardActivityRequest {
 export interface LeaderboardApiPutLeaderboardOptinRequest {
     /**
      * 
-     * @type {UserOptinReq}
+     * @type {LeaderboardUserOptinReq}
      * @memberof LeaderboardApiPutLeaderboardOptin
      */
-    readonly userOptinReq: UserOptinReq
+    readonly leaderboardUserOptinReq: LeaderboardUserOptinReq
 }
 
 /**
@@ -497,10 +499,10 @@ export interface LeaderboardApiPutLeaderboardOptinRequest {
 export interface LeaderboardApiPutLeaderboardOptinOrgRequest {
     /**
      * 
-     * @type {OrgOptinReq}
+     * @type {LeaderboardOrgOptinReq}
      * @memberof LeaderboardApiPutLeaderboardOptinOrg
      */
-    readonly orgOptinReq: OrgOptinReq
+    readonly leaderboardOrgOptinReq: LeaderboardOrgOptinReq
 }
 
 /**
@@ -511,8 +513,8 @@ export interface LeaderboardApiPutLeaderboardOptinOrgRequest {
  */
 export class LeaderboardApi extends BaseAPI {
     /**
-     * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-     * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
+     * Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
+     * @summary Ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
      * @param {LeaderboardApiGetLeaderboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -523,8 +525,8 @@ export class LeaderboardApi extends BaseAPI {
     }
 
     /**
-     * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-     * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
+     * Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
+     * @summary Returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
      * @param {LeaderboardApiGetLeaderboardActivityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -554,7 +556,7 @@ export class LeaderboardApi extends BaseAPI {
      * @memberof LeaderboardApi
      */
     public putLeaderboardOptin(requestParameters: LeaderboardApiPutLeaderboardOptinRequest, options?: RawAxiosRequestConfig) {
-        return LeaderboardApiFp(this.configuration).putLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(this.axios, this.basePath));
+        return LeaderboardApiFp(this.configuration).putLeaderboardOptin(requestParameters.leaderboardUserOptinReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -566,7 +568,7 @@ export class LeaderboardApi extends BaseAPI {
      * @memberof LeaderboardApi
      */
     public putLeaderboardOptinOrg(requestParameters: LeaderboardApiPutLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig) {
-        return LeaderboardApiFp(this.configuration).putLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(this.axios, this.basePath));
+        return LeaderboardApiFp(this.configuration).putLeaderboardOptinOrg(requestParameters.leaderboardOrgOptinReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

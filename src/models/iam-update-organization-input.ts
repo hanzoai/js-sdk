@@ -337,6 +337,12 @@ export interface IamUpdateOrganizationInput {
     'passwordType'?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof IamUpdateOrganizationInput
+     */
+    'platform'?: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof IamUpdateOrganizationInput
      */

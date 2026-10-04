@@ -21,10 +21,10 @@
  */
 export interface O11yO11yUpdatablePreference {
     /**
-     * Value is the value to set; its JSON type must match the preference\'s declared value type.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yUpdatablePreference
      */
-    'value'?: object;
+    'value'?: any;
 }
 

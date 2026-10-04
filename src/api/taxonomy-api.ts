@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Category } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { CategoryIn } from '../models';
+import type { TaxonomyCategory } from '../models';
 // @ts-ignore
-import type { Deleted } from '../models';
+import type { TaxonomyCategoryIn } from '../models';
 // @ts-ignore
-import type { Taxon } from '../models';
+import type { TaxonomyDeleted } from '../models';
 // @ts-ignore
-import type { TaxonIn } from '../models';
+import type { TaxonomyTaxon } from '../models';
 // @ts-ignore
-import type { Taxonomy } from '../models';
+import type { TaxonomyTaxonIn } from '../models';
+// @ts-ignore
+import type { TaxonomyTaxonomy } from '../models';
 /**
  * TaxonomyApi - axios parameter creator
  * @export
@@ -116,8 +118,8 @@ export const TaxonomyApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
-         * @summary Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
+         * Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
+         * @summary Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
          * @param {string} [brand] Brand returns only what that brand\&#39;s console shows — the categories it admits, and within them the taxa scoped to it. Empty returns everything.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -158,15 +160,15 @@ export const TaxonomyApiAxiosParamCreator = function (configuration?: Configurat
          * Creates or replaces one category and returns it as stored. The id in the URL is the one it is filed under whatever the body says, so a category can never be written under a name it was not addressed by — which also makes create and replace the same act, and is why there is no POST beside this.  Platform SuperAdmin only: one catalogue serves every tenant, so an org admin who could rename a category would rename it for all of them.
          * @summary Creates or replaces one category and returns it as stored.
          * @param {string} id ID is the category slug to write, from the path.
-         * @param {CategoryIn} categoryIn 
+         * @param {TaxonomyCategoryIn} taxonomyCategoryIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTaxonomyCategoriesById: async (id: string, categoryIn: CategoryIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTaxonomyCategoriesById: async (id: string, taxonomyCategoryIn: TaxonomyCategoryIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putTaxonomyCategoriesById', 'id', id)
-            // verify required parameter 'categoryIn' is not null or undefined
-            assertParamExists('putTaxonomyCategoriesById', 'categoryIn', categoryIn)
+            // verify required parameter 'taxonomyCategoryIn' is not null or undefined
+            assertParamExists('putTaxonomyCategoriesById', 'taxonomyCategoryIn', taxonomyCategoryIn)
             const localVarPath = `/v1/taxonomy/categories/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -191,7 +193,7 @@ export const TaxonomyApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(categoryIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(taxonomyCategoryIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -202,15 +204,15 @@ export const TaxonomyApiAxiosParamCreator = function (configuration?: Configurat
          * Creates or replaces one product and returns it as stored. The id in the URL is the one it is filed under whatever the body says. The category must already exist — a taxon naming a category that does not is refused with 400 rather than stored where nothing can render it.  A taxon opens exactly one way: `route` for a product the console renders itself, or `href` for one that genuinely lives at its own domain. Giving both, or neither, is refused.  Platform SuperAdmin only.
          * @summary Creates or replaces one product and returns it as stored.
          * @param {string} id ID is the taxon slug to write, from the path.
-         * @param {TaxonIn} taxonIn 
+         * @param {TaxonomyTaxonIn} taxonomyTaxonIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTaxonomyTaxaById: async (id: string, taxonIn: TaxonIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTaxonomyTaxaById: async (id: string, taxonomyTaxonIn: TaxonomyTaxonIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putTaxonomyTaxaById', 'id', id)
-            // verify required parameter 'taxonIn' is not null or undefined
-            assertParamExists('putTaxonomyTaxaById', 'taxonIn', taxonIn)
+            // verify required parameter 'taxonomyTaxonIn' is not null or undefined
+            assertParamExists('putTaxonomyTaxaById', 'taxonomyTaxonIn', taxonomyTaxonIn)
             const localVarPath = `/v1/taxonomy/taxa/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -235,7 +237,7 @@ export const TaxonomyApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(taxonIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(taxonomyTaxonIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -259,7 +261,7 @@ export const TaxonomyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTaxonomyCategoriesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Deleted>> {
+        async deleteTaxonomyCategoriesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaxonomyDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTaxonomyCategoriesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaxonomyApi.deleteTaxonomyCategoriesById']?.[localVarOperationServerIndex]?.url;
@@ -272,20 +274,20 @@ export const TaxonomyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTaxonomyTaxaById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Deleted>> {
+        async deleteTaxonomyTaxaById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaxonomyDeleted>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTaxonomyTaxaById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaxonomyApi.deleteTaxonomyTaxaById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
-         * @summary Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
+         * Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
+         * @summary Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
          * @param {string} [brand] Brand returns only what that brand\&#39;s console shows — the categories it admits, and within them the taxa scoped to it. Empty returns everything.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTaxonomy(brand?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Taxonomy>> {
+        async getTaxonomy(brand?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaxonomyTaxonomy>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTaxonomy(brand, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaxonomyApi.getTaxonomy']?.[localVarOperationServerIndex]?.url;
@@ -295,12 +297,12 @@ export const TaxonomyApiFp = function(configuration?: Configuration) {
          * Creates or replaces one category and returns it as stored. The id in the URL is the one it is filed under whatever the body says, so a category can never be written under a name it was not addressed by — which also makes create and replace the same act, and is why there is no POST beside this.  Platform SuperAdmin only: one catalogue serves every tenant, so an org admin who could rename a category would rename it for all of them.
          * @summary Creates or replaces one category and returns it as stored.
          * @param {string} id ID is the category slug to write, from the path.
-         * @param {CategoryIn} categoryIn 
+         * @param {TaxonomyCategoryIn} taxonomyCategoryIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTaxonomyCategoriesById(id: string, categoryIn: CategoryIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Category>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTaxonomyCategoriesById(id, categoryIn, options);
+        async putTaxonomyCategoriesById(id: string, taxonomyCategoryIn: TaxonomyCategoryIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaxonomyCategory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTaxonomyCategoriesById(id, taxonomyCategoryIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaxonomyApi.putTaxonomyCategoriesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -309,12 +311,12 @@ export const TaxonomyApiFp = function(configuration?: Configuration) {
          * Creates or replaces one product and returns it as stored. The id in the URL is the one it is filed under whatever the body says. The category must already exist — a taxon naming a category that does not is refused with 400 rather than stored where nothing can render it.  A taxon opens exactly one way: `route` for a product the console renders itself, or `href` for one that genuinely lives at its own domain. Giving both, or neither, is refused.  Platform SuperAdmin only.
          * @summary Creates or replaces one product and returns it as stored.
          * @param {string} id ID is the taxon slug to write, from the path.
-         * @param {TaxonIn} taxonIn 
+         * @param {TaxonomyTaxonIn} taxonomyTaxonIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTaxonomyTaxaById(id: string, taxonIn: TaxonIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Taxon>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTaxonomyTaxaById(id, taxonIn, options);
+        async putTaxonomyTaxaById(id: string, taxonomyTaxonIn: TaxonomyTaxonIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaxonomyTaxon>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTaxonomyTaxaById(id, taxonomyTaxonIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaxonomyApi.putTaxonomyTaxaById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -336,7 +338,7 @@ export const TaxonomyApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTaxonomyCategoriesById(requestParameters: TaxonomyApiDeleteTaxonomyCategoriesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Deleted> {
+        deleteTaxonomyCategoriesById(requestParameters: TaxonomyApiDeleteTaxonomyCategoriesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaxonomyDeleted> {
             return localVarFp.deleteTaxonomyCategoriesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -346,17 +348,17 @@ export const TaxonomyApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTaxonomyTaxaById(requestParameters: TaxonomyApiDeleteTaxonomyTaxaByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Deleted> {
+        deleteTaxonomyTaxaById(requestParameters: TaxonomyApiDeleteTaxonomyTaxaByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaxonomyDeleted> {
             return localVarFp.deleteTaxonomyTaxaById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
-         * @summary Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
+         * Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
+         * @summary Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
          * @param {TaxonomyApiGetTaxonomyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTaxonomy(requestParameters: TaxonomyApiGetTaxonomyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Taxonomy> {
+        getTaxonomy(requestParameters: TaxonomyApiGetTaxonomyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TaxonomyTaxonomy> {
             return localVarFp.getTaxonomy(requestParameters.brand, options).then((request) => request(axios, basePath));
         },
         /**
@@ -366,8 +368,8 @@ export const TaxonomyApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTaxonomyCategoriesById(requestParameters: TaxonomyApiPutTaxonomyCategoriesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Category> {
-            return localVarFp.putTaxonomyCategoriesById(requestParameters.id, requestParameters.categoryIn, options).then((request) => request(axios, basePath));
+        putTaxonomyCategoriesById(requestParameters: TaxonomyApiPutTaxonomyCategoriesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaxonomyCategory> {
+            return localVarFp.putTaxonomyCategoriesById(requestParameters.id, requestParameters.taxonomyCategoryIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one product and returns it as stored. The id in the URL is the one it is filed under whatever the body says. The category must already exist — a taxon naming a category that does not is refused with 400 rather than stored where nothing can render it.  A taxon opens exactly one way: `route` for a product the console renders itself, or `href` for one that genuinely lives at its own domain. Giving both, or neither, is refused.  Platform SuperAdmin only.
@@ -376,8 +378,8 @@ export const TaxonomyApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTaxonomyTaxaById(requestParameters: TaxonomyApiPutTaxonomyTaxaByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Taxon> {
-            return localVarFp.putTaxonomyTaxaById(requestParameters.id, requestParameters.taxonIn, options).then((request) => request(axios, basePath));
+        putTaxonomyTaxaById(requestParameters: TaxonomyApiPutTaxonomyTaxaByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaxonomyTaxon> {
+            return localVarFp.putTaxonomyTaxaById(requestParameters.id, requestParameters.taxonomyTaxonIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -439,10 +441,10 @@ export interface TaxonomyApiPutTaxonomyCategoriesByIdRequest {
 
     /**
      * 
-     * @type {CategoryIn}
+     * @type {TaxonomyCategoryIn}
      * @memberof TaxonomyApiPutTaxonomyCategoriesById
      */
-    readonly categoryIn: CategoryIn
+    readonly taxonomyCategoryIn: TaxonomyCategoryIn
 }
 
 /**
@@ -460,10 +462,10 @@ export interface TaxonomyApiPutTaxonomyTaxaByIdRequest {
 
     /**
      * 
-     * @type {TaxonIn}
+     * @type {TaxonomyTaxonIn}
      * @memberof TaxonomyApiPutTaxonomyTaxaById
      */
-    readonly taxonIn: TaxonIn
+    readonly taxonomyTaxonIn: TaxonomyTaxonIn
 }
 
 /**
@@ -498,8 +500,8 @@ export class TaxonomyApi extends BaseAPI {
     }
 
     /**
-     * Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
-     * @summary Read returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
+     * Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs. Another customer\'s rows are never in it. It is readable signed out, and a signed-out visitor gets the platform catalogue alone, which is what the marketing landing renders from.  Where the caller\'s org and the platform hold the same id, the caller\'s own row is the one served. That rule exists because ids are unique per ORG and not globally — two customers may each have a \"crm\", and refusing the second would tell one of them the other exists — so a collision with the platform is possible by construction and something has to win deterministically. Yours does: your own catalogue is the one you edited.  `?brand=` narrows it the way a brand\'s own console does: only the categories that brand admits, and within them only the taxa scoped to it. An unpublished row is served only to whoever may edit it — a SuperAdmin for the platform\'s, an org admin for their own — so a product can be staged before anyone sees it without becoming invisible to the person staging it.
+     * @summary Returns the product catalogue as this caller sees it: the PLATFORM catalogue — Hanzo\'s own products, the part that is true for everyone — plus the caller\'s own org\'s rows, every category in display order and each carrying the products filed under it in theirs.
      * @param {TaxonomyApiGetTaxonomyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -518,7 +520,7 @@ export class TaxonomyApi extends BaseAPI {
      * @memberof TaxonomyApi
      */
     public putTaxonomyCategoriesById(requestParameters: TaxonomyApiPutTaxonomyCategoriesByIdRequest, options?: RawAxiosRequestConfig) {
-        return TaxonomyApiFp(this.configuration).putTaxonomyCategoriesById(requestParameters.id, requestParameters.categoryIn, options).then((request) => request(this.axios, this.basePath));
+        return TaxonomyApiFp(this.configuration).putTaxonomyCategoriesById(requestParameters.id, requestParameters.taxonomyCategoryIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -530,7 +532,7 @@ export class TaxonomyApi extends BaseAPI {
      * @memberof TaxonomyApi
      */
     public putTaxonomyTaxaById(requestParameters: TaxonomyApiPutTaxonomyTaxaByIdRequest, options?: RawAxiosRequestConfig) {
-        return TaxonomyApiFp(this.configuration).putTaxonomyTaxaById(requestParameters.id, requestParameters.taxonIn, options).then((request) => request(this.axios, this.basePath));
+        return TaxonomyApiFp(this.configuration).putTaxonomyTaxaById(requestParameters.id, requestParameters.taxonomyTaxonIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

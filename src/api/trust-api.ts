@@ -22,31 +22,33 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Centre } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { ClauseCoverage } from '../models';
+import type { TrustCentre } from '../models';
 // @ts-ignore
-import type { ControlList } from '../models';
+import type { TrustClauseCoverage } from '../models';
 // @ts-ignore
-import type { Dropped } from '../models';
+import type { TrustControlList } from '../models';
 // @ts-ignore
-import type { FaqList } from '../models';
+import type { TrustDropped } from '../models';
 // @ts-ignore
-import type { FrameworkList } from '../models';
+import type { TrustFaqList } from '../models';
 // @ts-ignore
-import type { PolicyList } from '../models';
+import type { TrustFrameworkList } from '../models';
 // @ts-ignore
-import type { SectionWrite } from '../models';
+import type { TrustPolicyList } from '../models';
 // @ts-ignore
-import type { SubprocessorList } from '../models';
+import type { TrustSectionWrite } from '../models';
 // @ts-ignore
-import type { TrustCoverage } from '../models';
+import type { TrustSubprocessorList } from '../models';
 // @ts-ignore
-import type { TrustDocuments } from '../models';
+import type { TrustTrustCoverage } from '../models';
 // @ts-ignore
-import type { UpdateList } from '../models';
+import type { TrustTrustDocuments } from '../models';
 // @ts-ignore
-import type { Written } from '../models';
+import type { TrustUpdateList } from '../models';
+// @ts-ignore
+import type { TrustWritten } from '../models';
 /**
  * TrustApi - axios parameter creator
  * @export
@@ -634,21 +636,21 @@ export const TrustApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — a SOC 2 report, an ISO certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
+         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — an attestation report, a certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
          * @summary Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.
          * @param {string} kind Kind is the section being written. The URL is the authority.
          * @param {string} id ID is the record\&#39;s id. Omit it on a create and one is minted; the single-valued sections (profile, risk) hold one record whatever is named.
-         * @param {SectionWrite} sectionWrite 
+         * @param {TrustSectionWrite} trustSectionWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTrustByKindById: async (kind: string, id: string, sectionWrite: SectionWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTrustByKindById: async (kind: string, id: string, trustSectionWrite: TrustSectionWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'kind' is not null or undefined
             assertParamExists('putTrustByKindById', 'kind', kind)
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putTrustByKindById', 'id', id)
-            // verify required parameter 'sectionWrite' is not null or undefined
-            assertParamExists('putTrustByKindById', 'sectionWrite', sectionWrite)
+            // verify required parameter 'trustSectionWrite' is not null or undefined
+            assertParamExists('putTrustByKindById', 'trustSectionWrite', trustSectionWrite)
             const localVarPath = `/v1/trust/{kind}/{id}`
                 .replace(`{${"kind"}}`, encodeURIComponent(String(kind)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -674,7 +676,7 @@ export const TrustApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(sectionWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(trustSectionWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -699,7 +701,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTrustByKindById(kind: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Dropped>> {
+        async deleteTrustByKindById(kind: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustDropped>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTrustByKindById(kind, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.deleteTrustByKindById']?.[localVarOperationServerIndex]?.url;
@@ -711,7 +713,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrust(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Centre>> {
+        async getTrust(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustCentre>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrust(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrust']?.[localVarOperationServerIndex]?.url;
@@ -723,7 +725,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustControls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ControlList>> {
+        async getTrustControls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustControlList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustControls(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustControls']?.[localVarOperationServerIndex]?.url;
@@ -748,7 +750,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustCoverage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustCoverage>> {
+        async getTrustCoverage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustTrustCoverage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustCoverage(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustCoverage']?.[localVarOperationServerIndex]?.url;
@@ -761,7 +763,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustCoverageByFramework(framework: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClauseCoverage>> {
+        async getTrustCoverageByFramework(framework: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustClauseCoverage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustCoverageByFramework(framework, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustCoverageByFramework']?.[localVarOperationServerIndex]?.url;
@@ -773,7 +775,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustDocuments>> {
+        async getTrustDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustTrustDocuments>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustDocuments']?.[localVarOperationServerIndex]?.url;
@@ -801,7 +803,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustFaq(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FaqList>> {
+        async getTrustFaq(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustFaqList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustFaq(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustFaq']?.[localVarOperationServerIndex]?.url;
@@ -813,7 +815,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustFrameworks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkList>> {
+        async getTrustFrameworks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustFrameworkList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustFrameworks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustFrameworks']?.[localVarOperationServerIndex]?.url;
@@ -825,7 +827,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustPolicies(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PolicyList>> {
+        async getTrustPolicies(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustPolicyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustPolicies(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustPolicies']?.[localVarOperationServerIndex]?.url;
@@ -850,7 +852,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustPublishedByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Centre>> {
+        async getTrustPublishedByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustCentre>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustPublishedByOrg(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustPublishedByOrg']?.[localVarOperationServerIndex]?.url;
@@ -874,7 +876,7 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustSubprocessors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubprocessorList>> {
+        async getTrustSubprocessors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustSubprocessorList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustSubprocessors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustSubprocessors']?.[localVarOperationServerIndex]?.url;
@@ -886,23 +888,23 @@ export const TrustApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrustUpdates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateList>> {
+        async getTrustUpdates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustUpdateList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrustUpdates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.getTrustUpdates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — a SOC 2 report, an ISO certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
+         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — an attestation report, a certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
          * @summary Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.
          * @param {string} kind Kind is the section being written. The URL is the authority.
          * @param {string} id ID is the record\&#39;s id. Omit it on a create and one is minted; the single-valued sections (profile, risk) hold one record whatever is named.
-         * @param {SectionWrite} sectionWrite 
+         * @param {TrustSectionWrite} trustSectionWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTrustByKindById(kind: string, id: string, sectionWrite: SectionWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Written>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTrustByKindById(kind, id, sectionWrite, options);
+        async putTrustByKindById(kind: string, id: string, trustSectionWrite: TrustSectionWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustWritten>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTrustByKindById(kind, id, trustSectionWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrustApi.putTrustByKindById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -924,7 +926,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTrustByKindById(requestParameters: TrustApiDeleteTrustByKindByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Dropped> {
+        deleteTrustByKindById(requestParameters: TrustApiDeleteTrustByKindByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustDropped> {
             return localVarFp.deleteTrustByKindById(requestParameters.kind, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -933,7 +935,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrust(options?: RawAxiosRequestConfig): AxiosPromise<Centre> {
+        getTrust(options?: RawAxiosRequestConfig): AxiosPromise<TrustCentre> {
             return localVarFp.getTrust(options).then((request) => request(axios, basePath));
         },
         /**
@@ -942,7 +944,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustControls(options?: RawAxiosRequestConfig): AxiosPromise<ControlList> {
+        getTrustControls(options?: RawAxiosRequestConfig): AxiosPromise<TrustControlList> {
             return localVarFp.getTrustControls(options).then((request) => request(axios, basePath));
         },
         /**
@@ -961,7 +963,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustCoverage(options?: RawAxiosRequestConfig): AxiosPromise<TrustCoverage> {
+        getTrustCoverage(options?: RawAxiosRequestConfig): AxiosPromise<TrustTrustCoverage> {
             return localVarFp.getTrustCoverage(options).then((request) => request(axios, basePath));
         },
         /**
@@ -971,7 +973,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustCoverageByFramework(requestParameters: TrustApiGetTrustCoverageByFrameworkRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClauseCoverage> {
+        getTrustCoverageByFramework(requestParameters: TrustApiGetTrustCoverageByFrameworkRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustClauseCoverage> {
             return localVarFp.getTrustCoverageByFramework(requestParameters.framework, options).then((request) => request(axios, basePath));
         },
         /**
@@ -980,7 +982,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustDocuments(options?: RawAxiosRequestConfig): AxiosPromise<TrustDocuments> {
+        getTrustDocuments(options?: RawAxiosRequestConfig): AxiosPromise<TrustTrustDocuments> {
             return localVarFp.getTrustDocuments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -999,7 +1001,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustFaq(options?: RawAxiosRequestConfig): AxiosPromise<FaqList> {
+        getTrustFaq(options?: RawAxiosRequestConfig): AxiosPromise<TrustFaqList> {
             return localVarFp.getTrustFaq(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1008,7 +1010,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustFrameworks(options?: RawAxiosRequestConfig): AxiosPromise<FrameworkList> {
+        getTrustFrameworks(options?: RawAxiosRequestConfig): AxiosPromise<TrustFrameworkList> {
             return localVarFp.getTrustFrameworks(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1017,7 +1019,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustPolicies(options?: RawAxiosRequestConfig): AxiosPromise<PolicyList> {
+        getTrustPolicies(options?: RawAxiosRequestConfig): AxiosPromise<TrustPolicyList> {
             return localVarFp.getTrustPolicies(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1036,7 +1038,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustPublishedByOrg(requestParameters: TrustApiGetTrustPublishedByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<Centre> {
+        getTrustPublishedByOrg(requestParameters: TrustApiGetTrustPublishedByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustCentre> {
             return localVarFp.getTrustPublishedByOrg(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1054,7 +1056,7 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustSubprocessors(options?: RawAxiosRequestConfig): AxiosPromise<SubprocessorList> {
+        getTrustSubprocessors(options?: RawAxiosRequestConfig): AxiosPromise<TrustSubprocessorList> {
             return localVarFp.getTrustSubprocessors(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1063,18 +1065,18 @@ export const TrustApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrustUpdates(options?: RawAxiosRequestConfig): AxiosPromise<UpdateList> {
+        getTrustUpdates(options?: RawAxiosRequestConfig): AxiosPromise<TrustUpdateList> {
             return localVarFp.getTrustUpdates(options).then((request) => request(axios, basePath));
         },
         /**
-         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — a SOC 2 report, an ISO certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
+         * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — an attestation report, a certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
          * @summary Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.
          * @param {TrustApiPutTrustByKindByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTrustByKindById(requestParameters: TrustApiPutTrustByKindByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Written> {
-            return localVarFp.putTrustByKindById(requestParameters.kind, requestParameters.id, requestParameters.sectionWrite, options).then((request) => request(axios, basePath));
+        putTrustByKindById(requestParameters: TrustApiPutTrustByKindByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustWritten> {
+            return localVarFp.putTrustByKindById(requestParameters.kind, requestParameters.id, requestParameters.trustSectionWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1199,10 +1201,10 @@ export interface TrustApiPutTrustByKindByIdRequest {
 
     /**
      * 
-     * @type {SectionWrite}
+     * @type {TrustSectionWrite}
      * @memberof TrustApiPutTrustByKindById
      */
-    readonly sectionWrite: SectionWrite
+    readonly trustSectionWrite: TrustSectionWrite
 }
 
 /**
@@ -1394,7 +1396,7 @@ export class TrustApi extends BaseAPI {
     }
 
     /**
-     * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — a SOC 2 report, an ISO certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
+     * Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.  A control written here is held to exactly the rule a control committed to the deployment\'s own inventory is held to, by the same validator: its prose may not claim a certificate and may not name a framework (a framework belongs in the mappings, where it arrives attached to a number), anything short of automated must say what is missing, and a mapping to a clause no framework declares is refused rather than scored as nothing.  A document defaults to GATED. An artifact an independent auditor signed — an attestation report, a certificate, a penetration test, an auditor letter — cannot be made public at all; it is released through a grant. A self-assessment can, because the organization is the one attesting it.  The deployment\'s OWN control inventory is governed in git and is not writable here: naming one of its ids is a conflict, not an overwrite.
      * @summary Writes one record into a section of YOUR organization\'s trust centre — profile, control, document, subprocessor, policy, faq, update or risk.
      * @param {TrustApiPutTrustByKindByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1402,7 +1404,7 @@ export class TrustApi extends BaseAPI {
      * @memberof TrustApi
      */
     public putTrustByKindById(requestParameters: TrustApiPutTrustByKindByIdRequest, options?: RawAxiosRequestConfig) {
-        return TrustApiFp(this.configuration).putTrustByKindById(requestParameters.kind, requestParameters.id, requestParameters.sectionWrite, options).then((request) => request(this.axios, this.basePath));
+        return TrustApiFp(this.configuration).putTrustByKindById(requestParameters.kind, requestParameters.id, requestParameters.trustSectionWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

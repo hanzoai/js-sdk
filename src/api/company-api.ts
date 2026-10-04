@@ -22,57 +22,57 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AdvanceIn } from '../models';
+import type { CompanyAdvanceIn } from '../models';
 // @ts-ignore
-import type { BeginIn } from '../models';
+import type { CompanyBeginIn } from '../models';
 // @ts-ignore
-import type { DecisionIn } from '../models';
+import type { CompanyEIN } from '../models';
+// @ts-ignore
+import type { CompanyEinIn } from '../models';
+// @ts-ignore
+import type { CompanyEsignCompleteIn } from '../models';
+// @ts-ignore
+import type { CompanyEsignOut } from '../models';
+// @ts-ignore
+import type { CompanyFormationView } from '../models';
+// @ts-ignore
+import type { CompanyFoundersIn } from '../models';
+// @ts-ignore
+import type { CompanyImportCapTableIn } from '../models';
+// @ts-ignore
+import type { CompanyImportCapTableOut } from '../models';
+// @ts-ignore
+import type { CompanyImportDocumentsIn } from '../models';
+// @ts-ignore
+import type { CompanyImportDocumentsOut } from '../models';
+// @ts-ignore
+import type { CompanyKycRefreshOut } from '../models';
+// @ts-ignore
+import type { CompanyKycStartOut } from '../models';
+// @ts-ignore
+import type { CompanyRegisterCounts } from '../models';
+// @ts-ignore
+import type { CompanyRegisterPage } from '../models';
+// @ts-ignore
+import type { CompanyReviewQueue } from '../models';
+// @ts-ignore
+import type { CompanyRoundInput } from '../models';
+// @ts-ignore
+import type { CompanyRoundOut } from '../models';
+// @ts-ignore
+import type { CompanySafeIn } from '../models';
+// @ts-ignore
+import type { CompanySafeOut } from '../models';
+// @ts-ignore
+import type { CompanyStructureIn } from '../models';
+// @ts-ignore
+import type { CompanyTariff } from '../models';
+// @ts-ignore
+import type { CompanyTariffIn } from '../models';
 // @ts-ignore
 import type { DeckOut } from '../models';
 // @ts-ignore
-import type { EIN } from '../models';
-// @ts-ignore
-import type { EinIn } from '../models';
-// @ts-ignore
-import type { EsignCompleteIn } from '../models';
-// @ts-ignore
-import type { EsignOut } from '../models';
-// @ts-ignore
-import type { FormationView } from '../models';
-// @ts-ignore
-import type { FoundersIn } from '../models';
-// @ts-ignore
-import type { ImportCapTableIn } from '../models';
-// @ts-ignore
-import type { ImportCapTableOut } from '../models';
-// @ts-ignore
-import type { ImportDocumentsIn } from '../models';
-// @ts-ignore
-import type { ImportDocumentsOut } from '../models';
-// @ts-ignore
-import type { KycRefreshOut } from '../models';
-// @ts-ignore
-import type { KycStartOut } from '../models';
-// @ts-ignore
-import type { RegisterCounts } from '../models';
-// @ts-ignore
-import type { RegisterPage } from '../models';
-// @ts-ignore
-import type { ReviewQueue } from '../models';
-// @ts-ignore
-import type { RoundInput } from '../models';
-// @ts-ignore
-import type { RoundOut } from '../models';
-// @ts-ignore
-import type { SafeIn } from '../models';
-// @ts-ignore
-import type { SafeOut } from '../models';
-// @ts-ignore
-import type { StructureIn } from '../models';
-// @ts-ignore
-import type { Tariff } from '../models';
-// @ts-ignore
-import type { TariffIn } from '../models';
+import type { ProblemDetails } from '../models';
 /**
  * CompanyApi - axios parameter creator
  * @export
@@ -80,8 +80,8 @@ import type { TariffIn } from '../models';
 export const CompanyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
-         * @summary Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -241,15 +241,15 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Begin starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
-         * @summary Begin starts the org\'s one formation and returns it with the stages reachable from it.
-         * @param {BeginIn} beginIn 
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
+         * @param {CompanyBeginIn} companyBeginIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompany: async (beginIn: BeginIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'beginIn' is not null or undefined
-            assertParamExists('postCompany', 'beginIn', beginIn)
+        postCompany: async (companyBeginIn: CompanyBeginIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyBeginIn' is not null or undefined
+            assertParamExists('postCompany', 'companyBeginIn', companyBeginIn)
             const localVarPath = `/v1/company`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -273,7 +273,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(beginIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyBeginIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -281,15 +281,15 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
-         * @summary Advance runs the ONE guarded transition of the formation machine.
-         * @param {AdvanceIn} advanceIn 
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * @summary Runs the ONE guarded transition of the formation machine.
+         * @param {CompanyAdvanceIn} companyAdvanceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyAdvance: async (advanceIn: AdvanceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'advanceIn' is not null or undefined
-            assertParamExists('postCompanyAdvance', 'advanceIn', advanceIn)
+        postCompanyAdvance: async (companyAdvanceIn: CompanyAdvanceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyAdvanceIn' is not null or undefined
+            assertParamExists('postCompanyAdvance', 'companyAdvanceIn', companyAdvanceIn)
             const localVarPath = `/v1/company/advance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -313,7 +313,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(advanceIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyAdvanceIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -357,13 +357,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
          * @summary Opens the EIN application and answers what it owes.
-         * @param {EinIn} einIn 
+         * @param {CompanyEinIn} companyEinIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyEin: async (einIn: EinIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'einIn' is not null or undefined
-            assertParamExists('postCompanyEin', 'einIn', einIn)
+        postCompanyEin: async (companyEinIn: CompanyEinIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyEinIn' is not null or undefined
+            assertParamExists('postCompanyEin', 'companyEinIn', companyEinIn)
             const localVarPath = `/v1/company/ein`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -387,7 +387,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(einIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyEinIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -431,13 +431,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
          * @summary Records whether the formation documents have been signed.
-         * @param {EsignCompleteIn} esignCompleteIn 
+         * @param {CompanyEsignCompleteIn} companyEsignCompleteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyEsignComplete: async (esignCompleteIn: EsignCompleteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'esignCompleteIn' is not null or undefined
-            assertParamExists('postCompanyEsignComplete', 'esignCompleteIn', esignCompleteIn)
+        postCompanyEsignComplete: async (companyEsignCompleteIn: CompanyEsignCompleteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyEsignCompleteIn' is not null or undefined
+            assertParamExists('postCompanyEsignComplete', 'companyEsignCompleteIn', companyEsignCompleteIn)
             const localVarPath = `/v1/company/esign/complete`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -461,7 +461,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(esignCompleteIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyEsignCompleteIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -471,13 +471,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
          * @summary Replaces the formation\'s founders.
-         * @param {FoundersIn} foundersIn 
+         * @param {CompanyFoundersIn} companyFoundersIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFounders: async (foundersIn: FoundersIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'foundersIn' is not null or undefined
-            assertParamExists('postCompanyFounders', 'foundersIn', foundersIn)
+        postCompanyFounders: async (companyFoundersIn: CompanyFoundersIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyFoundersIn' is not null or undefined
+            assertParamExists('postCompanyFounders', 'companyFoundersIn', companyFoundersIn)
             const localVarPath = `/v1/company/founders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -501,7 +501,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(foundersIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyFoundersIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -549,13 +549,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
          * @summary Records a fundraising round on the org\'s canonical cap table.
-         * @param {RoundInput} roundInput 
+         * @param {CompanyRoundInput} companyRoundInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFundraiseRound: async (roundInput: RoundInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roundInput' is not null or undefined
-            assertParamExists('postCompanyFundraiseRound', 'roundInput', roundInput)
+        postCompanyFundraiseRound: async (companyRoundInput: CompanyRoundInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyRoundInput' is not null or undefined
+            assertParamExists('postCompanyFundraiseRound', 'companyRoundInput', companyRoundInput)
             const localVarPath = `/v1/company/fundraise/round`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -579,7 +579,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(roundInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyRoundInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -589,13 +589,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
          * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
-         * @param {SafeIn} safeIn 
+         * @param {CompanySafeIn} companySafeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFundraiseSafe: async (safeIn: SafeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'safeIn' is not null or undefined
-            assertParamExists('postCompanyFundraiseSafe', 'safeIn', safeIn)
+        postCompanyFundraiseSafe: async (companySafeIn: CompanySafeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companySafeIn' is not null or undefined
+            assertParamExists('postCompanyFundraiseSafe', 'companySafeIn', companySafeIn)
             const localVarPath = `/v1/company/fundraise/safe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -619,7 +619,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(safeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companySafeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -663,13 +663,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
          * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
-         * @param {ImportCapTableIn} importCapTableIn 
+         * @param {CompanyImportCapTableIn} companyImportCapTableIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyImportCaptable: async (importCapTableIn: ImportCapTableIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'importCapTableIn' is not null or undefined
-            assertParamExists('postCompanyImportCaptable', 'importCapTableIn', importCapTableIn)
+        postCompanyImportCaptable: async (companyImportCapTableIn: CompanyImportCapTableIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyImportCapTableIn' is not null or undefined
+            assertParamExists('postCompanyImportCaptable', 'companyImportCapTableIn', companyImportCapTableIn)
             const localVarPath = `/v1/company/import/captable`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -693,7 +693,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(importCapTableIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyImportCapTableIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -703,13 +703,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
          * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
-         * @param {ImportDocumentsIn} importDocumentsIn 
+         * @param {CompanyImportDocumentsIn} companyImportDocumentsIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyImportDocuments: async (importDocumentsIn: ImportDocumentsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'importDocumentsIn' is not null or undefined
-            assertParamExists('postCompanyImportDocuments', 'importDocumentsIn', importDocumentsIn)
+        postCompanyImportDocuments: async (companyImportDocumentsIn: CompanyImportDocumentsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyImportDocumentsIn' is not null or undefined
+            assertParamExists('postCompanyImportDocuments', 'companyImportDocumentsIn', companyImportDocumentsIn)
             const localVarPath = `/v1/company/import/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -733,7 +733,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(importDocumentsIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyImportDocumentsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -741,8 +741,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
-         * @summary StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -768,46 +768,6 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider \"verified\".  Because Hanzo forms the entity and carries the formation KYC/AML obligation, the reviewer is a HANZO platform reviewer (SuperAdmin), and the decision is ATTRIBUTED to them.
-         * @summary DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired.
-         * @param {DecisionIn} decisionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCompanyKycDecision: async (decisionIn: DecisionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'decisionIn' is not null or undefined
-            assertParamExists('postCompanyKycDecision', 'decisionIn', decisionIn)
-            const localVarPath = `/v1/company/kyc/decision`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(decisionIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -883,8 +843,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
-         * @summary Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -919,13 +879,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
          * @summary Itemises what a formation costs before anyone commits to it.
-         * @param {TariffIn} tariffIn 
+         * @param {CompanyTariffIn} companyTariffIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyTariff: async (tariffIn: TariffIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tariffIn' is not null or undefined
-            assertParamExists('postCompanyTariff', 'tariffIn', tariffIn)
+        postCompanyTariff: async (companyTariffIn: CompanyTariffIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyTariffIn' is not null or undefined
+            assertParamExists('postCompanyTariff', 'companyTariffIn', companyTariffIn)
             const localVarPath = `/v1/company/tariff`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -949,7 +909,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tariffIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyTariffIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -959,13 +919,13 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
          * @summary Records the entity kind, the state of formation and the proposed name.
-         * @param {StructureIn} structureIn 
+         * @param {CompanyStructureIn} companyStructureIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCompanyStructure: async (structureIn: StructureIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'structureIn' is not null or undefined
-            assertParamExists('putCompanyStructure', 'structureIn', structureIn)
+        putCompanyStructure: async (companyStructureIn: CompanyStructureIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyStructureIn' is not null or undefined
+            assertParamExists('putCompanyStructure', 'companyStructureIn', companyStructureIn)
             const localVarPath = `/v1/company/structure`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -989,7 +949,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(structureIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(companyStructureIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1007,12 +967,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CompanyApiAxiosParamCreator(configuration)
     return {
         /**
-         * Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
-         * @summary Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCompany(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
+        async getCompany(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCompany(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.getCompany']?.[localVarOperationServerIndex]?.url;
@@ -1028,7 +988,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCompanyRegister(stage?: string, structure?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterPage>> {
+        async getCompanyRegister(stage?: string, structure?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyRegisterPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyRegister(stage, structure, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.getCompanyRegister']?.[localVarOperationServerIndex]?.url;
@@ -1040,7 +1000,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCompanyRegisterSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterCounts>> {
+        async getCompanyRegisterSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyRegisterCounts>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyRegisterSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.getCompanyRegisterSummary']?.[localVarOperationServerIndex]?.url;
@@ -1053,34 +1013,34 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCompanyReview(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewQueue>> {
+        async getCompanyReview(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyReviewQueue>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyReview(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.getCompanyReview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Begin starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
-         * @summary Begin starts the org\'s one formation and returns it with the stages reachable from it.
-         * @param {BeginIn} beginIn 
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
+         * @param {CompanyBeginIn} companyBeginIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompany(beginIn: BeginIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompany(beginIn, options);
+        async postCompany(companyBeginIn: CompanyBeginIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompany(companyBeginIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompany']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
-         * @summary Advance runs the ONE guarded transition of the formation machine.
-         * @param {AdvanceIn} advanceIn 
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * @summary Runs the ONE guarded transition of the formation machine.
+         * @param {CompanyAdvanceIn} companyAdvanceIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyAdvance(advanceIn: AdvanceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyAdvance(advanceIn, options);
+        async postCompanyAdvance(companyAdvanceIn: CompanyAdvanceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyAdvance(companyAdvanceIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyAdvance']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1091,7 +1051,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
+        async postCompanyDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyDocuments']?.[localVarOperationServerIndex]?.url;
@@ -1100,12 +1060,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
          * @summary Opens the EIN application and answers what it owes.
-         * @param {EinIn} einIn 
+         * @param {CompanyEinIn} companyEinIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyEin(einIn: EinIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EIN>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEin(einIn, options);
+        async postCompanyEin(companyEinIn: CompanyEinIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyEIN>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEin(companyEinIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyEin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1116,7 +1076,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyEsign(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EsignOut>> {
+        async postCompanyEsign(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyEsignOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEsign(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyEsign']?.[localVarOperationServerIndex]?.url;
@@ -1125,12 +1085,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
          * @summary Records whether the formation documents have been signed.
-         * @param {EsignCompleteIn} esignCompleteIn 
+         * @param {CompanyEsignCompleteIn} companyEsignCompleteIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyEsignComplete(esignCompleteIn: EsignCompleteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEsignComplete(esignCompleteIn, options);
+        async postCompanyEsignComplete(companyEsignCompleteIn: CompanyEsignCompleteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEsignComplete(companyEsignCompleteIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyEsignComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1138,12 +1098,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
          * @summary Replaces the formation\'s founders.
-         * @param {FoundersIn} foundersIn 
+         * @param {CompanyFoundersIn} companyFoundersIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyFounders(foundersIn: FoundersIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFounders(foundersIn, options);
+        async postCompanyFounders(companyFoundersIn: CompanyFoundersIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFounders(companyFoundersIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyFounders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1164,12 +1124,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
          * @summary Records a fundraising round on the org\'s canonical cap table.
-         * @param {RoundInput} roundInput 
+         * @param {CompanyRoundInput} companyRoundInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyFundraiseRound(roundInput: RoundInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoundOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFundraiseRound(roundInput, options);
+        async postCompanyFundraiseRound(companyRoundInput: CompanyRoundInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyRoundOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFundraiseRound(companyRoundInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyFundraiseRound']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1177,12 +1137,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
          * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
-         * @param {SafeIn} safeIn 
+         * @param {CompanySafeIn} companySafeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyFundraiseSafe(safeIn: SafeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SafeOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFundraiseSafe(safeIn, options);
+        async postCompanyFundraiseSafe(companySafeIn: CompanySafeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanySafeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyFundraiseSafe(companySafeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyFundraiseSafe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1193,7 +1153,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyGenesis(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
+        async postCompanyGenesis(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyGenesis(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyGenesis']?.[localVarOperationServerIndex]?.url;
@@ -1202,12 +1162,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
          * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
-         * @param {ImportCapTableIn} importCapTableIn 
+         * @param {CompanyImportCapTableIn} companyImportCapTableIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyImportCaptable(importCapTableIn: ImportCapTableIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportCapTableOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyImportCaptable(importCapTableIn, options);
+        async postCompanyImportCaptable(companyImportCapTableIn: CompanyImportCapTableIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyImportCapTableOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyImportCaptable(companyImportCapTableIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyImportCaptable']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1215,39 +1175,26 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
          * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
-         * @param {ImportDocumentsIn} importDocumentsIn 
+         * @param {CompanyImportDocumentsIn} companyImportDocumentsIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyImportDocuments(importDocumentsIn: ImportDocumentsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportDocumentsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyImportDocuments(importDocumentsIn, options);
+        async postCompanyImportDocuments(companyImportDocumentsIn: CompanyImportDocumentsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyImportDocumentsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyImportDocuments(companyImportDocumentsIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyImportDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
-         * @summary StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyKyc(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KycStartOut>> {
+        async postCompanyKyc(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKycStartOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyKyc(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyKyc']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider \"verified\".  Because Hanzo forms the entity and carries the formation KYC/AML obligation, the reviewer is a HANZO platform reviewer (SuperAdmin), and the decision is ATTRIBUTED to them.
-         * @summary DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired.
-         * @param {DecisionIn} decisionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCompanyKycDecision(decisionIn: DecisionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyKycDecision(decisionIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyKycDecision']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1256,7 +1203,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyKycRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KycRefreshOut>> {
+        async postCompanyKycRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKycRefreshOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyKycRefresh(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyKycRefresh']?.[localVarOperationServerIndex]?.url;
@@ -1268,19 +1215,19 @@ export const CompanyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyPayment(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
+        async postCompanyPayment(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyPayment(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyPayment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
-         * @summary Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanySkip(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
+        async postCompanySkip(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanySkip(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanySkip']?.[localVarOperationServerIndex]?.url;
@@ -1289,12 +1236,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
          * @summary Itemises what a formation costs before anyone commits to it.
-         * @param {TariffIn} tariffIn 
+         * @param {CompanyTariffIn} companyTariffIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompanyTariff(tariffIn: TariffIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tariff>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyTariff(tariffIn, options);
+        async postCompanyTariff(companyTariffIn: CompanyTariffIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyTariff>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyTariff(companyTariffIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyTariff']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1302,12 +1249,12 @@ export const CompanyApiFp = function(configuration?: Configuration) {
         /**
          * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
          * @summary Records the entity kind, the state of formation and the proposed name.
-         * @param {StructureIn} structureIn 
+         * @param {CompanyStructureIn} companyStructureIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCompanyStructure(structureIn: StructureIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCompanyStructure(structureIn, options);
+        async putCompanyStructure(companyStructureIn: CompanyStructureIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyFormationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCompanyStructure(companyStructureIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.putCompanyStructure']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1323,12 +1270,12 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = CompanyApiFp(configuration)
     return {
         /**
-         * Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
-         * @summary Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompany(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
+        getCompany(options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
             return localVarFp.getCompany(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1338,7 +1285,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompanyRegister(requestParameters: CompanyApiGetCompanyRegisterRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegisterPage> {
+        getCompanyRegister(requestParameters: CompanyApiGetCompanyRegisterRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CompanyRegisterPage> {
             return localVarFp.getCompanyRegister(requestParameters.stage, requestParameters.structure, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1347,7 +1294,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompanyRegisterSummary(options?: RawAxiosRequestConfig): AxiosPromise<RegisterCounts> {
+        getCompanyRegisterSummary(options?: RawAxiosRequestConfig): AxiosPromise<CompanyRegisterCounts> {
             return localVarFp.getCompanyRegisterSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1357,28 +1304,28 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompanyReview(requestParameters: CompanyApiGetCompanyReviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ReviewQueue> {
+        getCompanyReview(requestParameters: CompanyApiGetCompanyReviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CompanyReviewQueue> {
             return localVarFp.getCompanyReview(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Begin starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
-         * @summary Begin starts the org\'s one formation and returns it with the stages reachable from it.
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
          * @param {CompanyApiPostCompanyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompany(requestParameters: CompanyApiPostCompanyRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.postCompany(requestParameters.beginIn, options).then((request) => request(axios, basePath));
+        postCompany(requestParameters: CompanyApiPostCompanyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
+            return localVarFp.postCompany(requestParameters.companyBeginIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
-         * @summary Advance runs the ONE guarded transition of the formation machine.
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * @summary Runs the ONE guarded transition of the formation machine.
          * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyAdvance(requestParameters: CompanyApiPostCompanyAdvanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.postCompanyAdvance(requestParameters.advanceIn, options).then((request) => request(axios, basePath));
+        postCompanyAdvance(requestParameters: CompanyApiPostCompanyAdvanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
+            return localVarFp.postCompanyAdvance(requestParameters.companyAdvanceIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
@@ -1386,7 +1333,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyDocuments(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
+        postCompanyDocuments(options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
             return localVarFp.postCompanyDocuments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1396,8 +1343,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyEin(requestParameters: CompanyApiPostCompanyEinRequest, options?: RawAxiosRequestConfig): AxiosPromise<EIN> {
-            return localVarFp.postCompanyEin(requestParameters.einIn, options).then((request) => request(axios, basePath));
+        postCompanyEin(requestParameters: CompanyApiPostCompanyEinRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyEIN> {
+            return localVarFp.postCompanyEin(requestParameters.companyEinIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
@@ -1405,7 +1352,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyEsign(options?: RawAxiosRequestConfig): AxiosPromise<EsignOut> {
+        postCompanyEsign(options?: RawAxiosRequestConfig): AxiosPromise<CompanyEsignOut> {
             return localVarFp.postCompanyEsign(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1415,8 +1362,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyEsignComplete(requestParameters: CompanyApiPostCompanyEsignCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.postCompanyEsignComplete(requestParameters.esignCompleteIn, options).then((request) => request(axios, basePath));
+        postCompanyEsignComplete(requestParameters: CompanyApiPostCompanyEsignCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
+            return localVarFp.postCompanyEsignComplete(requestParameters.companyEsignCompleteIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
@@ -1425,8 +1372,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFounders(requestParameters: CompanyApiPostCompanyFoundersRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.postCompanyFounders(requestParameters.foundersIn, options).then((request) => request(axios, basePath));
+        postCompanyFounders(requestParameters: CompanyApiPostCompanyFoundersRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
+            return localVarFp.postCompanyFounders(requestParameters.companyFoundersIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
@@ -1445,8 +1392,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFundraiseRound(requestParameters: CompanyApiPostCompanyFundraiseRoundRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoundOut> {
-            return localVarFp.postCompanyFundraiseRound(requestParameters.roundInput, options).then((request) => request(axios, basePath));
+        postCompanyFundraiseRound(requestParameters: CompanyApiPostCompanyFundraiseRoundRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyRoundOut> {
+            return localVarFp.postCompanyFundraiseRound(requestParameters.companyRoundInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
@@ -1455,8 +1402,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyFundraiseSafe(requestParameters: CompanyApiPostCompanyFundraiseSafeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SafeOut> {
-            return localVarFp.postCompanyFundraiseSafe(requestParameters.safeIn, options).then((request) => request(axios, basePath));
+        postCompanyFundraiseSafe(requestParameters: CompanyApiPostCompanyFundraiseSafeRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanySafeOut> {
+            return localVarFp.postCompanyFundraiseSafe(requestParameters.companySafeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.
@@ -1464,7 +1411,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyGenesis(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
+        postCompanyGenesis(options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
             return localVarFp.postCompanyGenesis(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1474,8 +1421,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyImportCaptable(requestParameters: CompanyApiPostCompanyImportCaptableRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImportCapTableOut> {
-            return localVarFp.postCompanyImportCaptable(requestParameters.importCapTableIn, options).then((request) => request(axios, basePath));
+        postCompanyImportCaptable(requestParameters: CompanyApiPostCompanyImportCaptableRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyImportCapTableOut> {
+            return localVarFp.postCompanyImportCaptable(requestParameters.companyImportCapTableIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
@@ -1484,27 +1431,17 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyImportDocuments(requestParameters: CompanyApiPostCompanyImportDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImportDocumentsOut> {
-            return localVarFp.postCompanyImportDocuments(requestParameters.importDocumentsIn, options).then((request) => request(axios, basePath));
+        postCompanyImportDocuments(requestParameters: CompanyApiPostCompanyImportDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyImportDocumentsOut> {
+            return localVarFp.postCompanyImportDocuments(requestParameters.companyImportDocumentsIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
-         * @summary StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyKyc(options?: RawAxiosRequestConfig): AxiosPromise<KycStartOut> {
+        postCompanyKyc(options?: RawAxiosRequestConfig): AxiosPromise<CompanyKycStartOut> {
             return localVarFp.postCompanyKyc(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider \"verified\".  Because Hanzo forms the entity and carries the formation KYC/AML obligation, the reviewer is a HANZO platform reviewer (SuperAdmin), and the decision is ATTRIBUTED to them.
-         * @summary DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired.
-         * @param {CompanyApiPostCompanyKycDecisionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCompanyKycDecision(requestParameters: CompanyApiPostCompanyKycDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.postCompanyKycDecision(requestParameters.decisionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
@@ -1512,7 +1449,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyKycRefresh(options?: RawAxiosRequestConfig): AxiosPromise<KycRefreshOut> {
+        postCompanyKycRefresh(options?: RawAxiosRequestConfig): AxiosPromise<CompanyKycRefreshOut> {
             return localVarFp.postCompanyKycRefresh(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1521,16 +1458,16 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyPayment(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
+        postCompanyPayment(options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
             return localVarFp.postCompanyPayment(options).then((request) => request(axios, basePath));
         },
         /**
-         * Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
-         * @summary Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanySkip(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
+        postCompanySkip(options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
             return localVarFp.postCompanySkip(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1540,8 +1477,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompanyTariff(requestParameters: CompanyApiPostCompanyTariffRequest, options?: RawAxiosRequestConfig): AxiosPromise<Tariff> {
-            return localVarFp.postCompanyTariff(requestParameters.tariffIn, options).then((request) => request(axios, basePath));
+        postCompanyTariff(requestParameters: CompanyApiPostCompanyTariffRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyTariff> {
+            return localVarFp.postCompanyTariff(requestParameters.companyTariffIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
@@ -1550,8 +1487,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCompanyStructure(requestParameters: CompanyApiPutCompanyStructureRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
-            return localVarFp.putCompanyStructure(requestParameters.structureIn, options).then((request) => request(axios, basePath));
+        putCompanyStructure(requestParameters: CompanyApiPutCompanyStructureRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompanyFormationView> {
+            return localVarFp.putCompanyStructure(requestParameters.companyStructureIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1613,10 +1550,10 @@ export interface CompanyApiGetCompanyReviewRequest {
 export interface CompanyApiPostCompanyRequest {
     /**
      * 
-     * @type {BeginIn}
+     * @type {CompanyBeginIn}
      * @memberof CompanyApiPostCompany
      */
-    readonly beginIn: BeginIn
+    readonly companyBeginIn: CompanyBeginIn
 }
 
 /**
@@ -1627,10 +1564,10 @@ export interface CompanyApiPostCompanyRequest {
 export interface CompanyApiPostCompanyAdvanceRequest {
     /**
      * 
-     * @type {AdvanceIn}
+     * @type {CompanyAdvanceIn}
      * @memberof CompanyApiPostCompanyAdvance
      */
-    readonly advanceIn: AdvanceIn
+    readonly companyAdvanceIn: CompanyAdvanceIn
 }
 
 /**
@@ -1641,10 +1578,10 @@ export interface CompanyApiPostCompanyAdvanceRequest {
 export interface CompanyApiPostCompanyEinRequest {
     /**
      * 
-     * @type {EinIn}
+     * @type {CompanyEinIn}
      * @memberof CompanyApiPostCompanyEin
      */
-    readonly einIn: EinIn
+    readonly companyEinIn: CompanyEinIn
 }
 
 /**
@@ -1655,10 +1592,10 @@ export interface CompanyApiPostCompanyEinRequest {
 export interface CompanyApiPostCompanyEsignCompleteRequest {
     /**
      * 
-     * @type {EsignCompleteIn}
+     * @type {CompanyEsignCompleteIn}
      * @memberof CompanyApiPostCompanyEsignComplete
      */
-    readonly esignCompleteIn: EsignCompleteIn
+    readonly companyEsignCompleteIn: CompanyEsignCompleteIn
 }
 
 /**
@@ -1669,10 +1606,10 @@ export interface CompanyApiPostCompanyEsignCompleteRequest {
 export interface CompanyApiPostCompanyFoundersRequest {
     /**
      * 
-     * @type {FoundersIn}
+     * @type {CompanyFoundersIn}
      * @memberof CompanyApiPostCompanyFounders
      */
-    readonly foundersIn: FoundersIn
+    readonly companyFoundersIn: CompanyFoundersIn
 }
 
 /**
@@ -1697,10 +1634,10 @@ export interface CompanyApiPostCompanyFundraiseDeckRequest {
 export interface CompanyApiPostCompanyFundraiseRoundRequest {
     /**
      * 
-     * @type {RoundInput}
+     * @type {CompanyRoundInput}
      * @memberof CompanyApiPostCompanyFundraiseRound
      */
-    readonly roundInput: RoundInput
+    readonly companyRoundInput: CompanyRoundInput
 }
 
 /**
@@ -1711,10 +1648,10 @@ export interface CompanyApiPostCompanyFundraiseRoundRequest {
 export interface CompanyApiPostCompanyFundraiseSafeRequest {
     /**
      * 
-     * @type {SafeIn}
+     * @type {CompanySafeIn}
      * @memberof CompanyApiPostCompanyFundraiseSafe
      */
-    readonly safeIn: SafeIn
+    readonly companySafeIn: CompanySafeIn
 }
 
 /**
@@ -1725,10 +1662,10 @@ export interface CompanyApiPostCompanyFundraiseSafeRequest {
 export interface CompanyApiPostCompanyImportCaptableRequest {
     /**
      * 
-     * @type {ImportCapTableIn}
+     * @type {CompanyImportCapTableIn}
      * @memberof CompanyApiPostCompanyImportCaptable
      */
-    readonly importCapTableIn: ImportCapTableIn
+    readonly companyImportCapTableIn: CompanyImportCapTableIn
 }
 
 /**
@@ -1739,24 +1676,10 @@ export interface CompanyApiPostCompanyImportCaptableRequest {
 export interface CompanyApiPostCompanyImportDocumentsRequest {
     /**
      * 
-     * @type {ImportDocumentsIn}
+     * @type {CompanyImportDocumentsIn}
      * @memberof CompanyApiPostCompanyImportDocuments
      */
-    readonly importDocumentsIn: ImportDocumentsIn
-}
-
-/**
- * Request parameters for postCompanyKycDecision operation in CompanyApi.
- * @export
- * @interface CompanyApiPostCompanyKycDecisionRequest
- */
-export interface CompanyApiPostCompanyKycDecisionRequest {
-    /**
-     * 
-     * @type {DecisionIn}
-     * @memberof CompanyApiPostCompanyKycDecision
-     */
-    readonly decisionIn: DecisionIn
+    readonly companyImportDocumentsIn: CompanyImportDocumentsIn
 }
 
 /**
@@ -1767,10 +1690,10 @@ export interface CompanyApiPostCompanyKycDecisionRequest {
 export interface CompanyApiPostCompanyTariffRequest {
     /**
      * 
-     * @type {TariffIn}
+     * @type {CompanyTariffIn}
      * @memberof CompanyApiPostCompanyTariff
      */
-    readonly tariffIn: TariffIn
+    readonly companyTariffIn: CompanyTariffIn
 }
 
 /**
@@ -1781,10 +1704,10 @@ export interface CompanyApiPostCompanyTariffRequest {
 export interface CompanyApiPutCompanyStructureRequest {
     /**
      * 
-     * @type {StructureIn}
+     * @type {CompanyStructureIn}
      * @memberof CompanyApiPutCompanyStructure
      */
-    readonly structureIn: StructureIn
+    readonly companyStructureIn: CompanyStructureIn
 }
 
 /**
@@ -1795,8 +1718,8 @@ export interface CompanyApiPutCompanyStructureRequest {
  */
 export class CompanyApi extends BaseAPI {
     /**
-     * Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
-     * @summary Get returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+     * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+     * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
@@ -1841,27 +1764,27 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Begin starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
-     * @summary Begin starts the org\'s one formation and returns it with the stages reachable from it.
+     * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+     * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
      * @param {CompanyApiPostCompanyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
      */
     public postCompany(requestParameters: CompanyApiPostCompanyRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompany(requestParameters.beginIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompany(requestParameters.companyBeginIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
-     * @summary Advance runs the ONE guarded transition of the formation machine.
+     * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+     * @summary Runs the ONE guarded transition of the formation machine.
      * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
      */
     public postCompanyAdvance(requestParameters: CompanyApiPostCompanyAdvanceRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyAdvance(requestParameters.advanceIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyAdvance(requestParameters.companyAdvanceIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1884,7 +1807,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyEin(requestParameters: CompanyApiPostCompanyEinRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyEin(requestParameters.einIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyEin(requestParameters.companyEinIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1907,7 +1830,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyEsignComplete(requestParameters: CompanyApiPostCompanyEsignCompleteRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyEsignComplete(requestParameters.esignCompleteIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyEsignComplete(requestParameters.companyEsignCompleteIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1919,7 +1842,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyFounders(requestParameters: CompanyApiPostCompanyFoundersRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyFounders(requestParameters.foundersIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyFounders(requestParameters.companyFoundersIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1943,7 +1866,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyFundraiseRound(requestParameters: CompanyApiPostCompanyFundraiseRoundRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyFundraiseRound(requestParameters.roundInput, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyFundraiseRound(requestParameters.companyRoundInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1955,7 +1878,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyFundraiseSafe(requestParameters: CompanyApiPostCompanyFundraiseSafeRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyFundraiseSafe(requestParameters.safeIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyFundraiseSafe(requestParameters.companySafeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1978,7 +1901,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyImportCaptable(requestParameters: CompanyApiPostCompanyImportCaptableRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyImportCaptable(requestParameters.importCapTableIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyImportCaptable(requestParameters.companyImportCapTableIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1990,30 +1913,18 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyImportDocuments(requestParameters: CompanyApiPostCompanyImportDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyImportDocuments(requestParameters.importDocumentsIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyImportDocuments(requestParameters.companyImportDocumentsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
-     * @summary StartKYC opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
+     * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+     * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
      */
     public postCompanyKyc(options?: RawAxiosRequestConfig) {
         return CompanyApiFp(this.configuration).postCompanyKyc(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider \"verified\".  Because Hanzo forms the entity and carries the formation KYC/AML obligation, the reviewer is a HANZO platform reviewer (SuperAdmin), and the decision is ATTRIBUTED to them.
-     * @summary DecideKYC records a privileged reviewer\'s MANUAL decision on a founder\'s KYC — the human-in-the-loop path, and the ONLY route to a pass when no real provider is wired.
-     * @param {CompanyApiPostCompanyKycDecisionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CompanyApi
-     */
-    public postCompanyKycDecision(requestParameters: CompanyApiPostCompanyKycDecisionRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyKycDecision(requestParameters.decisionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2039,8 +1950,8 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
-     * @summary Skip marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
+     * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+     * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
@@ -2058,7 +1969,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public postCompanyTariff(requestParameters: CompanyApiPostCompanyTariffRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).postCompanyTariff(requestParameters.tariffIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).postCompanyTariff(requestParameters.companyTariffIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2070,7 +1981,7 @@ export class CompanyApi extends BaseAPI {
      * @memberof CompanyApi
      */
     public putCompanyStructure(requestParameters: CompanyApiPutCompanyStructureRequest, options?: RawAxiosRequestConfig) {
-        return CompanyApiFp(this.configuration).putCompanyStructure(requestParameters.structureIn, options).then((request) => request(this.axios, this.basePath));
+        return CompanyApiFp(this.configuration).putCompanyStructure(requestParameters.companyStructureIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

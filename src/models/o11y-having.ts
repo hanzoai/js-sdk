@@ -34,9 +34,9 @@ export interface O11yHaving {
     'op'?: string;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof O11yHaving
      */
-    'value'?: object;
+    'value'?: any;
 }
 

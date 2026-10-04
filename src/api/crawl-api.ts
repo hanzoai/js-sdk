@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CrawlRequest } from '../models';
+import type { CrawlCrawlRequest } from '../models';
 // @ts-ignore
-import type { CrawlResult } from '../models';
+import type { CrawlCrawlResult } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * CrawlApi - axios parameter creator
  * @export
@@ -34,13 +36,13 @@ export const CrawlApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Reads one URL and answers with the page as markdown.  It fetches a single URL from inside the cluster and answers with the address it actually landed on, the document\'s title, its content rendered to MARKDOWN, and whatever the page said about itself. One URL per call: batching would make the answer a partial-failure envelope every caller then has to unpack.  A PAGE THAT COULD NOT BE FETCHED IS A NORMAL ANSWER, not a fault. An unreachable host, a refused address and a content type that is not a document all answer 200 with `success:false` and the reason in `error`, because the caller sent a well-formed ask and gets a well-formed answer. Non-2xx is reserved for a caller problem — 400 with the same body when there is no url, 401 for a bad key, 503 when the surface is unconfigured — so error handling can trust the status. Check `success` before reading `data`.  Admission is either a validated principal or the shared service key, presented as X-API-Key or a Bearer; neither is refused, and an unset key fails closed rather than opening the fetcher to the private network. Pages are archived under the scope of the VERIFIED principal and NEVER a scope named in the body, so a URL already read under that scope is answered from the archive without touching the network; a service caller has no org and its pages land in the shared corpus.  The URL is caller-supplied and dialled from INSIDE the cluster, which makes this a request-forgery primitive by construction. Only http and https are accepted, and every address actually dialled must be public unicast — loopback, link-local, private and multicast are refused. The check lives in the DIALER rather than on the hostname, because resolving a name to validate it and then letting the transport resolve it again is a gap DNS rebinding walks straight through; redirects re-enter the same dialer.
          * @summary Fetch one URL and read it back as markdown
-         * @param {CrawlRequest} crawlRequest 
+         * @param {CrawlCrawlRequest} crawlCrawlRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPage: async (crawlRequest: CrawlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'crawlRequest' is not null or undefined
-            assertParamExists('readPage', 'crawlRequest', crawlRequest)
+        readPage: async (crawlCrawlRequest: CrawlCrawlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'crawlCrawlRequest' is not null or undefined
+            assertParamExists('readPage', 'crawlCrawlRequest', crawlCrawlRequest)
             const localVarPath = `/v1/crawl`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,7 +66,7 @@ export const CrawlApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(crawlRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(crawlCrawlRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -84,12 +86,12 @@ export const CrawlApiFp = function(configuration?: Configuration) {
         /**
          * Reads one URL and answers with the page as markdown.  It fetches a single URL from inside the cluster and answers with the address it actually landed on, the document\'s title, its content rendered to MARKDOWN, and whatever the page said about itself. One URL per call: batching would make the answer a partial-failure envelope every caller then has to unpack.  A PAGE THAT COULD NOT BE FETCHED IS A NORMAL ANSWER, not a fault. An unreachable host, a refused address and a content type that is not a document all answer 200 with `success:false` and the reason in `error`, because the caller sent a well-formed ask and gets a well-formed answer. Non-2xx is reserved for a caller problem — 400 with the same body when there is no url, 401 for a bad key, 503 when the surface is unconfigured — so error handling can trust the status. Check `success` before reading `data`.  Admission is either a validated principal or the shared service key, presented as X-API-Key or a Bearer; neither is refused, and an unset key fails closed rather than opening the fetcher to the private network. Pages are archived under the scope of the VERIFIED principal and NEVER a scope named in the body, so a URL already read under that scope is answered from the archive without touching the network; a service caller has no org and its pages land in the shared corpus.  The URL is caller-supplied and dialled from INSIDE the cluster, which makes this a request-forgery primitive by construction. Only http and https are accepted, and every address actually dialled must be public unicast — loopback, link-local, private and multicast are refused. The check lives in the DIALER rather than on the hostname, because resolving a name to validate it and then letting the transport resolve it again is a gap DNS rebinding walks straight through; redirects re-enter the same dialer.
          * @summary Fetch one URL and read it back as markdown
-         * @param {CrawlRequest} crawlRequest 
+         * @param {CrawlCrawlRequest} crawlCrawlRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPage(crawlRequest: CrawlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrawlResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPage(crawlRequest, options);
+        async readPage(crawlCrawlRequest: CrawlCrawlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrawlCrawlResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPage(crawlCrawlRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CrawlApi.readPage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -111,8 +113,8 @@ export const CrawlApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPage(requestParameters: CrawlApiReadPageRequest, options?: RawAxiosRequestConfig): AxiosPromise<CrawlResult> {
-            return localVarFp.readPage(requestParameters.crawlRequest, options).then((request) => request(axios, basePath));
+        readPage(requestParameters: CrawlApiReadPageRequest, options?: RawAxiosRequestConfig): AxiosPromise<CrawlCrawlResult> {
+            return localVarFp.readPage(requestParameters.crawlCrawlRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -125,10 +127,10 @@ export const CrawlApiFactory = function (configuration?: Configuration, basePath
 export interface CrawlApiReadPageRequest {
     /**
      * 
-     * @type {CrawlRequest}
+     * @type {CrawlCrawlRequest}
      * @memberof CrawlApiReadPage
      */
-    readonly crawlRequest: CrawlRequest
+    readonly crawlCrawlRequest: CrawlCrawlRequest
 }
 
 /**
@@ -147,7 +149,7 @@ export class CrawlApi extends BaseAPI {
      * @memberof CrawlApi
      */
     public readPage(requestParameters: CrawlApiReadPageRequest, options?: RawAxiosRequestConfig) {
-        return CrawlApiFp(this.configuration).readPage(requestParameters.crawlRequest, options).then((request) => request(this.axios, this.basePath));
+        return CrawlApiFp(this.configuration).readPage(requestParameters.crawlCrawlRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

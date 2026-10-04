@@ -22,10 +22,10 @@
 export interface O11yAgentReport {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yAgentReport
      */
-    'data'?: { [key: string]: object; };
+    'data'?: { [key: string]: any; };
     /**
      * 
      * @type {number}

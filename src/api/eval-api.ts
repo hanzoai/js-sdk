@@ -22,45 +22,47 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Board } from '../models';
+import type { EvalBoard } from '../models';
 // @ts-ignore
-import type { DatasetList } from '../models';
+import type { EvalDatasetList } from '../models';
 // @ts-ignore
-import type { DatasetReq } from '../models';
+import type { EvalDatasetReq } from '../models';
 // @ts-ignore
-import type { DatasetView } from '../models';
+import type { EvalDatasetView } from '../models';
 // @ts-ignore
-import type { EvaluatorList } from '../models';
+import type { EvalEvaluatorList } from '../models';
 // @ts-ignore
-import type { EvaluatorReq } from '../models';
+import type { EvalEvaluatorReq } from '../models';
 // @ts-ignore
-import type { EvaluatorView } from '../models';
+import type { EvalEvaluatorView } from '../models';
 // @ts-ignore
-import type { ItemList } from '../models';
+import type { EvalItemList } from '../models';
 // @ts-ignore
-import type { ItemReq } from '../models';
+import type { EvalItemReq } from '../models';
 // @ts-ignore
-import type { ItemView } from '../models';
+import type { EvalItemView } from '../models';
 // @ts-ignore
-import type { RunRequest } from '../models';
+import type { EvalRunRequest } from '../models';
 // @ts-ignore
-import type { RunSummary } from '../models';
+import type { EvalRunSummary } from '../models';
 // @ts-ignore
-import type { Runs } from '../models';
+import type { EvalRuns } from '../models';
 // @ts-ignore
-import type { ScoreConfigList } from '../models';
+import type { EvalScoreConfigList } from '../models';
 // @ts-ignore
-import type { ScoreConfigReq } from '../models';
+import type { EvalScoreConfigReq } from '../models';
 // @ts-ignore
-import type { ScoreConfigView } from '../models';
+import type { EvalScoreConfigView } from '../models';
 // @ts-ignore
-import type { ScoreList } from '../models';
+import type { EvalScoreList } from '../models';
 // @ts-ignore
-import type { ScoreReq } from '../models';
+import type { EvalScoreReq } from '../models';
 // @ts-ignore
-import type { ScoreView } from '../models';
+import type { EvalScoreView } from '../models';
 // @ts-ignore
-import type { TraceList } from '../models';
+import type { EvalTraceList } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * EvalApi - axios parameter creator
  * @export
@@ -68,7 +70,7 @@ import type { TraceList } from '../models';
 export const EvalApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 403 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
+         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 401 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
          * @summary Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.
          * @param {string} name Name is the dataset the URL names.
          * @param {*} [options] Override http request option.
@@ -106,7 +108,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 403 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
+         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 401 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
          * @summary Is the datasets your org has, each with its name, description, metadata and timestamps.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
@@ -145,7 +147,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 403 without one.
+         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 401 without one.
          * @summary Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.
          * @param {string} name Name is the dataset the URL names.
          * @param {*} [options] Override http request option.
@@ -183,7 +185,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 403 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
+         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
          * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
          * @param {string} name Dataset is the set to read, from the path — this collection only exists inside one.
          * @param {number} [limit] 
@@ -226,7 +228,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
@@ -265,7 +267,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 403 without one.
+         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 401 without one.
          * @summary Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.
          * @param {string} [range] Range is 24h (the default), 7d or 30d. Anything else normalises to 24h rather than failing, so the board always has a valid window.
          * @param {string} [interval] Interval overrides the bucket the series is grouped into: \&quot;hour\&quot; or \&quot;day\&quot;. Any other value leaves the range\&#39;s own default in place.
@@ -309,7 +311,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
@@ -348,7 +350,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 403 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
+         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
          * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
          * @param {string} [datasetName] Dataset narrows to the runs against one dataset.
          * @param {number} [limit] 
@@ -392,7 +394,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 403 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
+         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 401 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
          * @summary Is the score events your org has recorded, narrowed by any of name, runName and traceId.
          * @param {string} [name] Name narrows to one score name.
          * @param {string} [runName] RunName narrows to the scores of one run.
@@ -446,7 +448,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 403 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
+         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 401 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
          * @summary Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.
          * @param {string} [sessionId] SessionID narrows to one session, which for an evaluation is one run.
          * @param {string} [runName] RunName narrows to the calls one run made.
@@ -500,15 +502,15 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 403 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
+         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 401 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
          * @summary Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.
-         * @param {DatasetReq} datasetReq 
+         * @param {EvalDatasetReq} evalDatasetReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalDatasets: async (datasetReq: DatasetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'datasetReq' is not null or undefined
-            assertParamExists('postEvalDatasets', 'datasetReq', datasetReq)
+        postEvalDatasets: async (evalDatasetReq: EvalDatasetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evalDatasetReq' is not null or undefined
+            assertParamExists('postEvalDatasets', 'evalDatasetReq', evalDatasetReq)
             const localVarPath = `/v1/eval/datasets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -532,7 +534,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(datasetReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalDatasetReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -540,18 +542,18 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 403 without one.
+         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 401 without one.
          * @summary Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.
          * @param {string} name 
-         * @param {ItemReq} itemReq 
+         * @param {EvalItemReq} evalItemReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalDatasetsByNameItems: async (name: string, itemReq: ItemReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEvalDatasetsByNameItems: async (name: string, evalItemReq: EvalItemReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postEvalDatasetsByNameItems', 'name', name)
-            // verify required parameter 'itemReq' is not null or undefined
-            assertParamExists('postEvalDatasetsByNameItems', 'itemReq', itemReq)
+            // verify required parameter 'evalItemReq' is not null or undefined
+            assertParamExists('postEvalDatasetsByNameItems', 'evalItemReq', evalItemReq)
             const localVarPath = `/v1/eval/datasets/{name}/items`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -576,7 +578,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(itemReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalItemReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -584,15 +586,15 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 403 without one.
+         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 401 without one.
          * @summary Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.
-         * @param {EvaluatorReq} evaluatorReq 
+         * @param {EvalEvaluatorReq} evalEvaluatorReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalEvaluators: async (evaluatorReq: EvaluatorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'evaluatorReq' is not null or undefined
-            assertParamExists('postEvalEvaluators', 'evaluatorReq', evaluatorReq)
+        postEvalEvaluators: async (evalEvaluatorReq: EvalEvaluatorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evalEvaluatorReq' is not null or undefined
+            assertParamExists('postEvalEvaluators', 'evalEvaluatorReq', evalEvaluatorReq)
             const localVarPath = `/v1/eval/evaluators`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -616,7 +618,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(evaluatorReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalEvaluatorReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -624,15 +626,15 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 403 without one.
+         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 401 without one.
          * @summary Defines the shape of one score name for the caller\'s org and answers 201 with it.
-         * @param {ScoreConfigReq} scoreConfigReq 
+         * @param {EvalScoreConfigReq} evalScoreConfigReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalRubrics: async (scoreConfigReq: ScoreConfigReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'scoreConfigReq' is not null or undefined
-            assertParamExists('postEvalRubrics', 'scoreConfigReq', scoreConfigReq)
+        postEvalRubrics: async (evalScoreConfigReq: EvalScoreConfigReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evalScoreConfigReq' is not null or undefined
+            assertParamExists('postEvalRubrics', 'evalScoreConfigReq', evalScoreConfigReq)
             const localVarPath = `/v1/eval/rubrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -656,7 +658,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(scoreConfigReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalScoreConfigReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -664,16 +666,16 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 403 without one.
+         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 401 without one.
          * @summary Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.
-         * @param {RunRequest} runRequest 
+         * @param {EvalRunRequest} evalRunRequest 
          * @param {string} [authorization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalRuns: async (runRequest: RunRequest, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'runRequest' is not null or undefined
-            assertParamExists('postEvalRuns', 'runRequest', runRequest)
+        postEvalRuns: async (evalRunRequest: EvalRunRequest, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evalRunRequest' is not null or undefined
+            assertParamExists('postEvalRuns', 'evalRunRequest', evalRunRequest)
             const localVarPath = `/v1/eval/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -700,7 +702,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(runRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalRunRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -708,15 +710,15 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 403 without one, and the org is stamped from the validated claim rather than read off the body.
+         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 401 without one, and the org is stamped from the validated claim rather than read off the body.
          * @summary Files one score event for the caller\'s org and answers 201 with it.
-         * @param {ScoreReq} scoreReq 
+         * @param {EvalScoreReq} evalScoreReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalScores: async (scoreReq: ScoreReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'scoreReq' is not null or undefined
-            assertParamExists('postEvalScores', 'scoreReq', scoreReq)
+        postEvalScores: async (evalScoreReq: EvalScoreReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evalScoreReq' is not null or undefined
+            assertParamExists('postEvalScores', 'evalScoreReq', evalScoreReq)
             const localVarPath = `/v1/eval/scores`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -740,7 +742,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(scoreReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(evalScoreReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -758,7 +760,7 @@ export const EvalApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EvalApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 403 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
+         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 401 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
          * @summary Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.
          * @param {string} name Name is the dataset the URL names.
          * @param {*} [options] Override http request option.
@@ -771,101 +773,101 @@ export const EvalApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 403 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
+         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 401 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
          * @summary Is the datasets your org has, each with its name, description, metadata and timestamps.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalDatasets(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetList>> {
+        async getEvalDatasets(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalDatasetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalDatasets(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalDatasets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 403 without one.
+         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 401 without one.
          * @summary Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.
          * @param {string} name Name is the dataset the URL names.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalDatasetsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetView>> {
+        async getEvalDatasetsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalDatasetView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalDatasetsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalDatasetsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 403 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
+         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
          * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
          * @param {string} name Dataset is the set to read, from the path — this collection only exists inside one.
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalDatasetsByNameItems(name: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ItemList>> {
+        async getEvalDatasetsByNameItems(name: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalItemList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalDatasetsByNameItems(name, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalDatasetsByNameItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalEvaluators(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluatorList>> {
+        async getEvalEvaluators(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalEvaluatorList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalEvaluators(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalEvaluators']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 403 without one.
+         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 401 without one.
          * @summary Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.
          * @param {string} [range] Range is 24h (the default), 7d or 30d. Anything else normalises to 24h rather than failing, so the board always has a valid window.
          * @param {string} [interval] Interval overrides the bucket the series is grouped into: \&quot;hour\&quot; or \&quot;day\&quot;. Any other value leaves the range\&#39;s own default in place.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalMetrics(range?: string, interval?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Board>> {
+        async getEvalMetrics(range?: string, interval?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalBoard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalMetrics(range, interval, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.
          * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalRubrics(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScoreConfigList>> {
+        async getEvalRubrics(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalScoreConfigList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalRubrics(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalRubrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 403 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
+         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
          * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
          * @param {string} [datasetName] Dataset narrows to the runs against one dataset.
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalRuns(datasetName?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Runs>> {
+        async getEvalRuns(datasetName?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalRuns>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalRuns(datasetName, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 403 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
+         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 401 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
          * @summary Is the score events your org has recorded, narrowed by any of name, runName and traceId.
          * @param {string} [name] Name narrows to one score name.
          * @param {string} [runName] RunName narrows to the scores of one run.
@@ -874,14 +876,14 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalScores(name?: string, runName?: string, traceId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScoreList>> {
+        async getEvalScores(name?: string, runName?: string, traceId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalScoreList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalScores(name, runName, traceId, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalScores']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 403 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
+         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 401 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
          * @summary Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.
          * @param {string} [sessionId] SessionID narrows to one session, which for an evaluation is one run.
          * @param {string} [runName] RunName narrows to the calls one run made.
@@ -890,88 +892,88 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEvalTraces(sessionId?: string, runName?: string, datasetName?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TraceList>> {
+        async getEvalTraces(sessionId?: string, runName?: string, datasetName?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalTraceList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEvalTraces(sessionId, runName, datasetName, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.getEvalTraces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 403 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
+         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 401 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
          * @summary Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.
-         * @param {DatasetReq} datasetReq 
+         * @param {EvalDatasetReq} evalDatasetReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalDatasets(datasetReq: DatasetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalDatasets(datasetReq, options);
+        async postEvalDatasets(evalDatasetReq: EvalDatasetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalDatasetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalDatasets(evalDatasetReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalDatasets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 403 without one.
+         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 401 without one.
          * @summary Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.
          * @param {string} name 
-         * @param {ItemReq} itemReq 
+         * @param {EvalItemReq} evalItemReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalDatasetsByNameItems(name: string, itemReq: ItemReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ItemView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalDatasetsByNameItems(name, itemReq, options);
+        async postEvalDatasetsByNameItems(name: string, evalItemReq: EvalItemReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalItemView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalDatasetsByNameItems(name, evalItemReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalDatasetsByNameItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 403 without one.
+         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 401 without one.
          * @summary Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.
-         * @param {EvaluatorReq} evaluatorReq 
+         * @param {EvalEvaluatorReq} evalEvaluatorReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalEvaluators(evaluatorReq: EvaluatorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluatorView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalEvaluators(evaluatorReq, options);
+        async postEvalEvaluators(evalEvaluatorReq: EvalEvaluatorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalEvaluatorView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalEvaluators(evalEvaluatorReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalEvaluators']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 403 without one.
+         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 401 without one.
          * @summary Defines the shape of one score name for the caller\'s org and answers 201 with it.
-         * @param {ScoreConfigReq} scoreConfigReq 
+         * @param {EvalScoreConfigReq} evalScoreConfigReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalRubrics(scoreConfigReq: ScoreConfigReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScoreConfigView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalRubrics(scoreConfigReq, options);
+        async postEvalRubrics(evalScoreConfigReq: EvalScoreConfigReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalScoreConfigView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalRubrics(evalScoreConfigReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalRubrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 403 without one.
+         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 401 without one.
          * @summary Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.
-         * @param {RunRequest} runRequest 
+         * @param {EvalRunRequest} evalRunRequest 
          * @param {string} [authorization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalRuns(runRequest: RunRequest, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalRuns(runRequest, authorization, options);
+        async postEvalRuns(evalRunRequest: EvalRunRequest, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalRunSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalRuns(evalRunRequest, authorization, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 403 without one, and the org is stamped from the validated claim rather than read off the body.
+         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 401 without one, and the org is stamped from the validated claim rather than read off the body.
          * @summary Files one score event for the caller\'s org and answers 201 with it.
-         * @param {ScoreReq} scoreReq 
+         * @param {EvalScoreReq} evalScoreReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEvalScores(scoreReq: ScoreReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScoreView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalScores(scoreReq, options);
+        async postEvalScores(evalScoreReq: EvalScoreReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvalScoreView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEvalScores(evalScoreReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EvalApi.postEvalScores']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -987,7 +989,7 @@ export const EvalApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = EvalApiFp(configuration)
     return {
         /**
-         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 403 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
+         * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 401 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
          * @summary Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.
          * @param {EvalApiDeleteEvalDatasetsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -997,154 +999,154 @@ export const EvalApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteEvalDatasetsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 403 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
+         * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 401 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
          * @summary Is the datasets your org has, each with its name, description, metadata and timestamps.
          * @param {EvalApiGetEvalDatasetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalDatasets(requestParameters: EvalApiGetEvalDatasetsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DatasetList> {
+        getEvalDatasets(requestParameters: EvalApiGetEvalDatasetsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalDatasetList> {
             return localVarFp.getEvalDatasets(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 403 without one.
+         * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 401 without one.
          * @summary Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.
          * @param {EvalApiGetEvalDatasetsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalDatasetsByName(requestParameters: EvalApiGetEvalDatasetsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetView> {
+        getEvalDatasetsByName(requestParameters: EvalApiGetEvalDatasetsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalDatasetView> {
             return localVarFp.getEvalDatasetsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 403 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
+         * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
          * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
          * @param {EvalApiGetEvalDatasetsByNameItemsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalDatasetsByNameItems(requestParameters: EvalApiGetEvalDatasetsByNameItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ItemList> {
+        getEvalDatasetsByNameItems(requestParameters: EvalApiGetEvalDatasetsByNameItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalItemList> {
             return localVarFp.getEvalDatasetsByNameItems(requestParameters.name, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.
          * @param {EvalApiGetEvalEvaluatorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalEvaluators(requestParameters: EvalApiGetEvalEvaluatorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvaluatorList> {
+        getEvalEvaluators(requestParameters: EvalApiGetEvalEvaluatorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalEvaluatorList> {
             return localVarFp.getEvalEvaluators(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 403 without one.
+         * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 401 without one.
          * @summary Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.
          * @param {EvalApiGetEvalMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalMetrics(requestParameters: EvalApiGetEvalMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Board> {
+        getEvalMetrics(requestParameters: EvalApiGetEvalMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalBoard> {
             return localVarFp.getEvalMetrics(requestParameters.range, requestParameters.interval, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+         * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
          * @summary Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.
          * @param {EvalApiGetEvalRubricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalRubrics(requestParameters: EvalApiGetEvalRubricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ScoreConfigList> {
+        getEvalRubrics(requestParameters: EvalApiGetEvalRubricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalScoreConfigList> {
             return localVarFp.getEvalRubrics(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 403 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
+         * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
          * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
          * @param {EvalApiGetEvalRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalRuns(requestParameters: EvalApiGetEvalRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Runs> {
+        getEvalRuns(requestParameters: EvalApiGetEvalRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalRuns> {
             return localVarFp.getEvalRuns(requestParameters.datasetName, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 403 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
+         * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 401 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
          * @summary Is the score events your org has recorded, narrowed by any of name, runName and traceId.
          * @param {EvalApiGetEvalScoresRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalScores(requestParameters: EvalApiGetEvalScoresRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ScoreList> {
+        getEvalScores(requestParameters: EvalApiGetEvalScoresRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalScoreList> {
             return localVarFp.getEvalScores(requestParameters.name, requestParameters.runName, requestParameters.traceId, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 403 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
+         * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 401 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
          * @summary Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.
          * @param {EvalApiGetEvalTracesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEvalTraces(requestParameters: EvalApiGetEvalTracesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TraceList> {
+        getEvalTraces(requestParameters: EvalApiGetEvalTracesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EvalTraceList> {
             return localVarFp.getEvalTraces(requestParameters.sessionId, requestParameters.runName, requestParameters.datasetName, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 403 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
+         * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 401 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
          * @summary Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.
          * @param {EvalApiPostEvalDatasetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalDatasets(requestParameters: EvalApiPostEvalDatasetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DatasetView> {
-            return localVarFp.postEvalDatasets(requestParameters.datasetReq, options).then((request) => request(axios, basePath));
+        postEvalDatasets(requestParameters: EvalApiPostEvalDatasetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalDatasetView> {
+            return localVarFp.postEvalDatasets(requestParameters.evalDatasetReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 403 without one.
+         * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 401 without one.
          * @summary Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.
          * @param {EvalApiPostEvalDatasetsByNameItemsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalDatasetsByNameItems(requestParameters: EvalApiPostEvalDatasetsByNameItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ItemView> {
-            return localVarFp.postEvalDatasetsByNameItems(requestParameters.name, requestParameters.itemReq, options).then((request) => request(axios, basePath));
+        postEvalDatasetsByNameItems(requestParameters: EvalApiPostEvalDatasetsByNameItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalItemView> {
+            return localVarFp.postEvalDatasetsByNameItems(requestParameters.name, requestParameters.evalItemReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 403 without one.
+         * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 401 without one.
          * @summary Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.
          * @param {EvalApiPostEvalEvaluatorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalEvaluators(requestParameters: EvalApiPostEvalEvaluatorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvaluatorView> {
-            return localVarFp.postEvalEvaluators(requestParameters.evaluatorReq, options).then((request) => request(axios, basePath));
+        postEvalEvaluators(requestParameters: EvalApiPostEvalEvaluatorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalEvaluatorView> {
+            return localVarFp.postEvalEvaluators(requestParameters.evalEvaluatorReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 403 without one.
+         * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 401 without one.
          * @summary Defines the shape of one score name for the caller\'s org and answers 201 with it.
          * @param {EvalApiPostEvalRubricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalRubrics(requestParameters: EvalApiPostEvalRubricsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScoreConfigView> {
-            return localVarFp.postEvalRubrics(requestParameters.scoreConfigReq, options).then((request) => request(axios, basePath));
+        postEvalRubrics(requestParameters: EvalApiPostEvalRubricsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalScoreConfigView> {
+            return localVarFp.postEvalRubrics(requestParameters.evalScoreConfigReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 403 without one.
+         * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 401 without one.
          * @summary Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.
          * @param {EvalApiPostEvalRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalRuns(requestParameters: EvalApiPostEvalRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunSummary> {
-            return localVarFp.postEvalRuns(requestParameters.runRequest, requestParameters.authorization, options).then((request) => request(axios, basePath));
+        postEvalRuns(requestParameters: EvalApiPostEvalRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalRunSummary> {
+            return localVarFp.postEvalRuns(requestParameters.evalRunRequest, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 403 without one, and the org is stamped from the validated claim rather than read off the body.
+         * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 401 without one, and the org is stamped from the validated claim rather than read off the body.
          * @summary Files one score event for the caller\'s org and answers 201 with it.
          * @param {EvalApiPostEvalScoresRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEvalScores(requestParameters: EvalApiPostEvalScoresRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScoreView> {
-            return localVarFp.postEvalScores(requestParameters.scoreReq, options).then((request) => request(axios, basePath));
+        postEvalScores(requestParameters: EvalApiPostEvalScoresRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvalScoreView> {
+            return localVarFp.postEvalScores(requestParameters.evalScoreReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1360,10 +1362,10 @@ export interface EvalApiGetEvalTracesRequest {
 export interface EvalApiPostEvalDatasetsRequest {
     /**
      * 
-     * @type {DatasetReq}
+     * @type {EvalDatasetReq}
      * @memberof EvalApiPostEvalDatasets
      */
-    readonly datasetReq: DatasetReq
+    readonly evalDatasetReq: EvalDatasetReq
 }
 
 /**
@@ -1381,10 +1383,10 @@ export interface EvalApiPostEvalDatasetsByNameItemsRequest {
 
     /**
      * 
-     * @type {ItemReq}
+     * @type {EvalItemReq}
      * @memberof EvalApiPostEvalDatasetsByNameItems
      */
-    readonly itemReq: ItemReq
+    readonly evalItemReq: EvalItemReq
 }
 
 /**
@@ -1395,10 +1397,10 @@ export interface EvalApiPostEvalDatasetsByNameItemsRequest {
 export interface EvalApiPostEvalEvaluatorsRequest {
     /**
      * 
-     * @type {EvaluatorReq}
+     * @type {EvalEvaluatorReq}
      * @memberof EvalApiPostEvalEvaluators
      */
-    readonly evaluatorReq: EvaluatorReq
+    readonly evalEvaluatorReq: EvalEvaluatorReq
 }
 
 /**
@@ -1409,10 +1411,10 @@ export interface EvalApiPostEvalEvaluatorsRequest {
 export interface EvalApiPostEvalRubricsRequest {
     /**
      * 
-     * @type {ScoreConfigReq}
+     * @type {EvalScoreConfigReq}
      * @memberof EvalApiPostEvalRubrics
      */
-    readonly scoreConfigReq: ScoreConfigReq
+    readonly evalScoreConfigReq: EvalScoreConfigReq
 }
 
 /**
@@ -1423,10 +1425,10 @@ export interface EvalApiPostEvalRubricsRequest {
 export interface EvalApiPostEvalRunsRequest {
     /**
      * 
-     * @type {RunRequest}
+     * @type {EvalRunRequest}
      * @memberof EvalApiPostEvalRuns
      */
-    readonly runRequest: RunRequest
+    readonly evalRunRequest: EvalRunRequest
 
     /**
      * 
@@ -1444,10 +1446,10 @@ export interface EvalApiPostEvalRunsRequest {
 export interface EvalApiPostEvalScoresRequest {
     /**
      * 
-     * @type {ScoreReq}
+     * @type {EvalScoreReq}
      * @memberof EvalApiPostEvalScores
      */
-    readonly scoreReq: ScoreReq
+    readonly evalScoreReq: EvalScoreReq
 }
 
 /**
@@ -1458,7 +1460,7 @@ export interface EvalApiPostEvalScoresRequest {
  */
 export class EvalApi extends BaseAPI {
     /**
-     * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 403 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
+     * Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.  This is not a detach: the examples are gone with the set, so a dataset cannot be resurrected by re-creating the name. A name this org does not have is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org. Requires a validated principal; 401 without one. Runs and scores already recorded against the dataset are telemetry events and are NOT deleted with it.
      * @summary Removes the named dataset of the caller\'s org AND all of its examples, in one transaction.
      * @param {EvalApiDeleteEvalDatasetsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1470,7 +1472,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 403 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
+     * Is the datasets your org has, each with its name, description, metadata and timestamps.  It is the only way to enumerate what an org holds. Requires a validated principal; 401 without one. Every row is filtered on the validated org, so there is no parameter that reaches another tenant\'s datasets. The item count is NOT populated here — read one dataset to get it.
      * @summary Is the datasets your org has, each with its name, description, metadata and timestamps.
      * @param {EvalApiGetEvalDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1482,7 +1484,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 403 without one.
+     * Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.  A name this org does not have is 404, which is also what another tenant\'s dataset looks like from here. Requires a validated principal; 401 without one.
      * @summary Returns one dataset of the caller\'s org by name, together with its live item count — the one read that answers how big the set actually is.
      * @param {EvalApiGetEvalDatasetsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1494,7 +1496,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 403 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
+     * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
      * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
      * @param {EvalApiGetEvalDatasetsByNameItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1506,7 +1508,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+     * Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
      * @summary Is the judges your org has defined, each with its judge model, criteria and the score name it writes under.
      * @param {EvalApiGetEvalEvaluatorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1518,7 +1520,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 403 without one.
+     * Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.  The window the answer was actually computed over is echoed back, so a client never has to infer it. A platform admin sees the board across ALL orgs; everyone else sees their own.  The board is HONEST-EMPTY where it cannot be computed: with no datastore wired, or under a named project scope the usage ledger does not yet carry, it answers a valid board with zero totals and a flat series rather than a fabricated number or a 500. Requires a validated principal; 401 without one.
      * @summary Is your org\'s AI overview board over a window: totals (generations, prompt and completion tokens, cost in cents, errors, success rate, distinct models and users), a gap-filled time series, a per-model breakdown with the long tail folded into \"other\", and latency percentiles read from the GenAI spans.
      * @param {EvalApiGetEvalMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1530,7 +1532,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 403 without one, and the listing is filtered on the validated org.
+     * Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.  Requires a validated principal; 401 without one, and the listing is filtered on the validated org.
      * @summary Is the score shapes your org has declared — each name\'s data type, its numeric bounds and its allowed categories.
      * @param {EvalApiGetEvalRubricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1542,7 +1544,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 403 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
+     * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
      * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
      * @param {EvalApiGetEvalRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1554,7 +1556,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 403 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
+     * Is the score events your org has recorded, narrowed by any of name, runName and traceId.  The org is bound as an authoritative predicate on the query, never taken from a header, so a filter can narrow the caller\'s own scores but can never widen past them. Requires a validated principal; 401 without one. Scores live in the datastore, so a deployment with none wired answers 503 rather than an empty page that would read as \"no scores\".
      * @summary Is the score events your org has recorded, narrowed by any of name, runName and traceId.
      * @param {EvalApiGetEvalScoresRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1566,7 +1568,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 403 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
+     * Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.  Scoped by org AND by project: the project is the caller\'s server-minted scope, not a parameter, so it cannot be widened by asking. Requires a validated principal; 401 without one. Traces live in the datastore, so a deployment with none wired answers 503 rather than an empty page.
      * @summary Is the traces behind your evaluations — one per model call an evaluation made, carrying its input, output, model and timing — narrowed by any of sessionId, runName and datasetName.
      * @param {EvalApiGetEvalTracesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1578,7 +1580,7 @@ export class EvalApi extends BaseAPI {
     }
 
     /**
-     * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 403 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
+     * Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.  The NAME is the key, not an id: posting a name the org already has updates that dataset\'s description and metadata and keeps its original creation time, so this is create-or-edit and never a duplicate. Its items are untouched.  Requires a validated principal; 401 without one. The org comes from the validated owner claim, never from a client X-Org-Id, so a dataset can only ever be written under the caller\'s own tenant. A description over 64 KiB is 400.
      * @summary Writes a dataset — the named set of graded examples a run scores a model against — under the caller\'s org and answers 201 with it.
      * @param {EvalApiPostEvalDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1586,11 +1588,11 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalDatasets(requestParameters: EvalApiPostEvalDatasetsRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalDatasets(requestParameters.datasetReq, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalDatasets(requestParameters.evalDatasetReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 403 without one.
+     * Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.  That dataset MUST already exist for this org: an unknown one is 404, never a silent create. Requires a validated principal; 401 without one.
      * @summary Writes one graded example — its input, its expected output, free-form metadata and a status — into the dataset named in the path, and answers 201 with it.
      * @param {EvalApiPostEvalDatasetsByNameItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1598,11 +1600,11 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalDatasetsByNameItems(requestParameters: EvalApiPostEvalDatasetsByNameItemsRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalDatasetsByNameItems(requestParameters.name, requestParameters.itemReq, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalDatasetsByNameItems(requestParameters.name, requestParameters.evalItemReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 403 without one.
+     * Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.  Like a dataset, the NAME is the key: re-posting a name edits that judge rather than adding a second one. Requires a validated principal; 401 without one.
      * @summary Saves a reusable judge for the caller\'s org — the judge model and the written criteria it grades against — and answers 201 with it.
      * @param {EvalApiPostEvalEvaluatorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1610,11 +1612,11 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalEvaluators(requestParameters: EvalApiPostEvalEvaluatorsRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalEvaluators(requestParameters.evaluatorReq, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalEvaluators(requestParameters.evalEvaluatorReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 403 without one.
+     * Defines the shape of one score name for the caller\'s org and answers 201 with it.  This is the integrity contract, not documentation: once a rubric exists for a name, every score recorded under that name is checked against it and the rubric\'s data type is AUTHORITATIVE — a caller cannot claim a different one. Out-of-range values, unlisted labels and non-finite numbers are refused at write time.  A CATEGORICAL rubric with no categories is 400, as is a non-finite bound or a minValue above maxValue. Requires a validated principal; 401 without one.
      * @summary Defines the shape of one score name for the caller\'s org and answers 201 with it.
      * @param {EvalApiPostEvalRubricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1622,11 +1624,11 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalRubrics(requestParameters: EvalApiPostEvalRubricsRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalRubrics(requestParameters.scoreConfigReq, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalRubrics(requestParameters.evalScoreConfigReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 403 without one.
+     * Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.  For each ACTIVE example in the dataset it calls the model under test, records a trace, calls the LLM-as-judge, and records the judge\'s score with its reasoning. The answer carries the per-item results (item id, trace id, score, output or error) alongside items, scored and avgScore.  The dataset must belong to the caller\'s org (404 otherwise) and must have at least one ACTIVE example (422 otherwise).  It runs as YOU: the caller\'s own Authorization bearer drives the model gateway, so a request without one is 401 rather than a run made anonymously or under a service identity. Only a non-reversible hash of that credential is recorded on the traces.  Bounded and honest about it: an org may have at most 4 runs in flight and the fifth is 429 rather than queued, and the whole run is capped at 10 minutes — examples past the deadline come back with an error instead of a score, and scored counts only real successes. A run where NOTHING scored answers 502, not a 200 that looks like an evaluation. A run must be able to persist what it produces, so a deployment with no datastore wired is 503 up front. Requires a validated principal; 401 without one.
      * @summary Runs a real evaluation and answers the summary when it is finished — this is synchronous work, not a job id.
      * @param {EvalApiPostEvalRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1634,11 +1636,11 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalRuns(requestParameters: EvalApiPostEvalRunsRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalRuns(requestParameters.runRequest, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalRuns(requestParameters.evalRunRequest, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 403 without one, and the org is stamped from the validated claim rather than read off the body.
+     * Files one score event for the caller\'s org and answers 201 with it.  This is how human review and out-of-band graders land beside the automatic ones: name the score, give it a value (or a stringValue for a categorical label), and attach it to a trace, a run, a dataset example, or any combination.  Scores are validated fail-closed. A value must be FINITE — NaN and Inf are 400 — and if the org has declared a rubric for this name, that rubric decides the type and the value must satisfy it: inside the numeric bounds, or one of the allowed categories. A caller cannot override the declared type by sending a different dataType.  A score is TELEMETRY, not metadata, so it needs the datastore: a deployment with none wired answers 503 rather than accepting a score it cannot persist. Requires a validated principal; 401 without one, and the org is stamped from the validated claim rather than read off the body.
      * @summary Files one score event for the caller\'s org and answers 201 with it.
      * @param {EvalApiPostEvalScoresRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1646,7 +1648,7 @@ export class EvalApi extends BaseAPI {
      * @memberof EvalApi
      */
     public postEvalScores(requestParameters: EvalApiPostEvalScoresRequest, options?: RawAxiosRequestConfig) {
-        return EvalApiFp(this.configuration).postEvalScores(requestParameters.scoreReq, options).then((request) => request(this.axios, this.basePath));
+        return EvalApiFp(this.configuration).postEvalScores(requestParameters.evalScoreReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -24,7 +24,7 @@ async function main() {
   const agents = new AgentApi(config());
 
   const { data: created } = await agents.postAgent({
-    createAgentIn: {
+    agentCreateAgentIn: {
       name,
       model,
       description: 'Created by the hanzoai SDK agent example.',

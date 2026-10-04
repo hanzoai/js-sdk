@@ -21,11 +21,11 @@
  */
 export interface O11yO11yLicenseActiveOut {
     /**
-     * Data is the license.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yLicenseActiveOut
      */
-    'data'?: object;
+    'data'?: any;
     /**
      * Status is \"success\".
      * @type {string}

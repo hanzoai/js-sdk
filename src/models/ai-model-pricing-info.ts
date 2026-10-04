@@ -22,15 +22,27 @@
 export interface AiModelPricingInfo {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof AiModelPricingInfo
      */
-    'input'?: number;
+    'completion'?: string;
     /**
      * 
      * @type {number}
      * @memberof AiModelPricingInfo
      */
-    'output'?: number;
+    'input_per_million'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AiModelPricingInfo
+     */
+    'output_per_million'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelPricingInfo
+     */
+    'prompt'?: string;
 }
 

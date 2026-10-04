@@ -22,10 +22,10 @@
 export interface O11yFunction {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<any>}
      * @memberof O11yFunction
      */
-    'args'?: Array<object>;
+    'args'?: Array<any>;
     /**
      * 
      * @type {string}
@@ -34,9 +34,9 @@ export interface O11yFunction {
     'name'?: string;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yFunction
      */
-    'namedArgs'?: { [key: string]: object; };
+    'namedArgs'?: { [key: string]: any; };
 }
 

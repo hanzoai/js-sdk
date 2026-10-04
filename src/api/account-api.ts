@@ -22,23 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ApiKeyList } from '../models';
+import type { AccountApiKeyList } from '../models';
 // @ts-ignore
-import type { Appearance } from '../models';
+import type { AccountAppearance } from '../models';
 // @ts-ignore
-import type { CsrfResp } from '../models';
+import type { AccountCsrfResp } from '../models';
 // @ts-ignore
-import type { EmbedStatusResp } from '../models';
+import type { AccountEmbedStatusResp } from '../models';
 // @ts-ignore
-import type { KeyTypeIn } from '../models';
+import type { AccountKeyTypeIn } from '../models';
 // @ts-ignore
-import type { MintedKey } from '../models';
+import type { AccountMintedKey } from '../models';
 // @ts-ignore
-import type { OnboardReq } from '../models';
+import type { AccountOnboardReq } from '../models';
 // @ts-ignore
-import type { OnboardResp } from '../models';
+import type { AccountOnboardResp } from '../models';
 // @ts-ignore
-import type { RevokedKey } from '../models';
+import type { AccountRevokedKey } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * AccountApi - axios parameter creator
  * @export
@@ -46,7 +48,7 @@ import type { RevokedKey } from '../models';
 export const AccountApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
          * @summary Revokes the caller\'s own API key of the requested class.
          * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
          * @param {*} [options] Override http request option.
@@ -165,8 +167,8 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
-         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
+         * Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -274,13 +276,13 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Stores the caller\'s appearance preference on their IAM account, preserving every other field of the row. The accent is validated as a real colour token before it is stored; an unset or invalid axis is dropped rather than stored.
          * @summary Stores the caller\'s appearance preference on their IAM account, preserving every other field of the row.
-         * @param {Appearance} appearance 
+         * @param {AccountAppearance} accountAppearance 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountAppearance: async (appearance: Appearance, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'appearance' is not null or undefined
-            assertParamExists('postAccountAppearance', 'appearance', appearance)
+        postAccountAppearance: async (accountAppearance: AccountAppearance, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountAppearance' is not null or undefined
+            assertParamExists('postAccountAppearance', 'accountAppearance', accountAppearance)
             const localVarPath = `/v1/account/appearance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -304,7 +306,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(appearance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(accountAppearance, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -348,13 +350,13 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {KeyTypeIn} keyTypeIn 
+         * @param {AccountKeyTypeIn} accountKeyTypeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountKeys: async (keyTypeIn: KeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'keyTypeIn' is not null or undefined
-            assertParamExists('postAccountKeys', 'keyTypeIn', keyTypeIn)
+        postAccountKeys: async (accountKeyTypeIn: AccountKeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountKeyTypeIn' is not null or undefined
+            assertParamExists('postAccountKeys', 'accountKeyTypeIn', accountKeyTypeIn)
             const localVarPath = `/v1/account/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -378,7 +380,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(keyTypeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(accountKeyTypeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -386,15 +388,15 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Onboard creates the caller\'s organization.
-         * @param {OnboardReq} onboardReq 
+         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
+         * @summary Creates the caller\'s organization.
+         * @param {AccountOnboardReq} accountOnboardReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountOrgs: async (onboardReq: OnboardReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'onboardReq' is not null or undefined
-            assertParamExists('postAccountOrgs', 'onboardReq', onboardReq)
+        postAccountOrgs: async (accountOnboardReq: AccountOnboardReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountOnboardReq' is not null or undefined
+            assertParamExists('postAccountOrgs', 'accountOnboardReq', accountOnboardReq)
             const localVarPath = `/v1/account/orgs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -418,7 +420,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(onboardReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(accountOnboardReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -436,13 +438,13 @@ export const AccountApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AccountApiAxiosParamCreator(configuration)
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
          * @summary Revokes the caller\'s own API key of the requested class.
          * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAccountKeys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokedKey>> {
+        async deleteAccountKeys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountRevokedKey>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAccountKeys(type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.deleteAccountKeys']?.[localVarOperationServerIndex]?.url;
@@ -454,7 +456,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountAppearance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Appearance>> {
+        async getAccountAppearance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountAppearance>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountAppearance(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.getAccountAppearance']?.[localVarOperationServerIndex]?.url;
@@ -476,12 +478,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
-         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
+         * Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountCsrf(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CsrfResp>> {
+        async getAccountCsrf(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountCsrfResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountCsrf(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.getAccountCsrf']?.[localVarOperationServerIndex]?.url;
@@ -494,7 +496,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountEmbed(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmbedStatusResp>> {
+        async getAccountEmbed(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountEmbedStatusResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountEmbed(app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.getAccountEmbed']?.[localVarOperationServerIndex]?.url;
@@ -506,7 +508,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyList>> {
+        async getAccountKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountApiKeyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountKeys(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.getAccountKeys']?.[localVarOperationServerIndex]?.url;
@@ -515,12 +517,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
         /**
          * Stores the caller\'s appearance preference on their IAM account, preserving every other field of the row. The accent is validated as a real colour token before it is stored; an unset or invalid axis is dropped rather than stored.
          * @summary Stores the caller\'s appearance preference on their IAM account, preserving every other field of the row.
-         * @param {Appearance} appearance 
+         * @param {AccountAppearance} accountAppearance 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAccountAppearance(appearance: Appearance, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Appearance>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountAppearance(appearance, options);
+        async postAccountAppearance(accountAppearance: AccountAppearance, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountAppearance>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountAppearance(accountAppearance, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.postAccountAppearance']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -540,25 +542,25 @@ export const AccountApiFp = function(configuration?: Configuration) {
         /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {KeyTypeIn} keyTypeIn 
+         * @param {AccountKeyTypeIn} accountKeyTypeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAccountKeys(keyTypeIn: KeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MintedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountKeys(keyTypeIn, options);
+        async postAccountKeys(accountKeyTypeIn: AccountKeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountMintedKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountKeys(accountKeyTypeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.postAccountKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Onboard creates the caller\'s organization.
-         * @param {OnboardReq} onboardReq 
+         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
+         * @summary Creates the caller\'s organization.
+         * @param {AccountOnboardReq} accountOnboardReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAccountOrgs(onboardReq: OnboardReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OnboardResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountOrgs(onboardReq, options);
+        async postAccountOrgs(accountOnboardReq: AccountOnboardReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountOnboardResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountOrgs(accountOnboardReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.postAccountOrgs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -574,13 +576,13 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = AccountApiFp(configuration)
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
          * @summary Revokes the caller\'s own API key of the requested class.
          * @param {AccountApiDeleteAccountKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccountKeys(requestParameters: AccountApiDeleteAccountKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RevokedKey> {
+        deleteAccountKeys(requestParameters: AccountApiDeleteAccountKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountRevokedKey> {
             return localVarFp.deleteAccountKeys(requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
@@ -589,7 +591,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountAppearance(options?: RawAxiosRequestConfig): AxiosPromise<Appearance> {
+        getAccountAppearance(options?: RawAxiosRequestConfig): AxiosPromise<AccountAppearance> {
             return localVarFp.getAccountAppearance(options).then((request) => request(axios, basePath));
         },
         /**
@@ -603,12 +605,12 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getAccountAvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(axios, basePath));
         },
         /**
-         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
-         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
+         * Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountCsrf(options?: RawAxiosRequestConfig): AxiosPromise<CsrfResp> {
+        getAccountCsrf(options?: RawAxiosRequestConfig): AxiosPromise<AccountCsrfResp> {
             return localVarFp.getAccountCsrf(options).then((request) => request(axios, basePath));
         },
         /**
@@ -618,7 +620,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountEmbed(requestParameters: AccountApiGetAccountEmbedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EmbedStatusResp> {
+        getAccountEmbed(requestParameters: AccountApiGetAccountEmbedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountEmbedStatusResp> {
             return localVarFp.getAccountEmbed(requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
@@ -627,7 +629,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountKeys(options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyList> {
+        getAccountKeys(options?: RawAxiosRequestConfig): AxiosPromise<AccountApiKeyList> {
             return localVarFp.getAccountKeys(options).then((request) => request(axios, basePath));
         },
         /**
@@ -637,8 +639,8 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountAppearance(requestParameters: AccountApiPostAccountAppearanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Appearance> {
-            return localVarFp.postAccountAppearance(requestParameters.appearance, options).then((request) => request(axios, basePath));
+        postAccountAppearance(requestParameters: AccountApiPostAccountAppearanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountAppearance> {
+            return localVarFp.postAccountAppearance(requestParameters.accountAppearance, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
@@ -656,18 +658,18 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<MintedKey> {
-            return localVarFp.postAccountKeys(requestParameters.keyTypeIn, options).then((request) => request(axios, basePath));
+        postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountMintedKey> {
+            return localVarFp.postAccountKeys(requestParameters.accountKeyTypeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Onboard creates the caller\'s organization.
+         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
+         * @summary Creates the caller\'s organization.
          * @param {AccountApiPostAccountOrgsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountOrgs(requestParameters: AccountApiPostAccountOrgsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OnboardResp> {
-            return localVarFp.postAccountOrgs(requestParameters.onboardReq, options).then((request) => request(axios, basePath));
+        postAccountOrgs(requestParameters: AccountApiPostAccountOrgsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountOnboardResp> {
+            return localVarFp.postAccountOrgs(requestParameters.accountOnboardReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -736,10 +738,10 @@ export interface AccountApiGetAccountEmbedRequest {
 export interface AccountApiPostAccountAppearanceRequest {
     /**
      * 
-     * @type {Appearance}
+     * @type {AccountAppearance}
      * @memberof AccountApiPostAccountAppearance
      */
-    readonly appearance: Appearance
+    readonly accountAppearance: AccountAppearance
 }
 
 /**
@@ -750,10 +752,10 @@ export interface AccountApiPostAccountAppearanceRequest {
 export interface AccountApiPostAccountKeysRequest {
     /**
      * 
-     * @type {KeyTypeIn}
+     * @type {AccountKeyTypeIn}
      * @memberof AccountApiPostAccountKeys
      */
-    readonly keyTypeIn: KeyTypeIn
+    readonly accountKeyTypeIn: AccountKeyTypeIn
 }
 
 /**
@@ -764,10 +766,10 @@ export interface AccountApiPostAccountKeysRequest {
 export interface AccountApiPostAccountOrgsRequest {
     /**
      * 
-     * @type {OnboardReq}
+     * @type {AccountOnboardReq}
      * @memberof AccountApiPostAccountOrgs
      */
-    readonly onboardReq: OnboardReq
+    readonly accountOnboardReq: AccountOnboardReq
 }
 
 /**
@@ -778,7 +780,7 @@ export interface AccountApiPostAccountOrgsRequest {
  */
 export class AccountApi extends BaseAPI {
     /**
-     * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+     * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
      * @summary Revokes the caller\'s own API key of the requested class.
      * @param {AccountApiDeleteAccountKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -813,8 +815,8 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
-     * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
+     * Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+     * @summary Mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
@@ -855,7 +857,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public postAccountAppearance(requestParameters: AccountApiPostAccountAppearanceRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).postAccountAppearance(requestParameters.appearance, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).postAccountAppearance(requestParameters.accountAppearance, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -878,19 +880,19 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).postAccountKeys(requestParameters.keyTypeIn, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).postAccountKeys(requestParameters.accountKeyTypeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-     * @summary Onboard creates the caller\'s organization.
+     * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
+     * @summary Creates the caller\'s organization.
      * @param {AccountApiPostAccountOrgsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
     public postAccountOrgs(requestParameters: AccountApiPostAccountOrgsRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).postAccountOrgs(requestParameters.onboardReq, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).postAccountOrgs(requestParameters.accountOnboardReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

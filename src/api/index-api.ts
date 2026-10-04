@@ -22,31 +22,35 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { IndexDocuments } from '../models';
-// @ts-ignore
 import type { IndexEnqueued } from '../models';
 // @ts-ignore
-import type { IndexFilter } from '../models';
+import type { IndexIndexDocuments } from '../models';
 // @ts-ignore
-import type { IndexHealth } from '../models';
+import type { IndexIndexEnqueued } from '../models';
 // @ts-ignore
-import type { IndexHits } from '../models';
+import type { IndexIndexFilter } from '../models';
 // @ts-ignore
-import type { IndexList } from '../models';
+import type { IndexIndexHealth } from '../models';
 // @ts-ignore
-import type { IndexNew } from '../models';
+import type { IndexIndexHits } from '../models';
 // @ts-ignore
-import type { IndexQuery } from '../models';
+import type { IndexIndexList } from '../models';
 // @ts-ignore
-import type { IndexSettings } from '../models';
+import type { IndexIndexNew } from '../models';
 // @ts-ignore
-import type { IndexStats } from '../models';
+import type { IndexIndexQuery } from '../models';
 // @ts-ignore
-import type { IndexTask } from '../models';
+import type { IndexIndexSettings } from '../models';
 // @ts-ignore
-import type { IndexVersion } from '../models';
+import type { IndexIndexStats } from '../models';
 // @ts-ignore
-import type { IndexView } from '../models';
+import type { IndexIndexTask } from '../models';
+// @ts-ignore
+import type { IndexIndexVersion } from '../models';
+// @ts-ignore
+import type { IndexIndexView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * IndexApi - axios parameter creator
  * @export
@@ -477,15 +481,15 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * Sets which attributes an index can be filtered on.  Replaces the whole filterable set. An attribute not listed here cannot be used in a search `filter`, so this is what makes a per-user or per-tag narrowing possible at all.  It CREATES the index when it is missing rather than answering 404, because a Meilisearch client configures settings on an index it has just asked for and a refusal there leaves the client with no index at all.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the setting is already applied when this answers.
          * @summary Sets which attributes an index can be filtered on.
          * @param {string} uid 
-         * @param {IndexFilter} indexFilter 
+         * @param {IndexIndexFilter} indexIndexFilter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchIndexIndexesByUidSettings: async (uid: string, indexFilter: IndexFilter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchIndexIndexesByUidSettings: async (uid: string, indexIndexFilter: IndexIndexFilter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
             assertParamExists('patchIndexIndexesByUidSettings', 'uid', uid)
-            // verify required parameter 'indexFilter' is not null or undefined
-            assertParamExists('patchIndexIndexesByUidSettings', 'indexFilter', indexFilter)
+            // verify required parameter 'indexIndexFilter' is not null or undefined
+            assertParamExists('patchIndexIndexesByUidSettings', 'indexIndexFilter', indexIndexFilter)
             const localVarPath = `/v1/index/indexes/{uid}/settings`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -510,7 +514,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(indexFilter, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(indexIndexFilter, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -520,13 +524,13 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Creates an index.  Registers a named index in the caller\'s own org and answers the dialect\'s EnqueuedTask. It is idempotent: creating an index that already exists returns the same receipt and changes nothing, which is what lets a client create on startup without checking first.  `primaryKey` is optional — the first write establishes one when it is omitted. An index is a ROW here rather than a table, so an unusual uid is stored verbatim instead of being sanitised into a schema name.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers. A client that polls waitForTask resolves immediately.
          * @summary Creates an index.
-         * @param {IndexNew} indexNew 
+         * @param {IndexIndexNew} indexIndexNew 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIndexIndexes: async (indexNew: IndexNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'indexNew' is not null or undefined
-            assertParamExists('postIndexIndexes', 'indexNew', indexNew)
+        postIndexIndexes: async (indexIndexNew: IndexIndexNew, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'indexIndexNew' is not null or undefined
+            assertParamExists('postIndexIndexes', 'indexIndexNew', indexIndexNew)
             const localVarPath = `/v1/index/indexes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -550,7 +554,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(indexNew, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(indexIndexNew, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -645,15 +649,15 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * Searches an index, forgiving typos.  Ranks the org\'s documents in one index against `q` and answers the matching documents whole, most relevant first. A prefix matches, so a partial word finds the documents containing it, and `filter` narrows the result to documents whose filterable attributes match — which is how a caller scopes results to one end user within its own org.  `estimatedTotalHits` is the dialect\'s name for the count; every hit is materialised here, so for this page it is exact. An index this org does not hold answers 404 carrying the dialect\'s `index_not_found`.
          * @summary Searches an index, forgiving typos.
          * @param {string} uid 
-         * @param {IndexQuery} indexQuery 
+         * @param {IndexIndexQuery} indexIndexQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIndexIndexesByUidSearch: async (uid: string, indexQuery: IndexQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexesByUidSearch: async (uid: string, indexIndexQuery: IndexIndexQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
             assertParamExists('postIndexIndexesByUidSearch', 'uid', uid)
-            // verify required parameter 'indexQuery' is not null or undefined
-            assertParamExists('postIndexIndexesByUidSearch', 'indexQuery', indexQuery)
+            // verify required parameter 'indexIndexQuery' is not null or undefined
+            assertParamExists('postIndexIndexesByUidSearch', 'indexIndexQuery', indexIndexQuery)
             const localVarPath = `/v1/index/indexes/{uid}/search`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -678,7 +682,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(indexQuery, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(indexIndexQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -744,7 +748,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
+        async deleteIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexEnqueued>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIndexIndexesByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteIndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
@@ -758,7 +762,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
+        async deleteIndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexEnqueued>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIndexIndexesByUidDocumentsById(uid, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteIndexIndexesByUidDocumentsById']?.[localVarOperationServerIndex]?.url;
@@ -770,7 +774,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexHealth>> {
+        async getIndexHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexHealth']?.[localVarOperationServerIndex]?.url;
@@ -782,7 +786,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexList>> {
+        async getIndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexes']?.[localVarOperationServerIndex]?.url;
@@ -795,7 +799,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexView>> {
+        async getIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
@@ -810,7 +814,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexIndexesByUidDocuments(uid: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexDocuments>> {
+        async getIndexIndexesByUidDocuments(uid: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexDocuments>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUidDocuments(uid, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
@@ -837,7 +841,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexSettings>> {
+        async getIndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUidSettings(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
@@ -849,7 +853,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexStats>> {
+        async getIndexStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexStats>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexStats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexStats']?.[localVarOperationServerIndex]?.url;
@@ -862,7 +866,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexTasksByUid(uid: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexTask>> {
+        async getIndexTasksByUid(uid: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexTask>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexTasksByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexTasksByUid']?.[localVarOperationServerIndex]?.url;
@@ -874,7 +878,7 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIndexVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexVersion>> {
+        async getIndexVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexVersion>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexVersion(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexVersion']?.[localVarOperationServerIndex]?.url;
@@ -884,12 +888,12 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * Sets which attributes an index can be filtered on.  Replaces the whole filterable set. An attribute not listed here cannot be used in a search `filter`, so this is what makes a per-user or per-tag narrowing possible at all.  It CREATES the index when it is missing rather than answering 404, because a Meilisearch client configures settings on an index it has just asked for and a refusal there leaves the client with no index at all.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the setting is already applied when this answers.
          * @summary Sets which attributes an index can be filtered on.
          * @param {string} uid 
-         * @param {IndexFilter} indexFilter 
+         * @param {IndexIndexFilter} indexIndexFilter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchIndexIndexesByUidSettings(uid: string, indexFilter: IndexFilter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchIndexIndexesByUidSettings(uid, indexFilter, options);
+        async patchIndexIndexesByUidSettings(uid: string, indexIndexFilter: IndexIndexFilter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexEnqueued>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchIndexIndexesByUidSettings(uid, indexIndexFilter, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.patchIndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -897,12 +901,12 @@ export const IndexApiFp = function(configuration?: Configuration) {
         /**
          * Creates an index.  Registers a named index in the caller\'s own org and answers the dialect\'s EnqueuedTask. It is idempotent: creating an index that already exists returns the same receipt and changes nothing, which is what lets a client create on startup without checking first.  `primaryKey` is optional — the first write establishes one when it is omitted. An index is a ROW here rather than a table, so an unusual uid is stored verbatim instead of being sanitised into a schema name.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers. A client that polls waitForTask resolves immediately.
          * @summary Creates an index.
-         * @param {IndexNew} indexNew 
+         * @param {IndexIndexNew} indexIndexNew 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIndexIndexes(indexNew: IndexNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexes(indexNew, options);
+        async postIndexIndexes(indexIndexNew: IndexIndexNew, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexEnqueued>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexes(indexIndexNew, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -939,12 +943,12 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * Searches an index, forgiving typos.  Ranks the org\'s documents in one index against `q` and answers the matching documents whole, most relevant first. A prefix matches, so a partial word finds the documents containing it, and `filter` narrows the result to documents whose filterable attributes match — which is how a caller scopes results to one end user within its own org.  `estimatedTotalHits` is the dialect\'s name for the count; every hit is materialised here, so for this page it is exact. An index this org does not hold answers 404 carrying the dialect\'s `index_not_found`.
          * @summary Searches an index, forgiving typos.
          * @param {string} uid 
-         * @param {IndexQuery} indexQuery 
+         * @param {IndexIndexQuery} indexIndexQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIndexIndexesByUidSearch(uid: string, indexQuery: IndexQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexHits>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidSearch(uid, indexQuery, options);
+        async postIndexIndexesByUidSearch(uid: string, indexIndexQuery: IndexIndexQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexIndexHits>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidSearch(uid, indexIndexQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexesByUidSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -980,7 +984,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIndexIndexesByUid(requestParameters: IndexApiDeleteIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexEnqueued> {
+        deleteIndexIndexesByUid(requestParameters: IndexApiDeleteIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexEnqueued> {
             return localVarFp.deleteIndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -990,7 +994,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexEnqueued> {
+        deleteIndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexEnqueued> {
             return localVarFp.deleteIndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -999,7 +1003,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexHealth(options?: RawAxiosRequestConfig): AxiosPromise<IndexHealth> {
+        getIndexHealth(options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexHealth> {
             return localVarFp.getIndexHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1008,7 +1012,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<IndexList> {
+        getIndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexList> {
             return localVarFp.getIndexIndexes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1018,7 +1022,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexIndexesByUid(requestParameters: IndexApiGetIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexView> {
+        getIndexIndexesByUid(requestParameters: IndexApiGetIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexView> {
             return localVarFp.getIndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1028,7 +1032,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexIndexesByUidDocuments(requestParameters: IndexApiGetIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexDocuments> {
+        getIndexIndexesByUidDocuments(requestParameters: IndexApiGetIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexDocuments> {
             return localVarFp.getIndexIndexesByUidDocuments(requestParameters.uid, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1048,7 +1052,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexIndexesByUidSettings(requestParameters: IndexApiGetIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexSettings> {
+        getIndexIndexesByUidSettings(requestParameters: IndexApiGetIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexSettings> {
             return localVarFp.getIndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1057,7 +1061,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexStats(options?: RawAxiosRequestConfig): AxiosPromise<IndexStats> {
+        getIndexStats(options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexStats> {
             return localVarFp.getIndexStats(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1067,7 +1071,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexTasksByUid(requestParameters: IndexApiGetIndexTasksByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexTask> {
+        getIndexTasksByUid(requestParameters: IndexApiGetIndexTasksByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexTask> {
             return localVarFp.getIndexTasksByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1076,7 +1080,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIndexVersion(options?: RawAxiosRequestConfig): AxiosPromise<IndexVersion> {
+        getIndexVersion(options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexVersion> {
             return localVarFp.getIndexVersion(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1086,8 +1090,8 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchIndexIndexesByUidSettings(requestParameters: IndexApiPatchIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexEnqueued> {
-            return localVarFp.patchIndexIndexesByUidSettings(requestParameters.uid, requestParameters.indexFilter, options).then((request) => request(axios, basePath));
+        patchIndexIndexesByUidSettings(requestParameters: IndexApiPatchIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexEnqueued> {
+            return localVarFp.patchIndexIndexesByUidSettings(requestParameters.uid, requestParameters.indexIndexFilter, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an index.  Registers a named index in the caller\'s own org and answers the dialect\'s EnqueuedTask. It is idempotent: creating an index that already exists returns the same receipt and changes nothing, which is what lets a client create on startup without checking first.  `primaryKey` is optional — the first write establishes one when it is omitted. An index is a ROW here rather than a table, so an unusual uid is stored verbatim instead of being sanitised into a schema name.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers. A client that polls waitForTask resolves immediately.
@@ -1096,8 +1100,8 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIndexIndexes(requestParameters: IndexApiPostIndexIndexesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexEnqueued> {
-            return localVarFp.postIndexIndexes(requestParameters.indexNew, options).then((request) => request(axios, basePath));
+        postIndexIndexes(requestParameters: IndexApiPostIndexIndexesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexEnqueued> {
+            return localVarFp.postIndexIndexes(requestParameters.indexIndexNew, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes documents into the caller\'s own index, keyed by the index\'s primary key: a document whose key is already present is REPLACED whole. The body is the dialect\'s own — an array of documents, or a single document — and each is stored verbatim, so a read gives back exactly what was written.  The index is CREATED when it is missing rather than refused, because a Meilisearch client writes before it configures.  The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying the dialect\'s `invalid_api_key` body.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the documents are searchable when this answers, and a client that polls waitForTask resolves immediately.
@@ -1126,8 +1130,8 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIndexIndexesByUidSearch(requestParameters: IndexApiPostIndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexHits> {
-            return localVarFp.postIndexIndexesByUidSearch(requestParameters.uid, requestParameters.indexQuery, options).then((request) => request(axios, basePath));
+        postIndexIndexesByUidSearch(requestParameters: IndexApiPostIndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexIndexHits> {
+            return localVarFp.postIndexIndexesByUidSearch(requestParameters.uid, requestParameters.indexIndexQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * The dialect\'s update spelling of the write above, and the same act: an upsert keyed by the index\'s primary key. The JS client\'s addDocuments and updateDocuments both reduce to this for whole documents, so both spellings are served and both behave identically.  The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header. Without a validated principal the answer is 403 carrying the dialect\'s `invalid_api_key` body.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers.
@@ -1283,10 +1287,10 @@ export interface IndexApiPatchIndexIndexesByUidSettingsRequest {
 
     /**
      * 
-     * @type {IndexFilter}
+     * @type {IndexIndexFilter}
      * @memberof IndexApiPatchIndexIndexesByUidSettings
      */
-    readonly indexFilter: IndexFilter
+    readonly indexIndexFilter: IndexIndexFilter
 }
 
 /**
@@ -1297,10 +1301,10 @@ export interface IndexApiPatchIndexIndexesByUidSettingsRequest {
 export interface IndexApiPostIndexIndexesRequest {
     /**
      * 
-     * @type {IndexNew}
+     * @type {IndexIndexNew}
      * @memberof IndexApiPostIndexIndexes
      */
-    readonly indexNew: IndexNew
+    readonly indexIndexNew: IndexIndexNew
 }
 
 /**
@@ -1360,10 +1364,10 @@ export interface IndexApiPostIndexIndexesByUidSearchRequest {
 
     /**
      * 
-     * @type {IndexQuery}
+     * @type {IndexIndexQuery}
      * @memberof IndexApiPostIndexIndexesByUidSearch
      */
-    readonly indexQuery: IndexQuery
+    readonly indexIndexQuery: IndexIndexQuery
 }
 
 /**
@@ -1531,7 +1535,7 @@ export class IndexApi extends BaseAPI {
      * @memberof IndexApi
      */
     public patchIndexIndexesByUidSettings(requestParameters: IndexApiPatchIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).patchIndexIndexesByUidSettings(requestParameters.uid, requestParameters.indexFilter, options).then((request) => request(this.axios, this.basePath));
+        return IndexApiFp(this.configuration).patchIndexIndexesByUidSettings(requestParameters.uid, requestParameters.indexIndexFilter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1543,7 +1547,7 @@ export class IndexApi extends BaseAPI {
      * @memberof IndexApi
      */
     public postIndexIndexes(requestParameters: IndexApiPostIndexIndexesRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postIndexIndexes(requestParameters.indexNew, options).then((request) => request(this.axios, this.basePath));
+        return IndexApiFp(this.configuration).postIndexIndexes(requestParameters.indexIndexNew, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1579,7 +1583,7 @@ export class IndexApi extends BaseAPI {
      * @memberof IndexApi
      */
     public postIndexIndexesByUidSearch(requestParameters: IndexApiPostIndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postIndexIndexesByUidSearch(requestParameters.uid, requestParameters.indexQuery, options).then((request) => request(this.axios, this.basePath));
+        return IndexApiFp(this.configuration).postIndexIndexesByUidSearch(requestParameters.uid, requestParameters.indexIndexQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

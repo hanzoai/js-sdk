@@ -22,10 +22,10 @@
 export interface O11yInstalledIntegration {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof O11yInstalledIntegration
      */
-    'config'?: { [key: string]: object; };
+    'config'?: { [key: string]: any; };
     /**
      * 
      * @type {any}

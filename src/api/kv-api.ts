@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BucketRecord } from '../models';
+import type { KvBucketRecord } from '../models';
 // @ts-ignore
-import type { BucketWrite } from '../models';
+import type { KvBucketWrite } from '../models';
 // @ts-ignore
-import type { KvAck } from '../models';
+import type { KvKvAck } from '../models';
 // @ts-ignore
-import type { KvEntry } from '../models';
+import type { KvKvEntry } from '../models';
 // @ts-ignore
-import type { KvPage } from '../models';
+import type { KvKvPage } from '../models';
 // @ts-ignore
-import type { KvWrite } from '../models';
+import type { KvKvWrite } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * KvApi - axios parameter creator
  * @export
@@ -120,8 +122,8 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
-         * @summary Get returns one key\'s current value and revision.
+         * Returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
+         * @summary Returns one key\'s current value and revision.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
          * @param {*} [options] Override http request option.
@@ -162,8 +164,8 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
-         * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
+         * Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
+         * @summary Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
          * @param {*} [options] Override http request option.
@@ -207,15 +209,15 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
          * Creates a KV bucket and returns it. A bucket is keyed state on the same durable plane as the streams: each key holds up to History revisions, entries can expire by TTL, and watchers on the NATS port see every write. 409 when the org already has a bucket of that name.
          * @summary Creates a KV bucket and returns it.
          * @param {string} bucket Bucket is the bucket\&#39;s name within the org, from the path: 1–64 of [A-Za-z0-9_], no dash.
-         * @param {BucketWrite} bucketWrite 
+         * @param {KvBucketWrite} kvBucketWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKvByBucket: async (bucket: string, bucketWrite: BucketWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postKvByBucket: async (bucket: string, kvBucketWrite: KvBucketWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
             assertParamExists('postKvByBucket', 'bucket', bucket)
-            // verify required parameter 'bucketWrite' is not null or undefined
-            assertParamExists('postKvByBucket', 'bucketWrite', bucketWrite)
+            // verify required parameter 'kvBucketWrite' is not null or undefined
+            assertParamExists('postKvByBucket', 'kvBucketWrite', kvBucketWrite)
             const localVarPath = `/v1/kv/{bucket}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -240,7 +242,7 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(bucketWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(kvBucketWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -248,21 +250,21 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
-         * @summary Put sets one key to one value and returns the revision the write created.
+         * Sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
+         * @summary Sets one key to one value and returns the revision the write created.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
-         * @param {KvWrite} kvWrite 
+         * @param {KvKvWrite} kvKvWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putKvByBucketByKey: async (bucket: string, key: string, kvWrite: KvWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putKvByBucketByKey: async (bucket: string, key: string, kvKvWrite: KvKvWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
             assertParamExists('putKvByBucketByKey', 'bucket', bucket)
             // verify required parameter 'key' is not null or undefined
             assertParamExists('putKvByBucketByKey', 'key', key)
-            // verify required parameter 'kvWrite' is not null or undefined
-            assertParamExists('putKvByBucketByKey', 'kvWrite', kvWrite)
+            // verify required parameter 'kvKvWrite' is not null or undefined
+            assertParamExists('putKvByBucketByKey', 'kvKvWrite', kvKvWrite)
             const localVarPath = `/v1/kv/{bucket}/{key}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -288,7 +290,7 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(kvWrite, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(kvKvWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -333,28 +335,28 @@ export const KvApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
-         * @summary Get returns one key\'s current value and revision.
+         * Returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
+         * @summary Returns one key\'s current value and revision.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvEntry>> {
+        async getKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvKvEntry>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKvByBucketByKey(bucket, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KvApi.getKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
-         * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
+         * Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
+         * @summary Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKvByBucketByKeyHistory(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvPage>> {
+        async getKvByBucketByKeyHistory(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvKvPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKvByBucketByKeyHistory(bucket, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KvApi.getKvByBucketByKeyHistory']?.[localVarOperationServerIndex]?.url;
@@ -364,27 +366,27 @@ export const KvApiFp = function(configuration?: Configuration) {
          * Creates a KV bucket and returns it. A bucket is keyed state on the same durable plane as the streams: each key holds up to History revisions, entries can expire by TTL, and watchers on the NATS port see every write. 409 when the org already has a bucket of that name.
          * @summary Creates a KV bucket and returns it.
          * @param {string} bucket Bucket is the bucket\&#39;s name within the org, from the path: 1–64 of [A-Za-z0-9_], no dash.
-         * @param {BucketWrite} bucketWrite 
+         * @param {KvBucketWrite} kvBucketWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postKvByBucket(bucket: string, bucketWrite: BucketWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postKvByBucket(bucket, bucketWrite, options);
+        async postKvByBucket(bucket: string, kvBucketWrite: KvBucketWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvBucketRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKvByBucket(bucket, kvBucketWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KvApi.postKvByBucket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
-         * @summary Put sets one key to one value and returns the revision the write created.
+         * Sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
+         * @summary Sets one key to one value and returns the revision the write created.
          * @param {string} bucket Bucket is the bucket, from the path.
          * @param {string} key Key is the key, from the path.
-         * @param {KvWrite} kvWrite 
+         * @param {KvKvWrite} kvKvWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putKvByBucketByKey(bucket: string, key: string, kvWrite: KvWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putKvByBucketByKey(bucket, key, kvWrite, options);
+        async putKvByBucketByKey(bucket: string, key: string, kvKvWrite: KvKvWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvKvAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putKvByBucketByKey(bucket, key, kvKvWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KvApi.putKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -420,23 +422,23 @@ export const KvApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.deleteKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
-         * @summary Get returns one key\'s current value and revision.
+         * Returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
+         * @summary Returns one key\'s current value and revision.
          * @param {KvApiGetKvByBucketByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKvByBucketByKey(requestParameters: KvApiGetKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvEntry> {
+        getKvByBucketByKey(requestParameters: KvApiGetKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvKvEntry> {
             return localVarFp.getKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
-         * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
+         * Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
+         * @summary Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
          * @param {KvApiGetKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKvByBucketByKeyHistory(requestParameters: KvApiGetKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvPage> {
+        getKvByBucketByKeyHistory(requestParameters: KvApiGetKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvKvPage> {
             return localVarFp.getKvByBucketByKeyHistory(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -446,18 +448,18 @@ export const KvApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postKvByBucket(requestParameters: KvApiPostKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<BucketRecord> {
-            return localVarFp.postKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(axios, basePath));
+        postKvByBucket(requestParameters: KvApiPostKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvBucketRecord> {
+            return localVarFp.postKvByBucket(requestParameters.bucket, requestParameters.kvBucketWrite, options).then((request) => request(axios, basePath));
         },
         /**
-         * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
-         * @summary Put sets one key to one value and returns the revision the write created.
+         * Sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
+         * @summary Sets one key to one value and returns the revision the write created.
          * @param {KvApiPutKvByBucketByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putKvByBucketByKey(requestParameters: KvApiPutKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvAck> {
-            return localVarFp.putKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(axios, basePath));
+        putKvByBucketByKey(requestParameters: KvApiPutKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvKvAck> {
+            return localVarFp.putKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvKvWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -554,10 +556,10 @@ export interface KvApiPostKvByBucketRequest {
 
     /**
      * 
-     * @type {BucketWrite}
+     * @type {KvBucketWrite}
      * @memberof KvApiPostKvByBucket
      */
-    readonly bucketWrite: BucketWrite
+    readonly kvBucketWrite: KvBucketWrite
 }
 
 /**
@@ -582,10 +584,10 @@ export interface KvApiPutKvByBucketByKeyRequest {
 
     /**
      * 
-     * @type {KvWrite}
+     * @type {KvKvWrite}
      * @memberof KvApiPutKvByBucketByKey
      */
-    readonly kvWrite: KvWrite
+    readonly kvKvWrite: KvKvWrite
 }
 
 /**
@@ -620,8 +622,8 @@ export class KvApi extends BaseAPI {
     }
 
     /**
-     * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
-     * @summary Get returns one key\'s current value and revision.
+     * Returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
+     * @summary Returns one key\'s current value and revision.
      * @param {KvApiGetKvByBucketByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -632,8 +634,8 @@ export class KvApi extends BaseAPI {
     }
 
     /**
-     * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
-     * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
+     * Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
+     * @summary Returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
      * @param {KvApiGetKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -652,19 +654,19 @@ export class KvApi extends BaseAPI {
      * @memberof KvApi
      */
     public postKvByBucket(requestParameters: KvApiPostKvByBucketRequest, options?: RawAxiosRequestConfig) {
-        return KvApiFp(this.configuration).postKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(this.axios, this.basePath));
+        return KvApiFp(this.configuration).postKvByBucket(requestParameters.bucket, requestParameters.kvBucketWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
-     * @summary Put sets one key to one value and returns the revision the write created.
+     * Sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
+     * @summary Sets one key to one value and returns the revision the write created.
      * @param {KvApiPutKvByBucketByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KvApi
      */
     public putKvByBucketByKey(requestParameters: KvApiPutKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
-        return KvApiFp(this.configuration).putKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(this.axios, this.basePath));
+        return KvApiFp(this.configuration).putKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvKvWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

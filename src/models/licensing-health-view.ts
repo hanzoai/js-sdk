@@ -33,7 +33,7 @@ export interface LicensingHealthView {
      */
     'service'?: string;
     /**
-     * Signer names the KMS provider signing licenses here. \"local\" means a development key: tokens it mints are not production credentials.
+     * Signer names where the signing key lives: \"kms\" or \"local\". \"local\" means a development key: tokens it mints are not production credentials.
      * @type {string}
      * @memberof LicensingHealthView
      */

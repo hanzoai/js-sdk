@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yIntegrationsCollectedLogAttribute } from './o11y-integrations-collected-log-attribute';
+import type { O11yCollectedLogAttribute } from './o11y-collected-log-attribute';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yIntegrationsCollectedMetric } from './o11y-integrations-collected-metric';
+import type { O11yCollectedMetric } from './o11y-collected-metric';
 
 /**
  * 
@@ -28,15 +28,15 @@ import type { O11yIntegrationsCollectedMetric } from './o11y-integrations-collec
 export interface O11yDataCollectedForIntegration {
     /**
      * 
-     * @type {Array<O11yIntegrationsCollectedLogAttribute>}
+     * @type {Array<O11yCollectedLogAttribute>}
      * @memberof O11yDataCollectedForIntegration
      */
-    'logs'?: Array<O11yIntegrationsCollectedLogAttribute>;
+    'logs'?: Array<O11yCollectedLogAttribute>;
     /**
      * 
-     * @type {Array<O11yIntegrationsCollectedMetric>}
+     * @type {Array<O11yCollectedMetric>}
      * @memberof O11yDataCollectedForIntegration
      */
-    'metrics'?: Array<O11yIntegrationsCollectedMetric>;
+    'metrics'?: Array<O11yCollectedMetric>;
 }
 

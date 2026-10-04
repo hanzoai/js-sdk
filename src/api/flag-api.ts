@@ -22,17 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ActivityOut } from '../models';
+import type { FlagActivityOut } from '../models';
 // @ts-ignore
-import type { DefRow } from '../models';
+import type { FlagDefRow } from '../models';
 // @ts-ignore
-import type { DefsOut } from '../models';
+import type { FlagDefsOut } from '../models';
 // @ts-ignore
-import type { DeletedOut } from '../models';
+import type { FlagDeletedOut } from '../models';
 // @ts-ignore
-import type { EvaluateIn } from '../models';
+import type { FlagEvaluateIn } from '../models';
 // @ts-ignore
-import type { HealthOut } from '../models';
+import type { FlagHealthOut } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * FlagApi - axios parameter creator
  * @export
@@ -40,7 +42,7 @@ import type { HealthOut } from '../models';
 export const FlagApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
+         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404. A staged capability\'s key is a SuperAdmin\'s to remove, as it is to set, and every other key an owner\'s or admin\'s of the org.
          * @summary Removes one flag definition by key and records the deletion in the change log.
          * @param {string} key Key is the flag key to act on, from the path.
          * @param {*} [options] Override http request option.
@@ -189,8 +191,8 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
-         * @summary Health reports that the flag engine is serving.
+         * Reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
+         * @summary Reports that the flag engine is serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -223,15 +225,15 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
-         * @param {EvaluateIn} evaluateIn 
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * @param {FlagEvaluateIn} flagEvaluateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFlag: async (evaluateIn: EvaluateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'evaluateIn' is not null or undefined
-            assertParamExists('postFlag', 'evaluateIn', evaluateIn)
+        postFlag: async (flagEvaluateIn: FlagEvaluateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flagEvaluateIn' is not null or undefined
+            assertParamExists('postFlag', 'flagEvaluateIn', flagEvaluateIn)
             const localVarPath = `/v1/flag`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -255,7 +257,7 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(evaluateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(flagEvaluateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -263,15 +265,15 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
-         * @param {EvaluateIn} evaluateIn 
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * @param {FlagEvaluateIn} flagEvaluateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFlagDecide: async (evaluateIn: EvaluateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'evaluateIn' is not null or undefined
-            assertParamExists('postFlagDecide', 'evaluateIn', evaluateIn)
+        postFlagDecide: async (flagEvaluateIn: FlagEvaluateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flagEvaluateIn' is not null or undefined
+            assertParamExists('postFlagDecide', 'flagEvaluateIn', flagEvaluateIn)
             const localVarPath = `/v1/flag/decide`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -295,7 +297,7 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(evaluateIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(flagEvaluateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -303,7 +305,7 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
+         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity. A key that lets an org into a capability that is not ga — research, machines — is a SuperAdmin\'s to set, never an org admin\'s, and its write is on the audit trail before it lands; every other key is an owner\'s or admin\'s of the org, never a member\'s.
          * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
          * @param {string} key Key is the flag key to write, from the path.
          * @param {any} body 
@@ -357,13 +359,13 @@ export const FlagApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FlagApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
+         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404. A staged capability\'s key is a SuperAdmin\'s to remove, as it is to set, and every other key an owner\'s or admin\'s of the org.
          * @summary Removes one flag definition by key and records the deletion in the change log.
          * @param {string} key Key is the flag key to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteFlagDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeletedOut>> {
+        async deleteFlagDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagDeletedOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFlagDefsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.deleteFlagDefsByKey']?.[localVarOperationServerIndex]?.url;
@@ -376,7 +378,7 @@ export const FlagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlagActivity(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityOut>> {
+        async getFlagActivity(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagActivityOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagActivity(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagActivity']?.[localVarOperationServerIndex]?.url;
@@ -388,7 +390,7 @@ export const FlagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlagDefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefsOut>> {
+        async getFlagDefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagDefsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagDefs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagDefs']?.[localVarOperationServerIndex]?.url;
@@ -401,59 +403,59 @@ export const FlagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlagDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
+        async getFlagDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagDefRow>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagDefsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagDefsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
-         * @summary Health reports that the flag engine is serving.
+         * Reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
+         * @summary Reports that the flag engine is serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlagHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthOut>> {
+        async getFlagHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagHealthOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
-         * @param {EvaluateIn} evaluateIn 
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * @param {FlagEvaluateIn} flagEvaluateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFlag(evaluateIn: EvaluateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlag(evaluateIn, options);
+        async postFlag(flagEvaluateIn: FlagEvaluateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlag(flagEvaluateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.postFlag']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
-         * @param {EvaluateIn} evaluateIn 
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * @param {FlagEvaluateIn} flagEvaluateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFlagDecide(evaluateIn: EvaluateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlagDecide(evaluateIn, options);
+        async postFlagDecide(flagEvaluateIn: FlagEvaluateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFlagDecide(flagEvaluateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.postFlagDecide']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
+         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity. A key that lets an org into a capability that is not ga — research, machines — is a SuperAdmin\'s to set, never an org admin\'s, and its write is on the audit trail before it lands; every other key is an owner\'s or admin\'s of the org, never a member\'s.
          * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
          * @param {string} key Key is the flag key to write, from the path.
          * @param {any} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putFlagDefsByKey(key: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
+        async putFlagDefsByKey(key: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagDefRow>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putFlagDefsByKey(key, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.putFlagDefsByKey']?.[localVarOperationServerIndex]?.url;
@@ -470,13 +472,13 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = FlagApiFp(configuration)
     return {
         /**
-         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
+         * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404. A staged capability\'s key is a SuperAdmin\'s to remove, as it is to set, and every other key an owner\'s or admin\'s of the org.
          * @summary Removes one flag definition by key and records the deletion in the change log.
          * @param {FlagApiDeleteFlagDefsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFlagDefsByKey(requestParameters: FlagApiDeleteFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeletedOut> {
+        deleteFlagDefsByKey(requestParameters: FlagApiDeleteFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagDeletedOut> {
             return localVarFp.deleteFlagDefsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -486,7 +488,7 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlagActivity(requestParameters: FlagApiGetFlagActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActivityOut> {
+        getFlagActivity(requestParameters: FlagApiGetFlagActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FlagActivityOut> {
             return localVarFp.getFlagActivity(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -495,7 +497,7 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlagDefs(options?: RawAxiosRequestConfig): AxiosPromise<DefsOut> {
+        getFlagDefs(options?: RawAxiosRequestConfig): AxiosPromise<FlagDefsOut> {
             return localVarFp.getFlagDefs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -505,46 +507,46 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlagDefsByKey(requestParameters: FlagApiGetFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
+        getFlagDefsByKey(requestParameters: FlagApiGetFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagDefRow> {
             return localVarFp.getFlagDefsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
-         * @summary Health reports that the flag engine is serving.
+         * Reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
+         * @summary Reports that the flag engine is serving.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlagHealth(options?: RawAxiosRequestConfig): AxiosPromise<HealthOut> {
+        getFlagHealth(options?: RawAxiosRequestConfig): AxiosPromise<FlagHealthOut> {
             return localVarFp.getFlagHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
          * @param {FlagApiPostFlagRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postFlag(requestParameters: FlagApiPostFlagRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postFlag(requestParameters.evaluateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postFlag(requestParameters.flagEvaluateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-         * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+         * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+         * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
          * @param {FlagApiPostFlagDecideRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postFlagDecide(requestParameters: FlagApiPostFlagDecideRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postFlagDecide(requestParameters.evaluateIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postFlagDecide(requestParameters.flagEvaluateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
+         * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity. A key that lets an org into a capability that is not ga — research, machines — is a SuperAdmin\'s to set, never an org admin\'s, and its write is on the audit trail before it lands; every other key is an owner\'s or admin\'s of the org, never a member\'s.
          * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
          * @param {FlagApiPutFlagDefsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putFlagDefsByKey(requestParameters: FlagApiPutFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
+        putFlagDefsByKey(requestParameters: FlagApiPutFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagDefRow> {
             return localVarFp.putFlagDefsByKey(requestParameters.key, requestParameters.body, options).then((request) => request(axios, basePath));
         },
     };
@@ -600,10 +602,10 @@ export interface FlagApiGetFlagDefsByKeyRequest {
 export interface FlagApiPostFlagRequest {
     /**
      * 
-     * @type {EvaluateIn}
+     * @type {FlagEvaluateIn}
      * @memberof FlagApiPostFlag
      */
-    readonly evaluateIn: EvaluateIn
+    readonly flagEvaluateIn: FlagEvaluateIn
 }
 
 /**
@@ -614,10 +616,10 @@ export interface FlagApiPostFlagRequest {
 export interface FlagApiPostFlagDecideRequest {
     /**
      * 
-     * @type {EvaluateIn}
+     * @type {FlagEvaluateIn}
      * @memberof FlagApiPostFlagDecide
      */
-    readonly evaluateIn: EvaluateIn
+    readonly flagEvaluateIn: FlagEvaluateIn
 }
 
 /**
@@ -649,7 +651,7 @@ export interface FlagApiPutFlagDefsByKeyRequest {
  */
 export class FlagApi extends BaseAPI {
     /**
-     * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
+     * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404. A staged capability\'s key is a SuperAdmin\'s to remove, as it is to set, and every other key an owner\'s or admin\'s of the org.
      * @summary Removes one flag definition by key and records the deletion in the change log.
      * @param {FlagApiDeleteFlagDefsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -696,8 +698,8 @@ export class FlagApi extends BaseAPI {
     }
 
     /**
-     * Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
-     * @summary Health reports that the flag engine is serving.
+     * Reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
+     * @summary Reports that the flag engine is serving.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagApi
@@ -707,31 +709,31 @@ export class FlagApi extends BaseAPI {
     }
 
     /**
-     * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-     * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+     * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+     * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
      * @param {FlagApiPostFlagRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagApi
      */
     public postFlag(requestParameters: FlagApiPostFlagRequest, options?: RawAxiosRequestConfig) {
-        return FlagApiFp(this.configuration).postFlag(requestParameters.evaluateIn, options).then((request) => request(this.axios, this.basePath));
+        return FlagApiFp(this.configuration).postFlag(requestParameters.flagEvaluateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
-     * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
+     * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
+     * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
      * @param {FlagApiPostFlagDecideRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagApi
      */
     public postFlagDecide(requestParameters: FlagApiPostFlagDecideRequest, options?: RawAxiosRequestConfig) {
-        return FlagApiFp(this.configuration).postFlagDecide(requestParameters.evaluateIn, options).then((request) => request(this.axios, this.basePath));
+        return FlagApiFp(this.configuration).postFlagDecide(requestParameters.flagEvaluateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
+     * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity. A key that lets an org into a capability that is not ga — research, machines — is a SuperAdmin\'s to set, never an org admin\'s, and its write is on the audit trail before it lands; every other key is an owner\'s or admin\'s of the org, never a member\'s.
      * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
      * @param {FlagApiPutFlagDefsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

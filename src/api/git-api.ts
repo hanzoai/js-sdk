@@ -22,59 +22,97 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BlobJSON } from '../models';
+import type { GitBlobJSON } from '../models';
 // @ts-ignore
-import type { CommitsJSON } from '../models';
+import type { GitCommitsJSON } from '../models';
 // @ts-ignore
-import type { CreateReq } from '../models';
+import type { GitCreateReq } from '../models';
 // @ts-ignore
-import type { FilesJSON } from '../models';
+import type { GitFilesJSON } from '../models';
 // @ts-ignore
-import type { GcOut } from '../models';
+import type { GitGcOut } from '../models';
 // @ts-ignore
-import type { KeyList } from '../models';
+import type { GitKeyList } from '../models';
 // @ts-ignore
-import type { KeyView } from '../models';
+import type { GitKeyView } from '../models';
 // @ts-ignore
-import type { MirrorList } from '../models';
+import type { GitMirrorList } from '../models';
 // @ts-ignore
-import type { MirrorReq } from '../models';
+import type { GitMirrorReq } from '../models';
 // @ts-ignore
-import type { MirrorTargetReq } from '../models';
+import type { GitMirrorTargetReq } from '../models';
 // @ts-ignore
-import type { MirrorTargetView } from '../models';
+import type { GitMirrorTargetView } from '../models';
 // @ts-ignore
-import type { OpenReq } from '../models';
+import type { GitOpenReq } from '../models';
 // @ts-ignore
-import type { PatchIn } from '../models';
+import type { GitPatchIn } from '../models';
 // @ts-ignore
-import type { PullList } from '../models';
+import type { GitPoolDeclare } from '../models';
 // @ts-ignore
-import type { PullView } from '../models';
+import type { GitPoolDeclared } from '../models';
 // @ts-ignore
-import type { PushReq } from '../models';
+import type { GitPoolList } from '../models';
 // @ts-ignore
-import type { PushResp } from '../models';
+import type { GitPullList } from '../models';
 // @ts-ignore
-import type { ReadmeJSON } from '../models';
+import type { GitPullView } from '../models';
 // @ts-ignore
-import type { RefsJSON } from '../models';
+import type { GitPushReq } from '../models';
 // @ts-ignore
-import type { RegisterKeyReq } from '../models';
+import type { GitPushResp } from '../models';
 // @ts-ignore
-import type { RepoList } from '../models';
+import type { GitReadmeJSON } from '../models';
 // @ts-ignore
-import type { RepoView } from '../models';
+import type { GitRefsJSON } from '../models';
 // @ts-ignore
-import type { SubscribeReq } from '../models';
+import type { GitRegisterKeyReq } from '../models';
 // @ts-ignore
-import type { SubscriptionList } from '../models';
+import type { GitRepoList } from '../models';
 // @ts-ignore
-import type { SubscriptionView } from '../models';
+import type { GitRepoView } from '../models';
 // @ts-ignore
-import type { TreeJSON } from '../models';
+import type { GitRunStart } from '../models';
 // @ts-ignore
-import type { UsageView } from '../models';
+import type { GitRunnerList } from '../models';
+// @ts-ignore
+import type { GitSubscribeReq } from '../models';
+// @ts-ignore
+import type { GitSubscriptionList } from '../models';
+// @ts-ignore
+import type { GitSubscriptionView } from '../models';
+// @ts-ignore
+import type { GitTreeJSON } from '../models';
+// @ts-ignore
+import type { GitUsageView } from '../models';
+// @ts-ignore
+import type { GitWorkflowList } from '../models';
+// @ts-ignore
+import type { GitWorkflowRun } from '../models';
+// @ts-ignore
+import type { GitWorkflowRuns } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
+// @ts-ignore
+import type { RunnerDeclareIn } from '../models';
+// @ts-ignore
+import type { RunnerDeclareOut } from '../models';
+// @ts-ignore
+import type { RunnerLogIn } from '../models';
+// @ts-ignore
+import type { RunnerLogOut } from '../models';
+// @ts-ignore
+import type { RunnerRegisterIn } from '../models';
+// @ts-ignore
+import type { RunnerRegisterOut } from '../models';
+// @ts-ignore
+import type { RunnerStateIn } from '../models';
+// @ts-ignore
+import type { RunnerStateOut } from '../models';
+// @ts-ignore
+import type { RunnerTaskIn } from '../models';
+// @ts-ignore
+import type { RunnerTaskOut } from '../models';
 /**
  * GitApi - axios parameter creator
  * @export
@@ -516,6 +554,40 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitPools: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/pools`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the repos in the caller\'s scope, most recently updated first. The scope is the request principal\'s — the gateway-minted org and its optional project — never anything off the wire, so a caller only ever sees its own. Rows carry no branches or HEAD; read one repo for those.
          * @summary Returns the repos in the caller\'s scope, most recently updated first.
          * @param {*} [options] Override http request option.
@@ -588,7 +660,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
+         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead. A repository in the organization\'s own code workspace on the forge is read from there.
          * @summary Returns one file\'s bytes at one revision.
          * @param {string} name Name is the repo to read, from the :name path segment.
          * @param {string} [ref] Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
@@ -979,7 +1051,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
+         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time. A repository in the organization\'s own code workspace on the forge is listed from there.
          * @summary Lists the immediate children of one directory at one revision, directories before files.
          * @param {string} name Name is the repo to read, from the :name path segment.
          * @param {string} [ref] Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
@@ -1027,6 +1099,122 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunners: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/runners`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns this org\'s runs, newest first.
+         * @summary Returns this org\'s runs, newest first.
+         * @param {string} [repo] Repo restricts the listing to one repository. Empty lists the whole org.
+         * @param {number} [limit] Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRuns: async (repo?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/runs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one run.
+         * @summary Returns one run.
+         * @param {string} id ID is the run to read, from the :id path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getGitRunsById', 'id', id)
+            const localVarPath = `/v1/git/runs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns per-repo and total storage bytes for the caller\'s org — the queryable, per-tenant number commerce and o11y meter on. It spans EVERY project sub-scope, unlike the repo list, so a billing consumer sees the whole tenant footprint in one call. Sizes are last-measured values (create, push, mirror and gc each re-measure), not a live walk of the disk.
          * @summary Returns per-repo and total storage bytes for the caller\'s org — the queryable, per-tenant number commerce and o11y meter on.
          * @param {*} [options] Override http request option.
@@ -1061,18 +1249,62 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
-         * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-         * @param {string} name Name is the repo to update, from the :name path segment.
-         * @param {PatchIn} patchIn 
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @param {string} [repo] Repo is the repository whose workflows to read.
+         * @param {string} [ref] Ref is the branch to read them at; empty means the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchGitReposByName: async (name: string, patchIn: PatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGitWorkflows: async (repo?: string, ref?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/workflows`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
+         * @summary Flips a repo\'s public bit, the one mutable repo setting today.
+         * @param {string} name Name is the repo to update, from the :name path segment.
+         * @param {GitPatchIn} gitPatchIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchGitReposByName: async (name: string, gitPatchIn: GitPatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchGitReposByName', 'name', name)
-            // verify required parameter 'patchIn' is not null or undefined
-            assertParamExists('patchGitReposByName', 'patchIn', patchIn)
+            // verify required parameter 'gitPatchIn' is not null or undefined
+            assertParamExists('patchGitReposByName', 'gitPatchIn', gitPatchIn)
             const localVarPath = `/v1/git/repos/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1097,7 +1329,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(patchIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitPatchIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1299,13 +1531,13 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
          * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-         * @param {RegisterKeyReq} registerKeyReq 
+         * @param {GitRegisterKeyReq} gitRegisterKeyReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitKeys: async (registerKeyReq: RegisterKeyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'registerKeyReq' is not null or undefined
-            assertParamExists('postGitKeys', 'registerKeyReq', registerKeyReq)
+        postGitKeys: async (gitRegisterKeyReq: GitRegisterKeyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitRegisterKeyReq' is not null or undefined
+            assertParamExists('postGitKeys', 'gitRegisterKeyReq', gitRegisterKeyReq)
             const localVarPath = `/v1/git/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1329,7 +1561,47 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerKeyReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitRegisterKeyReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.  Declaring is the ONLY way capacity comes to exist: a daemon cannot register against a pool nobody declared, because the secret it would have to present does not exist until this runs. Re-declaring an existing pool replaces its labels and mints a fresh secret; runners already inside it keep working.
+         * @summary Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.
+         * @param {GitPoolDeclare} gitPoolDeclare 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitPools: async (gitPoolDeclare: GitPoolDeclare, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitPoolDeclare' is not null or undefined
+            assertParamExists('postGitPools', 'gitPoolDeclare', gitPoolDeclare)
+            const localVarPath = `/v1/git/pools`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitPoolDeclare, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1339,13 +1611,13 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs. Answers 201. The name must be unique within the scope — a repeat is a 409, never a silent overwrite of an existing repo. The org comes from the validated principal, so a repo is always born owned by the caller\'s own tenant.
          * @summary Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs.
-         * @param {CreateReq} createReq 
+         * @param {GitCreateReq} gitCreateReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitRepos: async (createReq: CreateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createReq' is not null or undefined
-            assertParamExists('postGitRepos', 'createReq', createReq)
+        postGitRepos: async (gitCreateReq: GitCreateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitCreateReq' is not null or undefined
+            assertParamExists('postGitRepos', 'gitCreateReq', gitCreateReq)
             const localVarPath = `/v1/git/repos`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1369,7 +1641,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitCreateReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1418,15 +1690,15 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
          * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
          * @param {string} name Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
-         * @param {MirrorReq} mirrorReq 
+         * @param {GitMirrorReq} gitMirrorReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameMirror: async (name: string, mirrorReq: MirrorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNameMirror: async (name: string, gitMirrorReq: GitMirrorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postGitReposByNameMirror', 'name', name)
-            // verify required parameter 'mirrorReq' is not null or undefined
-            assertParamExists('postGitReposByNameMirror', 'mirrorReq', mirrorReq)
+            // verify required parameter 'gitMirrorReq' is not null or undefined
+            assertParamExists('postGitReposByNameMirror', 'gitMirrorReq', gitMirrorReq)
             const localVarPath = `/v1/git/repos/{name}/mirror`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1451,7 +1723,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mirrorReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitMirrorReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1462,15 +1734,15 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Proposes a branch for merging and returns it with its number.
          * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
-         * @param {OpenReq} openReq 
+         * @param {GitOpenReq} gitOpenReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNamePulls: async (name: string, openReq: OpenReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNamePulls: async (name: string, gitOpenReq: GitOpenReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postGitReposByNamePulls', 'name', name)
-            // verify required parameter 'openReq' is not null or undefined
-            assertParamExists('postGitReposByNamePulls', 'openReq', openReq)
+            // verify required parameter 'gitOpenReq' is not null or undefined
+            assertParamExists('postGitReposByNamePulls', 'gitOpenReq', gitOpenReq)
             const localVarPath = `/v1/git/repos/{name}/pulls`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1495,7 +1767,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(openReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitOpenReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1545,18 +1817,18 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
+         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.  It is for generated content. Changing CI through it needs an org admin (403 otherwise), and a workflow whose newest change came in through it is not run automatically; CI written through git runs as usual.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
          * @param {string} name Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
-         * @param {PushReq} pushReq 
+         * @param {GitPushReq} gitPushReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNamePush: async (name: string, pushReq: PushReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNamePush: async (name: string, gitPushReq: GitPushReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postGitReposByNamePush', 'name', name)
-            // verify required parameter 'pushReq' is not null or undefined
-            assertParamExists('postGitReposByNamePush', 'pushReq', pushReq)
+            // verify required parameter 'gitPushReq' is not null or undefined
+            assertParamExists('postGitReposByNamePush', 'gitPushReq', gitPushReq)
             const localVarPath = `/v1/git/repos/{name}/push`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1581,7 +1853,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pushReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitPushReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1592,15 +1864,15 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there. Answers 201. The same channel twice on one repo is a 409; a repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there.
          * @param {string} name Name is the repo to subscribe, from the :name path segment.
-         * @param {SubscribeReq} subscribeReq 
+         * @param {GitSubscribeReq} gitSubscribeReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameSubscriptions: async (name: string, subscribeReq: SubscribeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNameSubscriptions: async (name: string, gitSubscribeReq: GitSubscribeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postGitReposByNameSubscriptions', 'name', name)
-            // verify required parameter 'subscribeReq' is not null or undefined
-            assertParamExists('postGitReposByNameSubscriptions', 'subscribeReq', subscribeReq)
+            // verify required parameter 'gitSubscribeReq' is not null or undefined
+            assertParamExists('postGitReposByNameSubscriptions', 'gitSubscribeReq', gitSubscribeReq)
             const localVarPath = `/v1/git/repos/{name}/subscriptions`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1625,7 +1897,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(subscribeReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitSubscribeReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1636,15 +1908,15 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
          * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
          * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
-         * @param {MirrorTargetReq} mirrorTargetReq 
+         * @param {GitMirrorTargetReq} gitMirrorTargetReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameTargets: async (name: string, mirrorTargetReq: MirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNameTargets: async (name: string, gitMirrorTargetReq: GitMirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postGitReposByNameTargets', 'name', name)
-            // verify required parameter 'mirrorTargetReq' is not null or undefined
-            assertParamExists('postGitReposByNameTargets', 'mirrorTargetReq', mirrorTargetReq)
+            // verify required parameter 'gitMirrorTargetReq' is not null or undefined
+            assertParamExists('postGitReposByNameTargets', 'gitMirrorTargetReq', gitMirrorTargetReq)
             const localVarPath = `/v1/git/repos/{name}/targets`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1669,7 +1941,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mirrorTargetReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitMirrorTargetReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1677,7 +1949,47 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * Runs a repository\'s workflows at a ref, on demand.  It takes the SAME path a push takes: the request is recorded in the journal and delivered from there, so an explicit run and a pushed one are one mechanism with one idempotency rule and not two that can disagree. Asking twice for the same commit yields the same run.
+         * @summary Runs a repository\'s workflows at a ref, on demand.
+         * @param {GitRunStart} gitRunStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitRuns: async (gitRunStart: GitRunStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitRunStart' is not null or undefined
+            assertParamExists('postGitRuns', 'gitRunStart', gitRunStart)
+            const localVarPath = `/v1/git/runs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitRunStart, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/provider/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1704,6 +2016,238 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @param {RunnerDeclareIn} runnerDeclareIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerDeclare: async (runnerDeclareIn: RunnerDeclareIn, xRunnerUuid?: string, xRunnerToken?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerDeclareIn' is not null or undefined
+            assertParamExists('postRunnerDeclare', 'runnerDeclareIn', runnerDeclareIn)
+            const localVarPath = `/v1/runner/declare`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xRunnerUuid != null) {
+                localVarHeaderParameter['x-runner-uuid'] = String(xRunnerUuid);
+            }
+            if (xRunnerToken != null) {
+                localVarHeaderParameter['x-runner-token'] = String(xRunnerToken);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerDeclareIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @summary Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @param {RunnerLogIn} runnerLogIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerLog: async (runnerLogIn: RunnerLogIn, xRunnerUuid?: string, xRunnerToken?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerLogIn' is not null or undefined
+            assertParamExists('postRunnerLog', 'runnerLogIn', runnerLogIn)
+            const localVarPath = `/v1/runner/log`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xRunnerUuid != null) {
+                localVarHeaderParameter['x-runner-uuid'] = String(xRunnerUuid);
+            }
+            if (xRunnerToken != null) {
+                localVarHeaderParameter['x-runner-token'] = String(xRunnerToken);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerLogIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Trades a pool\'s join secret for a runner identity and the token that authenticates every later call. It is the one operation with no credential to check, because a runner has none until this answers.  The secret names the pool it opens, and a pool exists only because somebody declared it. A daemon that starts against capacity nobody declared is refused here, which is where the rule that pools are declared state actually holds.
+         * @summary Trades a pool\'s join secret for a runner identity and the token that authenticates every later call.
+         * @param {RunnerRegisterIn} runnerRegisterIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerRegister: async (runnerRegisterIn: RunnerRegisterIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerRegisterIn' is not null or undefined
+            assertParamExists('postRunnerRegister', 'runnerRegisterIn', runnerRegisterIn)
+            const localVarPath = `/v1/runner/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerRegisterIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @summary Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @param {RunnerStateIn} runnerStateIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerState: async (runnerStateIn: RunnerStateIn, xRunnerUuid?: string, xRunnerToken?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerStateIn' is not null or undefined
+            assertParamExists('postRunnerState', 'runnerStateIn', runnerStateIn)
+            const localVarPath = `/v1/runner/state`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xRunnerUuid != null) {
+                localVarHeaderParameter['x-runner-uuid'] = String(xRunnerUuid);
+            }
+            if (xRunnerToken != null) {
+                localVarHeaderParameter['x-runner-token'] = String(xRunnerToken);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerStateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Hands the runner a job to execute, if its pool has one, and answers immediately either way. A runner sends the queue version it last saw; when it matches, nothing has been queued since and no lease transaction is opened.
+         * @summary Hands the runner a job to execute, if its pool has one, and answers immediately either way.
+         * @param {RunnerTaskIn} runnerTaskIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerTask: async (runnerTaskIn: RunnerTaskIn, xRunnerUuid?: string, xRunnerToken?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerTaskIn' is not null or undefined
+            assertParamExists('postRunnerTask', 'runnerTaskIn', runnerTaskIn)
+            const localVarPath = `/v1/runner/task`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xRunnerUuid != null) {
+                localVarHeaderParameter['x-runner-uuid'] = String(xRunnerUuid);
+            }
+            if (xRunnerToken != null) {
+                localVarHeaderParameter['x-runner-token'] = String(xRunnerToken);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerTaskIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1861,10 +2405,22 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyList>> {
+        async getGitKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitKeys(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitPools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPoolList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitPools(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitPools']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1873,7 +2429,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitRepos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoList>> {
+        async getGitRepos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRepos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRepos']?.[localVarOperationServerIndex]?.url;
@@ -1886,14 +2442,14 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
+        async getGitReposByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
+         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead. A repository in the organization\'s own code workspace on the forge is read from there.
          * @summary Returns one file\'s bytes at one revision.
          * @param {string} name Name is the repo to read, from the :name path segment.
          * @param {string} [ref] Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
@@ -1901,7 +2457,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameBlob(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlobJSON>> {
+        async getGitReposByNameBlob(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitBlobJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameBlob(name, ref, path, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameBlob']?.[localVarOperationServerIndex]?.url;
@@ -1917,7 +2473,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameCommits(name: string, ref?: string, path?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsJSON>> {
+        async getGitReposByNameCommits(name: string, ref?: string, path?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitCommitsJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameCommits(name, ref, path, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameCommits']?.[localVarOperationServerIndex]?.url;
@@ -1932,7 +2488,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameFiles(name: string, ref?: string, glob?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilesJSON>> {
+        async getGitReposByNameFiles(name: string, ref?: string, glob?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitFilesJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameFiles(name, ref, glob, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameFiles']?.[localVarOperationServerIndex]?.url;
@@ -1946,7 +2502,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNamePulls(name: string, state?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullList>> {
+        async getGitReposByNamePulls(name: string, state?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPullList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNamePulls(name, state, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNamePulls']?.[localVarOperationServerIndex]?.url;
@@ -1960,7 +2516,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNamePullsByNumber(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
+        async getGitReposByNamePullsByNumber(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPullView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNamePullsByNumber(name, number, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNamePullsByNumber']?.[localVarOperationServerIndex]?.url;
@@ -1974,7 +2530,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameReadme(name: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadmeJSON>> {
+        async getGitReposByNameReadme(name: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitReadmeJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameReadme(name, ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameReadme']?.[localVarOperationServerIndex]?.url;
@@ -1987,7 +2543,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameRefs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefsJSON>> {
+        async getGitReposByNameRefs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRefsJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameRefs(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameRefs']?.[localVarOperationServerIndex]?.url;
@@ -2000,7 +2556,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameSubscriptions(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionList>> {
+        async getGitReposByNameSubscriptions(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitSubscriptionList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameSubscriptions(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameSubscriptions']?.[localVarOperationServerIndex]?.url;
@@ -2013,14 +2569,14 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameTargets(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorList>> {
+        async getGitReposByNameTargets(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitMirrorList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameTargets(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
+         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time. A repository in the organization\'s own code workspace on the forge is listed from there.
          * @summary Lists the immediate children of one directory at one revision, directories before files.
          * @param {string} name Name is the repo to read, from the :name path segment.
          * @param {string} [ref] Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
@@ -2028,10 +2584,49 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitReposByNameTree(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreeJSON>> {
+        async getGitReposByNameTree(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTreeJSON>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameTree(name, ref, path, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameTree']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitRunners(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRunnerList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRunners(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRunners']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns this org\'s runs, newest first.
+         * @summary Returns this org\'s runs, newest first.
+         * @param {string} [repo] Repo restricts the listing to one repository. Empty lists the whole org.
+         * @param {number} [limit] Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitRuns(repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRuns>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRuns(repo, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRuns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one run.
+         * @summary Returns one run.
+         * @param {string} id ID is the run to read, from the :id path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitRunsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRunsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRunsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2040,22 +2635,36 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitUsage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageView>> {
+        async getGitUsage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitUsageView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitUsage(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
-         * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-         * @param {string} name Name is the repo to update, from the :name path segment.
-         * @param {PatchIn} patchIn 
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @param {string} [repo] Repo is the repository whose workflows to read.
+         * @param {string} [ref] Ref is the branch to read them at; empty means the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchGitReposByName(name: string, patchIn: PatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchGitReposByName(name, patchIn, options);
+        async getGitWorkflows(repo?: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitWorkflows(repo, ref, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitWorkflows']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
+         * @summary Flips a repo\'s public bit, the one mutable repo setting today.
+         * @param {string} name Name is the repo to update, from the :name path segment.
+         * @param {GitPatchIn} gitPatchIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchGitReposByName(name: string, gitPatchIn: GitPatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchGitReposByName(name, gitPatchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.patchGitReposByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2125,25 +2734,38 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
          * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-         * @param {RegisterKeyReq} registerKeyReq 
+         * @param {GitRegisterKeyReq} gitRegisterKeyReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitKeys(registerKeyReq: RegisterKeyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitKeys(registerKeyReq, options);
+        async postGitKeys(gitRegisterKeyReq: GitRegisterKeyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitKeys(gitRegisterKeyReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs. Answers 201. The name must be unique within the scope — a repeat is a 409, never a silent overwrite of an existing repo. The org comes from the validated principal, so a repo is always born owned by the caller\'s own tenant.
-         * @summary Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs.
-         * @param {CreateReq} createReq 
+         * Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.  Declaring is the ONLY way capacity comes to exist: a daemon cannot register against a pool nobody declared, because the secret it would have to present does not exist until this runs. Re-declaring an existing pool replaces its labels and mints a fresh secret; runners already inside it keep working.
+         * @summary Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.
+         * @param {GitPoolDeclare} gitPoolDeclare 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitRepos(createReq: CreateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitRepos(createReq, options);
+        async postGitPools(gitPoolDeclare: GitPoolDeclare, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPoolDeclared>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitPools(gitPoolDeclare, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitPools']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs. Answers 201. The name must be unique within the scope — a repeat is a 409, never a silent overwrite of an existing repo. The org comes from the validated principal, so a repo is always born owned by the caller\'s own tenant.
+         * @summary Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs.
+         * @param {GitCreateReq} gitCreateReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitRepos(gitCreateReq: GitCreateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitRepos(gitCreateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitRepos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2155,7 +2777,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNameGc(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GcOut>> {
+        async postGitReposByNameGc(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitGcOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameGc(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameGc']?.[localVarOperationServerIndex]?.url;
@@ -2165,12 +2787,12 @@ export const GitApiFp = function(configuration?: Configuration) {
          * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
          * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
          * @param {string} name Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
-         * @param {MirrorReq} mirrorReq 
+         * @param {GitMirrorReq} gitMirrorReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNameMirror(name: string, mirrorReq: MirrorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameMirror(name, mirrorReq, options);
+        async postGitReposByNameMirror(name: string, gitMirrorReq: GitMirrorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameMirror(name, gitMirrorReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameMirror']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2179,12 +2801,12 @@ export const GitApiFp = function(configuration?: Configuration) {
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Proposes a branch for merging and returns it with its number.
          * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
-         * @param {OpenReq} openReq 
+         * @param {GitOpenReq} gitOpenReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNamePulls(name: string, openReq: OpenReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNamePulls(name, openReq, options);
+        async postGitReposByNamePulls(name: string, gitOpenReq: GitOpenReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPullView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNamePulls(name, gitOpenReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNamePulls']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2197,22 +2819,22 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNamePullsByNumberMerge(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
+        async postGitReposByNamePullsByNumberMerge(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPullView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNamePullsByNumberMerge(name, number, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNamePullsByNumberMerge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
+         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.  It is for generated content. Changing CI through it needs an org admin (403 otherwise), and a workflow whose newest change came in through it is not run automatically; CI written through git runs as usual.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
          * @param {string} name Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
-         * @param {PushReq} pushReq 
+         * @param {GitPushReq} gitPushReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNamePush(name: string, pushReq: PushReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PushResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNamePush(name, pushReq, options);
+        async postGitReposByNamePush(name: string, gitPushReq: GitPushReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitPushResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNamePush(name, gitPushReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNamePush']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2221,12 +2843,12 @@ export const GitApiFp = function(configuration?: Configuration) {
          * Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there. Answers 201. The same channel twice on one repo is a 409; a repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there.
          * @param {string} name Name is the repo to subscribe, from the :name path segment.
-         * @param {SubscribeReq} subscribeReq 
+         * @param {GitSubscribeReq} gitSubscribeReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNameSubscriptions(name: string, subscribeReq: SubscribeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameSubscriptions(name, subscribeReq, options);
+        async postGitReposByNameSubscriptions(name: string, gitSubscribeReq: GitSubscribeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitSubscriptionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameSubscriptions(name, gitSubscribeReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameSubscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2235,18 +2857,31 @@ export const GitApiFp = function(configuration?: Configuration) {
          * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
          * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
          * @param {string} name Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
-         * @param {MirrorTargetReq} mirrorTargetReq 
+         * @param {GitMirrorTargetReq} gitMirrorTargetReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNameTargets(name: string, mirrorTargetReq: MirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorTargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameTargets(name, mirrorTargetReq, options);
+        async postGitReposByNameTargets(name: string, gitMirrorTargetReq: GitMirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitMirrorTargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameTargets(name, gitMirrorTargetReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * Runs a repository\'s workflows at a ref, on demand.  It takes the SAME path a push takes: the request is recorded in the journal and delivered from there, so an explicit run and a pushed one are one mechanism with one idempotency rule and not two that can disagree. Asking twice for the same commit yields the same run.
+         * @summary Runs a repository\'s workflows at a ref, on demand.
+         * @param {GitRunStart} gitRunStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitRuns(gitRunStart: GitRunStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRuns>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitRuns(gitRunStart, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitRuns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/provider/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2255,6 +2890,79 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGitWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @param {RunnerDeclareIn} runnerDeclareIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postRunnerDeclare(runnerDeclareIn: RunnerDeclareIn, xRunnerUuid?: string, xRunnerToken?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerDeclareOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRunnerDeclare(runnerDeclareIn, xRunnerUuid, xRunnerToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postRunnerDeclare']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @summary Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @param {RunnerLogIn} runnerLogIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postRunnerLog(runnerLogIn: RunnerLogIn, xRunnerUuid?: string, xRunnerToken?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerLogOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRunnerLog(runnerLogIn, xRunnerUuid, xRunnerToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postRunnerLog']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Trades a pool\'s join secret for a runner identity and the token that authenticates every later call. It is the one operation with no credential to check, because a runner has none until this answers.  The secret names the pool it opens, and a pool exists only because somebody declared it. A daemon that starts against capacity nobody declared is refused here, which is where the rule that pools are declared state actually holds.
+         * @summary Trades a pool\'s join secret for a runner identity and the token that authenticates every later call.
+         * @param {RunnerRegisterIn} runnerRegisterIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postRunnerRegister(runnerRegisterIn: RunnerRegisterIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerRegisterOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRunnerRegister(runnerRegisterIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postRunnerRegister']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @summary Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @param {RunnerStateIn} runnerStateIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postRunnerState(runnerStateIn: RunnerStateIn, xRunnerUuid?: string, xRunnerToken?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerStateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRunnerState(runnerStateIn, xRunnerUuid, xRunnerToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postRunnerState']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Hands the runner a job to execute, if its pool has one, and answers immediately either way. A runner sends the queue version it last saw; when it matches, nothing has been queued since and no lease transaction is opened.
+         * @summary Hands the runner a job to execute, if its pool has one, and answers immediately either way.
+         * @param {RunnerTaskIn} runnerTaskIn 
+         * @param {string} [xRunnerUuid] 
+         * @param {string} [xRunnerToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postRunnerTask(runnerTaskIn: RunnerTaskIn, xRunnerUuid?: string, xRunnerToken?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerTaskOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRunnerTask(runnerTaskIn, xRunnerUuid, xRunnerToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postRunnerTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2371,8 +3079,17 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitKeys(options?: RawAxiosRequestConfig): AxiosPromise<KeyList> {
+        getGitKeys(options?: RawAxiosRequestConfig): AxiosPromise<GitKeyList> {
             return localVarFp.getGitKeys(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitPools(options?: RawAxiosRequestConfig): AxiosPromise<GitPoolList> {
+            return localVarFp.getGitPools(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the repos in the caller\'s scope, most recently updated first. The scope is the request principal\'s — the gateway-minted org and its optional project — never anything off the wire, so a caller only ever sees its own. Rows carry no branches or HEAD; read one repo for those.
@@ -2380,7 +3097,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitRepos(options?: RawAxiosRequestConfig): AxiosPromise<RepoList> {
+        getGitRepos(options?: RawAxiosRequestConfig): AxiosPromise<GitRepoList> {
             return localVarFp.getGitRepos(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2390,17 +3107,17 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByName(requestParameters: GitApiGetGitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
+        getGitReposByName(requestParameters: GitApiGetGitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
             return localVarFp.getGitReposByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
+         * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead. A repository in the organization\'s own code workspace on the forge is read from there.
          * @summary Returns one file\'s bytes at one revision.
          * @param {GitApiGetGitReposByNameBlobRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameBlob(requestParameters: GitApiGetGitReposByNameBlobRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlobJSON> {
+        getGitReposByNameBlob(requestParameters: GitApiGetGitReposByNameBlobRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitBlobJSON> {
             return localVarFp.getGitReposByNameBlob(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2410,7 +3127,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameCommits(requestParameters: GitApiGetGitReposByNameCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommitsJSON> {
+        getGitReposByNameCommits(requestParameters: GitApiGetGitReposByNameCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitCommitsJSON> {
             return localVarFp.getGitReposByNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2420,7 +3137,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameFiles(requestParameters: GitApiGetGitReposByNameFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<FilesJSON> {
+        getGitReposByNameFiles(requestParameters: GitApiGetGitReposByNameFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitFilesJSON> {
             return localVarFp.getGitReposByNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2430,7 +3147,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNamePulls(requestParameters: GitApiGetGitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullList> {
+        getGitReposByNamePulls(requestParameters: GitApiGetGitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPullList> {
             return localVarFp.getGitReposByNamePulls(requestParameters.name, requestParameters.state, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2440,7 +3157,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNamePullsByNumber(requestParameters: GitApiGetGitReposByNamePullsByNumberRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
+        getGitReposByNamePullsByNumber(requestParameters: GitApiGetGitReposByNamePullsByNumberRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPullView> {
             return localVarFp.getGitReposByNamePullsByNumber(requestParameters.name, requestParameters.number, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2450,7 +3167,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameReadme(requestParameters: GitApiGetGitReposByNameReadmeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadmeJSON> {
+        getGitReposByNameReadme(requestParameters: GitApiGetGitReposByNameReadmeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitReadmeJSON> {
             return localVarFp.getGitReposByNameReadme(requestParameters.name, requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2460,7 +3177,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameRefs(requestParameters: GitApiGetGitReposByNameRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefsJSON> {
+        getGitReposByNameRefs(requestParameters: GitApiGetGitReposByNameRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRefsJSON> {
             return localVarFp.getGitReposByNameRefs(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2470,7 +3187,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameSubscriptions(requestParameters: GitApiGetGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionList> {
+        getGitReposByNameSubscriptions(requestParameters: GitApiGetGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitSubscriptionList> {
             return localVarFp.getGitReposByNameSubscriptions(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2480,18 +3197,47 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameTargets(requestParameters: GitApiGetGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorList> {
+        getGitReposByNameTargets(requestParameters: GitApiGetGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitMirrorList> {
             return localVarFp.getGitReposByNameTargets(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
+         * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time. A repository in the organization\'s own code workspace on the forge is listed from there.
          * @summary Lists the immediate children of one directory at one revision, directories before files.
          * @param {GitApiGetGitReposByNameTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitReposByNameTree(requestParameters: GitApiGetGitReposByNameTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TreeJSON> {
+        getGitReposByNameTree(requestParameters: GitApiGetGitReposByNameTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitTreeJSON> {
             return localVarFp.getGitReposByNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunners(options?: RawAxiosRequestConfig): AxiosPromise<GitRunnerList> {
+            return localVarFp.getGitRunners(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns this org\'s runs, newest first.
+         * @summary Returns this org\'s runs, newest first.
+         * @param {GitApiGetGitRunsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRuns(requestParameters: GitApiGetGitRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowRuns> {
+            return localVarFp.getGitRuns(requestParameters.repo, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one run.
+         * @summary Returns one run.
+         * @param {GitApiGetGitRunsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunsById(requestParameters: GitApiGetGitRunsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowRun> {
+            return localVarFp.getGitRunsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns per-repo and total storage bytes for the caller\'s org — the queryable, per-tenant number commerce and o11y meter on. It spans EVERY project sub-scope, unlike the repo list, so a billing consumer sees the whole tenant footprint in one call. Sizes are last-measured values (create, push, mirror and gc each re-measure), not a live walk of the disk.
@@ -2499,8 +3245,18 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitUsage(options?: RawAxiosRequestConfig): AxiosPromise<UsageView> {
+        getGitUsage(options?: RawAxiosRequestConfig): AxiosPromise<GitUsageView> {
             return localVarFp.getGitUsage(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * @param {GitApiGetGitWorkflowsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitWorkflows(requestParameters: GitApiGetGitWorkflowsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowList> {
+            return localVarFp.getGitWorkflows(requestParameters.repo, requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
          * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
@@ -2509,8 +3265,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchGitReposByName(requestParameters: GitApiPatchGitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.patchGitReposByName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(axios, basePath));
+        patchGitReposByName(requestParameters: GitApiPatchGitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
+            return localVarFp.patchGitReposByName(requestParameters.name, requestParameters.gitPatchIn, options).then((request) => request(axios, basePath));
         },
         /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
@@ -2559,8 +3315,18 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<KeyView> {
-            return localVarFp.postGitKeys(requestParameters.registerKeyReq, options).then((request) => request(axios, basePath));
+        postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitKeyView> {
+            return localVarFp.postGitKeys(requestParameters.gitRegisterKeyReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.  Declaring is the ONLY way capacity comes to exist: a daemon cannot register against a pool nobody declared, because the secret it would have to present does not exist until this runs. Re-declaring an existing pool replaces its labels and mints a fresh secret; runners already inside it keep working.
+         * @summary Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.
+         * @param {GitApiPostGitPoolsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitPools(requestParameters: GitApiPostGitPoolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPoolDeclared> {
+            return localVarFp.postGitPools(requestParameters.gitPoolDeclare, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions an empty bare repository in the caller\'s scope and returns it with its clone URLs. Answers 201. The name must be unique within the scope — a repeat is a 409, never a silent overwrite of an existing repo. The org comes from the validated principal, so a repo is always born owned by the caller\'s own tenant.
@@ -2569,8 +3335,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitRepos(requestParameters: GitApiPostGitReposRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.postGitRepos(requestParameters.createReq, options).then((request) => request(axios, basePath));
+        postGitRepos(requestParameters: GitApiPostGitReposRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
+            return localVarFp.postGitRepos(requestParameters.gitCreateReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph. Idempotent, and safe to interrupt — git swaps both artifacts atomically. It runs under one pack slot with the same memory bounds as a clone, so it can block behind heavy pack traffic rather than compete with it. Storage usage is re-measured afterwards, since a repack reclaims space.
@@ -2579,7 +3345,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameGc(requestParameters: GitApiPostGitReposByNameGcRequest, options?: RawAxiosRequestConfig): AxiosPromise<GcOut> {
+        postGitReposByNameGc(requestParameters: GitApiPostGitReposByNameGcRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitGcOut> {
             return localVarFp.postGitReposByNameGc(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2589,8 +3355,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameMirror(requestParameters: GitApiPostGitReposByNameMirrorRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.postGitReposByNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(axios, basePath));
+        postGitReposByNameMirror(requestParameters: GitApiPostGitReposByNameMirrorRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
+            return localVarFp.postGitReposByNameMirror(requestParameters.name, requestParameters.gitMirrorReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
@@ -2599,8 +3365,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNamePulls(requestParameters: GitApiPostGitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
-            return localVarFp.postGitReposByNamePulls(requestParameters.name, requestParameters.openReq, options).then((request) => request(axios, basePath));
+        postGitReposByNamePulls(requestParameters: GitApiPostGitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPullView> {
+            return localVarFp.postGitReposByNamePulls(requestParameters.name, requestParameters.gitOpenReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.  It merges only when base is already an ancestor of head — the case where head contains every commit base has, so moving the branch loses nothing and invents nothing. When base has moved on independently, this REFUSES with 409 and says so: a real three-way merge is not implemented here, and reporting one would claim a result these bytes do not produce. Rebase head onto base and merge again.  The move is judged by the same ref policy a `git push` of it would face, and fires the same build and notify reactions, so merging is not a way around either. Merging an already-merged proposal is a 409.
@@ -2609,18 +3375,18 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNamePullsByNumberMerge(requestParameters: GitApiPostGitReposByNamePullsByNumberMergeRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
+        postGitReposByNamePullsByNumberMerge(requestParameters: GitApiPostGitReposByNamePullsByNumberMergeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPullView> {
             return localVarFp.postGitReposByNamePullsByNumberMerge(requestParameters.name, requestParameters.number, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
+         * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.  It is for generated content. Changing CI through it needs an org admin (403 otherwise), and a workflow whose newest change came in through it is not run automatically; CI written through git runs as usual.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
          * @param {GitApiPostGitReposByNamePushRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNamePush(requestParameters: GitApiPostGitReposByNamePushRequest, options?: RawAxiosRequestConfig): AxiosPromise<PushResp> {
-            return localVarFp.postGitReposByNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(axios, basePath));
+        postGitReposByNamePush(requestParameters: GitApiPostGitReposByNamePushRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitPushResp> {
+            return localVarFp.postGitReposByNamePush(requestParameters.name, requestParameters.gitPushReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there. Answers 201. The same channel twice on one repo is a 409; a repo outside the caller\'s scope is a 404, exactly as reading it is.
@@ -2629,8 +3395,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameSubscriptions(requestParameters: GitApiPostGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionView> {
-            return localVarFp.postGitReposByNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(axios, basePath));
+        postGitReposByNameSubscriptions(requestParameters: GitApiPostGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitSubscriptionView> {
+            return localVarFp.postGitReposByNameSubscriptions(requestParameters.name, requestParameters.gitSubscribeReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
@@ -2639,17 +3405,77 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameTargets(requestParameters: GitApiPostGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorTargetView> {
-            return localVarFp.postGitReposByNameTargets(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
+        postGitReposByNameTargets(requestParameters: GitApiPostGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitMirrorTargetView> {
+            return localVarFp.postGitReposByNameTargets(requestParameters.name, requestParameters.gitMirrorTargetReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+         * Runs a repository\'s workflows at a ref, on demand.  It takes the SAME path a push takes: the request is recorded in the journal and delivered from there, so an explicit run and a pushed one are one mechanism with one idempotency rule and not two that can disagree. Asking twice for the same commit yields the same run.
+         * @summary Runs a repository\'s workflows at a ref, on demand.
+         * @param {GitApiPostGitRunsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitRuns(requestParameters: GitApiPostGitRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowRuns> {
+            return localVarFp.postGitRuns(requestParameters.gitRunStart, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/provider/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
          * @summary Retired — push-to-deploy has no inbound webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postGitWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postGitWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+         * @param {GitApiPostRunnerDeclareRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerDeclare(requestParameters: GitApiPostRunnerDeclareRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerDeclareOut> {
+            return localVarFp.postRunnerDeclare(requestParameters.runnerDeclareIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @summary Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+         * @param {GitApiPostRunnerLogRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerLog(requestParameters: GitApiPostRunnerLogRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerLogOut> {
+            return localVarFp.postRunnerLog(requestParameters.runnerLogIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Trades a pool\'s join secret for a runner identity and the token that authenticates every later call. It is the one operation with no credential to check, because a runner has none until this answers.  The secret names the pool it opens, and a pool exists only because somebody declared it. A daemon that starts against capacity nobody declared is refused here, which is where the rule that pools are declared state actually holds.
+         * @summary Trades a pool\'s join secret for a runner identity and the token that authenticates every later call.
+         * @param {GitApiPostRunnerRegisterRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerRegister(requestParameters: GitApiPostRunnerRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerRegisterOut> {
+            return localVarFp.postRunnerRegister(requestParameters.runnerRegisterIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @summary Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+         * @param {GitApiPostRunnerStateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerState(requestParameters: GitApiPostRunnerStateRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerStateOut> {
+            return localVarFp.postRunnerState(requestParameters.runnerStateIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Hands the runner a job to execute, if its pool has one, and answers immediately either way. A runner sends the queue version it last saw; when it matches, nothing has been queued since and no lease transaction is opened.
+         * @summary Hands the runner a job to execute, if its pool has one, and answers immediately either way.
+         * @param {GitApiPostRunnerTaskRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postRunnerTask(requestParameters: GitApiPostRunnerTaskRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerTaskOut> {
+            return localVarFp.postRunnerTask(requestParameters.runnerTaskIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3054,6 +3880,62 @@ export interface GitApiGetGitReposByNameTreeRequest {
 }
 
 /**
+ * Request parameters for getGitRuns operation in GitApi.
+ * @export
+ * @interface GitApiGetGitRunsRequest
+ */
+export interface GitApiGetGitRunsRequest {
+    /**
+     * Repo restricts the listing to one repository. Empty lists the whole org.
+     * @type {string}
+     * @memberof GitApiGetGitRuns
+     */
+    readonly repo?: string
+
+    /**
+     * Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
+     * @type {number}
+     * @memberof GitApiGetGitRuns
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getGitRunsById operation in GitApi.
+ * @export
+ * @interface GitApiGetGitRunsByIdRequest
+ */
+export interface GitApiGetGitRunsByIdRequest {
+    /**
+     * ID is the run to read, from the :id path segment.
+     * @type {string}
+     * @memberof GitApiGetGitRunsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getGitWorkflows operation in GitApi.
+ * @export
+ * @interface GitApiGetGitWorkflowsRequest
+ */
+export interface GitApiGetGitWorkflowsRequest {
+    /**
+     * Repo is the repository whose workflows to read.
+     * @type {string}
+     * @memberof GitApiGetGitWorkflows
+     */
+    readonly repo?: string
+
+    /**
+     * Ref is the branch to read them at; empty means the default.
+     * @type {string}
+     * @memberof GitApiGetGitWorkflows
+     */
+    readonly ref?: string
+}
+
+/**
  * Request parameters for patchGitReposByName operation in GitApi.
  * @export
  * @interface GitApiPatchGitReposByNameRequest
@@ -3068,10 +3950,10 @@ export interface GitApiPatchGitReposByNameRequest {
 
     /**
      * 
-     * @type {PatchIn}
+     * @type {GitPatchIn}
      * @memberof GitApiPatchGitReposByName
      */
-    readonly patchIn: PatchIn
+    readonly gitPatchIn: GitPatchIn
 }
 
 /**
@@ -3208,10 +4090,24 @@ export interface GitApiPostGitByOrgByRepoGitUploadPackRequest {
 export interface GitApiPostGitKeysRequest {
     /**
      * 
-     * @type {RegisterKeyReq}
+     * @type {GitRegisterKeyReq}
      * @memberof GitApiPostGitKeys
      */
-    readonly registerKeyReq: RegisterKeyReq
+    readonly gitRegisterKeyReq: GitRegisterKeyReq
+}
+
+/**
+ * Request parameters for postGitPools operation in GitApi.
+ * @export
+ * @interface GitApiPostGitPoolsRequest
+ */
+export interface GitApiPostGitPoolsRequest {
+    /**
+     * 
+     * @type {GitPoolDeclare}
+     * @memberof GitApiPostGitPools
+     */
+    readonly gitPoolDeclare: GitPoolDeclare
 }
 
 /**
@@ -3222,10 +4118,10 @@ export interface GitApiPostGitKeysRequest {
 export interface GitApiPostGitReposRequest {
     /**
      * 
-     * @type {CreateReq}
+     * @type {GitCreateReq}
      * @memberof GitApiPostGitRepos
      */
-    readonly createReq: CreateReq
+    readonly gitCreateReq: GitCreateReq
 }
 
 /**
@@ -3257,10 +4153,10 @@ export interface GitApiPostGitReposByNameMirrorRequest {
 
     /**
      * 
-     * @type {MirrorReq}
+     * @type {GitMirrorReq}
      * @memberof GitApiPostGitReposByNameMirror
      */
-    readonly mirrorReq: MirrorReq
+    readonly gitMirrorReq: GitMirrorReq
 }
 
 /**
@@ -3278,10 +4174,10 @@ export interface GitApiPostGitReposByNamePullsRequest {
 
     /**
      * 
-     * @type {OpenReq}
+     * @type {GitOpenReq}
      * @memberof GitApiPostGitReposByNamePulls
      */
-    readonly openReq: OpenReq
+    readonly gitOpenReq: GitOpenReq
 }
 
 /**
@@ -3320,10 +4216,10 @@ export interface GitApiPostGitReposByNamePushRequest {
 
     /**
      * 
-     * @type {PushReq}
+     * @type {GitPushReq}
      * @memberof GitApiPostGitReposByNamePush
      */
-    readonly pushReq: PushReq
+    readonly gitPushReq: GitPushReq
 }
 
 /**
@@ -3341,10 +4237,10 @@ export interface GitApiPostGitReposByNameSubscriptionsRequest {
 
     /**
      * 
-     * @type {SubscribeReq}
+     * @type {GitSubscribeReq}
      * @memberof GitApiPostGitReposByNameSubscriptions
      */
-    readonly subscribeReq: SubscribeReq
+    readonly gitSubscribeReq: GitSubscribeReq
 }
 
 /**
@@ -3362,10 +4258,150 @@ export interface GitApiPostGitReposByNameTargetsRequest {
 
     /**
      * 
-     * @type {MirrorTargetReq}
+     * @type {GitMirrorTargetReq}
      * @memberof GitApiPostGitReposByNameTargets
      */
-    readonly mirrorTargetReq: MirrorTargetReq
+    readonly gitMirrorTargetReq: GitMirrorTargetReq
+}
+
+/**
+ * Request parameters for postGitRuns operation in GitApi.
+ * @export
+ * @interface GitApiPostGitRunsRequest
+ */
+export interface GitApiPostGitRunsRequest {
+    /**
+     * 
+     * @type {GitRunStart}
+     * @memberof GitApiPostGitRuns
+     */
+    readonly gitRunStart: GitRunStart
+}
+
+/**
+ * Request parameters for postRunnerDeclare operation in GitApi.
+ * @export
+ * @interface GitApiPostRunnerDeclareRequest
+ */
+export interface GitApiPostRunnerDeclareRequest {
+    /**
+     * 
+     * @type {RunnerDeclareIn}
+     * @memberof GitApiPostRunnerDeclare
+     */
+    readonly runnerDeclareIn: RunnerDeclareIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerDeclare
+     */
+    readonly xRunnerUuid?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerDeclare
+     */
+    readonly xRunnerToken?: string
+}
+
+/**
+ * Request parameters for postRunnerLog operation in GitApi.
+ * @export
+ * @interface GitApiPostRunnerLogRequest
+ */
+export interface GitApiPostRunnerLogRequest {
+    /**
+     * 
+     * @type {RunnerLogIn}
+     * @memberof GitApiPostRunnerLog
+     */
+    readonly runnerLogIn: RunnerLogIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerLog
+     */
+    readonly xRunnerUuid?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerLog
+     */
+    readonly xRunnerToken?: string
+}
+
+/**
+ * Request parameters for postRunnerRegister operation in GitApi.
+ * @export
+ * @interface GitApiPostRunnerRegisterRequest
+ */
+export interface GitApiPostRunnerRegisterRequest {
+    /**
+     * 
+     * @type {RunnerRegisterIn}
+     * @memberof GitApiPostRunnerRegister
+     */
+    readonly runnerRegisterIn: RunnerRegisterIn
+}
+
+/**
+ * Request parameters for postRunnerState operation in GitApi.
+ * @export
+ * @interface GitApiPostRunnerStateRequest
+ */
+export interface GitApiPostRunnerStateRequest {
+    /**
+     * 
+     * @type {RunnerStateIn}
+     * @memberof GitApiPostRunnerState
+     */
+    readonly runnerStateIn: RunnerStateIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerState
+     */
+    readonly xRunnerUuid?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerState
+     */
+    readonly xRunnerToken?: string
+}
+
+/**
+ * Request parameters for postRunnerTask operation in GitApi.
+ * @export
+ * @interface GitApiPostRunnerTaskRequest
+ */
+export interface GitApiPostRunnerTaskRequest {
+    /**
+     * 
+     * @type {RunnerTaskIn}
+     * @memberof GitApiPostRunnerTask
+     */
+    readonly runnerTaskIn: RunnerTaskIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerTask
+     */
+    readonly xRunnerUuid?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiPostRunnerTask
+     */
+    readonly xRunnerToken?: string
 }
 
 /**
@@ -3505,6 +4541,17 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * Returns the capacity this org has declared and how many daemons have entered each pool.
+     * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitPools(options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitPools(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the repos in the caller\'s scope, most recently updated first. The scope is the request principal\'s — the gateway-minted org and its optional project — never anything off the wire, so a caller only ever sees its own. Rows carry no branches or HEAD; read one repo for those.
      * @summary Returns the repos in the caller\'s scope, most recently updated first.
      * @param {*} [options] Override http request option.
@@ -3528,7 +4575,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
+     * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead. A repository in the organization\'s own code workspace on the forge is read from there.
      * @summary Returns one file\'s bytes at one revision.
      * @param {GitApiGetGitReposByNameBlobRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3636,7 +4683,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
+     * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time. A repository in the organization\'s own code workspace on the forge is listed from there.
      * @summary Lists the immediate children of one directory at one revision, directories before files.
      * @param {GitApiGetGitReposByNameTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3645,6 +4692,41 @@ export class GitApi extends BaseAPI {
      */
     public getGitReposByNameTree(requestParameters: GitApiGetGitReposByNameTreeRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitReposByNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+     * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitRunners(options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitRunners(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns this org\'s runs, newest first.
+     * @summary Returns this org\'s runs, newest first.
+     * @param {GitApiGetGitRunsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitRuns(requestParameters: GitApiGetGitRunsRequest = {}, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitRuns(requestParameters.repo, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one run.
+     * @summary Returns one run.
+     * @param {GitApiGetGitRunsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitRunsById(requestParameters: GitApiGetGitRunsByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitRunsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3659,6 +4741,18 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+     * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+     * @param {GitApiGetGitWorkflowsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitWorkflows(requestParameters: GitApiGetGitWorkflowsRequest = {}, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitWorkflows(requestParameters.repo, requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
      * @summary Flips a repo\'s public bit, the one mutable repo setting today.
      * @param {GitApiPatchGitReposByNameRequest} requestParameters Request parameters.
@@ -3667,7 +4761,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public patchGitReposByName(requestParameters: GitApiPatchGitReposByNameRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).patchGitReposByName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).patchGitReposByName(requestParameters.name, requestParameters.gitPatchIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3727,7 +4821,19 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitKeys(requestParameters.registerKeyReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitKeys(requestParameters.gitRegisterKeyReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.  Declaring is the ONLY way capacity comes to exist: a daemon cannot register against a pool nobody declared, because the secret it would have to present does not exist until this runs. Re-declaring an existing pool replaces its labels and mints a fresh secret; runners already inside it keep working.
+     * @summary Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.
+     * @param {GitApiPostGitPoolsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitPools(requestParameters: GitApiPostGitPoolsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitPools(requestParameters.gitPoolDeclare, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3739,7 +4845,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitRepos(requestParameters: GitApiPostGitReposRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitRepos(requestParameters.createReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitRepos(requestParameters.gitCreateReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3763,7 +4869,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitReposByNameMirror(requestParameters: GitApiPostGitReposByNameMirrorRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitReposByNameMirror(requestParameters.name, requestParameters.gitMirrorReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3775,7 +4881,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitReposByNamePulls(requestParameters: GitApiPostGitReposByNamePullsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNamePulls(requestParameters.name, requestParameters.openReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitReposByNamePulls(requestParameters.name, requestParameters.gitOpenReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3791,7 +4897,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
+     * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.  It is for generated content. Changing CI through it needs an org admin (403 otherwise), and a workflow whose newest change came in through it is not run automatically; CI written through git runs as usual.
      * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
      * @param {GitApiPostGitReposByNamePushRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3799,7 +4905,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitReposByNamePush(requestParameters: GitApiPostGitReposByNamePushRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitReposByNamePush(requestParameters.name, requestParameters.gitPushReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3811,7 +4917,7 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitReposByNameSubscriptions(requestParameters: GitApiPostGitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitReposByNameSubscriptions(requestParameters.name, requestParameters.gitSubscribeReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3823,11 +4929,23 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public postGitReposByNameTargets(requestParameters: GitApiPostGitReposByNameTargetsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNameTargets(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).postGitReposByNameTargets(requestParameters.name, requestParameters.gitMirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/integration/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
+     * Runs a repository\'s workflows at a ref, on demand.  It takes the SAME path a push takes: the request is recorded in the journal and delivered from there, so an explicit run and a pushed one are one mechanism with one idempotency rule and not two that can disagree. Asking twice for the same commit yields the same run.
+     * @summary Runs a repository\'s workflows at a ref, on demand.
+     * @param {GitApiPostGitRunsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitRuns(requestParameters: GitApiPostGitRunsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitRuns(requestParameters.gitRunStart, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * GONE (410). Push-to-deploy is not triggered by an inbound webhook. A push into this host\'s own git server fires the builder in-process, and a repository whose canonical home is GitHub is delivered by the Hanzo Platform GitHub App to POST /v1/provider/github/webhook. The forge does not report a push over HTTP.  Every delivery answers 410 whatever it carries — this endpoint reads no body and authenticates nothing.  410 rather than 404, because the address was real and its meaning moved, which is the distinction 410 carries. A 404 from this estate is ambiguous: Hanzo Git serves /v1, so /api/v1 404s too and reads as \"the API is switched off\". A retired endpoint says it is retired and names its replacement, so the answer carries its own fix.
      * @summary Retired — push-to-deploy has no inbound webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3835,6 +4953,66 @@ export class GitApi extends BaseAPI {
      */
     public postGitWebhook(options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).postGitWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+     * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
+     * @param {GitApiPostRunnerDeclareRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postRunnerDeclare(requestParameters: GitApiPostRunnerDeclareRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postRunnerDeclare(requestParameters.runnerDeclareIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+     * @summary Adds console output to a task\'s log and answers with how far that log is durable, so the runner knows where to resend from.
+     * @param {GitApiPostRunnerLogRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postRunnerLog(requestParameters: GitApiPostRunnerLogRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postRunnerLog(requestParameters.runnerLogIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Trades a pool\'s join secret for a runner identity and the token that authenticates every later call. It is the one operation with no credential to check, because a runner has none until this answers.  The secret names the pool it opens, and a pool exists only because somebody declared it. A daemon that starts against capacity nobody declared is refused here, which is where the rule that pools are declared state actually holds.
+     * @summary Trades a pool\'s join secret for a runner identity and the token that authenticates every later call.
+     * @param {GitApiPostRunnerRegisterRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postRunnerRegister(requestParameters: GitApiPostRunnerRegisterRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postRunnerRegister(requestParameters.runnerRegisterIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+     * @summary Records a task\'s progress and that of its steps, and answers with the result this side now holds — which is how a runner learns its task was stopped from somewhere else.
+     * @param {GitApiPostRunnerStateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postRunnerState(requestParameters: GitApiPostRunnerStateRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postRunnerState(requestParameters.runnerStateIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Hands the runner a job to execute, if its pool has one, and answers immediately either way. A runner sends the queue version it last saw; when it matches, nothing has been queued since and no lease transaction is opened.
+     * @summary Hands the runner a job to execute, if its pool has one, and answers immediately either way.
+     * @param {GitApiPostRunnerTaskRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postRunnerTask(requestParameters: GitApiPostRunnerTaskRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postRunnerTask(requestParameters.runnerTaskIn, requestParameters.xRunnerUuid, requestParameters.xRunnerToken, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

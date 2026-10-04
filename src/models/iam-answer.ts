@@ -28,22 +28,22 @@ export interface IamAnswer {
     'code'?: string;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof IamAnswer
      */
-    'data'?: object;
+    'data'?: any;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof IamAnswer
      */
-    'data2'?: object;
+    'data2'?: any;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof IamAnswer
      */
-    'data3'?: object;
+    'data3'?: any;
     /**
      * 
      * @type {string}

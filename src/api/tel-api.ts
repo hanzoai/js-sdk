@@ -22,25 +22,27 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { BuyInput } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { Call } from '../models';
+import type { TelBuyInput } from '../models';
 // @ts-ignore
-import type { CallInput } from '../models';
+import type { TelCall } from '../models';
 // @ts-ignore
-import type { CallList } from '../models';
+import type { TelCallInput } from '../models';
 // @ts-ignore
-import type { MessageInput } from '../models';
+import type { TelCallList } from '../models';
 // @ts-ignore
-import type { MessageList } from '../models';
+import type { TelMessageInput } from '../models';
 // @ts-ignore
-import type { Number } from '../models';
+import type { TelMessageList } from '../models';
 // @ts-ignore
-import type { NumberList } from '../models';
+import type { TelNumber } from '../models';
 // @ts-ignore
-import type { SMS } from '../models';
+import type { TelNumberList } from '../models';
 // @ts-ignore
-import type { Summary } from '../models';
+import type { TelSMS } from '../models';
+// @ts-ignore
+import type { TelSummary } from '../models';
 /**
  * TelApi - axios parameter creator
  * @export
@@ -316,13 +318,13 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Dials. An `agent` names a Hanzo assistant to answer it; the call is refused up front when no assistant plane is configured, because a call that connects to silence has already cost the person who answered it.
          * @summary Dials.
-         * @param {CallInput} callInput 
+         * @param {TelCallInput} telCallInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelCalls: async (callInput: CallInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'callInput' is not null or undefined
-            assertParamExists('postTelCalls', 'callInput', callInput)
+        postTelCalls: async (telCallInput: TelCallInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'telCallInput' is not null or undefined
+            assertParamExists('postTelCalls', 'telCallInput', telCallInput)
             const localVarPath = `/v1/tel/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -346,7 +348,7 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(callInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(telCallInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -356,13 +358,13 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Sends a message from one of this org\'s own numbers.  `from` must be a number the org HOLDS, checked against the store rather than taken on trust — a caller that could send from any number could impersonate one, and the carrier would deliver it. `to` is required, and the body needs text or media, because a message with neither is delivered as nothing and billed as something.
          * @summary Sends a message from one of this org\'s own numbers.
-         * @param {MessageInput} messageInput 
+         * @param {TelMessageInput} telMessageInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelMessages: async (messageInput: MessageInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'messageInput' is not null or undefined
-            assertParamExists('postTelMessages', 'messageInput', messageInput)
+        postTelMessages: async (telMessageInput: TelMessageInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'telMessageInput' is not null or undefined
+            assertParamExists('postTelMessages', 'telMessageInput', telMessageInput)
             const localVarPath = `/v1/tel/messages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -386,7 +388,7 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(messageInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(telMessageInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -396,13 +398,13 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Provisions with the carrier FIRST and records second. The other order records a holding that may not exist, and a number the platform believes it owns but cannot use is worse than one it failed to buy.
          * @summary Provisions with the carrier FIRST and records second.
-         * @param {BuyInput} buyInput 
+         * @param {TelBuyInput} telBuyInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelNumbers: async (buyInput: BuyInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'buyInput' is not null or undefined
-            assertParamExists('postTelNumbers', 'buyInput', buyInput)
+        postTelNumbers: async (telBuyInput: TelBuyInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'telBuyInput' is not null or undefined
+            assertParamExists('postTelNumbers', 'telBuyInput', telBuyInput)
             const localVarPath = `/v1/tel/numbers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -426,7 +428,7 @@ export const TelApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(buyInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(telBuyInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -475,7 +477,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTelCalls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallList>> {
+        async getTelCalls(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelCallList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTelCalls(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.getTelCalls']?.[localVarOperationServerIndex]?.url;
@@ -487,7 +489,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTelMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageList>> {
+        async getTelMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelMessageList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTelMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.getTelMessages']?.[localVarOperationServerIndex]?.url;
@@ -499,7 +501,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTelNumbers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NumberList>> {
+        async getTelNumbers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelNumberList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTelNumbers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.getTelNumbers']?.[localVarOperationServerIndex]?.url;
@@ -515,7 +517,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTelNumbersAvailable(country?: string, area?: string, type?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NumberList>> {
+        async getTelNumbersAvailable(country?: string, area?: string, type?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelNumberList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTelNumbersAvailable(country, area, type, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.getTelNumbersAvailable']?.[localVarOperationServerIndex]?.url;
@@ -527,7 +529,7 @@ export const TelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTelSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Summary>> {
+        async getTelSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTelSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.getTelSummary']?.[localVarOperationServerIndex]?.url;
@@ -536,12 +538,12 @@ export const TelApiFp = function(configuration?: Configuration) {
         /**
          * Dials. An `agent` names a Hanzo assistant to answer it; the call is refused up front when no assistant plane is configured, because a call that connects to silence has already cost the person who answered it.
          * @summary Dials.
-         * @param {CallInput} callInput 
+         * @param {TelCallInput} telCallInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTelCalls(callInput: CallInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Call>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelCalls(callInput, options);
+        async postTelCalls(telCallInput: TelCallInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelCall>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelCalls(telCallInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.postTelCalls']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -549,12 +551,12 @@ export const TelApiFp = function(configuration?: Configuration) {
         /**
          * Sends a message from one of this org\'s own numbers.  `from` must be a number the org HOLDS, checked against the store rather than taken on trust — a caller that could send from any number could impersonate one, and the carrier would deliver it. `to` is required, and the body needs text or media, because a message with neither is delivered as nothing and billed as something.
          * @summary Sends a message from one of this org\'s own numbers.
-         * @param {MessageInput} messageInput 
+         * @param {TelMessageInput} telMessageInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTelMessages(messageInput: MessageInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SMS>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelMessages(messageInput, options);
+        async postTelMessages(telMessageInput: TelMessageInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelSMS>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelMessages(telMessageInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.postTelMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -562,12 +564,12 @@ export const TelApiFp = function(configuration?: Configuration) {
         /**
          * Provisions with the carrier FIRST and records second. The other order records a holding that may not exist, and a number the platform believes it owns but cannot use is worse than one it failed to buy.
          * @summary Provisions with the carrier FIRST and records second.
-         * @param {BuyInput} buyInput 
+         * @param {TelBuyInput} telBuyInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTelNumbers(buyInput: BuyInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Number>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelNumbers(buyInput, options);
+        async postTelNumbers(telBuyInput: TelBuyInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TelNumber>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTelNumbers(telBuyInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TelApi.postTelNumbers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -608,7 +610,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTelCalls(options?: RawAxiosRequestConfig): AxiosPromise<CallList> {
+        getTelCalls(options?: RawAxiosRequestConfig): AxiosPromise<TelCallList> {
             return localVarFp.getTelCalls(options).then((request) => request(axios, basePath));
         },
         /**
@@ -617,7 +619,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTelMessages(options?: RawAxiosRequestConfig): AxiosPromise<MessageList> {
+        getTelMessages(options?: RawAxiosRequestConfig): AxiosPromise<TelMessageList> {
             return localVarFp.getTelMessages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -626,7 +628,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTelNumbers(options?: RawAxiosRequestConfig): AxiosPromise<NumberList> {
+        getTelNumbers(options?: RawAxiosRequestConfig): AxiosPromise<TelNumberList> {
             return localVarFp.getTelNumbers(options).then((request) => request(axios, basePath));
         },
         /**
@@ -636,7 +638,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTelNumbersAvailable(requestParameters: TelApiGetTelNumbersAvailableRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<NumberList> {
+        getTelNumbersAvailable(requestParameters: TelApiGetTelNumbersAvailableRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TelNumberList> {
             return localVarFp.getTelNumbersAvailable(requestParameters.country, requestParameters.area, requestParameters.type, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -645,7 +647,7 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTelSummary(options?: RawAxiosRequestConfig): AxiosPromise<Summary> {
+        getTelSummary(options?: RawAxiosRequestConfig): AxiosPromise<TelSummary> {
             return localVarFp.getTelSummary(options).then((request) => request(axios, basePath));
         },
         /**
@@ -655,8 +657,8 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelCalls(requestParameters: TelApiPostTelCallsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Call> {
-            return localVarFp.postTelCalls(requestParameters.callInput, options).then((request) => request(axios, basePath));
+        postTelCalls(requestParameters: TelApiPostTelCallsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TelCall> {
+            return localVarFp.postTelCalls(requestParameters.telCallInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends a message from one of this org\'s own numbers.  `from` must be a number the org HOLDS, checked against the store rather than taken on trust — a caller that could send from any number could impersonate one, and the carrier would deliver it. `to` is required, and the body needs text or media, because a message with neither is delivered as nothing and billed as something.
@@ -665,8 +667,8 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelMessages(requestParameters: TelApiPostTelMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SMS> {
-            return localVarFp.postTelMessages(requestParameters.messageInput, options).then((request) => request(axios, basePath));
+        postTelMessages(requestParameters: TelApiPostTelMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TelSMS> {
+            return localVarFp.postTelMessages(requestParameters.telMessageInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions with the carrier FIRST and records second. The other order records a holding that may not exist, and a number the platform believes it owns but cannot use is worse than one it failed to buy.
@@ -675,8 +677,8 @@ export const TelApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTelNumbers(requestParameters: TelApiPostTelNumbersRequest, options?: RawAxiosRequestConfig): AxiosPromise<Number> {
-            return localVarFp.postTelNumbers(requestParameters.buyInput, options).then((request) => request(axios, basePath));
+        postTelNumbers(requestParameters: TelApiPostTelNumbersRequest, options?: RawAxiosRequestConfig): AxiosPromise<TelNumber> {
+            return localVarFp.postTelNumbers(requestParameters.telBuyInput, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -752,10 +754,10 @@ export interface TelApiGetTelNumbersAvailableRequest {
 export interface TelApiPostTelCallsRequest {
     /**
      * 
-     * @type {CallInput}
+     * @type {TelCallInput}
      * @memberof TelApiPostTelCalls
      */
-    readonly callInput: CallInput
+    readonly telCallInput: TelCallInput
 }
 
 /**
@@ -766,10 +768,10 @@ export interface TelApiPostTelCallsRequest {
 export interface TelApiPostTelMessagesRequest {
     /**
      * 
-     * @type {MessageInput}
+     * @type {TelMessageInput}
      * @memberof TelApiPostTelMessages
      */
-    readonly messageInput: MessageInput
+    readonly telMessageInput: TelMessageInput
 }
 
 /**
@@ -780,10 +782,10 @@ export interface TelApiPostTelMessagesRequest {
 export interface TelApiPostTelNumbersRequest {
     /**
      * 
-     * @type {BuyInput}
+     * @type {TelBuyInput}
      * @memberof TelApiPostTelNumbers
      */
-    readonly buyInput: BuyInput
+    readonly telBuyInput: TelBuyInput
 }
 
 /**
@@ -882,7 +884,7 @@ export class TelApi extends BaseAPI {
      * @memberof TelApi
      */
     public postTelCalls(requestParameters: TelApiPostTelCallsRequest, options?: RawAxiosRequestConfig) {
-        return TelApiFp(this.configuration).postTelCalls(requestParameters.callInput, options).then((request) => request(this.axios, this.basePath));
+        return TelApiFp(this.configuration).postTelCalls(requestParameters.telCallInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -894,7 +896,7 @@ export class TelApi extends BaseAPI {
      * @memberof TelApi
      */
     public postTelMessages(requestParameters: TelApiPostTelMessagesRequest, options?: RawAxiosRequestConfig) {
-        return TelApiFp(this.configuration).postTelMessages(requestParameters.messageInput, options).then((request) => request(this.axios, this.basePath));
+        return TelApiFp(this.configuration).postTelMessages(requestParameters.telMessageInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -906,7 +908,7 @@ export class TelApi extends BaseAPI {
      * @memberof TelApi
      */
     public postTelNumbers(requestParameters: TelApiPostTelNumbersRequest, options?: RawAxiosRequestConfig) {
-        return TelApiFp(this.configuration).postTelNumbers(requestParameters.buyInput, options).then((request) => request(this.axios, this.basePath));
+        return TelApiFp(this.configuration).postTelNumbers(requestParameters.telBuyInput, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

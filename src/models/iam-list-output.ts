@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { IamAuditLog } from './iam-audit-log';
+import type { IamUser } from './iam-user';
 
 /**
  * 
@@ -25,15 +25,15 @@ import type { IamAuditLog } from './iam-audit-log';
 export interface IamListOutput {
     /**
      * 
-     * @type {Array<IamAuditLog>}
-     * @memberof IamListOutput
-     */
-    'auditLogs'?: Array<IamAuditLog>;
-    /**
-     * 
      * @type {number}
      * @memberof IamListOutput
      */
     'total'?: number;
+    /**
+     * 
+     * @type {Array<IamUser>}
+     * @memberof IamListOutput
+     */
+    'users'?: Array<IamUser>;
 }
 

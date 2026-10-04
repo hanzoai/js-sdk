@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { Approval } from '../models';
+// @ts-ignore
 import type { O11yAddItemsIn } from '../models';
 // @ts-ignore
 import type { O11yAlertmanagertypesReceiver } from '../models';
@@ -40,8 +42,6 @@ import type { O11yAnnQueueList } from '../models';
 // @ts-ignore
 import type { O11yAnnQueueView } from '../models';
 // @ts-ignore
-import type { O11yAvailabilityResponse } from '../models';
-// @ts-ignore
 import type { O11yClusterListRequest } from '../models';
 // @ts-ignore
 import type { O11yCreateQueueReq } from '../models';
@@ -51,6 +51,8 @@ import type { O11yDaemonSetListRequest } from '../models';
 import type { O11yDeploymentListRequest } from '../models';
 // @ts-ignore
 import type { O11yFilterAttributeValueRequest } from '../models';
+// @ts-ignore
+import type { O11yHeartbeat } from '../models';
 // @ts-ignore
 import type { O11yHostListRequest } from '../models';
 // @ts-ignore
@@ -76,8 +78,6 @@ import type { O11yO11yAccountOut } from '../models';
 // @ts-ignore
 import type { O11yO11yAccountsOut } from '../models';
 // @ts-ignore
-import type { O11yO11yAck } from '../models';
-// @ts-ignore
 import type { O11yO11yAgentCheckInIn } from '../models';
 // @ts-ignore
 import type { O11yO11yAgentCheckInOut } from '../models';
@@ -100,14 +100,6 @@ import type { O11yO11yAttributeKeysOut } from '../models';
 // @ts-ignore
 import type { O11yO11yAttributeValuesOut } from '../models';
 // @ts-ignore
-import type { O11yO11yAuthDomainOut } from '../models';
-// @ts-ignore
-import type { O11yO11yAuthDomainsOut } from '../models';
-// @ts-ignore
-import type { O11yO11yBulkInviteIn } from '../models';
-// @ts-ignore
-import type { O11yO11yChangePasswordIn } from '../models';
-// @ts-ignore
 import type { O11yO11yChannelOut } from '../models';
 // @ts-ignore
 import type { O11yO11yChannelUpdateIn } from '../models';
@@ -129,8 +121,6 @@ import type { O11yO11yCreateLimitIn } from '../models';
 import type { O11yO11yCreatedIngestionKeyOut } from '../models';
 // @ts-ignore
 import type { O11yO11yCreatedLimitOut } from '../models';
-// @ts-ignore
-import type { O11yO11yCreatedOut } from '../models';
 // @ts-ignore
 import type { O11yO11yCredentialsOut } from '../models';
 // @ts-ignore
@@ -166,12 +156,6 @@ import type { O11yO11yDependencyGraphIn } from '../models';
 // @ts-ignore
 import type { O11yO11yDeploymentListOut } from '../models';
 // @ts-ignore
-import type { O11yO11yDeprecatedUserOut } from '../models';
-// @ts-ignore
-import type { O11yO11yDeprecatedUserUpdate } from '../models';
-// @ts-ignore
-import type { O11yO11yDeprecatedUsersOut } from '../models';
-// @ts-ignore
 import type { O11yO11yDiscoverIn } from '../models';
 // @ts-ignore
 import type { O11yO11yDiscoverOut } from '../models';
@@ -189,8 +173,6 @@ import type { O11yO11yDowntimeSchedulesOut } from '../models';
 import type { O11yO11yDowntimeUpdateIn } from '../models';
 // @ts-ignore
 import type { O11yO11yDraftFunnelIn } from '../models';
-// @ts-ignore
-import type { O11yO11yEmailPasswordSessionIn } from '../models';
 // @ts-ignore
 import type { O11yO11yErrorGettableIssueOut } from '../models';
 // @ts-ignore
@@ -219,8 +201,6 @@ import type { O11yO11yFieldSetting } from '../models';
 import type { O11yO11yFieldValuesOut } from '../models';
 // @ts-ignore
 import type { O11yO11yFilterSuggestionsOut } from '../models';
-// @ts-ignore
-import type { O11yO11yForgotPasswordIn } from '../models';
 // @ts-ignore
 import type { O11yO11yFunnelCreateIn } from '../models';
 // @ts-ignore
@@ -285,10 +265,6 @@ import type { O11yO11yIntegrationAck } from '../models';
 import type { O11yO11yIntegrationOut } from '../models';
 // @ts-ignore
 import type { O11yO11yIntegrationsListOut } from '../models';
-// @ts-ignore
-import type { O11yO11yInviteIn } from '../models';
-// @ts-ignore
-import type { O11yO11yInviteOut } from '../models';
 // @ts-ignore
 import type { O11yO11yJobListOut } from '../models';
 // @ts-ignore
@@ -402,10 +378,6 @@ import type { O11yO11yOverallStateTransitionsOut } from '../models';
 // @ts-ignore
 import type { O11yO11yPodListOut } from '../models';
 // @ts-ignore
-import type { O11yO11yPostableAuthDomain } from '../models';
-// @ts-ignore
-import type { O11yO11yPostableUser } from '../models';
-// @ts-ignore
 import type { O11yO11yPreferenceOut } from '../models';
 // @ts-ignore
 import type { O11yO11yPreferencesOut } from '../models';
@@ -456,16 +428,6 @@ import type { O11yO11yReductionSeriesOut } from '../models';
 // @ts-ignore
 import type { O11yO11yReductionStatsOut } from '../models';
 // @ts-ignore
-import type { O11yO11yRegisterIn } from '../models';
-// @ts-ignore
-import type { O11yO11yRegisterOut } from '../models';
-// @ts-ignore
-import type { O11yO11yResetPasswordIn } from '../models';
-// @ts-ignore
-import type { O11yO11yResetTokenOut } from '../models';
-// @ts-ignore
-import type { O11yO11yResetTokenRef } from '../models';
-// @ts-ignore
 import type { O11yO11yRetentionOut } from '../models';
 // @ts-ignore
 import type { O11yO11yRetentionSetIn } from '../models';
@@ -481,8 +443,6 @@ import type { O11yO11yRoleOut } from '../models';
 import type { O11yO11yRoleUpdateIn } from '../models';
 // @ts-ignore
 import type { O11yO11yRolesOut } from '../models';
-// @ts-ignore
-import type { O11yO11yRotateSessionIn } from '../models';
 // @ts-ignore
 import type { O11yO11yRoutePoliciesOut } from '../models';
 // @ts-ignore
@@ -558,10 +518,6 @@ import type { O11yO11yServicesMetadataOut } from '../models';
 // @ts-ignore
 import type { O11yO11yServicesOut } from '../models';
 // @ts-ignore
-import type { O11yO11ySessionContextOut } from '../models';
-// @ts-ignore
-import type { O11yO11ySetRoleIn } from '../models';
-// @ts-ignore
 import type { O11yO11ySignalFiltersOut } from '../models';
 // @ts-ignore
 import type { O11yO11ySpanMapperCreateIn } from '../models';
@@ -592,8 +548,6 @@ import type { O11yO11yTestNotificationOut } from '../models';
 // @ts-ignore
 import type { O11yO11yTestRuleOut } from '../models';
 // @ts-ignore
-import type { O11yO11yTokenOut } from '../models';
-// @ts-ignore
 import type { O11yO11yTopLevelOpsIn } from '../models';
 // @ts-ignore
 import type { O11yO11yTraceAggregationsIn } from '../models';
@@ -616,13 +570,9 @@ import type { O11yO11yTracesOut } from '../models';
 // @ts-ignore
 import type { O11yO11yTransaction } from '../models';
 // @ts-ignore
-import type { O11yO11yUpdatableAuthDomain } from '../models';
-// @ts-ignore
 import type { O11yO11yUpdatablePreference } from '../models';
 // @ts-ignore
 import type { O11yO11yUpdatableQuickFilters } from '../models';
-// @ts-ignore
-import type { O11yO11yUpdatableUser } from '../models';
 // @ts-ignore
 import type { O11yO11yUpdateAccountIn } from '../models';
 // @ts-ignore
@@ -634,11 +584,7 @@ import type { O11yO11yUpdateServiceIn } from '../models';
 // @ts-ignore
 import type { O11yO11yUsageItem } from '../models';
 // @ts-ignore
-import type { O11yO11yUserUpdate } from '../models';
-// @ts-ignore
-import type { O11yO11yUserWithRolesOut } from '../models';
-// @ts-ignore
-import type { O11yO11yUsersOut } from '../models';
+import type { O11yO11yUserOut } from '../models';
 // @ts-ignore
 import type { O11yO11yVersionOut } from '../models';
 // @ts-ignore
@@ -703,6 +649,8 @@ import type { O11yUpdateItemIn } from '../models';
 import type { O11yUpdateQueueIn } from '../models';
 // @ts-ignore
 import type { O11yVolumeListRequest } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * O11yApi - axios parameter creator
  * @export
@@ -913,86 +861,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yCreateAccountIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id. Admin gate.
-         * @summary Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id.
-         * @param {O11yO11yPostableAuthDomain} o11yO11yPostableAuthDomain 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAuthDomain: async (o11yO11yPostableAuthDomain: O11yO11yPostableAuthDomain, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yPostableAuthDomain' is not null or undefined
-            assertParamExists('createAuthDomain', 'o11yO11yPostableAuthDomain', o11yO11yPostableAuthDomain)
-            const localVarPath = `/v1/o11y/domains`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yPostableAuthDomain, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats. Deprecated alongside createInvite. Admin gate.
-         * @summary Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats.
-         * @param {O11yO11yBulkInviteIn} o11yO11yBulkInviteIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBulkInvite: async (o11yO11yBulkInviteIn: O11yO11yBulkInviteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yBulkInviteIn' is not null or undefined
-            assertParamExists('createBulkInvite', 'o11yO11yBulkInviteIn', o11yO11yBulkInviteIn)
-            const localVarPath = `/v1/o11y/invite/bulk`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yBulkInviteIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1244,46 +1112,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Invites one person to the caller\'s org by email, with the role they will hold when they accept. Deprecated in favor of creating users directly; kept because callers still hold it. Admin gate, enforced by the runtime this op relays to.
-         * @summary Invites one person to the caller\'s org by email, with the role they will hold when they accept.
-         * @param {O11yO11yInviteIn} o11yO11yInviteIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createInvite: async (o11yO11yInviteIn: O11yO11yInviteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yInviteIn' is not null or undefined
-            assertParamExists('createInvite', 'o11yO11yInviteIn', o11yO11yInviteIn)
-            const localVarPath = `/v1/o11y/invite`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yInviteIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Adds a human annotation to a trace or observation, optionally in a review queue.  Callers need the editor role; the runtime\'s own gate enforces it, and it validates the payload and stamps the annotation\'s author and org.
          * @summary Adds a human annotation to a trace or observation, optionally in a review queue.
          * @param {O11yO11yLLMIngestAnnotation} o11yO11yLLMIngestAnnotation 
@@ -1481,44 +1309,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yPublicDashboardWriteIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced. Admin gate.
-         * @summary Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createResetPasswordToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('createResetPasswordToken', 'id', id)
-            const localVarPath = `/v1/o11y/users/{id}/reset_password_tokens`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1774,46 +1564,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Signs a user in with email and password and answers with the session\'s token pair. Unauthenticated: this call is how authentication begins.
-         * @summary Signs a user in with email and password and answers with the session\'s token pair.
-         * @param {O11yO11yEmailPasswordSessionIn} o11yO11yEmailPasswordSessionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSessionByEmailPassword: async (o11yO11yEmailPasswordSessionIn: O11yO11yEmailPasswordSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yEmailPasswordSessionIn' is not null or undefined
-            assertParamExists('createSessionByEmailPassword', 'o11yO11yEmailPasswordSessionIn', o11yO11yEmailPasswordSessionIn)
-            const localVarPath = `/v1/o11y/sessions/email_password`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yEmailPasswordSessionIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Adds a mapper to a group: which field context it reads, the move or copy it performs, and whether it is on.  Callers need the admin role; the runtime\'s own gate enforces it.
          * @summary Adds a mapper to a group: which field context it reads, the move or copy it performs, and whether it is on.
          * @param {string} groupId 
@@ -1931,84 +1681,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yFunnelCreateIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id. Admin gate.
-         * @summary Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id.
-         * @param {O11yO11yPostableUser} o11yO11yPostableUser 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createUser: async (o11yO11yPostableUser: O11yO11yPostableUser, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yPostableUser' is not null or undefined
-            assertParamExists('createUser', 'o11yO11yPostableUser', o11yO11yPostableUser)
-            const localVarPath = `/v1/o11y/users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yPostableUser, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Releases an email domain and discards its SSO configuration, by id. Admin gate.
-         * @summary Releases an email domain and discards its SSO configuration, by id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteAuthDomain: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteAuthDomain', 'id', id)
-            const localVarPath = `/v1/o11y/domains/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2434,8 +2106,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Deletes one Sentry project of the caller\'s org.
+         * Deletes one Sentry project of the caller\'s org; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org; retained events are not touched.
          * @param {string} id ID is the project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2704,40 +2376,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Signs the calling session out, invalidating its tokens. The access token on the call names the session to end.
-         * @summary Signs the calling session out, invalidating its tokens.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSession: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/sessions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Deletes one mapper from a group.  Callers need the admin role; the runtime\'s own gate enforces it.
          * @summary Deletes one mapper from a group.
          * @param {string} groupId 
@@ -2856,82 +2494,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Removes one org member, by user id. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteUser: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteUser', 'id', id)
-            const localVarPath = `/v1/o11y/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes one org member, by user id. The same operation as deleteUser on the legacy singular path. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteUserDeprecated: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteUserDeprecated', 'id', id)
-            const localVarPath = `/v1/o11y/user/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Tears down a connected account for the given provider, by id. Admin gate.
          * @summary Tears down a connected account for the given provider, by id.
          * @param {string} cloudProvider 
@@ -2967,46 +2529,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Starts the forgotten-password flow: the named user is mailed a reset link. Unauthenticated by design, and deliberately quiet about whether the address exists.
-         * @summary Starts the forgotten-password flow: the named user is mailed a reset link.
-         * @param {O11yO11yForgotPasswordIn} o11yO11yForgotPasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forgotPassword: async (o11yO11yForgotPasswordIn: O11yO11yForgotPasswordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yForgotPasswordIn' is not null or undefined
-            assertParamExists('forgotPassword', 'o11yO11yForgotPasswordIn', o11yO11yForgotPasswordIn)
-            const localVarPath = `/v1/o11y/factor_password/forgot`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yForgotPasswordIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3143,44 +2665,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          */
         getAllRoutePolicies: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/o11y/route_policies`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one auth domain with its SSO configuration, by id. Admin gate.
-         * @summary Returns one auth domain with its SSO configuration, by id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAuthDomain: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getAuthDomain', 'id', id)
-            const localVarPath = `/v1/o11y/domains/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4376,13 +3860,13 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the calling user with their single legacy role. Deprecated in favor of getMyUser. Open to any authenticated caller.
-         * @summary Returns the calling user with their single legacy role.
+         * Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging. The o11y ruler fires one alert forever, labelled watchdog=\"true\", and every notification of it that reaches this process is a heartbeat — recorded as ALERT-HEARTBEAT, never sent to a human.  It answers 200 with the heartbeat\'s age while one arrived within the last 15 minutes, and 503 once none has. A 503 means the path from the ruler to this receiver stopped — the ruler, its Alertmanager, or this process — which nothing inside the cluster can be trusted to say, so something OUTSIDE it polls this and pages on the 503. Process-local, like the replay ring: a restart starts the clock again rather than answering 503 before the first beat can arrive.
+         * @summary Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMyUserDeprecated: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/user/me`;
+        getO11yAlertsHeartbeat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/o11y/alerts/heartbeat`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4636,50 +4120,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window. Both come from the fleet prober\'s own measurements: every service is asked its health URL every 30 seconds, so a service is listed as down because it did not answer, never because something failed to collect it. PLATFORM SUDO ONLY — this is the whole fleet\'s inventory, not tenant data, so every customer is 403. An unreachable telemetry store answers 503 rather than an empty trend, because a board of zeroes and a fleet that is down look identical.
-         * @summary Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window.
-         * @param {number} [range] Range is the trend window in seconds. Default 3600, capped at 604800 (7d).
-         * @param {number} [stepSec] StepSec is the bucket width in seconds, clamped to [30, 3600]. Absent picks ~60 buckets across the range.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yAvailability: async (range?: number, stepSec?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/availability`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (range !== undefined) {
-                localVarQueryParameter['range'] = range;
-            }
-
-            if (stepSec !== undefined) {
-                localVarQueryParameter['stepSec'] = stepSec;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @summary Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @param {string} [dataSource] DataSource is the telemetry the keys come from — metrics for the infra faces. The runtime requires it.
@@ -4805,74 +4245,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The callback Google redirects a user back to after they approve the sign-in. It exchanges the authorization code, establishes the session and answers 303 to the console.  The answer is a Location header and no body, which is why it is not a typed operation — declaring a JSON response for a redirect would publish a shape that does not exist and hide the header that is the entire point.  UNAUTHENTICATED by necessity: it is how a caller GETS a principal, so requiring one would be circular. It is not an open endpoint — the code it carries is single-use and verified against the provider.
-         * @summary Complete a Google sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yCompleteGoogle: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/complete/google`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The callback any configured OIDC provider redirects back to. Same shape and same reasoning as the Google callback: the code is exchanged, the session is established, and the answer is a 303 to the console rather than a body.  UNAUTHENTICATED by necessity — this is the act of obtaining a principal, and the provider\'s own code is what authenticates it.
-         * @summary Complete a generic OIDC sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yCompleteOidc: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/complete/oidc`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -8031,8 +7403,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8065,8 +7437,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * Returns one Sentry project of the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org.
          * @param {string} id ID is the project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9021,82 +8393,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token. Admin gate.
-         * @summary Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getResetPasswordToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getResetPasswordToken', 'id', id)
-            const localVarPath = `/v1/o11y/users/{id}/reset_password_tokens`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a user\'s password-reset token, creating one if none is live. Deprecated in favor of the reset_password_tokens pair, which separates reading from minting. Admin gate.
-         * @summary Returns a user\'s password-reset token, creating one if none is live.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getResetPasswordTokenDeprecated: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getResetPasswordTokenDeprecated', 'id', id)
-            const localVarPath = `/v1/o11y/getResetPasswordToken/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns one role with the transaction groups it grants.
          * @summary Returns one role with the transaction groups it grants.
          * @param {string} id 
@@ -9107,44 +8403,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getRole', 'id', id)
             const localVarPath = `/v1/o11y/roles/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns every role one org member holds, by user id. Admin gate.
-         * @summary Returns every role one org member holds, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRolesByUserID: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getRolesByUserID', 'id', id)
-            const localVarPath = `/v1/o11y/users/{id}/roles`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9849,50 +9107,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it. Unauthenticated: it runs before any session exists.
-         * @summary Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it.
-         * @param {string} [email] Email is the address about to sign in. Required.
-         * @param {string} [ref] Ref is the page the sign-in started from, carried into SSO redirects.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSessionContext: async (email?: string, ref?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/sessions/context`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
-            }
-
-            if (ref !== undefined) {
-                localVarQueryParameter['ref'] = ref;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring. Viewer gate.
          * @summary Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring.
          * @param {string} signal 
@@ -10267,82 +9481,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns one org member together with every role they hold, by user id. Admin gate.
-         * @summary Returns one org member together with every role they hold, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUser: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getUser', 'id', id)
-            const localVarPath = `/v1/o11y/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one org member with their single legacy role, by user id. Admins may read anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Returns one org member with their single legacy role, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserDeprecated: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getUserDeprecated', 'id', id)
-            const localVarPath = `/v1/o11y/user/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns one preference of the calling user, by name. Viewer gate.
          * @summary Returns one preference of the calling user, by name.
          * @param {string} name 
@@ -10354,44 +9492,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('getUserPreference', 'name', name)
             const localVarPath = `/v1/o11y/user/preferences/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns every org member holding a role, by role id. Admin gate.
-         * @summary Returns every org member holding a role, by role id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsersByRoleID: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getUsersByRoleID', 'id', id)
-            const localVarPath = `/v1/o11y/roles/{id}/users`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10596,40 +9696,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('listAccounts', 'cloudProvider', cloudProvider)
             const localVarPath = `/v1/o11y/cloud_integrations/{cloud_provider}/accounts`
                 .replace(`{${"cloud_provider"}}`, encodeURIComponent(String(cloudProvider)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists the org\'s auth domains — the email domains whose SSO configuration this org owns. Admin gate.
-         * @summary Lists the org\'s auth domains — the email domains whose SSO configuration this org owns.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAuthDomains: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/domains`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -11904,74 +10970,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Lists the caller\'s org members. Admin gate.
-         * @summary Lists the caller\'s org members.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists the org\'s members with their single legacy role. Deprecated in favor of listUsers, which answers without the role. Admin gate.
-         * @summary Lists the org\'s members with their single legacy role.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listUsersDeprecated: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Locks a v2-shape dashboard. Only the dashboard\'s creator or an org admin may lock or unlock.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Locks a v2-shape dashboard.
          * @param {string} id ID is the resource id from the path.
@@ -12228,7 +11226,7 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), falling back to a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), then an email to `CLOUD_ALERTS_EMAIL_TO` on the org\'s own notify credential, then a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for. An alert labelled `watchdog=\"true\"` is the path\'s heartbeat (see `GET /v1/o11y/alerts/heartbeat`) and pages nobody.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
          * @summary Take an Alertmanager notification and page a human
          * @param {string} receiver 
          * @param {*} [options] Override http request option.
@@ -12239,82 +11237,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('postO11yAlertsByReceiver', 'receiver', receiver)
             const localVarPath = `/v1/o11y/alerts/{receiver}`
                 .replace(`{${"receiver"}}`, encodeURIComponent(String(receiver)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
-         * @summary Receive a Sentry envelope on the SDK\'s own DSN path
-         * @param {string} projectId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yApiByProjectIdEnvelope: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('postO11yApiByProjectIdEnvelope', 'projectId', projectId)
-            const localVarPath = `/v1/o11y/api/{project_id}/envelope/`
-                .replace(`{${"project_id"}}`, encodeURIComponent(String(projectId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The legacy single-event form of the envelope ingest: one JSON event rather than a framed batch, kept because SDKs in the field still send it.  Same address ownership and same authentication as the envelope route — the /api/ segment is the SDK\'s, the DSN public key is the credential, the principal gate does not apply, and a keyless submission is a 401 from the ingest verifier.
-         * @summary Receive a single Sentry event on the SDK\'s own DSN path
-         * @param {string} projectId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yApiByProjectIdStore: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('postO11yApiByProjectIdStore', 'projectId', projectId)
-            const localVarPath = `/v1/o11y/api/{project_id}/store/`
-                .replace(`{${"project_id"}}`, encodeURIComponent(String(projectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -12415,40 +11337,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yClusterListRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The assertion consumer service: the identity provider POSTs its signed assertion here, and a valid one establishes the session and answers 303 to the console.  A redirect, not a value, so it is not a typed operation. UNAUTHENTICATED by necessity and authenticated in fact by the assertion\'s signature, which is checked against the configured provider before any session exists.
-         * @summary Complete a SAML sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yCompleteSaml: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/complete/saml`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -14374,46 +13262,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Creates the FIRST organization and its admin user. It is open by design — there is nobody to be signed in as yet — and refuses once setup has completed, after which new users arrive by invitation only.  Open by design; the runtime\'s own gate is OpenAccess.
-         * @summary Creates the FIRST organization and its admin user.
-         * @param {O11yO11yRegisterIn} o11yO11yRegisterIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yRegister: async (o11yO11yRegisterIn: O11yO11yRegisterIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yRegisterIn' is not null or undefined
-            assertParamExists('postO11yRegister', 'o11yO11yRegisterIn', o11yO11yRegisterIn)
-            const localVarPath = `/v1/o11y/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yRegisterIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
          * @summary Creates a human-review queue in the caller\'s org and project.
          * @param {O11yCreateQueueReq} o11yCreateQueueReq 
@@ -14538,8 +13386,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * Creates a Sentry project under the caller\'s org and returns it. Only the name, and optionally a slug and platform, are the caller\'s to set; the org and id are server-assigned. The slug is the product name the event plane stores, so a project reads that product\'s errors.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it.
          * @param {O11yO11ySentryPostableProject} o11yO11ySentryPostableProject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14571,44 +13419,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySentryPostableProject, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-         * @param {string} id ID is the project id.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11ySentinelProjectsByIdKeysRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postO11ySentinelProjectsByIdKeysRotate', 'id', id)
-            const localVarPath = `/v1/o11y/sentinel/projects/{id}/keys/rotate`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -15304,88 +14114,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Takes a role away from one org member, by user id and role id — someone else, never the caller. Admin gate.
-         * @summary Takes a role away from one org member, by user id and role id — someone else, never the caller.
-         * @param {string} id 
-         * @param {string} roleId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeUserRoleByUserIDAndRoleID: async (id: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('removeUserRoleByUserIDAndRoleID', 'id', id)
-            // verify required parameter 'roleId' is not null or undefined
-            assertParamExists('removeUserRoleByUserIDAndRoleID', 'roleId', roleId)
-            const localVarPath = `/v1/o11y/users/{id}/roles/{roleId}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sets a new password for whoever the reset token was minted for, consuming the token. Unauthenticated: the token is the proof.
-         * @summary Sets a new password for whoever the reset token was minted for, consuming the token.
-         * @param {O11yO11yResetPasswordIn} o11yO11yResetPasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resetPassword: async (o11yO11yResetPasswordIn: O11yO11yResetPasswordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yResetPasswordIn' is not null or undefined
-            assertParamExists('resetPassword', 'o11yO11yResetPasswordIn', o11yO11yResetPasswordIn)
-            const localVarPath = `/v1/o11y/resetPassword`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yResetPasswordIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Revokes an API key. Revocation is immediate and permanent.
          * @summary Revokes an API key.
          * @param {string} id 
@@ -15421,46 +14149,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Exchanges a refresh token for a fresh token pair, retiring the old pair. The access token being rotated identifies the session.
-         * @summary Exchanges a refresh token for a fresh token pair, retiring the old pair.
-         * @param {O11yO11yRotateSessionIn} o11yO11yRotateSessionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rotateSession: async (o11yO11yRotateSessionIn: O11yO11yRotateSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yRotateSessionIn' is not null or undefined
-            assertParamExists('rotateSession', 'o11yO11yRotateSessionIn', o11yO11yRotateSessionIn)
-            const localVarPath = `/v1/o11y/sessions/rotate`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yRotateSessionIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -15568,50 +14256,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Assigns a role, by role name, to one org member — someone else, never the caller. Admin gate.
-         * @summary Assigns a role, by role name, to one org member — someone else, never the caller.
-         * @param {string} id 
-         * @param {O11yO11ySetRoleIn} o11yO11ySetRoleIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setRoleByUserID: async (id: string, o11yO11ySetRoleIn: O11yO11ySetRoleIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('setRoleByUserID', 'id', id)
-            // verify required parameter 'o11yO11ySetRoleIn' is not null or undefined
-            assertParamExists('setRoleByUserID', 'o11yO11ySetRoleIn', o11yO11ySetRoleIn)
-            const localVarPath = `/v1/o11y/users/{id}/roles`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySetRoleIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -15936,50 +14580,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yUpdateAccountIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Replaces one auth domain\'s SSO configuration, by id. Admin gate.
-         * @summary Replaces one auth domain\'s SSO configuration, by id.
-         * @param {string} id 
-         * @param {O11yO11yUpdatableAuthDomain} o11yO11yUpdatableAuthDomain 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateAuthDomain: async (id: string, o11yO11yUpdatableAuthDomain: O11yO11yUpdatableAuthDomain, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateAuthDomain', 'id', id)
-            // verify required parameter 'o11yO11yUpdatableAuthDomain' is not null or undefined
-            assertParamExists('updateAuthDomain', 'o11yO11yUpdatableAuthDomain', o11yO11yUpdatableAuthDomain)
-            const localVarPath = `/v1/o11y/domains/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yUpdatableAuthDomain, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -16375,46 +14975,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Replaces the calling user\'s password, refusing when the old one does not match. Open to any authenticated caller.
-         * @summary Replaces the calling user\'s password, refusing when the old one does not match.
-         * @param {O11yO11yChangePasswordIn} o11yO11yChangePasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMyPassword: async (o11yO11yChangePasswordIn: O11yO11yChangePasswordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yChangePasswordIn' is not null or undefined
-            assertParamExists('updateMyPassword', 'o11yO11yChangePasswordIn', o11yO11yChangePasswordIn)
-            const localVarPath = `/v1/o11y/users/me/factor_password`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yChangePasswordIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Renames the calling service account.
          * @summary Renames the calling service account.
          * @param {O11yO11yMyServiceAccountUpdateIn} o11yO11yMyServiceAccountUpdateIn 
@@ -16448,46 +15008,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yMyServiceAccountUpdateIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Renames the calling user. Open to any authenticated caller.
-         * @summary Renames the calling user.
-         * @param {O11yO11yUpdatableUser} o11yO11yUpdatableUser 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMyUserV2: async (o11yO11yUpdatableUser: O11yO11yUpdatableUser, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yUpdatableUser' is not null or undefined
-            assertParamExists('updateMyUserV2', 'o11yO11yUpdatableUser', o11yO11yUpdatableUser)
-            const localVarPath = `/v1/o11y/users/me`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yUpdatableUser, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -17115,94 +15635,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser. Admin gate.
-         * @summary Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser.
-         * @param {string} id 
-         * @param {O11yO11yUserUpdate} o11yO11yUserUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUser: async (id: string, o11yO11yUserUpdate: O11yO11yUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateUser', 'id', id)
-            // verify required parameter 'o11yO11yUserUpdate' is not null or undefined
-            assertParamExists('updateUser', 'o11yO11yUserUpdate', o11yO11yUserUpdate)
-            const localVarPath = `/v1/o11y/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yUserUpdate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Renames one org member and may move their legacy role, answering with the updated record. Admins may update anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Renames one org member and may move their legacy role, answering with the updated record.
-         * @param {string} id 
-         * @param {O11yO11yDeprecatedUserUpdate} o11yO11yDeprecatedUserUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUserDeprecated: async (id: string, o11yO11yDeprecatedUserUpdate: O11yO11yDeprecatedUserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateUserDeprecated', 'id', id)
-            // verify required parameter 'o11yO11yDeprecatedUserUpdate' is not null or undefined
-            assertParamExists('updateUserDeprecated', 'o11yO11yDeprecatedUserUpdate', o11yO11yDeprecatedUserUpdate)
-            const localVarPath = `/v1/o11y/user/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yDeprecatedUserUpdate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Sets one preference of the calling user, by name. Viewer gate.
          * @summary Sets one preference of the calling user, by name.
          * @param {string} name 
@@ -17330,46 +15762,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Checks that a reset-password token exists and has not expired, without consuming it. Unauthenticated: the token is the proof.
-         * @summary Checks that a reset-password token exists and has not expired, without consuming it.
-         * @param {O11yO11yResetTokenRef} o11yO11yResetTokenRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyResetPasswordToken: async (o11yO11yResetTokenRef: O11yO11yResetTokenRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'o11yO11yResetTokenRef' is not null or undefined
-            assertParamExists('verifyResetPasswordToken', 'o11yO11yResetTokenRef', o11yO11yResetTokenRef)
-            const localVarPath = `/v1/o11y/reset_password_tokens/verify`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yResetTokenRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -17446,32 +15838,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createAccount(cloudProvider, o11yO11yCreateAccountIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.createAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id. Admin gate.
-         * @summary Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id.
-         * @param {O11yO11yPostableAuthDomain} o11yO11yPostableAuthDomain 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createAuthDomain(o11yO11yPostableAuthDomain: O11yO11yPostableAuthDomain, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yCreatedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createAuthDomain(o11yO11yPostableAuthDomain, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createAuthDomain']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats. Deprecated alongside createInvite. Admin gate.
-         * @summary Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats.
-         * @param {O11yO11yBulkInviteIn} o11yO11yBulkInviteIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createBulkInvite(o11yO11yBulkInviteIn: O11yO11yBulkInviteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createBulkInvite(o11yO11yBulkInviteIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createBulkInvite']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17554,19 +15920,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Invites one person to the caller\'s org by email, with the role they will hold when they accept. Deprecated in favor of creating users directly; kept because callers still hold it. Admin gate, enforced by the runtime this op relays to.
-         * @summary Invites one person to the caller\'s org by email, with the role they will hold when they accept.
-         * @param {O11yO11yInviteIn} o11yO11yInviteIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createInvite(o11yO11yInviteIn: O11yO11yInviteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yInviteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createInvite(o11yO11yInviteIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createInvite']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Adds a human annotation to a trace or observation, optionally in a review queue.  Callers need the editor role; the runtime\'s own gate enforces it, and it validates the payload and stamps the annotation\'s author and org.
          * @summary Adds a human annotation to a trace or observation, optionally in a review queue.
          * @param {O11yO11yLLMIngestAnnotation} o11yO11yLLMIngestAnnotation 
@@ -17612,7 +15965,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrUpdateLLMPricingRules(o11yO11yLLMUpdatablePricingRules: O11yO11yLLMUpdatablePricingRules, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createOrUpdateLLMPricingRules(o11yO11yLLMUpdatablePricingRules: O11yO11yLLMUpdatablePricingRules, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createOrUpdateLLMPricingRules(o11yO11yLLMUpdatablePricingRules, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.createOrUpdateLLMPricingRules']?.[localVarOperationServerIndex]?.url;
@@ -17630,19 +15983,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPublicDashboard(id, o11yO11yPublicDashboardWriteIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.createPublicDashboard']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced. Admin gate.
-         * @summary Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createResetPasswordToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yResetTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createResetPasswordToken(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createResetPasswordToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17719,23 +16059,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createServiceAccountRole(id: string, o11yO11yServiceAccountRoleGrantIn: O11yO11yServiceAccountRoleGrantIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createServiceAccountRole(id: string, o11yO11yServiceAccountRoleGrantIn: O11yO11yServiceAccountRoleGrantIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createServiceAccountRole(id, o11yO11yServiceAccountRoleGrantIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.createServiceAccountRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Signs a user in with email and password and answers with the session\'s token pair. Unauthenticated: this call is how authentication begins.
-         * @summary Signs a user in with email and password and answers with the session\'s token pair.
-         * @param {O11yO11yEmailPasswordSessionIn} o11yO11yEmailPasswordSessionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createSessionByEmailPassword(o11yO11yEmailPasswordSessionIn: O11yO11yEmailPasswordSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createSessionByEmailPassword(o11yO11yEmailPasswordSessionIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createSessionByEmailPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17779,39 +16106,13 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id. Admin gate.
-         * @summary Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id.
-         * @param {O11yO11yPostableUser} o11yO11yPostableUser 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createUser(o11yO11yPostableUser: O11yO11yPostableUser, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yCreatedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(o11yO11yPostableUser, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.createUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Releases an email domain and discards its SSO configuration, by id. Admin gate.
-         * @summary Releases an email domain and discards its SSO configuration, by id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteAuthDomain(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAuthDomain(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteAuthDomain']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Removes a notification channel, by id. Admin gate.
          * @summary Removes a notification channel, by id.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteChannelByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteChannelByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteChannelByID(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteChannelByID']?.[localVarOperationServerIndex]?.url;
@@ -17824,7 +16125,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDashboardV2(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteDashboardV2']?.[localVarOperationServerIndex]?.url;
@@ -17837,7 +16138,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDashboardView(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteDashboardView(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDashboardView(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteDashboardView']?.[localVarOperationServerIndex]?.url;
@@ -17850,7 +16151,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDowntimeScheduleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteDowntimeScheduleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDowntimeScheduleByID(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteDowntimeScheduleByID']?.[localVarOperationServerIndex]?.url;
@@ -17863,7 +16164,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIngestionKey(keyId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteIngestionKey(keyId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIngestionKey(keyId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteIngestionKey']?.[localVarOperationServerIndex]?.url;
@@ -17876,7 +16177,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIngestionKeyLimit(limitId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteIngestionKeyLimit(limitId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIngestionKeyLimit(limitId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteIngestionKeyLimit']?.[localVarOperationServerIndex]?.url;
@@ -17889,7 +16190,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteLLMPricingRule(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteLLMPricingRule(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLLMPricingRule(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteLLMPricingRule']?.[localVarOperationServerIndex]?.url;
@@ -17902,7 +16203,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteLLMScore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteLLMScore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLLMScore(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteLLMScore']?.[localVarOperationServerIndex]?.url;
@@ -17915,7 +16216,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMetricReductionRuleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteMetricReductionRuleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMetricReductionRuleByID(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteMetricReductionRuleByID']?.[localVarOperationServerIndex]?.url;
@@ -17948,13 +16249,13 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Deletes one Sentry project of the caller\'s org.
+         * Deletes one Sentry project of the caller\'s org; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org; retained events are not touched.
          * @param {string} id ID is the project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteO11ySentinelProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteO11ySentinelProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteO11ySentinelProjectsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteO11ySentinelProjectsById']?.[localVarOperationServerIndex]?.url;
@@ -17967,7 +16268,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePublicDashboard(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deletePublicDashboard(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deletePublicDashboard(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deletePublicDashboard']?.[localVarOperationServerIndex]?.url;
@@ -17980,7 +16281,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteRole(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteRole(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRole(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteRole']?.[localVarOperationServerIndex]?.url;
@@ -17993,7 +16294,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteRoutePolicyByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteRoutePolicyByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRoutePolicyByID(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteRoutePolicyByID']?.[localVarOperationServerIndex]?.url;
@@ -18006,7 +16307,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteRuleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteRuleByID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRuleByID(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteRuleByID']?.[localVarOperationServerIndex]?.url;
@@ -18019,7 +16320,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteServiceAccount(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteServiceAccount(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteServiceAccount(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteServiceAccount']?.[localVarOperationServerIndex]?.url;
@@ -18033,22 +16334,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteServiceAccountRole(id: string, rid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteServiceAccountRole(id: string, rid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteServiceAccountRole(id, rid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteServiceAccountRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Signs the calling session out, invalidating its tokens. The access token on the call names the session to end.
-         * @summary Signs the calling session out, invalidating its tokens.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteSession(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSession(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18059,7 +16348,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSpanMapper(groupId: string, mapperId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteSpanMapper(groupId: string, mapperId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSpanMapper(groupId, mapperId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteSpanMapper']?.[localVarOperationServerIndex]?.url;
@@ -18072,7 +16361,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSpanMapperGroup(groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteSpanMapperGroup(groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSpanMapperGroup(groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteSpanMapperGroup']?.[localVarOperationServerIndex]?.url;
@@ -18092,32 +16381,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one org member, by user id. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteUser(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes one org member, by user id. The same operation as deleteUser on the legacy singular path. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteUserDeprecated(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUserDeprecated(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteUserDeprecated']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Tears down a connected account for the given provider, by id. Admin gate.
          * @summary Tears down a connected account for the given provider, by id.
          * @param {string} cloudProvider 
@@ -18125,23 +16388,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async disconnectAccount(cloudProvider: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async disconnectAccount(cloudProvider: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.disconnectAccount(cloudProvider, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.disconnectAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Starts the forgotten-password flow: the named user is mailed a reset link. Unauthenticated by design, and deliberately quiet about whether the address exists.
-         * @summary Starts the forgotten-password flow: the named user is mailed a reset link.
-         * @param {O11yO11yForgotPasswordIn} o11yO11yForgotPasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async forgotPassword(o11yO11yForgotPasswordIn: O11yO11yForgotPasswordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.forgotPassword(o11yO11yForgotPasswordIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.forgotPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18195,19 +16445,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllRoutePolicies(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getAllRoutePolicies']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one auth domain with its SSO configuration, by id. Admin gate.
-         * @summary Returns one auth domain with its SSO configuration, by id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAuthDomain(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yAuthDomainOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthDomain(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getAuthDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18592,22 +16829,22 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMyUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yUserWithRolesOut>> {
+        async getMyUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yUserOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMyUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getMyUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the calling user with their single legacy role. Deprecated in favor of getMyUser. Open to any authenticated caller.
-         * @summary Returns the calling user with their single legacy role.
+         * Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging. The o11y ruler fires one alert forever, labelled watchdog=\"true\", and every notification of it that reaches this process is a heartbeat — recorded as ALERT-HEARTBEAT, never sent to a human.  It answers 200 with the heartbeat\'s age while one arrived within the last 15 minutes, and 503 once none has. A 503 means the path from the ruler to this receiver stopped — the ruler, its Alertmanager, or this process — which nothing inside the cluster can be trusted to say, so something OUTSIDE it polls this and pages on the 503. Process-local, like the replay ring: a restart starts the clock again rather than answering 503 before the first beat can arrive.
+         * @summary Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMyUserDeprecated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yDeprecatedUserOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMyUserDeprecated(options);
+        async getO11yAlertsHeartbeat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yHeartbeat>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yAlertsHeartbeat(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getMyUserDeprecated']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yAlertsHeartbeat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18677,20 +16914,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window. Both come from the fleet prober\'s own measurements: every service is asked its health URL every 30 seconds, so a service is listed as down because it did not answer, never because something failed to collect it. PLATFORM SUDO ONLY — this is the whole fleet\'s inventory, not tenant data, so every customer is 403. An unreachable telemetry store answers 503 rather than an empty trend, because a board of zeroes and a fleet that is down look identical.
-         * @summary Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window.
-         * @param {number} [range] Range is the trend window in seconds. Default 3600, capped at 604800 (7d).
-         * @param {number} [stepSec] StepSec is the bucket width in seconds, clamped to [30, 3600]. Absent picks ~60 buckets across the range.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getO11yAvailability(range?: number, stepSec?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAvailabilityResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yAvailability(range, stepSec, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yAvailability']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @summary Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @param {string} [dataSource] DataSource is the telemetry the keys come from — metrics for the infra faces. The runtime requires it.
@@ -18726,30 +16949,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yClustersAttributeValues(dataSource, aggregateOperator, aggregateAttribute, attributeKey, filterAttributeKeyDataType, searchText, tagType, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yClustersAttributeValues']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The callback Google redirects a user back to after they approve the sign-in. It exchanges the authorization code, establishes the session and answers 303 to the console.  The answer is a Location header and no body, which is why it is not a typed operation — declaring a JSON response for a redirect would publish a shape that does not exist and hide the header that is the entire point.  UNAUTHENTICATED by necessity: it is how a caller GETS a principal, so requiring one would be circular. It is not an open endpoint — the code it carries is single-use and verified against the provider.
-         * @summary Complete a Google sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getO11yCompleteGoogle(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yCompleteGoogle(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yCompleteGoogle']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The callback any configured OIDC provider redirects back to. Same shape and same reasoning as the Google callback: the code is exchanged, the session is established, and the answer is a 303 to the console rather than a body.  UNAUTHENTICATED by necessity — this is the act of obtaining a principal, and the provider\'s own code is what authenticates it.
-         * @summary Complete a generic OIDC sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getO11yCompleteOidc(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yCompleteOidc(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yCompleteOidc']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -19684,8 +17883,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19696,8 +17895,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * Returns one Sentry project of the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org.
          * @param {string} id ID is the project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20001,32 +18200,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token. Admin gate.
-         * @summary Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getResetPasswordToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yResetTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getResetPasswordToken(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getResetPasswordToken']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns a user\'s password-reset token, creating one if none is live. Deprecated in favor of the reset_password_tokens pair, which separates reading from minting. Admin gate.
-         * @summary Returns a user\'s password-reset token, creating one if none is live.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getResetPasswordTokenDeprecated(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yResetTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getResetPasswordTokenDeprecated(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getResetPasswordTokenDeprecated']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns one role with the transaction groups it grants.
          * @summary Returns one role with the transaction groups it grants.
          * @param {string} id 
@@ -20037,19 +18210,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRole(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns every role one org member holds, by user id. Admin gate.
-         * @summary Returns every role one org member holds, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getRolesByUserID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yRolesOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRolesByUserID(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getRolesByUserID']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -20263,20 +18423,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it. Unauthenticated: it runs before any session exists.
-         * @summary Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it.
-         * @param {string} [email] Email is the address about to sign in. Required.
-         * @param {string} [ref] Ref is the page the sign-in started from, carried into SSO redirects.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSessionContext(email?: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySessionContextOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSessionContext(email, ref, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getSessionContext']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring. Viewer gate.
          * @summary Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring.
          * @param {string} signal 
@@ -20399,32 +18545,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one org member together with every role they hold, by user id. Admin gate.
-         * @summary Returns one org member together with every role they hold, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUser(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yUserWithRolesOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one org member with their single legacy role, by user id. Admins may read anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Returns one org member with their single legacy role, by user id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUserDeprecated(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yDeprecatedUserOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserDeprecated(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getUserDeprecated']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns one preference of the calling user, by name. Viewer gate.
          * @summary Returns one preference of the calling user, by name.
          * @param {string} name 
@@ -20435,19 +18555,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserPreference(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getUserPreference']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns every org member holding a role, by role id. Admin gate.
-         * @summary Returns every org member holding a role, by role id.
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUsersByRoleID(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yUsersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsersByRoleID(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getUsersByRoleID']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -20515,18 +18622,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAccounts(cloudProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.listAccounts']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists the org\'s auth domains — the email domains whose SSO configuration this org owns. Admin gate.
-         * @summary Lists the org\'s auth domains — the email domains whose SSO configuration this org owns.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listAuthDomains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yAuthDomainsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAuthDomains(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.listAuthDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -20910,37 +19005,13 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the caller\'s org members. Admin gate.
-         * @summary Lists the caller\'s org members.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yUsersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listUsers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.listUsers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists the org\'s members with their single legacy role. Deprecated in favor of listUsers, which answers without the role. Admin gate.
-         * @summary Lists the org\'s members with their single legacy role.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listUsersDeprecated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yDeprecatedUsersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listUsersDeprecated(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.listUsersDeprecated']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Locks a v2-shape dashboard. Only the dashboard\'s creator or an org admin may lock or unlock.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Locks a v2-shape dashboard.
          * @param {string} id ID is the resource id from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async lockDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async lockDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.lockDashboardV2(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.lockDashboardV2']?.[localVarOperationServerIndex]?.url;
@@ -21010,14 +19081,14 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pinDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async pinDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.pinDashboardV2(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.pinDashboardV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), falling back to a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), then an email to `CLOUD_ALERTS_EMAIL_TO` on the org\'s own notify credential, then a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for. An alert labelled `watchdog=\"true\"` is the path\'s heartbeat (see `GET /v1/o11y/alerts/heartbeat`) and pages nobody.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
          * @summary Take an Alertmanager notification and page a human
          * @param {string} receiver 
          * @param {*} [options] Override http request option.
@@ -21027,32 +19098,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yAlertsByReceiver(receiver, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yAlertsByReceiver']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
-         * @summary Receive a Sentry envelope on the SDK\'s own DSN path
-         * @param {string} projectId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postO11yApiByProjectIdEnvelope(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yApiByProjectIdEnvelope(projectId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yApiByProjectIdEnvelope']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The legacy single-event form of the envelope ingest: one JSON event rather than a framed batch, kept because SDKs in the field still send it.  Same address ownership and same authentication as the envelope route — the /api/ segment is the SDK\'s, the DSN public key is the credential, the principal gate does not apply, and a keyless submission is a 401 from the ingest verifier.
-         * @summary Receive a single Sentry event on the SDK\'s own DSN path
-         * @param {string} projectId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postO11yApiByProjectIdStore(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yApiByProjectIdStore(projectId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yApiByProjectIdStore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -21079,18 +19124,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yClustersList(o11yClusterListRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yClustersList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The assertion consumer service: the identity provider POSTs its signed assertion here, and a valid one establishes the session and answers 303 to the console.  A redirect, not a value, so it is not a typed operation. UNAUTHENTICATED by necessity and authenticated in fact by the assertion\'s signature, which is checked against the configured provider before any session exists.
-         * @summary Complete a SAML sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postO11yCompleteSaml(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yCompleteSaml(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yCompleteSaml']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -21718,19 +19751,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates the FIRST organization and its admin user. It is open by design — there is nobody to be signed in as yet — and refuses once setup has completed, after which new users arrive by invitation only.  Open by design; the runtime\'s own gate is OpenAccess.
-         * @summary Creates the FIRST organization and its admin user.
-         * @param {O11yO11yRegisterIn} o11yO11yRegisterIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postO11yRegister(o11yO11yRegisterIn: O11yO11yRegisterIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yRegisterOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11yRegister(o11yO11yRegisterIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11yRegister']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
          * @summary Creates a human-review queue in the caller\'s org and project.
          * @param {O11yCreateQueueReq} o11yCreateQueueReq 
@@ -21771,8 +19791,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * Creates a Sentry project under the caller\'s org and returns it. Only the name, and optionally a slug and platform, are the caller\'s to set; the org and id are server-assigned. The slug is the product name the event plane stores, so a project reads that product\'s errors.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it.
          * @param {O11yO11ySentryPostableProject} o11yO11ySentryPostableProject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21781,19 +19801,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postO11ySentinelProjects(o11yO11ySentryPostableProject, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11ySentinelProjects']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-         * @param {string} id ID is the project id.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postO11ySentinelProjectsByIdKeysRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11ySentinelProjectsByIdKeysRotate(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11ySentinelProjectsByIdKeysRotate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -21972,7 +19979,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putHost(o11yPostableHost: O11yPostableHost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putHost(o11yPostableHost: O11yPostableHost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putHost(o11yPostableHost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.putHost']?.[localVarOperationServerIndex]?.url;
@@ -22013,37 +20020,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putProfile(o11yPostableProfile: O11yPostableProfile, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putProfile(o11yPostableProfile: O11yPostableProfile, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putProfile(o11yPostableProfile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.putProfile']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Takes a role away from one org member, by user id and role id — someone else, never the caller. Admin gate.
-         * @summary Takes a role away from one org member, by user id and role id — someone else, never the caller.
-         * @param {string} id 
-         * @param {string} roleId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async removeUserRoleByUserIDAndRoleID(id: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeUserRoleByUserIDAndRoleID(id, roleId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.removeUserRoleByUserIDAndRoleID']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sets a new password for whoever the reset token was minted for, consuming the token. Unauthenticated: the token is the proof.
-         * @summary Sets a new password for whoever the reset token was minted for, consuming the token.
-         * @param {O11yO11yResetPasswordIn} o11yO11yResetPasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async resetPassword(o11yO11yResetPasswordIn: O11yO11yResetPasswordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.resetPassword(o11yO11yResetPasswordIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.resetPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22054,23 +20034,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async revokeServiceAccountKey(id: string, fid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async revokeServiceAccountKey(id: string, fid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.revokeServiceAccountKey(id, fid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.revokeServiceAccountKey']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Exchanges a refresh token for a fresh token pair, retiring the old pair. The access token being rotated identifies the session.
-         * @summary Exchanges a refresh token for a fresh token pair, retiring the old pair.
-         * @param {O11yO11yRotateSessionIn} o11yO11yRotateSessionIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async rotateSession(o11yO11yRotateSessionIn: O11yO11yRotateSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rotateSession(o11yO11yRotateSessionIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.rotateSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22106,27 +20073,13 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Assigns a role, by role name, to one org member — someone else, never the caller. Admin gate.
-         * @summary Assigns a role, by role name, to one org member — someone else, never the caller.
-         * @param {string} id 
-         * @param {O11yO11ySetRoleIn} o11yO11ySetRoleIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async setRoleByUserID(id: string, o11yO11ySetRoleIn: O11yO11ySetRoleIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setRoleByUserID(id, o11yO11ySetRoleIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.setRoleByUserID']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sends a test notification to the posted receiver. Editor gate.
          * @summary Sends a test notification to the posted receiver.
          * @param {O11yAlertmanagertypesReceiver} o11yAlertmanagertypesReceiver 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async testChannel(o11yAlertmanagertypesReceiver: O11yAlertmanagertypesReceiver, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async testChannel(o11yAlertmanagertypesReceiver: O11yAlertmanagertypesReceiver, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testChannel(o11yAlertmanagertypesReceiver, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.testChannel']?.[localVarOperationServerIndex]?.url;
@@ -22139,7 +20092,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async testChannelDeprecated(o11yAlertmanagertypesReceiver: O11yAlertmanagertypesReceiver, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async testChannelDeprecated(o11yAlertmanagertypesReceiver: O11yAlertmanagertypesReceiver, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testChannelDeprecated(o11yAlertmanagertypesReceiver, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.testChannelDeprecated']?.[localVarOperationServerIndex]?.url;
@@ -22191,7 +20144,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unlockDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async unlockDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unlockDashboardV2(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.unlockDashboardV2']?.[localVarOperationServerIndex]?.url;
@@ -22204,7 +20157,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unpinDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async unpinDashboardV2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unpinDashboardV2(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.unpinDashboardV2']?.[localVarOperationServerIndex]?.url;
@@ -22219,24 +20172,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateAccount(cloudProvider: string, id: string, o11yO11yUpdateAccountIn: O11yO11yUpdateAccountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateAccount(cloudProvider: string, id: string, o11yO11yUpdateAccountIn: O11yO11yUpdateAccountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateAccount(cloudProvider, id, o11yO11yUpdateAccountIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Replaces one auth domain\'s SSO configuration, by id. Admin gate.
-         * @summary Replaces one auth domain\'s SSO configuration, by id.
-         * @param {string} id 
-         * @param {O11yO11yUpdatableAuthDomain} o11yO11yUpdatableAuthDomain 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateAuthDomain(id: string, o11yO11yUpdatableAuthDomain: O11yO11yUpdatableAuthDomain, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateAuthDomain(id, o11yO11yUpdatableAuthDomain, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.updateAuthDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22247,7 +20186,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateChannelByID(id: string, o11yO11yChannelUpdateIn: O11yO11yChannelUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateChannelByID(id: string, o11yO11yChannelUpdateIn: O11yO11yChannelUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateChannelByID(id, o11yO11yChannelUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateChannelByID']?.[localVarOperationServerIndex]?.url;
@@ -22289,7 +20228,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateDowntimeScheduleByID(id: string, o11yO11yDowntimeUpdateIn: O11yO11yDowntimeUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateDowntimeScheduleByID(id: string, o11yO11yDowntimeUpdateIn: O11yO11yDowntimeUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateDowntimeScheduleByID(id, o11yO11yDowntimeUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateDowntimeScheduleByID']?.[localVarOperationServerIndex]?.url;
@@ -22303,7 +20242,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateIngestionKey(keyId: string, o11yO11yUpdateIngestionKeyIn: O11yO11yUpdateIngestionKeyIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateIngestionKey(keyId: string, o11yO11yUpdateIngestionKeyIn: O11yO11yUpdateIngestionKeyIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateIngestionKey(keyId, o11yO11yUpdateIngestionKeyIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateIngestionKey']?.[localVarOperationServerIndex]?.url;
@@ -22317,7 +20256,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateIngestionKeyLimit(limitId: string, o11yO11yUpdateLimitIn: O11yO11yUpdateLimitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateIngestionKeyLimit(limitId: string, o11yO11yUpdateLimitIn: O11yO11yUpdateLimitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateIngestionKeyLimit(limitId, o11yO11yUpdateLimitIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateIngestionKeyLimit']?.[localVarOperationServerIndex]?.url;
@@ -22357,23 +20296,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMyOrganization(o11yO11yOrganization: O11yO11yOrganization, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateMyOrganization(o11yO11yOrganization: O11yO11yOrganization, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMyOrganization(o11yO11yOrganization, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateMyOrganization']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Replaces the calling user\'s password, refusing when the old one does not match. Open to any authenticated caller.
-         * @summary Replaces the calling user\'s password, refusing when the old one does not match.
-         * @param {O11yO11yChangePasswordIn} o11yO11yChangePasswordIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateMyPassword(o11yO11yChangePasswordIn: O11yO11yChangePasswordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMyPassword(o11yO11yChangePasswordIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.updateMyPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22383,23 +20309,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMyServiceAccount(o11yO11yMyServiceAccountUpdateIn: O11yO11yMyServiceAccountUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateMyServiceAccount(o11yO11yMyServiceAccountUpdateIn: O11yO11yMyServiceAccountUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMyServiceAccount(o11yO11yMyServiceAccountUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateMyServiceAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Renames the calling user. Open to any authenticated caller.
-         * @summary Renames the calling user.
-         * @param {O11yO11yUpdatableUser} o11yO11yUpdatableUser 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateMyUserV2(o11yO11yUpdatableUser: O11yO11yUpdatableUser, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMyUserV2(o11yO11yUpdatableUser, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.updateMyUserV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22410,7 +20323,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOrgPreference(name: string, o11yO11yUpdatablePreference: O11yO11yUpdatablePreference, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateOrgPreference(name: string, o11yO11yUpdatablePreference: O11yO11yUpdatablePreference, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrgPreference(name, o11yO11yUpdatablePreference, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateOrgPreference']?.[localVarOperationServerIndex]?.url;
@@ -22424,7 +20337,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePublicDashboard(id: string, o11yO11yPublicDashboardWriteIn: O11yO11yPublicDashboardWriteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updatePublicDashboard(id: string, o11yO11yPublicDashboardWriteIn: O11yO11yPublicDashboardWriteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updatePublicDashboard(id, o11yO11yPublicDashboardWriteIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updatePublicDashboard']?.[localVarOperationServerIndex]?.url;
@@ -22437,7 +20350,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateQuickFilters(o11yO11yUpdatableQuickFilters: O11yO11yUpdatableQuickFilters, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateQuickFilters(o11yO11yUpdatableQuickFilters: O11yO11yUpdatableQuickFilters, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateQuickFilters(o11yO11yUpdatableQuickFilters, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateQuickFilters']?.[localVarOperationServerIndex]?.url;
@@ -22451,7 +20364,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateRole(id: string, o11yO11yRoleUpdateIn: O11yO11yRoleUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateRole(id: string, o11yO11yRoleUpdateIn: O11yO11yRoleUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateRole(id, o11yO11yRoleUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateRole']?.[localVarOperationServerIndex]?.url;
@@ -22479,7 +20392,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateRuleByID(id: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateRuleByID(id: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateRuleByID(id, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateRuleByID']?.[localVarOperationServerIndex]?.url;
@@ -22495,7 +20408,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateService(cloudProvider: string, id: string, serviceId: string, o11yO11yUpdateServiceIn: O11yO11yUpdateServiceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateService(cloudProvider: string, id: string, serviceId: string, o11yO11yUpdateServiceIn: O11yO11yUpdateServiceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateService(cloudProvider, id, serviceId, o11yO11yUpdateServiceIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateService']?.[localVarOperationServerIndex]?.url;
@@ -22509,7 +20422,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateServiceAccount(id: string, o11yO11yServiceAccountUpdateIn: O11yO11yServiceAccountUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateServiceAccount(id: string, o11yO11yServiceAccountUpdateIn: O11yO11yServiceAccountUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateServiceAccount(id, o11yO11yServiceAccountUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateServiceAccount']?.[localVarOperationServerIndex]?.url;
@@ -22524,7 +20437,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateServiceAccountKey(id: string, fid: string, o11yO11yAPIKeyUpdateIn: O11yO11yAPIKeyUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateServiceAccountKey(id: string, fid: string, o11yO11yAPIKeyUpdateIn: O11yO11yAPIKeyUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateServiceAccountKey(id, fid, o11yO11yAPIKeyUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateServiceAccountKey']?.[localVarOperationServerIndex]?.url;
@@ -22539,7 +20452,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateSpanMapper(groupId: string, mapperId: string, o11yO11ySpanMapperUpdateIn: O11yO11ySpanMapperUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateSpanMapper(groupId: string, mapperId: string, o11yO11ySpanMapperUpdateIn: O11yO11ySpanMapperUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateSpanMapper(groupId, mapperId, o11yO11ySpanMapperUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateSpanMapper']?.[localVarOperationServerIndex]?.url;
@@ -22553,7 +20466,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateSpanMapperGroup(groupId: string, o11yO11ySpanMapperGroupUpdateIn: O11yO11ySpanMapperGroupUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateSpanMapperGroup(groupId: string, o11yO11ySpanMapperGroupUpdateIn: O11yO11ySpanMapperGroupUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateSpanMapperGroup(groupId, o11yO11ySpanMapperGroupUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateSpanMapperGroup']?.[localVarOperationServerIndex]?.url;
@@ -22600,34 +20513,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser. Admin gate.
-         * @summary Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser.
-         * @param {string} id 
-         * @param {O11yO11yUserUpdate} o11yO11yUserUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateUser(id: string, o11yO11yUserUpdate: O11yO11yUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(id, o11yO11yUserUpdate, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.updateUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Renames one org member and may move their legacy role, answering with the updated record. Admins may update anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Renames one org member and may move their legacy role, answering with the updated record.
-         * @param {string} id 
-         * @param {O11yO11yDeprecatedUserUpdate} o11yO11yDeprecatedUserUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateUserDeprecated(id: string, o11yO11yDeprecatedUserUpdate: O11yO11yDeprecatedUserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yDeprecatedUserOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserDeprecated(id, o11yO11yDeprecatedUserUpdate, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.updateUserDeprecated']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sets one preference of the calling user, by name. Viewer gate.
          * @summary Sets one preference of the calling user, by name.
          * @param {string} name 
@@ -22635,7 +20520,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserPreference(name: string, o11yO11yUpdatablePreference: O11yO11yUpdatablePreference, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateUserPreference(name: string, o11yO11yUpdatablePreference: O11yO11yUpdatablePreference, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Approval>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserPreference(name, o11yO11yUpdatablePreference, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.updateUserPreference']?.[localVarOperationServerIndex]?.url;
@@ -22666,19 +20551,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.validateTraceFunnelTraces(funnelId, o11yO11yFunnelWindowIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.validateTraceFunnelTraces']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Checks that a reset-password token exists and has not expired, without consuming it. Unauthenticated: the token is the proof.
-         * @summary Checks that a reset-password token exists and has not expired, without consuming it.
-         * @param {O11yO11yResetTokenRef} o11yO11yResetTokenRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async verifyResetPasswordToken(o11yO11yResetTokenRef: O11yO11yResetTokenRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.verifyResetPasswordToken(o11yO11yResetTokenRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.verifyResetPasswordToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -22742,26 +20614,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.createAccount(requestParameters.cloudProvider, requestParameters.o11yO11yCreateAccountIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id. Admin gate.
-         * @summary Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id.
-         * @param {O11yApiCreateAuthDomainRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAuthDomain(requestParameters: O11yApiCreateAuthDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yCreatedOut> {
-            return localVarFp.createAuthDomain(requestParameters.o11yO11yPostableAuthDomain, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats. Deprecated alongside createInvite. Admin gate.
-         * @summary Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats.
-         * @param {O11yApiCreateBulkInviteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBulkInvite(requestParameters: O11yApiCreateBulkInviteRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yAck> {
-            return localVarFp.createBulkInvite(requestParameters.o11yO11yBulkInviteIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Creates a notification channel, answering with the stored channel. Admin gate.
          * @summary Creates a notification channel, answering with the stored channel.
          * @param {O11yApiCreateChannelRequest} requestParameters Request parameters.
@@ -22822,16 +20674,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.createIngestionKeyLimit(requestParameters.keyId, requestParameters.o11yO11yCreateLimitIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Invites one person to the caller\'s org by email, with the role they will hold when they accept. Deprecated in favor of creating users directly; kept because callers still hold it. Admin gate, enforced by the runtime this op relays to.
-         * @summary Invites one person to the caller\'s org by email, with the role they will hold when they accept.
-         * @param {O11yApiCreateInviteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createInvite(requestParameters: O11yApiCreateInviteRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yInviteOut> {
-            return localVarFp.createInvite(requestParameters.o11yO11yInviteIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Adds a human annotation to a trace or observation, optionally in a review queue.  Callers need the editor role; the runtime\'s own gate enforces it, and it validates the payload and stamps the annotation\'s author and org.
          * @summary Adds a human annotation to a trace or observation, optionally in a review queue.
          * @param {O11yApiCreateLLMAnnotationRequest} requestParameters Request parameters.
@@ -22868,7 +20710,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateLLMPricingRules(requestParameters: O11yApiCreateOrUpdateLLMPricingRulesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createOrUpdateLLMPricingRules(requestParameters: O11yApiCreateOrUpdateLLMPricingRulesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.createOrUpdateLLMPricingRules(requestParameters.o11yO11yLLMUpdatablePricingRules, options).then((request) => request(axios, basePath));
         },
         /**
@@ -22880,16 +20722,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         createPublicDashboard(requestParameters: O11yApiCreatePublicDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yIdentifiableOut> {
             return localVarFp.createPublicDashboard(requestParameters.id, requestParameters.o11yO11yPublicDashboardWriteIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced. Admin gate.
-         * @summary Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced.
-         * @param {O11yApiCreateResetPasswordTokenRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createResetPasswordToken(requestParameters: O11yApiCreateResetPasswordTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yResetTokenOut> {
-            return localVarFp.createResetPasswordToken(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a custom role in the caller\'s org from a name, an optional description and the transaction groups it grants, answering the new role\'s id.  Names are lowercase letters and hyphens only, and may not start with the reserved managed-role prefix; the runtime refuses anything else.
@@ -22948,18 +20780,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createServiceAccountRole(requestParameters: O11yApiCreateServiceAccountRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createServiceAccountRole(requestParameters: O11yApiCreateServiceAccountRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.createServiceAccountRole(requestParameters.id, requestParameters.o11yO11yServiceAccountRoleGrantIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Signs a user in with email and password and answers with the session\'s token pair. Unauthenticated: this call is how authentication begins.
-         * @summary Signs a user in with email and password and answers with the session\'s token pair.
-         * @param {O11yApiCreateSessionByEmailPasswordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSessionByEmailPassword(requestParameters: O11yApiCreateSessionByEmailPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTokenOut> {
-            return localVarFp.createSessionByEmailPassword(requestParameters.o11yO11yEmailPasswordSessionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a mapper to a group: which field context it reads, the move or copy it performs, and whether it is on.  Callers need the admin role; the runtime\'s own gate enforces it.
@@ -22992,33 +20814,13 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.createTraceFunnel(requestParameters.o11yO11yFunnelCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id. Admin gate.
-         * @summary Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id.
-         * @param {O11yApiCreateUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createUser(requestParameters: O11yApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yCreatedOut> {
-            return localVarFp.createUser(requestParameters.o11yO11yPostableUser, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Releases an email domain and discards its SSO configuration, by id. Admin gate.
-         * @summary Releases an email domain and discards its SSO configuration, by id.
-         * @param {O11yApiDeleteAuthDomainRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteAuthDomain(requestParameters: O11yApiDeleteAuthDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteAuthDomain(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Removes a notification channel, by id. Admin gate.
          * @summary Removes a notification channel, by id.
          * @param {O11yApiDeleteChannelByIDRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteChannelByID(requestParameters: O11yApiDeleteChannelByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteChannelByID(requestParameters: O11yApiDeleteChannelByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteChannelByID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23028,7 +20830,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDashboardV2(requestParameters: O11yApiDeleteDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteDashboardV2(requestParameters: O11yApiDeleteDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteDashboardV2(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23038,7 +20840,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDashboardView(requestParameters: O11yApiDeleteDashboardViewRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteDashboardView(requestParameters: O11yApiDeleteDashboardViewRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteDashboardView(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23048,7 +20850,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDowntimeScheduleByID(requestParameters: O11yApiDeleteDowntimeScheduleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteDowntimeScheduleByID(requestParameters: O11yApiDeleteDowntimeScheduleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteDowntimeScheduleByID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23058,7 +20860,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIngestionKey(requestParameters: O11yApiDeleteIngestionKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteIngestionKey(requestParameters: O11yApiDeleteIngestionKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteIngestionKey(requestParameters.keyId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23068,7 +20870,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIngestionKeyLimit(requestParameters: O11yApiDeleteIngestionKeyLimitRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteIngestionKeyLimit(requestParameters: O11yApiDeleteIngestionKeyLimitRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteIngestionKeyLimit(requestParameters.limitId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23078,7 +20880,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteLLMPricingRule(requestParameters: O11yApiDeleteLLMPricingRuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteLLMPricingRule(requestParameters: O11yApiDeleteLLMPricingRuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteLLMPricingRule(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23088,7 +20890,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteLLMScore(requestParameters: O11yApiDeleteLLMScoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteLLMScore(requestParameters: O11yApiDeleteLLMScoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteLLMScore(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23098,7 +20900,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMetricReductionRuleByID(requestParameters: O11yApiDeleteMetricReductionRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteMetricReductionRuleByID(requestParameters: O11yApiDeleteMetricReductionRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteMetricReductionRuleByID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23122,13 +20924,13 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteO11yReviewsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Deletes one Sentry project of the caller\'s org.
+         * Deletes one Sentry project of the caller\'s org; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org; retained events are not touched.
          * @param {O11yApiDeleteO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteO11ySentinelProjectsById(requestParameters: O11yApiDeleteO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteO11ySentinelProjectsById(requestParameters: O11yApiDeleteO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteO11ySentinelProjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23138,7 +20940,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePublicDashboard(requestParameters: O11yApiDeletePublicDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deletePublicDashboard(requestParameters: O11yApiDeletePublicDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deletePublicDashboard(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23148,7 +20950,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRole(requestParameters: O11yApiDeleteRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteRole(requestParameters: O11yApiDeleteRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteRole(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23158,7 +20960,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRoutePolicyByID(requestParameters: O11yApiDeleteRoutePolicyByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteRoutePolicyByID(requestParameters: O11yApiDeleteRoutePolicyByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteRoutePolicyByID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23168,7 +20970,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRuleByID(requestParameters: O11yApiDeleteRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteRuleByID(requestParameters: O11yApiDeleteRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteRuleByID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23178,7 +20980,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteServiceAccount(requestParameters: O11yApiDeleteServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteServiceAccount(requestParameters: O11yApiDeleteServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteServiceAccount(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23188,17 +20990,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteServiceAccountRole(requestParameters: O11yApiDeleteServiceAccountRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteServiceAccountRole(requestParameters: O11yApiDeleteServiceAccountRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteServiceAccountRole(requestParameters.id, requestParameters.rid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Signs the calling session out, invalidating its tokens. The access token on the call names the session to end.
-         * @summary Signs the calling session out, invalidating its tokens.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSession(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteSession(options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes one mapper from a group.  Callers need the admin role; the runtime\'s own gate enforces it.
@@ -23207,7 +21000,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSpanMapper(requestParameters: O11yApiDeleteSpanMapperRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteSpanMapper(requestParameters: O11yApiDeleteSpanMapperRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteSpanMapper(requestParameters.groupId, requestParameters.mapperId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23217,7 +21010,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSpanMapperGroup(requestParameters: O11yApiDeleteSpanMapperGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteSpanMapperGroup(requestParameters: O11yApiDeleteSpanMapperGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.deleteSpanMapperGroup(requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23231,44 +21024,14 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteTraceFunnel(requestParameters.funnelId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one org member, by user id. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {O11yApiDeleteUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteUser(requestParameters: O11yApiDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteUser(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes one org member, by user id. The same operation as deleteUser on the legacy singular path. Admin gate.
-         * @summary Removes one org member, by user id.
-         * @param {O11yApiDeleteUserDeprecatedRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteUserDeprecated(requestParameters: O11yApiDeleteUserDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteUserDeprecated(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Tears down a connected account for the given provider, by id. Admin gate.
          * @summary Tears down a connected account for the given provider, by id.
          * @param {O11yApiDisconnectAccountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        disconnectAccount(requestParameters: O11yApiDisconnectAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        disconnectAccount(requestParameters: O11yApiDisconnectAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.disconnectAccount(requestParameters.cloudProvider, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Starts the forgotten-password flow: the named user is mailed a reset link. Unauthenticated by design, and deliberately quiet about whether the address exists.
-         * @summary Starts the forgotten-password flow: the named user is mailed a reset link.
-         * @param {O11yApiForgotPasswordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forgotPassword(requestParameters: O11yApiForgotPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.forgotPassword(requestParameters.o11yO11yForgotPasswordIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one connected account for the given provider, by id. Admin gate.
@@ -23307,16 +21070,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getAllRoutePolicies(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yRoutePoliciesOut> {
             return localVarFp.getAllRoutePolicies(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one auth domain with its SSO configuration, by id. Admin gate.
-         * @summary Returns one auth domain with its SSO configuration, by id.
-         * @param {O11yApiGetAuthDomainRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAuthDomain(requestParameters: O11yApiGetAuthDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yAuthDomainOut> {
-            return localVarFp.getAuthDomain(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one notification channel, by id. Viewer gate.
@@ -23608,17 +21361,17 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMyUser(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yUserWithRolesOut> {
+        getMyUser(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yUserOut> {
             return localVarFp.getMyUser(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the calling user with their single legacy role. Deprecated in favor of getMyUser. Open to any authenticated caller.
-         * @summary Returns the calling user with their single legacy role.
+         * Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging. The o11y ruler fires one alert forever, labelled watchdog=\"true\", and every notification of it that reaches this process is a heartbeat — recorded as ALERT-HEARTBEAT, never sent to a human.  It answers 200 with the heartbeat\'s age while one arrived within the last 15 minutes, and 503 once none has. A 503 means the path from the ruler to this receiver stopped — the ruler, its Alertmanager, or this process — which nothing inside the cluster can be trusted to say, so something OUTSIDE it polls this and pages on the 503. Process-local, like the replay ring: a restart starts the clock again rather than answering 503 before the first beat can arrive.
+         * @summary Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMyUserDeprecated(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yDeprecatedUserOut> {
-            return localVarFp.getMyUserDeprecated(options).then((request) => request(axios, basePath));
+        getO11yAlertsHeartbeat(options?: RawAxiosRequestConfig): AxiosPromise<O11yHeartbeat> {
+            return localVarFp.getO11yAlertsHeartbeat(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `ALERT-RECEIVED` line per alert, followed by the `ALERT-DELIVERED` / `ALERT-UNDELIVERED` outcome of carrying it out of the process, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  Arrival and delivery are separate lines because they are separate facts that fail independently. Alertmanager can tell you it dispatched a notification, never that anything received it; this process taking the call says nothing about whether a human was reached. Reading only the first as if it were the second is how a pager stays silent for months behind a log where everything looks fine.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a record that outlived the process that took the call would be a claim about something nobody observed, and an unbounded log is a memory leak with a nice name. A restart empties it.
@@ -23660,16 +21413,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getO11yAutocompleteAttributeValues(requestParameters.dataSource, requestParameters.aggregateOperator, requestParameters.aggregateAttribute, requestParameters.attributeKey, requestParameters.filterAttributeKeyDataType, requestParameters.searchText, requestParameters.tagType, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window. Both come from the fleet prober\'s own measurements: every service is asked its health URL every 30 seconds, so a service is listed as down because it did not answer, never because something failed to collect it. PLATFORM SUDO ONLY — this is the whole fleet\'s inventory, not tenant data, so every customer is 403. An unreachable telemetry store answers 503 rather than an empty trend, because a board of zeroes and a fleet that is down look identical.
-         * @summary Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window.
-         * @param {O11yApiGetO11yAvailabilityRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yAvailability(requestParameters: O11yApiGetO11yAvailabilityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<O11yAvailabilityResponse> {
-            return localVarFp.getO11yAvailability(requestParameters.range, requestParameters.stepSec, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @summary Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
          * @param {O11yApiGetO11yClustersAttributeKeysRequest} requestParameters Request parameters.
@@ -23688,24 +21431,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getO11yClustersAttributeValues(requestParameters: O11yApiGetO11yClustersAttributeValuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yInfraAttributeValuesOut> {
             return localVarFp.getO11yClustersAttributeValues(requestParameters.dataSource, requestParameters.aggregateOperator, requestParameters.aggregateAttribute, requestParameters.attributeKey, requestParameters.filterAttributeKeyDataType, requestParameters.searchText, requestParameters.tagType, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The callback Google redirects a user back to after they approve the sign-in. It exchanges the authorization code, establishes the session and answers 303 to the console.  The answer is a Location header and no body, which is why it is not a typed operation — declaring a JSON response for a redirect would publish a shape that does not exist and hide the header that is the entire point.  UNAUTHENTICATED by necessity: it is how a caller GETS a principal, so requiring one would be circular. It is not an open endpoint — the code it carries is single-use and verified against the provider.
-         * @summary Complete a Google sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yCompleteGoogle(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getO11yCompleteGoogle(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The callback any configured OIDC provider redirects back to. Same shape and same reasoning as the Google callback: the code is exchanged, the session is established, and the answer is a 303 to the console rather than a body.  UNAUTHENTICATED by necessity — this is the act of obtaining a principal, and the provider\'s own code is what authenticates it.
-         * @summary Complete a generic OIDC sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getO11yCompleteOidc(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getO11yCompleteOidc(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the metric attribute keys Kubernetes daemonsets report, for building daemonset filters.
@@ -24283,8 +22008,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getO11ySentinelLogs(requestParameters.project, requestParameters.query, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24292,8 +22017,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getO11ySentinelProjects(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
-         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * Returns one Sentry project of the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org.
          * @param {O11yApiGetO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24505,26 +22230,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getQuickFilters(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token. Admin gate.
-         * @summary Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token.
-         * @param {O11yApiGetResetPasswordTokenRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getResetPasswordToken(requestParameters: O11yApiGetResetPasswordTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yResetTokenOut> {
-            return localVarFp.getResetPasswordToken(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a user\'s password-reset token, creating one if none is live. Deprecated in favor of the reset_password_tokens pair, which separates reading from minting. Admin gate.
-         * @summary Returns a user\'s password-reset token, creating one if none is live.
-         * @param {O11yApiGetResetPasswordTokenDeprecatedRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getResetPasswordTokenDeprecated(requestParameters: O11yApiGetResetPasswordTokenDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yResetTokenOut> {
-            return localVarFp.getResetPasswordTokenDeprecated(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns one role with the transaction groups it grants.
          * @summary Returns one role with the transaction groups it grants.
          * @param {O11yApiGetRoleRequest} requestParameters Request parameters.
@@ -24533,16 +22238,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getRole(requestParameters: O11yApiGetRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yRoleOut> {
             return localVarFp.getRole(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every role one org member holds, by user id. Admin gate.
-         * @summary Returns every role one org member holds, by user id.
-         * @param {O11yApiGetRolesByUserIDRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRolesByUserID(requestParameters: O11yApiGetRolesByUserIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yRolesOut> {
-            return localVarFp.getRolesByUserID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one route policy, by id. Viewer gate.
@@ -24685,16 +22380,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getServiceAccountRoles(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it. Unauthenticated: it runs before any session exists.
-         * @summary Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it.
-         * @param {O11yApiGetSessionContextRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSessionContext(requestParameters: O11yApiGetSessionContextRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySessionContextOut> {
-            return localVarFp.getSessionContext(requestParameters.email, requestParameters.ref, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring. Viewer gate.
          * @summary Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring.
          * @param {O11yApiGetSignalFiltersRequest} requestParameters Request parameters.
@@ -24784,26 +22469,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTraceFunnelStepOverview(requestParameters.funnelId, requestParameters.o11yO11yFunnelStepWindowIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one org member together with every role they hold, by user id. Admin gate.
-         * @summary Returns one org member together with every role they hold, by user id.
-         * @param {O11yApiGetUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUser(requestParameters: O11yApiGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yUserWithRolesOut> {
-            return localVarFp.getUser(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one org member with their single legacy role, by user id. Admins may read anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Returns one org member with their single legacy role, by user id.
-         * @param {O11yApiGetUserDeprecatedRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserDeprecated(requestParameters: O11yApiGetUserDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yDeprecatedUserOut> {
-            return localVarFp.getUserDeprecated(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns one preference of the calling user, by name. Viewer gate.
          * @summary Returns one preference of the calling user, by name.
          * @param {O11yApiGetUserPreferenceRequest} requestParameters Request parameters.
@@ -24812,16 +22477,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getUserPreference(requestParameters: O11yApiGetUserPreferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yPreferenceOut> {
             return localVarFp.getUserPreference(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every org member holding a role, by role id. Admin gate.
-         * @summary Returns every org member holding a role, by role id.
-         * @param {O11yApiGetUsersByRoleIDRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsersByRoleID(requestParameters: O11yApiGetUsersByRoleIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yUsersOut> {
-            return localVarFp.getUsersByRoleID(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a trace\'s waterfall: every span when the trace is small enough, a capped window around the selected span when it is not, with the uncollapsed subtrees the caller asked to keep open.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -24872,15 +22527,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         listAccounts(requestParameters: O11yApiListAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yAccountsOut> {
             return localVarFp.listAccounts(requestParameters.cloudProvider, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists the org\'s auth domains — the email domains whose SSO configuration this org owns. Admin gate.
-         * @summary Lists the org\'s auth domains — the email domains whose SSO configuration this org owns.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAuthDomains(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yAuthDomainsOut> {
-            return localVarFp.listAuthDomains(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the org\'s notification channels. Viewer gate.
@@ -25125,31 +22771,13 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.listUserPreferences(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the caller\'s org members. Admin gate.
-         * @summary Lists the caller\'s org members.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listUsers(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yUsersOut> {
-            return localVarFp.listUsers(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists the org\'s members with their single legacy role. Deprecated in favor of listUsers, which answers without the role. Admin gate.
-         * @summary Lists the org\'s members with their single legacy role.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listUsersDeprecated(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yDeprecatedUsersOut> {
-            return localVarFp.listUsersDeprecated(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Locks a v2-shape dashboard. Only the dashboard\'s creator or an org admin may lock or unlock.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Locks a v2-shape dashboard.
          * @param {O11yApiLockDashboardV2Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        lockDashboardV2(requestParameters: O11yApiLockDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        lockDashboardV2(requestParameters: O11yApiLockDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.lockDashboardV2(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25199,11 +22827,11 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pinDashboardV2(requestParameters: O11yApiPinDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        pinDashboardV2(requestParameters: O11yApiPinDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.pinDashboardV2(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), falling back to a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), then an email to `CLOUD_ALERTS_EMAIL_TO` on the org\'s own notify credential, then a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for. An alert labelled `watchdog=\"true\"` is the path\'s heartbeat (see `GET /v1/o11y/alerts/heartbeat`) and pages nobody.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
          * @summary Take an Alertmanager notification and page a human
          * @param {O11yApiPostO11yAlertsByReceiverRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -25211,26 +22839,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         postO11yAlertsByReceiver(requestParameters: O11yApiPostO11yAlertsByReceiverRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postO11yAlertsByReceiver(requestParameters.receiver, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
-         * @summary Receive a Sentry envelope on the SDK\'s own DSN path
-         * @param {O11yApiPostO11yApiByProjectIdEnvelopeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yApiByProjectIdEnvelope(requestParameters: O11yApiPostO11yApiByProjectIdEnvelopeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postO11yApiByProjectIdEnvelope(requestParameters.projectId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The legacy single-event form of the envelope ingest: one JSON event rather than a framed batch, kept because SDKs in the field still send it.  Same address ownership and same authentication as the envelope route — the /api/ segment is the SDK\'s, the DSN public key is the credential, the principal gate does not apply, and a keyless submission is a 401 from the ingest verifier.
-         * @summary Receive a single Sentry event on the SDK\'s own DSN path
-         * @param {O11yApiPostO11yApiByProjectIdStoreRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yApiByProjectIdStore(requestParameters: O11yApiPostO11yApiByProjectIdStoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postO11yApiByProjectIdStore(requestParameters.projectId, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads the attribute-value request from the body rather than off the query string — the spelling the newer builder uses to send its filters alongside the request.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -25251,15 +22859,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         postO11yClustersList(requestParameters: O11yApiPostO11yClustersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yClusterListOut> {
             return localVarFp.postO11yClustersList(requestParameters.o11yClusterListRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The assertion consumer service: the identity provider POSTs its signed assertion here, and a valid one establishes the session and answers 303 to the console.  A redirect, not a value, so it is not a typed operation. UNAUTHENTICATED by necessity and authenticated in fact by the assertion\'s signature, which is checked against the configured provider before any session exists.
-         * @summary Complete a SAML sign-in
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yCompleteSaml(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postO11yCompleteSaml(options).then((request) => request(axios, basePath));
         },
         /**
          * Counts the grouped exceptions in the query window for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -25741,16 +23340,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postO11yQueryRangePreview(requestParameters.o11yO11yQueryRangePreviewIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates the FIRST organization and its admin user. It is open by design — there is nobody to be signed in as yet — and refuses once setup has completed, after which new users arrive by invitation only.  Open by design; the runtime\'s own gate is OpenAccess.
-         * @summary Creates the FIRST organization and its admin user.
-         * @param {O11yApiPostO11yRegisterRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11yRegister(requestParameters: O11yApiPostO11yRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yRegisterOut> {
-            return localVarFp.postO11yRegister(requestParameters.o11yO11yRegisterIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
          * @summary Creates a human-review queue in the caller\'s org and project.
          * @param {O11yApiPostO11yReviewsRequest} requestParameters Request parameters.
@@ -25781,24 +23370,14 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postO11ySentinelDiscover(requestParameters.o11yO11yDiscoverIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * Creates a Sentry project under the caller\'s org and returns it. Only the name, and optionally a slug and platform, are the caller\'s to set; the org and id are server-assigned. The slug is the product name the event plane stores, so a project reads that product\'s errors.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it.
          * @param {O11yApiPostO11ySentinelProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postO11ySentinelProjects(requestParameters: O11yApiPostO11ySentinelProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
             return localVarFp.postO11ySentinelProjects(requestParameters.o11yO11ySentryPostableProject, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
-         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-         * @param {O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postO11ySentinelProjectsByIdKeysRotate(requestParameters: O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
-            return localVarFp.postO11ySentinelProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
@@ -25937,7 +23516,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putHost(requestParameters: O11yApiPutHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putHost(requestParameters: O11yApiPutHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.putHost(requestParameters.o11yPostableHost, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25967,28 +23546,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putProfile(requestParameters: O11yApiPutProfileRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putProfile(requestParameters: O11yApiPutProfileRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.putProfile(requestParameters.o11yPostableProfile, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a role away from one org member, by user id and role id — someone else, never the caller. Admin gate.
-         * @summary Takes a role away from one org member, by user id and role id — someone else, never the caller.
-         * @param {O11yApiRemoveUserRoleByUserIDAndRoleIDRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeUserRoleByUserIDAndRoleID(requestParameters: O11yApiRemoveUserRoleByUserIDAndRoleIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.removeUserRoleByUserIDAndRoleID(requestParameters.id, requestParameters.roleId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets a new password for whoever the reset token was minted for, consuming the token. Unauthenticated: the token is the proof.
-         * @summary Sets a new password for whoever the reset token was minted for, consuming the token.
-         * @param {O11yApiResetPasswordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resetPassword(requestParameters: O11yApiResetPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.resetPassword(requestParameters.o11yO11yResetPasswordIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Revokes an API key. Revocation is immediate and permanent.
@@ -25997,18 +23556,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        revokeServiceAccountKey(requestParameters: O11yApiRevokeServiceAccountKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        revokeServiceAccountKey(requestParameters: O11yApiRevokeServiceAccountKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.revokeServiceAccountKey(requestParameters.id, requestParameters.fid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Exchanges a refresh token for a fresh token pair, retiring the old pair. The access token being rotated identifies the session.
-         * @summary Exchanges a refresh token for a fresh token pair, retiring the old pair.
-         * @param {O11yApiRotateSessionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rotateSession(requestParameters: O11yApiRotateSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTokenOut> {
-            return localVarFp.rotateSession(requestParameters.o11yO11yRotateSessionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the workspace\'s ingestion keys whose name matches the search, paginated. Editor gate.
@@ -26031,23 +23580,13 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.searchTraces(requestParameters.traceId, requestParameters.spanId, requestParameters.levelUp, requestParameters.levelDown, requestParameters.spanRenderLimit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Assigns a role, by role name, to one org member — someone else, never the caller. Admin gate.
-         * @summary Assigns a role, by role name, to one org member — someone else, never the caller.
-         * @param {O11yApiSetRoleByUserIDRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setRoleByUserID(requestParameters: O11yApiSetRoleByUserIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yAck> {
-            return localVarFp.setRoleByUserID(requestParameters.id, requestParameters.o11yO11ySetRoleIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Sends a test notification to the posted receiver. Editor gate.
          * @summary Sends a test notification to the posted receiver.
          * @param {O11yApiTestChannelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testChannel(requestParameters: O11yApiTestChannelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        testChannel(requestParameters: O11yApiTestChannelRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.testChannel(requestParameters.o11yAlertmanagertypesReceiver, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26057,7 +23596,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testChannelDeprecated(requestParameters: O11yApiTestChannelDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        testChannelDeprecated(requestParameters: O11yApiTestChannelDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.testChannelDeprecated(requestParameters.o11yAlertmanagertypesReceiver, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26097,7 +23636,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unlockDashboardV2(requestParameters: O11yApiUnlockDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        unlockDashboardV2(requestParameters: O11yApiUnlockDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.unlockDashboardV2(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26107,7 +23646,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unpinDashboardV2(requestParameters: O11yApiUnpinDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        unpinDashboardV2(requestParameters: O11yApiUnpinDashboardV2Request, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.unpinDashboardV2(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26117,18 +23656,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateAccount(requestParameters: O11yApiUpdateAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateAccount(requestParameters: O11yApiUpdateAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateAccount(requestParameters.cloudProvider, requestParameters.id, requestParameters.o11yO11yUpdateAccountIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Replaces one auth domain\'s SSO configuration, by id. Admin gate.
-         * @summary Replaces one auth domain\'s SSO configuration, by id.
-         * @param {O11yApiUpdateAuthDomainRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateAuthDomain(requestParameters: O11yApiUpdateAuthDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateAuthDomain(requestParameters.id, requestParameters.o11yO11yUpdatableAuthDomain, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a notification channel\'s receiver, by id. Admin gate.
@@ -26137,7 +23666,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateChannelByID(requestParameters: O11yApiUpdateChannelByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateChannelByID(requestParameters: O11yApiUpdateChannelByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateChannelByID(requestParameters.id, requestParameters.o11yO11yChannelUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26167,7 +23696,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDowntimeScheduleByID(requestParameters: O11yApiUpdateDowntimeScheduleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateDowntimeScheduleByID(requestParameters: O11yApiUpdateDowntimeScheduleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateDowntimeScheduleByID(requestParameters.id, requestParameters.o11yO11yDowntimeUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26177,7 +23706,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateIngestionKey(requestParameters: O11yApiUpdateIngestionKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateIngestionKey(requestParameters: O11yApiUpdateIngestionKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateIngestionKey(requestParameters.keyId, requestParameters.o11yO11yUpdateIngestionKeyIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26187,7 +23716,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateIngestionKeyLimit(requestParameters: O11yApiUpdateIngestionKeyLimitRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateIngestionKeyLimit(requestParameters: O11yApiUpdateIngestionKeyLimitRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateIngestionKeyLimit(requestParameters.limitId, requestParameters.o11yO11yUpdateLimitIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26217,18 +23746,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMyOrganization(requestParameters: O11yApiUpdateMyOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateMyOrganization(requestParameters: O11yApiUpdateMyOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateMyOrganization(requestParameters.o11yO11yOrganization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Replaces the calling user\'s password, refusing when the old one does not match. Open to any authenticated caller.
-         * @summary Replaces the calling user\'s password, refusing when the old one does not match.
-         * @param {O11yApiUpdateMyPasswordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMyPassword(requestParameters: O11yApiUpdateMyPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateMyPassword(requestParameters.o11yO11yChangePasswordIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Renames the calling service account.
@@ -26237,18 +23756,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMyServiceAccount(requestParameters: O11yApiUpdateMyServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateMyServiceAccount(requestParameters: O11yApiUpdateMyServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateMyServiceAccount(requestParameters.o11yO11yMyServiceAccountUpdateIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Renames the calling user. Open to any authenticated caller.
-         * @summary Renames the calling user.
-         * @param {O11yApiUpdateMyUserV2Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMyUserV2(requestParameters: O11yApiUpdateMyUserV2Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateMyUserV2(requestParameters.o11yO11yUpdatableUser, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets one org-scoped preference, by name. Admin gate.
@@ -26257,7 +23766,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrgPreference(requestParameters: O11yApiUpdateOrgPreferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateOrgPreference(requestParameters: O11yApiUpdateOrgPreferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateOrgPreference(requestParameters.name, requestParameters.o11yO11yUpdatablePreference, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26267,7 +23776,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePublicDashboard(requestParameters: O11yApiUpdatePublicDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updatePublicDashboard(requestParameters: O11yApiUpdatePublicDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updatePublicDashboard(requestParameters.id, requestParameters.o11yO11yPublicDashboardWriteIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26277,7 +23786,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQuickFilters(requestParameters: O11yApiUpdateQuickFiltersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateQuickFilters(requestParameters: O11yApiUpdateQuickFiltersRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateQuickFilters(requestParameters.o11yO11yUpdatableQuickFilters, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26287,7 +23796,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRole(requestParameters: O11yApiUpdateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateRole(requestParameters: O11yApiUpdateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateRole(requestParameters.id, requestParameters.o11yO11yRoleUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26307,7 +23816,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRuleByID(requestParameters: O11yApiUpdateRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateRuleByID(requestParameters: O11yApiUpdateRuleByIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateRuleByID(requestParameters.id, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26317,7 +23826,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateService(requestParameters: O11yApiUpdateServiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateService(requestParameters: O11yApiUpdateServiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateService(requestParameters.cloudProvider, requestParameters.id, requestParameters.serviceId, requestParameters.o11yO11yUpdateServiceIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26327,7 +23836,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateServiceAccount(requestParameters: O11yApiUpdateServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateServiceAccount(requestParameters: O11yApiUpdateServiceAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateServiceAccount(requestParameters.id, requestParameters.o11yO11yServiceAccountUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26337,7 +23846,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateServiceAccountKey(requestParameters: O11yApiUpdateServiceAccountKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateServiceAccountKey(requestParameters: O11yApiUpdateServiceAccountKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateServiceAccountKey(requestParameters.id, requestParameters.fid, requestParameters.o11yO11yAPIKeyUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26347,7 +23856,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateSpanMapper(requestParameters: O11yApiUpdateSpanMapperRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateSpanMapper(requestParameters: O11yApiUpdateSpanMapperRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateSpanMapper(requestParameters.groupId, requestParameters.mapperId, requestParameters.o11yO11ySpanMapperUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26357,7 +23866,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateSpanMapperGroup(requestParameters: O11yApiUpdateSpanMapperGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateSpanMapperGroup(requestParameters: O11yApiUpdateSpanMapperGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateSpanMapperGroup(requestParameters.groupId, requestParameters.o11yO11ySpanMapperGroupUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26391,33 +23900,13 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.updateTraceFunnelSteps(requestParameters.o11yO11yFunnelStepsUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser. Admin gate.
-         * @summary Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser.
-         * @param {O11yApiUpdateUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUser(requestParameters: O11yApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateUser(requestParameters.id, requestParameters.o11yO11yUserUpdate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Renames one org member and may move their legacy role, answering with the updated record. Admins may update anyone; a non-admin only themselves (the runtime\'s self-access gate).
-         * @summary Renames one org member and may move their legacy role, answering with the updated record.
-         * @param {O11yApiUpdateUserDeprecatedRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUserDeprecated(requestParameters: O11yApiUpdateUserDeprecatedRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yDeprecatedUserOut> {
-            return localVarFp.updateUserDeprecated(requestParameters.id, requestParameters.o11yO11yDeprecatedUserUpdate, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Sets one preference of the calling user, by name. Viewer gate.
          * @summary Sets one preference of the calling user, by name.
          * @param {O11yApiUpdateUserPreferenceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserPreference(requestParameters: O11yApiUpdateUserPreferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateUserPreference(requestParameters: O11yApiUpdateUserPreferenceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Approval> {
             return localVarFp.updateUserPreference(requestParameters.name, requestParameters.o11yO11yUpdatablePreference, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26439,16 +23928,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         validateTraceFunnelTraces(requestParameters: O11yApiValidateTraceFunnelTracesRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yFunnelRowsOut> {
             return localVarFp.validateTraceFunnelTraces(requestParameters.funnelId, requestParameters.o11yO11yFunnelWindowIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Checks that a reset-password token exists and has not expired, without consuming it. Unauthenticated: the token is the proof.
-         * @summary Checks that a reset-password token exists and has not expired, without consuming it.
-         * @param {O11yApiVerifyResetPasswordTokenRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyResetPasswordToken(requestParameters: O11yApiVerifyResetPasswordTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.verifyResetPasswordToken(requestParameters.o11yO11yResetTokenRef, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -26545,34 +24024,6 @@ export interface O11yApiCreateAccountRequest {
 }
 
 /**
- * Request parameters for createAuthDomain operation in O11yApi.
- * @export
- * @interface O11yApiCreateAuthDomainRequest
- */
-export interface O11yApiCreateAuthDomainRequest {
-    /**
-     * 
-     * @type {O11yO11yPostableAuthDomain}
-     * @memberof O11yApiCreateAuthDomain
-     */
-    readonly o11yO11yPostableAuthDomain: O11yO11yPostableAuthDomain
-}
-
-/**
- * Request parameters for createBulkInvite operation in O11yApi.
- * @export
- * @interface O11yApiCreateBulkInviteRequest
- */
-export interface O11yApiCreateBulkInviteRequest {
-    /**
-     * 
-     * @type {O11yO11yBulkInviteIn}
-     * @memberof O11yApiCreateBulkInvite
-     */
-    readonly o11yO11yBulkInviteIn: O11yO11yBulkInviteIn
-}
-
-/**
  * Request parameters for createChannel operation in O11yApi.
  * @export
  * @interface O11yApiCreateChannelRequest
@@ -26664,20 +24115,6 @@ export interface O11yApiCreateIngestionKeyLimitRequest {
 }
 
 /**
- * Request parameters for createInvite operation in O11yApi.
- * @export
- * @interface O11yApiCreateInviteRequest
- */
-export interface O11yApiCreateInviteRequest {
-    /**
-     * 
-     * @type {O11yO11yInviteIn}
-     * @memberof O11yApiCreateInvite
-     */
-    readonly o11yO11yInviteIn: O11yO11yInviteIn
-}
-
-/**
  * Request parameters for createLLMAnnotation operation in O11yApi.
  * @export
  * @interface O11yApiCreateLLMAnnotationRequest
@@ -26752,20 +24189,6 @@ export interface O11yApiCreatePublicDashboardRequest {
      * @memberof O11yApiCreatePublicDashboard
      */
     readonly o11yO11yPublicDashboardWriteIn: O11yO11yPublicDashboardWriteIn
-}
-
-/**
- * Request parameters for createResetPasswordToken operation in O11yApi.
- * @export
- * @interface O11yApiCreateResetPasswordTokenRequest
- */
-export interface O11yApiCreateResetPasswordTokenRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiCreateResetPasswordToken
-     */
-    readonly id: string
 }
 
 /**
@@ -26867,20 +24290,6 @@ export interface O11yApiCreateServiceAccountRoleRequest {
 }
 
 /**
- * Request parameters for createSessionByEmailPassword operation in O11yApi.
- * @export
- * @interface O11yApiCreateSessionByEmailPasswordRequest
- */
-export interface O11yApiCreateSessionByEmailPasswordRequest {
-    /**
-     * 
-     * @type {O11yO11yEmailPasswordSessionIn}
-     * @memberof O11yApiCreateSessionByEmailPassword
-     */
-    readonly o11yO11yEmailPasswordSessionIn: O11yO11yEmailPasswordSessionIn
-}
-
-/**
  * Request parameters for createSpanMapper operation in O11yApi.
  * @export
  * @interface O11yApiCreateSpanMapperRequest
@@ -26927,34 +24336,6 @@ export interface O11yApiCreateTraceFunnelRequest {
      * @memberof O11yApiCreateTraceFunnel
      */
     readonly o11yO11yFunnelCreateIn: O11yO11yFunnelCreateIn
-}
-
-/**
- * Request parameters for createUser operation in O11yApi.
- * @export
- * @interface O11yApiCreateUserRequest
- */
-export interface O11yApiCreateUserRequest {
-    /**
-     * 
-     * @type {O11yO11yPostableUser}
-     * @memberof O11yApiCreateUser
-     */
-    readonly o11yO11yPostableUser: O11yO11yPostableUser
-}
-
-/**
- * Request parameters for deleteAuthDomain operation in O11yApi.
- * @export
- * @interface O11yApiDeleteAuthDomainRequest
- */
-export interface O11yApiDeleteAuthDomainRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiDeleteAuthDomain
-     */
-    readonly id: string
 }
 
 /**
@@ -27266,34 +24647,6 @@ export interface O11yApiDeleteTraceFunnelRequest {
 }
 
 /**
- * Request parameters for deleteUser operation in O11yApi.
- * @export
- * @interface O11yApiDeleteUserRequest
- */
-export interface O11yApiDeleteUserRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiDeleteUser
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for deleteUserDeprecated operation in O11yApi.
- * @export
- * @interface O11yApiDeleteUserDeprecatedRequest
- */
-export interface O11yApiDeleteUserDeprecatedRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiDeleteUserDeprecated
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for disconnectAccount operation in O11yApi.
  * @export
  * @interface O11yApiDisconnectAccountRequest
@@ -27312,20 +24665,6 @@ export interface O11yApiDisconnectAccountRequest {
      * @memberof O11yApiDisconnectAccount
      */
     readonly id: string
-}
-
-/**
- * Request parameters for forgotPassword operation in O11yApi.
- * @export
- * @interface O11yApiForgotPasswordRequest
- */
-export interface O11yApiForgotPasswordRequest {
-    /**
-     * 
-     * @type {O11yO11yForgotPasswordIn}
-     * @memberof O11yApiForgotPassword
-     */
-    readonly o11yO11yForgotPasswordIn: O11yO11yForgotPasswordIn
 }
 
 /**
@@ -27375,20 +24714,6 @@ export interface O11yApiGetAccountServiceRequest {
      * @memberof O11yApiGetAccountService
      */
     readonly serviceId: string
-}
-
-/**
- * Request parameters for getAuthDomain operation in O11yApi.
- * @export
- * @interface O11yApiGetAuthDomainRequest
- */
-export interface O11yApiGetAuthDomainRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetAuthDomain
-     */
-    readonly id: string
 }
 
 /**
@@ -27893,27 +25218,6 @@ export interface O11yApiGetO11yAutocompleteAttributeValuesRequest {
      * @memberof O11yApiGetO11yAutocompleteAttributeValues
      */
     readonly limit?: number
-}
-
-/**
- * Request parameters for getO11yAvailability operation in O11yApi.
- * @export
- * @interface O11yApiGetO11yAvailabilityRequest
- */
-export interface O11yApiGetO11yAvailabilityRequest {
-    /**
-     * Range is the trend window in seconds. Default 3600, capped at 604800 (7d).
-     * @type {number}
-     * @memberof O11yApiGetO11yAvailability
-     */
-    readonly range?: number
-
-    /**
-     * StepSec is the bucket width in seconds, clamped to [30, 3600]. Absent picks ~60 buckets across the range.
-     * @type {number}
-     * @memberof O11yApiGetO11yAvailability
-     */
-    readonly stepSec?: number
 }
 
 /**
@@ -30290,34 +27594,6 @@ export interface O11yApiGetPublicDashboardWidgetQueryRangeRequest {
 }
 
 /**
- * Request parameters for getResetPasswordToken operation in O11yApi.
- * @export
- * @interface O11yApiGetResetPasswordTokenRequest
- */
-export interface O11yApiGetResetPasswordTokenRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetResetPasswordToken
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getResetPasswordTokenDeprecated operation in O11yApi.
- * @export
- * @interface O11yApiGetResetPasswordTokenDeprecatedRequest
- */
-export interface O11yApiGetResetPasswordTokenDeprecatedRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetResetPasswordTokenDeprecated
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for getRole operation in O11yApi.
  * @export
  * @interface O11yApiGetRoleRequest
@@ -30327,20 +27603,6 @@ export interface O11yApiGetRoleRequest {
      * 
      * @type {string}
      * @memberof O11yApiGetRole
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getRolesByUserID operation in O11yApi.
- * @export
- * @interface O11yApiGetRolesByUserIDRequest
- */
-export interface O11yApiGetRolesByUserIDRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetRolesByUserID
      */
     readonly id: string
 }
@@ -30738,27 +28000,6 @@ export interface O11yApiGetServiceAccountRolesRequest {
 }
 
 /**
- * Request parameters for getSessionContext operation in O11yApi.
- * @export
- * @interface O11yApiGetSessionContextRequest
- */
-export interface O11yApiGetSessionContextRequest {
-    /**
-     * Email is the address about to sign in. Required.
-     * @type {string}
-     * @memberof O11yApiGetSessionContext
-     */
-    readonly email?: string
-
-    /**
-     * Ref is the page the sign-in started from, carried into SSO redirects.
-     * @type {string}
-     * @memberof O11yApiGetSessionContext
-     */
-    readonly ref?: string
-}
-
-/**
  * Request parameters for getSignalFilters operation in O11yApi.
  * @export
  * @interface O11yApiGetSignalFiltersRequest
@@ -30913,34 +28154,6 @@ export interface O11yApiGetTraceFunnelStepOverviewRequest {
 }
 
 /**
- * Request parameters for getUser operation in O11yApi.
- * @export
- * @interface O11yApiGetUserRequest
- */
-export interface O11yApiGetUserRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetUser
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getUserDeprecated operation in O11yApi.
- * @export
- * @interface O11yApiGetUserDeprecatedRequest
- */
-export interface O11yApiGetUserDeprecatedRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetUserDeprecated
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for getUserPreference operation in O11yApi.
  * @export
  * @interface O11yApiGetUserPreferenceRequest
@@ -30952,20 +28165,6 @@ export interface O11yApiGetUserPreferenceRequest {
      * @memberof O11yApiGetUserPreference
      */
     readonly name: string
-}
-
-/**
- * Request parameters for getUsersByRoleID operation in O11yApi.
- * @export
- * @interface O11yApiGetUsersByRoleIDRequest
- */
-export interface O11yApiGetUsersByRoleIDRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiGetUsersByRoleID
-     */
-    readonly id: string
 }
 
 /**
@@ -31865,34 +29064,6 @@ export interface O11yApiPostO11yAlertsByReceiverRequest {
 }
 
 /**
- * Request parameters for postO11yApiByProjectIdEnvelope operation in O11yApi.
- * @export
- * @interface O11yApiPostO11yApiByProjectIdEnvelopeRequest
- */
-export interface O11yApiPostO11yApiByProjectIdEnvelopeRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiPostO11yApiByProjectIdEnvelope
-     */
-    readonly projectId: string
-}
-
-/**
- * Request parameters for postO11yApiByProjectIdStore operation in O11yApi.
- * @export
- * @interface O11yApiPostO11yApiByProjectIdStoreRequest
- */
-export interface O11yApiPostO11yApiByProjectIdStoreRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiPostO11yApiByProjectIdStore
-     */
-    readonly projectId: string
-}
-
-/**
  * Request parameters for postO11yAutoCompleteAttributeValues operation in O11yApi.
  * @export
  * @interface O11yApiPostO11yAutoCompleteAttributeValuesRequest
@@ -32586,20 +29757,6 @@ export interface O11yApiPostO11yQueryRangePreviewRequest {
 }
 
 /**
- * Request parameters for postO11yRegister operation in O11yApi.
- * @export
- * @interface O11yApiPostO11yRegisterRequest
- */
-export interface O11yApiPostO11yRegisterRequest {
-    /**
-     * 
-     * @type {O11yO11yRegisterIn}
-     * @memberof O11yApiPostO11yRegister
-     */
-    readonly o11yO11yRegisterIn: O11yO11yRegisterIn
-}
-
-/**
  * Request parameters for postO11yReviews operation in O11yApi.
  * @export
  * @interface O11yApiPostO11yReviewsRequest
@@ -32660,20 +29817,6 @@ export interface O11yApiPostO11ySentinelProjectsRequest {
      * @memberof O11yApiPostO11ySentinelProjects
      */
     readonly o11yO11ySentryPostableProject: O11yO11ySentryPostableProject
-}
-
-/**
- * Request parameters for postO11ySentinelProjectsByIdKeysRotate operation in O11yApi.
- * @export
- * @interface O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest
- */
-export interface O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest {
-    /**
-     * ID is the project id.
-     * @type {string}
-     * @memberof O11yApiPostO11ySentinelProjectsByIdKeysRotate
-     */
-    readonly id: string
 }
 
 /**
@@ -32929,41 +30072,6 @@ export interface O11yApiPutProfileRequest {
 }
 
 /**
- * Request parameters for removeUserRoleByUserIDAndRoleID operation in O11yApi.
- * @export
- * @interface O11yApiRemoveUserRoleByUserIDAndRoleIDRequest
- */
-export interface O11yApiRemoveUserRoleByUserIDAndRoleIDRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiRemoveUserRoleByUserIDAndRoleID
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiRemoveUserRoleByUserIDAndRoleID
-     */
-    readonly roleId: string
-}
-
-/**
- * Request parameters for resetPassword operation in O11yApi.
- * @export
- * @interface O11yApiResetPasswordRequest
- */
-export interface O11yApiResetPasswordRequest {
-    /**
-     * 
-     * @type {O11yO11yResetPasswordIn}
-     * @memberof O11yApiResetPassword
-     */
-    readonly o11yO11yResetPasswordIn: O11yO11yResetPasswordIn
-}
-
-/**
  * Request parameters for revokeServiceAccountKey operation in O11yApi.
  * @export
  * @interface O11yApiRevokeServiceAccountKeyRequest
@@ -32982,20 +30090,6 @@ export interface O11yApiRevokeServiceAccountKeyRequest {
      * @memberof O11yApiRevokeServiceAccountKey
      */
     readonly fid: string
-}
-
-/**
- * Request parameters for rotateSession operation in O11yApi.
- * @export
- * @interface O11yApiRotateSessionRequest
- */
-export interface O11yApiRotateSessionRequest {
-    /**
-     * 
-     * @type {O11yO11yRotateSessionIn}
-     * @memberof O11yApiRotateSession
-     */
-    readonly o11yO11yRotateSessionIn: O11yO11yRotateSessionIn
 }
 
 /**
@@ -33066,27 +30160,6 @@ export interface O11yApiSearchTracesRequest {
      * @memberof O11yApiSearchTraces
      */
     readonly spanRenderLimit?: number
-}
-
-/**
- * Request parameters for setRoleByUserID operation in O11yApi.
- * @export
- * @interface O11yApiSetRoleByUserIDRequest
- */
-export interface O11yApiSetRoleByUserIDRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiSetRoleByUserID
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {O11yO11ySetRoleIn}
-     * @memberof O11yApiSetRoleByUserID
-     */
-    readonly o11yO11ySetRoleIn: O11yO11ySetRoleIn
 }
 
 /**
@@ -33213,27 +30286,6 @@ export interface O11yApiUpdateAccountRequest {
      * @memberof O11yApiUpdateAccount
      */
     readonly o11yO11yUpdateAccountIn: O11yO11yUpdateAccountIn
-}
-
-/**
- * Request parameters for updateAuthDomain operation in O11yApi.
- * @export
- * @interface O11yApiUpdateAuthDomainRequest
- */
-export interface O11yApiUpdateAuthDomainRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiUpdateAuthDomain
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {O11yO11yUpdatableAuthDomain}
-     * @memberof O11yApiUpdateAuthDomain
-     */
-    readonly o11yO11yUpdatableAuthDomain: O11yO11yUpdatableAuthDomain
 }
 
 /**
@@ -33412,20 +30464,6 @@ export interface O11yApiUpdateMyOrganizationRequest {
 }
 
 /**
- * Request parameters for updateMyPassword operation in O11yApi.
- * @export
- * @interface O11yApiUpdateMyPasswordRequest
- */
-export interface O11yApiUpdateMyPasswordRequest {
-    /**
-     * 
-     * @type {O11yO11yChangePasswordIn}
-     * @memberof O11yApiUpdateMyPassword
-     */
-    readonly o11yO11yChangePasswordIn: O11yO11yChangePasswordIn
-}
-
-/**
  * Request parameters for updateMyServiceAccount operation in O11yApi.
  * @export
  * @interface O11yApiUpdateMyServiceAccountRequest
@@ -33437,20 +30475,6 @@ export interface O11yApiUpdateMyServiceAccountRequest {
      * @memberof O11yApiUpdateMyServiceAccount
      */
     readonly o11yO11yMyServiceAccountUpdateIn: O11yO11yMyServiceAccountUpdateIn
-}
-
-/**
- * Request parameters for updateMyUserV2 operation in O11yApi.
- * @export
- * @interface O11yApiUpdateMyUserV2Request
- */
-export interface O11yApiUpdateMyUserV2Request {
-    /**
-     * 
-     * @type {O11yO11yUpdatableUser}
-     * @memberof O11yApiUpdateMyUserV2
-     */
-    readonly o11yO11yUpdatableUser: O11yO11yUpdatableUser
 }
 
 /**
@@ -33755,48 +30779,6 @@ export interface O11yApiUpdateTraceFunnelStepsRequest {
 }
 
 /**
- * Request parameters for updateUser operation in O11yApi.
- * @export
- * @interface O11yApiUpdateUserRequest
- */
-export interface O11yApiUpdateUserRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiUpdateUser
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {O11yO11yUserUpdate}
-     * @memberof O11yApiUpdateUser
-     */
-    readonly o11yO11yUserUpdate: O11yO11yUserUpdate
-}
-
-/**
- * Request parameters for updateUserDeprecated operation in O11yApi.
- * @export
- * @interface O11yApiUpdateUserDeprecatedRequest
- */
-export interface O11yApiUpdateUserDeprecatedRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiUpdateUserDeprecated
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {O11yO11yDeprecatedUserUpdate}
-     * @memberof O11yApiUpdateUserDeprecated
-     */
-    readonly o11yO11yDeprecatedUserUpdate: O11yO11yDeprecatedUserUpdate
-}
-
-/**
  * Request parameters for updateUserPreference operation in O11yApi.
  * @export
  * @interface O11yApiUpdateUserPreferenceRequest
@@ -33850,20 +30832,6 @@ export interface O11yApiValidateTraceFunnelTracesRequest {
      * @memberof O11yApiValidateTraceFunnelTraces
      */
     readonly o11yO11yFunnelWindowIn: O11yO11yFunnelWindowIn
-}
-
-/**
- * Request parameters for verifyResetPasswordToken operation in O11yApi.
- * @export
- * @interface O11yApiVerifyResetPasswordTokenRequest
- */
-export interface O11yApiVerifyResetPasswordTokenRequest {
-    /**
-     * 
-     * @type {O11yO11yResetTokenRef}
-     * @memberof O11yApiVerifyResetPasswordToken
-     */
-    readonly o11yO11yResetTokenRef: O11yO11yResetTokenRef
 }
 
 /**
@@ -33931,30 +30899,6 @@ export class O11yApi extends BaseAPI {
      */
     public createAccount(requestParameters: O11yApiCreateAccountRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).createAccount(requestParameters.cloudProvider, requestParameters.o11yO11yCreateAccountIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id. Admin gate.
-     * @summary Claims an email domain for the org and configures how its users sign in; the answer is the new domain\'s id.
-     * @param {O11yApiCreateAuthDomainRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createAuthDomain(requestParameters: O11yApiCreateAuthDomainRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createAuthDomain(requestParameters.o11yO11yPostableAuthDomain, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats. Deprecated alongside createInvite. Admin gate.
-     * @summary Invites several people to the caller\'s org in one call, refusing the whole batch when any email repeats.
-     * @param {O11yApiCreateBulkInviteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createBulkInvite(requestParameters: O11yApiCreateBulkInviteRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createBulkInvite(requestParameters.o11yO11yBulkInviteIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34030,18 +30974,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Invites one person to the caller\'s org by email, with the role they will hold when they accept. Deprecated in favor of creating users directly; kept because callers still hold it. Admin gate, enforced by the runtime this op relays to.
-     * @summary Invites one person to the caller\'s org by email, with the role they will hold when they accept.
-     * @param {O11yApiCreateInviteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createInvite(requestParameters: O11yApiCreateInviteRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createInvite(requestParameters.o11yO11yInviteIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Adds a human annotation to a trace or observation, optionally in a review queue.  Callers need the editor role; the runtime\'s own gate enforces it, and it validates the payload and stamps the annotation\'s author and org.
      * @summary Adds a human annotation to a trace or observation, optionally in a review queue.
      * @param {O11yApiCreateLLMAnnotationRequest} requestParameters Request parameters.
@@ -34099,18 +31031,6 @@ export class O11yApi extends BaseAPI {
      */
     public createPublicDashboard(requestParameters: O11yApiCreatePublicDashboardRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).createPublicDashboard(requestParameters.id, requestParameters.o11yO11yPublicDashboardWriteIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced. Admin gate.
-     * @summary Creates or regenerates a user\'s reset-password token: a live token is returned as it is, an expired one is replaced.
-     * @param {O11yApiCreateResetPasswordTokenRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createResetPasswordToken(requestParameters: O11yApiCreateResetPasswordTokenRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createResetPasswordToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34186,18 +31106,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Signs a user in with email and password and answers with the session\'s token pair. Unauthenticated: this call is how authentication begins.
-     * @summary Signs a user in with email and password and answers with the session\'s token pair.
-     * @param {O11yApiCreateSessionByEmailPasswordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createSessionByEmailPassword(requestParameters: O11yApiCreateSessionByEmailPasswordRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createSessionByEmailPassword(requestParameters.o11yO11yEmailPasswordSessionIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Adds a mapper to a group: which field context it reads, the move or copy it performs, and whether it is on.  Callers need the admin role; the runtime\'s own gate enforces it.
      * @summary Adds a mapper to a group: which field context it reads, the move or copy it performs, and whether it is on.
      * @param {O11yApiCreateSpanMapperRequest} requestParameters Request parameters.
@@ -34231,30 +31139,6 @@ export class O11yApi extends BaseAPI {
      */
     public createTraceFunnel(requestParameters: O11yApiCreateTraceFunnelRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).createTraceFunnel(requestParameters.o11yO11yFunnelCreateIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id. Admin gate.
-     * @summary Creates a member of the caller\'s org in the pending-invite state and mails them their invitation; the answer is the new user\'s id.
-     * @param {O11yApiCreateUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public createUser(requestParameters: O11yApiCreateUserRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).createUser(requestParameters.o11yO11yPostableUser, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Releases an email domain and discards its SSO configuration, by id. Admin gate.
-     * @summary Releases an email domain and discards its SSO configuration, by id.
-     * @param {O11yApiDeleteAuthDomainRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public deleteAuthDomain(requestParameters: O11yApiDeleteAuthDomainRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteAuthDomain(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34390,8 +31274,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
-     * @summary Deletes one Sentry project of the caller\'s org.
+     * Deletes one Sentry project of the caller\'s org; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Deletes one Sentry project of the caller\'s org; retained events are not touched.
      * @param {O11yApiDeleteO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -34474,17 +31358,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Signs the calling session out, invalidating its tokens. The access token on the call names the session to end.
-     * @summary Signs the calling session out, invalidating its tokens.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public deleteSession(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteSession(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Deletes one mapper from a group.  Callers need the admin role; the runtime\'s own gate enforces it.
      * @summary Deletes one mapper from a group.
      * @param {O11yApiDeleteSpanMapperRequest} requestParameters Request parameters.
@@ -34521,30 +31394,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Removes one org member, by user id. Admin gate.
-     * @summary Removes one org member, by user id.
-     * @param {O11yApiDeleteUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public deleteUser(requestParameters: O11yApiDeleteUserRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteUser(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes one org member, by user id. The same operation as deleteUser on the legacy singular path. Admin gate.
-     * @summary Removes one org member, by user id.
-     * @param {O11yApiDeleteUserDeprecatedRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public deleteUserDeprecated(requestParameters: O11yApiDeleteUserDeprecatedRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteUserDeprecated(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Tears down a connected account for the given provider, by id. Admin gate.
      * @summary Tears down a connected account for the given provider, by id.
      * @param {O11yApiDisconnectAccountRequest} requestParameters Request parameters.
@@ -34554,18 +31403,6 @@ export class O11yApi extends BaseAPI {
      */
     public disconnectAccount(requestParameters: O11yApiDisconnectAccountRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).disconnectAccount(requestParameters.cloudProvider, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Starts the forgotten-password flow: the named user is mailed a reset link. Unauthenticated by design, and deliberately quiet about whether the address exists.
-     * @summary Starts the forgotten-password flow: the named user is mailed a reset link.
-     * @param {O11yApiForgotPasswordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public forgotPassword(requestParameters: O11yApiForgotPasswordRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).forgotPassword(requestParameters.o11yO11yForgotPasswordIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34612,18 +31449,6 @@ export class O11yApi extends BaseAPI {
      */
     public getAllRoutePolicies(options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getAllRoutePolicies(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one auth domain with its SSO configuration, by id. Admin gate.
-     * @summary Returns one auth domain with its SSO configuration, by id.
-     * @param {O11yApiGetAuthDomainRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getAuthDomain(requestParameters: O11yApiGetAuthDomainRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getAuthDomain(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34980,14 +31805,14 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Returns the calling user with their single legacy role. Deprecated in favor of getMyUser. Open to any authenticated caller.
-     * @summary Returns the calling user with their single legacy role.
+     * Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging. The o11y ruler fires one alert forever, labelled watchdog=\"true\", and every notification of it that reaches this process is a heartbeat — recorded as ALERT-HEARTBEAT, never sent to a human.  It answers 200 with the heartbeat\'s age while one arrived within the last 15 minutes, and 503 once none has. A 503 means the path from the ruler to this receiver stopped — the ruler, its Alertmanager, or this process — which nothing inside the cluster can be trusted to say, so something OUTSIDE it polls this and pages on the 503. Process-local, like the replay ring: a restart starts the clock again rather than answering 503 before the first beat can arrive.
+     * @summary Reports whether the alert path\'s heartbeat is still arriving: the dead-man\'s switch for paging.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getMyUserDeprecated(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getMyUserDeprecated(options).then((request) => request(this.axios, this.basePath));
+    public getO11yAlertsHeartbeat(options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11yAlertsHeartbeat(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -35038,18 +31863,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window. Both come from the fleet prober\'s own measurements: every service is asked its health URL every 30 seconds, so a service is listed as down because it did not answer, never because something failed to collect it. PLATFORM SUDO ONLY — this is the whole fleet\'s inventory, not tenant data, so every customer is 403. An unreachable telemetry store answers 503 rather than an empty trend, because a board of zeroes and a fleet that is down look identical.
-     * @summary Reports how much of the Hanzo fleet is up — the current per-service inventory plus an up-versus-reporting trend across the window.
-     * @param {O11yApiGetO11yAvailabilityRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getO11yAvailability(requestParameters: O11yApiGetO11yAvailabilityRequest = {}, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getO11yAvailability(requestParameters.range, requestParameters.stepSec, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
      * @summary Lists the metric attribute keys Kubernetes clusters report, for building cluster filters.
      * @param {O11yApiGetO11yClustersAttributeKeysRequest} requestParameters Request parameters.
@@ -35071,28 +31884,6 @@ export class O11yApi extends BaseAPI {
      */
     public getO11yClustersAttributeValues(requestParameters: O11yApiGetO11yClustersAttributeValuesRequest = {}, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getO11yClustersAttributeValues(requestParameters.dataSource, requestParameters.aggregateOperator, requestParameters.aggregateAttribute, requestParameters.attributeKey, requestParameters.filterAttributeKeyDataType, requestParameters.searchText, requestParameters.tagType, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The callback Google redirects a user back to after they approve the sign-in. It exchanges the authorization code, establishes the session and answers 303 to the console.  The answer is a Location header and no body, which is why it is not a typed operation — declaring a JSON response for a redirect would publish a shape that does not exist and hide the header that is the entire point.  UNAUTHENTICATED by necessity: it is how a caller GETS a principal, so requiring one would be circular. It is not an open endpoint — the code it carries is single-use and verified against the provider.
-     * @summary Complete a Google sign-in
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getO11yCompleteGoogle(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getO11yCompleteGoogle(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The callback any configured OIDC provider redirects back to. Same shape and same reasoning as the Google callback: the code is exchanged, the session is established, and the answer is a 303 to the console rather than a body.  UNAUTHENTICATED by necessity — this is the act of obtaining a principal, and the provider\'s own code is what authenticates it.
-     * @summary Complete a generic OIDC sign-in
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getO11yCompleteOidc(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getO11yCompleteOidc(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -35789,8 +32580,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
-     * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+     * Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Lists the caller\'s org\'s Sentry projects — one per product that has reported an error, plus any created by hand.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -35800,8 +32591,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
-     * @summary Returns one Sentry project of the caller\'s org, DSN included.
+     * Returns one Sentry project of the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Returns one Sentry project of the caller\'s org.
      * @param {O11yApiGetO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -36057,30 +32848,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token. Admin gate.
-     * @summary Returns the reset-password token a user already has; absent one, the answer is a not-found rather than a fresh token.
-     * @param {O11yApiGetResetPasswordTokenRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getResetPasswordToken(requestParameters: O11yApiGetResetPasswordTokenRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getResetPasswordToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns a user\'s password-reset token, creating one if none is live. Deprecated in favor of the reset_password_tokens pair, which separates reading from minting. Admin gate.
-     * @summary Returns a user\'s password-reset token, creating one if none is live.
-     * @param {O11yApiGetResetPasswordTokenDeprecatedRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getResetPasswordTokenDeprecated(requestParameters: O11yApiGetResetPasswordTokenDeprecatedRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getResetPasswordTokenDeprecated(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns one role with the transaction groups it grants.
      * @summary Returns one role with the transaction groups it grants.
      * @param {O11yApiGetRoleRequest} requestParameters Request parameters.
@@ -36090,18 +32857,6 @@ export class O11yApi extends BaseAPI {
      */
     public getRole(requestParameters: O11yApiGetRoleRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getRole(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every role one org member holds, by user id. Admin gate.
-     * @summary Returns every role one org member holds, by user id.
-     * @param {O11yApiGetRolesByUserIDRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getRolesByUserID(requestParameters: O11yApiGetRolesByUserIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getRolesByUserID(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36273,18 +33028,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it. Unauthenticated: it runs before any session exists.
-     * @summary Tells a sign-in page what an email address can do: which orgs the address belongs to and, per org, which password and SSO routes are open to it.
-     * @param {O11yApiGetSessionContextRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getSessionContext(requestParameters: O11yApiGetSessionContextRequest = {}, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getSessionContext(requestParameters.email, requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring. Viewer gate.
      * @summary Returns the org\'s quick filters for one signal — traces, logs, metrics, exceptions or api_monitoring.
      * @param {O11yApiGetSignalFiltersRequest} requestParameters Request parameters.
@@ -36392,30 +33135,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Returns one org member together with every role they hold, by user id. Admin gate.
-     * @summary Returns one org member together with every role they hold, by user id.
-     * @param {O11yApiGetUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getUser(requestParameters: O11yApiGetUserRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getUser(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one org member with their single legacy role, by user id. Admins may read anyone; a non-admin only themselves (the runtime\'s self-access gate).
-     * @summary Returns one org member with their single legacy role, by user id.
-     * @param {O11yApiGetUserDeprecatedRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getUserDeprecated(requestParameters: O11yApiGetUserDeprecatedRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getUserDeprecated(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns one preference of the calling user, by name. Viewer gate.
      * @summary Returns one preference of the calling user, by name.
      * @param {O11yApiGetUserPreferenceRequest} requestParameters Request parameters.
@@ -36425,18 +33144,6 @@ export class O11yApi extends BaseAPI {
      */
     public getUserPreference(requestParameters: O11yApiGetUserPreferenceRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getUserPreference(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every org member holding a role, by role id. Admin gate.
-     * @summary Returns every org member holding a role, by role id.
-     * @param {O11yApiGetUsersByRoleIDRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public getUsersByRoleID(requestParameters: O11yApiGetUsersByRoleIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getUsersByRoleID(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36497,17 +33204,6 @@ export class O11yApi extends BaseAPI {
      */
     public listAccounts(requestParameters: O11yApiListAccountsRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).listAccounts(requestParameters.cloudProvider, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists the org\'s auth domains — the email domains whose SSO configuration this org owns. Admin gate.
-     * @summary Lists the org\'s auth domains — the email domains whose SSO configuration this org owns.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public listAuthDomains(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).listAuthDomains(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36803,28 +33499,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Lists the caller\'s org members. Admin gate.
-     * @summary Lists the caller\'s org members.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public listUsers(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).listUsers(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists the org\'s members with their single legacy role. Deprecated in favor of listUsers, which answers without the role. Admin gate.
-     * @summary Lists the org\'s members with their single legacy role.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public listUsersDeprecated(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).listUsersDeprecated(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Locks a v2-shape dashboard. Only the dashboard\'s creator or an org admin may lock or unlock.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Locks a v2-shape dashboard.
      * @param {O11yApiLockDashboardV2Request} requestParameters Request parameters.
@@ -36897,7 +33571,7 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), falling back to a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
+     * Records one Alertmanager webhook delivery and pages the on-call. Each alert prints an `ALERT-RECEIVED` line and joins the replay ring, then the batch is carried out of the process by the egress chain: the org\'s KMS-custodied Slack bot token first (the ONE product Slack egress, not a second webhook credential), then an email to `CLOUD_ALERTS_EMAIL_TO` on the org\'s own notify credential, then a plain POST to `CLOUD_ALERTS_WEBHOOK_URL` — which needs no Slack connection and so works in exactly the state that silences the first. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for. An alert labelled `watchdog=\"true\"` is the path\'s heartbeat (see `GET /v1/o11y/alerts/heartbeat`) and pages nobody.  THE STATUS CODE REPORTS DELIVERY, NOT ARRIVAL. 200 `ok` means an egress accepted the batch. If none did — including when none is configured at all — it answers **503** naming the failure, so Alertmanager retries and counts it in `alertmanager_notifications_failed_total`. An alert nobody could be told about must never answer the same way as one that was delivered.  A body that will not parse is still recorded (with empty fields) rather than rejected: the delivery happened, which is the fact being recorded, and a 400 would make Alertmanager retry a malformed payload forever.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code.
      * @summary Take an Alertmanager notification and page a human
      * @param {O11yApiPostO11yAlertsByReceiverRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -36906,30 +33580,6 @@ export class O11yApi extends BaseAPI {
      */
     public postO11yAlertsByReceiver(requestParameters: O11yApiPostO11yAlertsByReceiverRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).postO11yAlertsByReceiver(requestParameters.receiver, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
-     * @summary Receive a Sentry envelope on the SDK\'s own DSN path
-     * @param {O11yApiPostO11yApiByProjectIdEnvelopeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public postO11yApiByProjectIdEnvelope(requestParameters: O11yApiPostO11yApiByProjectIdEnvelopeRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postO11yApiByProjectIdEnvelope(requestParameters.projectId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The legacy single-event form of the envelope ingest: one JSON event rather than a framed batch, kept because SDKs in the field still send it.  Same address ownership and same authentication as the envelope route — the /api/ segment is the SDK\'s, the DSN public key is the credential, the principal gate does not apply, and a keyless submission is a 401 from the ingest verifier.
-     * @summary Receive a single Sentry event on the SDK\'s own DSN path
-     * @param {O11yApiPostO11yApiByProjectIdStoreRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public postO11yApiByProjectIdStore(requestParameters: O11yApiPostO11yApiByProjectIdStoreRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postO11yApiByProjectIdStore(requestParameters.projectId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36954,17 +33604,6 @@ export class O11yApi extends BaseAPI {
      */
     public postO11yClustersList(requestParameters: O11yApiPostO11yClustersListRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).postO11yClustersList(requestParameters.o11yClusterListRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The assertion consumer service: the identity provider POSTs its signed assertion here, and a valid one establishes the session and answers 303 to the console.  A redirect, not a value, so it is not a typed operation. UNAUTHENTICATED by necessity and authenticated in fact by the assertion\'s signature, which is checked against the configured provider before any session exists.
-     * @summary Complete a SAML sign-in
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public postO11yCompleteSaml(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postO11yCompleteSaml(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37543,18 +34182,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Creates the FIRST organization and its admin user. It is open by design — there is nobody to be signed in as yet — and refuses once setup has completed, after which new users arrive by invitation only.  Open by design; the runtime\'s own gate is OpenAccess.
-     * @summary Creates the FIRST organization and its admin user.
-     * @param {O11yApiPostO11yRegisterRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public postO11yRegister(requestParameters: O11yApiPostO11yRegisterRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postO11yRegister(requestParameters.o11yO11yRegisterIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
      * @summary Creates a human-review queue in the caller\'s org and project.
      * @param {O11yApiPostO11yReviewsRequest} requestParameters Request parameters.
@@ -37591,8 +34218,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
-     * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+     * Creates a Sentry project under the caller\'s org and returns it. Only the name, and optionally a slug and platform, are the caller\'s to set; the org and id are server-assigned. The slug is the product name the event plane stores, so a project reads that product\'s errors.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Creates a Sentry project under the caller\'s org and returns it.
      * @param {O11yApiPostO11ySentinelProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -37600,18 +34227,6 @@ export class O11yApi extends BaseAPI {
      */
     public postO11ySentinelProjects(requestParameters: O11yApiPostO11ySentinelProjectsRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).postO11ySentinelProjects(requestParameters.o11yO11ySentryPostableProject, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
-     * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-     * @param {O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public postO11ySentinelProjectsByIdKeysRotate(requestParameters: O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postO11ySentinelProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37819,30 +34434,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Takes a role away from one org member, by user id and role id — someone else, never the caller. Admin gate.
-     * @summary Takes a role away from one org member, by user id and role id — someone else, never the caller.
-     * @param {O11yApiRemoveUserRoleByUserIDAndRoleIDRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public removeUserRoleByUserIDAndRoleID(requestParameters: O11yApiRemoveUserRoleByUserIDAndRoleIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).removeUserRoleByUserIDAndRoleID(requestParameters.id, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sets a new password for whoever the reset token was minted for, consuming the token. Unauthenticated: the token is the proof.
-     * @summary Sets a new password for whoever the reset token was minted for, consuming the token.
-     * @param {O11yApiResetPasswordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public resetPassword(requestParameters: O11yApiResetPasswordRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).resetPassword(requestParameters.o11yO11yResetPasswordIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Revokes an API key. Revocation is immediate and permanent.
      * @summary Revokes an API key.
      * @param {O11yApiRevokeServiceAccountKeyRequest} requestParameters Request parameters.
@@ -37852,18 +34443,6 @@ export class O11yApi extends BaseAPI {
      */
     public revokeServiceAccountKey(requestParameters: O11yApiRevokeServiceAccountKeyRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).revokeServiceAccountKey(requestParameters.id, requestParameters.fid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Exchanges a refresh token for a fresh token pair, retiring the old pair. The access token being rotated identifies the session.
-     * @summary Exchanges a refresh token for a fresh token pair, retiring the old pair.
-     * @param {O11yApiRotateSessionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public rotateSession(requestParameters: O11yApiRotateSessionRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).rotateSession(requestParameters.o11yO11yRotateSessionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37888,18 +34467,6 @@ export class O11yApi extends BaseAPI {
      */
     public searchTraces(requestParameters: O11yApiSearchTracesRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).searchTraces(requestParameters.traceId, requestParameters.spanId, requestParameters.levelUp, requestParameters.levelDown, requestParameters.spanRenderLimit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Assigns a role, by role name, to one org member — someone else, never the caller. Admin gate.
-     * @summary Assigns a role, by role name, to one org member — someone else, never the caller.
-     * @param {O11yApiSetRoleByUserIDRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public setRoleByUserID(requestParameters: O11yApiSetRoleByUserIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).setRoleByUserID(requestParameters.id, requestParameters.o11yO11ySetRoleIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37996,18 +34563,6 @@ export class O11yApi extends BaseAPI {
      */
     public updateAccount(requestParameters: O11yApiUpdateAccountRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).updateAccount(requestParameters.cloudProvider, requestParameters.id, requestParameters.o11yO11yUpdateAccountIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Replaces one auth domain\'s SSO configuration, by id. Admin gate.
-     * @summary Replaces one auth domain\'s SSO configuration, by id.
-     * @param {O11yApiUpdateAuthDomainRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public updateAuthDomain(requestParameters: O11yApiUpdateAuthDomainRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).updateAuthDomain(requestParameters.id, requestParameters.o11yO11yUpdatableAuthDomain, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -38119,18 +34674,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Replaces the calling user\'s password, refusing when the old one does not match. Open to any authenticated caller.
-     * @summary Replaces the calling user\'s password, refusing when the old one does not match.
-     * @param {O11yApiUpdateMyPasswordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public updateMyPassword(requestParameters: O11yApiUpdateMyPasswordRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).updateMyPassword(requestParameters.o11yO11yChangePasswordIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Renames the calling service account.
      * @summary Renames the calling service account.
      * @param {O11yApiUpdateMyServiceAccountRequest} requestParameters Request parameters.
@@ -38140,18 +34683,6 @@ export class O11yApi extends BaseAPI {
      */
     public updateMyServiceAccount(requestParameters: O11yApiUpdateMyServiceAccountRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).updateMyServiceAccount(requestParameters.o11yO11yMyServiceAccountUpdateIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Renames the calling user. Open to any authenticated caller.
-     * @summary Renames the calling user.
-     * @param {O11yApiUpdateMyUserV2Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public updateMyUserV2(requestParameters: O11yApiUpdateMyUserV2Request, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).updateMyUserV2(requestParameters.o11yO11yUpdatableUser, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -38323,30 +34854,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser. Admin gate.
-     * @summary Renames one org member, by user id — someone else, never the caller, who renames themselves through updateMyUser.
-     * @param {O11yApiUpdateUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public updateUser(requestParameters: O11yApiUpdateUserRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).updateUser(requestParameters.id, requestParameters.o11yO11yUserUpdate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Renames one org member and may move their legacy role, answering with the updated record. Admins may update anyone; a non-admin only themselves (the runtime\'s self-access gate).
-     * @summary Renames one org member and may move their legacy role, answering with the updated record.
-     * @param {O11yApiUpdateUserDeprecatedRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public updateUserDeprecated(requestParameters: O11yApiUpdateUserDeprecatedRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).updateUserDeprecated(requestParameters.id, requestParameters.o11yO11yDeprecatedUserUpdate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Sets one preference of the calling user, by name. Viewer gate.
      * @summary Sets one preference of the calling user, by name.
      * @param {O11yApiUpdateUserPreferenceRequest} requestParameters Request parameters.
@@ -38380,18 +34887,6 @@ export class O11yApi extends BaseAPI {
      */
     public validateTraceFunnelTraces(requestParameters: O11yApiValidateTraceFunnelTracesRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).validateTraceFunnelTraces(requestParameters.funnelId, requestParameters.o11yO11yFunnelWindowIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Checks that a reset-password token exists and has not expired, without consuming it. Unauthenticated: the token is the proof.
-     * @summary Checks that a reset-password token exists and has not expired, without consuming it.
-     * @param {O11yApiVerifyResetPasswordTokenRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public verifyResetPasswordToken(requestParameters: O11yApiVerifyResetPasswordTokenRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).verifyResetPasswordToken(requestParameters.o11yO11yResetTokenRef, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -36,7 +36,7 @@ export interface LicensingPubkeyView {
      */
     'keys'?: Array<LicensingJWK>;
     /**
-     * Provider names the KMS holding the private half (\"local\" | \"aws\" | ...). \"local\" means a development key — never trust it in production.
+     * Provider names where the private half lives: \"kms\" (production) or \"local\" (a development key — never trust it in production).
      * @type {string}
      * @memberof LicensingPubkeyView
      */

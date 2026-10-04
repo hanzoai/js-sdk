@@ -22,15 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { History } from '../models';
+import type { MarketHistory } from '../models';
 // @ts-ignore
-import type { Pools } from '../models';
+import type { MarketPools } from '../models';
 // @ts-ignore
-import type { Roster } from '../models';
+import type { MarketRoster } from '../models';
 // @ts-ignore
-import type { Survey } from '../models';
+import type { MarketSurvey } from '../models';
 // @ts-ignore
-import type { Tokens } from '../models';
+import type { MarketTokens } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * MarketApi - axios parameter creator
  * @export
@@ -228,7 +230,7 @@ export const MarketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketChains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Roster>> {
+        async getMarketChains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketRoster>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketChains(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketApi.getMarketChains']?.[localVarOperationServerIndex]?.url;
@@ -241,7 +243,7 @@ export const MarketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketPools(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pools>> {
+        async getMarketPools(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketPools>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketPools(chain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketApi.getMarketPools']?.[localVarOperationServerIndex]?.url;
@@ -254,7 +256,7 @@ export const MarketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketSurvey(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Survey>> {
+        async getMarketSurvey(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketSurvey>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketSurvey(chain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketApi.getMarketSurvey']?.[localVarOperationServerIndex]?.url;
@@ -268,7 +270,7 @@ export const MarketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketToken(chain?: string, at?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<History>> {
+        async getMarketToken(chain?: string, at?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketHistory>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketToken(chain, at, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketApi.getMarketToken']?.[localVarOperationServerIndex]?.url;
@@ -281,7 +283,7 @@ export const MarketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketTokens(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tokens>> {
+        async getMarketTokens(chain?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketTokens>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketTokens(chain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketApi.getMarketTokens']?.[localVarOperationServerIndex]?.url;
@@ -303,7 +305,7 @@ export const MarketApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketChains(options?: RawAxiosRequestConfig): AxiosPromise<Roster> {
+        getMarketChains(options?: RawAxiosRequestConfig): AxiosPromise<MarketRoster> {
             return localVarFp.getMarketChains(options).then((request) => request(axios, basePath));
         },
         /**
@@ -313,7 +315,7 @@ export const MarketApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketPools(requestParameters: MarketApiGetMarketPoolsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Pools> {
+        getMarketPools(requestParameters: MarketApiGetMarketPoolsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketPools> {
             return localVarFp.getMarketPools(requestParameters.chain, options).then((request) => request(axios, basePath));
         },
         /**
@@ -323,7 +325,7 @@ export const MarketApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketSurvey(requestParameters: MarketApiGetMarketSurveyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Survey> {
+        getMarketSurvey(requestParameters: MarketApiGetMarketSurveyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketSurvey> {
             return localVarFp.getMarketSurvey(requestParameters.chain, options).then((request) => request(axios, basePath));
         },
         /**
@@ -333,7 +335,7 @@ export const MarketApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketToken(requestParameters: MarketApiGetMarketTokenRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<History> {
+        getMarketToken(requestParameters: MarketApiGetMarketTokenRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketHistory> {
             return localVarFp.getMarketToken(requestParameters.chain, requestParameters.at, options).then((request) => request(axios, basePath));
         },
         /**
@@ -343,7 +345,7 @@ export const MarketApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketTokens(requestParameters: MarketApiGetMarketTokensRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Tokens> {
+        getMarketTokens(requestParameters: MarketApiGetMarketTokensRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketTokens> {
             return localVarFp.getMarketTokens(requestParameters.chain, options).then((request) => request(axios, basePath));
         },
     };

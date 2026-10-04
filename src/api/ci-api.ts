@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Executions } from '../models';
+import type { CiExecutions } from '../models';
 // @ts-ignore
-import type { Pipelines } from '../models';
+import type { CiPipelines } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * CiApi - axios parameter creator
  * @export
@@ -115,7 +117,7 @@ export const CiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCiFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipelines>> {
+        async getCiFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CiPipelines>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCiFleet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CiApi.getCiFleet']?.[localVarOperationServerIndex]?.url;
@@ -127,7 +129,7 @@ export const CiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCiRuns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Executions>> {
+        async getCiRuns(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CiExecutions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCiRuns(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CiApi.getCiRuns']?.[localVarOperationServerIndex]?.url;
@@ -149,7 +151,7 @@ export const CiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCiFleet(options?: RawAxiosRequestConfig): AxiosPromise<Pipelines> {
+        getCiFleet(options?: RawAxiosRequestConfig): AxiosPromise<CiPipelines> {
             return localVarFp.getCiFleet(options).then((request) => request(axios, basePath));
         },
         /**
@@ -158,7 +160,7 @@ export const CiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCiRuns(options?: RawAxiosRequestConfig): AxiosPromise<Executions> {
+        getCiRuns(options?: RawAxiosRequestConfig): AxiosPromise<CiExecutions> {
             return localVarFp.getCiRuns(options).then((request) => request(axios, basePath));
         },
     };

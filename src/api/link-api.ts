@@ -22,27 +22,29 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AccountsUsage } from '../models';
+import type { LinkAccountsUsage } from '../models';
 // @ts-ignore
-import type { BoardResp } from '../models';
+import type { LinkBoardResp } from '../models';
 // @ts-ignore
-import type { DeviceView } from '../models';
+import type { LinkDeviceView } from '../models';
 // @ts-ignore
-import type { EnrollReq } from '../models';
+import type { LinkEnrollReq } from '../models';
 // @ts-ignore
-import type { IngestReq } from '../models';
+import type { LinkIngestReq } from '../models';
 // @ts-ignore
-import type { IngestResp } from '../models';
+import type { LinkIngestResp } from '../models';
 // @ts-ignore
-import type { LinkList } from '../models';
+import type { LinkLinkList } from '../models';
 // @ts-ignore
-import type { LinkView } from '../models';
+import type { LinkLinkView } from '../models';
 // @ts-ignore
-import type { RevokeResp } from '../models';
+import type { LinkRevokeResp } from '../models';
 // @ts-ignore
-import type { RoutePlan } from '../models';
+import type { LinkRoutePlan } from '../models';
 // @ts-ignore
-import type { SummaryResp } from '../models';
+import type { LinkSummaryResp } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * LinkApi - axios parameter creator
  * @export
@@ -361,13 +363,13 @@ export const LinkApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Registers a signed-in AI provider account on a machine.  It records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers 201 with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat. machine and provider are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403, so a caller writes only their OWN accounts within their own org.
          * @summary Registers a signed-in AI provider account on a machine.
-         * @param {EnrollReq} enrollReq 
+         * @param {LinkEnrollReq} linkEnrollReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLink: async (enrollReq: EnrollReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'enrollReq' is not null or undefined
-            assertParamExists('postLink', 'enrollReq', enrollReq)
+        postLink: async (linkEnrollReq: LinkEnrollReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'linkEnrollReq' is not null or undefined
+            assertParamExists('postLink', 'linkEnrollReq', linkEnrollReq)
             const localVarPath = `/v1/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -391,7 +393,7 @@ export const LinkApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(enrollReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(linkEnrollReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -439,13 +441,13 @@ export const LinkApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Reports usage samples from the device collector.  It ingests a batch of usage samples and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and stored says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way. Send either one sample inline or up to 256 in samples; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported.
          * @summary Reports usage samples from the device collector.
-         * @param {IngestReq} ingestReq 
+         * @param {LinkIngestReq} linkIngestReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLinkUsage: async (ingestReq: IngestReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'ingestReq' is not null or undefined
-            assertParamExists('postLinkUsage', 'ingestReq', ingestReq)
+        postLinkUsage: async (linkIngestReq: LinkIngestReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'linkIngestReq' is not null or undefined
+            assertParamExists('postLinkUsage', 'linkIngestReq', linkIngestReq)
             const localVarPath = `/v1/link/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -469,7 +471,7 @@ export const LinkApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(ingestReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(linkIngestReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -493,7 +495,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteLinkById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+        async deleteLinkById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkRevokeResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLinkById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.deleteLinkById']?.[localVarOperationServerIndex]?.url;
@@ -505,7 +507,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkList>> {
+        async getLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkLinkList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLink']?.[localVarOperationServerIndex]?.url;
@@ -518,7 +520,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
+        async getLinkById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkLinkView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkById']?.[localVarOperationServerIndex]?.url;
@@ -531,7 +533,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkDevicesByMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceView>> {
+        async getLinkDevicesByMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkDeviceView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkDevicesByMachine(machine, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkDevicesByMachine']?.[localVarOperationServerIndex]?.url;
@@ -543,7 +545,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkRoute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoutePlan>> {
+        async getLinkRoute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkRoutePlan>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkRoute(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkRoute']?.[localVarOperationServerIndex]?.url;
@@ -559,7 +561,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkUsage(provider?: string, account?: string, window?: string, range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardResp>> {
+        async getLinkUsage(provider?: string, account?: string, window?: string, range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkBoardResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkUsage(provider, account, window, range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkUsage']?.[localVarOperationServerIndex]?.url;
@@ -571,7 +573,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkUsageAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsUsage>> {
+        async getLinkUsageAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkAccountsUsage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkUsageAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkUsageAccounts']?.[localVarOperationServerIndex]?.url;
@@ -584,7 +586,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLinkUsageSummary(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryResp>> {
+        async getLinkUsageSummary(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkSummaryResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLinkUsageSummary(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.getLinkUsageSummary']?.[localVarOperationServerIndex]?.url;
@@ -593,12 +595,12 @@ export const LinkApiFp = function(configuration?: Configuration) {
         /**
          * Registers a signed-in AI provider account on a machine.  It records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers 201 with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat. machine and provider are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403, so a caller writes only their OWN accounts within their own org.
          * @summary Registers a signed-in AI provider account on a machine.
-         * @param {EnrollReq} enrollReq 
+         * @param {LinkEnrollReq} linkEnrollReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLink(enrollReq: EnrollReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLink(enrollReq, options);
+        async postLink(linkEnrollReq: LinkEnrollReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkLinkView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLink(linkEnrollReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.postLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -610,7 +612,7 @@ export const LinkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLinkDevicesByMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+        async postLinkDevicesByMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkRevokeResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postLinkDevicesByMachineRevoke(machine, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.postLinkDevicesByMachineRevoke']?.[localVarOperationServerIndex]?.url;
@@ -619,12 +621,12 @@ export const LinkApiFp = function(configuration?: Configuration) {
         /**
          * Reports usage samples from the device collector.  It ingests a batch of usage samples and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and stored says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way. Send either one sample inline or up to 256 in samples; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported.
          * @summary Reports usage samples from the device collector.
-         * @param {IngestReq} ingestReq 
+         * @param {LinkIngestReq} linkIngestReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLinkUsage(ingestReq: IngestReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngestResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLinkUsage(ingestReq, options);
+        async postLinkUsage(linkIngestReq: LinkIngestReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkIngestResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLinkUsage(linkIngestReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LinkApi.postLinkUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -646,7 +648,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteLinkById(requestParameters: LinkApiDeleteLinkByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+        deleteLinkById(requestParameters: LinkApiDeleteLinkByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkRevokeResp> {
             return localVarFp.deleteLinkById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -655,7 +657,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLink(options?: RawAxiosRequestConfig): AxiosPromise<LinkList> {
+        getLink(options?: RawAxiosRequestConfig): AxiosPromise<LinkLinkList> {
             return localVarFp.getLink(options).then((request) => request(axios, basePath));
         },
         /**
@@ -665,7 +667,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkById(requestParameters: LinkApiGetLinkByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
+        getLinkById(requestParameters: LinkApiGetLinkByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkLinkView> {
             return localVarFp.getLinkById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -675,7 +677,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkDevicesByMachine(requestParameters: LinkApiGetLinkDevicesByMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceView> {
+        getLinkDevicesByMachine(requestParameters: LinkApiGetLinkDevicesByMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkDeviceView> {
             return localVarFp.getLinkDevicesByMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
@@ -684,7 +686,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkRoute(options?: RawAxiosRequestConfig): AxiosPromise<RoutePlan> {
+        getLinkRoute(options?: RawAxiosRequestConfig): AxiosPromise<LinkRoutePlan> {
             return localVarFp.getLinkRoute(options).then((request) => request(axios, basePath));
         },
         /**
@@ -694,7 +696,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkUsage(requestParameters: LinkApiGetLinkUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardResp> {
+        getLinkUsage(requestParameters: LinkApiGetLinkUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LinkBoardResp> {
             return localVarFp.getLinkUsage(requestParameters.provider, requestParameters.account, requestParameters.window, requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
@@ -703,7 +705,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkUsageAccounts(options?: RawAxiosRequestConfig): AxiosPromise<AccountsUsage> {
+        getLinkUsageAccounts(options?: RawAxiosRequestConfig): AxiosPromise<LinkAccountsUsage> {
             return localVarFp.getLinkUsageAccounts(options).then((request) => request(axios, basePath));
         },
         /**
@@ -713,7 +715,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLinkUsageSummary(requestParameters: LinkApiGetLinkUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SummaryResp> {
+        getLinkUsageSummary(requestParameters: LinkApiGetLinkUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LinkSummaryResp> {
             return localVarFp.getLinkUsageSummary(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
@@ -723,8 +725,8 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLink(requestParameters: LinkApiPostLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
-            return localVarFp.postLink(requestParameters.enrollReq, options).then((request) => request(axios, basePath));
+        postLink(requestParameters: LinkApiPostLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkLinkView> {
+            return localVarFp.postLink(requestParameters.linkEnrollReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Logs out every account on one machine and stops its sessions.  It revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button. Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404.
@@ -733,7 +735,7 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLinkDevicesByMachineRevoke(requestParameters: LinkApiPostLinkDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+        postLinkDevicesByMachineRevoke(requestParameters: LinkApiPostLinkDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkRevokeResp> {
             return localVarFp.postLinkDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
@@ -743,8 +745,8 @@ export const LinkApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLinkUsage(requestParameters: LinkApiPostLinkUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngestResp> {
-            return localVarFp.postLinkUsage(requestParameters.ingestReq, options).then((request) => request(axios, basePath));
+        postLinkUsage(requestParameters: LinkApiPostLinkUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkIngestResp> {
+            return localVarFp.postLinkUsage(requestParameters.linkIngestReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -848,10 +850,10 @@ export interface LinkApiGetLinkUsageSummaryRequest {
 export interface LinkApiPostLinkRequest {
     /**
      * 
-     * @type {EnrollReq}
+     * @type {LinkEnrollReq}
      * @memberof LinkApiPostLink
      */
-    readonly enrollReq: EnrollReq
+    readonly linkEnrollReq: LinkEnrollReq
 }
 
 /**
@@ -876,10 +878,10 @@ export interface LinkApiPostLinkDevicesByMachineRevokeRequest {
 export interface LinkApiPostLinkUsageRequest {
     /**
      * 
-     * @type {IngestReq}
+     * @type {LinkIngestReq}
      * @memberof LinkApiPostLinkUsage
      */
-    readonly ingestReq: IngestReq
+    readonly linkIngestReq: LinkIngestReq
 }
 
 /**
@@ -991,7 +993,7 @@ export class LinkApi extends BaseAPI {
      * @memberof LinkApi
      */
     public postLink(requestParameters: LinkApiPostLinkRequest, options?: RawAxiosRequestConfig) {
-        return LinkApiFp(this.configuration).postLink(requestParameters.enrollReq, options).then((request) => request(this.axios, this.basePath));
+        return LinkApiFp(this.configuration).postLink(requestParameters.linkEnrollReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1015,7 +1017,7 @@ export class LinkApi extends BaseAPI {
      * @memberof LinkApi
      */
     public postLinkUsage(requestParameters: LinkApiPostLinkUsageRequest, options?: RawAxiosRequestConfig) {
-        return LinkApiFp(this.configuration).postLinkUsage(requestParameters.ingestReq, options).then((request) => request(this.axios, this.basePath));
+        return LinkApiFp(this.configuration).postLinkUsage(requestParameters.linkIngestReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

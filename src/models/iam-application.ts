@@ -420,6 +420,12 @@ export interface IamApplication {
      */
     'owner'?: string;
     /**
+     * Platform marks an application the platform itself declares (init_data.json): its own consoles and apps, never one a tenant registered. The seed stamps it on every declared application at boot, and only a SuperAdmin may change it over the API. It is what lets a signed-in person act through IAM with a bearer on the platform\'s behalf — sending an invitation from the platform\'s own email account, joining an org — which a tenant\'s application may not do with the tokens its users hand it.
+     * @type {boolean}
+     * @memberof IamApplication
+     */
+    'platform'?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof IamApplication

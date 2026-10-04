@@ -22,9 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Fusion } from '../models';
+import type { ProblemDetails } from '../models';
 // @ts-ignore
-import type { Request } from '../models';
+import type { SearchFusion } from '../models';
+// @ts-ignore
+import type { SearchRequest } from '../models';
 /**
  * SearchApi - axios parameter creator
  * @export
@@ -34,13 +36,13 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
          * @summary Hybrid search over the org\'s own corpora
-         * @param {Request} request 
+         * @param {SearchRequest} searchRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        search: async (request: Request, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'request' is not null or undefined
-            assertParamExists('search', 'request', request)
+        search: async (searchRequest: SearchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchRequest' is not null or undefined
+            assertParamExists('search', 'searchRequest', searchRequest)
             const localVarPath = `/v1/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,7 +66,7 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(searchRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -84,12 +86,12 @@ export const SearchApiFp = function(configuration?: Configuration) {
         /**
          * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
          * @summary Hybrid search over the org\'s own corpora
-         * @param {Request} request 
+         * @param {SearchRequest} searchRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async search(request: Request, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Fusion>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.search(request, options);
+        async search(searchRequest: SearchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchFusion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.search(searchRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SearchApi.search']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -111,8 +113,8 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<Fusion> {
-            return localVarFp.search(requestParameters.request, options).then((request) => request(axios, basePath));
+        search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchFusion> {
+            return localVarFp.search(requestParameters.searchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -125,10 +127,10 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
 export interface SearchApiSearchRequest {
     /**
      * 
-     * @type {Request}
+     * @type {SearchRequest}
      * @memberof SearchApiSearch
      */
-    readonly request: Request
+    readonly searchRequest: SearchRequest
 }
 
 /**
@@ -147,7 +149,7 @@ export class SearchApi extends BaseAPI {
      * @memberof SearchApi
      */
     public search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).search(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+        return SearchApiFp(this.configuration).search(requestParameters.searchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

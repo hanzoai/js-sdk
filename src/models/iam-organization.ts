@@ -336,6 +336,12 @@ export interface IamOrganization {
      */
     'passwordType'?: string;
     /**
+     * Platform marks an organization the platform itself declares (init_data.json): the brand orgs and the others the seed creates, never one a customer made. The seed stamps it on every declared organization at boot, and no request sets or clears it. Only a SuperAdmin may delete an organization that carries it.
+     * @type {boolean}
+     * @memberof IamOrganization
+     */
+    'platform'?: boolean;
+    /**
      * 
      * @type {Array<string>}
      * @memberof IamOrganization

@@ -30,10 +30,10 @@ export interface O11yO11yMetricLabel {
      */
     'key'?: O11yO11yMetricField;
     /**
-     * Value is the label\'s value.
-     * @type {object}
+     * 
+     * @type {any}
      * @memberof O11yO11yMetricLabel
      */
-    'value'?: object;
+    'value'?: any;
 }
 

@@ -337,6 +337,12 @@ export interface IamCreateOrganizationInput {
     'passwordType'?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof IamCreateOrganizationInput
+     */
+    'platform'?: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof IamCreateOrganizationInput
      */

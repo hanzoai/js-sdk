@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { EntitlementsView } from '../models';
+import type { EntitlementEntitlementsView } from '../models';
 // @ts-ignore
-import type { MutateReq } from '../models';
+import type { EntitlementMutateReq } from '../models';
 // @ts-ignore
-import type { ProjectionView } from '../models';
+import type { EntitlementProjectionView } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * EntitlementApi - axios parameter creator
  * @export
@@ -34,8 +36,8 @@ import type { ProjectionView } from '../models';
 export const EntitlementApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It fails SAFE-TO-LOCKED, never 500: an unvalidated principal is a 403, but a commerce outage reports every app locked at 200 rather than breaking the shell. The ENFORCEMENT path still fails open, so functionality survives the same outage even while the UI conservatively shows locked.
-         * @summary Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
+         * Reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It never answers 500: an unvalidated principal is a 403, and an app whose plan cannot be confirmed is reported locked at 200, so the shell always renders. The paywall applies the same rule when it enforces: access follows a confirmed standing.
+         * @summary Reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -68,8 +70,8 @@ export const EntitlementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
-         * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
+         * Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
+         * @summary Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
          * @param {string} org 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -106,18 +108,18 @@ export const EntitlementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
-         * @summary Post turns products on or off for an org and returns the enabled set afterwards.
+         * Turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
+         * @summary Turns products on or off for an org and returns the enabled set afterwards.
          * @param {string} org 
-         * @param {MutateReq} mutateReq 
+         * @param {EntitlementMutateReq} entitlementMutateReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEntitlementOrgsByOrg: async (org: string, mutateReq: MutateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEntitlementOrgsByOrg: async (org: string, entitlementMutateReq: EntitlementMutateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
             assertParamExists('postEntitlementOrgsByOrg', 'org', org)
-            // verify required parameter 'mutateReq' is not null or undefined
-            assertParamExists('postEntitlementOrgsByOrg', 'mutateReq', mutateReq)
+            // verify required parameter 'entitlementMutateReq' is not null or undefined
+            assertParamExists('postEntitlementOrgsByOrg', 'entitlementMutateReq', entitlementMutateReq)
             const localVarPath = `/v1/entitlement/orgs/{org}`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -142,7 +144,7 @@ export const EntitlementApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mutateReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(entitlementMutateReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -160,40 +162,40 @@ export const EntitlementApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EntitlementApiAxiosParamCreator(configuration)
     return {
         /**
-         * Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It fails SAFE-TO-LOCKED, never 500: an unvalidated principal is a 403, but a commerce outage reports every app locked at 200 rather than breaking the shell. The ENFORCEMENT path still fails open, so functionality survives the same outage even while the UI conservatively shows locked.
-         * @summary Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
+         * Reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It never answers 500: an unvalidated principal is a 403, and an app whose plan cannot be confirmed is reported locked at 200, so the shell always renders. The paywall applies the same rule when it enforces: access follows a confirmed standing.
+         * @summary Reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEntitlement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectionView>> {
+        async getEntitlement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementProjectionView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntitlement(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EntitlementApi.getEntitlement']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
-         * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
+         * Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
+         * @summary Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
          * @param {string} org 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEntitlementOrgsByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
+        async getEntitlementOrgsByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementEntitlementsView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntitlementOrgsByOrg(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EntitlementApi.getEntitlementOrgsByOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
-         * @summary Post turns products on or off for an org and returns the enabled set afterwards.
+         * Turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
+         * @summary Turns products on or off for an org and returns the enabled set afterwards.
          * @param {string} org 
-         * @param {MutateReq} mutateReq 
+         * @param {EntitlementMutateReq} entitlementMutateReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEntitlementOrgsByOrg(org: string, mutateReq: MutateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEntitlementOrgsByOrg(org, mutateReq, options);
+        async postEntitlementOrgsByOrg(org: string, entitlementMutateReq: EntitlementMutateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementEntitlementsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEntitlementOrgsByOrg(org, entitlementMutateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EntitlementApi.postEntitlementOrgsByOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -209,33 +211,33 @@ export const EntitlementApiFactory = function (configuration?: Configuration, ba
     const localVarFp = EntitlementApiFp(configuration)
     return {
         /**
-         * Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It fails SAFE-TO-LOCKED, never 500: an unvalidated principal is a 403, but a commerce outage reports every app locked at 200 rather than breaking the shell. The ENFORCEMENT path still fails open, so functionality survives the same outage even while the UI conservatively shows locked.
-         * @summary Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
+         * Reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It never answers 500: an unvalidated principal is a 403, and an app whose plan cannot be confirmed is reported locked at 200, so the shell always renders. The paywall applies the same rule when it enforces: access follows a confirmed standing.
+         * @summary Reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEntitlement(options?: RawAxiosRequestConfig): AxiosPromise<ProjectionView> {
+        getEntitlement(options?: RawAxiosRequestConfig): AxiosPromise<EntitlementProjectionView> {
             return localVarFp.getEntitlement(options).then((request) => request(axios, basePath));
         },
         /**
-         * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
-         * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
+         * Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
+         * @summary Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
          * @param {EntitlementApiGetEntitlementOrgsByOrgRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEntitlementOrgsByOrg(requestParameters: EntitlementApiGetEntitlementOrgsByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
+        getEntitlementOrgsByOrg(requestParameters: EntitlementApiGetEntitlementOrgsByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementEntitlementsView> {
             return localVarFp.getEntitlementOrgsByOrg(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
-         * @summary Post turns products on or off for an org and returns the enabled set afterwards.
+         * Turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
+         * @summary Turns products on or off for an org and returns the enabled set afterwards.
          * @param {EntitlementApiPostEntitlementOrgsByOrgRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEntitlementOrgsByOrg(requestParameters: EntitlementApiPostEntitlementOrgsByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
-            return localVarFp.postEntitlementOrgsByOrg(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(axios, basePath));
+        postEntitlementOrgsByOrg(requestParameters: EntitlementApiPostEntitlementOrgsByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementEntitlementsView> {
+            return localVarFp.postEntitlementOrgsByOrg(requestParameters.org, requestParameters.entitlementMutateReq, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -269,10 +271,10 @@ export interface EntitlementApiPostEntitlementOrgsByOrgRequest {
 
     /**
      * 
-     * @type {MutateReq}
+     * @type {EntitlementMutateReq}
      * @memberof EntitlementApiPostEntitlementOrgsByOrg
      */
-    readonly mutateReq: MutateReq
+    readonly entitlementMutateReq: EntitlementMutateReq
 }
 
 /**
@@ -283,8 +285,8 @@ export interface EntitlementApiPostEntitlementOrgsByOrgRequest {
  */
 export class EntitlementApi extends BaseAPI {
     /**
-     * Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It fails SAFE-TO-LOCKED, never 500: an unvalidated principal is a 403, but a commerce outage reports every app locked at 200 rather than breaking the shell. The ENFORCEMENT path still fails open, so functionality survives the same outage even while the UI conservatively shows locked.
-     * @summary Projection reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
+     * Reports which console apps the CALLER\'s org may open, and the plan slug that decides it. It is the READ side of the unified paywall: the org\'s plan tier resolved from commerce, which is a different authority from the enablement store behind GET /v1/entitlement/orgs/{org} (that one is the org\'s own on/off intent).  It never answers 500: an unvalidated principal is a 403, and an app whose plan cannot be confirmed is reported locked at 200, so the shell always renders. The paywall applies the same rule when it enforces: access follows a confirmed standing.
+     * @summary Reports which console apps the CALLER\'s org may open, and the plan slug that decides it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EntitlementApi
@@ -294,8 +296,8 @@ export class EntitlementApi extends BaseAPI {
     }
 
     /**
-     * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
-     * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
+     * Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlement, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
+     * @summary Lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
      * @param {EntitlementApiGetEntitlementOrgsByOrgRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -306,15 +308,15 @@ export class EntitlementApi extends BaseAPI {
     }
 
     /**
-     * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
-     * @summary Post turns products on or off for an org and returns the enabled set afterwards.
+     * Turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
+     * @summary Turns products on or off for an org and returns the enabled set afterwards.
      * @param {EntitlementApiPostEntitlementOrgsByOrgRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EntitlementApi
      */
     public postEntitlementOrgsByOrg(requestParameters: EntitlementApiPostEntitlementOrgsByOrgRequest, options?: RawAxiosRequestConfig) {
-        return EntitlementApiFp(this.configuration).postEntitlementOrgsByOrg(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(this.axios, this.basePath));
+        return EntitlementApiFp(this.configuration).postEntitlementOrgsByOrg(requestParameters.org, requestParameters.entitlementMutateReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
