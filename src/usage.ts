@@ -15,9 +15,9 @@
 // and six codes in it are six different facts with six different ways out, so
 // each is a class: a caller tells them apart with `instanceof`, never by parsing
 // the sentence. The names are the Python and Go SDKs' names. Both transports
-// throw them from the error path they already had — the generated client's
-// axios adapter (transport.ts) and the six capabilities' Fault (answer.ts) —
-// through `limited`, the one place a body becomes one of these.
+// throw them from the error path they already had — an axios response
+// interceptor for the generated client (transport.ts) and the six capabilities'
+// Fault (answer.ts) — through `limited`, the one place a body becomes one.
 
 import { list, obj, type Obj } from './read';
 
@@ -48,6 +48,8 @@ const instant = (v: unknown): Date | undefined => {
 
 /** A priced request refused because nothing the caller holds may pay for it. */
 export class UsageLimitError extends Error {
+  // Literal, not `new.target.name`, which a minifier renames.
+  override name = 'UsageLimitError';
   /** 402 or 429. */
   readonly status: number;
   /** The machine code — one per subclass. */
@@ -65,13 +67,14 @@ export class UsageLimitError extends Error {
   /** The upgrade page. */
   readonly upgradeUrl: string | undefined;
   readonly actions: UsageAction[];
-  /** What the transport raised: the AxiosError, or nothing on the fetch path. */
+  /** `x-request-id` — the handle that finds this call in the audit trail. */
+  readonly request: string | undefined;
+  /** What the transport raised: the AxiosError on the generated client, nothing on the six. */
   readonly cause: unknown;
 
-  constructor(status: number, error: Obj, cause?: unknown) {
+  constructor(status: number, error: Obj, request?: string, cause?: unknown) {
     const code = text(error['code']) ?? '';
     super(text(error['message']) ?? `HTTP ${status} ${code}`);
-    this.name = new.target.name;
     this.status = status;
     this.code = code;
     this.type = text(error['type']);
@@ -80,54 +83,73 @@ export class UsageLimitError extends Error {
     this.fallback = text(error['fallback']);
     this.resetsAt = instant(error['resets_at']);
     this.upgradeUrl = text(error['upgrade_url']);
-    this.actions = list(error['actions']).map((a) => {
+    // An entry with no kind is not an action, so it is not offered.
+    this.actions = list(error['actions']).flatMap((a) => {
       const o = obj(a);
-      const out: UsageAction = { kind: text(o['kind']) ?? '' };
+      const kind = text(o['kind']);
+      if (!kind) return [];
+      const out: UsageAction = { kind };
       for (const k of ['label', 'url', 'plan', 'model'] as const) {
         const v = text(o[k]);
         if (v !== undefined) out[k] = v;
       }
-      return out;
+      return [out];
     });
+    this.request = request;
     this.cause = cause;
   }
 }
 
 /** 402 `plan_allowance_used` — the plan's included usage of the class is used, and nothing else may pay. */
-export class PlanAllowanceUsedError extends UsageLimitError {}
+export class PlanAllowanceUsedError extends UsageLimitError {
+  override name = 'PlanAllowanceUsedError';
+}
 
 /** 402 `paid_plan_required` — the model needs a paid plan or prepaid balance. */
-export class PaidPlanRequiredError extends UsageLimitError {}
+export class PaidPlanRequiredError extends UsageLimitError {
+  override name = 'PaidPlanRequiredError';
+}
 
 /** 429 `free_plan_cap` — the free plan's daily cap on the model is used; it lifts at `resetsAt`. */
-export class FreePlanCapError extends UsageLimitError {}
+export class FreePlanCapError extends UsageLimitError {
+  override name = 'FreePlanCapError';
+}
 
 /** 402 `model_cap` — the model has used its share of the plan; `fallback` answers instead. */
-export class ModelCapError extends UsageLimitError {}
+export class ModelCapError extends UsageLimitError {
+  override name = 'ModelCapError';
+}
 
 /** 429 `usage_cap_exceeded` — a session or day request window is spent. */
-export class UsageCapExceededError extends UsageLimitError {}
+export class UsageCapExceededError extends UsageLimitError {
+  override name = 'UsageCapExceededError';
+}
 
 /** 402 `insufficient_balance` — the known wallet balance cannot cover the request. */
-export class InsufficientBalanceError extends UsageLimitError {}
+export class InsufficientBalanceError extends UsageLimitError {
+  override name = 'InsufficientBalanceError';
+}
 
-const classes: Record<string, new (status: number, error: Obj, cause?: unknown) => UsageLimitError> = {
-  plan_allowance_used: PlanAllowanceUsedError,
-  paid_plan_required: PaidPlanRequiredError,
-  free_plan_cap: FreePlanCapError,
-  model_cap: ModelCapError,
-  usage_cap_exceeded: UsageCapExceededError,
-  insufficient_balance: InsufficientBalanceError,
-};
+// A Map, not an object literal: a code of "constructor" must find nothing.
+const classes = new Map<string, new (status: number, error: Obj, request?: string, cause?: unknown) => UsageLimitError>([
+  ['plan_allowance_used', PlanAllowanceUsedError],
+  ['paid_plan_required', PaidPlanRequiredError],
+  ['free_plan_cap', FreePlanCapError],
+  ['model_cap', ModelCapError],
+  ['usage_cap_exceeded', UsageCapExceededError],
+  ['insufficient_balance', InsufficientBalanceError],
+]);
 
 /**
- * The typed error a refusal body names, or undefined where `error.code` is none
- * of the six — that answer stays whatever error its transport already raises.
+ * The typed error a refusal names, or undefined: only a 402 or 429 whose
+ * `error.code` is one of the six is one. Anything else stays whatever error its
+ * transport already raises.
  */
-export function limited(status: number, body: unknown, cause?: unknown): UsageLimitError | undefined {
+export function limited(status: number, body: unknown, request?: string, cause?: unknown): UsageLimitError | undefined {
+  if (status !== 402 && status !== 429) return undefined;
   const error = obj(obj(body)['error']);
-  const Class = classes[text(error['code']) ?? ''];
-  return Class ? new Class(status, error, cause) : undefined;
+  const Class = classes.get(text(error['code']) ?? '');
+  return Class ? new Class(status, error, request, cause) : undefined;
 }
 
 /** What the X-Hanzo-* headers on one answer say. Each is undefined where the header is absent. */
@@ -156,27 +178,26 @@ export type HeaderSource = { get(name: string): unknown } | Record<string, unkno
  * would claim the server said something it did not.
  */
 export function readUsage(headers: HeaderSource | null | undefined): Usage {
-  const h = headers ?? {};
-  const get =
-    typeof (h as { get?: unknown }).get === 'function'
-      ? (name: string) => (h as { get(name: string): unknown }).get(name)
-      : (() => {
-          const lower: Record<string, unknown> = {};
-          for (const [k, v] of Object.entries(h)) lower[k.toLowerCase()] = v;
-          return (name: string) => lower[name];
-        })();
-  const read = (name: string): string | undefined => {
-    let v = get(name);
-    if (Array.isArray(v)) v = v[0];
-    if (typeof v === 'number' || typeof v === 'boolean') v = String(v);
-    return typeof v === 'string' ? text(v.trim()) : undefined;
-  };
   return {
-    usage: read('x-hanzo-usage'),
-    usageClass: read('x-hanzo-usage-class'),
-    paidBy: read('x-hanzo-paid-by'),
-    fallback: read('x-hanzo-fallback'),
-    served: read('x-hanzo-served'),
-    reason: read('x-hanzo-usage-reason'),
+    usage: header(headers, 'x-hanzo-usage'),
+    usageClass: header(headers, 'x-hanzo-usage-class'),
+    paidBy: header(headers, 'x-hanzo-paid-by'),
+    fallback: header(headers, 'x-hanzo-fallback'),
+    served: header(headers, 'x-hanzo-served'),
+    reason: header(headers, 'x-hanzo-usage-reason'),
   };
+}
+
+/** One header by lower-case name, matched case-insensitively; undefined where absent or empty. */
+export function header(headers: HeaderSource | null | undefined, name: string): string | undefined {
+  const h = headers ?? {};
+  let v: unknown;
+  if (typeof (h as { get?: unknown }).get === 'function') {
+    v = (h as { get(name: string): unknown }).get(name);
+  } else {
+    for (const [k, value] of Object.entries(h)) if (k.toLowerCase() === name) v = value;
+  }
+  if (Array.isArray(v)) v = v[0];
+  if (typeof v === 'number' || typeof v === 'boolean') v = String(v);
+  return typeof v === 'string' ? text(v.trim()) : undefined;
 }

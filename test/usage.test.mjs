@@ -10,8 +10,10 @@
 // write for their codes.
 
 import assert from 'node:assert/strict';
-import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
+import test from 'node:test';
 
 import { TOKEN, client, configuration, hanzoai, json, wire } from './wire.mjs';
 
@@ -145,6 +147,7 @@ for (const [name, status, body] of refusals) {
       assert.equal(err.upgradeUrl, body.error.upgrade_url);
       assert.deepEqual(err.resetsAt, body.error.resets_at ? new Date(body.error.resets_at) : undefined);
       assert.deepEqual(err.actions, body.error.actions ?? []);
+      assert.equal(err.request, REQUEST);
       // What axios raised is kept, headers and all.
       assert.ok(axios.isAxiosError(err.cause));
       assert.equal(err.cause.response.status, status);
@@ -177,11 +180,17 @@ test('any other refusal is still the AxiosError it was', async (t) => {
     { status: 400, body: { error: { message: 'unknown model', type: 'invalid_request_error', code: 'model_not_found' } } },
     { status: 503, body: { error: { message: 'Unable to verify your balance right now.', type: 'billing_error', code: 'balance_unavailable' } } },
     { status: 402, body: { type: 'about:blank', status: 402, detail: 'Add credits', code: 'insufficient_balance' } },
+    // A usage code outside 402 and 429 is not a usage refusal.
+    { status: 401, body: modelCap },
+    // Nor is a name every object inherits.
+    { status: 402, body: { error: { code: 'constructor' } } },
+    { status: 429, body: { error: { code: '__proto__' } } },
+    { status: 402, body: { error: { code: 'toString' } } },
   ]);
   t.after(sent.restore);
 
   const ai = new hanzoai.AiApi(configuration());
-  for (const status of [400, 503, 402]) {
+  for (const status of [400, 503, 402, 401, 402, 429, 402]) {
     await assert.rejects(() => ai.postDecisions(decision), (err) => {
       assert.ok(axios.isAxiosError(err));
       assert.equal(err instanceof hanzoai.UsageLimitError, false);
@@ -189,6 +198,96 @@ test('any other refusal is still the AxiosError it was', async (t) => {
       return true;
     });
   }
+});
+
+test('an action with no kind is not offered', async (t) => {
+  const body = { error: { ...freePlanCap.error, actions: [{ label: 'no kind' }, 'upgrade', ...freePlanCap.error.actions] } };
+  const sent = wire([{ status: 429, body }]);
+  t.after(sent.restore);
+
+  await assert.rejects(() => new hanzoai.AiApi(configuration()).postDecisions(decision), (err) => {
+    assert.deepEqual(err.actions, freePlanCap.error.actions);
+    return true;
+  });
+});
+
+test('a buffer or a stream body is read, and a stream is left whole for the caller', async (t) => {
+  const sent = wire([
+    { status: 402, body: modelCap },
+    { status: 429, body: freePlanCap },
+    { status: 429, body: { error: { message: 'slow down', code: 'rate_limited' } } },
+  ]);
+  t.after(sent.restore);
+
+  const ai = new hanzoai.AiApi(configuration());
+  await assert.rejects(() => ai.postDecisions(decision, { responseType: 'arraybuffer' }), hanzoai.ModelCapError);
+  await assert.rejects(() => ai.postDecisions(decision, { responseType: 'stream' }), (err) => {
+    assert.ok(err instanceof hanzoai.FreePlanCapError);
+    assert.deepEqual(err.resetsAt, new Date('2026-10-05T00:00:00Z'));
+    return true;
+  });
+  const err = await ai.postDecisions(decision, { responseType: 'stream' }).catch((e) => e);
+  assert.ok(axios.isAxiosError(err));
+  assert.equal(await new Response(err.response.data).text(), JSON.stringify({ error: { message: 'slow down', code: 'rate_limited' } }));
+});
+
+test('through the http adapter: a parsed body, a Node stream, and a stream left whole', async (t) => {
+  const answers = [
+    [402, JSON.stringify(modelCap)],
+    [429, JSON.stringify(usageCapExceeded)],
+    [429, JSON.stringify({ error: { message: 'slow down', code: 'rate_limited' } })],
+  ];
+  const server = createServer((req, res) => {
+    req.resume();
+    const [status, text] = answers.shift();
+    res.writeHead(status, { 'content-type': 'application/json', 'x-request-id': REQUEST });
+    res.end(text);
+  });
+  await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
+  t.after(() => server.close());
+
+  const ai = new hanzoai.AiApi(new hanzoai.Configuration({ basePath: `http://127.0.0.1:${server.address().port}`, accessToken: 'tok-1' }));
+  await assert.rejects(() => ai.postDecisions(decision), (err) => {
+    assert.ok(err instanceof hanzoai.ModelCapError);
+    assert.equal(err.fallback, 'enso');
+    assert.equal(err.request, REQUEST);
+    return true;
+  });
+  await assert.rejects(() => ai.postDecisions(decision, { responseType: 'stream' }), hanzoai.UsageCapExceededError);
+  const err = await ai.postDecisions(decision, { responseType: 'stream' }).catch((e) => e);
+  assert.ok(axios.isAxiosError(err));
+  let text = '';
+  for await (const chunk of err.response.data) text += chunk;
+  assert.equal(text, JSON.stringify({ error: { message: 'slow down', code: 'rate_limited' } }));
+});
+
+test('an adapter of the caller\'s own is left alone, on an instance or set globally later', async (t) => {
+  let hits = 0;
+  const refuse = async (config) => {
+    hits++;
+    const err = new axios.AxiosError('402', 'ERR_BAD_REQUEST', config, null, {
+      status: 402, statusText: '', headers: {}, config, data: JSON.stringify(modelCap),
+    });
+    throw err;
+  };
+  // An instance of the caller's own: its adapter answers, and its own
+  // interceptors (none) decide the error's type.
+  const own = axios.create({ adapter: refuse });
+  await assert.rejects(
+    () => new hanzoai.AiApi(configuration({ baseOptions: {} }), undefined, own).postDecisions(decision),
+    (err) => axios.isAxiosError(err),
+  );
+  assert.equal(hits, 1);
+
+  // A global adapter set after the Configuration was built still answers.
+  const config = configuration({ baseOptions: {} });
+  const before = axios.defaults.adapter;
+  axios.defaults.adapter = refuse;
+  t.after(() => {
+    axios.defaults.adapter = before;
+  });
+  await assert.rejects(() => new hanzoai.AiApi(config).postDecisions(decision), hanzoai.ModelCapError);
+  assert.equal(hits, 2);
 });
 
 test('readUsage reads a priced answer off the axios response', async (t) => {
@@ -364,10 +463,34 @@ test('GET /v1/models carries no credential and types class, family and pricing.v
   assert.deepEqual(data.data.filter((m) => m.pricing?.variable).map((m) => m.id), ['openrouter/auto']);
 });
 
-test('Client.configuration is the package Configuration, typed refusals included', () => {
-  const c = client().configuration;
-  assert.ok(c instanceof hanzoai.Configuration);
-  assert.equal(typeof c.baseOptions.adapter, 'function');
+test('Client.configuration is the package Configuration, typed refusals included', async (t) => {
+  const c = client();
+  assert.ok(c.configuration instanceof hanzoai.Configuration);
+
+  const sent = wire([{ status: 200, body: TOKEN }, { status: 429, body: freePlanCap }]);
+  t.after(sent.restore);
+  await assert.rejects(
+    () => new hanzoai.AiApi(c.configuration).postDecisions(decision, { adapter: 'fetch' }),
+    hanzoai.FreePlanCapError,
+  );
+  assert.equal(sent[1].headers.authorization, 'Bearer tok-1');
+});
+
+test('no hand-written name hides a generated one, but Configuration', () => {
+  // `.generated` names every file the generator owns; their exports are the
+  // names a regeneration can add.
+  const generated = new Set();
+  const root = new URL('../', import.meta.url);
+  for (const f of readFileSync(new URL('.generated', root), 'utf8').split('\n')) {
+    if (!f.endsWith('.ts')) continue;
+    for (const m of readFileSync(new URL(f, root), 'utf8').matchAll(/^export (?:interface|type|class|const|function|enum) (\w+)/gm)) {
+      generated.add(m[1]);
+    }
+  }
+  const entry = readFileSync(new URL('../src/hanzo.ts', import.meta.url), 'utf8');
+  const named = [...entry.matchAll(/^export (?:type )?\{([^}]*)\}/gm)].flatMap((m) => m[1].split(',').map((n) => n.trim()).filter(Boolean));
+  assert.ok(named.includes('readUsage') && named.includes('Configuration'));
+  assert.deepEqual(named.filter((n) => generated.has(n)), ['Configuration']);
 });
 
 // The six capabilities' fetch path: what a gated call would throw as a Fault is
@@ -381,7 +504,24 @@ test('a 429 usage refusal on a gated call throws its type, not a Fault', async (
     assert.ok(err instanceof hanzoai.FreePlanCapError);
     assert.equal(err instanceof hanzoai.answer.Fault, false);
     assert.equal(err.status, 429);
+    assert.equal(err.request, REQUEST);
+    assert.equal(err.cause, undefined);
     assert.deepEqual(err.resetsAt, new Date('2026-10-05T00:00:00Z'));
+    return true;
+  });
+});
+
+test('an envelope that is no usage refusal is a Fault carrying the code it nests', async (t) => {
+  const sent = wire([
+    { status: 200, body: TOKEN },
+    { status: 400, body: { error: { message: 'unknown model', type: 'invalid_request_error', code: 'model_not_found' } } },
+  ]);
+  t.after(sent.restore);
+
+  await assert.rejects(() => client().search.find('runbook'), (err) => {
+    assert.ok(err instanceof hanzoai.answer.Fault);
+    assert.equal(err.code, 'model_not_found');
+    assert.equal(err.detail, 'unknown model');
     return true;
   });
 });
@@ -402,4 +542,11 @@ test('a 402 in the OpenAI envelope is denied on the code it nests', async (t) =>
   assert.equal(a.code, 'plan_allowance_used');
   assert.equal(a.reason, planAllowanceUsed.error.message);
   assert.equal(a.request, REQUEST);
+
+  // A 403 refusal code is read from the envelope too.
+  const refused = wire([{ status: 200, body: TOKEN }, { status: 403, body: insufficientBalance }]);
+  t.after(refused.restore);
+  const b = await client().search.find('runbook');
+  assert.equal(b.status, 'denied');
+  assert.equal(b.code, 'insufficient_balance');
 });

@@ -210,7 +210,10 @@ export function value<T>(r: Reply, read: (body: unknown) => T): T {
  * (usage.ts), or a [Fault]. What [arm] reads as [Denied] never reaches here.
  */
 function fault(r: Reply, said: { code: string; reason: string }): Error {
-  return limited(r.status, r.body) ?? new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
+  return (
+    limited(r.status, r.body, r.request || undefined) ??
+    new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request)
+  );
 }
 
 /** `{data, total}` — the page shape every listing on this wire answers with. */
