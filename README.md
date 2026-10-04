@@ -133,9 +133,10 @@ A 402 or 429 refusal nothing may pay for throws a subclass of
 | `UsageCapExceededError` | 429 | `usage_cap_exceeded` |
 | `InsufficientBalanceError` | 402 | `insufficient_balance` |
 
-Any other refusal stays an `AxiosError`, as does any refusal through an axios
-instance you pass an `*Api` yourself. A `responseType: 'stream'` body is read
-for the code and left whole on `err.cause.response.data`. `Client`'s six throw
+Any other refusal stays an `AxiosError`, as does a refusal through an `*Api`
+built without the package's `Configuration` or with an axios instance of your
+own. A `responseType: 'stream'` JSON body is read for the code, within the
+request's `signal` and `timeout`, and left whole on `err.cause.response.data`. `Client`'s six throw
 these where they would throw `answer.Fault`; a 402 there is still the `denied`
 arm.
 

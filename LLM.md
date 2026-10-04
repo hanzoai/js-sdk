@@ -235,15 +235,22 @@ looked up in a `Map` so `"constructor"` finds nothing. Class names are literals;
 
 Both transports throw them from the path they already had:
 
-- **axios** — one response interceptor on the default axios instance, installed
-  by the first `src/transport.ts` `Configuration` built. That subclass puts a
-  mark (`hanzoUsage: true`) in `baseOptions`, which every generated request
-  spreads in, and the interceptor acts only on marked requests — so no adapter,
-  transform or other axios traffic of the caller's is touched. An adapter in
-  `baseOptions` was tried first and shadowed an axios instance's own adapter, so
-  a mock-adapter test suite sent real requests. A buffer, blob or stream body is
-  read there; a stream is `tee`d (WHATWG) or replayed through its own
-  constructor's `from` (Node), so the caller still holds every byte. An axios
+- **axios** — one response interceptor on the default axios instance, put there
+  by any `src/transport.ts` `Configuration` that finds it absent (so a test
+  teardown's `interceptors.response.clear()` is undone by the next one). That
+  subclass marks `baseOptions` with `hanzoUsage: <its own interceptor>`, which
+  every generated request spreads in, and the interceptor acts only on requests
+  carrying itself — so no adapter, transform or other axios traffic of the
+  caller's is touched, and two copies of the package on one axios each type only
+  their own. An adapter in `baseOptions` was tried first and shadowed an axios
+  instance's own adapter, so a mock-adapter test suite sent real requests. A
+  buffer or blob body is read there; a stream only when its content-type is JSON
+  (an event stream never is), at most 64 KiB and no longer than the request's
+  signal and timeout, then replayed — a WHATWG `ReadableStream`, or a Node stream
+  through its own constructor's `from` — so the caller still holds every byte. A
+  body that cannot be read leaves the `AxiosError`. A caller's interceptor added
+  after the first `Configuration` sees the typed error, one added before sees
+  the `AxiosError`. An axios
   instance passed as an `*Api`'s third argument has its own interceptors: a
   refusal through it stays an `AxiosError`. `hanzo.ts` exports the subclass by
   name, and an explicit export shadows `export *`, so `Configuration` from
