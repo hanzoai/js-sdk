@@ -13,7 +13,7 @@
 // `client.configuration` and construct one with the same identity.
 
 import { Fault, type Call, type Query, type Reply } from './answer';
-import { Configuration } from './configuration';
+import { Configuration } from './transport';
 import { Audit } from './audit';
 import { Budget } from './budget';
 import { Graph } from './graph';
@@ -120,7 +120,8 @@ export class Client {
   /**
    * A Configuration carrying this client's identity, for the generated *Api
    * classes. The `accessToken` reader is a function, so every generated call
-   * mints or re-uses through the same cache the six use.
+   * mints or re-uses through the same cache the six use, and a usage refusal
+   * arrives as its typed error (transport.ts).
    */
   get configuration(): Configuration {
     return new Configuration({ basePath: this.base, accessToken: () => this.token() });

@@ -23,8 +23,26 @@
 
 export * from './index';
 
+// The generated Configuration, plus typed usage refusals on every *Api call
+// made with it. Named here, it shadows the one `./index` exports.
+export { Configuration } from './transport';
+
 export { Client } from './client';
 export type { Options } from './client';
+
+// What a priced answer's headers say, and the six refusals a caller can act on —
+// the same names as the Python and Go SDKs.
+export {
+  readUsage,
+  UsageLimitError,
+  PlanAllowanceUsedError,
+  PaidPlanRequiredError,
+  FreePlanCapError,
+  ModelCapError,
+  UsageCapExceededError,
+  InsufficientBalanceError,
+} from './usage';
+export type { Usage, UsageAction, HeaderSource } from './usage';
 
 export * as answer from './answer';
 export * as budget from './budget';

@@ -23,14 +23,19 @@ export function wire(script) {
   const sent = [];
   const real = globalThis.fetch;
   let n = 0;
-  globalThis.fetch = async (url, init = {}) => {
+  globalThis.fetch = async (input, init = {}) => {
+    // axios's fetch adapter hands over a Request and no init; the six hand over
+    // a URL and an init. One record either way.
+    const req = input instanceof Request ? input : undefined;
+    const url = req ? req.url : String(input);
+    const method = init.method ?? req?.method ?? 'GET';
     const step = script[n++];
-    if (!step) throw new Error(`wire: no answer scripted for ${init.method ?? 'GET'} ${url}`);
+    if (!step) throw new Error(`wire: no answer scripted for ${method} ${url}`);
     sent.push({
-      url: String(url),
-      method: init.method ?? 'GET',
-      headers: init.headers ?? {},
-      body: init.body,
+      url,
+      method,
+      headers: req ? Object.fromEntries(req.headers) : init.headers ?? {},
+      body: req ? (await req.text()) || undefined : init.body,
     });
     const body = typeof step.body === 'string' || step.body === undefined
       ? step.body ?? ''
@@ -59,6 +64,18 @@ export const client = (options = {}) =>
 
 /** The JSON a recorded request carried. */
 export const json = (request) => JSON.parse(request.body);
+
+/**
+ * The package's Configuration, sending through axios's fetch adapter so the
+ * generated client's requests reach the scripted fetch above.
+ */
+export const configuration = (options = {}) =>
+  new hanzoai.Configuration({
+    basePath: 'https://api.hanzo.ai',
+    accessToken: 'tok-1',
+    baseOptions: { adapter: 'fetch' },
+    ...options,
+  });
 
 /** The query terms a recorded request carried. */
 export const terms = (request) => Object.fromEntries(new URL(request.url).searchParams);

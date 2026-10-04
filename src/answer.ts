@@ -10,6 +10,7 @@
 // read, so there is no arm for them.
 
 import { list, num, obj, str } from './read';
+import { limited } from './usage';
 
 /** One way out of a refusal, in the order to offer them. */
 export interface Cure {
@@ -143,15 +144,17 @@ const refusals = new Set(['spend_cap_exceeded', 'insufficient_balance']);
 function refusal(body: unknown): { code: string; reason: string; product?: string; cures: Cure[] } {
   const b = obj(body);
   // RFC 9457 spells the code `code` and the sentence `detail`; the spend gate's
-  // own body spells them `error` and `message` and adds `product` and `cure[]`.
-  // Its own `reason` — "unpaid", "unresolved" — names the admit leg that failed
-  // rather than explaining anything to a person, so it is not read. One reader,
-  // named fallbacks — not two paths — so it keeps working unchanged when cloud
-  // settles on the envelope alone.
+  // own body spells them `error` and `message` and adds `product` and `cure[]`;
+  // the AI gateway's OpenAI envelope nests `code` and `message` under `error`.
+  // The spend gate's `reason` — "unpaid", "unresolved" — names the admit leg that
+  // failed rather than explaining anything to a person, so it is not read. One
+  // reader, named fallbacks — not three paths — so it keeps working unchanged
+  // when cloud settles on one envelope.
+  const e = obj(b['error']);
   const product = str(b['product']);
   return {
-    code: str(b['code']) || str(b['error']),
-    reason: str(b['detail']) || str(b['message']),
+    code: str(b['code']) || str(b['error']) || str(e['code']),
+    reason: str(b['detail']) || str(b['message']) || str(e['message']),
     ...(product ? { product } : {}),
     cures: list(b['cure']).map((c) => {
       const cure = obj(c);
@@ -193,14 +196,21 @@ export function arm<T>(r: Reply, read: (body: unknown) => T): Answer<T> {
   if (r.status === 402 || (r.status === 403 && refusals.has(said.code))) {
     return { status: 'denied', ...said, request: r.request };
   }
-  throw new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
+  throw fault(r, said);
 }
 
 /** A read no gate refuses: the value, or a [Fault] because nothing was decided. */
 export function value<T>(r: Reply, read: (body: unknown) => T): T {
   if (r.status >= 200 && r.status < 300) return read(r.body);
-  const said = refusal(r.body);
-  throw new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
+  throw fault(r, refusal(r.body));
+}
+
+/**
+ * What a call that decided nothing throws: the usage refusal the body names
+ * (usage.ts), or a [Fault]. What [arm] reads as [Denied] never reaches here.
+ */
+function fault(r: Reply, said: { code: string; reason: string }): Error {
+  return limited(r.status, r.body) ?? new Fault(r.status, said.code, said.reason || `HTTP ${r.status}`, r.request);
 }
 
 /** `{data, total}` — the page shape every listing on this wire answers with. */
