@@ -2674,7 +2674,6 @@ export * from './store';
 export * from './sweep';
 export * from './sync-endpoint-req';
 export * from './sync-endpoint-view';
-export * from './sync-native-view';
 export * from './sync-patch-sync-in';
 export * from './sync-sync-list';
 export * from './sync-sync-queued';

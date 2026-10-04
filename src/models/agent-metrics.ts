@@ -117,17 +117,17 @@ export interface AgentMetrics {
      */
     'load1'?: number;
     /**
-     * Load5 is the same figure averaged over five minutes.
-     * @type {number}
-     * @memberof AgentMetrics
-     */
-    'load5'?: number;
-    /**
      * Load15 is the same figure over fifteen. The three together are what separate a machine that is busy right now from one that has been busy all along — which is the question a dispatcher is really asking.
      * @type {number}
      * @memberof AgentMetrics
      */
     'load15'?: number;
+    /**
+     * Load5 is the same figure averaged over five minutes.
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'load5'?: number;
     /**
      * bytes
      * @type {number}

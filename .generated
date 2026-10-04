@@ -2803,7 +2803,6 @@ src/models/store.ts
 src/models/sweep.ts
 src/models/sync-endpoint-req.ts
 src/models/sync-endpoint-view.ts
-src/models/sync-native-view.ts
 src/models/sync-patch-sync-in.ts
 src/models/sync-sync-list.ts
 src/models/sync-sync-queued.ts
