@@ -15,19 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainSeries } from './train-series';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainMetricsOut
  */
-export interface AccountApiKeyList {
+export interface TrainMetricsOut {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Data is one series per metric name.
+     * @type {Array<TrainSeries>}
+     * @memberof TrainMetricsOut
      */
-    'keys'?: Array<AccountApiKey>;
+    'data'?: Array<TrainSeries>;
 }
 

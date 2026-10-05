@@ -15,19 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainUpload } from './train-upload';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainRegisterOut
  */
-export interface AccountApiKeyList {
+export interface TrainRegisterOut {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * SHA256 names the artifact.
+     * @type {string}
+     * @memberof TrainRegisterOut
      */
-    'keys'?: Array<AccountApiKey>;
+    'sha256'?: string;
+    /**
+     * Stored says the org already holds these bytes: nothing to upload.
+     * @type {boolean}
+     * @memberof TrainRegisterOut
+     */
+    'stored'?: boolean;
+    /**
+     * Upload is the grant to PUT the bytes, when they are not stored.
+     * @type {TrainUpload}
+     * @memberof TrainRegisterOut
+     */
+    'upload'?: TrainUpload;
 }
 

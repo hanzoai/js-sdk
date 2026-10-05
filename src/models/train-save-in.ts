@@ -15,19 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainOutput } from './train-output';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainSaveIn
  */
-export interface AccountApiKeyList {
+export interface TrainSaveIn {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * ID names the client.
+     * @type {string}
+     * @memberof TrainSaveIn
      */
-    'keys'?: Array<AccountApiKey>;
+    'id'?: string;
+    /**
+     * Name is the adapter\'s name.
+     * @type {string}
+     * @memberof TrainSaveIn
+     */
+    'name'?: string;
+    /**
+     * Output is lora, the one kind a client writes.
+     * @type {TrainOutput}
+     * @memberof TrainSaveIn
+     */
+    'output'?: TrainOutput;
 }
 

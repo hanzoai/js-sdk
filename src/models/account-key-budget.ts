@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface AccountKeyBudget
  */
-export interface AccountApiKeyList {
+export interface AccountKeyBudget {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Month is per calendar month, UTC.
+     * @type {number}
+     * @memberof AccountKeyBudget
      */
-    'keys'?: Array<AccountApiKey>;
+    'month'?: number;
+    /**
+     * Total is over the key\'s whole life.
+     * @type {number}
+     * @memberof AccountKeyBudget
+     */
+    'total'?: number;
 }
 

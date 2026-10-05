@@ -13,21 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainEvent
  */
-export interface AccountApiKeyList {
+export interface TrainEvent {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * At is when it was recorded, unix seconds.
+     * @type {number}
+     * @memberof TrainEvent
      */
-    'keys'?: Array<AccountApiKey>;
+    'at'?: number;
+    /**
+     * 
+     * @type {any}
+     * @memberof TrainEvent
+     */
+    'event'?: any;
+    /**
+     * Seq orders the job\'s events from 1.
+     * @type {number}
+     * @memberof TrainEvent
+     */
+    'seq'?: number;
+    /**
+     * Task is the task that reported it.
+     * @type {string}
+     * @memberof TrainEvent
+     */
+    'task'?: string;
 }
 

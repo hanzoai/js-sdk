@@ -13,21 +13,18 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainEvaluation
  */
-export interface AccountApiKeyList {
+export interface TrainEvaluation {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Suites are the suites the job is meant to improve.
+     * @type {Array<string>}
+     * @memberof TrainEvaluation
      */
-    'keys'?: Array<AccountApiKey>;
+    'suites'?: Array<string>;
 }
 

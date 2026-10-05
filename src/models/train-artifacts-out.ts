@@ -15,19 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainDownload } from './train-download';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainArtifactsOut
  */
-export interface AccountApiKeyList {
+export interface TrainArtifactsOut {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Data is the job\'s artifacts.
+     * @type {Array<TrainDownload>}
+     * @memberof TrainArtifactsOut
      */
-    'keys'?: Array<AccountApiKey>;
+    'data'?: Array<TrainDownload>;
 }
 

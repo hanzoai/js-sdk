@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainDataset
  */
-export interface AccountApiKeyList {
+export interface TrainDataset {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Splits maps a role (train, validation) to the dataset\'s own split name.
+     * @type {{ [key: string]: string; }}
+     * @memberof TrainDataset
      */
-    'keys'?: Array<AccountApiKey>;
+    'splits'?: { [key: string]: string; };
+    /**
+     * URI names the data.
+     * @type {string}
+     * @memberof TrainDataset
+     */
+    'uri'?: string;
 }
 

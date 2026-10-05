@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainOptimIn
  */
-export interface AccountApiKeyList {
+export interface TrainOptimIn {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * 
+     * @type {any}
+     * @memberof TrainOptimIn
      */
-    'keys'?: Array<AccountApiKey>;
+    'adam_params'?: any;
+    /**
+     * ID names the client.
+     * @type {string}
+     * @memberof TrainOptimIn
+     */
+    'id'?: string;
 }
 

@@ -126,6 +126,7 @@ export * from './api/team-api';
 export * from './api/tel-api';
 export * from './api/template-api';
 export * from './api/tool-api';
+export * from './api/train-api';
 export * from './api/translate-api';
 export * from './api/treasury-api';
 export * from './api/trust-api';

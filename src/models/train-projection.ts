@@ -13,21 +13,18 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainProjection
  */
-export interface AccountApiKeyList {
+export interface TrainProjection {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Strength is λ in [0, 1]; absent is 1, the whole of P g removed.
+     * @type {number}
+     * @memberof TrainProjection
      */
-    'keys'?: Array<AccountApiKey>;
+    'strength'?: number;
 }
 

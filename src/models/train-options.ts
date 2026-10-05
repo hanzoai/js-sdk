@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainOptions
  */
-export interface AccountApiKeyList {
+export interface TrainOptions {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Labels are its option labels, in order: a choice\'s criteria, a score\'s levels as text, a noul\'s two sides.
+     * @type {Array<string>}
+     * @memberof TrainOptions
      */
-    'keys'?: Array<AccountApiKey>;
+    'labels'?: Array<string>;
+    /**
+     * Type is choice, score or noul.
+     * @type {string}
+     * @memberof TrainOptions
+     */
+    'type'?: string;
 }
 

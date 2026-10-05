@@ -105,6 +105,24 @@ export interface IamKey {
      */
     'owner'?: string;
     /**
+     * Prefix is the head of the credential the holder presents — the sk- of a secret key, the pk- of a publishable one — recorded when the key is minted (PrefixOf). It lets a listing say which string a row is, and is far too short to use: the secret itself is never stored.
+     * @type {string}
+     * @memberof IamKey
+     */
+    'prefix'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamKey
+     */
+    'revokeTime'?: string;
+    /**
+     * Revoker is who revoked the key and RevokeTime when. Revoking sets State to KeyStateRevoked and keeps the row, so the key is still listed and its history can be read; the resolvers refuse it, and no update reopens it.
+     * @type {string}
+     * @memberof IamKey
+     */
+    'revoker'?: string;
+    /**
      * Scope is the key\'s ACCESS CLASS, orthogonal to Type (which names the bound principal). Empty (the default, \"secret\") is a full key: a pk- publishable half AND a confidential sk- half, the sk- authenticating a server-side reader. KeyScopePublish is a WRITE-ONLY publishable key — a pk- half only, no secret — that resolves to just an ORG (never a principal) at the ingest endpoint and is safe to ship in client JS. A missing value on an existing row reads as the default, so every pre-Scope key is a secret key unchanged.
      * @type {string}
      * @memberof IamKey
@@ -134,6 +152,12 @@ export interface IamKey {
      * @memberof IamKey
      */
     'updatedTime'?: string;
+    /**
+     * UsedTime is when the key was last presented and resolved. A list read fills it from the key\'s Sighting; the key row itself never holds it, so recording a use never rewrites the row a person may be editing.
+     * @type {string}
+     * @memberof IamKey
+     */
+    'usedTime'?: string;
     /**
      * 
      * @type {string}

@@ -13,21 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainTerm
  */
-export interface AccountApiKeyList {
+export interface TrainTerm {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Kind names the term.
+     * @type {string}
+     * @memberof TrainTerm
      */
-    'keys'?: Array<AccountApiKey>;
+    'kind'?: string;
+    /**
+     * Margin is a hinge\'s margin, in logits.
+     * @type {number}
+     * @memberof TrainTerm
+     */
+    'margin'?: number;
+    /**
+     * Weight scales it; 0 is off.
+     * @type {number}
+     * @memberof TrainTerm
+     */
+    'weight'?: number;
 }
 

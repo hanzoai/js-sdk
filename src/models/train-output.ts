@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainOutput
  */
-export interface AccountApiKeyList {
+export interface TrainOutput {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Kind is checkpoint, lora, capability, basis or merged.
+     * @type {string}
+     * @memberof TrainOutput
      */
-    'keys'?: Array<AccountApiKey>;
+    'kind'?: string;
+    /**
+     * Name labels it.
+     * @type {string}
+     * @memberof TrainOutput
+     */
+    'name'?: string;
 }
 
