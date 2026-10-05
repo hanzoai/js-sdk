@@ -244,6 +244,7 @@ src/models/ai-decision-sides.ts
 src/models/ai-decision.ts
 src/models/ai-decisions-action.ts
 src/models/ai-decisions-answer.ts
+src/models/ai-decisions-boolean.ts
 src/models/ai-decisions-choice.ts
 src/models/ai-decisions-noul.ts
 src/models/ai-decisions-question.ts
@@ -545,6 +546,7 @@ src/models/captable-captable-updated.ts
 src/models/capture-batch.ts
 src/models/capture-event.ts
 src/models/capture-result.ts
+src/models/captured.ts
 src/models/cart-item-set.ts
 src/models/cart-item.ts
 src/models/cart-open.ts
@@ -709,6 +711,9 @@ src/models/content-storefront-result.ts
 src/models/content-transition-in.ts
 src/models/content-transition-result.ts
 src/models/cookie-ack.ts
+src/models/correct-in.ts
+src/models/correction.ts
+src/models/corrections.ts
 src/models/count.ts
 src/models/crawl-crawl-document.ts
 src/models/crawl-crawl-request.ts
@@ -2980,12 +2985,20 @@ src/models/train-artifact.ts
 src/models/train-artifacts-out.ts
 src/models/train-assignment.ts
 src/models/train-budget.ts
+src/models/train-capabilities-out.ts
+src/models/train-capability.ts
+src/models/train-capture-in.ts
+src/models/train-capture.ts
 src/models/train-catalog.ts
 src/models/train-chose.ts
 src/models/train-claim-in.ts
 src/models/train-claimed.ts
 src/models/train-client-list.ts
+src/models/train-correction-group.ts
+src/models/train-correction.ts
+src/models/train-corrections-out.ts
 src/models/train-create-client-in.ts
+src/models/train-create-in.ts
 src/models/train-dataset.ts
 src/models/train-deleted-out.ts
 src/models/train-download.ts
@@ -2996,6 +3009,7 @@ src/models/train-family.ts
 src/models/train-forward-in.ts
 src/models/train-job.ts
 src/models/train-jobs-out.ts
+src/models/train-live.ts
 src/models/train-metrics-out.ts
 src/models/train-object.ts
 src/models/train-objective.ts
@@ -3006,7 +3020,9 @@ src/models/train-output.ts
 src/models/train-part.ts
 src/models/train-projection.ts
 src/models/train-protect.ts
+src/models/train-publish-cap-in.ts
 src/models/train-publish-in.ts
+src/models/train-question.ts
 src/models/train-register-in.ts
 src/models/train-register-out.ts
 src/models/train-report-in.ts
@@ -3021,9 +3037,12 @@ src/models/train-spec.ts
 src/models/train-supports.ts
 src/models/train-task-view.ts
 src/models/train-term.ts
+src/models/train-train-in.ts
+src/models/train-unmade-out.ts
 src/models/train-upload-in.ts
 src/models/train-upload.ts
 src/models/train-usage.ts
+src/models/train-version.ts
 src/models/translate-memory-entry.ts
 src/models/translate-memory-page.ts
 src/models/translate-review-request.ts

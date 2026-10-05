@@ -62,6 +62,12 @@ import type { AiTokenCount } from '../models';
 // @ts-ignore
 import type { AiVideoStatus } from '../models';
 // @ts-ignore
+import type { CorrectIn } from '../models';
+// @ts-ignore
+import type { Correction } from '../models';
+// @ts-ignore
+import type { Corrections } from '../models';
+// @ts-ignore
 import type { DocSearchResult } from '../models';
 // @ts-ignore
 import type { Envelope } from '../models';
@@ -483,6 +489,130 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(aiLimitsSet, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why. A decision Kai captured can teach a capability of its question (/v1/capabilities); one made with capture off is kept with state missing and cannot. The org\'s first correction turns capture on, so its next decisions can teach. Refused: 409 not_wrong when the answer is Kai\'s own, 409 corrected when the question already has a correction, 404 when the decision captured no such question.
+         * @summary Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why.
+         * @param {string} decision Decision is the decision\&#39;s id.
+         * @param {CorrectIn} correctIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsCorrect: async (decision: string, correctIn: CorrectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'decision' is not null or undefined
+            assertParamExists('decisionsCorrect', 'decision', decision)
+            // verify required parameter 'correctIn' is not null or undefined
+            assertParamExists('decisionsCorrect', 'correctIn', correctIn)
+            const localVarPath = `/v1/decisions/{decision}/corrections`
+                .replace(`{${"decision"}}`, encodeURIComponent(String(decision)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(correctIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @summary Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @param {string} decision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsCorrections: async (decision: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'decision' is not null or undefined
+            assertParamExists('decisionsCorrections', 'decision', decision)
+            const localVarPath = `/v1/decisions/{decision}/corrections`
+                .replace(`{${"decision"}}`, encodeURIComponent(String(decision)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes one correction of one of the org\'s decisions. A capability already taught from it keeps its versions.
+         * @summary Deletes one correction of one of the org\'s decisions.
+         * @param {string} decision 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsUncorrect: async (decision: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'decision' is not null or undefined
+            assertParamExists('decisionsUncorrect', 'decision', decision)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('decisionsUncorrect', 'id', id)
+            const localVarPath = `/v1/decisions/{decision}/corrections/{id}`
+                .replace(`{${"decision"}}`, encodeURIComponent(String(decision)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -12505,6 +12635,47 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why. A decision Kai captured can teach a capability of its question (/v1/capabilities); one made with capture off is kept with state missing and cannot. The org\'s first correction turns capture on, so its next decisions can teach. Refused: 409 not_wrong when the answer is Kai\'s own, 409 corrected when the question already has a correction, 404 when the decision captured no such question.
+         * @summary Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why.
+         * @param {string} decision Decision is the decision\&#39;s id.
+         * @param {CorrectIn} correctIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async decisionsCorrect(decision: string, correctIn: CorrectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Correction>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.decisionsCorrect(decision, correctIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.decisionsCorrect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @summary Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @param {string} decision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async decisionsCorrections(decision: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Corrections>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.decisionsCorrections(decision, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.decisionsCorrections']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes one correction of one of the org\'s decisions. A capability already taught from it keeps its versions.
+         * @summary Deletes one correction of one of the org\'s decisions.
+         * @param {string} decision 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async decisionsUncorrect(decision: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.decisionsUncorrect(decision, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.decisionsUncorrect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Delete one article.
          * @summary Delete a article
          * @param {string} owner 
@@ -16566,6 +16737,36 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.aiSetLimits(requestParameters.aiLimitsSet, options).then((request) => request(axios, basePath));
         },
         /**
+         * Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why. A decision Kai captured can teach a capability of its question (/v1/capabilities); one made with capture off is kept with state missing and cannot. The org\'s first correction turns capture on, so its next decisions can teach. Refused: 409 not_wrong when the answer is Kai\'s own, 409 corrected when the question already has a correction, 404 when the decision captured no such question.
+         * @summary Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why.
+         * @param {AiApiDecisionsCorrectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsCorrect(requestParameters: AiApiDecisionsCorrectRequest, options?: RawAxiosRequestConfig): AxiosPromise<Correction> {
+            return localVarFp.decisionsCorrect(requestParameters.decision, requestParameters.correctIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @summary Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+         * @param {AiApiDecisionsCorrectionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsCorrections(requestParameters: AiApiDecisionsCorrectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Corrections> {
+            return localVarFp.decisionsCorrections(requestParameters.decision, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes one correction of one of the org\'s decisions. A capability already taught from it keeps its versions.
+         * @summary Deletes one correction of one of the org\'s decisions.
+         * @param {AiApiDecisionsUncorrectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        decisionsUncorrect(requestParameters: AiApiDecisionsUncorrectRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.decisionsUncorrect(requestParameters.decision, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Delete one article.
          * @summary Delete a article
          * @param {AiApiDeleteAiArticlesByOwnerByNameRequest} requestParameters Request parameters.
@@ -19575,6 +19776,62 @@ export interface AiApiAiSetLimitsRequest {
      * @memberof AiApiAiSetLimits
      */
     readonly aiLimitsSet: AiLimitsSet
+}
+
+/**
+ * Request parameters for decisionsCorrect operation in AiApi.
+ * @export
+ * @interface AiApiDecisionsCorrectRequest
+ */
+export interface AiApiDecisionsCorrectRequest {
+    /**
+     * Decision is the decision\&#39;s id.
+     * @type {string}
+     * @memberof AiApiDecisionsCorrect
+     */
+    readonly decision: string
+
+    /**
+     * 
+     * @type {CorrectIn}
+     * @memberof AiApiDecisionsCorrect
+     */
+    readonly correctIn: CorrectIn
+}
+
+/**
+ * Request parameters for decisionsCorrections operation in AiApi.
+ * @export
+ * @interface AiApiDecisionsCorrectionsRequest
+ */
+export interface AiApiDecisionsCorrectionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiApiDecisionsCorrections
+     */
+    readonly decision: string
+}
+
+/**
+ * Request parameters for decisionsUncorrect operation in AiApi.
+ * @export
+ * @interface AiApiDecisionsUncorrectRequest
+ */
+export interface AiApiDecisionsUncorrectRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiApiDecisionsUncorrect
+     */
+    readonly decision: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AiApiDecisionsUncorrect
+     */
+    readonly id: string
 }
 
 /**
@@ -23139,6 +23396,42 @@ export class AiApi extends BaseAPI {
      */
     public aiSetLimits(requestParameters: AiApiAiSetLimitsRequest, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).aiSetLimits(requestParameters.aiLimitsSet, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why. A decision Kai captured can teach a capability of its question (/v1/capabilities); one made with capture off is kept with state missing and cannot. The org\'s first correction turns capture on, so its next decisions can teach. Refused: 409 not_wrong when the answer is Kai\'s own, 409 corrected when the question already has a correction, 404 when the decision captured no such question.
+     * @summary Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why.
+     * @param {AiApiDecisionsCorrectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public decisionsCorrect(requestParameters: AiApiDecisionsCorrectRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).decisionsCorrect(requestParameters.decision, requestParameters.correctIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+     * @summary Answers one of the org\'s decisions\' corrections, each captured (it can teach) or missing (the decision was made with capture off).
+     * @param {AiApiDecisionsCorrectionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public decisionsCorrections(requestParameters: AiApiDecisionsCorrectionsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).decisionsCorrections(requestParameters.decision, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes one correction of one of the org\'s decisions. A capability already taught from it keeps its versions.
+     * @summary Deletes one correction of one of the org\'s decisions.
+     * @param {AiApiDecisionsUncorrectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public decisionsUncorrect(requestParameters: AiApiDecisionsUncorrectRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).decisionsUncorrect(requestParameters.decision, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
