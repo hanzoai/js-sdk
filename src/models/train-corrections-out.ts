@@ -15,21 +15,28 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionsBoolean } from './ai-decisions-boolean';
+import type { TrainCorrection } from './train-correction';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionsChoice } from './ai-decisions-choice';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionsNoul } from './ai-decisions-noul';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionsScore } from './ai-decisions-score';
+import type { TrainCorrectionGroup } from './train-correction-group';
 
 /**
- * @type AiDecisionsQuestion
+ * 
  * @export
+ * @interface TrainCorrectionsOut
  */
-export type AiDecisionsQuestion = { type: 'boolean' } & AiDecisionsBoolean | { type: 'choice' } & AiDecisionsChoice | { type: 'noul' } & AiDecisionsNoul | { type: 'score' } & AiDecisionsScore;
-
+export interface TrainCorrectionsOut {
+    /**
+     * 
+     * @type {Array<TrainCorrection>}
+     * @memberof TrainCorrectionsOut
+     */
+    'data'?: Array<TrainCorrection>;
+    /**
+     * 
+     * @type {Array<TrainCorrectionGroup>}
+     * @memberof TrainCorrectionsOut
+     */
+    'questions'?: Array<TrainCorrectionGroup>;
+}
 

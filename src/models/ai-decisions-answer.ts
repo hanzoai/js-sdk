@@ -70,6 +70,12 @@ export interface AiDecisionsAnswer {
      * @type {number}
      * @memberof AiDecisionsAnswer
      */
+    'probability'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AiDecisionsAnswer
+     */
     'score'?: number;
     /**
      * 
@@ -80,6 +86,7 @@ export interface AiDecisionsAnswer {
 }
 
 export const AiDecisionsAnswerTypeEnum = {
+    Boolean: 'boolean',
     Noul: 'noul',
     Choice: 'choice',
     Score: 'score'

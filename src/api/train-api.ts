@@ -28,13 +28,25 @@ import type { TrainArtifactsOut } from '../models';
 // @ts-ignore
 import type { TrainAssignment } from '../models';
 // @ts-ignore
+import type { TrainCapabilitiesOut } from '../models';
+// @ts-ignore
+import type { TrainCapability } from '../models';
+// @ts-ignore
+import type { TrainCapture } from '../models';
+// @ts-ignore
+import type { TrainCaptureIn } from '../models';
+// @ts-ignore
 import type { TrainCatalog } from '../models';
 // @ts-ignore
 import type { TrainClaimIn } from '../models';
 // @ts-ignore
 import type { TrainClientList } from '../models';
 // @ts-ignore
+import type { TrainCorrectionsOut } from '../models';
+// @ts-ignore
 import type { TrainCreateClientIn } from '../models';
+// @ts-ignore
+import type { TrainCreateIn } from '../models';
 // @ts-ignore
 import type { TrainDeletedOut } from '../models';
 // @ts-ignore
@@ -54,6 +66,8 @@ import type { TrainObjectsOut } from '../models';
 // @ts-ignore
 import type { TrainOptimIn } from '../models';
 // @ts-ignore
+import type { TrainPublishCapIn } from '../models';
+// @ts-ignore
 import type { TrainPublishIn } from '../models';
 // @ts-ignore
 import type { TrainRegisterIn } from '../models';
@@ -70,6 +84,10 @@ import type { TrainSaveIn } from '../models';
 // @ts-ignore
 import type { TrainSpec } from '../models';
 // @ts-ignore
+import type { TrainTrainIn } from '../models';
+// @ts-ignore
+import type { TrainUnmadeOut } from '../models';
+// @ts-ignore
 import type { TrainUploadIn } from '../models';
 /**
  * TrainApi - axios parameter creator
@@ -77,6 +95,433 @@ import type { TrainUploadIn } from '../models';
  */
 export const TrainApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from. Off until the org turns it on or files its first correction.
+         * @summary Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCapture: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/capabilities/capture`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @summary Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @param {string} [question] Question keeps one question\&#39;s corrections.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCorrections: async (question?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/capabilities/corrections`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (question !== undefined) {
+                localVarQueryParameter['question'] = question;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * @param {TrainCreateIn} trainCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCreate: async (trainCreateIn: TrainCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trainCreateIn' is not null or undefined
+            assertParamExists('capabilitiesCreate', 'trainCreateIn', trainCreateIn)
+            const localVarPath = `/v1/capabilities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trainCreateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes a capability and its versions; their artifacts go with the org\'s retention. Refused 409 installed while a version is in the set: disable it first.
+         * @summary Deletes a capability and its versions; their artifacts go with the org\'s retention.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesDelete: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesDelete', 'name', name)
+            const localVarPath = `/v1/capabilities/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision. Its versions stay, and any one that passed can be published again.
+         * @summary Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesDisable: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesDisable', 'name', name)
+            const localVarPath = `/v1/capabilities/{name}/disable`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @summary Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesGet: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesGet', 'name', name)
+            const localVarPath = `/v1/capabilities/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @summary Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/capabilities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now. Refused 409: not_publishable (no passing version, or that one did not pass), needs_validation (Kai\'s base moved since it was taught: train again), route_conflict (a published job answers its question).
+         * @summary Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now.
+         * @param {string} name 
+         * @param {TrainPublishCapIn} trainPublishCapIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesPublish: async (name: string, trainPublishCapIn: TrainPublishCapIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesPublish', 'name', name)
+            // verify required parameter 'trainPublishCapIn' is not null or undefined
+            assertParamExists('capabilitiesPublish', 'trainPublishCapIn', trainPublishCapIn)
+            const localVarPath = `/v1/capabilities/{name}/publish`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trainPublishCapIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained. Refused 409 no_previous when none was installed before it, and needs_validation when that one was taught over another base than Kai serves.
+         * @summary Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesRollback: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesRollback', 'name', name)
+            const localVarPath = `/v1/capabilities/{name}/rollback`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Turns capture on or off for the org\'s Kai decisions from the next one. Off keeps what was captured until its retention ends.
+         * @summary Turns capture on or off for the org\'s Kai decisions from the next one.
+         * @param {TrainCaptureIn} trainCaptureIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesSetCapture: async (trainCaptureIn: TrainCaptureIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trainCaptureIn' is not null or undefined
+            assertParamExists('capabilitiesSetCapture', 'trainCaptureIn', trainCaptureIn)
+            const localVarPath = `/v1/capabilities/capture`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trainCaptureIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
+         * @param {string} name 
+         * @param {TrainTrainIn} trainTrainIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesTrain: async (name: string, trainTrainIn: TrainTrainIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesTrain', 'name', name)
+            // verify required parameter 'trainTrainIn' is not null or undefined
+            assertParamExists('capabilitiesTrain', 'trainTrainIn', trainTrainIn)
+            const localVarPath = `/v1/capabilities/{name}/train`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trainTrainIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed. A published object is 409 published, and one a job that has not ended reads or produced is 409 in_use. Another org\'s sha256 is not found, exactly as an unknown one is.
          * @summary Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed.
@@ -1054,6 +1499,149 @@ export const TrainApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TrainApiAxiosParamCreator(configuration)
     return {
         /**
+         * Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from. Off until the org turns it on or files its first correction.
+         * @summary Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesCapture(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapture>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesCapture(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesCapture']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @summary Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @param {string} [question] Question keeps one question\&#39;s corrections.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesCorrections(question?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCorrectionsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesCorrections(question, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesCorrections']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * @param {TrainCreateIn} trainCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesCreate(trainCreateIn: TrainCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesCreate(trainCreateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes a capability and its versions; their artifacts go with the org\'s retention. Refused 409 installed while a version is in the set: disable it first.
+         * @summary Deletes a capability and its versions; their artifacts go with the org\'s retention.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesDelete(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainUnmadeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesDelete(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision. Its versions stay, and any one that passed can be published again.
+         * @summary Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesDisable(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesDisable(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesDisable']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @summary Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesGet(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesGet(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @summary Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapabilitiesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesList(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now. Refused 409: not_publishable (no passing version, or that one did not pass), needs_validation (Kai\'s base moved since it was taught: train again), route_conflict (a published job answers its question).
+         * @summary Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now.
+         * @param {string} name 
+         * @param {TrainPublishCapIn} trainPublishCapIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesPublish(name: string, trainPublishCapIn: TrainPublishCapIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesPublish(name, trainPublishCapIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesPublish']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained. Refused 409 no_previous when none was installed before it, and needs_validation when that one was taught over another base than Kai serves.
+         * @summary Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesRollback(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesRollback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Turns capture on or off for the org\'s Kai decisions from the next one. Off keeps what was captured until its retention ends.
+         * @summary Turns capture on or off for the org\'s Kai decisions from the next one.
+         * @param {TrainCaptureIn} trainCaptureIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesSetCapture(trainCaptureIn: TrainCaptureIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapture>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesSetCapture(trainCaptureIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesSetCapture']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
+         * @param {string} name 
+         * @param {TrainTrainIn} trainTrainIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesTrain(name: string, trainTrainIn: TrainTrainIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesTrain(name, trainTrainIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesTrain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed. A published object is 409 published, and one a job that has not ended reads or produced is 409 in_use. Another org\'s sha256 is not found, exactly as an unknown one is.
          * @summary Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed.
          * @param {string} sha256 SHA256 names the object, from the path.
@@ -1383,6 +1971,114 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = TrainApiFp(configuration)
     return {
         /**
+         * Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from. Off until the org turns it on or files its first correction.
+         * @summary Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCapture(options?: RawAxiosRequestConfig): AxiosPromise<TrainCapture> {
+            return localVarFp.capabilitiesCapture(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @summary Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+         * @param {TrainApiCapabilitiesCorrectionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCorrections(requestParameters: TrainApiCapabilitiesCorrectionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrainCorrectionsOut> {
+            return localVarFp.capabilitiesCorrections(requestParameters.question, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * @param {TrainApiCapabilitiesCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesCreate(requestParameters: TrainApiCapabilitiesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesCreate(requestParameters.trainCreateIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes a capability and its versions; their artifacts go with the org\'s retention. Refused 409 installed while a version is in the set: disable it first.
+         * @summary Deletes a capability and its versions; their artifacts go with the org\'s retention.
+         * @param {TrainApiCapabilitiesDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesDelete(requestParameters: TrainApiCapabilitiesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainUnmadeOut> {
+            return localVarFp.capabilitiesDelete(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision. Its versions stay, and any one that passed can be published again.
+         * @summary Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision.
+         * @param {TrainApiCapabilitiesDisableRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesDisable(requestParameters: TrainApiCapabilitiesDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesDisable(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @summary Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+         * @param {TrainApiCapabilitiesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesGet(requestParameters: TrainApiCapabilitiesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesGet(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @summary Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesList(options?: RawAxiosRequestConfig): AxiosPromise<TrainCapabilitiesOut> {
+            return localVarFp.capabilitiesList(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now. Refused 409: not_publishable (no passing version, or that one did not pass), needs_validation (Kai\'s base moved since it was taught: train again), route_conflict (a published job answers its question).
+         * @summary Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now.
+         * @param {TrainApiCapabilitiesPublishRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesPublish(requestParameters: TrainApiCapabilitiesPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesPublish(requestParameters.name, requestParameters.trainPublishCapIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained. Refused 409 no_previous when none was installed before it, and needs_validation when that one was taught over another base than Kai serves.
+         * @summary Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained.
+         * @param {TrainApiCapabilitiesRollbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesRollback(requestParameters: TrainApiCapabilitiesRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesRollback(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Turns capture on or off for the org\'s Kai decisions from the next one. Off keeps what was captured until its retention ends.
+         * @summary Turns capture on or off for the org\'s Kai decisions from the next one.
+         * @param {TrainApiCapabilitiesSetCaptureRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesSetCapture(requestParameters: TrainApiCapabilitiesSetCaptureRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapture> {
+            return localVarFp.capabilitiesSetCapture(requestParameters.trainCaptureIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
+         * @param {TrainApiCapabilitiesTrainRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesTrain(requestParameters: TrainApiCapabilitiesTrainRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
+            return localVarFp.capabilitiesTrain(requestParameters.name, requestParameters.trainTrainIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed. A published object is 409 published, and one a job that has not ended reads or produced is 409 in_use. Another org\'s sha256 is not found, exactly as an unknown one is.
          * @summary Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed.
          * @param {TrainApiDeleteTrainArtifactsBySha256Request} requestParameters Request parameters.
@@ -1621,6 +2317,146 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for capabilitiesCorrections operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesCorrectionsRequest
+ */
+export interface TrainApiCapabilitiesCorrectionsRequest {
+    /**
+     * Question keeps one question\&#39;s corrections.
+     * @type {string}
+     * @memberof TrainApiCapabilitiesCorrections
+     */
+    readonly question?: string
+}
+
+/**
+ * Request parameters for capabilitiesCreate operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesCreateRequest
+ */
+export interface TrainApiCapabilitiesCreateRequest {
+    /**
+     * 
+     * @type {TrainCreateIn}
+     * @memberof TrainApiCapabilitiesCreate
+     */
+    readonly trainCreateIn: TrainCreateIn
+}
+
+/**
+ * Request parameters for capabilitiesDelete operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesDeleteRequest
+ */
+export interface TrainApiCapabilitiesDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesDelete
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for capabilitiesDisable operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesDisableRequest
+ */
+export interface TrainApiCapabilitiesDisableRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesDisable
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for capabilitiesGet operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesGetRequest
+ */
+export interface TrainApiCapabilitiesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesGet
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for capabilitiesPublish operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesPublishRequest
+ */
+export interface TrainApiCapabilitiesPublishRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesPublish
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {TrainPublishCapIn}
+     * @memberof TrainApiCapabilitiesPublish
+     */
+    readonly trainPublishCapIn: TrainPublishCapIn
+}
+
+/**
+ * Request parameters for capabilitiesRollback operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesRollbackRequest
+ */
+export interface TrainApiCapabilitiesRollbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesRollback
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for capabilitiesSetCapture operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesSetCaptureRequest
+ */
+export interface TrainApiCapabilitiesSetCaptureRequest {
+    /**
+     * 
+     * @type {TrainCaptureIn}
+     * @memberof TrainApiCapabilitiesSetCapture
+     */
+    readonly trainCaptureIn: TrainCaptureIn
+}
+
+/**
+ * Request parameters for capabilitiesTrain operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesTrainRequest
+ */
+export interface TrainApiCapabilitiesTrainRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesTrain
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {TrainTrainIn}
+     * @memberof TrainApiCapabilitiesTrain
+     */
+    readonly trainTrainIn: TrainTrainIn
+}
 
 /**
  * Request parameters for deleteTrainArtifactsBySha256 operation in TrainApi.
@@ -1993,6 +2829,136 @@ export interface TrainApiPostTrainJobsClaimRequest {
  * @extends {BaseAPI}
  */
 export class TrainApi extends BaseAPI {
+    /**
+     * Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from. Off until the org turns it on or files its first correction.
+     * @summary Answers whether the org\'s Kai decisions keep their states for its capabilities to learn from.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesCapture(options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesCapture(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+     * @summary Answers every correction of the org\'s decisions, newest first, each captured (it can teach) or missing (its decision was made with capture off), and the questions they ask, each counted: what a capability is made from.
+     * @param {TrainApiCapabilitiesCorrectionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesCorrections(requestParameters: TrainApiCapabilitiesCorrectionsRequest = {}, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesCorrections(requestParameters.question, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+     * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+     * @param {TrainApiCapabilitiesCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesCreate(requestParameters: TrainApiCapabilitiesCreateRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesCreate(requestParameters.trainCreateIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes a capability and its versions; their artifacts go with the org\'s retention. Refused 409 installed while a version is in the set: disable it first.
+     * @summary Deletes a capability and its versions; their artifacts go with the org\'s retention.
+     * @param {TrainApiCapabilitiesDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesDelete(requestParameters: TrainApiCapabilitiesDeleteRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesDelete(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision. Its versions stay, and any one that passed can be published again.
+     * @summary Takes a capability\'s installed version out of the org\'s published set: its questions are answered by base Kai, bit for bit, from the next decision.
+     * @param {TrainApiCapabilitiesDisableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesDisable(requestParameters: TrainApiCapabilitiesDisableRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesDisable(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+     * @summary Answers one capability: its versions with their evaluations, newest first, and what its installed version did live.
+     * @param {TrainApiCapabilitiesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesGet(requestParameters: TrainApiCapabilitiesGetRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesGet(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+     * @summary Answers the org\'s capabilities by name, each with its state, its latest and installed versions, and what the installed one did live.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesList(options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesList(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now. Refused 409: not_publishable (no passing version, or that one did not pass), needs_validation (Kai\'s base moved since it was taught: train again), route_conflict (a published job answers its question).
+     * @summary Installs a version in the org\'s published set, where ai attaches it to the org\'s decisions: the version\'s evaluation must have passed, and it must have been taught over the base Kai serves now.
+     * @param {TrainApiCapabilitiesPublishRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesPublish(requestParameters: TrainApiCapabilitiesPublishRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesPublish(requestParameters.name, requestParameters.trainPublishCapIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained. Refused 409 no_previous when none was installed before it, and needs_validation when that one was taught over another base than Kai serves.
+     * @summary Puts the version installed before the installed one back in the org\'s published set: exactly that version\'s artifact, nothing retrained.
+     * @param {TrainApiCapabilitiesRollbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesRollback(requestParameters: TrainApiCapabilitiesRollbackRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesRollback(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Turns capture on or off for the org\'s Kai decisions from the next one. Off keeps what was captured until its retention ends.
+     * @summary Turns capture on or off for the org\'s Kai decisions from the next one.
+     * @param {TrainApiCapabilitiesSetCaptureRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesSetCapture(requestParameters: TrainApiCapabilitiesSetCaptureRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesSetCapture(requestParameters.trainCaptureIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+     * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
+     * @param {TrainApiCapabilitiesTrainRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesTrain(requestParameters: TrainApiCapabilitiesTrainRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesTrain(requestParameters.name, requestParameters.trainTrainIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed. A published object is 409 published, and one a job that has not ended reads or produced is 409 in_use. Another org\'s sha256 is not found, exactly as an unknown one is.
      * @summary Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed.

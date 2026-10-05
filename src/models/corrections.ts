@@ -15,21 +15,28 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionsBoolean } from './ai-decisions-boolean';
+import type { Captured } from './captured';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionsChoice } from './ai-decisions-choice';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionsNoul } from './ai-decisions-noul';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionsScore } from './ai-decisions-score';
+import type { Correction } from './correction';
 
 /**
- * @type AiDecisionsQuestion
+ * 
  * @export
+ * @interface Corrections
  */
-export type AiDecisionsQuestion = { type: 'boolean' } & AiDecisionsBoolean | { type: 'choice' } & AiDecisionsChoice | { type: 'noul' } & AiDecisionsNoul | { type: 'score' } & AiDecisionsScore;
-
+export interface Corrections {
+    /**
+     * 
+     * @type {Array<Correction>}
+     * @memberof Corrections
+     */
+    'data'?: Array<Correction>;
+    /**
+     * Questions are the decision\'s captured questions, by key; none when it was made with capture off.
+     * @type {Array<Captured>}
+     * @memberof Corrections
+     */
+    'questions'?: Array<Captured>;
+}
 
