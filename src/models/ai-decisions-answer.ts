@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { AiDecisionsAction } from './ai-decisions-action';
 
 /**
@@ -52,10 +49,10 @@ export interface AiDecisionsAnswer {
     'confidence'?: number;
     /**
      * 
-     * @type {{ [key: string]: AiDecisionSidesFalse; }}
+     * @type {{ [key: string]: any; }}
      * @memberof AiDecisionsAnswer
      */
-    'legend'?: { [key: string]: AiDecisionSidesFalse; };
+    'legend'?: { [key: string]: any; };
     /**
      * 
      * @type {number}

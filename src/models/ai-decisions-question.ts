@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { AiDecisionsChoice } from './ai-decisions-choice';
 // May contain unused imports in some cases
 // @ts-ignore

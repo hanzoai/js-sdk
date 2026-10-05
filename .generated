@@ -234,13 +234,15 @@ src/models/ai-anthropic-response.ts
 src/models/ai-anthropic-tool.ts
 src/models/ai-anthropic-usage.ts
 src/models/ai-cache-writes.ts
+src/models/ai-chat-in.ts
+src/models/ai-chat.ts
 src/models/ai-class.ts
 src/models/ai-cost-stats.ts
-src/models/ai-decision-sides-false.ts
+src/models/ai-decide-in.ts
 src/models/ai-decision-sides.ts
+src/models/ai-decision.ts
 src/models/ai-decisions-action.ts
 src/models/ai-decisions-answer.ts
-src/models/ai-decisions-choice-criteria-value.ts
 src/models/ai-decisions-choice.ts
 src/models/ai-decisions-noul.ts
 src/models/ai-decisions-question.ts
@@ -268,8 +270,11 @@ src/models/ai-model-info.ts
 src/models/ai-model-list.ts
 src/models/ai-model-pricing-info.ts
 src/models/ai-model-providers.ts
+src/models/ai-model.ts
+src/models/ai-models.ts
 src/models/ai-panel-judge.ts
 src/models/ai-paused.ts
+src/models/ai-price.ts
 src/models/ai-provider-usage-model-spend.ts
 src/models/ai-provider-usage-series-point.ts
 src/models/ai-provider-usage-totals.ts
@@ -279,6 +284,7 @@ src/models/ai-rank-usage.ts
 src/models/ai-ranked-doc.ts
 src/models/ai-ranked-text.ts
 src/models/ai-ranking.ts
+src/models/ai-receipt.ts
 src/models/ai-response.ts
 src/models/ai-responses-input-details.ts
 src/models/ai-responses-output-details.ts
@@ -291,6 +297,7 @@ src/models/ai-router-stats.ts
 src/models/ai-routing-edit.ts
 src/models/ai-routing-probe.ts
 src/models/ai-routing-proposal.ts
+src/models/ai-routing-reward-request.ts
 src/models/ai-routing-reward-result.ts
 src/models/ai-routing-view.ts
 src/models/ai-stats-window.ts
@@ -346,7 +353,9 @@ src/models/auto-flow.ts
 src/models/auto-last-run.ts
 src/models/auto-patch-flow-in.ts
 src/models/auto-populated-flow.ts
+src/models/auto-post-result.ts
 src/models/auto-prop-spec.ts
+src/models/auto-review-in.ts
 src/models/auto-run-handle.ts
 src/models/auto-run-in.ts
 src/models/auto-run-page.ts
@@ -1048,6 +1057,7 @@ src/models/git-workflow-list.ts
 src/models/git-workflow-run.ts
 src/models/git-workflow-runs.ts
 src/models/git-workflow-view.ts
+src/models/git-workspace-view.ts
 src/models/grants.ts
 src/models/graph-graph-answer-in.ts
 src/models/graph-graph-answer-out.ts
@@ -2812,6 +2822,8 @@ src/models/sync-sync-req.ts
 src/models/sync-sync-view.ts
 src/models/tag-config.ts
 src/models/task-board-view.ts
+src/models/task-comment-list.ts
+src/models/task-comment.ts
 src/models/task-issue-edit.ts
 src/models/task-issue-hit.ts
 src/models/task-issue-hits.ts

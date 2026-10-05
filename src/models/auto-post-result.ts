@@ -17,33 +17,26 @@
 /**
  * 
  * @export
- * @interface AiDecisionsScore
+ * @interface AutoPostResult
  */
-export interface AiDecisionsScore {
+export interface AutoPostResult {
     /**
-     * 
-     * @type {Array<any>}
-     * @memberof AiDecisionsScore
-     */
-    'criteria': Array<any>;
-    /**
-     * 
-     * @type {any}
-     * @memberof AiDecisionsScore
-     */
-    'instructions'?: any;
-    /**
-     * 
+     * Error is the platform\'s reason it did not go; absent when it did.
      * @type {string}
-     * @memberof AiDecisionsScore
+     * @memberof AutoPostResult
      */
-    'type': AiDecisionsScoreTypeEnum;
+    'error'?: string;
+    /**
+     * To is the account\'s platform: x, linkedin or facebook.
+     * @type {string}
+     * @memberof AutoPostResult
+     */
+    'to'?: string;
+    /**
+     * URL opens the post; absent when it did not go.
+     * @type {string}
+     * @memberof AutoPostResult
+     */
+    'url'?: string;
 }
-
-export const AiDecisionsScoreTypeEnum = {
-    Score: 'score'
-} as const;
-
-export type AiDecisionsScoreTypeEnum = typeof AiDecisionsScoreTypeEnum[keyof typeof AiDecisionsScoreTypeEnum];
-
 

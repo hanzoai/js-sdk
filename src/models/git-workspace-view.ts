@@ -17,8 +17,26 @@
 /**
  * 
  * @export
- * @interface AiDecisionSidesFalse
+ * @interface GitWorkspaceView
  */
-export interface AiDecisionSidesFalse {
+export interface GitWorkspaceView {
+    /**
+     * Login is the caller\'s forge account in a made workspace.
+     * @type {string}
+     * @memberof GitWorkspaceView
+     */
+    'login'?: string;
+    /**
+     * Made says the platform made it for the org; false is the estate\'s.
+     * @type {boolean}
+     * @memberof GitWorkspaceView
+     */
+    'made'?: boolean;
+    /**
+     * Owner is the forge namespace.
+     * @type {string}
+     * @memberof GitWorkspaceView
+     */
+    'owner'?: string;
 }
 

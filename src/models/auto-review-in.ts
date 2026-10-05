@@ -17,8 +17,26 @@
 /**
  * 
  * @export
- * @interface AiDecisionsChoiceCriteriaValue
+ * @interface AutoReviewIn
  */
-export interface AiDecisionsChoiceCriteriaValue {
+export interface AutoReviewIn {
+    /**
+     * ID is the automation, and Run its run in review, from the path.
+     * @type {string}
+     * @memberof AutoReviewIn
+     */
+    'id'?: string;
+    /**
+     * Post posts it when true and discards it when false.
+     * @type {boolean}
+     * @memberof AutoReviewIn
+     */
+    'post'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AutoReviewIn
+     */
+    'run'?: string;
 }
 

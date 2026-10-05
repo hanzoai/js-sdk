@@ -21,6 +21,12 @@
  */
 export interface ProviderGithubImportOut {
     /**
+     * Codebases are the names they take in the org\'s code workspace, in the same order: poll GET /v1/git/repos for each to appear.
+     * @type {Array<string>}
+     * @memberof ProviderGithubImportOut
+     */
+    'codebases'?: Array<string>;
+    /**
      * Queued is how many repositories were handed to the background importer.
      * @type {number}
      * @memberof ProviderGithubImportOut

@@ -26,6 +26,8 @@ import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { TaskBoardView } from '../models';
 // @ts-ignore
+import type { TaskCommentList } from '../models';
+// @ts-ignore
 import type { TaskIssueEdit } from '../models';
 // @ts-ignore
 import type { TaskIssueHit } from '../models';
@@ -383,6 +385,48 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
             // verify required parameter 'num' is not null or undefined
             assertParamExists('getTaskProjectsByKeyIssuesByNum', 'num', num)
             const localVarPath = `/v1/task/projects/{key}/issues/{num}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)))
+                .replace(`{${"num"}}`, encodeURIComponent(String(num)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is one issue\'s conversation, oldest first, read as the caller. An issue that lives on GitHub names its home and is read there.
+         * @summary Is one issue\'s conversation, oldest first, read as the caller.
+         * @param {string} key Key is the board — the repository name, or an index board\&#39;s key.
+         * @param {number} num Num is the issue\&#39;s number on that board.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTaskProjectsByKeyIssuesByNumComments: async (key: string, num: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getTaskProjectsByKeyIssuesByNumComments', 'key', key)
+            // verify required parameter 'num' is not null or undefined
+            assertParamExists('getTaskProjectsByKeyIssuesByNumComments', 'num', num)
+            const localVarPath = `/v1/task/projects/{key}/issues/{num}/comments`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)))
                 .replace(`{${"num"}}`, encodeURIComponent(String(num)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -777,6 +821,20 @@ export const TaskApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Is one issue\'s conversation, oldest first, read as the caller. An issue that lives on GitHub names its home and is read there.
+         * @summary Is one issue\'s conversation, oldest first, read as the caller.
+         * @param {string} key Key is the board — the repository name, or an index board\&#39;s key.
+         * @param {number} num Num is the issue\&#39;s number on that board.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTaskProjectsByKeyIssuesByNumComments(key: string, num: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskCommentList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTaskProjectsByKeyIssuesByNumComments(key, num, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TaskApi.getTaskProjectsByKeyIssuesByNumComments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
          * @summary Summarises one room\'s work.
          * @param {string} room Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
@@ -935,6 +993,16 @@ export const TaskApiFactory = function (configuration?: Configuration, basePath?
          */
         getTaskProjectsByKeyIssuesByNum(requestParameters: TaskApiGetTaskProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaskIssueView> {
             return localVarFp.getTaskProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is one issue\'s conversation, oldest first, read as the caller. An issue that lives on GitHub names its home and is read there.
+         * @summary Is one issue\'s conversation, oldest first, read as the caller.
+         * @param {TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTaskProjectsByKeyIssuesByNumComments(requestParameters: TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaskCommentList> {
+            return localVarFp.getTaskProjectsByKeyIssuesByNumComments(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
         },
         /**
          * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
@@ -1230,6 +1298,27 @@ export interface TaskApiGetTaskProjectsByKeyIssuesByNumRequest {
 }
 
 /**
+ * Request parameters for getTaskProjectsByKeyIssuesByNumComments operation in TaskApi.
+ * @export
+ * @interface TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest
+ */
+export interface TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest {
+    /**
+     * Key is the board — the repository name, or an index board\&#39;s key.
+     * @type {string}
+     * @memberof TaskApiGetTaskProjectsByKeyIssuesByNumComments
+     */
+    readonly key: string
+
+    /**
+     * Num is the issue\&#39;s number on that board.
+     * @type {number}
+     * @memberof TaskApiGetTaskProjectsByKeyIssuesByNumComments
+     */
+    readonly num: number
+}
+
+/**
  * Request parameters for getTaskRoomsByRoom operation in TaskApi.
  * @export
  * @interface TaskApiGetTaskRoomsByRoomRequest
@@ -1415,6 +1504,18 @@ export class TaskApi extends BaseAPI {
      */
     public getTaskProjectsByKeyIssuesByNum(requestParameters: TaskApiGetTaskProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig) {
         return TaskApiFp(this.configuration).getTaskProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is one issue\'s conversation, oldest first, read as the caller. An issue that lives on GitHub names its home and is read there.
+     * @summary Is one issue\'s conversation, oldest first, read as the caller.
+     * @param {TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TaskApi
+     */
+    public getTaskProjectsByKeyIssuesByNumComments(requestParameters: TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest, options?: RawAxiosRequestConfig) {
+        return TaskApiFp(this.configuration).getTaskProjectsByKeyIssuesByNumComments(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { AiDecisionsQuestion } from './ai-decisions-question';
 
 /**
@@ -64,10 +61,10 @@ export interface AiDecisionsRequest {
     'session_id'?: string;
     /**
      * 
-     * @type {AiDecisionSidesFalse}
+     * @type {any}
      * @memberof AiDecisionsRequest
      */
-    'state'?: AiDecisionSidesFalse;
+    'state'?: any;
     /**
      * 
      * @type {any}

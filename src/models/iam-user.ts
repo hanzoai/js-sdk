@@ -777,7 +777,7 @@ export interface IamUser {
      */
     'name'?: string;
     /**
-     * 
+     * NameKey is Fold(Name), derived on every save (BeforeCreate, BeforeUpdate) and on every open for a row saved without it (store.Prepare): the indexed key a case-insensitive username lookup reads (store.GetUserByName). It is always written, empty or not, so a row that has been keyed is never mistaken for one that has not.
      * @type {string}
      * @memberof IamUser
      */

@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AutoPostResult } from './auto-post-result';
 
 /**
  * 
@@ -27,6 +30,12 @@ export interface AutoAutomationRun {
      */
     'at'?: string;
     /**
+     * Draft is the post the agent wrote, for an automation that posts; empty otherwise.
+     * @type {string}
+     * @memberof AutoAutomationRun
+     */
+    'draft'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AutoAutomationRun
@@ -39,7 +48,13 @@ export interface AutoAutomationRun {
      */
     'id'?: string;
     /**
-     * Status is succeeded, failed, running, queued, skipped for a start that found the previous run still going, or refused for a run whose person is no longer a member of the org.
+     * Posts are where it went: one per account, its link or the platform\'s reason it did not go. Never null.
+     * @type {Array<AutoPostResult>}
+     * @memberof AutoAutomationRun
+     */
+    'posts'?: Array<AutoPostResult>;
+    /**
+     * Status is succeeded, failed, running, queued, review for a post waiting for its person to post or discard it, skipped for a start that found the previous run still going, or refused for a run whose person is no longer a member of the org.
      * @type {string}
      * @memberof AutoAutomationRun
      */

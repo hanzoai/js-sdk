@@ -21,6 +21,12 @@
  */
 export interface ProviderGithubRepoItem {
     /**
+     * Codebase is the name it has in the org\'s code workspace once brought in (POST /v1/provider/github/repos/import): listed by GET /v1/git/repos when it is there.
+     * @type {string}
+     * @memberof ProviderGithubRepoItem
+     */
+    'codebase'?: string;
+    /**
      * DefaultBranch is the branch GitHub opens it on.
      * @type {string}
      * @memberof ProviderGithubRepoItem

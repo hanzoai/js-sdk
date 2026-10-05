@@ -17,33 +17,32 @@
 /**
  * 
  * @export
- * @interface AiDecisionsScore
+ * @interface TaskComment
  */
-export interface AiDecisionsScore {
+export interface TaskComment {
     /**
-     * 
-     * @type {Array<any>}
-     * @memberof AiDecisionsScore
-     */
-    'criteria': Array<any>;
-    /**
-     * 
-     * @type {any}
-     * @memberof AiDecisionsScore
-     */
-    'instructions'?: any;
-    /**
-     * 
+     * Author is who wrote it: their name, else their forge login.
      * @type {string}
-     * @memberof AiDecisionsScore
+     * @memberof TaskComment
      */
-    'type': AiDecisionsScoreTypeEnum;
+    'author'?: string;
+    /**
+     * Body is what was written, as markdown.
+     * @type {string}
+     * @memberof TaskComment
+     */
+    'body'?: string;
+    /**
+     * CreatedAt is when it was written, RFC 3339.
+     * @type {string}
+     * @memberof TaskComment
+     */
+    'createdAt'?: string;
+    /**
+     * ID is the forge\'s id for the comment.
+     * @type {number}
+     * @memberof TaskComment
+     */
+    'id'?: number;
 }
-
-export const AiDecisionsScoreTypeEnum = {
-    Score: 'score'
-} as const;
-
-export type AiDecisionsScoreTypeEnum = typeof AiDecisionsScoreTypeEnum[keyof typeof AiDecisionsScoreTypeEnum];
-
 

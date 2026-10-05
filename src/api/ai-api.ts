@@ -26,6 +26,14 @@ import type { AiAnthropicRequest } from '../models';
 // @ts-ignore
 import type { AiAnthropicResponse } from '../models';
 // @ts-ignore
+import type { AiChat } from '../models';
+// @ts-ignore
+import type { AiChatIn } from '../models';
+// @ts-ignore
+import type { AiDecideIn } from '../models';
+// @ts-ignore
+import type { AiDecision } from '../models';
+// @ts-ignore
 import type { AiDecisionsRefused } from '../models';
 // @ts-ignore
 import type { AiDecisionsRequest } from '../models';
@@ -40,6 +48,8 @@ import type { AiMCPSurface } from '../models';
 // @ts-ignore
 import type { AiModelList } from '../models';
 // @ts-ignore
+import type { AiModels } from '../models';
+// @ts-ignore
 import type { AiRanking } from '../models';
 // @ts-ignore
 import type { AiResponse } from '../models';
@@ -47,6 +57,8 @@ import type { AiResponse } from '../models';
 import type { AiResponsesResource } from '../models';
 // @ts-ignore
 import type { AiRoutingEdit } from '../models';
+// @ts-ignore
+import type { AiRoutingRewardRequest } from '../models';
 // @ts-ignore
 import type { AiTokenCount } from '../models';
 // @ts-ignore
@@ -224,6 +236,86 @@ import type { PutAiRouterCatalog200Response } from '../models';
 export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Asks one model one prompt and answers the reply, which model served it and who paid. The call is the caller\'s own POST /v1/chat/completions, run as the caller, so it is gated, billed and refused exactly as that route is; a refusal names its code and what lifts it, never an amount. An empty model asks the deployment\'s default Hanzo model.
+         * @summary Asks one model one prompt and answers the reply, which model served it and who paid.
+         * @param {AiChatIn} aiChatIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat: async (aiChatIn: AiChatIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiChatIn' is not null or undefined
+            assertParamExists('aiChat', 'aiChatIn', aiChatIn)
+            const localVarPath = `/v1/ai/mcp/chat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiChatIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid. A refusal names its code and what lifts it, never an amount.
+         * @summary Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid.
+         * @param {AiDecideIn} aiDecideIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiDecide: async (aiDecideIn: AiDecideIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiDecideIn' is not null or undefined
+            assertParamExists('aiDecide', 'aiDecideIn', aiDecideIn)
+            const localVarPath = `/v1/ai/mcp/decisions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiDecideIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -283,6 +375,65 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
             if (names !== undefined) {
                 localVarQueryParameter['names'] = names;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @param {string} [q] Q matches the model\&#39;s id, name, description or owner, ignoring case.
+         * @param {string} [_class] Class keeps one class: premium (third-party frontier models), ours (Hanzo\&#39;s priced models) or free.
+         * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
+         * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
+         * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiModels: async (q?: string, _class?: string, family?: string, capability?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/ai/mcp/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (_class !== undefined) {
+                localVarQueryParameter['class'] = _class;
+            }
+
+            if (family !== undefined) {
+                localVarQueryParameter['family'] = family;
+            }
+
+            if (capability !== undefined) {
+                localVarQueryParameter['capability'] = capability;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
             }
 
 
@@ -7761,10 +7912,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal. Org-scoped via the same session-OR-Bearer principal the usage read uses (RequirePrincipal): the reward lands only on the caller\'s OWN org\'s event, so a request_id from another org (or unknown) is a 404 — cross-org writes are impossible and unknown ids are indistinguishable from foreign ones. Idempotent: a repeat overwrites. The body carries NO prompt text — only {request_id, reward|rating}.
          * @summary Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal.
+         * @param {AiRoutingRewardRequest} aiRoutingRewardRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFeedback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAiFeedback: async (aiRoutingRewardRequest: AiRoutingRewardRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiRoutingRewardRequest' is not null or undefined
+            assertParamExists('postAiFeedback', 'aiRoutingRewardRequest', aiRoutingRewardRequest)
             const localVarPath = `/v1/ai/feedback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7783,9 +7937,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiRoutingRewardRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10260,10 +10417,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChat: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChat: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postChat', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/chat`;
@@ -10286,6 +10445,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xMaxCost != null) {
+                localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
+                    ? xMaxCost
+                    : JSON.stringify(xMaxCost);
+            }
+            if (xMaxLatencyMs != null) {
+                localVarHeaderParameter['X-Max-Latency-Ms'] = typeof xMaxLatencyMs === 'string'
+                    ? xMaxLatencyMs
+                    : JSON.stringify(xMaxLatencyMs);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -10300,10 +10469,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChatCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChatCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postChatCompletions', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/chat/completions`;
@@ -10326,6 +10497,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xMaxCost != null) {
+                localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
+                    ? xMaxCost
+                    : JSON.stringify(xMaxCost);
+            }
+            if (xMaxLatencyMs != null) {
+                localVarHeaderParameter['X-Max-Latency-Ms'] = typeof xMaxLatencyMs === 'string'
+                    ? xMaxLatencyMs
+                    : JSON.stringify(xMaxLatencyMs);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -10380,10 +10561,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postCompletions', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/completions`;
@@ -10406,6 +10589,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xMaxCost != null) {
+                localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
+                    ? xMaxCost
+                    : JSON.stringify(xMaxCost);
+            }
+            if (xMaxLatencyMs != null) {
+                localVarHeaderParameter['X-Max-Latency-Ms'] = typeof xMaxLatencyMs === 'string'
+                    ? xMaxLatencyMs
+                    : JSON.stringify(xMaxLatencyMs);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -10679,10 +10872,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postResponses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResponses: async (xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/responses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10701,6 +10896,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            if (xMaxCost != null) {
+                localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
+                    ? xMaxCost
+                    : JSON.stringify(xMaxCost);
+            }
+            if (xMaxLatencyMs != null) {
+                localVarHeaderParameter['X-Max-Latency-Ms'] = typeof xMaxLatencyMs === 'string'
+                    ? xMaxLatencyMs
+                    : JSON.stringify(xMaxLatencyMs);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -12217,6 +12422,32 @@ export const AiApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AiApiAxiosParamCreator(configuration)
     return {
         /**
+         * Asks one model one prompt and answers the reply, which model served it and who paid. The call is the caller\'s own POST /v1/chat/completions, run as the caller, so it is gated, billed and refused exactly as that route is; a refusal names its code and what lifts it, never an amount. An empty model asks the deployment\'s default Hanzo model.
+         * @summary Asks one model one prompt and answers the reply, which model served it and who paid.
+         * @param {AiChatIn} aiChatIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChat(aiChatIn: AiChatIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiChat>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(aiChatIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiChat']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid. A refusal names its code and what lifts it, never an amount.
+         * @summary Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid.
+         * @param {AiDecideIn} aiDecideIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiDecide(aiDecideIn: AiDecideIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiDecision>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiDecide(aiDecideIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiDecide']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -12239,6 +12470,23 @@ export const AiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.aiMCPTools(names, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.aiMCPTools']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @param {string} [q] Q matches the model\&#39;s id, name, description or owner, ignoring case.
+         * @param {string} [_class] Class keeps one class: premium (third-party frontier models), ours (Hanzo\&#39;s priced models) or free.
+         * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
+         * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
+         * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiModels(q?: string, _class?: string, family?: string, capability?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModels>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiModels(q, _class, family, capability, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -14775,11 +15023,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal. Org-scoped via the same session-OR-Bearer principal the usage read uses (RequirePrincipal): the reward lands only on the caller\'s OWN org\'s event, so a request_id from another org (or unknown) is a 404 — cross-org writes are impossible and unknown ids are indistinguishable from foreign ones. Idempotent: a repeat overwrites. The body carries NO prompt text — only {request_id, reward|rating}.
          * @summary Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal.
+         * @param {AiRoutingRewardRequest} aiRoutingRewardRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFeedback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFeedback200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFeedback(options);
+        async postAiFeedback(aiRoutingRewardRequest: AiRoutingRewardRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFeedback200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFeedback(aiRoutingRewardRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFeedback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15609,11 +15858,13 @@ export const AiApiFp = function(configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(openaiChatCompletionRequest, options);
+        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15622,11 +15873,13 @@ export const AiApiFp = function(configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(openaiChatCompletionRequest, options);
+        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15648,11 +15901,13 @@ export const AiApiFp = function(configuration?: Configuration) {
          * Implements the OpenAI-compatible chat completions API
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(openaiChatCompletionRequest, options);
+        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15748,11 +16003,13 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
+         * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+         * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postResponses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponsesResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(options);
+        async postResponses(xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponsesResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postResponses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -16248,6 +16505,26 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
     const localVarFp = AiApiFp(configuration)
     return {
         /**
+         * Asks one model one prompt and answers the reply, which model served it and who paid. The call is the caller\'s own POST /v1/chat/completions, run as the caller, so it is gated, billed and refused exactly as that route is; a refusal names its code and what lifts it, never an amount. An empty model asks the deployment\'s default Hanzo model.
+         * @summary Asks one model one prompt and answers the reply, which model served it and who paid.
+         * @param {AiApiAiChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat(requestParameters: AiApiAiChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiChat> {
+            return localVarFp.aiChat(requestParameters.aiChatIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid. A refusal names its code and what lifts it, never an amount.
+         * @summary Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid.
+         * @param {AiApiAiDecideRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiDecide(requestParameters: AiApiAiDecideRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiDecision> {
+            return localVarFp.aiDecide(requestParameters.aiDecideIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -16265,6 +16542,16 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          */
         aiMCPTools(requestParameters: AiApiAiMCPToolsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiMCPSurface> {
             return localVarFp.aiMCPTools(requestParameters.names, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * @param {AiApiAiModelsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiModels> {
+            return localVarFp.aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
@@ -18116,11 +18403,12 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal. Org-scoped via the same session-OR-Bearer principal the usage read uses (RequirePrincipal): the reward lands only on the caller\'s OWN org\'s event, so a request_id from another org (or unknown) is a 404 — cross-org writes are impossible and unknown ids are indistinguishable from foreign ones. Idempotent: a repeat overwrites. The body carries NO prompt text — only {request_id, reward|rating}.
          * @summary Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal.
+         * @param {AiApiPostAiFeedbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFeedback(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFeedback200Response> {
-            return localVarFp.postAiFeedback(options).then((request) => request(axios, basePath));
+        postAiFeedback(requestParameters: AiApiPostAiFeedbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiFeedback200Response> {
+            return localVarFp.postAiFeedback(requestParameters.aiRoutingRewardRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one file.
@@ -18745,7 +19033,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @throws {RequiredError}
          */
         postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
-            return localVarFp.postChat(requestParameters.openaiChatCompletionRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements the OpenAI-compatible chat completions API
@@ -18755,7 +19043,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @throws {RequiredError}
          */
         postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
-            return localVarFp.postChatCompletions(requestParameters.openaiChatCompletionRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves one completion to a caller with no account.
@@ -18775,7 +19063,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @throws {RequiredError}
          */
         postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
-            return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"choice\"|\"noul\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
@@ -18847,11 +19135,12 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
+         * @param {AiApiPostResponsesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postResponses(options?: RawAxiosRequestConfig): AxiosPromise<AiResponsesResource> {
-            return localVarFp.postResponses(options).then((request) => request(axios, basePath));
+        postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiResponsesResource> {
+            return localVarFp.postResponses(requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/videos/generations — the ASYNC create.  Body: {\"model\": \"...\", \"prompt\": \"...\", \"size\"?: \"1280x720\", \"seconds\"?: int}  It authenticates the caller, resolves the model to its upstream provider via the shared routing table (zen3-video* / wan2-2-t2v-a14b → the spark-video backend), reserves the per-video budget (the balance gate), creates ONE upstream job, registers it in the in-pod store, and returns the OpenAI-shaped video object with status \"queued\" IMMEDIATELY. The client then polls GET /v1/videos/{id} and downloads GET /v1/videos/{id}/content. Nothing is billed here — the debit lands on completion.
@@ -19189,6 +19478,34 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
 };
 
 /**
+ * Request parameters for aiChat operation in AiApi.
+ * @export
+ * @interface AiApiAiChatRequest
+ */
+export interface AiApiAiChatRequest {
+    /**
+     * 
+     * @type {AiChatIn}
+     * @memberof AiApiAiChat
+     */
+    readonly aiChatIn: AiChatIn
+}
+
+/**
+ * Request parameters for aiDecide operation in AiApi.
+ * @export
+ * @interface AiApiAiDecideRequest
+ */
+export interface AiApiAiDecideRequest {
+    /**
+     * 
+     * @type {AiDecideIn}
+     * @memberof AiApiAiDecide
+     */
+    readonly aiDecideIn: AiDecideIn
+}
+
+/**
  * Request parameters for aiMCPTools operation in AiApi.
  * @export
  * @interface AiApiAiMCPToolsRequest
@@ -19200,6 +19517,48 @@ export interface AiApiAiMCPToolsRequest {
      * @memberof AiApiAiMCPTools
      */
     readonly names?: boolean
+}
+
+/**
+ * Request parameters for aiModels operation in AiApi.
+ * @export
+ * @interface AiApiAiModelsRequest
+ */
+export interface AiApiAiModelsRequest {
+    /**
+     * Q matches the model\&#39;s id, name, description or owner, ignoring case.
+     * @type {string}
+     * @memberof AiApiAiModels
+     */
+    readonly q?: string
+
+    /**
+     * Class keeps one class: premium (third-party frontier models), ours (Hanzo\&#39;s priced models) or free.
+     * @type {string}
+     * @memberof AiApiAiModels
+     */
+    readonly _class?: string
+
+    /**
+     * Family keeps one Hanzo family: enso, zen, kai or zoo.
+     * @type {string}
+     * @memberof AiApiAiModels
+     */
+    readonly family?: string
+
+    /**
+     * Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
+     * @type {string}
+     * @memberof AiApiAiModels
+     */
+    readonly capability?: string
+
+    /**
+     * Limit is the most models to answer, 1 to 500; 0 answers 50.
+     * @type {number}
+     * @memberof AiApiAiModels
+     */
+    readonly limit?: number
 }
 
 /**
@@ -21184,6 +21543,20 @@ export interface AiApiPostAiDeploymentsByOwnerByNameUndeployRequest {
 }
 
 /**
+ * Request parameters for postAiFeedback operation in AiApi.
+ * @export
+ * @interface AiApiPostAiFeedbackRequest
+ */
+export interface AiApiPostAiFeedbackRequest {
+    /**
+     * 
+     * @type {AiRoutingRewardRequest}
+     * @memberof AiApiPostAiFeedback
+     */
+    readonly aiRoutingRewardRequest: AiRoutingRewardRequest
+}
+
+/**
  * Request parameters for postAiFiles operation in AiApi.
  * @export
  * @interface AiApiPostAiFilesRequest
@@ -21839,6 +22212,20 @@ export interface AiApiPostChatRequest {
      * @memberof AiApiPostChat
      */
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
+
+    /**
+     * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+     * @type {number}
+     * @memberof AiApiPostChat
+     */
+    readonly xMaxCost?: number
+
+    /**
+     * The slowest model this request accepts, in milliseconds.
+     * @type {number}
+     * @memberof AiApiPostChat
+     */
+    readonly xMaxLatencyMs?: number
 }
 
 /**
@@ -21853,6 +22240,20 @@ export interface AiApiPostChatCompletionsRequest {
      * @memberof AiApiPostChatCompletions
      */
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
+
+    /**
+     * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+     * @type {number}
+     * @memberof AiApiPostChatCompletions
+     */
+    readonly xMaxCost?: number
+
+    /**
+     * The slowest model this request accepts, in milliseconds.
+     * @type {number}
+     * @memberof AiApiPostChatCompletions
+     */
+    readonly xMaxLatencyMs?: number
 }
 
 /**
@@ -21881,6 +22282,20 @@ export interface AiApiPostCompletionsRequest {
      * @memberof AiApiPostCompletions
      */
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
+
+    /**
+     * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+     * @type {number}
+     * @memberof AiApiPostCompletions
+     */
+    readonly xMaxCost?: number
+
+    /**
+     * The slowest model this request accepts, in milliseconds.
+     * @type {number}
+     * @memberof AiApiPostCompletions
+     */
+    readonly xMaxLatencyMs?: number
 }
 
 /**
@@ -21937,6 +22352,27 @@ export interface AiApiPostModelsByModelAccessRequest {
      * @memberof AiApiPostModelsByModelAccess
      */
     readonly model: string
+}
+
+/**
+ * Request parameters for postResponses operation in AiApi.
+ * @export
+ * @interface AiApiPostResponsesRequest
+ */
+export interface AiApiPostResponsesRequest {
+    /**
+     * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
+     * @type {number}
+     * @memberof AiApiPostResponses
+     */
+    readonly xMaxCost?: number
+
+    /**
+     * The slowest model this request accepts, in milliseconds.
+     * @type {number}
+     * @memberof AiApiPostResponses
+     */
+    readonly xMaxLatencyMs?: number
 }
 
 /**
@@ -22633,6 +23069,30 @@ export interface AiApiPutAiWorkflowsByOwnerByNameRequest {
  */
 export class AiApi extends BaseAPI {
     /**
+     * Asks one model one prompt and answers the reply, which model served it and who paid. The call is the caller\'s own POST /v1/chat/completions, run as the caller, so it is gated, billed and refused exactly as that route is; a refusal names its code and what lifts it, never an amount. An empty model asks the deployment\'s default Hanzo model.
+     * @summary Asks one model one prompt and answers the reply, which model served it and who paid.
+     * @param {AiApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiChat(requestParameters: AiApiAiChatRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiChat(requestParameters.aiChatIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid. A refusal names its code and what lifts it, never an amount.
+     * @summary Runs one decision — the caller\'s own POST /v1/decisions, gated and billed exactly as that route is — and answers the decision, which model served it and who paid.
+     * @param {AiApiAiDecideRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiDecide(requestParameters: AiApiAiDecideRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiDecide(requestParameters.aiDecideIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
      * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
      * @param {*} [options] Override http request option.
@@ -22653,6 +23113,18 @@ export class AiApi extends BaseAPI {
      */
     public aiMCPTools(requestParameters: AiApiAiMCPToolsRequest = {}, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).aiMCPTools(requestParameters.names, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+     * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+     * @param {AiApiAiModelsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -24895,12 +25367,13 @@ export class AiApi extends BaseAPI {
     /**
      * Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal. Org-scoped via the same session-OR-Bearer principal the usage read uses (RequirePrincipal): the reward lands only on the caller\'s OWN org\'s event, so a request_id from another org (or unknown) is a 404 — cross-org writes are impossible and unknown ids are indistinguishable from foreign ones. Idempotent: a repeat overwrites. The body carries NO prompt text — only {request_id, reward|rating}.
      * @summary Attaches a per-request outcome reward to the routing decision that served request_id — the enso training loop\'s quality signal.
+     * @param {AiApiPostAiFeedbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postAiFeedback(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postAiFeedback(options).then((request) => request(this.axios, this.basePath));
+    public postAiFeedback(requestParameters: AiApiPostAiFeedbackRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postAiFeedback(requestParameters.aiRoutingRewardRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25655,7 +26128,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postChat(requestParameters.openaiChatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25667,7 +26140,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postChatCompletions(requestParameters.openaiChatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25691,7 +26164,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postCompletions(requestParameters.openaiChatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25778,12 +26251,13 @@ export class AiApi extends BaseAPI {
     /**
      * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
      * @summary Implements POST /v1/responses.
+     * @param {AiApiPostResponsesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postResponses(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postResponses(options).then((request) => request(this.axios, this.basePath));
+    public postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postResponses(requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

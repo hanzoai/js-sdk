@@ -92,6 +92,8 @@ import type { GitWorkflowRun } from '../models';
 // @ts-ignore
 import type { GitWorkflowRuns } from '../models';
 // @ts-ignore
+import type { GitWorkspaceView } from '../models';
+// @ts-ignore
 import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { RunnerDeclareIn } from '../models';
@@ -2023,6 +2025,40 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there. Idempotent. The estate\'s namespace is answered from the closed table and nobody is enrolled in it. A seat is a person\'s: an API key or an application is refused, and a SuperAdmin acting in another org reads the workspace as it is and makes nothing.
+         * @summary Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitWorkspace: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/workspace`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
          * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
          * @param {RunnerDeclareIn} runnerDeclareIn 
@@ -2893,6 +2929,18 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there. Idempotent. The estate\'s namespace is answered from the closed table and nobody is enrolled in it. A seat is a person\'s: an API key or an application is refused, and a SuperAdmin acting in another org reads the workspace as it is and makes nothing.
+         * @summary Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitWorkspace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkspaceView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitWorkspace(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitWorkspace']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
          * @summary Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
          * @param {RunnerDeclareIn} runnerDeclareIn 
@@ -3426,6 +3474,15 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         postGitWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postGitWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there. Idempotent. The estate\'s namespace is answered from the closed table and nobody is enrolled in it. A seat is a person\'s: an API key or an application is refused, and a SuperAdmin acting in another org reads the workspace as it is and makes nothing.
+         * @summary Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitWorkspace(options?: RawAxiosRequestConfig): AxiosPromise<GitWorkspaceView> {
+            return localVarFp.postGitWorkspace(options).then((request) => request(axios, basePath));
         },
         /**
          * Republishes what a registered runner can do, and answers with what this side understands, so the two learn about each other from one exchange.
@@ -4953,6 +5010,17 @@ export class GitApi extends BaseAPI {
      */
     public postGitWebhook(options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).postGitWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there. Idempotent. The estate\'s namespace is answered from the closed table and nobody is enrolled in it. A seat is a person\'s: an API key or an application is refused, and a SuperAdmin acting in another org reads the workspace as it is and makes nothing.
+     * @summary Sets the org\'s code workspace up for the caller and answers it: the namespace, made when the org has none, and the caller\'s forge account and seat there.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitWorkspace(options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitWorkspace(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

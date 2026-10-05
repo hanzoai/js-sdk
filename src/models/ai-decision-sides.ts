@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
 
 /**
  * 
@@ -25,15 +22,15 @@ import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
 export interface AiDecisionSides {
     /**
      * 
-     * @type {AiDecisionSidesFalse}
+     * @type {any}
      * @memberof AiDecisionSides
      */
-    'false'?: AiDecisionSidesFalse;
+    'false'?: any;
     /**
      * 
-     * @type {AiDecisionSidesFalse}
+     * @type {any}
      * @memberof AiDecisionSides
      */
-    'true'?: AiDecisionSidesFalse;
+    'true'?: any;
 }
 

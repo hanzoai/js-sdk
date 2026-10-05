@@ -67,6 +67,12 @@ export interface AutoAutomationPatch {
     'permissions'?: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof AutoAutomationPatch
+     */
+    'postTo'?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof AutoAutomationPatch
      */

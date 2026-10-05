@@ -93,6 +93,12 @@ export interface AutoAutomation {
      */
     'permissions'?: string;
     /**
+     * PostTo are the connected accounts each run\'s answer is posted to — x, linkedin, facebook — after review when Permissions is ask (post.go). Never null.
+     * @type {Array<string>}
+     * @memberof AutoAutomation
+     */
+    'postTo'?: Array<string>;
+    /**
      * Project is the Dev project the run works in, by its slug; null for none.
      * @type {string}
      * @memberof AutoAutomation

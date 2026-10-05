@@ -13,37 +13,27 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AiModel } from './ai-model';
 
 /**
  * 
  * @export
- * @interface AiDecisionsScore
+ * @interface AiModels
  */
-export interface AiDecisionsScore {
+export interface AiModels {
     /**
-     * 
-     * @type {Array<any>}
-     * @memberof AiDecisionsScore
+     * Models are the matches, in the catalog\'s order.
+     * @type {Array<AiModel>}
+     * @memberof AiModels
      */
-    'criteria': Array<any>;
+    'models'?: Array<AiModel>;
     /**
-     * 
-     * @type {any}
-     * @memberof AiDecisionsScore
+     * Total is how many models matched, before Limit.
+     * @type {number}
+     * @memberof AiModels
      */
-    'instructions'?: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof AiDecisionsScore
-     */
-    'type': AiDecisionsScoreTypeEnum;
+    'total'?: number;
 }
-
-export const AiDecisionsScoreTypeEnum = {
-    Score: 'score'
-} as const;
-
-export type AiDecisionsScoreTypeEnum = typeof AiDecisionsScoreTypeEnum[keyof typeof AiDecisionsScoreTypeEnum];
-
 

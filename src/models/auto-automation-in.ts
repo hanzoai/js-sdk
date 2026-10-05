@@ -60,6 +60,12 @@ export interface AutoAutomationIn {
      */
     'permissions'?: string;
     /**
+     * PostTo are the connected accounts each run\'s answer is posted to: x, linkedin, facebook. Absent posts nothing.
+     * @type {Array<string>}
+     * @memberof AutoAutomationIn
+     */
+    'postTo'?: Array<string>;
+    /**
      * Project is a Dev project\'s slug to work in. Optional.
      * @type {string}
      * @memberof AutoAutomationIn

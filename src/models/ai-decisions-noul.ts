@@ -16,9 +16,6 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { AiDecisionSides } from './ai-decision-sides';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
 
 /**
  * 
@@ -34,10 +31,10 @@ export interface AiDecisionsNoul {
     'criteria'?: AiDecisionSides;
     /**
      * 
-     * @type {AiDecisionSidesFalse}
+     * @type {any}
      * @memberof AiDecisionsNoul
      */
-    'instructions'?: AiDecisionSidesFalse;
+    'instructions'?: any;
     /**
      * 
      * @type {{ [key: string]: string; }}

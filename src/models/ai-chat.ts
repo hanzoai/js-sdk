@@ -13,37 +13,33 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AiReceipt } from './ai-receipt';
 
 /**
  * 
  * @export
- * @interface AiDecisionsScore
+ * @interface AiChat
  */
-export interface AiDecisionsScore {
+export interface AiChat {
     /**
-     * 
-     * @type {Array<any>}
-     * @memberof AiDecisionsScore
-     */
-    'criteria': Array<any>;
-    /**
-     * 
-     * @type {any}
-     * @memberof AiDecisionsScore
-     */
-    'instructions'?: any;
-    /**
-     * 
+     * Answer is the model\'s reply.
      * @type {string}
-     * @memberof AiDecisionsScore
+     * @memberof AiChat
      */
-    'type': AiDecisionsScoreTypeEnum;
+    'answer'?: string;
+    /**
+     * Model is the model asked: the caller\'s, or the default when it named none.
+     * @type {string}
+     * @memberof AiChat
+     */
+    'model'?: string;
+    /**
+     * Receipt says which model served the reply and who paid for it.
+     * @type {AiReceipt}
+     * @memberof AiChat
+     */
+    'receipt'?: AiReceipt;
 }
-
-export const AiDecisionsScoreTypeEnum = {
-    Score: 'score'
-} as const;
-
-export type AiDecisionsScoreTypeEnum = typeof AiDecisionsScoreTypeEnum[keyof typeof AiDecisionsScoreTypeEnum];
-
 

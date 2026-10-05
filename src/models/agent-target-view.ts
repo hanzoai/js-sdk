@@ -81,6 +81,12 @@ export interface AgentTargetView {
      */
     'running'?: number;
     /**
+     * Serving says whether a run the caller sends here now would be taken: the machine is the caller\'s (or the caller is an org admin), and it is online with a runner that polled for work within the last 90 seconds — the online and runner half is what dispatch checks (TargetDispatchable). A heartbeat alone keeps a machine online, not serving, and a colleague\'s machine never serves the caller.
+     * @type {boolean}
+     * @memberof AgentTargetView
+     */
+    'serving'?: boolean;
+    /**
      * Sessions is how many of the org\'s sessions are mapped to this machine, by target id OR by matching Host. All of them, whatever their status.
      * @type {number}
      * @memberof AgentTargetView

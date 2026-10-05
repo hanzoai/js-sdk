@@ -30,6 +30,8 @@ import type { AutoAutomationPage } from '../models';
 // @ts-ignore
 import type { AutoAutomationPatch } from '../models';
 // @ts-ignore
+import type { AutoAutomationRun } from '../models';
+// @ts-ignore
 import type { AutoAutomationRunPage } from '../models';
 // @ts-ignore
 import type { AutoCatalog } from '../models';
@@ -49,6 +51,8 @@ import type { AutoFlowVersion } from '../models';
 import type { AutoPatchFlowIn } from '../models';
 // @ts-ignore
 import type { AutoPopulatedFlow } from '../models';
+// @ts-ignore
+import type { AutoReviewIn } from '../models';
 // @ts-ignore
 import type { AutoRunIn } from '../models';
 // @ts-ignore
@@ -707,6 +711,54 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * @param {string} id ID is the automation, and Run its run in review, from the path.
+         * @param {string} run 
+         * @param {AutoReviewIn} autoReviewIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAutoAutomationsByIdRunsByRunReview: async (id: string, run: string, autoReviewIn: AutoReviewIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postAutoAutomationsByIdRunsByRunReview', 'id', id)
+            // verify required parameter 'run' is not null or undefined
+            assertParamExists('postAutoAutomationsByIdRunsByRunReview', 'run', run)
+            // verify required parameter 'autoReviewIn' is not null or undefined
+            assertParamExists('postAutoAutomationsByIdRunsByRunReview', 'autoReviewIn', autoReviewIn)
+            const localVarPath = `/v1/auto/automations/{id}/runs/{run}/review`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"run"}}`, encodeURIComponent(String(run)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoReviewIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/auto/flows/{id}/enable does that.
          * @summary Creates an automation and its initial DRAFT version in one call.
          * @param {AutoCreateFlowReq} autoCreateFlowReq 
@@ -1289,6 +1341,21 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * @param {string} id ID is the automation, and Run its run in review, from the path.
+         * @param {string} run 
+         * @param {AutoReviewIn} autoReviewIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAutoAutomationsByIdRunsByRunReview(id: string, run: string, autoReviewIn: AutoReviewIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoAutomationRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoAutomationsByIdRunsByRunReview(id, run, autoReviewIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoAutomationsByIdRunsByRunReview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/auto/flows/{id}/enable does that.
          * @summary Creates an automation and its initial DRAFT version in one call.
          * @param {AutoCreateFlowReq} autoCreateFlowReq 
@@ -1575,6 +1642,16 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
          */
         postAutoAutomationsByIdRun(requestParameters: AutoApiPostAutoAutomationsByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoRunStarted> {
             return localVarFp.postAutoAutomationsByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * @param {AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAutoAutomationsByIdRunsByRunReview(requestParameters: AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoAutomationRun> {
+            return localVarFp.postAutoAutomationsByIdRunsByRunReview(requestParameters.id, requestParameters.run, requestParameters.autoReviewIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/auto/flows/{id}/enable does that.
@@ -1905,6 +1982,34 @@ export interface AutoApiPostAutoAutomationsByIdRunRequest {
      * @memberof AutoApiPostAutoAutomationsByIdRun
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for postAutoAutomationsByIdRunsByRunReview operation in AutoApi.
+ * @export
+ * @interface AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest
+ */
+export interface AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest {
+    /**
+     * ID is the automation, and Run its run in review, from the path.
+     * @type {string}
+     * @memberof AutoApiPostAutoAutomationsByIdRunsByRunReview
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutoApiPostAutoAutomationsByIdRunsByRunReview
+     */
+    readonly run: string
+
+    /**
+     * 
+     * @type {AutoReviewIn}
+     * @memberof AutoApiPostAutoAutomationsByIdRunsByRunReview
+     */
+    readonly autoReviewIn: AutoReviewIn
 }
 
 /**
@@ -2249,6 +2354,18 @@ export class AutoApi extends BaseAPI {
      */
     public postAutoAutomationsByIdRun(requestParameters: AutoApiPostAutoAutomationsByIdRunRequest, options?: RawAxiosRequestConfig) {
         return AutoApiFp(this.configuration).postAutoAutomationsByIdRun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+     * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+     * @param {AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoApi
+     */
+    public postAutoAutomationsByIdRunsByRunReview(requestParameters: AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).postAutoAutomationsByIdRunsByRunReview(requestParameters.id, requestParameters.run, requestParameters.autoReviewIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

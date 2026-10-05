@@ -13,37 +13,27 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TaskComment } from './task-comment';
 
 /**
  * 
  * @export
- * @interface AiDecisionsScore
+ * @interface TaskCommentList
  */
-export interface AiDecisionsScore {
+export interface TaskCommentList {
     /**
-     * 
-     * @type {Array<any>}
-     * @memberof AiDecisionsScore
+     * Data is the conversation. Empty is an empty array, never null.
+     * @type {Array<TaskComment>}
+     * @memberof TaskCommentList
      */
-    'criteria': Array<any>;
+    'data'?: Array<TaskComment>;
     /**
-     * 
-     * @type {any}
-     * @memberof AiDecisionsScore
-     */
-    'instructions'?: any;
-    /**
-     * 
+     * Home is the GitHub repository (owner/name) the issue lives on when its board mirrors one; its conversation is read there, and Data is then empty.
      * @type {string}
-     * @memberof AiDecisionsScore
+     * @memberof TaskCommentList
      */
-    'type': AiDecisionsScoreTypeEnum;
+    'home'?: string;
 }
-
-export const AiDecisionsScoreTypeEnum = {
-    Score: 'score'
-} as const;
-
-export type AiDecisionsScoreTypeEnum = typeof AiDecisionsScoreTypeEnum[keyof typeof AiDecisionsScoreTypeEnum];
-
 

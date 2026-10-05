@@ -13,12 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionSidesFalse } from './ai-decision-sides-false';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiDecisionsChoiceCriteriaValue } from './ai-decisions-choice-criteria-value';
 
 /**
  * 
@@ -28,16 +22,16 @@ import type { AiDecisionsChoiceCriteriaValue } from './ai-decisions-choice-crite
 export interface AiDecisionsChoice {
     /**
      * 
-     * @type {{ [key: string]: AiDecisionsChoiceCriteriaValue; }}
+     * @type {any}
      * @memberof AiDecisionsChoice
      */
-    'criteria': { [key: string]: AiDecisionsChoiceCriteriaValue; };
+    'criteria': any;
     /**
      * 
-     * @type {AiDecisionSidesFalse}
+     * @type {any}
      * @memberof AiDecisionsChoice
      */
-    'instructions'?: AiDecisionSidesFalse;
+    'instructions'?: any;
     /**
      * 
      * @type {string}
