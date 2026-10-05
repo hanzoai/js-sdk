@@ -54,8 +54,6 @@ import type { AiRanking } from '../models';
 // @ts-ignore
 import type { AiResponse } from '../models';
 // @ts-ignore
-import type { AiResponsesResource } from '../models';
-// @ts-ignore
 import type { AiRoutingEdit } from '../models';
 // @ts-ignore
 import type { AiRoutingRewardRequest } from '../models';
@@ -224,7 +222,11 @@ import type { PostAiVideos200Response } from '../models';
 // @ts-ignore
 import type { PostAiWorkflows200Response } from '../models';
 // @ts-ignore
+import type { PostChat200Response } from '../models';
+// @ts-ignore
 import type { PostModelsByModelAccess200Response } from '../models';
+// @ts-ignore
+import type { PostResponses200Response } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 // @ts-ignore
@@ -15863,7 +15865,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChat']?.[localVarOperationServerIndex]?.url;
@@ -15878,7 +15880,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
@@ -15906,7 +15908,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
+        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postCompletions']?.[localVarOperationServerIndex]?.url;
@@ -16008,7 +16010,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postResponses(xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponsesResource>> {
+        async postResponses(xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostResponses200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postResponses']?.[localVarOperationServerIndex]?.url;
@@ -19032,7 +19034,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
+        postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
             return localVarFp.postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19042,7 +19044,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
+        postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
             return localVarFp.postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19062,7 +19064,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
+        postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
             return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19139,7 +19141,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiResponsesResource> {
+        postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PostResponses200Response> {
             return localVarFp.postResponses(requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**

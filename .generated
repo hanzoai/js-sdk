@@ -2453,8 +2453,13 @@ src/models/post-ai-tree-files200-response.ts
 src/models/post-ai-vectors200-response.ts
 src/models/post-ai-videos200-response.ts
 src/models/post-ai-workflows200-response.ts
+src/models/post-chat200-response-all-of-routing-candidates-inner.ts
+src/models/post-chat200-response-all-of-routing-inputs.ts
+src/models/post-chat200-response-all-of-routing.ts
+src/models/post-chat200-response.ts
 src/models/post-event-request.ts
 src/models/post-models-by-model-access200-response.ts
+src/models/post-responses200-response.ts
 src/models/pref-prefs-view.ts
 src/models/pricing-card.ts
 src/models/pricing-component.ts
