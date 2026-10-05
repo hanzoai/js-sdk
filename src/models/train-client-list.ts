@@ -13,21 +13,18 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainClientList
  */
-export interface AccountApiKeyList {
+export interface TrainClientList {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Clients are the org\'s live clients, as the engine reports them.
+     * @type {Array<any>}
+     * @memberof TrainClientList
      */
-    'keys'?: Array<AccountApiKey>;
+    'clients'?: Array<any>;
 }
 

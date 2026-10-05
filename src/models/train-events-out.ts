@@ -15,19 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainEvent } from './train-event';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainEventsOut
  */
-export interface AccountApiKeyList {
+export interface TrainEventsOut {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Data is the events after the cursor, in order.
+     * @type {Array<TrainEvent>}
+     * @memberof TrainEventsOut
      */
-    'keys'?: Array<AccountApiKey>;
+    'data'?: Array<TrainEvent>;
+    /**
+     * Next is the cursor to pass as after.
+     * @type {number}
+     * @memberof TrainEventsOut
+     */
+    'next'?: number;
+    /**
+     * Status is the job\'s status as of this answer.
+     * @type {string}
+     * @memberof TrainEventsOut
+     */
+    'status'?: string;
 }
 

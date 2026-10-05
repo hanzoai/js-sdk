@@ -15,19 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainTerm } from './train-term';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainObjective
  */
-export interface AccountApiKeyList {
+export interface TrainObjective {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Loss is `cross_entropy`.
+     * @type {string}
+     * @memberof TrainObjective
      */
-    'keys'?: Array<AccountApiKey>;
+    'loss'?: string;
+    /**
+     * Terms are added to each row\'s loss.
+     * @type {Array<TrainTerm>}
+     * @memberof TrainObjective
+     */
+    'terms'?: Array<TrainTerm>;
 }
 

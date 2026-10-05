@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AccountKeyBudget } from './account-key-budget';
 
 /**
  * 
@@ -21,34 +24,100 @@
  */
 export interface AccountApiKey {
     /**
-     * CreatedAt is when the key last changed, as IAM records it.
+     * Budget is what the key may spend on models, in cents. Absent means no cap.
+     * @type {AccountKeyBudget}
+     * @memberof AccountApiKey
+     */
+    'budget'?: AccountKeyBudget;
+    /**
+     * Created is when the key was minted (RFC 3339).
      * @type {string}
      * @memberof AccountApiKey
      */
-    'createdAt'?: string;
+    'created'?: string;
     /**
-     * Key is the FULL value, and is present for a publishable key only: it is public by construction and useless to its holder if it cannot be read back.
+     * Creator is the person the key speaks for, `<org>/<user>`: who created it.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'creator'?: string;
+    /**
+     * Expires is when the key stops working (RFC 3339). Absent means never.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'expires'?: string;
+    /**
+     * ID addresses this key in PATCH and DELETE /v1/account/keys/{id}.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'id'?: string;
+    /**
+     * Key is the full credential. A publishable key always carries it; a secret key carries it once, in the answer to the POST that created it.
      * @type {string}
      * @memberof AccountApiKey
      */
     'key'?: string;
     /**
-     * Limit is what this key may reach, as `kind:name` entries — `model:zen5`, `project:acme`, `product:commerce`. Absent means the key reaches whatever its holder does, which is what every key minted before limits existed does and must keep doing.
+     * Limit is what this key may reach, as `kind:name` entries — `model:zen5`, `project:acme`, `product:train` (read and write), `read:billing` (read only), `read:*` (a read-only key). Absent means the key reaches whatever its holder does.
      * @type {Array<string>}
      * @memberof AccountApiKey
      */
     'limit'?: Array<string>;
     /**
-     * Prefix is the recognizable, non-secret head of the key — enough to tell two keys apart, never enough to use one.
+     * Name is the key\'s label, chosen by the person who made it.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'name'?: string;
+    /**
+     * Prefix is the head of the credential this key\'s holder presents — the sk- of a secret key — enough to tell which string a row is, never enough to use. Absent on a key minted before prefixes were recorded.
      * @type {string}
      * @memberof AccountApiKey
      */
     'prefix'?: string;
+    /**
+     * Rate is how many requests a minute the key may make. Absent means no limit of its own.
+     * @type {number}
+     * @memberof AccountApiKey
+     */
+    'rate'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'revoked'?: string;
+    /**
+     * Revoker is who revoked the key, `<org>/<user>`, and Revoked when.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'revoker'?: string;
+    /**
+     * Spend is what the key has spent on models, in cents rounded up. Absent when it could not be read just now.
+     * @type {AccountKeyBudget}
+     * @memberof AccountApiKey
+     */
+    'spend'?: AccountKeyBudget;
+    /**
+     * Status is active, expired, revoked, or disabled (switched off in IAM).
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'status'?: string;
     /**
      * Type is the key class: secret (sk-) or publishable (pk-).
      * @type {string}
      * @memberof AccountApiKey
      */
     'type'?: string;
+    /**
+     * Used is when the key was last used (RFC 3339). Absent means never.
+     * @type {string}
+     * @memberof AccountApiKey
+     */
+    'used'?: string;
 }
 

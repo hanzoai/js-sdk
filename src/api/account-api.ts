@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AccountApiKey } from '../models';
+// @ts-ignore
 import type { AccountApiKeyList } from '../models';
 // @ts-ignore
 import type { AccountAppearance } from '../models';
@@ -30,15 +32,13 @@ import type { AccountCsrfResp } from '../models';
 // @ts-ignore
 import type { AccountEmbedStatusResp } from '../models';
 // @ts-ignore
-import type { AccountKeyTypeIn } from '../models';
+import type { AccountKeyEdit } from '../models';
 // @ts-ignore
-import type { AccountMintedKey } from '../models';
+import type { AccountKeyIn } from '../models';
 // @ts-ignore
 import type { AccountOnboardReq } from '../models';
 // @ts-ignore
 import type { AccountOnboardResp } from '../models';
-// @ts-ignore
-import type { AccountRevokedKey } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
@@ -48,14 +48,17 @@ import type { ProblemDetails } from '../models';
 export const AccountApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
+         * Revokes exactly one API key, by id. Every other key keeps working. The key stays listed as revoked, with who revoked it and when, and can never be used again. IAM refuses it at once; cloud caches a resolved key for up to 60 seconds, so a request inside that window may still be served.  A member revokes their own keys; an org admin revokes any of the org\'s, and revoking someone else\'s is recorded on the audit trail.
+         * @summary Revokes exactly one API key, by id.
+         * @param {string} id ID is the key to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccountKeys: async (type?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/account/keys`;
+        deleteAccountKeysById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteAccountKeysById', 'id', id)
+            const localVarPath = `/v1/account/keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -70,10 +73,6 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
 
 
     
@@ -240,8 +239,8 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
-         * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
+         * Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it. Each is its own credential with its own name, prefix, status, expiry and limit. Revoked keys stay listed. No secret material comes back; a publishable key, which is public by construction, carries its full value.
+         * @summary Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -267,6 +266,50 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes one key\'s name, permissions, budget, rate or expiry. The secret is not reissued: the key in your deployment keeps working, under its new policy. Only the person the key belongs to may edit it, and a revoked key cannot be edited.
+         * @summary Changes one key\'s name, permissions, budget, rate or expiry.
+         * @param {string} id ID is the key to edit, from the path.
+         * @param {AccountKeyEdit} accountKeyEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeysById: async (id: string, accountKeyEdit: AccountKeyEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchAccountKeysById', 'id', id)
+            // verify required parameter 'accountKeyEdit' is not null or undefined
+            assertParamExists('patchAccountKeysById', 'accountKeyEdit', accountKeyEdit)
+            const localVarPath = `/v1/account/keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(accountKeyEdit, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -348,15 +391,15 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
-         * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {AccountKeyTypeIn} accountKeyTypeIn 
+         * Creates a NEW API key and returns its secret ONCE. It never revokes or changes any other key: every key the caller already holds keeps working. The key is filed in the org the caller acts in and names them as its creator.  An org holds at most 1,000 live keys; past that the create is refused until one is revoked.
+         * @summary Creates a NEW API key and returns its secret ONCE.
+         * @param {AccountKeyIn} accountKeyIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountKeys: async (accountKeyTypeIn: AccountKeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountKeyTypeIn' is not null or undefined
-            assertParamExists('postAccountKeys', 'accountKeyTypeIn', accountKeyTypeIn)
+        postAccountKeys: async (accountKeyIn: AccountKeyIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountKeyIn' is not null or undefined
+            assertParamExists('postAccountKeys', 'accountKeyIn', accountKeyIn)
             const localVarPath = `/v1/account/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -380,7 +423,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(accountKeyTypeIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(accountKeyIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -438,16 +481,16 @@ export const AccountApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AccountApiAxiosParamCreator(configuration)
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
+         * Revokes exactly one API key, by id. Every other key keeps working. The key stays listed as revoked, with who revoked it and when, and can never be used again. IAM refuses it at once; cloud caches a resolved key for up to 60 seconds, so a request inside that window may still be served.  A member revokes their own keys; an org admin revokes any of the org\'s, and revoking someone else\'s is recorded on the audit trail.
+         * @summary Revokes exactly one API key, by id.
+         * @param {string} id ID is the key to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAccountKeys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountRevokedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAccountKeys(type, options);
+        async deleteAccountKeysById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountApiKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAccountKeysById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.deleteAccountKeys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.deleteAccountKeysById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -503,8 +546,8 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
-         * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
+         * Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it. Each is its own credential with its own name, prefix, status, expiry and limit. Revoked keys stay listed. No secret material comes back; a publishable key, which is public by construction, carries its full value.
+         * @summary Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -512,6 +555,20 @@ export const AccountApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountKeys(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.getAccountKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes one key\'s name, permissions, budget, rate or expiry. The secret is not reissued: the key in your deployment keeps working, under its new policy. Only the person the key belongs to may edit it, and a revoked key cannot be edited.
+         * @summary Changes one key\'s name, permissions, budget, rate or expiry.
+         * @param {string} id ID is the key to edit, from the path.
+         * @param {AccountKeyEdit} accountKeyEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchAccountKeysById(id: string, accountKeyEdit: AccountKeyEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountApiKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAccountKeysById(id, accountKeyEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.patchAccountKeysById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -540,14 +597,14 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
-         * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {AccountKeyTypeIn} accountKeyTypeIn 
+         * Creates a NEW API key and returns its secret ONCE. It never revokes or changes any other key: every key the caller already holds keeps working. The key is filed in the org the caller acts in and names them as its creator.  An org holds at most 1,000 live keys; past that the create is refused until one is revoked.
+         * @summary Creates a NEW API key and returns its secret ONCE.
+         * @param {AccountKeyIn} accountKeyIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAccountKeys(accountKeyTypeIn: AccountKeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountMintedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountKeys(accountKeyTypeIn, options);
+        async postAccountKeys(accountKeyIn: AccountKeyIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountApiKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountKeys(accountKeyIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.postAccountKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -576,14 +633,14 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = AccountApiFp(configuration)
     return {
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {AccountApiDeleteAccountKeysRequest} requestParameters Request parameters.
+         * Revokes exactly one API key, by id. Every other key keeps working. The key stays listed as revoked, with who revoked it and when, and can never be used again. IAM refuses it at once; cloud caches a resolved key for up to 60 seconds, so a request inside that window may still be served.  A member revokes their own keys; an org admin revokes any of the org\'s, and revoking someone else\'s is recorded on the audit trail.
+         * @summary Revokes exactly one API key, by id.
+         * @param {AccountApiDeleteAccountKeysByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccountKeys(requestParameters: AccountApiDeleteAccountKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountRevokedKey> {
-            return localVarFp.deleteAccountKeys(requestParameters.type, options).then((request) => request(axios, basePath));
+        deleteAccountKeysById(requestParameters: AccountApiDeleteAccountKeysByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountApiKey> {
+            return localVarFp.deleteAccountKeysById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the signed-in caller\'s own appearance preference — text size, density and accent — read from their IAM account so it is the same on every device and every Hanzo surface. An unset preference is an empty object.  A transient IAM read failure reports the empty preference rather than a 5xx, so a surface applies its published default and never error-toasts on load — the same fail-soft the key read uses.
@@ -624,13 +681,23 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getAccountEmbed(requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
-         * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
+         * Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it. Each is its own credential with its own name, prefix, status, expiry and limit. Revoked keys stay listed. No secret material comes back; a publishable key, which is public by construction, carries its full value.
+         * @summary Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAccountKeys(options?: RawAxiosRequestConfig): AxiosPromise<AccountApiKeyList> {
             return localVarFp.getAccountKeys(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes one key\'s name, permissions, budget, rate or expiry. The secret is not reissued: the key in your deployment keeps working, under its new policy. Only the person the key belongs to may edit it, and a revoked key cannot be edited.
+         * @summary Changes one key\'s name, permissions, budget, rate or expiry.
+         * @param {AccountApiPatchAccountKeysByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeysById(requestParameters: AccountApiPatchAccountKeysByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountApiKey> {
+            return localVarFp.patchAccountKeysById(requestParameters.id, requestParameters.accountKeyEdit, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores the caller\'s appearance preference on their IAM account, preserving every other field of the row. The accent is validated as a real colour token before it is stored; an unset or invalid axis is dropped rather than stored.
@@ -652,14 +719,14 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postAccountAvatar(options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
-         * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
+         * Creates a NEW API key and returns its secret ONCE. It never revokes or changes any other key: every key the caller already holds keeps working. The key is filed in the org the caller acts in and names them as its creator.  An org holds at most 1,000 live keys; past that the create is refused until one is revoked.
+         * @summary Creates a NEW API key and returns its secret ONCE.
          * @param {AccountApiPostAccountKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountMintedKey> {
-            return localVarFp.postAccountKeys(requestParameters.accountKeyTypeIn, options).then((request) => request(axios, basePath));
+        postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountApiKey> {
+            return localVarFp.postAccountKeys(requestParameters.accountKeyIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
@@ -675,17 +742,17 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for deleteAccountKeys operation in AccountApi.
+ * Request parameters for deleteAccountKeysById operation in AccountApi.
  * @export
- * @interface AccountApiDeleteAccountKeysRequest
+ * @interface AccountApiDeleteAccountKeysByIdRequest
  */
-export interface AccountApiDeleteAccountKeysRequest {
+export interface AccountApiDeleteAccountKeysByIdRequest {
     /**
-     * Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
+     * ID is the key to act on, from the path.
      * @type {string}
-     * @memberof AccountApiDeleteAccountKeys
+     * @memberof AccountApiDeleteAccountKeysById
      */
-    readonly type?: string
+    readonly id: string
 }
 
 /**
@@ -731,6 +798,27 @@ export interface AccountApiGetAccountEmbedRequest {
 }
 
 /**
+ * Request parameters for patchAccountKeysById operation in AccountApi.
+ * @export
+ * @interface AccountApiPatchAccountKeysByIdRequest
+ */
+export interface AccountApiPatchAccountKeysByIdRequest {
+    /**
+     * ID is the key to edit, from the path.
+     * @type {string}
+     * @memberof AccountApiPatchAccountKeysById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AccountKeyEdit}
+     * @memberof AccountApiPatchAccountKeysById
+     */
+    readonly accountKeyEdit: AccountKeyEdit
+}
+
+/**
  * Request parameters for postAccountAppearance operation in AccountApi.
  * @export
  * @interface AccountApiPostAccountAppearanceRequest
@@ -752,10 +840,10 @@ export interface AccountApiPostAccountAppearanceRequest {
 export interface AccountApiPostAccountKeysRequest {
     /**
      * 
-     * @type {AccountKeyTypeIn}
+     * @type {AccountKeyIn}
      * @memberof AccountApiPostAccountKeys
      */
-    readonly accountKeyTypeIn: AccountKeyTypeIn
+    readonly accountKeyIn: AccountKeyIn
 }
 
 /**
@@ -780,15 +868,15 @@ export interface AccountApiPostAccountOrgsRequest {
  */
 export class AccountApi extends BaseAPI {
     /**
-     * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but cloud caches a home key\'s principal for up to 60s, so a request inside that window may still be served. A member\'s key is never cached.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-     * @summary Revokes the caller\'s own API key of the requested class.
-     * @param {AccountApiDeleteAccountKeysRequest} requestParameters Request parameters.
+     * Revokes exactly one API key, by id. Every other key keeps working. The key stays listed as revoked, with who revoked it and when, and can never be used again. IAM refuses it at once; cloud caches a resolved key for up to 60 seconds, so a request inside that window may still be served.  A member revokes their own keys; an org admin revokes any of the org\'s, and revoking someone else\'s is recorded on the audit trail.
+     * @summary Revokes exactly one API key, by id.
+     * @param {AccountApiDeleteAccountKeysByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public deleteAccountKeys(requestParameters: AccountApiDeleteAccountKeysRequest = {}, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).deleteAccountKeys(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    public deleteAccountKeysById(requestParameters: AccountApiDeleteAccountKeysByIdRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).deleteAccountKeysById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -838,14 +926,26 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
-     * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
+     * Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it. Each is its own credential with its own name, prefix, status, expiry and limit. Revoked keys stay listed. No secret material comes back; a publishable key, which is public by construction, carries its full value.
+     * @summary Returns the API keys the caller may see, newest first: their own, or every key the org holds when the caller administers it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
     public getAccountKeys(options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).getAccountKeys(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes one key\'s name, permissions, budget, rate or expiry. The secret is not reissued: the key in your deployment keeps working, under its new policy. Only the person the key belongs to may edit it, and a revoked key cannot be edited.
+     * @summary Changes one key\'s name, permissions, budget, rate or expiry.
+     * @param {AccountApiPatchAccountKeysByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public patchAccountKeysById(requestParameters: AccountApiPatchAccountKeysByIdRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).patchAccountKeysById(requestParameters.id, requestParameters.accountKeyEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -872,15 +972,15 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
-     * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
+     * Creates a NEW API key and returns its secret ONCE. It never revokes or changes any other key: every key the caller already holds keeps working. The key is filed in the org the caller acts in and names them as its creator.  An org holds at most 1,000 live keys; past that the create is refused until one is revoked.
+     * @summary Creates a NEW API key and returns its secret ONCE.
      * @param {AccountApiPostAccountKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
     public postAccountKeys(requestParameters: AccountApiPostAccountKeysRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).postAccountKeys(requestParameters.accountKeyTypeIn, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).postAccountKeys(requestParameters.accountKeyIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

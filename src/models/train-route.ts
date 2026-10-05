@@ -15,19 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainOptions } from './train-options';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainRoute
  */
-export interface AccountApiKeyList {
+export interface TrainRoute {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Keys are the question keys it answers.
+     * @type {Array<string>}
+     * @memberof TrainRoute
      */
-    'keys'?: Array<AccountApiKey>;
+    'keys'?: Array<string>;
+    /**
+     * Options narrows a key to one question: a question under that key routes here only when its type and option labels are exactly these. A key not named here routes whatever its question.
+     * @type {{ [key: string]: TrainOptions; }}
+     * @memberof TrainRoute
+     */
+    'options'?: { [key: string]: TrainOptions; };
 }
 

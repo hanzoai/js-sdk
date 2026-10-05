@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface AccountRevokedKey
+ * @interface TrainChose
  */
-export interface AccountRevokedKey {
+export interface TrainChose {
     /**
-     * OK is true when the key was revoked. A failure is an error status, never a false here.
-     * @type {boolean}
-     * @memberof AccountRevokedKey
-     */
-    'ok'?: boolean;
-    /**
-     * Type is the key class that was revoked, resolved — so a caller that named nothing can see it revoked the secret key.
+     * Mode is the mode the job runs.
      * @type {string}
-     * @memberof AccountRevokedKey
+     * @memberof TrainChose
      */
-    'type'?: string;
+    'mode'?: string;
+    /**
+     * Why says what decided it.
+     * @type {string}
+     * @memberof TrainChose
+     */
+    'why'?: string;
 }
 

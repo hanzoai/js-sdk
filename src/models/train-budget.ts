@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainBudget
  */
-export interface AccountApiKeyList {
+export interface TrainBudget {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Accuracy is the largest accuracy drop allowed.
+     * @type {number}
+     * @memberof TrainBudget
      */
-    'keys'?: Array<AccountApiKey>;
+    'accuracy'?: number;
+    /**
+     * ECE is the largest calibration-error rise allowed.
+     * @type {number}
+     * @memberof TrainBudget
+     */
+    'ece'?: number;
 }
 

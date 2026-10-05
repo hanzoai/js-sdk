@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainSeries
  */
-export interface AccountApiKeyList {
+export interface TrainSeries {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Name is the metric.
+     * @type {string}
+     * @memberof TrainSeries
      */
-    'keys'?: Array<AccountApiKey>;
+    'name'?: string;
+    /**
+     * Points are [step, value, at] in step order.
+     * @type {Array<Array<number>>}
+     * @memberof TrainSeries
+     */
+    'points'?: Array<Array<number>>;
 }
 

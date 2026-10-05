@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainDeletedOut
  */
-export interface AccountApiKeyList {
+export interface TrainDeletedOut {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Deleted is true.
+     * @type {boolean}
+     * @memberof TrainDeletedOut
      */
-    'keys'?: Array<AccountApiKey>;
+    'deleted'?: boolean;
+    /**
+     * SHA256 names the object deleted.
+     * @type {string}
+     * @memberof TrainDeletedOut
+     */
+    'sha256'?: string;
 }
 

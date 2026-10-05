@@ -15,19 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AccountApiKey } from './account-api-key';
+import type { TrainFamily } from './train-family';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainCatalog
  */
-export interface AccountApiKeyList {
+export interface TrainCatalog {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * Data is every base the caller can train, each with its methods, where it runs and what a device-second costs there.
+     * @type {Array<TrainFamily>}
+     * @memberof TrainCatalog
      */
-    'keys'?: Array<AccountApiKey>;
+    'data'?: Array<TrainFamily>;
 }
 

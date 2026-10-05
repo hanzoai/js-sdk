@@ -13,21 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AccountApiKey } from './account-api-key';
 
 /**
  * 
  * @export
- * @interface AccountApiKeyList
+ * @interface TrainUsage
  */
-export interface AccountApiKeyList {
+export interface TrainUsage {
     /**
-     * Keys is every key the caller may see, newest first: their own, or every key of the org when the caller administers it. Revoked keys stay listed.
-     * @type {Array<AccountApiKey>}
-     * @memberof AccountApiKeyList
+     * CostMicroUSD is what Seconds were charged, in micro-USD: 0 on the org\'s own machines.
+     * @type {number}
+     * @memberof TrainUsage
      */
-    'keys'?: Array<AccountApiKey>;
+    'cost_micro_usd'?: number;
+    /**
+     * Held are the device-seconds held beyond Seconds; 0 once it ended.
+     * @type {number}
+     * @memberof TrainUsage
+     */
+    'held'?: number;
+    /**
+     * Seconds are the device-seconds used.
+     * @type {number}
+     * @memberof TrainUsage
+     */
+    'seconds'?: number;
 }
 

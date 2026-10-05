@@ -1727,8 +1727,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5716,8 +5716,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
+         * Changes what a key is called, what it may reach, when it expires, or revokes it. The credential itself is not reissued — the key in your deployment keeps working until it expires or is revoked.  An update writes the whole set of editable fields, so send the key as you read it with your changes made. The class in its scope (publishable or secret) is fixed at creation and an update naming the other is refused. Setting state to \"Revoked\" revokes the key: the row stays, records who revoked it and when, and is never updated again.
+         * @summary Changes what a key is called, what it may reach, when it expires, or revokes it.
          * @param {string} owner Owner is the tenant that holds the key; Name is unique within Owner.
          * @param {string} name 
          * @param {IamKey} iamKey 
@@ -7167,8 +7167,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8513,8 +8513,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
+         * Changes what a key is called, what it may reach, when it expires, or revokes it. The credential itself is not reissued — the key in your deployment keeps working until it expires or is revoked.  An update writes the whole set of editable fields, so send the key as you read it with your changes made. The class in its scope (publishable or secret) is fixed at creation and an update naming the other is refused. Setting state to \"Revoked\" revokes the key: the row stays, records who revoked it and when, and is never updated again.
+         * @summary Changes what a key is called, what it may reach, when it expires, or revokes it.
          * @param {string} owner Owner is the tenant that holds the key; Name is unique within Owner.
          * @param {string} name 
          * @param {IamKey} iamKey 
@@ -9192,8 +9192,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10179,8 +10179,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
+         * Changes what a key is called, what it may reach, when it expires, or revokes it. The credential itself is not reissued — the key in your deployment keeps working until it expires or is revoked.  An update writes the whole set of editable fields, so send the key as you read it with your changes made. The class in its scope (publishable or secret) is fixed at creation and an update naming the other is refused. Setting state to \"Revoked\" revokes the key: the row stays, records who revoked it and when, and is never updated again.
+         * @summary Changes what a key is called, what it may reach, when it expires, or revokes it.
          * @param {IamApiPutIamKeysByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13032,8 +13032,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-     * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half.
+     * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
+     * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
      * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14227,8 +14227,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-     * @summary Changes what a key is called or what it may reach.
+     * Changes what a key is called, what it may reach, when it expires, or revokes it. The credential itself is not reissued — the key in your deployment keeps working until it expires or is revoked.  An update writes the whole set of editable fields, so send the key as you read it with your changes made. The class in its scope (publishable or secret) is fixed at creation and an update naming the other is refused. Setting state to \"Revoked\" revokes the key: the row stays, records who revoked it and when, and is never updated again.
+     * @summary Changes what a key is called, what it may reach, when it expires, or revokes it.
      * @param {IamApiPutIamKeysByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
