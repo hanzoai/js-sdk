@@ -126,6 +126,12 @@ export interface BillingSubscription {
      */
     'status'?: string;
     /**
+     * Test marks a sandbox subscription: sold while its org was in test mode, paid with sandbox money. It is listed and never revenue.
+     * @type {boolean}
+     * @memberof BillingSubscription
+     */
+    'test'?: boolean;
+    /**
      * TrialEnd is when that trial ends; absent when there was none.
      * @type {string}
      * @memberof BillingSubscription
