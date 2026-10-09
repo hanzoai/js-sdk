@@ -322,6 +322,7 @@ src/models/ask-request.ts
 src/models/ask-source.ts
 src/models/ask-web-question.ts
 src/models/asset.ts
+src/models/audit-act.ts
 src/models/audit-trail-page.ts
 src/models/audit-wire.ts
 src/models/audit.ts
@@ -645,6 +646,7 @@ src/models/compliance-acc-list.ts
 src/models/compliance-acc-view.ts
 src/models/compliance-accreditation-decision.ts
 src/models/compliance-accreditation-req.ts
+src/models/compliance-act.ts
 src/models/compliance-audit-list.ts
 src/models/compliance-check-list.ts
 src/models/compliance-check-view.ts
@@ -1026,10 +1028,11 @@ src/models/git-file-json.ts
 src/models/git-files-json.ts
 src/models/git-gc-out.ts
 src/models/git-job-view.ts
-src/models/git-key-list.ts
-src/models/git-key-view.ts
+src/models/git-link-all.ts
+src/models/git-link-req.ts
+src/models/git-link.ts
+src/models/git-linked.ts
 src/models/git-mirror-list.ts
-src/models/git-mirror-req.ts
 src/models/git-mirror-target-req.ts
 src/models/git-mirror-target-view.ts
 src/models/git-open-req.ts
@@ -1046,7 +1049,6 @@ src/models/git-push-resp.ts
 src/models/git-readme-json.ts
 src/models/git-ref-json.ts
 src/models/git-refs-json.ts
-src/models/git-register-key-req.ts
 src/models/git-repo-list.ts
 src/models/git-repo-view.ts
 src/models/git-run-start.ts
@@ -1057,6 +1059,7 @@ src/models/git-subscription-list.ts
 src/models/git-subscription-view.ts
 src/models/git-tree-entry-json.ts
 src/models/git-tree-json.ts
+src/models/git-unmatched.ts
 src/models/git-usage-repo.ts
 src/models/git-usage-view.ts
 src/models/git-workflow-list.ts

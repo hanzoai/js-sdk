@@ -40,10 +40,22 @@ export interface AiModelPricingInfo {
     'output_per_million'?: number;
     /**
      * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof AiModelPricingInfo
+     */
+    'overrides'?: Array<{ [key: string]: any; }>;
+    /**
+     * 
      * @type {string}
      * @memberof AiModelPricingInfo
      */
     'prompt'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof AiModelPricingInfo
+     */
+    'rates'?: { [key: string]: string; };
     /**
      * 
      * @type {boolean}

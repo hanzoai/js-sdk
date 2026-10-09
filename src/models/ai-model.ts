@@ -42,11 +42,23 @@ export interface AiModel {
      */
     'context_window'?: number;
     /**
+     * Expires is the day the model\'s vendor stops serving it (2006-01-02), absent when it states none.
+     * @type {string}
+     * @memberof AiModel
+     */
+    'expires'?: string;
+    /**
      * Family is the Hanzo family (enso, zen, kai, zoo), absent for a third-party model.
      * @type {string}
      * @memberof AiModel
      */
     'family'?: string;
+    /**
+     * Free is whether a call bills nothing.
+     * @type {boolean}
+     * @memberof AiModel
+     */
+    'free'?: boolean;
     /**
      * ID is the model\'s id, the one a completion or a decision names.
      * @type {string}
@@ -59,6 +71,12 @@ export interface AiModel {
      * @memberof AiModel
      */
     'inputs'?: Array<string>;
+    /**
+     * MaxOutputTokens is the most one answer may hold, absent when the catalog does not say.
+     * @type {number}
+     * @memberof AiModel
+     */
+    'max_output_tokens'?: number;
     /**
      * Name is the model\'s display name.
      * @type {string}

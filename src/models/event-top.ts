@@ -39,6 +39,12 @@ export interface EventTop {
      */
     'end'?: string;
     /**
+     * Impersonated is which events products, topPages, topReferrers and topSources counted against the mark a platform operator leaves acting as someone else: exclude (the tenant\'s own traffic), include, or only. Models reads the usage ledger, which carries no mark.
+     * @type {string}
+     * @memberof EventTop
+     */
+    'impersonated'?: string;
+    /**
      * Models ranks the window\'s LLM models by spend — real per-org data.
      * @type {EventTopModels}
      * @memberof EventTop

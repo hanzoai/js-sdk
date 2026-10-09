@@ -150,6 +150,44 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Removes the conversation for good: every turn of it, and every link it was shared by, which stops opening and leaves the lists of the people it was open to. Only the member who opened it may delete it; anyone else is answered 404, as for one that is not there. Every delete is written to the audit trail.
+         * @summary Delete one of your conversations
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgentChatConversationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteAgentChatConversationsById', 'id', id)
+            const localVarPath = `/v1/agent/chat/conversations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Ends one share of a conversation the caller owns, for every viewer: it leaves their lists, and its token opens nothing and reads exactly like a token that never existed. Every revoke is written to the audit trail.
          * @summary Revoke a link to one of your conversations
          * @param {string} id 
@@ -587,7 +625,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
          * @summary List the agent threads in your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1456,6 +1494,44 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(agentUpdateAgentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes `{title?, pinned?, archived?}` and changes what it names, leaving the rest; a body naming none is refused 400, and so is an empty title. A title is cut to one line of at most 80 characters. Answers the conversation as the list does — id, title, updatedAt, pinned, archived — and the change does not move `updatedAt`, which stays when it was last spoken in.  The list puts pinned conversations first and leaves archived ones out; `?archived=true` lists those alone. Only the member who opened the conversation may change it; another member\'s, another org\'s, and one recorded with no member answer 404. Every change is written to the audit trail.
+         * @summary Rename, pin or archive one of your conversations
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAgentChatConversationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchAgentChatConversationsById', 'id', id)
+            const localVarPath = `/v1/agent/chat/conversations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2410,6 +2486,19 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Removes the conversation for good: every turn of it, and every link it was shared by, which stops opening and leaves the lists of the people it was open to. Only the member who opened it may delete it; anyone else is answered 404, as for one that is not there. Every delete is written to the audit trail.
+         * @summary Delete one of your conversations
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAgentChatConversationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgentChatConversationsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.deleteAgentChatConversationsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Ends one share of a conversation the caller owns, for every viewer: it leaves their lists, and its token opens nothing and reads exactly like a token that never existed. Every revoke is written to the audit trail.
          * @summary Revoke a link to one of your conversations
          * @param {string} id 
@@ -2557,7 +2646,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
          * @summary List the agent threads in your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2846,6 +2935,19 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAgentByRef(ref, agentUpdateAgentIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.patchAgentByRef']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes `{title?, pinned?, archived?}` and changes what it names, leaving the rest; a body naming none is refused 400, and so is an empty title. A title is cut to one line of at most 80 characters. Answers the conversation as the list does — id, title, updatedAt, pinned, archived — and the change does not move `updatedAt`, which stays when it was last spoken in.  The list puts pinned conversations first and leaves archived ones out; `?archived=true` lists those alone. Only the member who opened the conversation may change it; another member\'s, another org\'s, and one recorded with no member answer 404. Every change is written to the audit trail.
+         * @summary Rename, pin or archive one of your conversations
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchAgentChatConversationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAgentChatConversationsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.patchAgentChatConversationsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3174,6 +3276,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.deleteAgentByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
+         * Removes the conversation for good: every turn of it, and every link it was shared by, which stops opening and leaves the lists of the people it was open to. Only the member who opened it may delete it; anyone else is answered 404, as for one that is not there. Every delete is written to the audit trail.
+         * @summary Delete one of your conversations
+         * @param {AgentApiDeleteAgentChatConversationsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgentChatConversationsById(requestParameters: AgentApiDeleteAgentChatConversationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAgentChatConversationsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Ends one share of a conversation the caller owns, for every viewer: it leaves their lists, and its token opens nothing and reads exactly like a token that never existed. Every revoke is written to the audit trail.
          * @summary Revoke a link to one of your conversations
          * @param {AgentApiDeleteAgentChatConversationsByIdSharesByShareRequest} requestParameters Request parameters.
@@ -3282,7 +3394,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentByRefSpend(requestParameters.ref, requestParameters.by, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
          * @summary List the agent threads in your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3494,6 +3606,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         patchAgentByRef(requestParameters: AgentApiPatchAgentByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentAgentView> {
             return localVarFp.patchAgentByRef(requestParameters.ref, requestParameters.agentUpdateAgentIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes `{title?, pinned?, archived?}` and changes what it names, leaving the rest; a body naming none is refused 400, and so is an empty title. A title is cut to one line of at most 80 characters. Answers the conversation as the list does — id, title, updatedAt, pinned, archived — and the change does not move `updatedAt`, which stays when it was last spoken in.  The list puts pinned conversations first and leaves archived ones out; `?archived=true` lists those alone. Only the member who opened the conversation may change it; another member\'s, another org\'s, and one recorded with no member answer 404. Every change is written to the audit trail.
+         * @summary Rename, pin or archive one of your conversations
+         * @param {AgentApiPatchAgentChatConversationsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAgentChatConversationsById(requestParameters: AgentApiPatchAgentChatConversationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchAgentChatConversationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public. A FINISHED session stays finished — reopening a done/error run would fabricate liveness — and publishing is refused unless the session names the project it built, because the public build route is keyed on (org, project).
@@ -3736,6 +3858,20 @@ export interface AgentApiDeleteAgentByRefRequest {
      * @memberof AgentApiDeleteAgentByRef
      */
     readonly ref: string
+}
+
+/**
+ * Request parameters for deleteAgentChatConversationsById operation in AgentApi.
+ * @export
+ * @interface AgentApiDeleteAgentChatConversationsByIdRequest
+ */
+export interface AgentApiDeleteAgentChatConversationsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentApiDeleteAgentChatConversationsById
+     */
+    readonly id: string
 }
 
 /**
@@ -4215,6 +4351,20 @@ export interface AgentApiPatchAgentByRefRequest {
 }
 
 /**
+ * Request parameters for patchAgentChatConversationsById operation in AgentApi.
+ * @export
+ * @interface AgentApiPatchAgentChatConversationsByIdRequest
+ */
+export interface AgentApiPatchAgentChatConversationsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentApiPatchAgentChatConversationsById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for patchAgentSessionsById operation in AgentApi.
  * @export
  * @interface AgentApiPatchAgentSessionsByIdRequest
@@ -4570,6 +4720,18 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
+     * Removes the conversation for good: every turn of it, and every link it was shared by, which stops opening and leaves the lists of the people it was open to. Only the member who opened it may delete it; anyone else is answered 404, as for one that is not there. Every delete is written to the audit trail.
+     * @summary Delete one of your conversations
+     * @param {AgentApiDeleteAgentChatConversationsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public deleteAgentChatConversationsById(requestParameters: AgentApiDeleteAgentChatConversationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).deleteAgentChatConversationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Ends one share of a conversation the caller owns, for every viewer: it leaves their lists, and its token opens nothing and reads exactly like a token that never existed. Every revoke is written to the audit trail.
      * @summary Revoke a link to one of your conversations
      * @param {AgentApiDeleteAgentChatConversationsByIdSharesByShareRequest} requestParameters Request parameters.
@@ -4700,7 +4862,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+     * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
      * @summary List the agent threads in your org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4955,6 +5117,18 @@ export class AgentApi extends BaseAPI {
      */
     public patchAgentByRef(requestParameters: AgentApiPatchAgentByRefRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).patchAgentByRef(requestParameters.ref, requestParameters.agentUpdateAgentIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes `{title?, pinned?, archived?}` and changes what it names, leaving the rest; a body naming none is refused 400, and so is an empty title. A title is cut to one line of at most 80 characters. Answers the conversation as the list does — id, title, updatedAt, pinned, archived — and the change does not move `updatedAt`, which stays when it was last spoken in.  The list puts pinned conversations first and leaves archived ones out; `?archived=true` lists those alone. Only the member who opened the conversation may change it; another member\'s, another org\'s, and one recorded with no member answer 404. Every change is written to the audit trail.
+     * @summary Rename, pin or archive one of your conversations
+     * @param {AgentApiPatchAgentChatConversationsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public patchAgentChatConversationsById(requestParameters: AgentApiPatchAgentChatConversationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).patchAgentChatConversationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

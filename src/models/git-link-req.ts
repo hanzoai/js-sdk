@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface GitRegisterKeyReq
+ * @interface GitLinkReq
  */
-export interface GitRegisterKeyReq {
+export interface GitLinkReq {
     /**
-     * PublicKey is one OpenSSH authorized-key line (\"ssh-ed25519 AAAA… you@host\"). Required; a line that does not parse is refused and never stored.
+     * Name is the repository, from the :name path segment. It is made when the org has none of that name.
      * @type {string}
-     * @memberof GitRegisterKeyReq
+     * @memberof GitLinkReq
      */
-    'publicKey'?: string;
+    'name'?: string;
     /**
-     * Title labels the key in the console. Max 256 chars; when omitted the comment on the key line is used.
+     * Project is the sub-scope to make it in; empty uses the caller\'s own.
      * @type {string}
-     * @memberof GitRegisterKeyReq
+     * @memberof GitLinkReq
      */
-    'title'?: string;
+    'project'?: string;
+    /**
+     * Source is where its history lives: an http(s) clone address, such as https://github.com/acme/widgets.git. Its host must let the caller read it.
+     * @type {string}
+     * @memberof GitLinkReq
+     */
+    'source'?: string;
 }
 

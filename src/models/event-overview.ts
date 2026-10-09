@@ -45,6 +45,12 @@ export interface EventOverview {
      */
     'end'?: string;
     /**
+     * Impersonated is which events web and commerce counted against the mark a platform operator leaves acting as someone else: exclude (the tenant\'s own traffic), include, or only. LLM reads the usage ledger, which carries no mark.
+     * @type {string}
+     * @memberof EventOverview
+     */
+    'impersonated'?: string;
+    /**
      * Interval is the bucket width the window implies: hour or day.
      * @type {string}
      * @memberof EventOverview

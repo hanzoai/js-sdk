@@ -190,13 +190,14 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  What a platform operator did acting as someone else is left out unless impersonated asks for it; such a row carries impersonated and impersonated_by in its properties.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 400 on an unknown impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
+         * @param {string} [impersonated] Impersonated is which events to return against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventInsightsEvents: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEventInsightsEvents: async (limit?: number, impersonated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/event/insights/events`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -215,6 +216,10 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (impersonated !== undefined) {
+                localVarQueryParameter['impersonated'] = impersonated;
             }
 
 
@@ -263,15 +268,16 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The web and commerce lenses count the tenant\'s own traffic: what a platform operator did while acting as someone else is left out unless impersonated asks for it (include, or only). The LLM lens reads the usage ledger, which carries no such mark, and counts every call.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
+         * @param {string} [impersonated] Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventOverview: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEventOverview: async (range?: string, start?: string, end?: string, impersonated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/event/overview`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -298,6 +304,10 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
 
             if (end !== undefined) {
                 localVarQueryParameter['end'] = end;
+            }
+
+            if (impersonated !== undefined) {
+                localVarQueryParameter['impersonated'] = impersonated;
             }
 
 
@@ -433,16 +443,17 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet, and count the tenant\'s own traffic: what a platform operator did acting as someone else is left out unless impersonated asks for it (include, or only). Models reads the usage ledger, which carries no such mark. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {number} [limit] Limit bounds every ranked lens in the response. Default 10, maximum 100; a value at or below zero, or one that is not a number, takes the default.
+         * @param {string} [impersonated] Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEventTop: async (range?: string, start?: string, end?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEventTop: async (range?: string, start?: string, end?: string, limit?: number, impersonated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/event/top`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -473,6 +484,10 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (impersonated !== undefined) {
+                localVarQueryParameter['impersonated'] = impersonated;
             }
 
 
@@ -655,14 +670,15 @@ export const EventApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  What a platform operator did acting as someone else is left out unless impersonated asks for it; such a row carries impersonated and impersonated_by in its properties.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 400 on an unknown impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
+         * @param {string} [impersonated] Impersonated is which events to return against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventInsightsEvents(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventEventList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventInsightsEvents(limit, options);
+        async getEventInsightsEvents(limit?: number, impersonated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventEventList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventInsightsEvents(limit, impersonated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventInsightsEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -680,16 +696,17 @@ export const EventApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The web and commerce lenses count the tenant\'s own traffic: what a platform operator did while acting as someone else is left out unless impersonated asks for it (include, or only). The LLM lens reads the usage ledger, which carries no such mark, and counts every call.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
+         * @param {string} [impersonated] Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventOverview(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventOverview>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventOverview(range, start, end, options);
+        async getEventOverview(range?: string, start?: string, end?: string, impersonated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventOverview>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventOverview(range, start, end, impersonated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventOverview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -735,17 +752,18 @@ export const EventApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet, and count the tenant\'s own traffic: what a platform operator did acting as someone else is left out unless impersonated asks for it (include, or only). Models reads the usage ledger, which carries no such mark. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {number} [limit] Limit bounds every ranked lens in the response. Default 10, maximum 100; a value at or below zero, or one that is not a number, takes the default.
+         * @param {string} [impersonated] Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEventTop(range?: string, start?: string, end?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventTop>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventTop(range, start, end, limit, options);
+        async getEventTop(range?: string, start?: string, end?: string, limit?: number, impersonated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventTop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventTop(range, start, end, limit, impersonated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventApi.getEventTop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -829,14 +847,14 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEventHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  What a platform operator did acting as someone else is left out unless impersonated asks for it; such a row carries impersonated and impersonated_by in its properties.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 400 on an unknown impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
          * @param {EventApiGetEventInsightsEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEventInsightsEvents(requestParameters: EventApiGetEventInsightsEventsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventEventList> {
-            return localVarFp.getEventInsightsEvents(requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getEventInsightsEvents(requestParameters.limit, requestParameters.impersonated, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports that the unified insights surface is serving. It reads no tenant data and consults no dependency, so it answers 200 unconditionally and needs no principal — liveness must be probe-able. The warehouse-connectivity probe is a different question and lives at GET /v1/event/health.
@@ -848,14 +866,14 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEventInsightsHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The web and commerce lenses count the tenant\'s own traffic: what a platform operator did while acting as someone else is left out unless impersonated asks for it (include, or only). The LLM lens reads the usage ledger, which carries no such mark, and counts every call.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s analytics KPIs for one time window.
          * @param {EventApiGetEventOverviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEventOverview(requestParameters: EventApiGetEventOverviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventOverview> {
-            return localVarFp.getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+            return localVarFp.getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.impersonated, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a transparent 1x1 GIF and records one page view for the project whose publishable key names the address:      <img src=\"https://api.hanzo.ai/v1/event/pixel/pk-….gif\" alt=\"\" width=\"1\" height=\"1\">  The page is `?u=` when given, else the Referer. The visitor is stamped from the request like every event, is one visitor for a day, and carries no cookie. Do-not-track and a developer\'s own machine record nothing. The image is answered whatever happened to the view, with no-store.
@@ -887,14 +905,14 @@ export const EventApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEventTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+         * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet, and count the tenant\'s own traffic: what a platform operator did acting as someone else is left out unless impersonated asks for it (include, or only). Models reads the usage ledger, which carries no such mark. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
          * @param {EventApiGetEventTopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEventTop(requestParameters: EventApiGetEventTopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventTop> {
-            return localVarFp.getEventTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getEventTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, requestParameters.impersonated, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores pageviews, browser errors, identifies and custom commerce events as rows in the caller\'s own tenant, and answers a receipt {accepted, dropped} that always totals what was sent — a beacon is never silently discarded.  THE STATUS SAYS WHETHER ANYTHING LANDED, so a green check can never mean an empty warehouse. 200 means at least one event was stored (or that nothing was sent), and a nonzero `dropped` beside a nonzero `accepted` is a PARTIAL batch, never a failed one — a batch is not refused whole for its worst element. If NOTHING was stored the request is an error, and it names the one thing that fixes it: 401 `ingest_key_required` when every event was refused for want of a credential (the same events land with a key), and 400 `unroutable_events` when the caller HAD capability and the body still named nothing storable.  ONE endpoint for every wire a Hanzo surface emits, dispatched by the SHAPE of the body and never by a second path: a bare event object, a bare array of them, the {batch:[…]} / {events:[…]} envelope, the team console\'s snake_case array, and the PostHog wire (spelled `distinct_id`/`api_key`, which the canonical wire never uses). BATCH IS A BODY, NOT A PATH — there is no /v1/event/batch, because an array already is one.  WHAT THE CALLER PRESENTS DECIDES WHAT IT MAY WRITE, and the endpoint itself grants nothing. A validated bearer or an org API key writes the full event at full fidelity. A PUBLISHABLE key (pk-, on Authorization: Bearer, x-hanzo-ingest-key, or ?ingest_key= for navigator.sendBeacon, which cannot set headers) does the same, and is the credential a browser bundle ships: it is deliberately NOT a secret, it resolves WHICH tenant a beacon belongs to and nothing more. A pk- never authenticates and can READ NOTHING — not this org\'s errors, not a lens, not any other route on this API — so a leaked one lets a stranger write into your stream, and never lets one read out of it. Reading these rows back always takes a real bearer. A Hanzo Team space token resolves its org at REDUCED capability: the signed account names the person, so a `distinctId` in the body cannot pin events on a colleague.  NO CREDENTIAL IS REFUSED: a write the server cannot attribute to a project is 401 `ingest_key_required`, and a credential that IS presented but resolves to no project is 403 `ingest_key_unknown`. Nothing is filed under a shared tenant — events nobody can read are worse than events nobody sent, because the caller is told it succeeded. A browser bundle therefore always ships a pk-, which is what /v1/event/tag.js takes.  A REDUCED principal — a Hanzo Team space token — writes through the PROJECTION into its own org: narrowed to what the SERVER can name (pageviews and errors, plus the closed autocapture vocabulary $click, $input, $change, $submit, $view), where every one of those names is resolved through a server-owned table and stored as that table\'s value, so the name on the wire is never the name in the row. Stripped, too, to the fields the projection names, so revenue, personId, groupId and every property but the element annotation cannot reach a row — and an exception is carried only on an error, never on an interaction, so a click cannot ship a stack trace into a row\'s attributes. It does NOT name the person: the signed account is the identity, so a `distinctId` in the body cannot pin events on a colleague. Everything refused is counted in `dropped`.  The projected lane alone is bounded: 413 over 64 KiB, 400 over 50 events, 429 on the per-client-IP and per-peer caps, and a DNT:1 or Sec-GPC:1 request stores nothing and says so in the receipt. Two stored values carry their own bounds on top, because a request cap does not bound one value: an element annotation over 2 KiB (or a trail over 32 steps) and an exception class over 256 bytes are dropped from the row, which still lands. Authenticated bodies are offered to the observability plane first, which claims LLM-observability ingestion batches and declines everything else.
@@ -997,6 +1015,13 @@ export interface EventApiGetEventInsightsEventsRequest {
      * @memberof EventApiGetEventInsightsEvents
      */
     readonly limit?: number
+
+    /**
+     * Impersonated is which events to return against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
+     * @type {string}
+     * @memberof EventApiGetEventInsightsEvents
+     */
+    readonly impersonated?: string
 }
 
 /**
@@ -1025,6 +1050,13 @@ export interface EventApiGetEventOverviewRequest {
      * @memberof EventApiGetEventOverview
      */
     readonly end?: string
+
+    /**
+     * Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
+     * @type {string}
+     * @memberof EventApiGetEventOverview
+     */
+    readonly impersonated?: string
 }
 
 /**
@@ -1102,6 +1134,13 @@ export interface EventApiGetEventTopRequest {
      * @memberof EventApiGetEventTop
      */
     readonly limit?: number
+
+    /**
+     * Impersonated is which events the product-event lenses count against the mark a platform operator leaves acting as someone else: exclude (the default, the tenant\&#39;s own traffic), include, or only. Anything else is a 400.
+     * @type {string}
+     * @memberof EventApiGetEventTop
+     */
+    readonly impersonated?: string
 }
 
 /**
@@ -1189,7 +1228,7 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 503 when the warehouse is unreachable.
+     * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture endpoints fill — one row per stored event, with the row\'s attributes returned as the properties object.  What a platform operator did acting as someone else is left out unless impersonated asks for it; such a row carries impersonated and impersonated_by in its properties.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 401 without a validated bearer, 400 on an unknown impersonated value, 503 when the warehouse is unreachable.
      * @summary Returns the caller org\'s most recent product events, newest first.
      * @param {EventApiGetEventInsightsEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1197,7 +1236,7 @@ export class EventApi extends BaseAPI {
      * @memberof EventApi
      */
     public getEventInsightsEvents(requestParameters: EventApiGetEventInsightsEventsRequest = {}, options?: RawAxiosRequestConfig) {
-        return EventApiFp(this.configuration).getEventInsightsEvents(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return EventApiFp(this.configuration).getEventInsightsEvents(requestParameters.limit, requestParameters.impersonated, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1212,7 +1251,7 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+     * Returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The web and commerce lenses count the tenant\'s own traffic: what a platform operator did while acting as someone else is left out unless impersonated asks for it (include, or only). The LLM lens reads the usage ledger, which carries no such mark, and counts every call.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
      * @summary Returns the caller org\'s analytics KPIs for one time window.
      * @param {EventApiGetEventOverviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1220,7 +1259,7 @@ export class EventApi extends BaseAPI {
      * @memberof EventApi
      */
     public getEventOverview(requestParameters: EventApiGetEventOverviewRequest = {}, options?: RawAxiosRequestConfig) {
-        return EventApiFp(this.configuration).getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+        return EventApiFp(this.configuration).getEventOverview(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.impersonated, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1259,7 +1298,7 @@ export class EventApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
+     * Returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet, and count the tenant\'s own traffic: what a platform operator did acting as someone else is left out unless impersonated asks for it (include, or only). Models reads the usage ledger, which carries no such mark. The org is the validated principal\'s — never a parameter. 401 without a validated bearer, 400 on an unknown range or impersonated value, 503 when the warehouse is unreachable.
      * @summary Returns the caller org\'s ranked lenses for one window, five of them at once.
      * @param {EventApiGetEventTopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1267,7 +1306,7 @@ export class EventApi extends BaseAPI {
      * @memberof EventApi
      */
     public getEventTop(requestParameters: EventApiGetEventTopRequest = {}, options?: RawAxiosRequestConfig) {
-        return EventApiFp(this.configuration).getEventTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return EventApiFp(this.configuration).getEventTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, requestParameters.impersonated, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

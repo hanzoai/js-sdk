@@ -67,7 +67,19 @@ export interface AiModelInfo {
      * @type {string}
      * @memberof AiModelInfo
      */
+    'expires'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
     'family'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AiModelInfo
+     */
+    'free'?: boolean;
     /**
      * 
      * @type {string}

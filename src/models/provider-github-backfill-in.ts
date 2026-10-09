@@ -21,6 +21,12 @@
  */
 export interface ProviderGithubBackfillIn {
     /**
+     * Repo narrows the pass to ONE granted repository, named `owner/name` or bare `name` (case-insensitive). Empty walks every granted repository. A project page syncs its own issues with this; the org-wide pass stays the default. A name the connection does not grant is a 404, never a silent empty pass that reads as \"this repository has no issues\".
+     * @type {string}
+     * @memberof ProviderGithubBackfillIn
+     */
+    'repo'?: string;
+    /**
      * State is the GitHub issue state to walk: \"open\" (the default), \"closed\" or \"all\". Anything else is a 400.
      * @type {string}
      * @memberof ProviderGithubBackfillIn

@@ -1727,8 +1727,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
+         * Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which keys come from your credentials, not from the request. You may name an organization you belong to: its admin sees every key it holds, and a member sees the keys they hold there. Naming any other organization is refused.
+         * @summary Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7167,8 +7167,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
+         * Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which keys come from your credentials, not from the request. You may name an organization you belong to: its admin sees every key it holds, and a member sees the keys they hold there. Naming any other organization is refused.
+         * @summary Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {string} [owner] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9192,8 +9192,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-         * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
+         * Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which keys come from your credentials, not from the request. You may name an organization you belong to: its admin sees every key it holds, and a member sees the keys they hold there. Naming any other organization is refused.
+         * @summary Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
          * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13032,8 +13032,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s. The capability that admits a confidential client to this collection does not itself name a tenant, so the tenant is decided here.
-     * @summary Returns an organization\'s API keys, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
+     * Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used. Secret halves are never listed.  Which keys come from your credentials, not from the request. You may name an organization you belong to: its admin sees every key it holds, and a member sees the keys they hold there. Naming any other organization is refused.
+     * @summary Returns the API keys of an organization that you may see, newest first — what each is called, what it may reach, its publishable half, and when it was last used.
      * @param {IamApiGetIamKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -39,11 +39,23 @@ export interface AiPrice {
      */
     'output_per_million'?: number;
     /**
+     * Overrides are the vendor\'s conditional rates as billed, each with its condition: min_prompt_tokens, or utc_start, utc_end and utc_days.
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof AiPrice
+     */
+    'overrides'?: Array<{ [key: string]: any; }>;
+    /**
      * Prompt is the price of one input token, a decimal string.
      * @type {string}
      * @memberof AiPrice
      */
     'prompt'?: string;
+    /**
+     * Rates is every rate a resold model\'s vendor states, in the vendor\'s names and units (USD per token for prompt, completion, input_cache_read, input_cache_write, internal_reasoning; per request; per search for web_search), as billed: the vendor\'s rate times our margin, exact.
+     * @type {{ [key: string]: string; }}
+     * @memberof AiPrice
+     */
+    'rates'?: { [key: string]: string; };
     /**
      * Variable is true for a router that bills each answer at the price of the model that gave it; the figures above are then that router\'s ceiling.
      * @type {boolean}

@@ -397,17 +397,18 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
-         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
          * @param {string} [q] Q matches the model\&#39;s id, name, description or owner, ignoring case.
          * @param {string} [_class] Class keeps one class: premium (third-party frontier models), ours (Hanzo\&#39;s priced models) or free.
          * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
          * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
+         * @param {boolean} [free] Free keeps the models a call to which bills nothing (bounded by the free allowances instead of a balance).
          * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        aiModels: async (q?: string, _class?: string, family?: string, capability?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        aiModels: async (q?: string, _class?: string, family?: string, capability?: string, free?: boolean, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/ai/mcp/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -438,6 +439,10 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
             if (capability !== undefined) {
                 localVarQueryParameter['capability'] = capability;
+            }
+
+            if (free !== undefined) {
+                localVarQueryParameter['free'] = free;
             }
 
             if (limit !== undefined) {
@@ -6094,6 +6099,82 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
+         * Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced. ?free=1 keeps the models the vendor charges nothing for. Public, as the vendor\'s own list is: the free lane reads it in place of the vendor\'s.
+         * @summary Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced.
+         * @param {string} vendor 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModelsVendorsByVendor: async (vendor: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'vendor' is not null or undefined
+            assertParamExists('getModelsVendorsByVendor', 'vendor', vendor)
+            const localVarPath = `/v1/models/vendors/{vendor}`
+                .replace(`{${"vendor"}}`, encodeURIComponent(String(vendor)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the changes syncs read in a vendor\'s model list, newest first. Each is new, back, gone, price, free (was priced, now free) or paid (was free, now priced), with the price list before and after. ?id= keeps one model\'s; ?limit= bounds the rows (100, at most 1000).
+         * @summary Lists the changes syncs read in a vendor\'s model list, newest first.
+         * @param {string} vendor 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModelsVendorsByVendorEvents: async (vendor: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'vendor' is not null or undefined
+            assertParamExists('getModelsVendorsByVendorEvents', 'vendor', vendor)
+            const localVarPath = `/v1/models/vendors/{vendor}/events`
+                .replace(`{${"vendor"}}`, encodeURIComponent(String(vendor)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
          * @param {string} id 
@@ -10742,7 +10823,7 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"choice\"|\"noul\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
+         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"boolean\"|\"choice\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  A boolean is a yes/no probability, answered {\"type\": \"boolean\", \"probability\": p}. noul is accepted as Jev\'s spelling of it and answered in Jev\'s shape, {\"type\": \"noul\", \"noul\": p}; an older Kai adds confidence and answer_confidence to a noul\'s. A boolean carries no confidence. Jev is asked a boolean as a noul, and its answer comes back as exactly the boolean.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
          * @summary Implements POST /v1/decisions (the Decisions API).
          * @param {AiDecisionsRequest} aiDecisionsRequest 
          * @param {*} [options] Override http request option.
@@ -12605,18 +12686,19 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
-         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
          * @param {string} [q] Q matches the model\&#39;s id, name, description or owner, ignoring case.
          * @param {string} [_class] Class keeps one class: premium (third-party frontier models), ours (Hanzo\&#39;s priced models) or free.
          * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
          * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
+         * @param {boolean} [free] Free keeps the models a call to which bills nothing (bounded by the free allowances instead of a balance).
          * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async aiModels(q?: string, _class?: string, family?: string, capability?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModels>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiModels(q, _class, family, capability, limit, options);
+        async aiModels(q?: string, _class?: string, family?: string, capability?: string, free?: boolean, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModels>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiModels(q, _class, family, capability, free, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.aiModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -14566,6 +14648,32 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced. ?free=1 keeps the models the vendor charges nothing for. Public, as the vendor\'s own list is: the free lane reads it in place of the vendor\'s.
+         * @summary Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced.
+         * @param {string} vendor 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getModelsVendorsByVendor(vendor: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsVendorsByVendor(vendor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.getModelsVendorsByVendor']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the changes syncs read in a vendor\'s model list, newest first. Each is new, back, gone, price, free (was priced, now free) or paid (was free, now priced), with the price list before and after. ?id= keeps one model\'s; ?limit= bounds the rows (100, at most 1000).
+         * @summary Lists the changes syncs read in a vendor\'s model list, newest first.
+         * @param {string} vendor 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getModelsVendorsByVendorEvents(vendor: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsVendorsByVendorEvents(vendor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.getModelsVendorsByVendorEvents']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
          * @param {string} id 
@@ -16086,7 +16194,7 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"choice\"|\"noul\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
+         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"boolean\"|\"choice\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  A boolean is a yes/no probability, answered {\"type\": \"boolean\", \"probability\": p}. noul is accepted as Jev\'s spelling of it and answered in Jev\'s shape, {\"type\": \"noul\", \"noul\": p}; an older Kai adds confidence and answer_confidence to a noul\'s. A boolean carries no confidence. Jev is asked a boolean as a noul, and its answer comes back as exactly the boolean.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
          * @summary Implements POST /v1/decisions (the Decisions API).
          * @param {AiDecisionsRequest} aiDecisionsRequest 
          * @param {*} [options] Override http request option.
@@ -16717,14 +16825,14 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.aiMCPTools(requestParameters.names, options).then((request) => request(axios, basePath));
         },
         /**
-         * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
-         * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+         * Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
+         * @summary Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
          * @param {AiApiAiModelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiModels> {
-            return localVarFp.aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
@@ -18163,6 +18271,26 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.getModelsProviders(options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced. ?free=1 keeps the models the vendor charges nothing for. Public, as the vendor\'s own list is: the free lane reads it in place of the vendor\'s.
+         * @summary Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced.
+         * @param {AiApiGetModelsVendorsByVendorRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModelsVendorsByVendor(requestParameters: AiApiGetModelsVendorsByVendorRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getModelsVendorsByVendor(requestParameters.vendor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the changes syncs read in a vendor\'s model list, newest first. Each is new, back, gone, price, free (was priced, now free) or paid (was free, now priced), with the price list before and after. ?id= keeps one model\'s; ?limit= bounds the rows (100, at most 1000).
+         * @summary Lists the changes syncs read in a vendor\'s model list, newest first.
+         * @param {AiApiGetModelsVendorsByVendorEventsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModelsVendorsByVendorEvents(requestParameters: AiApiGetModelsVendorsByVendorEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getModelsVendorsByVendorEvents(requestParameters.vendor, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
          * @param {AiApiGetVideosByIdRequest} requestParameters Request parameters.
@@ -19269,7 +19397,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"choice\"|\"noul\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
+         * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"boolean\"|\"choice\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  A boolean is a yes/no probability, answered {\"type\": \"boolean\", \"probability\": p}. noul is accepted as Jev\'s spelling of it and answered in Jev\'s shape, {\"type\": \"noul\", \"noul\": p}; an older Kai adds confidence and answer_confidence to a noul\'s. A boolean carries no confidence. Jev is asked a boolean as a noul, and its answer comes back as exactly the boolean.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
          * @summary Implements POST /v1/decisions (the Decisions API).
          * @param {AiApiPostDecisionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -19755,6 +19883,13 @@ export interface AiApiAiModelsRequest {
      * @memberof AiApiAiModels
      */
     readonly capability?: string
+
+    /**
+     * Free keeps the models a call to which bills nothing (bounded by the free allowances instead of a balance).
+     * @type {boolean}
+     * @memberof AiApiAiModels
+     */
+    readonly free?: boolean
 
     /**
      * Limit is the most models to answer, 1 to 500; 0 answers 50.
@@ -20931,6 +21066,34 @@ export interface AiApiGetModelsByModelAccessRequest {
      * @memberof AiApiGetModelsByModelAccess
      */
     readonly model: string
+}
+
+/**
+ * Request parameters for getModelsVendorsByVendor operation in AiApi.
+ * @export
+ * @interface AiApiGetModelsVendorsByVendorRequest
+ */
+export interface AiApiGetModelsVendorsByVendorRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiApiGetModelsVendorsByVendor
+     */
+    readonly vendor: string
+}
+
+/**
+ * Request parameters for getModelsVendorsByVendorEvents operation in AiApi.
+ * @export
+ * @interface AiApiGetModelsVendorsByVendorEventsRequest
+ */
+export interface AiApiGetModelsVendorsByVendorEventsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiApiGetModelsVendorsByVendorEvents
+     */
+    readonly vendor: string
 }
 
 /**
@@ -23375,15 +23538,15 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
-     * @summary Searches the model catalog — the one GET /v1/models lists — by text, class, family or capability, and answers each match with its class, family, list price (per token and per million; variable for a router billed at the answering model\'s price), context window and capabilities.
+     * Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
+     * @summary Searches the model catalog — the one GET /v1/models lists, every OpenRouter model among it as last synced — by text, class, family, capability or free, and answers each match with its class, family, whether it is free, its list price (per token and per million; variable for a router billed at the answering model\'s price; a resold model\'s every vendor rate and conditional rate as billed), context window, output bound, expiry and capabilities.
      * @param {AiApiAiModelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
     public aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25129,6 +25292,30 @@ export class AiApi extends BaseAPI {
     }
 
     /**
+     * Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced. ?free=1 keeps the models the vendor charges nothing for. Public, as the vendor\'s own list is: the free lane reads it in place of the vendor\'s.
+     * @summary Lists every model a vendor lists now, each entry exactly as the vendor listed it (prices, context, output bound, modalities, parameters, created, expiration), and when the list was last synced.
+     * @param {AiApiGetModelsVendorsByVendorRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public getModelsVendorsByVendor(requestParameters: AiApiGetModelsVendorsByVendorRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).getModelsVendorsByVendor(requestParameters.vendor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the changes syncs read in a vendor\'s model list, newest first. Each is new, back, gone, price, free (was priced, now free) or paid (was free, now priced), with the price list before and after. ?id= keeps one model\'s; ?limit= bounds the rows (100, at most 1000).
+     * @summary Lists the changes syncs read in a vendor\'s model list, newest first.
+     * @param {AiApiGetModelsVendorsByVendorEventsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public getModelsVendorsByVendorEvents(requestParameters: AiApiGetModelsVendorsByVendorEventsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).getModelsVendorsByVendorEvents(requestParameters.vendor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
      * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
      * @param {AiApiGetVideosByIdRequest} requestParameters Request parameters.
@@ -26463,7 +26650,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"choice\"|\"noul\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
+     * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"boolean\"|\"choice\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  A boolean is a yes/no probability, answered {\"type\": \"boolean\", \"probability\": p}. noul is accepted as Jev\'s spelling of it and answered in Jev\'s shape, {\"type\": \"noul\", \"noul\": p}; an older Kai adds confidence and answer_confidence to a noul\'s. A boolean carries no confidence. Jev is asked a boolean as a noul, and its answer comes back as exactly the boolean.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input tokens at the model\'s price.
      * @summary Implements POST /v1/decisions (the Decisions API).
      * @param {AiApiPostDecisionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

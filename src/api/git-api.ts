@@ -32,13 +32,13 @@ import type { GitFilesJSON } from '../models';
 // @ts-ignore
 import type { GitGcOut } from '../models';
 // @ts-ignore
-import type { GitKeyList } from '../models';
+import type { GitLinkAll } from '../models';
 // @ts-ignore
-import type { GitKeyView } from '../models';
+import type { GitLinkReq } from '../models';
+// @ts-ignore
+import type { GitLinked } from '../models';
 // @ts-ignore
 import type { GitMirrorList } from '../models';
-// @ts-ignore
-import type { GitMirrorReq } from '../models';
 // @ts-ignore
 import type { GitMirrorTargetReq } from '../models';
 // @ts-ignore
@@ -65,8 +65,6 @@ import type { GitPushResp } from '../models';
 import type { GitReadmeJSON } from '../models';
 // @ts-ignore
 import type { GitRefsJSON } from '../models';
-// @ts-ignore
-import type { GitRegisterKeyReq } from '../models';
 // @ts-ignore
 import type { GitRepoList } from '../models';
 // @ts-ignore
@@ -121,44 +119,6 @@ import type { RunnerTaskOut } from '../models';
  */
 export const GitApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
-         * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {string} id ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteGitKeysById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteGitKeysById', 'id', id)
-            const localVarPath = `/v1/git/keys/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
@@ -495,40 +455,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         getGitExplore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/git/explore`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
-         * @summary Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1531,16 +1457,16 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
-         * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-         * @param {GitRegisterKeyReq} gitRegisterKeyReq 
+         * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
+         * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
+         * @param {GitLinkAll} gitLinkAll 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitKeys: async (gitRegisterKeyReq: GitRegisterKeyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'gitRegisterKeyReq' is not null or undefined
-            assertParamExists('postGitKeys', 'gitRegisterKeyReq', gitRegisterKeyReq)
-            const localVarPath = `/v1/git/keys`;
+        postGitLink: async (gitLinkAll: GitLinkAll, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitLinkAll' is not null or undefined
+            assertParamExists('postGitLink', 'gitLinkAll', gitLinkAll)
+            const localVarPath = `/v1/git/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1563,7 +1489,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(gitRegisterKeyReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitLinkAll, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1689,19 +1615,57 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
-         * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-         * @param {string} name Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
-         * @param {GitMirrorReq} gitMirrorReq 
+         * Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into. A forge repository of that name that already exists is refused, never overwritten. Org admins only.
+         * @summary Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into.
+         * @param {string} name Name is the repository, from the :name path segment.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameMirror: async (name: string, gitMirrorReq: GitMirrorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGitReposByNameHome: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postGitReposByNameMirror', 'name', name)
-            // verify required parameter 'gitMirrorReq' is not null or undefined
-            assertParamExists('postGitReposByNameMirror', 'gitMirrorReq', gitMirrorReq)
-            const localVarPath = `/v1/git/repos/{name}/mirror`
+            assertParamExists('postGitReposByNameHome', 'name', name)
+            const localVarPath = `/v1/git/repos/{name}/home`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records that a repository\'s history lives on another host, making the repository first when the org has none of that name. Nothing is copied: a read is served from a cache filled from the host, as the host lets the caller read, and a push goes to the host. A repository whose history is HERE is refused (409): a link would hide what only this store holds.
+         * @summary Records that a repository\'s history lives on another host, making the repository first when the org has none of that name.
+         * @param {string} name Name is the repository, from the :name path segment. It is made when the org has none of that name.
+         * @param {GitLinkReq} gitLinkReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameLink: async (name: string, gitLinkReq: GitLinkReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postGitReposByNameLink', 'name', name)
+            // verify required parameter 'gitLinkReq' is not null or undefined
+            assertParamExists('postGitReposByNameLink', 'gitLinkReq', gitLinkReq)
+            const localVarPath = `/v1/git/repos/{name}/link`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1725,7 +1689,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(gitMirrorReq, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gitLinkReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2301,19 +2265,6 @@ export const GitApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GitApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
-         * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {string} id ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteGitKeysById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitKeysById(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteGitKeysById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
@@ -2433,18 +2384,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitExplore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitExplore']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
-         * @summary Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGitKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitKeys(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2768,16 +2707,16 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
-         * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-         * @param {GitRegisterKeyReq} gitRegisterKeyReq 
+         * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
+         * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
+         * @param {GitLinkAll} gitLinkAll 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitKeys(gitRegisterKeyReq: GitRegisterKeyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitKeys(gitRegisterKeyReq, options);
+        async postGitLink(gitLinkAll: GitLinkAll, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitLinked>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitLink(gitLinkAll, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitKeys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2820,17 +2759,30 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
-         * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-         * @param {string} name Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
-         * @param {GitMirrorReq} gitMirrorReq 
+         * Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into. A forge repository of that name that already exists is refused, never overwritten. Org admins only.
+         * @summary Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into.
+         * @param {string} name Name is the repository, from the :name path segment.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGitReposByNameMirror(name: string, gitMirrorReq: GitMirrorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameMirror(name, gitMirrorReq, options);
+        async postGitReposByNameHome(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameHome(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameMirror']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameHome']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records that a repository\'s history lives on another host, making the repository first when the org has none of that name. Nothing is copied: a read is served from a cache filled from the host, as the host lets the caller read, and a push goes to the host. A repository whose history is HERE is refused (409): a link would hide what only this store holds.
+         * @summary Records that a repository\'s history lives on another host, making the repository first when the org has none of that name.
+         * @param {string} name Name is the repository, from the :name path segment. It is made when the org has none of that name.
+         * @param {GitLinkReq} gitLinkReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitReposByNameLink(name: string, gitLinkReq: GitLinkReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameLink(name, gitLinkReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3024,16 +2976,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = GitApiFp(configuration)
     return {
         /**
-         * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
-         * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {GitApiDeleteGitKeysByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteGitKeysById(requestParameters: GitApiDeleteGitKeysByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteGitKeysById(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
@@ -3120,15 +3062,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGitExplore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getGitExplore(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
-         * @summary Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitKeys(options?: RawAxiosRequestConfig): AxiosPromise<GitKeyList> {
-            return localVarFp.getGitKeys(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the capacity this org has declared and how many daemons have entered each pool.
@@ -3357,14 +3290,14 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitByOrgByRepoGitUploadPack(requestParameters.org, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
-         * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-         * @param {GitApiPostGitKeysRequest} requestParameters Request parameters.
+         * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
+         * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
+         * @param {GitApiPostGitLinkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitKeyView> {
-            return localVarFp.postGitKeys(requestParameters.gitRegisterKeyReq, options).then((request) => request(axios, basePath));
+        postGitLink(requestParameters: GitApiPostGitLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitLinked> {
+            return localVarFp.postGitLink(requestParameters.gitLinkAll, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the capacity an org has, and answers with the secret a runner daemon presents to enter it.  Declaring is the ONLY way capacity comes to exist: a daemon cannot register against a pool nobody declared, because the secret it would have to present does not exist until this runs. Re-declaring an existing pool replaces its labels and mints a fresh secret; runners already inside it keep working.
@@ -3397,14 +3330,24 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitReposByNameGc(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
-         * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-         * @param {GitApiPostGitReposByNameMirrorRequest} requestParameters Request parameters.
+         * Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into. A forge repository of that name that already exists is refused, never overwritten. Org admins only.
+         * @summary Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into.
+         * @param {GitApiPostGitReposByNameHomeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGitReposByNameMirror(requestParameters: GitApiPostGitReposByNameMirrorRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
-            return localVarFp.postGitReposByNameMirror(requestParameters.name, requestParameters.gitMirrorReq, options).then((request) => request(axios, basePath));
+        postGitReposByNameHome(requestParameters: GitApiPostGitReposByNameHomeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
+            return localVarFp.postGitReposByNameHome(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records that a repository\'s history lives on another host, making the repository first when the org has none of that name. Nothing is copied: a read is served from a cache filled from the host, as the host lets the caller read, and a push goes to the host. A repository whose history is HERE is refused (409): a link would hide what only this store holds.
+         * @summary Records that a repository\'s history lives on another host, making the repository first when the org has none of that name.
+         * @param {GitApiPostGitReposByNameLinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameLink(requestParameters: GitApiPostGitReposByNameLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
+            return localVarFp.postGitReposByNameLink(requestParameters.name, requestParameters.gitLinkReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
@@ -3536,20 +3479,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
         },
     };
 };
-
-/**
- * Request parameters for deleteGitKeysById operation in GitApi.
- * @export
- * @interface GitApiDeleteGitKeysByIdRequest
- */
-export interface GitApiDeleteGitKeysByIdRequest {
-    /**
-     * ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
-     * @type {string}
-     * @memberof GitApiDeleteGitKeysById
-     */
-    readonly id: string
-}
 
 /**
  * Request parameters for deleteGitReposByName operation in GitApi.
@@ -4140,17 +4069,17 @@ export interface GitApiPostGitByOrgByRepoGitUploadPackRequest {
 }
 
 /**
- * Request parameters for postGitKeys operation in GitApi.
+ * Request parameters for postGitLink operation in GitApi.
  * @export
- * @interface GitApiPostGitKeysRequest
+ * @interface GitApiPostGitLinkRequest
  */
-export interface GitApiPostGitKeysRequest {
+export interface GitApiPostGitLinkRequest {
     /**
      * 
-     * @type {GitRegisterKeyReq}
-     * @memberof GitApiPostGitKeys
+     * @type {GitLinkAll}
+     * @memberof GitApiPostGitLink
      */
-    readonly gitRegisterKeyReq: GitRegisterKeyReq
+    readonly gitLinkAll: GitLinkAll
 }
 
 /**
@@ -4196,24 +4125,38 @@ export interface GitApiPostGitReposByNameGcRequest {
 }
 
 /**
- * Request parameters for postGitReposByNameMirror operation in GitApi.
+ * Request parameters for postGitReposByNameHome operation in GitApi.
  * @export
- * @interface GitApiPostGitReposByNameMirrorRequest
+ * @interface GitApiPostGitReposByNameHomeRequest
  */
-export interface GitApiPostGitReposByNameMirrorRequest {
+export interface GitApiPostGitReposByNameHomeRequest {
     /**
-     * Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
+     * Name is the repository, from the :name path segment.
      * @type {string}
-     * @memberof GitApiPostGitReposByNameMirror
+     * @memberof GitApiPostGitReposByNameHome
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for postGitReposByNameLink operation in GitApi.
+ * @export
+ * @interface GitApiPostGitReposByNameLinkRequest
+ */
+export interface GitApiPostGitReposByNameLinkRequest {
+    /**
+     * Name is the repository, from the :name path segment. It is made when the org has none of that name.
+     * @type {string}
+     * @memberof GitApiPostGitReposByNameLink
      */
     readonly name: string
 
     /**
      * 
-     * @type {GitMirrorReq}
-     * @memberof GitApiPostGitReposByNameMirror
+     * @type {GitLinkReq}
+     * @memberof GitApiPostGitReposByNameLink
      */
-    readonly gitMirrorReq: GitMirrorReq
+    readonly gitLinkReq: GitLinkReq
 }
 
 /**
@@ -4469,18 +4412,6 @@ export interface GitApiPostRunnerTaskRequest {
  */
 export class GitApi extends BaseAPI {
     /**
-     * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
-     * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-     * @param {GitApiDeleteGitKeysByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public deleteGitKeysById(requestParameters: GitApiDeleteGitKeysByIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteGitKeysById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
      * @summary Removes a repo\'s metadata and purges its storage.
      * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
@@ -4584,17 +4515,6 @@ export class GitApi extends BaseAPI {
      */
     public getGitExplore(options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitExplore(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
-     * @summary Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public getGitKeys(options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitKeys(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4870,15 +4790,15 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org. The key line is parsed and canonicalized before storage, its SHA256 fingerprint becomes the auth lookup handle, and the full public key round-trips (it is public). Answers 201. Fingerprints are globally unique, so a key already registered — to this org or any other — is a 409: one key belongs to exactly one org.
-     * @summary Registers an SSH public key so it can authenticate `git clone git@<host>:<org>/<repo>.git` for the caller\'s org.
-     * @param {GitApiPostGitKeysRequest} requestParameters Request parameters.
+     * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
+     * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
+     * @param {GitApiPostGitLinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitKeys(requestParameters.gitRegisterKeyReq, options).then((request) => request(this.axios, this.basePath));
+    public postGitLink(requestParameters: GitApiPostGitLinkRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitLink(requestParameters.gitLinkAll, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4918,15 +4838,27 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
-     * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-     * @param {GitApiPostGitReposByNameMirrorRequest} requestParameters Request parameters.
+     * Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into. A forge repository of that name that already exists is refused, never overwritten. Org admins only.
+     * @summary Moves a repository whose history is HERE to the forge (git.hanzo.ai), the one home of a repository no other host holds, and links it there: the repository is made in the org\'s own namespace on the forge, every branch and tag is pushed to it, the forge\'s refs are read back and must equal these, and only then does the row name the forge as its link, so this copy becomes the cache it can be fetched back into.
+     * @param {GitApiPostGitReposByNameHomeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postGitReposByNameMirror(requestParameters: GitApiPostGitReposByNameMirrorRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postGitReposByNameMirror(requestParameters.name, requestParameters.gitMirrorReq, options).then((request) => request(this.axios, this.basePath));
+    public postGitReposByNameHome(requestParameters: GitApiPostGitReposByNameHomeRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitReposByNameHome(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records that a repository\'s history lives on another host, making the repository first when the org has none of that name. Nothing is copied: a read is served from a cache filled from the host, as the host lets the caller read, and a push goes to the host. A repository whose history is HERE is refused (409): a link would hide what only this store holds.
+     * @summary Records that a repository\'s history lives on another host, making the repository first when the org has none of that name.
+     * @param {GitApiPostGitReposByNameLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitReposByNameLink(requestParameters: GitApiPostGitReposByNameLinkRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitReposByNameLink(requestParameters.name, requestParameters.gitLinkReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

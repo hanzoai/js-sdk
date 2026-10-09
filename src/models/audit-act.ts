@@ -13,21 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { GitKeyView } from './git-key-view';
 
 /**
  * 
  * @export
- * @interface GitKeyList
+ * @interface AuditAct
  */
-export interface GitKeyList {
+export interface AuditAct {
     /**
-     * Data holds the org\'s keys.
-     * @type {Array<GitKeyView>}
-     * @memberof GitKeyList
+     * Name is the operator\'s IAM username.
+     * @type {string}
+     * @memberof AuditAct
      */
-    'data'?: Array<GitKeyView>;
+    'name'?: string;
+    /**
+     * Owner is the org of the operator\'s IAM row: \"admin\" for a SuperAdmin.
+     * @type {string}
+     * @memberof AuditAct
+     */
+    'owner'?: string;
+    /**
+     * Sub is the operator\'s IAM subject.
+     * @type {string}
+     * @memberof AuditAct
+     */
+    'sub'?: string;
 }
 

@@ -37,6 +37,12 @@ export interface IamToken {
      * @type {string}
      * @memberof IamToken
      */
+    'actor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamToken
+     */
     'application'?: string;
     /**
      * 
@@ -128,6 +134,12 @@ export interface IamToken {
      * @memberof IamToken
      */
     'publicGrant'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamToken
+     */
+    'reason'?: string;
     /**
      * RedirectUri binds the authorization code to the exact redirect URI of the authorize request (RFC 6749 §4.1.3): the token endpoint refuses a code redeemed with a different redirect_uri, closing code-injection across a client\'s registered URIs.
      * @type {string}

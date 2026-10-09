@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ComplianceAct } from './compliance-act';
 
 /**
  * 
@@ -20,6 +23,12 @@
  * @interface ComplianceWire
  */
 export interface ComplianceWire {
+    /**
+     * Act is present ONLY on an action taken in a support session: the platform operator IAM signed in AS this row\'s sub, while org, sub and email stay the person\'s. A console row carrying `act` was done by the operator it names.
+     * @type {ComplianceAct}
+     * @memberof ComplianceWire
+     */
+    'act'?: ComplianceAct;
     /**
      * Action is the verb that was performed. It is the event\'s name, not the HTTP method — a request-sourced record carries both, and the pair is what makes a row readable (\"grant.create\" at POST /v1/admin/grants).
      * @type {string}

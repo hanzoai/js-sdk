@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface GitMirrorReq
+ * @interface ComplianceAct
  */
-export interface GitMirrorReq {
+export interface ComplianceAct {
     /**
-     * Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
+     * Name is the operator\'s IAM username.
      * @type {string}
-     * @memberof GitMirrorReq
+     * @memberof ComplianceAct
      */
     'name'?: string;
     /**
-     * Project is the sub-scope to land the repo in; empty uses the caller\'s own, exactly as a create would.
+     * Owner is the org of the operator\'s IAM row: \"admin\" for a SuperAdmin.
      * @type {string}
-     * @memberof GitMirrorReq
+     * @memberof ComplianceAct
      */
-    'project'?: string;
+    'owner'?: string;
     /**
-     * Source is the http(s) git URL to fetch from. The host is SSRF-guarded, and a credential is sent only if we hold one NAMED FOR that host — so a tenant-supplied URL to anywhere else fetches anonymously.
+     * Sub is the operator\'s IAM subject.
      * @type {string}
-     * @memberof GitMirrorReq
+     * @memberof ComplianceAct
      */
-    'source'?: string;
+    'sub'?: string;
 }
 

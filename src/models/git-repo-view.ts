@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { GitLink } from './git-link';
 
 /**
  * 
@@ -62,6 +65,12 @@ export interface GitRepoView {
      * @memberof GitRepoView
      */
     'id'?: string;
+    /**
+     * Link is where the repo\'s history lives when it is on another host: reads are served from a cache filled from there and pushes go there. Absent for a repo whose history is here.
+     * @type {GitLink}
+     * @memberof GitRepoView
+     */
+    'link'?: GitLink;
     /**
      * Name is the org-unique handle, and the last path segment of both URLs below.
      * @type {string}
