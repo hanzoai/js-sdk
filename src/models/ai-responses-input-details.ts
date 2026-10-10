@@ -25,6 +25,12 @@ export interface AiResponsesInputDetails {
      * @type {number}
      * @memberof AiResponsesInputDetails
      */
+    'cache_write_tokens'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AiResponsesInputDetails
+     */
     'cached_tokens'?: number;
 }
 
