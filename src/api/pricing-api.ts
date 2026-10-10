@@ -942,7 +942,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
+         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Opts the caller\'s OWN org into a beta item.
          * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
@@ -982,7 +982,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
+         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
          * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
@@ -1345,7 +1345,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
+         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Opts the caller\'s OWN org into a beta item.
          * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
@@ -1358,7 +1358,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
+         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
          * @param {PricingEnablementOptRef} pricingEnablementOptRef 
          * @param {*} [options] Override http request option.
@@ -1616,7 +1616,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingTools(options).then((request) => request(axios, basePath));
         },
         /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
+         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Opts the caller\'s OWN org into a beta item.
          * @param {PricingApiPostPricingEnablementOptinRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1626,7 +1626,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postPricingEnablementOptin(requestParameters.pricingEnablementOptRef, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
+         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
          * @param {PricingApiPostPricingEnablementOptoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1975,7 +1975,7 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
+     * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
      * @summary Opts the caller\'s OWN org into a beta item.
      * @param {PricingApiPostPricingEnablementOptinRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1987,7 +1987,7 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
+     * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
      * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
      * @param {PricingApiPostPricingEnablementOptoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

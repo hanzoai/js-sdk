@@ -12,6 +12,7 @@ src/api/authz-api.ts
 src/api/auto-api.ts
 src/api/base-api.ts
 src/api/benchmark-api.ts
+src/api/beta-api.ts
 src/api/billing-api.ts
 src/api/blueprint-api.ts
 src/api/books-api.ts
@@ -390,6 +391,9 @@ src/models/benchmark-put-claims-in.ts
 src/models/benchmark-put-claims-out.ts
 src/models/benchmark-run-point.ts
 src/models/benchmark-suite.ts
+src/models/beta-beta-application.ts
+src/models/beta-beta-apply.ts
+src/models/beta-beta-status.ts
 src/models/billing-accounts-total.ts
 src/models/billing-accounts.ts
 src/models/billing-alert-patch.ts
@@ -3126,6 +3130,13 @@ src/models/webhook-endpoint-list.ts
 src/models/webhook-endpoint.ts
 src/models/webhook-test-result.ts
 src/models/webhook-update-endpoint-in.ts
+src/models/websearch-search-engine-key.ts
+src/models/websearch-search-engine-keyed.ts
+src/models/websearch-search-engine-option.ts
+src/models/websearch-search-engine-options.ts
+src/models/websearch-search-engine.ts
+src/models/websearch-search-engines-set.ts
+src/models/websearch-search-engines.ts
 src/models/websearch-web-engine.ts
 src/models/websearch-web-result.ts
 src/models/websearch-web-search-query.ts

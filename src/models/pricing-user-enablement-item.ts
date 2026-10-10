@@ -21,7 +21,7 @@
  */
 export interface PricingUserEnablementItem {
     /**
-     * CanOptIn is whether POST /v1/pricing/enablement/optin would do anything here: the item is in beta and this org is not on its list yet. False for a caller with no validated org, who has no org to enrol.
+     * CanOptIn is whether POST /v1/pricing/enablement/optin would do anything here: the item is in beta, this org is not on its list yet, and the org is entitled to betas (it holds the beta program\'s grant). False for a caller with no validated org, who has no org to enrol.
      * @type {boolean}
      * @memberof PricingUserEnablementItem
      */
