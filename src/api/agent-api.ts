@@ -1194,7 +1194,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org.
+         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
          * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @param {string} id ID is the session to act on, from the path.
          * @param {*} [options] Override http request option.
@@ -1385,7 +1385,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns every machine registered to the caller\'s org, newest first, each with its live session load.
+         * Returns every machine registered to the caller\'s org, newest first, each with its live session load. In a held org, where self-serve signups land beside the platform\'s staff, it is only the caller\'s own.
          * @summary Returns every machine registered to the caller\'s org, newest first, each with its live session load.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2834,7 +2834,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org.
+         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
          * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @param {string} id ID is the session to act on, from the path.
          * @param {*} [options] Override http request option.
@@ -2899,7 +2899,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every machine registered to the caller\'s org, newest first, each with its live session load.
+         * Returns every machine registered to the caller\'s org, newest first, each with its live session load. In a held org, where self-serve signups land beside the platform\'s staff, it is only the caller\'s own.
          * @summary Returns every machine registered to the caller\'s org, newest first, each with its live session load.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3530,7 +3530,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.room, requestParameters.kind, requestParameters.limit, requestParameters.after, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org.
+         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
          * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @param {AgentApiGetAgentSessionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3579,7 +3579,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentSessionsStream(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every machine registered to the caller\'s org, newest first, each with its live session load.
+         * Returns every machine registered to the caller\'s org, newest first, each with its live session load. In a held org, where self-serve signups land beside the platform\'s staff, it is only the caller\'s own.
          * @summary Returns every machine registered to the caller\'s org, newest first, each with its live session load.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5026,7 +5026,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org.
+     * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
      * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
      * @param {AgentApiGetAgentSessionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5085,7 +5085,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns every machine registered to the caller\'s org, newest first, each with its live session load.
+     * Returns every machine registered to the caller\'s org, newest first, each with its live session load. In a held org, where self-serve signups land beside the platform\'s staff, it is only the caller\'s own.
      * @summary Returns every machine registered to the caller\'s org, newest first, each with its live session load.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

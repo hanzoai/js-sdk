@@ -2671,6 +2671,7 @@ export * from './session';
 export * from './settings-settings-req';
 export * from './settings-view';
 export * from './share-enable-resp';
+export * from './share-rotated';
 export * from './share-share-view';
 export * from './share-shares-out';
 export * from './social-social-account';

@@ -24,7 +24,7 @@ import type { AgentTargetView } from './agent-target-view';
  */
 export interface AgentTargetList {
     /**
-     * Targets is every target registered to the caller\'s org.
+     * Targets is every target registered to the caller\'s org; in a held org, the caller\'s own.
      * @type {Array<AgentTargetView>}
      * @memberof AgentTargetList
      */

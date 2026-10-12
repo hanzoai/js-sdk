@@ -26,6 +26,8 @@ import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { ShareEnableResp } from '../models';
 // @ts-ignore
+import type { ShareRotated } from '../models';
+// @ts-ignore
 import type { ShareSharesOut } from '../models';
 /**
  * ShareApi - axios parameter creator
@@ -34,8 +36,8 @@ import type { ShareSharesOut } from '../models';
 export const ShareApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
-         * @summary Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled.
+         * Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
+         * @summary Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -68,13 +70,47 @@ export const ShareApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org and, in a held org, the caller\'s attested subject, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postShareEnable: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/share/enable`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on. The account is kept: enable hands its holder the new credential.  In a customer\'s org the account is the org\'s, which its members share, and an admin of the org or a SuperAdmin rotates it. In a held org each person\'s account is their own, and they rotate it — every account they hold, the one an API key of theirs was handed before included, so none stays live. An admin of the org or a SuperAdmin then rotates the org\'s own account, which no call there hands out, whether or not they hold an account of their own; when that one cannot be rotated, `pending` says so and their own are rotated still.  An account never provisioned has nothing to rotate and counts 0. 503 when the deployment has no share controller configured; 502 when that controller is unreachable, or holds the caller\'s account under a credential this deployment does not derive — out of a rotation\'s reach, so it is refused rather than reported done.
+         * @summary Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postShareRotate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/share/rotate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -112,8 +148,8 @@ export const ShareApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ShareApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
-         * @summary Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled.
+         * Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
+         * @summary Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -124,8 +160,8 @@ export const ShareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org and, in a held org, the caller\'s attested subject, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -133,6 +169,18 @@ export const ShareApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postShareEnable(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ShareApi.postShareEnable']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on. The account is kept: enable hands its holder the new credential.  In a customer\'s org the account is the org\'s, which its members share, and an admin of the org or a SuperAdmin rotates it. In a held org each person\'s account is their own, and they rotate it — every account they hold, the one an API key of theirs was handed before included, so none stays live. An admin of the org or a SuperAdmin then rotates the org\'s own account, which no call there hands out, whether or not they hold an account of their own; when that one cannot be rotated, `pending` says so and their own are rotated still.  An account never provisioned has nothing to rotate and counts 0. 503 when the deployment has no share controller configured; 502 when that controller is unreachable, or holds the caller\'s account under a credential this deployment does not derive — out of a rotation\'s reach, so it is refused rather than reported done.
+         * @summary Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postShareRotate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShareRotated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postShareRotate(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareApi.postShareRotate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -146,8 +194,8 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = ShareApiFp(configuration)
     return {
         /**
-         * Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
-         * @summary Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled.
+         * Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
+         * @summary Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -155,13 +203,22 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getShare(options).then((request) => request(axios, basePath));
         },
         /**
-         * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-         * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+         * Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org and, in a held org, the caller\'s attested subject, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+         * @summary Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postShareEnable(options?: RawAxiosRequestConfig): AxiosPromise<ShareEnableResp> {
             return localVarFp.postShareEnable(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on. The account is kept: enable hands its holder the new credential.  In a customer\'s org the account is the org\'s, which its members share, and an admin of the org or a SuperAdmin rotates it. In a held org each person\'s account is their own, and they rotate it — every account they hold, the one an API key of theirs was handed before included, so none stays live. An admin of the org or a SuperAdmin then rotates the org\'s own account, which no call there hands out, whether or not they hold an account of their own; when that one cannot be rotated, `pending` says so and their own are rotated still.  An account never provisioned has nothing to rotate and counts 0. 503 when the deployment has no share controller configured; 502 when that controller is unreachable, or holds the caller\'s account under a credential this deployment does not derive — out of a rotation\'s reach, so it is refused rather than reported done.
+         * @summary Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postShareRotate(options?: RawAxiosRequestConfig): AxiosPromise<ShareRotated> {
+            return localVarFp.postShareRotate(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -174,8 +231,8 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
  */
 export class ShareApi extends BaseAPI {
     /**
-     * Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
-     * @summary Returns the tunnel shares the caller\'s org currently has open, across every environment that org has enabled.
+     * Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled. It is a READ and it degrades honestly: an unconfigured deployment, an org that has not provisioned yet, and an unreachable controller all answer an EMPTY list at 200 rather than an error, so the console never error-toasts on load.
+     * @summary Returns the tunnel shares the caller\'s account currently has open — their org\'s, or in a held org their own — across every environment it has enabled.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ShareApi
@@ -185,14 +242,25 @@ export class ShareApi extends BaseAPI {
     }
 
     /**
-     * Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
-     * @summary Provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel.
+     * Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org and, in a held org, the caller\'s attested subject, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
+     * @summary Provisions the caller\'s tunnel account — their org\'s, or in a held org, where every self-serve signup lands, their own — and returns the credential the `hanzo share` CLI needs to run a tunnel.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ShareApi
      */
     public postShareEnable(options?: RawAxiosRequestConfig) {
         return ShareApiFp(this.configuration).postShareEnable(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on. The account is kept: enable hands its holder the new credential.  In a customer\'s org the account is the org\'s, which its members share, and an admin of the org or a SuperAdmin rotates it. In a held org each person\'s account is their own, and they rotate it — every account they hold, the one an API key of theirs was handed before included, so none stays live. An admin of the org or a SuperAdmin then rotates the org\'s own account, which no call there hands out, whether or not they hold an account of their own; when that one cannot be rotated, `pending` says so and their own are rotated still.  An account never provisioned has nothing to rotate and counts 0. 503 when the deployment has no share controller configured; 502 when that controller is unreachable, or holds the caller\'s account under a credential this deployment does not derive — out of a rotation\'s reach, so it is refused rather than reported done.
+     * @summary Replaces the credential of a tunnel account and ends every environment enabled with it, shares and all, so a credential handed out before — to a member who has left, or to anyone who read it — opens nothing from now on.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShareApi
+     */
+    public postShareRotate(options?: RawAxiosRequestConfig) {
+        return ShareApiFp(this.configuration).postShareRotate(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

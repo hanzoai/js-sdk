@@ -2802,6 +2802,7 @@ src/models/session.ts
 src/models/settings-settings-req.ts
 src/models/settings-view.ts
 src/models/share-enable-resp.ts
+src/models/share-rotated.ts
 src/models/share-share-view.ts
 src/models/share-shares-out.ts
 src/models/social-social-account-body.ts
