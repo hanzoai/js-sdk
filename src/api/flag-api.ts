@@ -34,6 +34,8 @@ import type { FlagEvaluateIn } from '../models';
 // @ts-ignore
 import type { FlagHealthOut } from '../models';
 // @ts-ignore
+import type { FlagPlatformOut } from '../models';
+// @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
  * FlagApi - axios parameter creator
@@ -198,6 +200,40 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
          */
         getFlagHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/flag/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
+         * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlagPlatform: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/flag/platform`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -422,6 +458,18 @@ export const FlagApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
+         * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFlagPlatform(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagPlatformOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagPlatform(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagPlatform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
          * @summary Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
          * @param {FlagEvaluateIn} flagEvaluateIn 
@@ -518,6 +566,15 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
          */
         getFlagHealth(options?: RawAxiosRequestConfig): AxiosPromise<FlagHealthOut> {
             return localVarFp.getFlagHealth(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
+         * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlagPlatform(options?: RawAxiosRequestConfig): AxiosPromise<FlagPlatformOut> {
+            return localVarFp.getFlagPlatform(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
@@ -706,6 +763,17 @@ export class FlagApi extends BaseAPI {
      */
     public getFlagHealth(options?: RawAxiosRequestConfig) {
         return FlagApiFp(this.configuration).getFlagHealth(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
+     * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlagApi
+     */
+    public getFlagPlatform(options?: RawAxiosRequestConfig) {
+        return FlagApiFp(this.configuration).getFlagPlatform(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

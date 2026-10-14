@@ -27,6 +27,30 @@ export interface UsageLLM {
      */
     'available'?: boolean;
     /**
+     * CacheReadTokens is how many of the prompt tokens the provider\'s prompt cache served, at the cache-read price.
+     * @type {number}
+     * @memberof UsageLLM
+     */
+    'cacheReadTokens'?: number;
+    /**
+     * CacheSavedCents is what the prompt cache took off the bill, in US cents: each call\'s cache-read tokens at the model\'s input price less the same tokens at its cache-read price, from the price that call was billed at. A call recorded before this was measured counts 0, so it is a floor.
+     * @type {number}
+     * @memberof UsageLLM
+     */
+    'cacheSavedCents'?: number;
+    /**
+     * CacheWriteTokens is how many prompt tokens were written to the prompt cache.
+     * @type {number}
+     * @memberof UsageLLM
+     */
+    'cacheWriteTokens'?: number;
+    /**
+     * CachedShare is CacheReadTokens over PromptTokens, 0 to 1 at four decimals; 0 when nothing was prompted.
+     * @type {number}
+     * @memberof UsageLLM
+     */
+    'cachedShare'?: number;
+    /**
      * CompletionTokens is the output half.
      * @type {number}
      * @memberof UsageLLM

@@ -17,14 +17,14 @@
 /**
  * 
  * @export
- * @interface BetaBetaApply
+ * @interface FlagPlatformOut
  */
-export interface BetaBetaApply {
+export interface FlagPlatformOut {
     /**
-     * Answers are the form\'s answers, by question id: text for a question, true or false for an acknowledgement. Every required question is answered and every required acknowledgement is true; a question the form does not ask is refused.
-     * @type {{ [key: string]: any; }}
-     * @memberof BetaBetaApply
+     * Flags maps each principal switch\'s key to whether it is on for the caller: `beta` is whether the caller sees products and catalog items that are not yet generally available.
+     * @type {{ [key: string]: boolean; }}
+     * @memberof FlagPlatformOut
      */
-    'answers'?: { [key: string]: any; };
+    'flags'?: { [key: string]: boolean; };
 }
 

@@ -12,7 +12,6 @@ src/api/authz-api.ts
 src/api/auto-api.ts
 src/api/base-api.ts
 src/api/benchmark-api.ts
-src/api/beta-api.ts
 src/api/billing-api.ts
 src/api/blueprint-api.ts
 src/api/books-api.ts
@@ -391,9 +390,6 @@ src/models/benchmark-put-claims-in.ts
 src/models/benchmark-put-claims-out.ts
 src/models/benchmark-run-point.ts
 src/models/benchmark-suite.ts
-src/models/beta-beta-application.ts
-src/models/beta-beta-apply.ts
-src/models/beta-beta-status.ts
 src/models/billing-accounts-total.ts
 src/models/billing-accounts.ts
 src/models/billing-alert-patch.ts
@@ -945,6 +941,7 @@ src/models/flag-defs-out.ts
 src/models/flag-deleted-out.ts
 src/models/flag-evaluate-in.ts
 src/models/flag-health-out.ts
+src/models/flag-platform-out.ts
 src/models/flow-flow-create.ts
 src/models/flow-flow-run.ts
 src/models/flow-flow-status.ts
@@ -2476,7 +2473,6 @@ src/models/pref-prefs-view.ts
 src/models/pricing-card.ts
 src/models/pricing-component.ts
 src/models/pricing-enablement-board.ts
-src/models/pricing-enablement-opt-ref.ts
 src/models/pricing-pricing-health.ts
 src/models/pricing-pricing-model-list.ts
 src/models/pricing-pricing-plan-list.ts
@@ -3080,6 +3076,7 @@ src/models/trust-written.ts
 src/models/usage-accounts.ts
 src/models/usage-category-spend.ts
 src/models/usage-dash-resp.ts
+src/models/usage-kai.ts
 src/models/usage-llm.ts
 src/models/usage-provider-breakdown.ts
 src/models/usage-provider-row.ts

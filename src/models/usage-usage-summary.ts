@@ -18,6 +18,9 @@
 import type { UsageAccounts } from './usage-accounts';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { UsageKai } from './usage-kai';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { UsageLLM } from './usage-llm';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -53,6 +56,12 @@ export interface UsageUsageSummary {
      * @memberof UsageUsageSummary
      */
     'interval'?: string;
+    /**
+     * Kai is the org\'s Kai decisions: count, input tokens and cost. Also counted in LLM.
+     * @type {UsageKai}
+     * @memberof UsageUsageSummary
+     */
+    'kai'?: UsageKai;
     /**
      * LLM is the org\'s Hanzo-routed inference totals from the warehouse.
      * @type {UsageLLM}

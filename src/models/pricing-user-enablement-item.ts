@@ -21,13 +21,7 @@
  */
 export interface PricingUserEnablementItem {
     /**
-     * CanOptIn is whether POST /v1/pricing/enablement/optin would do anything here: the item is in beta, this org is not on its list yet, and the org is entitled to betas (it holds the beta program\'s grant). False for a caller with no validated org, who has no org to enrol.
-     * @type {boolean}
-     * @memberof PricingUserEnablementItem
-     */
-    'canOptIn'?: boolean;
-    /**
-     * Effective is whether the caller\'s org may use the item right now, which is the field to branch on: true for any ga item, for a beta this org holds, and never for an off one.
+     * Effective is whether the caller may use the item right now, which is the field to branch on: true for any ga item, for a beta item while the platform\'s `beta` switch is on for the caller, and never for an off one.
      * @type {boolean}
      * @memberof PricingUserEnablementItem
      */
@@ -44,12 +38,6 @@ export interface PricingUserEnablementItem {
      * @memberof PricingUserEnablementItem
      */
     'kind'?: string;
-    /**
-     * OptedIn is whether the caller\'s org is on this item\'s beta grant list. It can be true on an \"off\" item — the list survives the kill switch and is simply ignored while it is thrown — so it does not imply Effective.
-     * @type {boolean}
-     * @memberof PricingUserEnablementItem
-     */
-    'optedIn'?: boolean;
     /**
      * State is the item\'s GLOBAL availability — \"off\", \"beta\" or \"ga\" — which is the operator\'s setting and not this caller\'s answer. Effective is that.
      * @type {string}

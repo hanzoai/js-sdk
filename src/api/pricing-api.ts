@@ -26,8 +26,6 @@ import type { PricingCard } from '../models';
 // @ts-ignore
 import type { PricingEnablementBoard } from '../models';
 // @ts-ignore
-import type { PricingEnablementOptRef } from '../models';
-// @ts-ignore
 import type { PricingPricingHealth } from '../models';
 // @ts-ignore
 import type { PricingPricingModelList } from '../models';
@@ -43,8 +41,6 @@ import type { PricingPricingRegionList } from '../models';
 import type { PricingPricingTierList } from '../models';
 // @ts-ignore
 import type { PricingPricingToolList } from '../models';
-// @ts-ignore
-import type { PricingUserEnablementItem } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
@@ -394,8 +390,8 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in. Read-only and safe for any caller — one without a validated principal simply sees the generally-available items and no opt-in affordance, never another org\'s state.
-         * @summary Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in.
+         * Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it. Read-only and safe for any caller: one without a validated principal sees the generally-available items, never another org\'s view.
+         * @summary Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -636,8 +632,8 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -941,86 +937,6 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingEnablementOptin: async (pricingEnablementOptRef: PricingEnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pricingEnablementOptRef' is not null or undefined
-            assertParamExists('postPricingEnablementOptin', 'pricingEnablementOptRef', pricingEnablementOptRef)
-            const localVarPath = `/v1/pricing/enablement/optin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pricingEnablementOptRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingEnablementOptout: async (pricingEnablementOptRef: PricingEnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pricingEnablementOptRef' is not null or undefined
-            assertParamExists('postPricingEnablementOptout', 'pricingEnablementOptRef', pricingEnablementOptRef)
-            const localVarPath = `/v1/pricing/enablement/optout`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pricingEnablementOptRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1152,8 +1068,8 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in. Read-only and safe for any caller — one without a validated principal simply sees the generally-available items and no opt-in affordance, never another org\'s state.
-         * @summary Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in.
+         * Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it. Read-only and safe for any caller: one without a validated principal sees the generally-available items, never another org\'s view.
+         * @summary Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1237,8 +1153,8 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1344,32 +1260,6 @@ export const PricingApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingTools']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPricingEnablementOptin(pricingEnablementOptRef: PricingEnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingUserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptin(pricingEnablementOptRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingEnablementOptin']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {PricingEnablementOptRef} pricingEnablementOptRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPricingEnablementOptout(pricingEnablementOptRef: PricingEnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingUserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingEnablementOptout(pricingEnablementOptRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingEnablementOptout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -1471,8 +1361,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingDatastore(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in. Read-only and safe for any caller — one without a validated principal simply sees the generally-available items and no opt-in affordance, never another org\'s state.
-         * @summary Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in.
+         * Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it. Read-only and safe for any caller: one without a validated principal sees the generally-available items, never another org\'s view.
+         * @summary Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1535,8 +1425,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1615,26 +1505,6 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
         getPricingTools(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingToolList> {
             return localVarFp.getPricingTools(options).then((request) => request(axios, basePath));
         },
-        /**
-         * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {PricingApiPostPricingEnablementOptinRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingEnablementOptin(requestParameters: PricingApiPostPricingEnablementOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<PricingUserEnablementItem> {
-            return localVarFp.postPricingEnablementOptin(requestParameters.pricingEnablementOptRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
-         * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {PricingApiPostPricingEnablementOptoutRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPricingEnablementOptout(requestParameters: PricingApiPostPricingEnablementOptoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PricingUserEnablementItem> {
-            return localVarFp.postPricingEnablementOptout(requestParameters.pricingEnablementOptRef, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -1650,34 +1520,6 @@ export interface PricingApiGetPricingModelByNameRequest {
      * @memberof PricingApiGetPricingModelByName
      */
     readonly name: string
-}
-
-/**
- * Request parameters for postPricingEnablementOptin operation in PricingApi.
- * @export
- * @interface PricingApiPostPricingEnablementOptinRequest
- */
-export interface PricingApiPostPricingEnablementOptinRequest {
-    /**
-     * 
-     * @type {PricingEnablementOptRef}
-     * @memberof PricingApiPostPricingEnablementOptin
-     */
-    readonly pricingEnablementOptRef: PricingEnablementOptRef
-}
-
-/**
- * Request parameters for postPricingEnablementOptout operation in PricingApi.
- * @export
- * @interface PricingApiPostPricingEnablementOptoutRequest
- */
-export interface PricingApiPostPricingEnablementOptoutRequest {
-    /**
-     * 
-     * @type {PricingEnablementOptRef}
-     * @memberof PricingApiPostPricingEnablementOptout
-     */
-    readonly pricingEnablementOptRef: PricingEnablementOptRef
 }
 
 /**
@@ -1798,8 +1640,8 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in. Read-only and safe for any caller — one without a validated principal simply sees the generally-available items and no opt-in affordance, never another org\'s state.
-     * @summary Returns what the caller\'s org can actually use: every managed item with its global state, whether it is effective here, whether this org is already opted into its beta, and whether it may still opt in.
+     * Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it. Read-only and safe for any caller: one without a validated principal sees the generally-available items, never another org\'s view.
+     * @summary Returns what the caller can actually use: every managed item with its global state and whether it is effective for this caller — a beta item is, while the platform\'s `beta` switch is on for it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
@@ -1876,8 +1718,8 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-     * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
+     * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+     * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
@@ -1972,30 +1814,6 @@ export class PricingApi extends BaseAPI {
      */
     public getPricingTools(options?: RawAxiosRequestConfig) {
         return PricingApiFp(this.configuration).getPricingTools(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. The org must be entitled to betas — it holds the beta program\'s grant, from an approved application or an operator — or the opt-in is 403; when the program cannot be asked it is 503, and worth retrying. Requires a signed-in owner or admin of the org (403 for a member).
-     * @summary Opts the caller\'s OWN org into a beta item.
-     * @param {PricingApiPostPricingEnablementOptinRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PricingApi
-     */
-    public postPricingEnablementOptin(requestParameters: PricingApiPostPricingEnablementOptinRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postPricingEnablementOptin(requestParameters.pricingEnablementOptRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in owner or admin of the org (403 for a member).
-     * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-     * @param {PricingApiPostPricingEnablementOptoutRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PricingApi
-     */
-    public postPricingEnablementOptout(requestParameters: PricingApiPostPricingEnablementOptoutRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postPricingEnablementOptout(requestParameters.pricingEnablementOptRef, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

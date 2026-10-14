@@ -24,13 +24,7 @@ import type { PricingUserEnablementItem } from './pricing-user-enablement-item';
  */
 export interface PricingEnablementBoard {
     /**
-     * Betas are the subset of Items the caller\'s org may still opt into.
-     * @type {Array<PricingUserEnablementItem>}
-     * @memberof PricingEnablementBoard
-     */
-    'betas'?: Array<PricingUserEnablementItem>;
-    /**
-     * Items is every managed item, each resolved for the caller\'s org.
+     * Items is every managed item, each resolved for the caller.
      * @type {Array<PricingUserEnablementItem>}
      * @memberof PricingEnablementBoard
      */

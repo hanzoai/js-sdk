@@ -27,7 +27,6 @@ export * from './api/authz-api';
 export * from './api/auto-api';
 export * from './api/base-api';
 export * from './api/benchmark-api';
-export * from './api/beta-api';
 export * from './api/billing-api';
 export * from './api/blueprint-api';
 export * from './api/books-api';
