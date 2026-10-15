@@ -2022,6 +2022,40 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with. To anyone else it answers as the token endpoint does: who are you, or not you.  The key is not a secret; publishing it is the hazard. A verifier that fetches the public JWKS and trusts what verifies would admit a delegated token as the person. So it is not in that document, and this one is not an address a relying party is ever pointed at.
+         * @summary Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamOauthDelegationKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/oauth/delegation/keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
@@ -3752,7 +3786,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
+         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is created by a SuperAdmin only.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
          * @param {IamApplication} iamApplication 
          * @param {*} [options] Override http request option.
@@ -5490,7 +5524,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
+         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
          * @param {string} owner 
          * @param {string} name 
@@ -7268,6 +7302,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with. To anyone else it answers as the token endpoint does: who are you, or not you.  The key is not a secret; publishing it is the hazard. A verifier that fetches the public JWKS and trusts what verifies would admit a delegated token as the person. So it is not in that document, and this one is not an address a relying party is ever pointed at.
+         * @summary Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamOauthDelegationKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamOauthDelegationKeys(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamOauthDelegationKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
@@ -7849,7 +7895,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
+         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is created by a SuperAdmin only.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
          * @param {IamApplication} iamApplication 
          * @param {*} [options] Override http request option.
@@ -8441,7 +8487,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
+         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
          * @param {string} owner 
          * @param {string} name 
@@ -9267,6 +9313,15 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamOauthCallback(options).then((request) => request(axios, basePath));
         },
         /**
+         * Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with. To anyone else it answers as the token endpoint does: who are you, or not you.  The key is not a secret; publishing it is the hazard. A verifier that fetches the public JWKS and trusts what verifies would admit a delegated token as the person. So it is not in that document, and this one is not an address a relying party is ever pointed at.
+         * @summary Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamOauthDelegationKeys(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamOauthDelegationKeys(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
@@ -9690,7 +9745,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamAdminProvision(options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
+         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is created by a SuperAdmin only.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
          * @param {IamApiPostIamApplicationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -10130,7 +10185,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
+         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
          * @param {IamApiPutIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13123,6 +13178,17 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with. To anyone else it answers as the token endpoint does: who are you, or not you.  The key is not a secret; publishing it is the hazard. A verifier that fetches the public JWKS and trusts what verifies would admit a delegated token as the person. So it is not in that document, and this one is not an address a relying party is ever pointed at.
+     * @summary Serves the public half of every delegation key, as a JWKS, to a confidential client allowed to delegate — the one resource server that verifies what it is handed, reading with the credential it delegates with.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamOauthDelegationKeys(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamOauthDelegationKeys(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
@@ -13634,7 +13700,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
+     * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is created by a SuperAdmin only.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
      * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
      * @param {IamApiPostIamApplicationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -14168,7 +14234,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
+     * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
      * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
      * @param {IamApiPutIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
