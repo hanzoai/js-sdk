@@ -52,6 +52,12 @@ export interface AiResponsesTool {
     'strict'?: boolean;
     /**
      * 
+     * @type {Array<AiResponsesTool>}
+     * @memberof AiResponsesTool
+     */
+    'tools'?: Array<AiResponsesTool>;
+    /**
+     * 
      * @type {string}
      * @memberof AiResponsesTool
      */
