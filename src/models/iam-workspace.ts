@@ -57,7 +57,7 @@ export interface IamWorkspace {
      */
     'displayName'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamWorkspace
      */

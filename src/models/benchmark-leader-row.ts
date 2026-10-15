@@ -39,6 +39,12 @@ export interface BenchmarkLeaderRow {
      */
     'claims'?: number;
     /**
+     * From is the org whose claim Published was promoted from, when a SuperAdmin published another org\'s claim rather than writing one under org admin: \"hanzo\" on a row Hanzo measured and the platform published.
+     * @type {string}
+     * @memberof BenchmarkLeaderRow
+     */
+    'from'?: string;
+    /**
      * published − measured (the arena signal)
      * @type {number}
      * @memberof BenchmarkLeaderRow

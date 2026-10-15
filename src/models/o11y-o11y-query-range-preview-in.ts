@@ -30,13 +30,13 @@ import type { O11yVariableItem } from './o11y-variable-item';
  */
 export interface O11yO11yQueryRangePreviewIn {
     /**
-     * 
+     * CompositeQuery is the composite query to use for the request.
      * @type {O11yCompositeQuery}
      * @memberof O11yO11yQueryRangePreviewIn
      */
     'compositeQuery'?: O11yCompositeQuery;
     /**
-     * 
+     * End is the end time of the query in epoch milliseconds.
      * @type {number}
      * @memberof O11yO11yQueryRangePreviewIn
      */
@@ -48,7 +48,7 @@ export interface O11yO11yQueryRangePreviewIn {
      */
     'formatOptions'?: O11yFormatOptions;
     /**
-     * 
+     * NoCache is a flag to disable caching for the request.
      * @type {boolean}
      * @memberof O11yO11yQueryRangePreviewIn
      */
@@ -60,19 +60,19 @@ export interface O11yO11yQueryRangePreviewIn {
      */
     'requestType'?: any;
     /**
-     * 
+     * SchemaVersion is the version of the schema to use for the request payload.
      * @type {string}
      * @memberof O11yO11yQueryRangePreviewIn
      */
     'schemaVersion'?: string;
     /**
-     * 
+     * Start is the start time of the query in epoch milliseconds.
      * @type {number}
      * @memberof O11yO11yQueryRangePreviewIn
      */
     'start'?: number;
     /**
-     * 
+     * Variables is the variables to use for the request.
      * @type {{ [key: string]: O11yVariableItem; }}
      * @memberof O11yO11yQueryRangePreviewIn
      */

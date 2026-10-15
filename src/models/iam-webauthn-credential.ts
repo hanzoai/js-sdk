@@ -87,7 +87,7 @@ export interface IamWebauthnCredential {
      */
     'deleted'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamWebauthnCredential
      */

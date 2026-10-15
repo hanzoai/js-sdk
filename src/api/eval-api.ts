@@ -188,7 +188,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
          * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
          * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
          * @param {string} name Dataset is the set to read, from the path — this collection only exists inside one.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -353,7 +353,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
          * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
          * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
          * @param {string} [datasetName] Dataset narrows to the runs against one dataset.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -399,7 +399,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [name] Name narrows to one score name.
          * @param {string} [runName] RunName narrows to the scores of one run.
          * @param {string} [traceId] TraceID narrows to the scores on one model call.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -453,7 +453,7 @@ export const EvalApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [sessionId] SessionID narrows to one session, which for an evaluation is one run.
          * @param {string} [runName] RunName narrows to the calls one run made.
          * @param {string} [datasetName] Dataset narrows to the calls made against one dataset.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -802,7 +802,7 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.  Archived examples are included, so the caller sees the whole set rather than only what a run would use. Requires a validated principal; 401 without one, and the read is filtered on the validated org, so naming another tenant\'s dataset returns nothing rather than its contents.
          * @summary Is the examples in one of your datasets — the set is named in the path, because this collection only exists inside one.
          * @param {string} name Dataset is the set to read, from the path — this collection only exists inside one.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -856,7 +856,7 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.  Requires a validated principal; 401 without one, and rows are filtered on the validated org. These records come from the metastore rather than the datastore, so they are readable on a deployment with no telemetry wired — but a run\'s traces and scores are not.
          * @summary Is your past runs and how they scored — the dataset and model, the judge model, how many examples were attempted and how many scored, the average score, and when it happened.
          * @param {string} [datasetName] Dataset narrows to the runs against one dataset.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -872,7 +872,7 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * @param {string} [name] Name narrows to one score name.
          * @param {string} [runName] RunName narrows to the scores of one run.
          * @param {string} [traceId] TraceID narrows to the scores on one model call.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -888,7 +888,7 @@ export const EvalApiFp = function(configuration?: Configuration) {
          * @param {string} [sessionId] SessionID narrows to one session, which for an evaluation is one run.
          * @param {string} [runName] RunName narrows to the calls one run made.
          * @param {string} [datasetName] Dataset narrows to the calls made against one dataset.
-         * @param {number} [limit] 
+         * @param {number} [limit] Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1207,7 +1207,7 @@ export interface EvalApiGetEvalDatasetsByNameItemsRequest {
     readonly name: string
 
     /**
-     * 
+     * Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
      * @type {number}
      * @memberof EvalApiGetEvalDatasetsByNameItems
      */
@@ -1277,7 +1277,7 @@ export interface EvalApiGetEvalRunsRequest {
     readonly datasetName?: string
 
     /**
-     * 
+     * Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
      * @type {number}
      * @memberof EvalApiGetEvalRuns
      */
@@ -1312,7 +1312,7 @@ export interface EvalApiGetEvalScoresRequest {
     readonly traceId?: string
 
     /**
-     * 
+     * Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
      * @type {number}
      * @memberof EvalApiGetEvalScores
      */
@@ -1347,7 +1347,7 @@ export interface EvalApiGetEvalTracesRequest {
     readonly datasetName?: string
 
     /**
-     * 
+     * Limit caps the rows returned. It defaults to 100 and is capped at 500; a non-positive or unparseable value falls back to the default rather than failing, because a typo about paging is not a reason to refuse a read.
      * @type {number}
      * @memberof EvalApiGetEvalTraces
      */

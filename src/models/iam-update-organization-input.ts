@@ -42,7 +42,7 @@ export interface IamUpdateOrganizationInput {
      */
     'accountMenu'?: string;
     /**
-     * 
+     * How the organization appears across Hanzo — the square mark beside its name — as an image or as one emoji, never both. It is the pair a person carries (User.Avatar) under the same names, resolved the same way, so a screen draws a subject without asking which kind of subject it has. Both halves live on the row: a mark that appears everywhere cannot be kept on one device. Written through schema.MarkOf; Logo and LogoDark above are a different thing, the wordmark a login screen draws.
      * @type {string}
      * @memberof IamUpdateOrganizationInput
      */
@@ -144,7 +144,7 @@ export interface IamUpdateOrganizationInput {
      */
     'failedSigninFrozenTime'?: number;
     /**
-     * 
+     * Per-organization signin throttle. Zero means \"inherit the application default\"; a non-zero value overrides it. Safe bounds are clamped by the resource service before persistence.
      * @type {number}
      * @memberof IamUpdateOrganizationInput
      */
@@ -156,7 +156,7 @@ export interface IamUpdateOrganizationInput {
      */
     'favicon'?: string;
     /**
-     * 
+     * Founder is the stable storage id of the identity that provisioned this org (self-service onboarding). It is the resume token that makes provisioning converge on a backend where each write autocommits independently (no transaction rollback): after a partial failure that created the org but did not move the founder in, a retry recognises the org as the founder\'s own and completes it, instead of refusing it as \"already taken\". It also fences the org to ONE tenant — a different identity can never complete or join it.
      * @type {string}
      * @memberof IamUpdateOrganizationInput
      */
@@ -168,7 +168,7 @@ export interface IamUpdateOrganizationInput {
      */
     'hasPrivilegeConsent'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamUpdateOrganizationInput
      */
@@ -288,7 +288,7 @@ export interface IamUpdateOrganizationInput {
      */
     'navItems'?: Array<string>;
     /**
-     * 
+     * Balance fields are read-only mirrors; authoritative balances live in Commerce (billing.hanzo.ai). Carried for field-complete v1 parity.
      * @type {number}
      * @memberof IamUpdateOrganizationInput
      */
@@ -336,7 +336,7 @@ export interface IamUpdateOrganizationInput {
      */
     'passwordType'?: string;
     /**
-     * 
+     * Platform marks an organization the platform itself declares (init_data.json): the brand orgs and the others the seed creates, never one a customer made. The seed stamps it on every declared organization at boot, and no request sets or clears it. Only a SuperAdmin may delete an organization that carries it.
      * @type {boolean}
      * @memberof IamUpdateOrganizationInput
      */

@@ -21,7 +21,7 @@
  */
 export interface O11yO11yAgentCheckInIn {
     /**
-     * 
+     * following are backward compatible fields for older running agents, hence snake case JSON keys. Which get mapped to new fields in AgentCheckInRequest
      * @type {string}
      * @memberof O11yO11yAgentCheckInIn
      */
@@ -33,7 +33,7 @@ export interface O11yO11yAgentCheckInIn {
      */
     'cloudIntegrationId'?: any;
     /**
-     * 
+     * => ProviderAccountID
      * @type {string}
      * @memberof O11yO11yAgentCheckInIn
      */

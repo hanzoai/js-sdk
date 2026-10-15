@@ -27,7 +27,7 @@ export interface LegalDocumentView {
      */
     'body'?: string;
     /**
-     * 
+     * Category is the template\'s category: formation, equity, ops or sales.
      * @type {string}
      * @memberof LegalDocumentView
      */
@@ -39,55 +39,55 @@ export interface LegalDocumentView {
      */
     'contentType'?: string;
     /**
-     * 
+     * CreatedAt is when the document was generated, in unix seconds.
      * @type {number}
      * @memberof LegalDocumentView
      */
     'createdAt'?: number;
     /**
-     * 
+     * EsignProvider names the e-signature provider handling it, absent until a signature has been requested.
      * @type {string}
      * @memberof LegalDocumentView
      */
     'esignProvider'?: string;
     /**
-     * 
+     * ID is the document\'s server-minted handle, \"doc_\"-prefixed.
      * @type {string}
      * @memberof LegalDocumentView
      */
     'id'?: string;
     /**
-     * 
+     * SignedAt is when the provider reported completion, in unix seconds. Absent until then.
      * @type {number}
      * @memberof LegalDocumentView
      */
     'signedAt'?: number;
     /**
-     * 
+     * Status is the lifecycle state: draft, out_for_signature, signed or voided. There is deliberately no \"legally valid\" state — that is counsel\'s determination, not the platform\'s.
      * @type {string}
      * @memberof LegalDocumentView
      */
     'status'?: string;
     /**
-     * 
+     * TemplateID is the template it was rendered from.
      * @type {string}
      * @memberof LegalDocumentView
      */
     'templateId'?: string;
     /**
-     * 
+     * TemplateVersion is WHICH version of that template rendered it, so the document is reproducible and auditable.
      * @type {number}
      * @memberof LegalDocumentView
      */
     'templateVersion'?: number;
     /**
-     * 
+     * Title is the document\'s title, inherited from the template.
      * @type {string}
      * @memberof LegalDocumentView
      */
     'title'?: string;
     /**
-     * 
+     * UpdatedAt is when it last changed, in unix seconds.
      * @type {number}
      * @memberof LegalDocumentView
      */

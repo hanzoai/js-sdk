@@ -27,6 +27,12 @@ export interface BenchmarkBenchmark {
      */
     'axis'?: string;
     /**
+     * Direction is \"higher\" when a higher score is better and \"lower\" when a lower one is: a false-alarm rate, a share of answers that moved. The leaderboard orders its rows by it.
+     * @type {string}
+     * @memberof BenchmarkBenchmark
+     */
+    'direction'?: string;
+    /**
      * the id every other op on this surface takes
      * @type {string}
      * @memberof BenchmarkBenchmark

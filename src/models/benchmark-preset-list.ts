@@ -24,7 +24,7 @@ import type { BenchmarkPreset } from './benchmark-preset';
  */
 export interface BenchmarkPresetList {
     /**
-     * Data is the blends available to compose from.
+     * Data is the reference blend, then the caller\'s org\'s stored blends by name.
      * @type {Array<BenchmarkPreset>}
      * @memberof BenchmarkPresetList
      */

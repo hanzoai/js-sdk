@@ -48,7 +48,7 @@ export interface O11yO11ySavedViewUpdateIn {
      */
     'createdBy'?: string;
     /**
-     * 
+     * ExtraData is JSON encoded data used by frontend to store additional data
      * @type {string}
      * @memberof O11yO11ySavedViewUpdateIn
      */

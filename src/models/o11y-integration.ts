@@ -75,7 +75,7 @@ export interface O11yIntegration {
      */
     'data_collected'?: O11yDataCollectedForIntegration;
     /**
-     * 
+     * A short description
      * @type {string}
      * @memberof O11yIntegration
      */
@@ -99,7 +99,7 @@ export interface O11yIntegration {
      */
     'installation'?: O11yInstalledIntegration;
     /**
-     * 
+     * markdown
      * @type {string}
      * @memberof O11yIntegration
      */

@@ -51,7 +51,7 @@ export interface IamSession {
      */
     'exclusiveSignin'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamSession
      */

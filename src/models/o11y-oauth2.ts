@@ -108,19 +108,19 @@ export interface O11yOAuth2 {
      */
     'iss'?: string;
     /**
-     * 
+     * NoProxy contains addresses that should not use a proxy.
      * @type {string}
      * @memberof O11yOAuth2
      */
     'no_proxy'?: string;
     /**
-     * 
+     * ProxyConnectHeader optionally specifies headers to send to proxies during CONNECT requests. Assume that at least _some_ of these headers are going to contain secrets and use Secret as the value type instead of string.
      * @type {{ [key: string]: Array<any>; }}
      * @memberof O11yOAuth2
      */
     'proxy_connect_header'?: { [key: string]: Array<any>; };
     /**
-     * 
+     * ProxyFromEnvironment makes use of net/http ProxyFromEnvironment function to determine proxies.
      * @type {boolean}
      * @memberof O11yOAuth2
      */

@@ -87,7 +87,7 @@ export interface IamPermission {
      */
     'effect'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamPermission
      */

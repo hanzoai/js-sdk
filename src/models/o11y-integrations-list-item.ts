@@ -30,7 +30,7 @@ export interface O11yIntegrationsListItem {
      */
     'author'?: O11yIntegrationAuthor;
     /**
-     * 
+     * A short description
      * @type {string}
      * @memberof O11yIntegrationsListItem
      */

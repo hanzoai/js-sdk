@@ -27,25 +27,25 @@ import type { BillingRoutedUsage } from './billing-routed-usage';
  */
 export interface BillingAccounts {
     /**
-     * 
+     * Accounts is one row per linked account the gateway actually routed through.
      * @type {Array<BillingRoutedUsage>}
      * @memberof BillingAccounts
      */
     'accounts'?: Array<BillingRoutedUsage>;
     /**
-     * 
+     * Scope is always \"user\": the caller\'s own linked accounts.
      * @type {string}
      * @memberof BillingAccounts
      */
     'scope'?: string;
     /**
-     * 
+     * Source is always \"routed\": the gateway\'s own routed ledger.
      * @type {string}
      * @memberof BillingAccounts
      */
     'source'?: string;
     /**
-     * 
+     * Total is the honest sum across the rows.
      * @type {BillingAccountsTotal}
      * @memberof BillingAccounts
      */

@@ -27,73 +27,73 @@ import type { FunctionTriggerView } from './function-trigger-view';
  */
 export interface FunctionFunctionDetail {
     /**
-     * 
+     * mean wall-clock of those runs
      * @type {number}
      * @memberof FunctionFunctionDetail
      */
     'avgDurationMs'?: number;
     /**
-     * 
+     * when it was first published
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'createdAt'?: string;
     /**
-     * 
+     * the path that invokes it
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'endpoint'?: string;
     /**
-     * 
+     * how many secret NAMES it mounts; values are never carried
      * @type {number}
      * @memberof FunctionFunctionDetail
      */
     'envCount'?: number;
     /**
-     * 
+     * the language it runs under
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'environment'?: string;
     /**
-     * 
+     * how many of those runs failed
      * @type {number}
      * @memberof FunctionFunctionDetail
      */
     'errors7d'?: number;
     /**
-     * 
+     * the prebuilt image it runs, when it runs one instead of source
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'image'?: string;
     /**
-     * 
+     * runs in the last 7 days; ABSENT, never 0, when it has not run
      * @type {number}
      * @memberof FunctionFunctionDetail
      */
     'invocations7d'?: number;
     /**
-     * 
+     * when its code last changed
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'lastDeployedAt'?: string;
     /**
-     * 
+     * the memory it runs with, and the multiplier on its compute charge
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'memoryLimit'?: string;
     /**
-     * 
+     * the function\'s org-unique handle
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'name'?: string;
     /**
-     * 
+     * the display group it belongs to; the org is the isolation key
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
@@ -111,25 +111,25 @@ export interface FunctionFunctionDetail {
      */
     'secrets'?: Array<string>;
     /**
-     * 
+     * whether it is ready to serve
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'status'?: string;
     /**
-     * 
+     * share of those runs that succeeded, 0..1
      * @type {number}
      * @memberof FunctionFunctionDetail
      */
     'successRate'?: number;
     /**
-     * 
+     * where it runs: empty for the sandbox, \"fleet\" for the org\'s GPU fleet
      * @type {string}
      * @memberof FunctionFunctionDetail
      */
     'target'?: string;
     /**
-     * 
+     * its per-invocation deadline
      * @type {number}
      * @memberof FunctionFunctionDetail
      */

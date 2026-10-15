@@ -30,7 +30,13 @@ export interface BenchmarkLeaderboard {
      */
     'benchmark'?: string;
     /**
-     * Rows is one per model, ordered by measured accuracy descending.
+     * Direction is \"higher\" or \"lower\": which way this benchmark\'s score improves, and so which way Rows is ordered.
+     * @type {string}
+     * @memberof BenchmarkLeaderboard
+     */
+    'direction'?: string;
+    /**
+     * Rows is one per model, best first in Direction: measured rows by their measurement, then claim-only rows by their published score, ties by model.
      * @type {Array<BenchmarkLeaderRow>}
      * @memberof BenchmarkLeaderboard
      */

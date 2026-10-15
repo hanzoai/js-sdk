@@ -24,25 +24,25 @@ import type { CampaignChannelSpec } from './campaign-channel-spec';
  */
 export interface CampaignCampaignUpdate {
     /**
-     * 
+     * Audience is the segment or audience selector this campaign targets.
      * @type {string}
      * @memberof CampaignCampaignUpdate
      */
     'audience'?: string;
     /**
-     * 
+     * Budget is the campaign\'s total budget in CENTS. Negative reads as 0.
      * @type {number}
      * @memberof CampaignCampaignUpdate
      */
     'budget'?: number;
     /**
-     * 
+     * Channels are the fan-out targets, at most one per kind (paid, organic, email) and at most 12. A channel\'s status and provider id are server-owned: whatever the caller sends for them is replaced with \"pending\".
      * @type {Array<CampaignChannelSpec>}
      * @memberof CampaignCampaignUpdate
      */
     'channels'?: Array<CampaignChannelSpec>;
     /**
-     * 
+     * Content is the ordered creative set. Content[0] is the active creative and the rest are A/B variants; at most 32, empty entries dropped.
      * @type {Array<string>}
      * @memberof CampaignCampaignUpdate
      */
@@ -54,13 +54,13 @@ export interface CampaignCampaignUpdate {
      */
     'id'?: string;
     /**
-     * 
+     * Name is the campaign\'s display name. Required; trimmed and capped at 2048 characters.
      * @type {string}
      * @memberof CampaignCampaignUpdate
      */
     'name'?: string;
     /**
-     * 
+     * ScheduleAt is when the campaign should run, in unix seconds. Negative reads as 0 (immediately).
      * @type {number}
      * @memberof CampaignCampaignUpdate
      */

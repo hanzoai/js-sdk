@@ -24,49 +24,49 @@ import type { LegalField } from './legal-field';
  */
 export interface LegalLegalTemplate {
     /**
-     * 
+     * Body is the text/template source, markdown, referencing each declared field as {{.key}}. Rendering is pure — no clock, no I/O — so a template version and a data map always produce identical bytes. Only the single-template read carries it; the catalog listing does not.
      * @type {string}
      * @memberof LegalLegalTemplate
      */
     'body'?: string;
     /**
-     * 
+     * Category is the corporate need the template serves: formation, equity, ops or sales. Formation and equity are the securities-class categories, which is what forces CounselReview.
      * @type {string}
      * @memberof LegalLegalTemplate
      */
     'category'?: string;
     /**
-     * 
+     * CounselReview marks a template whose rendered documents open with CounselNotice. It can be raised but never lowered, and the engine also raises it for any formation or equity template whatever the flag says — so no org can render a securities-class document without the notice.
      * @type {boolean}
      * @memberof LegalLegalTemplate
      */
     'counselReview'?: boolean;
     /**
-     * 
+     * Fields declares the merge fields Body consumes, each with its human label. Every one is REQUIRED at generation: a missing or blank value is refused rather than rendered as a silent blank into a contract.
      * @type {Array<LegalField>}
      * @memberof LegalLegalTemplate
      */
     'fields'?: Array<LegalField>;
     /**
-     * 
+     * ID is the template\'s stable id and the path segment that addresses it — \"nda\", \"msa\", \"safe\". An override keeps the built-in\'s id, so the id names the DOCUMENT KIND rather than a particular version of it.
      * @type {string}
      * @memberof LegalLegalTemplate
      */
     'id'?: string;
     /**
-     * 
+     * Origin is \"builtin\" for a template the platform ships or \"org\" for one this org saved. It separates the catalog every tenant sees from this tenant\'s own.
      * @type {string}
      * @memberof LegalLegalTemplate
      */
     'origin'?: string;
     /**
-     * 
+     * Title is the display name, e.g. \"Mutual Non-Disclosure Agreement\". A generated document inherits it.
      * @type {string}
      * @memberof LegalLegalTemplate
      */
     'title'?: string;
     /**
-     * 
+     * Version is which version of this template the caller resolved to, and what a generated document records so it stays reproducible. A built-in is version 1; an org\'s first override is 2 and each save increments, so an override version never collides with the built-in\'s.
      * @type {number}
      * @memberof LegalLegalTemplate
      */

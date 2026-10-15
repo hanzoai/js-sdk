@@ -21,7 +21,7 @@
  */
 export interface TrainDownload {
     /**
-     * 
+     * Created is when it was registered, unix seconds.
      * @type {number}
      * @memberof TrainDownload
      */
@@ -33,13 +33,13 @@ export interface TrainDownload {
      */
     'expires'?: number;
     /**
-     * 
+     * Job is the job that produced it; empty for an upload.
      * @type {string}
      * @memberof TrainDownload
      */
     'job'?: string;
     /**
-     * 
+     * Kind is checkpoint, lora, capability, basis or merged, or dataset for an upload.
      * @type {string}
      * @memberof TrainDownload
      */
@@ -51,25 +51,25 @@ export interface TrainDownload {
      */
     'meta'?: any;
     /**
-     * 
+     * Name labels it.
      * @type {string}
      * @memberof TrainDownload
      */
     'name'?: string;
     /**
-     * 
+     * SHA256 is the hex digest of its bytes, and its name in the object store.
      * @type {string}
      * @memberof TrainDownload
      */
     'sha256'?: string;
     /**
-     * 
+     * Size is its byte count.
      * @type {number}
      * @memberof TrainDownload
      */
     'size'?: number;
     /**
-     * 
+     * State is pending until its bytes are read back, then stored; deleted once the org deleted it or it outlived its retention unpublished.
      * @type {string}
      * @memberof TrainDownload
      */

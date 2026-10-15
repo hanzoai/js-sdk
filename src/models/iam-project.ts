@@ -51,7 +51,7 @@ export interface IamProject {
      */
     'displayName'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamProject
      */

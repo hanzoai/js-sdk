@@ -57,7 +57,7 @@ export interface IamRole {
      */
     'domains'?: Array<string>;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamRole
      */

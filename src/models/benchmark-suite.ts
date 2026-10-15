@@ -21,25 +21,13 @@
  */
 export interface BenchmarkSuite {
     /**
-     * Attempts is how many times to try each item; the harness\'s default applies when it is omitted.
-     * @type {number}
-     * @memberof BenchmarkSuite
-     */
-    'attempts'?: number;
-    /**
-     * Benchmarks are the catalog ids to run. At least one is required, and every id must be in the catalog.
+     * Benchmarks are the catalog ids to ask about. At least one is required, and every id must be in the catalog.
      * @type {Array<string>}
      * @memberof BenchmarkSuite
      */
     'benchmarks': Array<string>;
     /**
-     * Endpoint is your own chat-completions URL, for benchmarking a model this arena does not host. Either this or model is required.
-     * @type {string}
-     * @memberof BenchmarkSuite
-     */
-    'endpoint'?: string;
-    /**
-     * Model is the catalog model id to run. Either this or endpoint is required.
+     * Model is the model to ask about, by the id its attempts are stored under. Required.
      * @type {string}
      * @memberof BenchmarkSuite
      */

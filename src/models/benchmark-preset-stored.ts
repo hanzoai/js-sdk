@@ -20,38 +20,26 @@ import type { BenchmarkPreset } from './benchmark-preset';
 /**
  * 
  * @export
- * @interface BenchmarkPresetAccepted
+ * @interface BenchmarkPresetStored
  */
-export interface BenchmarkPresetAccepted {
+export interface BenchmarkPresetStored {
     /**
-     * By is the verified user who composed it.
+     * Note says what storing does and does not promise.
      * @type {string}
-     * @memberof BenchmarkPresetAccepted
-     */
-    'by'?: string;
-    /**
-     * Note explains what acceptance does and does not promise.
-     * @type {string}
-     * @memberof BenchmarkPresetAccepted
+     * @memberof BenchmarkPresetStored
      */
     'note'?: string;
     /**
-     * Preset is the blend with its defaults filled in and Owner set to the caller\'s verified org.
+     * Preset is the blend as stored: defaults filled in, Owner the caller\'s verified org, At and By the server\'s.
      * @type {BenchmarkPreset}
-     * @memberof BenchmarkPresetAccepted
+     * @memberof BenchmarkPresetStored
      */
     'preset'?: BenchmarkPreset;
     /**
-     * ServedAs is the model id the serving layer would resolve this blend under.
+     * ServedAs is enso-<name>: the model id a router would resolve this blend under.
      * @type {string}
-     * @memberof BenchmarkPresetAccepted
+     * @memberof BenchmarkPresetStored
      */
     'served_as'?: string;
-    /**
-     * Status is \"accepted\": the blend is well-formed, not that it is now served.
-     * @type {string}
-     * @memberof BenchmarkPresetAccepted
-     */
-    'status'?: string;
 }
 

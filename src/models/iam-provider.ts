@@ -177,7 +177,7 @@ export interface IamProvider {
      */
     'httpHeaders'?: { [key: string]: string; };
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamProvider
      */

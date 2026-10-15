@@ -51,7 +51,7 @@ export interface IamAuditLog {
      */
     'deleted'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamAuditLog
      */

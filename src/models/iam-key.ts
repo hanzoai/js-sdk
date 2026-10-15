@@ -81,7 +81,7 @@ export interface IamKey {
      */
     'expireTime'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamKey
      */

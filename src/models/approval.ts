@@ -21,19 +21,19 @@
  */
 export interface Approval {
     /**
-     * 
+     * Clause names the clause of the rule that asked for sign-off.
      * @type {string}
      * @memberof Approval
      */
     'clause'?: string;
     /**
-     * 
+     * Reason is what a person reads before answering.
      * @type {string}
      * @memberof Approval
      */
     'reason'?: string;
     /**
-     * 
+     * Status is always held: the op stopped for sign-off and did not run.
      * @type {string}
      * @memberof Approval
      */

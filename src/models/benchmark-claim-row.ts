@@ -39,6 +39,12 @@ export interface BenchmarkClaimRow {
      */
     'by'?: string;
     /**
+     * From is the org a curator row was promoted from: the org that filed the claim before a SuperAdmin published it. Empty on every other row.
+     * @type {string}
+     * @memberof BenchmarkClaimRow
+     */
+    'from'?: string;
+    /**
      * Model is the system the score is claimed for.
      * @type {string}
      * @memberof BenchmarkClaimRow

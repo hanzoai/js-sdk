@@ -45,7 +45,7 @@ export interface IamTombstone {
      */
     'founder'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamTombstone
      */

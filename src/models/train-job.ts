@@ -51,7 +51,7 @@ import type { TrainUsage } from './train-usage';
  */
 export interface TrainJob {
     /**
-     * 
+     * Adaptation is how the update is parameterized.
      * @type {TrainAdaptation}
      * @memberof TrainJob
      */
@@ -63,7 +63,7 @@ export interface TrainJob {
      */
     'artifacts'?: Array<TrainArtifact>;
     /**
-     * 
+     * BaseModel is the base the capability is taught to: `kai`, or a model the engine loads for a client.
      * @type {string}
      * @memberof TrainJob
      */
@@ -81,7 +81,7 @@ export interface TrainJob {
      */
     'created_by'?: string;
     /**
-     * 
+     * Dataset is what the job trains on.
      * @type {TrainDataset}
      * @memberof TrainJob
      */
@@ -99,13 +99,13 @@ export interface TrainJob {
      */
     'error'?: string;
     /**
-     * 
+     * Evaluation names the target suites the result reports.
      * @type {TrainEvaluation}
      * @memberof TrainJob
      */
     'evaluation'?: TrainEvaluation;
     /**
-     * 
+     * From is an artifact the job starts from, by sha256.
      * @type {string}
      * @memberof TrainJob
      */
@@ -117,13 +117,13 @@ export interface TrainJob {
      */
     'id'?: string;
     /**
-     * 
+     * Objective is the loss and the terms beside it.
      * @type {TrainObjective}
      * @memberof TrainJob
      */
     'objective'?: TrainObjective;
     /**
-     * 
+     * Output is what the job produces.
      * @type {TrainOutput}
      * @memberof TrainJob
      */
@@ -135,7 +135,7 @@ export interface TrainJob {
      */
     'project'?: string;
     /**
-     * 
+     * Protect names what the base already does that must hold, and the budget.
      * @type {TrainProtect}
      * @memberof TrainJob
      */
@@ -147,7 +147,7 @@ export interface TrainJob {
      */
     'published'?: any;
     /**
-     * 
+     * Resources places and bounds the run.
      * @type {TrainResources}
      * @memberof TrainJob
      */
@@ -159,7 +159,7 @@ export interface TrainJob {
      */
     'result'?: any;
     /**
-     * 
+     * Revision pins the base. For kai: a finished run\'s name on the executor, or `hub:<repo>@<rev>`.
      * @type {string}
      * @memberof TrainJob
      */

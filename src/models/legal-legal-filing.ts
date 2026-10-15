@@ -21,55 +21,55 @@
  */
 export interface LegalLegalFiling {
     /**
-     * 
+     * CreatedAt is when the filing was recorded, in unix seconds.
      * @type {number}
      * @memberof LegalLegalFiling
      */
     'createdAt'?: number;
     /**
-     * 
+     * DocumentIDs are the generated documents this filing covers. At least one, and each must already belong to Org — a filing can never reach across tenants.
      * @type {Array<string>}
      * @memberof LegalLegalFiling
      */
     'documentIds'?: Array<string>;
     /**
-     * 
+     * ID is the filing\'s server-minted handle, \"filing_\"-prefixed. It is OURS, not the state\'s — a state file number arrives only from a real filing partner.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'id'?: string;
     /**
-     * 
+     * Jurisdiction is the state or agency the filing is for, as the caller wrote it (\"DE\"). Free text, not validated against a list. Absent when the caller sent none.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'jurisdiction'?: string;
     /**
-     * 
+     * Note is the provider\'s explanation of Status, in prose meant for a person. On the manual default it says the documents were generated for signature and the org files them through its registered agent. Absent when the provider offered nothing.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'note'?: string;
     /**
-     * 
+     * Org owns the filing. Every query is scoped to it, so another tenant\'s filing is indistinguishable from a missing one.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'org'?: string;
     /**
-     * 
+     * Provider is the filing partner that took the submission, or \"manual\" when no partner is wired on this deployment.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'provider'?: string;
     /**
-     * 
+     * Status is where the filing stands: manual (no partner wired — file through your registered agent), submitted (a partner accepted it), filed (the state accepted it) or rejected.
      * @type {string}
      * @memberof LegalLegalFiling
      */
     'status'?: string;
     /**
-     * 
+     * UpdatedAt is when it last changed, in unix seconds. Equal to CreatedAt until a provider reports movement.
      * @type {number}
      * @memberof LegalLegalFiling
      */

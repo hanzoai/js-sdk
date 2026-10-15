@@ -39,7 +39,7 @@ import type { PlatformUnreadableFile } from './platform-unreadable-file';
  */
 export interface PlatformProjectView {
     /**
-     * 
+     * Apps is how many declarations name the project.
      * @type {number}
      * @memberof PlatformProjectView
      */
@@ -57,13 +57,13 @@ export interface PlatformProjectView {
      */
     'clusterUnavailable'?: PlatformUnreadable;
     /**
-     * 
+     * Drift counts its apps by drift severity.
      * @type {PlatformDriftTally}
      * @memberof PlatformProjectView
      */
     'drift'?: PlatformDriftTally;
     /**
-     * 
+     * Health counts its apps by CD\'s health verdict.
      * @type {PlatformHealthTally}
      * @memberof PlatformProjectView
      */
@@ -75,25 +75,25 @@ export interface PlatformProjectView {
      */
     'members'?: Array<PlatformProjectApp>;
     /**
-     * 
+     * Name is the project, as the values files spell it in `partOf`.
      * @type {string}
      * @memberof PlatformProjectView
      */
     'name'?: string;
     /**
-     * 
+     * Namespaces are the namespaces its apps deploy into, sorted.
      * @type {Array<string>}
      * @memberof PlatformProjectView
      */
     'namespaces'?: Array<string>;
     /**
-     * 
+     * Org is the organization that owns the project. Absent for the platform\'s own projects, whose apps live in the platform\'s directories.
      * @type {string}
      * @memberof PlatformProjectView
      */
     'org'?: string;
     /**
-     * 
+     * Sync counts its apps by CD\'s sync verdict.
      * @type {PlatformSyncTally}
      * @memberof PlatformProjectView
      */

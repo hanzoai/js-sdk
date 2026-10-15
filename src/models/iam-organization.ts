@@ -168,7 +168,7 @@ export interface IamOrganization {
      */
     'hasPrivilegeConsent'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamOrganization
      */

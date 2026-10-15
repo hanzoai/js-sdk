@@ -348,7 +348,7 @@ export interface IamApplication {
      */
     'homepageUrl'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamApplication
      */

@@ -21,67 +21,67 @@
  */
 export interface MqMakeIn {
     /**
-     * 
+     * Ack is the acknowledgment policy: explicit (default), all, or none.
      * @type {string}
      * @memberof MqMakeIn
      */
     'ack_policy'?: string;
     /**
-     * 
+     * AckWait is how long the broker waits for an ack before redelivering, e.g. \"30s\" (default).
      * @type {string}
      * @memberof MqMakeIn
      */
     'ack_wait'?: string;
     /**
-     * 
+     * Deliver is where delivery starts: all (default), last, new, by_start_sequence, by_start_time, or last_per_subject.
      * @type {string}
      * @memberof MqMakeIn
      */
     'deliver_policy'?: string;
     /**
-     * 
+     * Description says what this consumer is for.
      * @type {string}
      * @memberof MqMakeIn
      */
     'description'?: string;
     /**
-     * 
+     * Name is the durable consumer name (alphanumeric, hyphens, underscores).
      * @type {string}
      * @memberof MqMakeIn
      */
     'durable_name'?: string;
     /**
-     * 
+     * Filter delivers only messages on this org-relative subject (wildcards supported).
      * @type {string}
      * @memberof MqMakeIn
      */
     'filter_subject'?: string;
     /**
-     * 
+     * MaxAckPending caps unacknowledged messages in flight (default 1000).
      * @type {number}
      * @memberof MqMakeIn
      */
     'max_ack_pending'?: number;
     /**
-     * 
+     * MaxDeliver caps delivery attempts per message; -1 (default) is unlimited.
      * @type {number}
      * @memberof MqMakeIn
      */
     'max_deliver'?: number;
     /**
-     * 
+     * StartSeq is the starting sequence for deliver_policy by_start_sequence.
      * @type {number}
      * @memberof MqMakeIn
      */
     'opt_start_seq'?: number;
     /**
-     * 
+     * StartTime is the starting instant for deliver_policy by_start_time.
      * @type {string}
      * @memberof MqMakeIn
      */
     'opt_start_time'?: string;
     /**
-     * 
+     * Replay is the replay pacing: instant (default) or original.
      * @type {string}
      * @memberof MqMakeIn
      */

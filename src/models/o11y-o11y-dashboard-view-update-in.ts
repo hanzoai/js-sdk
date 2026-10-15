@@ -24,7 +24,7 @@ import type { O11yO11yDashboardViewData } from './o11y-o11y-dashboard-view-data'
  */
 export interface O11yO11yDashboardViewUpdateIn {
     /**
-     * 
+     * Data is the listing state the view captures.
      * @type {O11yO11yDashboardViewData}
      * @memberof O11yO11yDashboardViewUpdateIn
      */
@@ -36,7 +36,7 @@ export interface O11yO11yDashboardViewUpdateIn {
      */
     'id'?: string;
     /**
-     * 
+     * Name is the saved view\'s name; at most 32 characters, no surrounding space.
      * @type {string}
      * @memberof O11yO11yDashboardViewUpdateIn
      */

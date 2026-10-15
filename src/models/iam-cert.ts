@@ -99,7 +99,7 @@ export interface IamCert {
      */
     'expireTime'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamCert
      */

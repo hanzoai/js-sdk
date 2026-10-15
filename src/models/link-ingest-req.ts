@@ -24,91 +24,91 @@ import type { LinkReadingReq } from './link-reading-req';
  */
 export interface LinkIngestReq {
     /**
-     * 
+     * Account is the provider-side account the sample belongs to.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'account'?: string;
     /**
-     * 
+     * CachedInputTokens is the window\'s cached-prompt-token count.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'cachedInputTokens'?: number;
     /**
-     * 
+     * Confidence says how real the counters are, as the meter graded itself.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'confidence'?: string;
     /**
-     * 
+     * CostCents is the window\'s spend in cents, as the provider\'s meter states it.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'costCents'?: number;
     /**
-     * 
+     * CostLimitCents is the window\'s spend cap in cents, when the meter knows one.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'costLimitCents'?: number;
     /**
-     * 
+     * Currency is the ISO currency the cost fields are stated in.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'currency'?: string;
     /**
-     * 
+     * InputTokens is the window\'s prompt-token count.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'inputTokens'?: number;
     /**
-     * 
+     * Kind is subscription or apikey; anything else is refused.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'kind'?: string;
     /**
-     * 
+     * Lane names the meter\'s own lane label for this measurement.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'lane'?: string;
     /**
-     * 
+     * Machine is the machine the collector observed the account on. Required.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'machine'?: string;
     /**
-     * 
+     * OutputTokens is the window\'s completion-token count.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'outputTokens'?: number;
     /**
-     * 
+     * Plan is the provider plan label the account is on.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'plan'?: string;
     /**
-     * 
+     * Provider is the AI provider whose meter reported this sample. Required.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'provider'?: string;
     /**
-     * 
+     * Requests is the window\'s request count.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'requests'?: number;
     /**
-     * 
+     * ResetsAt is when the window resets, RFC 3339, bounded.
      * @type {string}
      * @memberof LinkIngestReq
      */
@@ -120,37 +120,37 @@ export interface LinkIngestReq {
      */
     'samples'?: Array<LinkReadingReq>;
     /**
-     * 
+     * Synthetic marks a sample the collector derived rather than observed.
      * @type {boolean}
      * @memberof LinkIngestReq
      */
     'synthetic'?: boolean;
     /**
-     * 
+     * TotalTokens is the window\'s total token count.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'totalTokens'?: number;
     /**
-     * 
+     * UsedPct is how much of the window\'s allowance is consumed, clamped 0..100.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'usedPct'?: number;
     /**
-     * 
+     * Window is the window class, one of 6h, day, week, month; anything else is refused rather than silently reclassified.
      * @type {string}
      * @memberof LinkIngestReq
      */
     'window'?: string;
     /**
-     * 
+     * WindowMinutes is the window\'s length as the meter reported it.
      * @type {number}
      * @memberof LinkIngestReq
      */
     'windowMinutes'?: number;
     /**
-     * 
+     * WindowStart is when the measured window opened, RFC 3339, bounded to a sane interval around now.
      * @type {string}
      * @memberof LinkIngestReq
      */

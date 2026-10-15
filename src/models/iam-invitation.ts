@@ -75,7 +75,7 @@ export interface IamInvitation {
      */
     'generated'?: boolean;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamInvitation
      */

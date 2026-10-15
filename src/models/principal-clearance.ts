@@ -39,7 +39,7 @@ import type { PrincipalWithholding } from './principal-withholding';
  */
 export interface PrincipalClearance {
     /**
-     * 
+     * Allowed is true when nothing is required first and no fact blocks.
      * @type {boolean}
      * @memberof PrincipalClearance
      */
@@ -63,7 +63,7 @@ export interface PrincipalClearance {
      */
     'decidedAt'?: number;
     /**
-     * 
+     * Facts are what a rule turns on that the platform does not know.
      * @type {Array<PrincipalFact>}
      * @memberof PrincipalClearance
      */
@@ -111,37 +111,37 @@ export interface PrincipalClearance {
      */
     'rail'?: string;
     /**
-     * 
+     * Reporting are the returns this payment makes someone owe.
      * @type {Array<PrincipalObligation>}
      * @memberof PrincipalClearance
      */
     'reporting_obligations'?: Array<PrincipalObligation>;
     /**
-     * 
+     * Required are the steps before the payment.
      * @type {Array<PrincipalStep>}
      * @memberof PrincipalClearance
      */
     'required_before_payment'?: Array<PrincipalStep>;
     /**
-     * 
+     * Rules names the rule behind each field above.
      * @type {Array<PrincipalDecided>}
      * @memberof PrincipalClearance
      */
     'rules'?: Array<PrincipalDecided>;
     /**
-     * 
+     * Settlement are the ways it may settle, net of what is withheld.
      * @type {Array<PrincipalMethod>}
      * @memberof PrincipalClearance
      */
     'settlement_methods'?: Array<PrincipalMethod>;
     /**
-     * 
+     * Status is what the payer may treat the payee as: us, foreign or unknown — read off the form the payee granted the payer, and unknown without one.
      * @type {string}
      * @memberof PrincipalClearance
      */
     'status'?: string;
     /**
-     * 
+     * Withholding is what must be withheld.
      * @type {PrincipalWithholding}
      * @memberof PrincipalClearance
      */

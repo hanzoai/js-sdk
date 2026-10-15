@@ -27,43 +27,43 @@ import type { O11yO11yDashboardTag } from './o11y-o11y-dashboard-tag';
  */
 export interface O11yO11yDashboardListItemForUser {
     /**
-     * 
+     * CreatedAt is when the dashboard was created.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'createdAt'?: string;
     /**
-     * 
+     * CreatedBy is who created it.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'createdBy'?: string;
     /**
-     * 
+     * ID is the dashboard\'s id.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'id'?: string;
     /**
-     * 
+     * Image is an optional cover image reference.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'image'?: string;
     /**
-     * 
+     * Locked reports whether the dashboard is locked against edits.
      * @type {boolean}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'locked'?: boolean;
     /**
-     * 
+     * Name is the dashboard\'s unique internal name.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'name'?: string;
     /**
-     * 
+     * OrgID is the org the dashboard belongs to.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
@@ -75,37 +75,37 @@ export interface O11yO11yDashboardListItemForUser {
      */
     'pinned'?: boolean;
     /**
-     * 
+     * SchemaVersion is the dashboard schema version.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'schemaVersion'?: string;
     /**
-     * 
+     * Source is where the dashboard came from: user, system or integration.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'source'?: string;
     /**
-     * 
+     * Spec is the display-only slice of the dashboard spec.
      * @type {O11yO11yDashboardListSpec}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'spec'?: O11yO11yDashboardListSpec;
     /**
-     * 
+     * Tags are the dashboard\'s tags.
      * @type {Array<O11yO11yDashboardTag>}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'tags'?: Array<O11yO11yDashboardTag>;
     /**
-     * 
+     * UpdatedAt is when it last changed.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */
     'updatedAt'?: string;
     /**
-     * 
+     * UpdatedBy is who last changed it.
      * @type {string}
      * @memberof O11yO11yDashboardListItemForUser
      */

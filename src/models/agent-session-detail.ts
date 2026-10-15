@@ -33,31 +33,31 @@ import type { AgentSessionView } from './agent-session-view';
  */
 export interface AgentSessionDetail {
     /**
-     * 
+     * Account is which subscription or API account under that provider served it. Together with Provider it is what a login revoke matches on to stop the sessions a withdrawn account was paying for.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'account'?: string;
     /**
-     * 
+     * Actor is WHO this session belongs to, as \"org/sub\" — the same identity a run is billed under. A register that names none takes the calling principal. It is what scopes a login revoke, so a session with the wrong actor is a session the right person cannot stop.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'actor'?: string;
     /**
-     * 
+     * Agent is the label the surface running this session calls itself by (\"hanzo-dev\"), up to 128 characters. Required at register. It is free text, not a reference: it need not name a defined agent, and nothing resolves it.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'agent'?: string;
     /**
-     * 
+     * Base is the branch the run started from. Empty when it took the repository\'s default and did not say which.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'base'?: string;
     /**
-     * 
+     * Branch is the branch the run pushes its work to, and the only one it may write.
      * @type {string}
      * @memberof AgentSessionDetail
      */
@@ -69,109 +69,109 @@ export interface AgentSessionDetail {
      */
     'childSessions'?: Array<AgentSessionView>;
     /**
-     * 
+     * Children is the DIRECT fan-out — how many sessions name this one as parent — and not the size of the subtree. Read the tree for that.
      * @type {number}
      * @memberof AgentSessionDetail
      */
     'children'?: number;
     /**
-     * 
+     * CreatedAt is when the row was written, same format. Every path that opens a session stamps it and StartedAt from one clock reading, so the two are equal on every session this surface has ever produced.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'createdAt'?: string;
     /**
-     * 
+     * Cwd is the directory the session is working in NOW, not the one it started in: a linked shell moves around, and a card showing where `hanzo link` was run answers \"which work is this\" with something that was true once.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'cwd'?: string;
     /**
-     * 
+     * EndedAt is when it reached done or error, same format. Empty while it is still running or paused, which is how absence reads here: not over yet.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'endedAt'?: string;
     /**
-     * 
+     * Environment is where the run executes: \"sandbox\" for a Hanzo sandbox, or the id of the org\'s machine it was routed to (the same id Target carries).
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'environment'?: string;
     /**
-     * 
+     * Events is how many turns the session\'s log holds, counted at read time. It is the whole log, however few of them RecentEvents carries.
      * @type {number}
      * @memberof AgentSessionDetail
      */
     'events'?: number;
     /**
-     * 
+     * Execution context (mission-control): the machine/repo/cwd a card shows and the run-target a session is dispatched to. Omitted when a surface didn\'t report it.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'host'?: string;
     /**
-     * 
+     * ID is the session\'s handle, minted here as \"sess_\" + 32 hex characters. Every later read, patch, event append and control command is addressed with it, and a caller cannot choose it.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'id'?: string;
     /**
-     * 
+     * Kind is what sort of run this session is the view of — \"coding\" for a coding run. Empty for a session no run tagged.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'kind'?: string;
     /**
-     * 
+     * LastEvent is the compact latest-activity line for the list projection (nil in register/patch/tree responses; set by list + detail). It lets a swipe card show a live one-line preview without fetching full detail.
      * @type {AgentLastEventView}
      * @memberof AgentSessionDetail
      */
     'lastEvent'?: AgentLastEventView;
     /**
-     * 
+     * Mode is what the run may do to its repository: \"build\" edits, commits and pushes its branch; \"plan\" reads and answers with a plan, writing nothing. Empty for a session no run tagged.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'mode'?: string;
     /**
-     * 
+     * Org is the caller\'s OWN tenant, echoed so a client can build the public build URL (/builds/:org/:project) without a second call or a guess. It is never another tenant\'s — every read is org-scoped before it gets here.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'org'?: string;
     /**
-     * 
+     * ParentSessionID is the session that spawned this one, making this a subagent of it. Empty means this session is a root — a flow of its own. A parent always belongs to the same org, so a tree never crosses a tenant.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'parentSessionId'?: string;
     /**
-     * 
+     * PR is the address of the pull request the run proposed. Empty until it proposes one, and for a run that changed nothing.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'pr'?: string;
     /**
-     * 
+     * Progress is how far along this run is — a share of its goal, a phase, and a line saying what it is doing. Always present, so a board never branches on whether it is there; `phase` says \"unknown\" when nothing has estimated it. It is a MODEL ESTIMATE wherever `estimated` is true, and the row\'s own word where it is false. See progress.go.
      * @type {AgentSessionProgress}
      * @memberof AgentSessionDetail
      */
     'progress'?: AgentSessionProgress;
     /**
-     * 
+     * The readable build: the product this session built and whether its story is public (provenance.go).
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'project'?: string;
     /**
-     * 
+     * Provider is the linked AI account\'s provider (claude | codex | hanzo | …) that served this run. Empty when the surface did not say.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'provider'?: string;
     /**
-     * 
+     * Published is the author\'s decision to let anyone read this session\'s story at the public build route. It only ever widens READ access to a session that already exists and grants nothing else; false, an unpublished session is invisible there no matter who asks. It cannot be true without a Project, because that route is keyed on (org, project).
      * @type {boolean}
      * @memberof AgentSessionDetail
      */
@@ -183,73 +183,73 @@ export interface AgentSessionDetail {
      */
     'recentEvents'?: Array<AgentEventView>;
     /**
-     * 
+     * Repo is the code the session is working on, as the surface reported it. It is truth the SURFACE states, so it is a label rather than something resolved here.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'repo'?: string;
     /**
-     * 
+     * Room is the collaborative room this run was started in (HIP-0523), empty when it came from anywhere else — a CLI, a schedule, an API call. It is what lets a space view show the runs of one room beside its messages.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'room'?: string;
     /**
-     * 
+     * RootSessionID is the top of this session\'s tree, inherited from the parent and shared by every node in one flow. A root session\'s own id, when it has no parent. It is the key one indexed read pulls a whole flow by, and what ?root= narrows a list or a stream to.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'rootSessionId'?: string;
     /**
-     * 
+     * Sandbox is the id of the sandbox the run works in (\"m_\" and 24 hex), the handle its terminal and its screen are opened with (/v1/sandbox/{id}/terminal, /screen). Set when the run leases it, and kept once the run gives it back, when the id opens nothing. Empty for a run that never leased one — a routed run, or a turn that only talked.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'sandbox'?: string;
     /**
-     * 
+     * StartedAt is when the session opened, RFC 3339 in UTC to the second.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'startedAt'?: string;
     /**
-     * 
+     * Status is one of exactly four: running, paused, done, error. running and paused are LIVE; done and error are TERMINAL and monotonic — once a session reaches one it can never go back, because reopening a finished run would fabricate liveness. A control command never moves it: the surface running the agent reports the new status, and until it does the command is only recorded.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'status'?: string;
     /**
-     * 
+     * Target is the registered run-target this session is dispatched to — a machine the org claimed, resolved same-org when it was set, so it can never point at another tenant\'s computer. Empty means the session names no machine.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'target'?: string;
     /**
-     * 
+     * TaskRunID is that workflow\'s particular run. A workflow is the definition and a run is one execution of it, which is why both are carried.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'taskRunId'?: string;
     /**
-     * 
+     * TaskWorkflowID is the hanzoai/tasks durable workflow that actually EXECUTES this session — this registry is the view, control and stream layer over it. Set, a control command is FORWARDED to that engine; empty, the running surface polls for commands instead, which is every session today.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'taskWorkflowId'?: string;
     /**
-     * 
+     * Terminal is where this session can be WATCHED — the URL the machine published for its live terminal. Omitted when it publishes none.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'terminal'?: string;
     /**
-     * 
+     * Title is the human line a card shows (\"ship the landing page\"), up to 512 characters. Free text, and the one field a surface may rewrite as the work turns out to be something else.
      * @type {string}
      * @memberof AgentSessionDetail
      */
     'title'?: string;
     /**
-     * 
+     * UpdatedAt is the session\'s last-activity clock, same format. It moves on a write to the row — a status, a title, a re-dispatch — AND on every appended turn, because the append bumps it in the same transaction. The list is ordered on CreatedAt, so this is the field that says whether a session is still saying anything.
      * @type {string}
      * @memberof AgentSessionDetail
      */

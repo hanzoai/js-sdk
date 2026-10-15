@@ -30,13 +30,13 @@ import type { PlatformSecretRef } from './platform-secret-ref';
  */
 export interface PlatformDeclared {
     /**
-     * 
+     * Application is the CD Application name the generator mints from the path — the directory joined to the file name, less any words the two share (applicationName). It is how cd.hanzo.ai names the app.
      * @type {string}
      * @memberof PlatformDeclared
      */
     'application'?: string;
     /**
-     * 
+     * Automated is cd.automated: false means the Application reports drift and NOTHING moves. It is off by default for a new file on purpose.
      * @type {boolean}
      * @memberof PlatformDeclared
      */
@@ -48,55 +48,55 @@ export interface PlatformDeclared {
      */
     'cd'?: PlatformCDApp;
     /**
-     * 
+     * Component is the app\'s role within its project (`component`), \"\" when unnamed.
      * @type {string}
      * @memberof PlatformDeclared
      */
     'component'?: string;
     /**
-     * 
+     * image.digest — wins over tag
      * @type {string}
      * @memberof PlatformDeclared
      */
     'digest'?: string;
     /**
-     * 
+     * Env is the declared container environment, as the chart\'s list of {name,value}. It is read back so a re-declare of an identical body is a no-op rather than a refusal — idempotency is what makes a retry safe.
      * @type {Array<PlatformDeclareEnv>}
      * @memberof PlatformDeclared
      */
     'env'?: Array<PlatformDeclareEnv>;
     /**
-     * 
+     * ingress.hosts, both shapes flattened
      * @type {Array<string>}
      * @memberof PlatformDeclared
      */
     'hosts'?: Array<string>;
     /**
-     * 
+     * the Helm release name — the file\'s basename
      * @type {string}
      * @memberof PlatformDeclared
      */
     'name'?: string;
     /**
-     * 
+     * Org is the owner. It is ALSO the values directory and the destination namespace, because those are one value under one name — see the header.
      * @type {string}
      * @memberof PlatformDeclared
      */
     'org'?: string;
     /**
-     * 
+     * PartOf is the platform project this app belongs to: the values file\'s own `partOf` key, which the chart also stamps on every object it renders as app.kubernetes.io/part-of. It is the ONE declaration of membership — there is no project table — and \"\" means the file names none.
      * @type {string}
      * @memberof PlatformDeclared
      */
     'partOf'?: string;
     /**
-     * 
+     * Path is the file, relative to the repository root.
      * @type {string}
      * @memberof PlatformDeclared
      */
     'path'?: string;
     /**
-     * 
+     * Project is the AppProject the sync is admitted under, derived from the directory exactly as the ApplicationSet derives it. It differs from Org for a reserved directory, which syncs under the platform fence.
      * @type {string}
      * @memberof PlatformDeclared
      */
@@ -108,19 +108,19 @@ export interface PlatformDeclared {
      */
     'replicas'?: number;
     /**
-     * 
+     * image.repository
      * @type {string}
      * @memberof PlatformDeclared
      */
     'repository'?: string;
     /**
-     * 
+     * Secrets are the KMS coordinates the app reads — kmsSecrets and secrets.paths — as paths and key names. A values file never carries a secret value, so neither does this.
      * @type {Array<PlatformSecretRef>}
      * @memberof PlatformDeclared
      */
     'secrets'?: Array<PlatformSecretRef>;
     /**
-     * 
+     * image.tag
      * @type {string}
      * @memberof PlatformDeclared
      */

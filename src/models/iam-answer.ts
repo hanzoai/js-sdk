@@ -21,7 +21,7 @@
  */
 export interface IamAnswer {
     /**
-     * 
+     * Code is a STABLE machine-readable reason, where the human `msg` is deliberately generic. `msg` is prose for a person and several distinct causes legitimately share one sentence; a caller that must BRANCH on the cause — or tell its own user which of them happened — cannot parse prose. Optional, so every existing envelope is byte-identical and no SDK changes.
      * @type {string}
      * @memberof IamAnswer
      */

@@ -24,7 +24,7 @@ import type { MarketplacePrice } from './marketplace-price';
  */
 export interface MarketplaceMarketItem {
     /**
-     * 
+     * Activated is filled by the registry from the activation store for the requesting (org,project); providers leave it zero. An unactivated tool is discoverable but refused 403 at dispatch.
      * @type {boolean}
      * @memberof MarketplaceMarketItem
      */
@@ -36,13 +36,13 @@ export interface MarketplaceMarketItem {
      */
     'category'?: string;
     /**
-     * 
+     * Description is the prose a model reads to decide whether to call the tool.
      * @type {string}
      * @memberof MarketplaceMarketItem
      */
     'description'?: string;
     /**
-     * 
+     * Dispatchable is whether the tool can be CALLED. False for a listing-only entry: a skill is activated and attached to an agent, never called.
      * @type {boolean}
      * @memberof MarketplaceMarketItem
      */
@@ -60,19 +60,19 @@ export interface MarketplaceMarketItem {
      */
     'installed'?: boolean;
     /**
-     * 
+     * Name is the tool\'s id in the flat, fleet-wide tool namespace — the value a tools/call passes. Unique across sources: a collision is resolved by source precedence before the caller ever sees it.
      * @type {string}
      * @memberof MarketplaceMarketItem
      */
     'name'?: string;
     /**
-     * 
+     * Price is what a call costs and who is paid, absent for a free tool. Enforcement is the x402 settlement client; this is the declaration.
      * @type {MarketplacePrice}
      * @memberof MarketplaceMarketItem
      */
     'price'?: MarketplacePrice;
     /**
-     * 
+     * Source is where the tool comes from: connector, function, zap-service, agent, skill or mcp.
      * @type {string}
      * @memberof MarketplaceMarketItem
      */

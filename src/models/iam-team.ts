@@ -51,7 +51,7 @@ export interface IamTeam {
      */
     'displayName'?: string;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamTeam
      */

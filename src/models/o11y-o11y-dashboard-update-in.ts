@@ -30,19 +30,19 @@ export interface O11yO11yDashboardUpdateIn {
      */
     'id'?: string;
     /**
-     * 
+     * Image is an optional cover image reference.
      * @type {string}
      * @memberof O11yO11yDashboardUpdateIn
      */
     'image'?: string;
     /**
-     * 
+     * Name must equal the dashboard\'s existing name — it is immutable.
      * @type {string}
      * @memberof O11yO11yDashboardUpdateIn
      */
     'name'?: string;
     /**
-     * 
+     * SchemaVersion is the dashboard schema version; must be the current v6.
      * @type {string}
      * @memberof O11yO11yDashboardUpdateIn
      */
@@ -54,7 +54,7 @@ export interface O11yO11yDashboardUpdateIn {
      */
     'spec'?: any;
     /**
-     * 
+     * Tags replace the dashboard\'s tags; at most ten.
      * @type {Array<O11yO11yDashboardPostableTag>}
      * @memberof O11yO11yDashboardUpdateIn
      */

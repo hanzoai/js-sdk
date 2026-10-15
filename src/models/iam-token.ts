@@ -99,7 +99,7 @@ export interface IamToken {
      */
     'expiresIn'?: number;
     /**
-     * 
+     * Persisted fields
      * @type {string}
      * @memberof IamToken
      */

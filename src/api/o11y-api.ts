@@ -8569,10 +8569,10 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @summary Returns the distinct values a given label key has taken across a rule\'s history entries.
          * @param {string} id 
          * @param {string} name Name is the label key whose values to list. Required.
-         * @param {number} [startUnixMilli] 
-         * @param {number} [endUnixMilli] 
-         * @param {string} [searchText] 
-         * @param {number} [limit] 
+         * @param {number} [startUnixMilli] StartUnixMilli is the window start, unix milliseconds.
+         * @param {number} [endUnixMilli] EndUnixMilli is the window end, unix milliseconds.
+         * @param {string} [searchText] SearchText narrows the keys to those containing it.
+         * @param {number} [limit] Limit caps how many keys come back. Absent means 50, capped at 200.
          * @param {string} [existingQuery] ExistingQuery is a filter expression scoping which values appear.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18260,10 +18260,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @summary Returns the distinct values a given label key has taken across a rule\'s history entries.
          * @param {string} id 
          * @param {string} name Name is the label key whose values to list. Required.
-         * @param {number} [startUnixMilli] 
-         * @param {number} [endUnixMilli] 
-         * @param {string} [searchText] 
-         * @param {number} [limit] 
+         * @param {number} [startUnixMilli] StartUnixMilli is the window start, unix milliseconds.
+         * @param {number} [endUnixMilli] EndUnixMilli is the window end, unix milliseconds.
+         * @param {string} [searchText] SearchText narrows the keys to those containing it.
+         * @param {number} [limit] Limit caps how many keys come back. Absent means 50, capped at 200.
          * @param {string} [existingQuery] ExistingQuery is a filter expression scoping which values appear.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -27698,28 +27698,28 @@ export interface O11yApiGetRuleHistoryFilterValuesRequest {
     readonly name: string
 
     /**
-     * 
+     * StartUnixMilli is the window start, unix milliseconds.
      * @type {number}
      * @memberof O11yApiGetRuleHistoryFilterValues
      */
     readonly startUnixMilli?: number
 
     /**
-     * 
+     * EndUnixMilli is the window end, unix milliseconds.
      * @type {number}
      * @memberof O11yApiGetRuleHistoryFilterValues
      */
     readonly endUnixMilli?: number
 
     /**
-     * 
+     * SearchText narrows the keys to those containing it.
      * @type {string}
      * @memberof O11yApiGetRuleHistoryFilterValues
      */
     readonly searchText?: string
 
     /**
-     * 
+     * Limit caps how many keys come back. Absent means 50, capped at 200.
      * @type {number}
      * @memberof O11yApiGetRuleHistoryFilterValues
      */

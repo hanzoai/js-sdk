@@ -21,7 +21,7 @@
  */
 export interface Web3ChainStatus {
     /**
-     * 
+     * ChainID is the EIP-155 id, so a caller can check it matches the wallet they are about to sign with.
      * @type {number}
      * @memberof Web3ChainStatus
      */
@@ -33,7 +33,7 @@ export interface Web3ChainStatus {
      */
     'height'?: number;
     /**
-     * 
+     * ID is the URL name: the value of :chain.
      * @type {string}
      * @memberof Web3ChainStatus
      */
@@ -45,7 +45,7 @@ export interface Web3ChainStatus {
      */
     'live'?: boolean;
     /**
-     * 
+     * Name is for humans.
      * @type {string}
      * @memberof Web3ChainStatus
      */

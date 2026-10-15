@@ -27,7 +27,19 @@ export interface BenchmarkPreset {
      */
     'arms'?: Array<string>;
     /**
-     * served as enso-<name>
+     * At is when this version was stored. Set by the server; a value sent is not read. Zero on the reference blend.
+     * @type {string}
+     * @memberof BenchmarkPreset
+     */
+    'at'?: string;
+    /**
+     * By is the verified user who stored it. Set by the server; a value sent is not read.
+     * @type {string}
+     * @memberof BenchmarkPreset
+     */
+    'by'?: string;
+    /**
+     * the part after enso-: lowercase letters, digits and inner hyphens, at most 64
      * @type {string}
      * @memberof BenchmarkPreset
      */

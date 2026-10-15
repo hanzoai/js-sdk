@@ -21,7 +21,7 @@
  */
 export interface O11yO11yPublicDashboardWriteIn {
     /**
-     * 
+     * DefaultTimeRange is the fixed window as a Go duration, e.g. 1h, 30m.
      * @type {string}
      * @memberof O11yO11yPublicDashboardWriteIn
      */
@@ -33,7 +33,7 @@ export interface O11yO11yPublicDashboardWriteIn {
      */
     'id'?: string;
     /**
-     * 
+     * TimeRangeEnabled lets the public page pick its own time range; when false the share fixes DefaultTimeRange.
      * @type {boolean}
      * @memberof O11yO11yPublicDashboardWriteIn
      */
