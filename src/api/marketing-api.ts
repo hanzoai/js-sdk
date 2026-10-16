@@ -88,7 +88,7 @@ import type { ProblemDetails } from '../models';
 export const MarketingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
+         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Removes one of the caller org\'s audiences and answers 204.
          * @param {string} id ID is the audience id from the path, as returned by create.
          * @param {*} [options] Override http request option.
@@ -202,7 +202,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
+         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {string} [channel] Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
          * @param {string} [address] Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
@@ -525,6 +525,45 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Follows a tracked email link. It is public — the person clicking has no session — and the token is its only authority: a token that verifies, for a sequence of one of Hanzo\'s own orgs that still exists, answers 302 to the destination it signs and records one click (time and user-agent family; no IP address), off the request path so the redirect never waits on storage. A token that is missing, altered, signed under another key, older than a year, or for any other org or a deleted sequence answers 302 to the brand\'s home page (https://hanzo.ai/ on Hanzo\'s deployment). The location is only ever a destination a token signs or that page, never a URL the request names.
+         * @summary Follows a tracked email link.
+         * @param {string} [userAgent] Agent is the clicker\&#39;s User-Agent header. Only its family (chrome, safari, automated, …) is kept.
+         * @param {string} [t] T is the click token the send minted for this link and this recipient: base64url, signed under the deployment\&#39;s KMS key marketing/click-hmac. It is the request\&#39;s only authority.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingClick: async (userAgent?: string, t?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/click`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (t !== undefined) {
+                localVarQueryParameter['t'] = t;
+            }
+
+
+    
+            if (userAgent != null) {
+                localVarHeaderParameter['User-Agent'] = String(userAgent);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -908,10 +947,6 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
             if (org !== undefined) {
                 localVarQueryParameter['org'] = org;
             }
@@ -940,7 +975,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
+         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Saves a cohort filter for the caller\'s org.
          * @param {MarketingAudience} marketingAudience 
          * @param {*} [options] Override http request option.
@@ -1188,7 +1223,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
+         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Registers a drip sequence in the caller\'s org.
          * @param {MarketingSequence} marketingSequence 
          * @param {*} [options] Override http request option.
@@ -1228,7 +1263,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
+         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
          * @param {string} id ID is the sequence id from the path.
          * @param {MarketingEnrollInput} marketingEnrollInput 
@@ -1272,7 +1307,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
+         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
          * @param {string} id ID is the sequence id from the path.
          * @param {string} eid EID is the enrollment id from the path, as returned by a single-address enroll.
@@ -1314,7 +1349,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
+         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
          * @param {string} id ID is the sequence id from the path.
          * @param {MarketingSequenceStatus} marketingSequenceStatus 
@@ -1358,7 +1393,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
+         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
          * @param {string} id SequenceID is the sequence id from the path (the route\&#39;s :id).
          * @param {MarketingStepInput} marketingStepInput 
@@ -1402,7 +1437,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
          * @param {*} [options] Override http request option.
@@ -1435,6 +1470,69 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(marketingSuppression, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click. It opts out exactly what a click on the link does, under the same token check, and is as public.
+         * @summary Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click.
+         * @param {string} [org] Org is the org the link was minted for.
+         * @param {string} [channel] Channel is the surface to opt out of.
+         * @param {string} [address] Address is the recipient to opt out.
+         * @param {string} [token] Token is the HMAC over (org, channel, address), the only authority here.
+         * @param {string} [listUnsubscribe] OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, listUnsubscribe?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/unsubscribe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
+            }
+
+            if (address !== undefined) {
+                localVarQueryParameter['address'] = address;
+            }
+
+            if (token !== undefined) {
+                localVarQueryParameter['token'] = token;
+            }
+
+
+            if (listUnsubscribe !== undefined) { 
+                localVarFormParams.append('List-Unsubscribe', listUnsubscribe as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1540,7 +1638,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MarketingApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
+         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Removes one of the caller org\'s audiences and answers 204.
          * @param {string} id ID is the audience id from the path, as returned by create.
          * @param {*} [options] Override http request option.
@@ -1579,7 +1677,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
+         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {string} [channel] Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
          * @param {string} [address] Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
@@ -1685,6 +1783,20 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Follows a tracked email link. It is public — the person clicking has no session — and the token is its only authority: a token that verifies, for a sequence of one of Hanzo\'s own orgs that still exists, answers 302 to the destination it signs and records one click (time and user-agent family; no IP address), off the request path so the redirect never waits on storage. A token that is missing, altered, signed under another key, older than a year, or for any other org or a deleted sequence answers 302 to the brand\'s home page (https://hanzo.ai/ on Hanzo\'s deployment). The location is only ever a destination a token signs or that page, never a URL the request names.
+         * @summary Follows a tracked email link.
+         * @param {string} [userAgent] Agent is the clicker\&#39;s User-Agent header. Only its family (chrome, safari, automated, …) is kept.
+         * @param {string} [t] T is the click token the send minted for this link and this recipient: base64url, signed under the deployment\&#39;s KMS key marketing/click-hmac. It is the request\&#39;s only authority.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingClick(userAgent?: string, t?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProblemDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingClick(userAgent, t, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingClick']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1822,7 +1934,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
+         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Saves a cohort filter for the caller\'s org.
          * @param {MarketingAudience} marketingAudience 
          * @param {*} [options] Override http request option.
@@ -1902,7 +2014,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
+         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Registers a drip sequence in the caller\'s org.
          * @param {MarketingSequence} marketingSequence 
          * @param {*} [options] Override http request option.
@@ -1915,7 +2027,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
+         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
          * @param {string} id ID is the sequence id from the path.
          * @param {MarketingEnrollInput} marketingEnrollInput 
@@ -1929,7 +2041,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
+         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
          * @param {string} id ID is the sequence id from the path.
          * @param {string} eid EID is the enrollment id from the path, as returned by a single-address enroll.
@@ -1943,7 +2055,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
+         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
          * @param {string} id ID is the sequence id from the path.
          * @param {MarketingSequenceStatus} marketingSequenceStatus 
@@ -1957,7 +2069,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
+         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
          * @param {string} id SequenceID is the sequence id from the path (the route\&#39;s :id).
          * @param {MarketingStepInput} marketingStepInput 
@@ -1971,7 +2083,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
          * @param {*} [options] Override http request option.
@@ -1981,6 +2093,23 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSuppressions(marketingSuppression, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click. It opts out exactly what a click on the link does, under the same token check, and is as public.
+         * @summary Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click.
+         * @param {string} [org] Org is the org the link was minted for.
+         * @param {string} [channel] Channel is the surface to opt out of.
+         * @param {string} [address] Address is the recipient to opt out.
+         * @param {string} [token] Token is the HMAC over (org, channel, address), the only authority here.
+         * @param {string} [listUnsubscribe] OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, listUnsubscribe?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingUnsubscribe(org, channel, address, token, listUnsubscribe, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2022,7 +2151,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
     const localVarFp = MarketingApiFp(configuration)
     return {
         /**
-         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
+         * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Removes one of the caller org\'s audiences and answers 204.
          * @param {MarketingApiDeleteMarketingAudiencesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2052,7 +2181,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
+         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2130,6 +2259,16 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         getMarketingCampaignsById(requestParameters: MarketingApiGetMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingCampaign> {
             return localVarFp.getMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Follows a tracked email link. It is public — the person clicking has no session — and the token is its only authority: a token that verifies, for a sequence of one of Hanzo\'s own orgs that still exists, answers 302 to the destination it signs and records one click (time and user-agent family; no IP address), off the request path so the redirect never waits on storage. A token that is missing, altered, signed under another key, older than a year, or for any other org or a deleted sequence answers 302 to the brand\'s home page (https://hanzo.ai/ on Hanzo\'s deployment). The location is only ever a destination a token signs or that page, never a URL the request names.
+         * @summary Follows a tracked email link.
+         * @param {MarketingApiGetMarketingClickRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingClick(requestParameters: MarketingApiGetMarketingClickRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProblemDetails> {
+            return localVarFp.getMarketingClick(requestParameters.userAgent, requestParameters.t, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
@@ -2230,7 +2369,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
+         * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Saves a cohort filter for the caller\'s org.
          * @param {MarketingApiPostMarketingAudiencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2290,7 +2429,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingPromosByCodeRedeem(requestParameters.code, requestParameters.marketingRedeemInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
+         * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Registers a drip sequence in the caller\'s org.
          * @param {MarketingApiPostMarketingSequencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2300,7 +2439,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequences(requestParameters.marketingSequence, options).then((request) => request(axios, basePath));
         },
         /**
-         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
+         * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
          * @param {MarketingApiPostMarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2310,7 +2449,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdEnroll(requestParameters.id, requestParameters.marketingEnrollInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
+         * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
          * @param {MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2320,7 +2459,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdEnrollmentsByEidCancel(requestParameters.id, requestParameters.eid, options).then((request) => request(axios, basePath));
         },
         /**
-         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
+         * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
          * @param {MarketingApiPostMarketingSequencesByIdStatusRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2330,7 +2469,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdStatus(requestParameters.id, requestParameters.marketingSequenceStatus, options).then((request) => request(axios, basePath));
         },
         /**
-         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
+         * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
          * @param {MarketingApiPostMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2340,7 +2479,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdSteps(requestParameters.id, requestParameters.marketingStepInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2348,6 +2487,16 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         postMarketingSuppressions(requestParameters: MarketingApiPostMarketingSuppressionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSuppression> {
             return localVarFp.postMarketingSuppressions(requestParameters.marketingSuppression, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click. It opts out exactly what a click on the link does, under the same token check, and is as public.
+         * @summary Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click.
+         * @param {MarketingApiPostMarketingUnsubscribeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingUnsubscribed> {
+            return localVarFp.postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
@@ -2559,6 +2708,27 @@ export interface MarketingApiGetMarketingCampaignsByIdRequest {
      * @memberof MarketingApiGetMarketingCampaignsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingClick operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingClickRequest
+ */
+export interface MarketingApiGetMarketingClickRequest {
+    /**
+     * Agent is the clicker\&#39;s User-Agent header. Only its family (chrome, safari, automated, …) is kept.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingClick
+     */
+    readonly userAgent?: string
+
+    /**
+     * T is the click token the send minted for this link and this recipient: base64url, signed under the deployment\&#39;s KMS key marketing/click-hmac. It is the request\&#39;s only authority.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingClick
+     */
+    readonly t?: string
 }
 
 /**
@@ -2926,6 +3096,48 @@ export interface MarketingApiPostMarketingSuppressionsRequest {
 }
 
 /**
+ * Request parameters for postMarketingUnsubscribe operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingUnsubscribeRequest
+ */
+export interface MarketingApiPostMarketingUnsubscribeRequest {
+    /**
+     * Org is the org the link was minted for.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly org?: string
+
+    /**
+     * Channel is the surface to opt out of.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly channel?: string
+
+    /**
+     * Address is the recipient to opt out.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly address?: string
+
+    /**
+     * Token is the HMAC over (org, channel, address), the only authority here.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly token?: string
+
+    /**
+     * OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly listUnsubscribe?: string
+}
+
+/**
  * Request parameters for putMarketingCalendarById operation in MarketingApi.
  * @export
  * @interface MarketingApiPutMarketingCalendarByIdRequest
@@ -2975,7 +3187,7 @@ export interface MarketingApiPutMarketingCampaignsByIdRequest {
  */
 export class MarketingApi extends BaseAPI {
     /**
-     * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
+     * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Removes one of the caller org\'s audiences and answers 204.
      * @param {MarketingApiDeleteMarketingAudiencesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3011,7 +3223,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
+     * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Re-subscribes an address on one channel and answers 204.
      * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3104,6 +3316,18 @@ export class MarketingApi extends BaseAPI {
      */
     public getMarketingCampaignsById(requestParameters: MarketingApiGetMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).getMarketingCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Follows a tracked email link. It is public — the person clicking has no session — and the token is its only authority: a token that verifies, for a sequence of one of Hanzo\'s own orgs that still exists, answers 302 to the destination it signs and records one click (time and user-agent family; no IP address), off the request path so the redirect never waits on storage. A token that is missing, altered, signed under another key, older than a year, or for any other org or a deleted sequence answers 302 to the brand\'s home page (https://hanzo.ai/ on Hanzo\'s deployment). The location is only ever a destination a token signs or that page, never a URL the request names.
+     * @summary Follows a tracked email link.
+     * @param {MarketingApiGetMarketingClickRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingClick(requestParameters: MarketingApiGetMarketingClickRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingClick(requestParameters.userAgent, requestParameters.t, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3225,7 +3449,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
+     * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Saves a cohort filter for the caller\'s org.
      * @param {MarketingApiPostMarketingAudiencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3297,7 +3521,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
+     * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Registers a drip sequence in the caller\'s org.
      * @param {MarketingApiPostMarketingSequencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3309,7 +3533,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
+     * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
      * @param {MarketingApiPostMarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3321,7 +3545,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
+     * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
      * @param {MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3333,7 +3557,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
+     * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
      * @param {MarketingApiPostMarketingSequencesByIdStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3345,7 +3569,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
+     * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
      * @param {MarketingApiPostMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3357,7 +3581,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
+     * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Records an opt-out for the org (admin / self-service management).
      * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3366,6 +3590,18 @@ export class MarketingApi extends BaseAPI {
      */
     public postMarketingSuppressions(requestParameters: MarketingApiPostMarketingSuppressionsRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).postMarketingSuppressions(requestParameters.marketingSuppression, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click. It opts out exactly what a click on the link does, under the same token check, and is as public.
+     * @summary Is the one-click unsubscribe a mail client sends from the List-Unsubscribe header (RFC 8058): the same signed link the footer carries, POSTed with the form body List-Unsubscribe=One-Click.
+     * @param {MarketingApiPostMarketingUnsubscribeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

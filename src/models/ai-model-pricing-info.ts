@@ -13,12 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiPerMillion } from './ai-per-million';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AiWindow } from './ai-window';
 
 /**
  * 
@@ -32,18 +26,6 @@ export interface AiModelPricingInfo {
      * @memberof AiModelPricingInfo
      */
     'completion'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AiModelPricingInfo
-     */
-    'fee'?: string;
-    /**
-     * 
-     * @type {AiPerMillion}
-     * @memberof AiModelPricingInfo
-     */
-    'from'?: AiPerMillion;
     /**
      * 
      * @type {number}
@@ -76,21 +58,9 @@ export interface AiModelPricingInfo {
     'rates'?: { [key: string]: string; };
     /**
      * 
-     * @type {AiPerMillion}
-     * @memberof AiModelPricingInfo
-     */
-    'up_to'?: AiPerMillion;
-    /**
-     * 
      * @type {boolean}
      * @memberof AiModelPricingInfo
      */
     'variable'?: boolean;
-    /**
-     * 
-     * @type {AiWindow}
-     * @memberof AiModelPricingInfo
-     */
-    'window'?: AiWindow;
 }
 

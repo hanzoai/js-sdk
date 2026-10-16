@@ -42,6 +42,12 @@ export interface BillingSubscription {
      */
     'chargedCents'?: number;
     /**
+     * Coupon is the plan coupon code the first period was bought with, as commerce stores it (upper case); absent when none was.
+     * @type {string}
+     * @memberof BillingSubscription
+     */
+    'coupon'?: string;
+    /**
      * CreatedAt is when the row was written, RFC 3339.
      * @type {string}
      * @memberof BillingSubscription

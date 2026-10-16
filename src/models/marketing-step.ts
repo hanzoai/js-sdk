@@ -21,7 +21,7 @@
  */
 export interface MarketingStep {
     /**
-     * Body is the message text. Required. The signed one-click unsubscribe link is appended to it at send time.
+     * Body is the message text. Required. The signed one-click unsubscribe link is appended to it at send time, and in an HTML body each <a> to an http(s) URL is sent pointing at GET /v1/marketing/click, which counts the click and redirects to the URL written here.
      * @type {string}
      * @memberof MarketingStep
      */
