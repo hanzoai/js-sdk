@@ -276,6 +276,7 @@ src/models/ai-model.ts
 src/models/ai-models.ts
 src/models/ai-panel-judge.ts
 src/models/ai-paused.ts
+src/models/ai-per-million.ts
 src/models/ai-price.ts
 src/models/ai-provider-usage-model-spend.ts
 src/models/ai-provider-usage-series-point.ts
@@ -2474,6 +2475,8 @@ src/models/pref-prefs-view.ts
 src/models/pricing-card.ts
 src/models/pricing-component.ts
 src/models/pricing-enablement-board.ts
+src/models/pricing-enso-out.ts
+src/models/pricing-price.ts
 src/models/pricing-pricing-health.ts
 src/models/pricing-pricing-model-list.ts
 src/models/pricing-pricing-plan-list.ts
@@ -2482,6 +2485,9 @@ src/models/pricing-pricing-provider-list.ts
 src/models/pricing-pricing-region-list.ts
 src/models/pricing-pricing-tier-list.ts
 src/models/pricing-pricing-tool-list.ts
+src/models/pricing-quote.ts
+src/models/pricing-rate-arm.ts
+src/models/pricing-rate-window.ts
 src/models/pricing-rate.ts
 src/models/pricing-speed.ts
 src/models/pricing-user-enablement-item.ts

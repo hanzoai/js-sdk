@@ -26,6 +26,8 @@ import type { PricingCard } from '../models';
 // @ts-ignore
 import type { PricingEnablementBoard } from '../models';
 // @ts-ignore
+import type { PricingEnsoOut } from '../models';
+// @ts-ignore
 import type { PricingPricingHealth } from '../models';
 // @ts-ignore
 import type { PricingPricingModelList } from '../models';
@@ -411,6 +413,60 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Quotes what Enso costs. A call bills what its arms cost us — each provider\'s price, and OpenRouter\'s fee where OpenRouter\'s credit bought it — and the platform\'s fee on top, so a model has three prices: from (its cheapest arm), typical (what its calls cost over the last day, or its last calls when the day held few) and upTo (its dearest arm, a long prompt\'s price included), in dollars a million tokens. Preset and reasoning narrow the answer to one model at one depth; arms quotes a blend of models instead. A SuperAdmin\'s answer names each model\'s arms.
+         * @summary Quotes what Enso costs.
+         * @param {string} [preset] Preset is the Enso model to quote (\&quot;enso-flash\&quot;); empty quotes every one.
+         * @param {string} [reasoning] Reasoning is the depth to quote it at: none, low, medium, high, max, or default (what a request that names none gets). Empty quotes every depth together.
+         * @param {string} [arms] Arms quotes a set of models composed into a blend instead, comma-separated ids (the arms of a /v1/benchmark/presets blend): from its cheapest, up to its dearest, nothing typical.
+         * @param {boolean} [byok] BYOK quotes the platform\&#39;s fee on a call the org\&#39;s own provider key pays for.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPricingEnso: async (preset?: string, reasoning?: string, arms?: string, byok?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/pricing/enso`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (preset !== undefined) {
+                localVarQueryParameter['preset'] = preset;
+            }
+
+            if (reasoning !== undefined) {
+                localVarQueryParameter['reasoning'] = reasoning;
+            }
+
+            if (arms !== undefined) {
+                localVarQueryParameter['arms'] = arms;
+            }
+
+            if (byok !== undefined) {
+                localVarQueryParameter['byok'] = byok;
+            }
 
 
     
@@ -836,7 +892,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds.
+         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds. A SuperAdmin\'s summary adds `enso`: the day\'s Enso answers, the arms that failed first, the share OpenRouter\'s credit bought (fallbacks), the fee collected and every loss, by route.
          * @summary Returns the catalog\'s headline statistics — model counts by family and the provider directory.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1080,6 +1136,22 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Quotes what Enso costs. A call bills what its arms cost us — each provider\'s price, and OpenRouter\'s fee where OpenRouter\'s credit bought it — and the platform\'s fee on top, so a model has three prices: from (its cheapest arm), typical (what its calls cost over the last day, or its last calls when the day held few) and upTo (its dearest arm, a long prompt\'s price included), in dollars a million tokens. Preset and reasoning narrow the answer to one model at one depth; arms quotes a blend of models instead. A SuperAdmin\'s answer names each model\'s arms.
+         * @summary Quotes what Enso costs.
+         * @param {string} [preset] Preset is the Enso model to quote (\&quot;enso-flash\&quot;); empty quotes every one.
+         * @param {string} [reasoning] Reasoning is the depth to quote it at: none, low, medium, high, max, or default (what a request that names none gets). Empty quotes every depth together.
+         * @param {string} [arms] Arms quotes a set of models composed into a blend instead, comma-separated ids (the arms of a /v1/benchmark/presets blend): from its cheapest, up to its dearest, nothing typical.
+         * @param {boolean} [byok] BYOK quotes the platform\&#39;s fee on a call the org\&#39;s own provider key pays for.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPricingEnso(preset?: string, reasoning?: string, arms?: string, byok?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingEnsoOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingEnso(preset, reasoning, arms, byok, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingEnso']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the models the catalog highlights, filtered to what the caller\'s org may see. It is the same catalog as ListModels narrowed to entries the pricing source marks featured.
          * @summary Returns the models the catalog highlights, filtered to what the caller\'s org may see.
          * @param {*} [options] Override http request option.
@@ -1225,7 +1297,7 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds.
+         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds. A SuperAdmin\'s summary adds `enso`: the day\'s Enso answers, the arms that failed first, the share OpenRouter\'s credit bought (fallbacks), the fee collected and every loss, by route.
          * @summary Returns the catalog\'s headline statistics — model counts by family and the provider directory.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1370,6 +1442,16 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingEnablement(options).then((request) => request(axios, basePath));
         },
         /**
+         * Quotes what Enso costs. A call bills what its arms cost us — each provider\'s price, and OpenRouter\'s fee where OpenRouter\'s credit bought it — and the platform\'s fee on top, so a model has three prices: from (its cheapest arm), typical (what its calls cost over the last day, or its last calls when the day held few) and upTo (its dearest arm, a long prompt\'s price included), in dollars a million tokens. Preset and reasoning narrow the answer to one model at one depth; arms quotes a blend of models instead. A SuperAdmin\'s answer names each model\'s arms.
+         * @summary Quotes what Enso costs.
+         * @param {PricingApiGetPricingEnsoRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPricingEnso(requestParameters: PricingApiGetPricingEnsoRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PricingEnsoOut> {
+            return localVarFp.getPricingEnso(requestParameters.preset, requestParameters.reasoning, requestParameters.arms, requestParameters.byok, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the models the catalog highlights, filtered to what the caller\'s org may see. It is the same catalog as ListModels narrowed to entries the pricing source marks featured.
          * @summary Returns the models the catalog highlights, filtered to what the caller\'s org may see.
          * @param {*} [options] Override http request option.
@@ -1479,7 +1561,7 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingSubscriptions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds.
+         * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds. A SuperAdmin\'s summary adds `enso`: the day\'s Enso answers, the arms that failed first, the share OpenRouter\'s credit bought (fallbacks), the fee collected and every loss, by route.
          * @summary Returns the catalog\'s headline statistics — model counts by family and the provider directory.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1507,6 +1589,41 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for getPricingEnso operation in PricingApi.
+ * @export
+ * @interface PricingApiGetPricingEnsoRequest
+ */
+export interface PricingApiGetPricingEnsoRequest {
+    /**
+     * Preset is the Enso model to quote (\&quot;enso-flash\&quot;); empty quotes every one.
+     * @type {string}
+     * @memberof PricingApiGetPricingEnso
+     */
+    readonly preset?: string
+
+    /**
+     * Reasoning is the depth to quote it at: none, low, medium, high, max, or default (what a request that names none gets). Empty quotes every depth together.
+     * @type {string}
+     * @memberof PricingApiGetPricingEnso
+     */
+    readonly reasoning?: string
+
+    /**
+     * Arms quotes a set of models composed into a blend instead, comma-separated ids (the arms of a /v1/benchmark/presets blend): from its cheapest, up to its dearest, nothing typical.
+     * @type {string}
+     * @memberof PricingApiGetPricingEnso
+     */
+    readonly arms?: string
+
+    /**
+     * BYOK quotes the platform\&#39;s fee on a call the org\&#39;s own provider key pays for.
+     * @type {boolean}
+     * @memberof PricingApiGetPricingEnso
+     */
+    readonly byok?: boolean
+}
 
 /**
  * Request parameters for getPricingModelByName operation in PricingApi.
@@ -1651,6 +1768,18 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
+     * Quotes what Enso costs. A call bills what its arms cost us — each provider\'s price, and OpenRouter\'s fee where OpenRouter\'s credit bought it — and the platform\'s fee on top, so a model has three prices: from (its cheapest arm), typical (what its calls cost over the last day, or its last calls when the day held few) and upTo (its dearest arm, a long prompt\'s price included), in dollars a million tokens. Preset and reasoning narrow the answer to one model at one depth; arms quotes a blend of models instead. A SuperAdmin\'s answer names each model\'s arms.
+     * @summary Quotes what Enso costs.
+     * @param {PricingApiGetPricingEnsoRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PricingApi
+     */
+    public getPricingEnso(requestParameters: PricingApiGetPricingEnsoRequest = {}, options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingEnso(requestParameters.preset, requestParameters.reasoning, requestParameters.arms, requestParameters.byok, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the models the catalog highlights, filtered to what the caller\'s org may see. It is the same catalog as ListModels narrowed to entries the pricing source marks featured.
      * @summary Returns the models the catalog highlights, filtered to what the caller\'s org may see.
      * @param {*} [options] Override http request option.
@@ -1784,7 +1913,7 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds.
+     * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds. A SuperAdmin\'s summary adds `enso`: the day\'s Enso answers, the arms that failed first, the share OpenRouter\'s credit bought (fallbacks), the fee collected and every loss, by route.
      * @summary Returns the catalog\'s headline statistics — model counts by family and the provider directory.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
