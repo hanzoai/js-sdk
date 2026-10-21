@@ -10,7 +10,8 @@
 //
 // The read-back is the RUN list rather than the agent record: an agent you just
 // created tells you nothing you did not just send, while its runs are the part
-// the server produced.
+// the server produced. The agent is deleted at the end, whatever happened, so a
+// run of the example leaves the org as it found it.
 import { AgentApi } from 'hanzoai';
 import { config, fail } from '../client';
 
@@ -33,13 +34,18 @@ async function main() {
   });
   console.log(`created ${created.name} (${created.id}) on ${created.model}`);
 
-  await agents.postAgentByRefRun({ ref: name });
-  console.log('run started');
+  try {
+    await agents.postAgentByRefRun({ ref: name });
+    console.log('run started');
 
-  const { data: runs } = await agents.getAgentByRefRuns({ ref: name, limit: 5 });
-  console.log(`${runs.runs?.length ?? 0} run(s):`);
-  for (const r of runs.runs ?? []) {
-    console.log(`  ${JSON.stringify(r)}`);
+    const { data: runs } = await agents.getAgentByRefRuns({ ref: name, limit: 5 });
+    console.log(`${runs.runs?.length ?? 0} run(s):`);
+    for (const r of runs.runs ?? []) {
+      console.log(`  ${JSON.stringify(r)}`);
+    }
+  } finally {
+    await agents.deleteAgentByRef({ ref: name });
+    console.log(`deleted ${name}`);
   }
 }
 
