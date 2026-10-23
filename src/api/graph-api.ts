@@ -78,6 +78,40 @@ import type { ProblemDetails } from '../models';
 export const GraphApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Returns the schema POST at this address runs queries against, as GraphQL SDL: the five types the store models and the fields askable of each. It is what a code generator or an editor reads, and it is the same for every organization; what a query answers is scoped to the caller\'s.
+         * @summary Read the graph\'s GraphQL schema.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGraphGraphql: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/graph/graphql`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
          * @summary Answers a question from the whole graph and cites the assertions it rests on.
          * @param {GraphGraphAnswerIn} graphGraphAnswerIn 
@@ -677,7 +711,7 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by introspection.  A query that cannot run answers 200 with an `errors` list, which is the wire every GraphQL client parses.
+         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by GET at this same address, and introspection is not.  A query that ran answers 200 with each failure in an `errors` list beside the data, which is the wire every GraphQL client parses; one that could not begin — it does not parse, or names a fragment it does not define — answers 400 with the reason and no data. `edges` nest at most three deep, refused before any operation runs, and one root field\'s edges answer at most 1000 entities.
          * @summary Ask the graph in one request, traversing.
          * @param {GraphQLIn} [graphQLIn] 
          * @param {*} [options] Override http request option.
@@ -724,6 +758,18 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
 export const GraphApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GraphApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Returns the schema POST at this address runs queries against, as GraphQL SDL: the five types the store models and the fields askable of each. It is what a code generator or an editor reads, and it is the same for every organization; what a query answers is scoped to the caller\'s.
+         * @summary Read the graph\'s GraphQL schema.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGraphGraphql(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGraphGraphql(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.getGraphGraphql']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
          * @summary Answers a question from the whole graph and cites the assertions it rests on.
@@ -915,7 +961,7 @@ export const GraphApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by introspection.  A query that cannot run answers 200 with an `errors` list, which is the wire every GraphQL client parses.
+         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by GET at this same address, and introspection is not.  A query that ran answers 200 with each failure in an `errors` list beside the data, which is the wire every GraphQL client parses; one that could not begin — it does not parse, or names a fragment it does not define — answers 400 with the reason and no data. `edges` nest at most three deep, refused before any operation runs, and one root field\'s edges answer at most 1000 entities.
          * @summary Ask the graph in one request, traversing.
          * @param {GraphQLIn} [graphQLIn] 
          * @param {*} [options] Override http request option.
@@ -937,6 +983,15 @@ export const GraphApiFp = function(configuration?: Configuration) {
 export const GraphApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = GraphApiFp(configuration)
     return {
+        /**
+         * Returns the schema POST at this address runs queries against, as GraphQL SDL: the five types the store models and the fields askable of each. It is what a code generator or an editor reads, and it is the same for every organization; what a query answers is scoped to the caller\'s.
+         * @summary Read the graph\'s GraphQL schema.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGraphGraphql(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getGraphGraphql(options).then((request) => request(axios, basePath));
+        },
         /**
          * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
          * @summary Answers a question from the whole graph and cites the assertions it rests on.
@@ -1077,7 +1132,7 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.graphVocabulary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by introspection.  A query that cannot run answers 200 with an `errors` list, which is the wire every GraphQL client parses.
+         * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by GET at this same address, and introspection is not.  A query that ran answers 200 with each failure in an `errors` list beside the data, which is the wire every GraphQL client parses; one that could not begin — it does not parse, or names a fragment it does not define — answers 400 with the reason and no data. `edges` nest at most three deep, refused before any operation runs, and one root field\'s edges answer at most 1000 entities.
          * @summary Ask the graph in one request, traversing.
          * @param {GraphApiPostGraphGraphqlRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1356,6 +1411,17 @@ export interface GraphApiPostGraphGraphqlRequest {
  */
 export class GraphApi extends BaseAPI {
     /**
+     * Returns the schema POST at this address runs queries against, as GraphQL SDL: the five types the store models and the fields askable of each. It is what a code generator or an editor reads, and it is the same for every organization; what a query answers is scoped to the caller\'s.
+     * @summary Read the graph\'s GraphQL schema.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public getGraphGraphql(options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).getGraphGraphql(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers a question from the whole graph and cites the assertions it rests on.  It asks a model what each community\'s in-force facts say about the question, then asks once more for one answer from those findings. Every cited ID is checked to be a row of this graph, a failed model call fails the answer, and the calls are billed to the calling organization.  Time: as_of and as_known place the graph that is read; either absent is now.
      * @summary Answers a question from the whole graph and cites the assertions it rests on.
      * @param {GraphApiGraphAnswerRequest} requestParameters Request parameters.
@@ -1523,7 +1589,7 @@ export class GraphApi extends BaseAPI {
     }
 
     /**
-     * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by introspection.  A query that cannot run answers 200 with an `errors` list, which is the wire every GraphQL client parses.
+     * Runs a GraphQL query against this organization\'s assertions.  It is the one endpoint here a caller can TRAVERSE: the REST ops each answer a single question, so composing them — the entities this one points at, and what each of those resolves to — costs a request per hop with the intermediate keys held by the caller. Here that is one query and the nesting is the answer\'s shape.  It adds no way to ask anything new. Every field runs the SAME operation the matching REST route runs, so the tenancy, the as-of bound, the traversal bounds and the conflict rule are the ones already in force; the schema is served by GET at this same address, and introspection is not.  A query that ran answers 200 with each failure in an `errors` list beside the data, which is the wire every GraphQL client parses; one that could not begin — it does not parse, or names a fragment it does not define — answers 400 with the reason and no data. `edges` nest at most three deep, refused before any operation runs, and one root field\'s edges answer at most 1000 entities.
      * @summary Ask the graph in one request, traversing.
      * @param {GraphApiPostGraphGraphqlRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

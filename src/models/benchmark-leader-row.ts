@@ -39,6 +39,12 @@ export interface BenchmarkLeaderRow {
      */
     'claims'?: number;
     /**
+     * Evidence are the evidence uris the Published claim rests on (GET /v1/research/evidence?uri=).
+     * @type {Array<string>}
+     * @memberof BenchmarkLeaderRow
+     */
+    'evidence'?: Array<string>;
+    /**
      * From is the org whose claim Published was promoted from, when a SuperAdmin published another org\'s claim rather than writing one under org admin: \"hanzo\" on a row Hanzo measured and the platform published.
      * @type {string}
      * @memberof BenchmarkLeaderRow
@@ -98,6 +104,12 @@ export interface BenchmarkLeaderRow {
      * @memberof BenchmarkLeaderRow
      */
     'run'?: string;
+    /**
+     * Runs are the research run ids the Published claim rests on (GET /v1/research/runs?id=).
+     * @type {Array<string>}
+     * @memberof BenchmarkLeaderRow
+     */
+    'runs'?: Array<string>;
     /**
      * Spread is the distance between the highest and lowest of them, nil when there is only one. It is the disagreement AMONG sources, which a single Published number cannot show — signal in the same way the published-minus-measured gap is.
      * @type {number}

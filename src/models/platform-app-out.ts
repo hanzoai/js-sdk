@@ -60,7 +60,7 @@ export interface PlatformAppOut {
      */
     'dockerfile'?: string;
     /**
-     * Domains are the ingress hosts rendered into the app\'s CR, its own `<slug>.<org>.<sites host>` first. That one is seeded at create and cannot be removed; a custom host joins only after add-domain and DNS verification.
+     * Domains are the ingress hosts rendered into the app\'s CR, its own `<slug>.<sites host>` first. That one is seeded at create and cannot be removed; a custom host joins only after add-domain and DNS verification.
      * @type {Array<string>}
      * @memberof PlatformAppOut
      */

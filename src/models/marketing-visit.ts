@@ -33,7 +33,7 @@ export interface MarketingVisit {
      */
     'clicked'?: number;
     /**
-     * Consent is the Cookie Preferences the visitor granted, comma separated: any of analytics, marketing and ads. Empty is a visitor who refused them all, which is a choice; absent is one who stated none.
+     * Consent is the Cookie Preferences the visitor granted, comma separated: any of analytics, marketing and ads. Empty is a visitor who refused them all, which is a choice; absent is one who stated none. It counts only from a browser, and a browser that sends GPC or DNT has allowed nothing.
      * @type {string}
      * @memberof MarketingVisit
      */

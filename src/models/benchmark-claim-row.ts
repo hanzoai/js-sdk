@@ -39,6 +39,12 @@ export interface BenchmarkClaimRow {
      */
     'by'?: string;
     /**
+     * Evidence are the evidence uris the claim rests on (GET /v1/research/evidence?uri=).
+     * @type {Array<string>}
+     * @memberof BenchmarkClaimRow
+     */
+    'evidence'?: Array<string>;
+    /**
      * From is the org a curator row was promoted from: the org that filed the claim before a SuperAdmin published it. Empty on every other row.
      * @type {string}
      * @memberof BenchmarkClaimRow
@@ -74,6 +80,12 @@ export interface BenchmarkClaimRow {
      * @memberof BenchmarkClaimRow
      */
     'provider'?: string;
+    /**
+     * Runs are the research run ids the claim rests on (GET /v1/research/runs?id=).
+     * @type {Array<string>}
+     * @memberof BenchmarkClaimRow
+     */
+    'runs'?: Array<string>;
     /**
      * Score is the reported aggregate, as a percentage.
      * @type {number}

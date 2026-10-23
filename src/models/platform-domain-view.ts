@@ -42,7 +42,7 @@ export interface PlatformDomainView {
      */
     'host'?: string;
     /**
-     * Kind is `default`, `subtree` or `custom` — how the org came to own it.
+     * Kind is `default` (the app\'s own name) or `custom` — how the org came to own it.
      * @type {string}
      * @memberof PlatformDomainView
      */

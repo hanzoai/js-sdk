@@ -31,22 +31,16 @@ export interface Decision {
     'defaults'?: Grants;
     /**
      * 
-     * @type {boolean}
-     * @memberof Decision
-     */
-    'gpc'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof Decision
      */
     'mode'?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof Decision
      */
-    'notice'?: string;
+    'refused'?: boolean;
     /**
      * 
      * @type {string}

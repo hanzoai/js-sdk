@@ -132,6 +132,12 @@ export interface ProjectProjectsProject {
      */
     'name'?: string;
     /**
+     * Namespace is where the site\'s files are kept: `<namespace>/<slug>/` in the sites bucket. It is the GitHub org the project\'s repository lives in when this org holds that GitHub account, and the org otherwise, decided when the repository is linked.
+     * @type {string}
+     * @memberof ProjectProjectsProject
+     */
+    'namespace'?: string;
+    /**
      * Org is the organisation that owns the project, and therefore who pays for it and who may change it. It is also the AUTHORSHIP line a gallery credits; there is no separate author field.
      * @type {string}
      * @memberof ProjectProjectsProject

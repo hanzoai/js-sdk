@@ -48,6 +48,10 @@ import type { AutoFlowRun } from '../models';
 // @ts-ignore
 import type { AutoFlowVersion } from '../models';
 // @ts-ignore
+import type { AutoJob } from '../models';
+// @ts-ignore
+import type { AutoJobPage } from '../models';
+// @ts-ignore
 import type { AutoPatchFlowIn } from '../models';
 // @ts-ignore
 import type { AutoPopulatedFlow } from '../models';
@@ -65,6 +69,10 @@ import type { AutoRunStarted } from '../models';
 import type { AutoStarterPage } from '../models';
 // @ts-ignore
 import type { AutoVersionPage } from '../models';
+// @ts-ignore
+import type { AutoWhenIn } from '../models';
+// @ts-ignore
+import type { AutoWhenOut } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
@@ -150,14 +158,15 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the org\'s automations. `q` keeps those whose name or instructions contain it, ignoring case; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
-         * @summary Returns the org\'s automations.
+         * Returns your automations — another member\'s are never listed. `q` keeps those whose name or instructions contain it, ignoring case; `source` keeps those made in one product; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
+         * @summary Returns your automations — another member\'s are never listed.
          * @param {string} [q] Q keeps the automations whose name or instructions contain it, ignoring case.
          * @param {string} [sort] Sort is name, next or updated (the default, newest first).
+         * @param {string} [source] Source keeps the automations made in one product: chat, dev, studio or workflow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAutoAutomations: async (q?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoAutomations: async (q?: string, sort?: string, source?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/auto/automations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -180,6 +189,10 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
             }
 
 
@@ -232,8 +245,8 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
-         * @summary Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org.
+         * Returns one automation\'s runs, newest first, to the person it runs as. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
+         * @summary Returns one automation\'s runs, newest first, to the person it runs as.
          * @param {string} id ID is the automation, from the path.
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
@@ -262,6 +275,40 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Holds one text/event-stream open and writes a frame each time one of your jobs or automations changes: `event: job` with the job as GET /v1/auto/jobs/{id} answers it, and `event: automation` with the automation as GET /v1/auto/automations/{id} answers it. Only your own rows are sent; another member\'s never are. Authenticate with `Authorization: Bearer` — a fetch-based reader, since a browser EventSource cannot set it. A `: ping` comment is written every 15 seconds, and the server closes the stream after 15 minutes; reconnect and re-read the lists. Frames carry no `id`: the lists are the truth, and the stream is a live hint over them.
+         * @summary Stream your jobs and automations as they change, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auto/events`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -395,6 +442,93 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you. Each is in one of five states — scheduled, running, succeeded, failed, cancelled — with what it made (Library item ids) and what it cost when that is known. Another member\'s jobs are never listed.
+         * @summary Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you.
+         * @param {string} [product] Product keeps one product\&#39;s jobs: chat, dev, studio or workflow.
+         * @param {string} [state] State keeps one state: scheduled, running, succeeded, failed or cancelled.
+         * @param {number} [limit] Limit bounds the page (default 100, at most 500).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoJobs: async (product?: string, state?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auto/jobs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (product !== undefined) {
+                localVarQueryParameter['product'] = product;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one of your jobs. A job that is not yours answers 404, as one that does not exist.
+         * @summary Reads one of your jobs.
+         * @param {string} id ID is the job, from the path: a run_ or a job_ id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoJobsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAutoJobsById', 'id', id)
+            const localVarPath = `/v1/auto/jobs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the connector catalogue. Each entry is an external service a flow step can invoke, carrying its auth descriptor and the input properties of its actions and triggers. The catalogue is the same for every tenant, so the gate is a validated principal rather than a per-org view.
          * @summary Returns the connector catalogue.
          * @param {*} [options] Override http request option.
@@ -429,8 +563,8 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
-         * @summary Returns the caller org\'s run history, newest first.
+         * Returns your run history, newest first: the runs of the flows you hold. The optional `flowId` query narrows it to one of them and `limit` bounds the page.
+         * @summary Returns your run history, newest first: the runs of the flows you hold.
          * @param {string} [flowId] FlowID narrows the history to one flow. Omit it for the whole org\&#39;s runs.
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
@@ -545,8 +679,8 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
-         * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
+         * Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
+         * @summary Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {string} id ID is the automation, from the path.
          * @param {AutoAutomationPatch} autoAutomationPatch 
          * @param {*} [options] Override http request option.
@@ -673,7 +807,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Starts one run now, whether or not its schedule is armed. Only the person it runs as, or an admin of the org, may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
+         * Starts one run now, whether or not its schedule is armed. Only the person it runs as may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
          * @summary Starts one run now, whether or not its schedule is armed.
          * @param {string} id ID is the automation, from the path.
          * @param {*} [options] Override http request option.
@@ -711,8 +845,8 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
-         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
          * @param {string} id ID is the automation, and Run its run in review, from the path.
          * @param {string} run 
          * @param {AutoReviewIn} autoReviewIn 
@@ -752,6 +886,46 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(autoReviewIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run. Nothing is created: send the schedule to POST /v1/auto/automations. A phrase that no rule reads is read by a model; a phrase that names no schedule answers 422.
+         * @summary Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run.
+         * @param {AutoWhenIn} autoWhenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAutoCron: async (autoWhenIn: AutoWhenIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'autoWhenIn' is not null or undefined
+            assertParamExists('postAutoCron', 'autoWhenIn', autoWhenIn)
+            const localVarPath = `/v1/auto/cron`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoWhenIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1155,15 +1329,16 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s automations. `q` keeps those whose name or instructions contain it, ignoring case; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
-         * @summary Returns the org\'s automations.
+         * Returns your automations — another member\'s are never listed. `q` keeps those whose name or instructions contain it, ignoring case; `source` keeps those made in one product; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
+         * @summary Returns your automations — another member\'s are never listed.
          * @param {string} [q] Q keeps the automations whose name or instructions contain it, ignoring case.
          * @param {string} [sort] Sort is name, next or updated (the default, newest first).
+         * @param {string} [source] Source keeps the automations made in one product: chat, dev, studio or workflow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAutoAutomations(q?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoAutomationPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoAutomations(q, sort, options);
+        async getAutoAutomations(q?: string, sort?: string, source?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoAutomationPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoAutomations(q, sort, source, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoAutomations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1182,8 +1357,8 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
-         * @summary Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org.
+         * Returns one automation\'s runs, newest first, to the person it runs as. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
+         * @summary Returns one automation\'s runs, newest first, to the person it runs as.
          * @param {string} id ID is the automation, from the path.
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
@@ -1193,6 +1368,18 @@ export const AutoApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoAutomationsByIdRuns(id, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoAutomationsByIdRuns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Holds one text/event-stream open and writes a frame each time one of your jobs or automations changes: `event: job` with the job as GET /v1/auto/jobs/{id} answers it, and `event: automation` with the automation as GET /v1/auto/automations/{id} answers it. Only your own rows are sent; another member\'s never are. Authenticate with `Authorization: Bearer` — a fetch-based reader, since a browser EventSource cannot set it. A `: ping` comment is written every 15 seconds, and the server closes the stream after 15 minutes; reconnect and re-read the lists. Frames carry no `id`: the lists are the truth, and the stream is a live hint over them.
+         * @summary Stream your jobs and automations as they change, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAutoEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoEvents(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1236,6 +1423,34 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you. Each is in one of five states — scheduled, running, succeeded, failed, cancelled — with what it made (Library item ids) and what it cost when that is known. Another member\'s jobs are never listed.
+         * @summary Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you.
+         * @param {string} [product] Product keeps one product\&#39;s jobs: chat, dev, studio or workflow.
+         * @param {string} [state] State keeps one state: scheduled, running, succeeded, failed or cancelled.
+         * @param {number} [limit] Limit bounds the page (default 100, at most 500).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAutoJobs(product?: string, state?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoJobPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoJobs(product, state, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoJobs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one of your jobs. A job that is not yours answers 404, as one that does not exist.
+         * @summary Reads one of your jobs.
+         * @param {string} id ID is the job, from the path: a run_ or a job_ id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAutoJobsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoJobsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoJobsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the connector catalogue. Each entry is an external service a flow step can invoke, carrying its auth descriptor and the input properties of its actions and triggers. The catalogue is the same for every tenant, so the gate is a validated principal rather than a per-org view.
          * @summary Returns the connector catalogue.
          * @param {*} [options] Override http request option.
@@ -1248,8 +1463,8 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
-         * @summary Returns the caller org\'s run history, newest first.
+         * Returns your run history, newest first: the runs of the flows you hold. The optional `flowId` query narrows it to one of them and `limit` bounds the page.
+         * @summary Returns your run history, newest first: the runs of the flows you hold.
          * @param {string} [flowId] FlowID narrows the history to one flow. Omit it for the whole org\&#39;s runs.
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
@@ -1287,8 +1502,8 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
-         * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
+         * Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
+         * @summary Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {string} id ID is the automation, from the path.
          * @param {AutoAutomationPatch} autoAutomationPatch 
          * @param {*} [options] Override http request option.
@@ -1328,7 +1543,7 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts one run now, whether or not its schedule is armed. Only the person it runs as, or an admin of the org, may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
+         * Starts one run now, whether or not its schedule is armed. Only the person it runs as may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
          * @summary Starts one run now, whether or not its schedule is armed.
          * @param {string} id ID is the automation, from the path.
          * @param {*} [options] Override http request option.
@@ -1341,8 +1556,8 @@ export const AutoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
-         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
          * @param {string} id ID is the automation, and Run its run in review, from the path.
          * @param {string} run 
          * @param {AutoReviewIn} autoReviewIn 
@@ -1353,6 +1568,19 @@ export const AutoApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoAutomationsByIdRunsByRunReview(id, run, autoReviewIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoAutomationsByIdRunsByRunReview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run. Nothing is created: send the schedule to POST /v1/auto/automations. A phrase that no rule reads is read by a model; a phrase that names no schedule answers 422.
+         * @summary Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run.
+         * @param {AutoWhenIn} autoWhenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAutoCron(autoWhenIn: AutoWhenIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoWhenOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoCron(autoWhenIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoCron']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1506,14 +1734,14 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteAutoFlowsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s automations. `q` keeps those whose name or instructions contain it, ignoring case; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
-         * @summary Returns the org\'s automations.
+         * Returns your automations — another member\'s are never listed. `q` keeps those whose name or instructions contain it, ignoring case; `source` keeps those made in one product; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
+         * @summary Returns your automations — another member\'s are never listed.
          * @param {AutoApiGetAutoAutomationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAutoAutomations(requestParameters: AutoApiGetAutoAutomationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AutoAutomationPage> {
-            return localVarFp.getAutoAutomations(requestParameters.q, requestParameters.sort, options).then((request) => request(axios, basePath));
+            return localVarFp.getAutoAutomations(requestParameters.q, requestParameters.sort, requestParameters.source, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one automation. A flow of the org that is not an automation, and anything of another org, answers not-found.
@@ -1526,14 +1754,23 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getAutoAutomationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
-         * @summary Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org.
+         * Returns one automation\'s runs, newest first, to the person it runs as. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
+         * @summary Returns one automation\'s runs, newest first, to the person it runs as.
          * @param {AutoApiGetAutoAutomationsByIdRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAutoAutomationsByIdRuns(requestParameters: AutoApiGetAutoAutomationsByIdRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoAutomationRunPage> {
             return localVarFp.getAutoAutomationsByIdRuns(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Holds one text/event-stream open and writes a frame each time one of your jobs or automations changes: `event: job` with the job as GET /v1/auto/jobs/{id} answers it, and `event: automation` with the automation as GET /v1/auto/automations/{id} answers it. Only your own rows are sent; another member\'s never are. Authenticate with `Authorization: Bearer` — a fetch-based reader, since a browser EventSource cannot set it. A `: ping` comment is written every 15 seconds, and the server closes the stream after 15 minutes; reconnect and re-read the lists. Frames carry no `id`: the lists are the truth, and the stream is a live hint over them.
+         * @summary Stream your jobs and automations as they change, as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoEvents(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getAutoEvents(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s automations, most-recently-updated first. The optional `limit` query bounds the page.
@@ -1566,6 +1803,26 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getAutoFlowsByIdVersions(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you. Each is in one of five states — scheduled, running, succeeded, failed, cancelled — with what it made (Library item ids) and what it cost when that is known. Another member\'s jobs are never listed.
+         * @summary Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you.
+         * @param {AutoApiGetAutoJobsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoJobs(requestParameters: AutoApiGetAutoJobsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AutoJobPage> {
+            return localVarFp.getAutoJobs(requestParameters.product, requestParameters.state, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one of your jobs. A job that is not yours answers 404, as one that does not exist.
+         * @summary Reads one of your jobs.
+         * @param {AutoApiGetAutoJobsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAutoJobsById(requestParameters: AutoApiGetAutoJobsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoJob> {
+            return localVarFp.getAutoJobsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the connector catalogue. Each entry is an external service a flow step can invoke, carrying its auth descriptor and the input properties of its actions and triggers. The catalogue is the same for every tenant, so the gate is a validated principal rather than a per-org view.
          * @summary Returns the connector catalogue.
          * @param {*} [options] Override http request option.
@@ -1575,8 +1832,8 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getAutoProvider(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
-         * @summary Returns the caller org\'s run history, newest first.
+         * Returns your run history, newest first: the runs of the flows you hold. The optional `flowId` query narrows it to one of them and `limit` bounds the page.
+         * @summary Returns your run history, newest first: the runs of the flows you hold.
          * @param {AutoApiGetAutoRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1604,8 +1861,8 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getAutoTemplates(options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
-         * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
+         * Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
+         * @summary Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule.
          * @param {AutoApiPatchAutoAutomationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1634,7 +1891,7 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postAutoAutomations(requestParameters.autoAutomationIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts one run now, whether or not its schedule is armed. Only the person it runs as, or an admin of the org, may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
+         * Starts one run now, whether or not its schedule is armed. Only the person it runs as may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
          * @summary Starts one run now, whether or not its schedule is armed.
          * @param {AutoApiPostAutoAutomationsByIdRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1644,14 +1901,24 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postAutoAutomationsByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
-         * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+         * Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+         * @summary Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
          * @param {AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postAutoAutomationsByIdRunsByRunReview(requestParameters: AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoAutomationRun> {
             return localVarFp.postAutoAutomationsByIdRunsByRunReview(requestParameters.id, requestParameters.run, requestParameters.autoReviewIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run. Nothing is created: send the schedule to POST /v1/auto/automations. A phrase that no rule reads is read by a model; a phrase that names no schedule answers 422.
+         * @summary Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run.
+         * @param {AutoApiPostAutoCronRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAutoCron(requestParameters: AutoApiPostAutoCronRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoWhenOut> {
+            return localVarFp.postAutoCron(requestParameters.autoWhenIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/auto/flows/{id}/enable does that.
@@ -1793,6 +2060,13 @@ export interface AutoApiGetAutoAutomationsRequest {
      * @memberof AutoApiGetAutoAutomations
      */
     readonly sort?: string
+
+    /**
+     * Source keeps the automations made in one product: chat, dev, studio or workflow.
+     * @type {string}
+     * @memberof AutoApiGetAutoAutomations
+     */
+    readonly source?: string
 }
 
 /**
@@ -1877,6 +2151,48 @@ export interface AutoApiGetAutoFlowsByIdVersionsRequest {
      * @memberof AutoApiGetAutoFlowsByIdVersions
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for getAutoJobs operation in AutoApi.
+ * @export
+ * @interface AutoApiGetAutoJobsRequest
+ */
+export interface AutoApiGetAutoJobsRequest {
+    /**
+     * Product keeps one product\&#39;s jobs: chat, dev, studio or workflow.
+     * @type {string}
+     * @memberof AutoApiGetAutoJobs
+     */
+    readonly product?: string
+
+    /**
+     * State keeps one state: scheduled, running, succeeded, failed or cancelled.
+     * @type {string}
+     * @memberof AutoApiGetAutoJobs
+     */
+    readonly state?: string
+
+    /**
+     * Limit bounds the page (default 100, at most 500).
+     * @type {number}
+     * @memberof AutoApiGetAutoJobs
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getAutoJobsById operation in AutoApi.
+ * @export
+ * @interface AutoApiGetAutoJobsByIdRequest
+ */
+export interface AutoApiGetAutoJobsByIdRequest {
+    /**
+     * ID is the job, from the path: a run_ or a job_ id.
+     * @type {string}
+     * @memberof AutoApiGetAutoJobsById
+     */
+    readonly id: string
 }
 
 /**
@@ -2010,6 +2326,20 @@ export interface AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest {
      * @memberof AutoApiPostAutoAutomationsByIdRunsByRunReview
      */
     readonly autoReviewIn: AutoReviewIn
+}
+
+/**
+ * Request parameters for postAutoCron operation in AutoApi.
+ * @export
+ * @interface AutoApiPostAutoCronRequest
+ */
+export interface AutoApiPostAutoCronRequest {
+    /**
+     * 
+     * @type {AutoWhenIn}
+     * @memberof AutoApiPostAutoCron
+     */
+    readonly autoWhenIn: AutoWhenIn
 }
 
 /**
@@ -2191,15 +2521,15 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s automations. `q` keeps those whose name or instructions contain it, ignoring case; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
-     * @summary Returns the org\'s automations.
+     * Returns your automations — another member\'s are never listed. `q` keeps those whose name or instructions contain it, ignoring case; `source` keeps those made in one product; `sort` is `updated` (the default, newest first), `name`, or `next` (soonest first, unscheduled last).
+     * @summary Returns your automations — another member\'s are never listed.
      * @param {AutoApiGetAutoAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
     public getAutoAutomations(requestParameters: AutoApiGetAutoAutomationsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getAutoAutomations(requestParameters.q, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+        return AutoApiFp(this.configuration).getAutoAutomations(requestParameters.q, requestParameters.sort, requestParameters.source, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2215,8 +2545,8 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
-     * @summary Returns one automation\'s runs, newest first, to the person it runs as or an admin of the org.
+     * Returns one automation\'s runs, newest first, to the person it runs as. Each links the Dev run it started as `transcript`. The optional `limit` bounds the page.
+     * @summary Returns one automation\'s runs, newest first, to the person it runs as.
      * @param {AutoApiGetAutoAutomationsByIdRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2224,6 +2554,17 @@ export class AutoApi extends BaseAPI {
      */
     public getAutoAutomationsByIdRuns(requestParameters: AutoApiGetAutoAutomationsByIdRunsRequest, options?: RawAxiosRequestConfig) {
         return AutoApiFp(this.configuration).getAutoAutomationsByIdRuns(requestParameters.id, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Holds one text/event-stream open and writes a frame each time one of your jobs or automations changes: `event: job` with the job as GET /v1/auto/jobs/{id} answers it, and `event: automation` with the automation as GET /v1/auto/automations/{id} answers it. Only your own rows are sent; another member\'s never are. Authenticate with `Authorization: Bearer` — a fetch-based reader, since a browser EventSource cannot set it. A `: ping` comment is written every 15 seconds, and the server closes the stream after 15 minutes; reconnect and re-read the lists. Frames carry no `id`: the lists are the truth, and the stream is a live hint over them.
+     * @summary Stream your jobs and automations as they change, as Server-Sent Events
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoApi
+     */
+    public getAutoEvents(options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoEvents(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2263,6 +2604,30 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
+     * Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you. Each is in one of five states — scheduled, running, succeeded, failed, cancelled — with what it made (Library item ids) and what it cost when that is known. Another member\'s jobs are never listed.
+     * @summary Lists everything of yours that runs without you watching, across every product: each run of your automations and workflows, and every Studio render, long video or other background run a product recorded for you.
+     * @param {AutoApiGetAutoJobsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoApi
+     */
+    public getAutoJobs(requestParameters: AutoApiGetAutoJobsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoJobs(requestParameters.product, requestParameters.state, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one of your jobs. A job that is not yours answers 404, as one that does not exist.
+     * @summary Reads one of your jobs.
+     * @param {AutoApiGetAutoJobsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoApi
+     */
+    public getAutoJobsById(requestParameters: AutoApiGetAutoJobsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoJobsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the connector catalogue. Each entry is an external service a flow step can invoke, carrying its auth descriptor and the input properties of its actions and triggers. The catalogue is the same for every tenant, so the gate is a validated principal rather than a per-org view.
      * @summary Returns the connector catalogue.
      * @param {*} [options] Override http request option.
@@ -2274,8 +2639,8 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
-     * @summary Returns the caller org\'s run history, newest first.
+     * Returns your run history, newest first: the runs of the flows you hold. The optional `flowId` query narrows it to one of them and `limit` bounds the page.
+     * @summary Returns your run history, newest first: the runs of the flows you hold.
      * @param {AutoApiGetAutoRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2309,8 +2674,8 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
-     * @summary Changes an automation, for the person it runs as or an admin of the org: any field it was created with, and `enabled`, which arms or disarms its schedule.
+     * Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule. A field the request omits is left alone; `project` or `model` sent as null (or \"\") clears it. Any change but `enabled` makes the caller the person it runs as from then on. A draft is finished by saving its `instructions`: it becomes an automation in place, on unless `enabled` says otherwise.
+     * @summary Changes an automation, for the person it runs as: any field it was created with, and `enabled`, which arms or disarms its schedule.
      * @param {AutoApiPatchAutoAutomationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2345,7 +2710,7 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Starts one run now, whether or not its schedule is armed. Only the person it runs as, or an admin of the org, may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
+     * Starts one run now, whether or not its schedule is armed. Only the person it runs as may start one; who did is kept. An automation runs one at a time: while a run is going, this records a skipped start and answers it. Every run first asks IAM whether the person it runs as is still a member of the org; one who is not makes the run refused and turns the automation off.
      * @summary Starts one run now, whether or not its schedule is armed.
      * @param {AutoApiPostAutoAutomationsByIdRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2357,8 +2722,8 @@ export class AutoApi extends BaseAPI {
     }
 
     /**
-     * Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
-     * @summary Answers a run that holds a post for review, for the person the automation runs as or an admin of the org: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
+     * Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it. A run not in review answers 409; one held longer than a day is not posted.
+     * @summary Answers a run that holds a post for review, for the person the automation runs as: `post` true posts it to the automation\'s accounts and answers the run while it posts; false discards it.
      * @param {AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2366,6 +2731,18 @@ export class AutoApi extends BaseAPI {
      */
     public postAutoAutomationsByIdRunsByRunReview(requestParameters: AutoApiPostAutoAutomationsByIdRunsByRunReviewRequest, options?: RawAxiosRequestConfig) {
         return AutoApiFp(this.configuration).postAutoAutomationsByIdRunsByRunReview(requestParameters.id, requestParameters.run, requestParameters.autoReviewIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run. Nothing is created: send the schedule to POST /v1/auto/automations. A phrase that no rule reads is read by a model; a phrase that names no schedule answers 422.
+     * @summary Reads a schedule said in words — \"every 5 minutes\", \"weekdays at 8:30\", \"every monday at 9am\", \"tomorrow at 7pm\", \"in 20 minutes\", or a five-field cron expression — in your time zone, and answers the schedule an automation takes, said back in plain words, with when it would first run.
+     * @param {AutoApiPostAutoCronRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoApi
+     */
+    public postAutoCron(requestParameters: AutoApiPostAutoCronRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).postAutoCron(requestParameters.autoWhenIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

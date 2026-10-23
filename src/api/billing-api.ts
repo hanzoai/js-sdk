@@ -30,6 +30,8 @@ import type { BillingAlertPatch } from '../models';
 // @ts-ignore
 import type { BillingAlertSpec } from '../models';
 // @ts-ignore
+import type { BillingAssignment } from '../models';
+// @ts-ignore
 import type { BillingAutoRecharge } from '../models';
 // @ts-ignore
 import type { BillingAutoRechargeEdit } from '../models';
@@ -60,6 +62,8 @@ import type { BillingHolder } from '../models';
 // @ts-ignore
 import type { BillingInvoice } from '../models';
 // @ts-ignore
+import type { BillingInvoiceRef } from '../models';
+// @ts-ignore
 import type { BillingInvoices } from '../models';
 // @ts-ignore
 import type { BillingMode } from '../models';
@@ -74,11 +78,13 @@ import type { BillingRaiseIn } from '../models';
 // @ts-ignore
 import type { BillingRecharge } from '../models';
 // @ts-ignore
+import type { BillingResize } from '../models';
+// @ts-ignore
 import type { BillingRollup } from '../models';
 // @ts-ignore
 import type { BillingSubscription } from '../models';
 // @ts-ignore
-import type { BillingSubscriptionRef } from '../models';
+import type { BillingSubscriptionAct } from '../models';
 // @ts-ignore
 import type { BillingSubscriptions } from '../models';
 // @ts-ignore
@@ -104,18 +110,62 @@ import type { ProblemDetails } from '../models';
 export const BillingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary End a subscription
+         * Assigns a team\'s seats: which member holds a standard seat and which a premium one, replacing what was assigned.  A seat type is given no more members than the seats of it paid for — the fewer of the period in hand\'s and the next one\'s — and a member holds one seat; past either the request is 400 and nothing changes. Which member holds a seat moves no money and bounds no usage: a team\'s usage is all of its seats\' together.  The team\'s seats are its admins\' to assign, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Assign a team\'s seats
          * @param {string} id 
-         * @param {BillingSubscriptionRef} billingSubscriptionRef 
+         * @param {BillingAssignment} billingAssignment 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelSubscription: async (id: string, billingSubscriptionRef: BillingSubscriptionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        assignSeats: async (id: string, billingAssignment: BillingAssignment, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('assignSeats', 'id', id)
+            // verify required parameter 'billingAssignment' is not null or undefined
+            assertParamExists('assignSeats', 'billingAssignment', billingAssignment)
+            const localVarPath = `/v1/billing/subscriptions/{id}/seats`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingAssignment, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  The org\'s plan is its admins\' to end, and the platform\'s in support mode. A member is refused with 403 and told to ask an admin; a member billed from a wallet of their own may end that wallet\'s plan. Every one is on the audit trail, the operator named when it is the platform acting inside the org.  A subscription from another org, or held by a wallet the caller may not change, is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary End a subscription
+         * @param {string} id ID is the subscription, from the path.
+         * @param {BillingSubscriptionAct} billingSubscriptionAct 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelSubscription: async (id: string, billingSubscriptionAct: BillingSubscriptionAct, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cancelSubscription', 'id', id)
-            // verify required parameter 'billingSubscriptionRef' is not null or undefined
-            assertParamExists('cancelSubscription', 'billingSubscriptionRef', billingSubscriptionRef)
+            // verify required parameter 'billingSubscriptionAct' is not null or undefined
+            assertParamExists('cancelSubscription', 'billingSubscriptionAct', billingSubscriptionAct)
             const localVarPath = `/v1/billing/subscriptions/{id}/cancel`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -140,7 +190,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(billingSubscriptionRef, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(billingSubscriptionAct, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -151,12 +201,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs. It spends the named customer\'s money, so it is the org admin\'s act; a member is refused 403.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Collect an issued invoice from credits, balance, then card
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        collectInvoice: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        collectInvoice: async (id: string, billingInvoiceRef: BillingInvoiceRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('collectInvoice', 'id', id)
+            // verify required parameter 'billingInvoiceRef' is not null or undefined
+            assertParamExists('collectInvoice', 'billingInvoiceRef', billingInvoiceRef)
             const localVarPath = `/v1/billing/invoices/{id}/collect`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -176,9 +229,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingInvoiceRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -224,7 +280,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
+         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. The org\'s cards are removed only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
          * @summary Removes one card or account the caller has saved.
          * @param {string} id ID is the saved method to detach, from the path.
          * @param {*} [options] Override http request option.
@@ -872,7 +928,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponFirstCents` (the first month\'s charge under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponMonths` (how many monthly periods it discounts, from the first paid one; 1 for a first-month coupon), `couponFirstCents` (what each of those months charges under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
          * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -940,8 +996,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1008,8 +1064,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Lists the plans the caller holds, with the count beside them.
+         * Lists the plans the caller may see, with the count beside them.  An admin of the org, and the platform, see every plan the org holds, and may narrow to one wallet with `userId`. A member sees the plans of the wallet they pay from — the org\'s own for a member of a pooled org, their own in the shared signup org — and never another member\'s; the card a plan renews on is left off a row the member cannot change. A query cannot widen any of it to another customer\'s org. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller may see, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1302,10 +1358,11 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * Reads one invoice out of the caller\'s org.  The org scopes the read by construction — the store is namespaced to it — so an id belonging to another tenant is not found rather than found and then filtered.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Read one invoice
          * @param {string} id ID is the invoice id.
+         * @param {string} [brand] Brand is the brand that bills (hanzo, lux, zoo, pars), whose mark and address a rendered invoice carries. The edge sets it from the caller\&#39;s issuer; empty is Hanzo.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInvoice: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInvoice: async (id: string, brand?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getInvoice', 'id', id)
             const localVarPath = `/v1/billing/invoices/{id}`
@@ -1325,6 +1382,10 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (brand !== undefined) {
+                localVarQueryParameter['brand'] = brand;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1340,12 +1401,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * Issues a draft invoice: moves it to OPEN, assigns its number, and makes it collectible. It is the org admin\'s act; a member is refused 403.  Only a draft can be issued. An invoice already open, paid or void is refused with the state machine\'s own reason rather than being silently re-issued, which would mint a second number for one debt.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Issue a draft invoice, making it collectible
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        issueInvoice: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        issueInvoice: async (id: string, billingInvoiceRef: BillingInvoiceRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('issueInvoice', 'id', id)
+            // verify required parameter 'billingInvoiceRef' is not null or undefined
+            assertParamExists('issueInvoice', 'billingInvoiceRef', billingInvoiceRef)
             const localVarPath = `/v1/billing/invoices/{id}/issue`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1365,9 +1429,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingInvoiceRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1499,7 +1566,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1573,7 +1640,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1641,7 +1708,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1675,7 +1742,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -1803,8 +1870,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
          * @param {BillingAutoRechargeEdit} billingAutoRechargeEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1883,18 +1950,18 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  Resuming the org\'s plan commits its card to the next renewal, so it takes the authority ending it does: an admin of the org or the platform, or a member for a wallet of their own. A member is refused with 403 and told to ask an admin.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Put a canceled subscription back on its plan
-         * @param {string} id 
-         * @param {BillingSubscriptionRef} billingSubscriptionRef 
+         * @param {string} id ID is the subscription, from the path.
+         * @param {BillingSubscriptionAct} billingSubscriptionAct 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reactivateSubscription: async (id: string, billingSubscriptionRef: BillingSubscriptionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        reactivateSubscription: async (id: string, billingSubscriptionAct: BillingSubscriptionAct, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('reactivateSubscription', 'id', id)
-            // verify required parameter 'billingSubscriptionRef' is not null or undefined
-            assertParamExists('reactivateSubscription', 'billingSubscriptionRef', billingSubscriptionRef)
+            // verify required parameter 'billingSubscriptionAct' is not null or undefined
+            assertParamExists('reactivateSubscription', 'billingSubscriptionAct', billingSubscriptionAct)
             const localVarPath = `/v1/billing/subscriptions/{id}/reactivate`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1919,7 +1986,51 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(billingSubscriptionRef, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(billingSubscriptionAct, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes a team\'s seats: how many standard and premium seats its next period opens at.  `quantity` is the subscription\'s own seat type, 0 to keep it, and `lines` each other seat type: `{\"lines\":[{\"planId\":\"team-premium\",\"quantity\":1}]}` adds a premium seat to a team bought with standard ones. The renewal that opens the next period charges the seats asked for, and the period in hand keeps the ones it was paid for, so nothing is charged now. A team is at least 2 seats and at most 100 across every seat type; past either, or naming a plan that is not a seat type of the team, is 400 and nothing changes.  The team\'s seats are its admins\' to change, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Change a team\'s seats
+         * @param {string} id 
+         * @param {BillingResize} billingResize 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resizeSubscription: async (id: string, billingResize: BillingResize, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('resizeSubscription', 'id', id)
+            // verify required parameter 'billingResize' is not null or undefined
+            assertParamExists('resizeSubscription', 'billingResize', billingResize)
+            const localVarPath = `/v1/billing/subscriptions/{id}/resize`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingResize, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1930,12 +2041,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * Voids a draft or issued invoice — the cancel. It is the org admin\'s act; a member is refused 403.  A paid invoice cannot be voided: money has moved, and the correction for that is a refund, not an erasure. The state machine refuses it and that refusal is the answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Void a draft or issued invoice
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voidInvoice: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        voidInvoice: async (id: string, billingInvoiceRef: BillingInvoiceRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('voidInvoice', 'id', id)
+            // verify required parameter 'billingInvoiceRef' is not null or undefined
+            assertParamExists('voidInvoice', 'billingInvoiceRef', billingInvoiceRef)
             const localVarPath = `/v1/billing/invoices/{id}/void`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1955,9 +2069,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingInvoiceRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1975,15 +2092,29 @@ export const BillingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BillingApiAxiosParamCreator(configuration)
     return {
         /**
-         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary End a subscription
+         * Assigns a team\'s seats: which member holds a standard seat and which a premium one, replacing what was assigned.  A seat type is given no more members than the seats of it paid for — the fewer of the period in hand\'s and the next one\'s — and a member holds one seat; past either the request is 400 and nothing changes. Which member holds a seat moves no money and bounds no usage: a team\'s usage is all of its seats\' together.  The team\'s seats are its admins\' to assign, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Assign a team\'s seats
          * @param {string} id 
-         * @param {BillingSubscriptionRef} billingSubscriptionRef 
+         * @param {BillingAssignment} billingAssignment 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cancelSubscription(id: string, billingSubscriptionRef: BillingSubscriptionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelSubscription(id, billingSubscriptionRef, options);
+        async assignSeats(id: string, billingAssignment: BillingAssignment, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assignSeats(id, billingAssignment, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.assignSeats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  The org\'s plan is its admins\' to end, and the platform\'s in support mode. A member is refused with 403 and told to ask an admin; a member billed from a wallet of their own may end that wallet\'s plan. Every one is on the audit trail, the operator named when it is the platform acting inside the org.  A subscription from another org, or held by a wallet the caller may not change, is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary End a subscription
+         * @param {string} id ID is the subscription, from the path.
+         * @param {BillingSubscriptionAct} billingSubscriptionAct 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelSubscription(id: string, billingSubscriptionAct: BillingSubscriptionAct, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelSubscription(id, billingSubscriptionAct, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.cancelSubscription']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1992,11 +2123,12 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs. It spends the named customer\'s money, so it is the org admin\'s act; a member is refused 403.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Collect an issued invoice from credits, balance, then card
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async collectInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCollected>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.collectInvoice(id, options);
+        async collectInvoice(id: string, billingInvoiceRef: BillingInvoiceRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCollected>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.collectInvoice(id, billingInvoiceRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.collectInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2015,7 +2147,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
+         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. The org\'s cards are removed only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
          * @summary Removes one card or account the caller has saved.
          * @param {string} id ID is the saved method to detach, from the path.
          * @param {*} [options] Override http request option.
@@ -2234,7 +2366,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponFirstCents` (the first month\'s charge under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponMonths` (how many monthly periods it discounts, from the first paid one; 1 for a first-month coupon), `couponFirstCents` (what each of those months charges under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
          * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2258,8 +2390,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2282,8 +2414,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Lists the plans the caller holds, with the count beside them.
+         * Lists the plans the caller may see, with the count beside them.  An admin of the org, and the platform, see every plan the org holds, and may narrow to one wallet with `userId`. A member sees the plans of the wallet they pay from — the org\'s own for a member of a pooled org, their own in the shared signup org — and never another member\'s; the card a plan renews on is left off a row the member cannot change. A query cannot widen any of it to another customer\'s org. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller may see, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2385,11 +2517,12 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * Reads one invoice out of the caller\'s org.  The org scopes the read by construction — the store is namespaced to it — so an id belonging to another tenant is not found rather than found and then filtered.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Read one invoice
          * @param {string} id ID is the invoice id.
+         * @param {string} [brand] Brand is the brand that bills (hanzo, lux, zoo, pars), whose mark and address a rendered invoice carries. The edge sets it from the caller\&#39;s issuer; empty is Hanzo.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getInvoice(id, options);
+        async getInvoice(id: string, brand?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInvoice(id, brand, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2398,11 +2531,12 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * Issues a draft invoice: moves it to OPEN, assigns its number, and makes it collectible. It is the org admin\'s act; a member is refused 403.  Only a draft can be issued. An invoice already open, paid or void is refused with the state machine\'s own reason rather than being silently re-issued, which would mint a second number for one debt.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Issue a draft invoice, making it collectible
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async issueInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.issueInvoice(id, options);
+        async issueInvoice(id: string, billingInvoiceRef: BillingInvoiceRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.issueInvoice(id, billingInvoiceRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.issueInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2448,7 +2582,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2473,7 +2607,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2497,7 +2631,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2509,7 +2643,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -2550,8 +2684,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
          * @param {BillingAutoRechargeEdit} billingAutoRechargeEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2576,28 +2710,43 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  Resuming the org\'s plan commits its card to the next renewal, so it takes the authority ending it does: an admin of the org or the platform, or a member for a wallet of their own. A member is refused with 403 and told to ask an admin.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Put a canceled subscription back on its plan
-         * @param {string} id 
-         * @param {BillingSubscriptionRef} billingSubscriptionRef 
+         * @param {string} id ID is the subscription, from the path.
+         * @param {BillingSubscriptionAct} billingSubscriptionAct 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reactivateSubscription(id: string, billingSubscriptionRef: BillingSubscriptionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reactivateSubscription(id, billingSubscriptionRef, options);
+        async reactivateSubscription(id: string, billingSubscriptionAct: BillingSubscriptionAct, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reactivateSubscription(id, billingSubscriptionAct, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.reactivateSubscription']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes a team\'s seats: how many standard and premium seats its next period opens at.  `quantity` is the subscription\'s own seat type, 0 to keep it, and `lines` each other seat type: `{\"lines\":[{\"planId\":\"team-premium\",\"quantity\":1}]}` adds a premium seat to a team bought with standard ones. The renewal that opens the next period charges the seats asked for, and the period in hand keeps the ones it was paid for, so nothing is charged now. A team is at least 2 seats and at most 100 across every seat type; past either, or naming a plan that is not a seat type of the team, is 400 and nothing changes.  The team\'s seats are its admins\' to change, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Change a team\'s seats
+         * @param {string} id 
+         * @param {BillingResize} billingResize 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resizeSubscription(id: string, billingResize: BillingResize, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resizeSubscription(id, billingResize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.resizeSubscription']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Voids a draft or issued invoice — the cancel. It is the org admin\'s act; a member is refused 403.  A paid invoice cannot be voided: money has moved, and the correction for that is a refund, not an erasure. The state machine refuses it and that refusal is the answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Void a draft or issued invoice
          * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voidInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voidInvoice(id, options);
+        async voidInvoice(id: string, billingInvoiceRef: BillingInvoiceRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoice>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voidInvoice(id, billingInvoiceRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.voidInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2613,14 +2762,24 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = BillingApiFp(configuration)
     return {
         /**
-         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Assigns a team\'s seats: which member holds a standard seat and which a premium one, replacing what was assigned.  A seat type is given no more members than the seats of it paid for — the fewer of the period in hand\'s and the next one\'s — and a member holds one seat; past either the request is 400 and nothing changes. Which member holds a seat moves no money and bounds no usage: a team\'s usage is all of its seats\' together.  The team\'s seats are its admins\' to assign, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Assign a team\'s seats
+         * @param {BillingApiAssignSeatsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignSeats(requestParameters: BillingApiAssignSeatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSubscription> {
+            return localVarFp.assignSeats(requestParameters.id, requestParameters.billingAssignment, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  The org\'s plan is its admins\' to end, and the platform\'s in support mode. A member is refused with 403 and told to ask an admin; a member billed from a wallet of their own may end that wallet\'s plan. Every one is on the audit trail, the operator named when it is the platform acting inside the org.  A subscription from another org, or held by a wallet the caller may not change, is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary End a subscription
          * @param {BillingApiCancelSubscriptionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cancelSubscription(requestParameters: BillingApiCancelSubscriptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSubscription> {
-            return localVarFp.cancelSubscription(requestParameters.id, requestParameters.billingSubscriptionRef, options).then((request) => request(axios, basePath));
+            return localVarFp.cancelSubscription(requestParameters.id, requestParameters.billingSubscriptionAct, options).then((request) => request(axios, basePath));
         },
         /**
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs. It spends the named customer\'s money, so it is the org admin\'s act; a member is refused 403.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2630,7 +2789,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         collectInvoice(requestParameters: BillingApiCollectInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCollected> {
-            return localVarFp.collectInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.collectInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller\'s spend caps and answers 204.  Removing a cap RAISES what the org may spend, so it takes the same authority setting one does. The caps that remain still bind: this drops one, never the whole policy.
@@ -2643,7 +2802,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteBillingAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
+         * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. The org\'s cards are removed only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
          * @summary Removes one card or account the caller has saved.
          * @param {BillingApiDeleteBillingMethodsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2804,7 +2963,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPayouts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponFirstCents` (the first month\'s charge under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponMonths` (how many monthly periods it discounts, from the first paid one; 1 for a first-month coupon), `couponFirstCents` (what each of those months charges under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
          * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2822,8 +2981,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2840,8 +2999,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingSettings(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Lists the plans the caller holds, with the count beside them.
+         * Lists the plans the caller may see, with the count beside them.  An admin of the org, and the platform, see every plan the org holds, and may narrow to one wallet with `userId`. A member sees the plans of the wallet they pay from — the org\'s own for a member of a pooled org, their own in the shared signup org — and never another member\'s; the card a plan renews on is left off a row the member cannot change. A query cannot widen any of it to another customer\'s org. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller may see, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2921,7 +3080,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         getInvoice(requestParameters: BillingApiGetInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingInvoice> {
-            return localVarFp.getInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.getInvoice(requestParameters.id, requestParameters.brand, options).then((request) => request(axios, basePath));
         },
         /**
          * Issues a draft invoice: moves it to OPEN, assigns its number, and makes it collectible. It is the org admin\'s act; a member is refused 403.  Only a draft can be issued. An invoice already open, paid or void is refused with the state machine\'s own reason rather than being silently re-issued, which would mint a second number for one debt.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2931,7 +3090,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         issueInvoice(requestParameters: BillingApiIssueInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingInvoice> {
-            return localVarFp.issueInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.issueInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.  Only the fields the body carries move. Every mutable field is optional, and an absent one is PRESERVED rather than reset — so a change that flips enforcement cannot silently wipe the threshold it enforces.  A cap belonging to another org is a 404, not a 403: a guessed id must not become an oracle for what anyone else holds.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2964,7 +3123,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingCryptoDeposit(requestParameters.billingCryptoAsset, options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2983,7 +3142,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingMode(requestParameters.billingModeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3001,7 +3160,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingRechargeRunAll(options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3010,7 +3169,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingSubscribeCard(options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3040,8 +3199,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingUsage(requestParameters.billingUsageReport, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
          * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3060,14 +3219,24 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.raiseInvoice(requestParameters.billingRaiseIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  Resuming the org\'s plan commits its card to the next renewal, so it takes the authority ending it does: an admin of the org or the platform, or a member for a wallet of their own. A member is refused with 403 and told to ask an admin.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Put a canceled subscription back on its plan
          * @param {BillingApiReactivateSubscriptionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         reactivateSubscription(requestParameters: BillingApiReactivateSubscriptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSubscription> {
-            return localVarFp.reactivateSubscription(requestParameters.id, requestParameters.billingSubscriptionRef, options).then((request) => request(axios, basePath));
+            return localVarFp.reactivateSubscription(requestParameters.id, requestParameters.billingSubscriptionAct, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes a team\'s seats: how many standard and premium seats its next period opens at.  `quantity` is the subscription\'s own seat type, 0 to keep it, and `lines` each other seat type: `{\"lines\":[{\"planId\":\"team-premium\",\"quantity\":1}]}` adds a premium seat to a team bought with standard ones. The renewal that opens the next period charges the seats asked for, and the period in hand keeps the ones it was paid for, so nothing is charged now. A team is at least 2 seats and at most 100 across every seat type; past either, or naming a plan that is not a seat type of the team, is 400 and nothing changes.  The team\'s seats are its admins\' to change, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Change a team\'s seats
+         * @param {BillingApiResizeSubscriptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resizeSubscription(requestParameters: BillingApiResizeSubscriptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSubscription> {
+            return localVarFp.resizeSubscription(requestParameters.id, requestParameters.billingResize, options).then((request) => request(axios, basePath));
         },
         /**
          * Voids a draft or issued invoice — the cancel. It is the org admin\'s act; a member is refused 403.  A paid invoice cannot be voided: money has moved, and the correction for that is a refund, not an erasure. The state machine refuses it and that refusal is the answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -3077,10 +3246,31 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         voidInvoice(requestParameters: BillingApiVoidInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingInvoice> {
-            return localVarFp.voidInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.voidInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for assignSeats operation in BillingApi.
+ * @export
+ * @interface BillingApiAssignSeatsRequest
+ */
+export interface BillingApiAssignSeatsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiAssignSeats
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingAssignment}
+     * @memberof BillingApiAssignSeats
+     */
+    readonly billingAssignment: BillingAssignment
+}
 
 /**
  * Request parameters for cancelSubscription operation in BillingApi.
@@ -3089,7 +3279,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
  */
 export interface BillingApiCancelSubscriptionRequest {
     /**
-     * 
+     * ID is the subscription, from the path.
      * @type {string}
      * @memberof BillingApiCancelSubscription
      */
@@ -3097,10 +3287,10 @@ export interface BillingApiCancelSubscriptionRequest {
 
     /**
      * 
-     * @type {BillingSubscriptionRef}
+     * @type {BillingSubscriptionAct}
      * @memberof BillingApiCancelSubscription
      */
-    readonly billingSubscriptionRef: BillingSubscriptionRef
+    readonly billingSubscriptionAct: BillingSubscriptionAct
 }
 
 /**
@@ -3115,6 +3305,13 @@ export interface BillingApiCollectInvoiceRequest {
      * @memberof BillingApiCollectInvoice
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {BillingInvoiceRef}
+     * @memberof BillingApiCollectInvoice
+     */
+    readonly billingInvoiceRef: BillingInvoiceRef
 }
 
 /**
@@ -3346,6 +3543,13 @@ export interface BillingApiGetInvoiceRequest {
      * @memberof BillingApiGetInvoice
      */
     readonly id: string
+
+    /**
+     * Brand is the brand that bills (hanzo, lux, zoo, pars), whose mark and address a rendered invoice carries. The edge sets it from the caller\&#39;s issuer; empty is Hanzo.
+     * @type {string}
+     * @memberof BillingApiGetInvoice
+     */
+    readonly brand?: string
 }
 
 /**
@@ -3360,6 +3564,13 @@ export interface BillingApiIssueInvoiceRequest {
      * @memberof BillingApiIssueInvoice
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {BillingInvoiceRef}
+     * @memberof BillingApiIssueInvoice
+     */
+    readonly billingInvoiceRef: BillingInvoiceRef
 }
 
 /**
@@ -3516,7 +3727,7 @@ export interface BillingApiRaiseInvoiceRequest {
  */
 export interface BillingApiReactivateSubscriptionRequest {
     /**
-     * 
+     * ID is the subscription, from the path.
      * @type {string}
      * @memberof BillingApiReactivateSubscription
      */
@@ -3524,10 +3735,31 @@ export interface BillingApiReactivateSubscriptionRequest {
 
     /**
      * 
-     * @type {BillingSubscriptionRef}
+     * @type {BillingSubscriptionAct}
      * @memberof BillingApiReactivateSubscription
      */
-    readonly billingSubscriptionRef: BillingSubscriptionRef
+    readonly billingSubscriptionAct: BillingSubscriptionAct
+}
+
+/**
+ * Request parameters for resizeSubscription operation in BillingApi.
+ * @export
+ * @interface BillingApiResizeSubscriptionRequest
+ */
+export interface BillingApiResizeSubscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiResizeSubscription
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingResize}
+     * @memberof BillingApiResizeSubscription
+     */
+    readonly billingResize: BillingResize
 }
 
 /**
@@ -3542,6 +3774,13 @@ export interface BillingApiVoidInvoiceRequest {
      * @memberof BillingApiVoidInvoice
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {BillingInvoiceRef}
+     * @memberof BillingApiVoidInvoice
+     */
+    readonly billingInvoiceRef: BillingInvoiceRef
 }
 
 /**
@@ -3552,7 +3791,19 @@ export interface BillingApiVoidInvoiceRequest {
  */
 export class BillingApi extends BaseAPI {
     /**
-     * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Assigns a team\'s seats: which member holds a standard seat and which a premium one, replacing what was assigned.  A seat type is given no more members than the seats of it paid for — the fewer of the period in hand\'s and the next one\'s — and a member holds one seat; past either the request is 400 and nothing changes. Which member holds a seat moves no money and bounds no usage: a team\'s usage is all of its seats\' together.  The team\'s seats are its admins\' to assign, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Assign a team\'s seats
+     * @param {BillingApiAssignSeatsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public assignSeats(requestParameters: BillingApiAssignSeatsRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).assignSeats(requestParameters.id, requestParameters.billingAssignment, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  The org\'s plan is its admins\' to end, and the platform\'s in support mode. A member is refused with 403 and told to ask an admin; a member billed from a wallet of their own may end that wallet\'s plan. Every one is on the audit trail, the operator named when it is the platform acting inside the org.  A subscription from another org, or held by a wallet the caller may not change, is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary End a subscription
      * @param {BillingApiCancelSubscriptionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3560,7 +3811,7 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public cancelSubscription(requestParameters: BillingApiCancelSubscriptionRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cancelSubscription(requestParameters.id, requestParameters.billingSubscriptionRef, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).cancelSubscription(requestParameters.id, requestParameters.billingSubscriptionAct, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3572,7 +3823,7 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public collectInvoice(requestParameters: BillingApiCollectInvoiceRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).collectInvoice(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).collectInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3588,7 +3839,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
+     * Removes one card or account the caller has saved.  It detaches only the CALLER\'S own — the wallet this request bills from, resolved server-side — so an id belonging to another customer of the same org is not something this operation can reach. The org\'s cards are removed only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A platform or service caller detaches on the subject\'s behalf, and that authority is decided HERE, where the credential is, and travels as a value: authority decided twice is authority that eventually disagrees with itself.  The card is vaulted at the processor, so what goes is our token for it.
      * @summary Removes one card or account the caller has saved.
      * @param {BillingApiDeleteBillingMethodsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3783,7 +4034,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponFirstCents` (the first month\'s charge under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
+     * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  `?coupon=` quotes the catalog under a plan coupon code: each paid plan it covers carries `couponCode`, `couponPercent`, `couponMonths` (how many monthly periods it discounts, from the first paid one; 1 for a first-month coupon), `couponFirstCents` (what each of those months charges under it) and `couponEnds`; every other row carries `couponError` — `unknown`, `expired`, `exhausted` or `not_applicable`. Nothing is reserved by a quote. Without the parameter the catalog is unchanged.  It is public and needs no tenant, and it is the catalog of the brand the request\'s host resolves to — the same brand `/v1/commerce/org` answers there. A brand that publishes no plans answers an empty list.
      * @summary The plan catalog, priced with whatever offer is in force
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3805,8 +4056,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Reads the caller\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session.
+     * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3827,8 +4078,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Lists the plans the caller holds, with the count beside them.
+     * Lists the plans the caller may see, with the count beside them.  An admin of the org, and the platform, see every plan the org holds, and may narrow to one wallet with `userId`. A member sees the plans of the wallet they pay from — the org\'s own for a member of a pooled org, their own in the shared signup org — and never another member\'s; the card a plan renews on is left off a row the member cannot change. A query cannot widen any of it to another customer\'s org. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Lists the plans the caller may see, with the count beside them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3925,7 +4176,7 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public getInvoice(requestParameters: BillingApiGetInvoiceRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).getInvoice(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).getInvoice(requestParameters.id, requestParameters.brand, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3937,7 +4188,7 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public issueInvoice(requestParameters: BillingApiIssueInvoiceRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).issueInvoice(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).issueInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3977,7 +4228,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
      * @summary Save a card or account for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4000,7 +4251,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
      * @summary Save a card or account for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4022,7 +4273,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+     * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
      * @summary Buy a plan with a card
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4033,7 +4284,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
      * @summary Charges a card the caller already saved and credits the balance.
      * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4069,8 +4320,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Sets the caller\'s auto-reload rule, and answers with the rule as stored.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. A non-positive amount and a negative threshold are refused the same way, each naming the field that was wrong.  The rule is the caller\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Sets the caller\'s auto-reload rule, and answers with the rule as stored.
+     * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
      * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4093,7 +4344,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  Resuming the org\'s plan commits its card to the next renewal, so it takes the authority ending it does: an admin of the org or the platform, or a member for a wallet of their own. A member is refused with 403 and told to ask an admin.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Put a canceled subscription back on its plan
      * @param {BillingApiReactivateSubscriptionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4101,7 +4352,19 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public reactivateSubscription(requestParameters: BillingApiReactivateSubscriptionRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).reactivateSubscription(requestParameters.id, requestParameters.billingSubscriptionRef, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).reactivateSubscription(requestParameters.id, requestParameters.billingSubscriptionAct, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes a team\'s seats: how many standard and premium seats its next period opens at.  `quantity` is the subscription\'s own seat type, 0 to keep it, and `lines` each other seat type: `{\"lines\":[{\"planId\":\"team-premium\",\"quantity\":1}]}` adds a premium seat to a team bought with standard ones. The renewal that opens the next period charges the seats asked for, and the period in hand keeps the ones it was paid for, so nothing is charged now. A team is at least 2 seats and at most 100 across every seat type; past either, or naming a plan that is not a seat type of the team, is 400 and nothing changes.  The team\'s seats are its admins\' to change, and the platform\'s. A member is refused with 403 and told to ask an admin. A subscription from another org, or held by a wallet the caller may not change, is not found.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Change a team\'s seats
+     * @param {BillingApiResizeSubscriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public resizeSubscription(requestParameters: BillingApiResizeSubscriptionRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).resizeSubscription(requestParameters.id, requestParameters.billingResize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4113,7 +4376,7 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public voidInvoice(requestParameters: BillingApiVoidInvoiceRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).voidInvoice(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).voidInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

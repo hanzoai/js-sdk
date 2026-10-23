@@ -21,7 +21,7 @@
  */
 export interface FlagPlatformOut {
     /**
-     * Flags maps each principal switch\'s key to whether it is on for the caller: `beta` is whether the caller sees products and catalog items that are not yet generally available.
+     * Flags maps each principal switch\'s key to whether it is on for the caller: `beta` is whether the caller sees products and catalog items that are not yet generally available, and beta.<id> whether they see that one app in beta in the Hanzo app.
      * @type {{ [key: string]: boolean; }}
      * @memberof FlagPlatformOut
      */

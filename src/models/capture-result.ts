@@ -32,5 +32,11 @@ export interface CaptureResult {
      * @memberof CaptureResult
      */
     'dropped'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CaptureResult
+     */
+    'withheld'?: number;
 }
 

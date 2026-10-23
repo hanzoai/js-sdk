@@ -19,6 +19,12 @@ import type { AiModelAccessInfo } from './ai-model-access-info';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { AiModelPricingInfo } from './ai-model-pricing-info';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AiVideoSpec } from './ai-video-spec';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AiVoiceSpec } from './ai-voice-spec';
 
 /**
  * 
@@ -158,5 +164,17 @@ export interface AiModelInfo {
      * @memberof AiModelInfo
      */
     'supports_vision'?: boolean;
+    /**
+     * 
+     * @type {AiVideoSpec}
+     * @memberof AiModelInfo
+     */
+    'video'?: AiVideoSpec;
+    /**
+     * 
+     * @type {AiVoiceSpec}
+     * @memberof AiModelInfo
+     */
+    'voice'?: AiVoiceSpec;
 }
 

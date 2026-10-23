@@ -111,6 +111,12 @@ export interface AutoAutomation {
      */
     'schedule'?: AutoSchedule;
     /**
+     * Source is the product it was made in: chat, dev, studio or workflow.
+     * @type {string}
+     * @memberof AutoAutomation
+     */
+    'source'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AutoAutomation

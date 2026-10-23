@@ -21,7 +21,7 @@
  */
 export interface AutoSchedule {
     /**
-     * At is the local time, HH:MM on a 24-hour clock, for daily, weekdays and weekly. Hourly takes its minute, and runs on the hour without one.
+     * At is the local time, HH:MM on a 24-hour clock, for daily, weekdays and weekly. Hourly takes its minute, and runs on the hour without one. Once takes a local date and time, YYYY-MM-DDTHH:MM, and runs now without one.
      * @type {string}
      * @memberof AutoSchedule
      */
@@ -39,7 +39,7 @@ export interface AutoSchedule {
      */
     'day'?: string;
     /**
-     * Kind is manual, hourly, daily, weekdays, weekly or cron. Manual runs only when asked.
+     * Kind is manual, hourly, daily, weekdays, weekly, cron or once. Manual runs only when asked; once runs one time and then switches itself off.
      * @type {string}
      * @memberof AutoSchedule
      */

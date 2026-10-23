@@ -21,23 +21,17 @@
  */
 export interface AccountOnboardResp {
     /**
-     * AccessKey is the identifier of the org-scoped credential provisioning minted with the organization. Present on a first run that actually minted one.
+     * AccessKey is the publishable half of the organization\'s default API key, held by its creator. Absent when the key could not be minted; the creator then mints one from the keys page.
      * @type {string}
      * @memberof AccountOnboardResp
      */
     'accessKey'?: string;
     /**
-     * AccessSecret is that credential\'s confidential half, returned ONCE — on the response that mints it and never again. IAM keeps only its argon2id digest and blanks the plaintext, so this is the single moment it exists in a form its owner can read; a replay of the same provision re-reveals nothing.
+     * AccessSecret is that credential\'s confidential half, returned ONCE — on the response that mints it and never again. IAM keeps only its argon2id digest and blanks the plaintext, so this is the single moment it exists in a form its owner can read.
      * @type {string}
      * @memberof AccountOnboardResp
      */
     'accessSecret'?: string;
-    /**
-     * Additional is true when the caller already had an organization and this one was created WITHOUT moving them into it — they reach it via the org switcher.
-     * @type {boolean}
-     * @memberof AccountOnboardResp
-     */
-    'additional'?: boolean;
     /**
      * DisplayName is the organization\'s human name.
      * @type {string}

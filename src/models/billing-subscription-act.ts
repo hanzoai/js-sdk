@@ -17,19 +17,19 @@
 /**
  * 
  * @export
- * @interface BillingSubscriptionRef
+ * @interface BillingSubscriptionAct
  */
-export interface BillingSubscriptionRef {
+export interface BillingSubscriptionAct {
     /**
-     * AtPeriodEnd cancels at the end of the paid period rather than at once. It defaults TRUE on the endpoint, because a customer who cancels has already paid for the period they are in.
+     * AtPeriodEnd cancels at the end of the paid period rather than at once. It defaults TRUE, because a customer who cancels has already paid for the period they are in.
      * @type {boolean}
-     * @memberof BillingSubscriptionRef
+     * @memberof BillingSubscriptionAct
      */
     'atPeriodEnd'?: boolean;
     /**
-     * 
+     * ID is the subscription, from the path.
      * @type {string}
-     * @memberof BillingSubscriptionRef
+     * @memberof BillingSubscriptionAct
      */
     'id'?: string;
 }

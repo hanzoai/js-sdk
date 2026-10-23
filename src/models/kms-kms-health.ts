@@ -21,6 +21,12 @@
  */
 export interface KmsKmsHealth {
     /**
+     * Audit is the state of the audit trail every access is recorded to: `ok`, `failing` when it did not take the last record, or `absent` when this process has none. Every access is refused in the last two. Absent from the answer when there is no in-process client to audit.
+     * @type {string}
+     * @memberof KmsKmsHealth
+     */
+    'audit'?: string;
+    /**
      * Enforcing is whether a secret value the declaration in force does not grant is refused. False while it says `enforce: false` and while none has loaded; every such value is then logged and audited as would-deny.
      * @type {boolean}
      * @memberof KmsKmsHealth
@@ -39,7 +45,7 @@ export interface KmsKmsHealth {
      */
     'policy'?: string;
     /**
-     * Ready is whether a secret operation would actually succeed right now. These are exactly the two states in which the secret operations refuse.
+     * Ready is whether a secret operation would actually succeed right now. These are exactly the states in which the secret operations refuse.
      * @type {boolean}
      * @memberof KmsKmsHealth
      */

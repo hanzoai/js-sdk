@@ -28,9 +28,9 @@ export interface GraphQLError {
     'message'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof GraphQLError
      */
-    'path'?: Array<string>;
+    'path'?: Array<any>;
 }
 

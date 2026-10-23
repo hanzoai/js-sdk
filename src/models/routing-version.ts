@@ -37,6 +37,12 @@ export interface RoutingVersion {
      * @type {string}
      * @memberof RoutingVersion
      */
+    'boot'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoutingVersion
+     */
     'catalog'?: string;
     /**
      * 

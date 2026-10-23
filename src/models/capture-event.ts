@@ -106,6 +106,12 @@ export interface CaptureEvent {
     'kind'?: string;
     /**
      * 
+     * @type {UTM}
+     * @memberof CaptureEvent
+     */
+    'lastUtm'?: UTM;
+    /**
+     * 
      * @type {string}
      * @memberof CaptureEvent
      */

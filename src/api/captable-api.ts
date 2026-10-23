@@ -90,7 +90,7 @@ import type { ProblemDetails } from '../models';
 export const CaptableApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
          * @param {string} id ID is the convertible note to delete.
          * @param {*} [options] Override http request option.
@@ -128,7 +128,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
          * @param {string} id ID is the option grant to delete.
          * @param {*} [options] Override http request option.
@@ -166,7 +166,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
          * @param {string} id ID is the SAFE to delete.
          * @param {*} [options] Override http request option.
@@ -204,7 +204,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
          * @param {string} id ID is the share certificate to delete.
          * @param {*} [options] Override http request option.
@@ -242,7 +242,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
+         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to delete.
          * @param {*} [options] Override http request option.
@@ -280,7 +280,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.
+         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share classes, in creation order.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -314,7 +314,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.
+         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s cap-table company record.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -348,7 +348,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s convertible notes, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -382,7 +382,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.
+         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s investments, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -416,7 +416,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.
+         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s option grants, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -450,7 +450,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.
+         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s equity plans, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -484,7 +484,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.
+         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s fundraising rounds, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -518,7 +518,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
+         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
          * @param {string} id ID is the round to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {*} [options] Override http request option.
@@ -556,7 +556,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s SAFEs, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -590,7 +590,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.
+         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share certificates, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -624,7 +624,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.
+         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s stakeholders, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -658,7 +658,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.
+         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Computes the caller org\'s cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -692,7 +692,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
+         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces one share class\'s terms.
          * @param {string} id ID addresses the resource. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which row is written whatever a body claims.
          * @param {CaptableCaptableShareClassAmend} captableCaptableShareClassAmend 
@@ -736,7 +736,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
+         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Changes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to update. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {CaptableCaptableStakeholderPatch} captableCaptableStakeholderPatch 
@@ -780,7 +780,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
+         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Defines a new class of shares.
          * @param {CaptableCaptableShareClassIn} captableCaptableShareClassIn 
          * @param {*} [options] Override http request option.
@@ -820,7 +820,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records a convertible note.
+         * Records a convertible note.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a convertible note.
          * @param {CaptableCaptableConvertibleIn} captableCaptableConvertibleIn 
          * @param {*} [options] Override http request option.
@@ -860,7 +860,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Grants options to a stakeholder from an equity plan.
+         * Grants options to a stakeholder from an equity plan.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Grants options to a stakeholder from an equity plan.
          * @param {CaptableCaptableOptionIn} captableCaptableOptionIn 
          * @param {*} [options] Override http request option.
@@ -900,7 +900,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Opens an equity plan that options are granted from.
+         * Opens an equity plan that options are granted from.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an equity plan that options are granted from.
          * @param {CaptableCaptableEquityPlanIn} captableCaptableEquityPlanIn 
          * @param {*} [options] Override http request option.
@@ -940,7 +940,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
+         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens a priced round that investments can be added to.
          * @param {CaptableCaptableRoundIn} captableCaptableRoundIn 
          * @param {*} [options] Override http request option.
@@ -980,7 +980,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
          * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {CaptableCaptableRoundCloseRequest} captableCaptableRoundCloseRequest 
@@ -1024,7 +1024,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
+         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records one investor\'s money into an open round.
          * @param {string} id ID is the round to invest in. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which round is written whatever a body claims.
          * @param {CaptableCaptableInvestmentIn} captableCaptableInvestmentIn 
@@ -1068,7 +1068,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records a SAFE — a simple agreement for future equity.
+         * Records a SAFE — a simple agreement for future equity.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a SAFE — a simple agreement for future equity.
          * @param {CaptableCaptableSafeIn} captableCaptableSafeIn 
          * @param {*} [options] Override http request option.
@@ -1108,7 +1108,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
+         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Issues a share certificate to a stakeholder.
          * @param {CaptableCaptableShareIn} captableCaptableShareIn 
          * @param {*} [options] Override http request option.
@@ -1148,7 +1148,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
+         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Moves shares from one stakeholder to another.
          * @param {CaptableCaptableShareTransfer} captableCaptableShareTransfer 
          * @param {*} [options] Override http request option.
@@ -1188,7 +1188,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused 401, and one from a member who is neither a SuperAdmin nor an admin of the org is refused 403. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
          * @summary Add stakeholders to the cap table
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1222,7 +1222,7 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
+         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sets the caller org\'s company name and incorporation details.
          * @param {CaptableCaptableCompanyUpdate} captableCaptableCompanyUpdate 
          * @param {*} [options] Override http request option.
@@ -1272,7 +1272,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CaptableApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
          * @param {string} id ID is the convertible note to delete.
          * @param {*} [options] Override http request option.
@@ -1285,7 +1285,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
          * @param {string} id ID is the option grant to delete.
          * @param {*} [options] Override http request option.
@@ -1298,7 +1298,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
          * @param {string} id ID is the SAFE to delete.
          * @param {*} [options] Override http request option.
@@ -1311,7 +1311,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
          * @param {string} id ID is the share certificate to delete.
          * @param {*} [options] Override http request option.
@@ -1324,7 +1324,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
+         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to delete.
          * @param {*} [options] Override http request option.
@@ -1337,7 +1337,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.
+         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share classes, in creation order.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1349,7 +1349,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.
+         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s cap-table company record.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1361,7 +1361,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s convertible notes, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1373,7 +1373,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.
+         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s investments, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1385,7 +1385,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.
+         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s option grants, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1397,7 +1397,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.
+         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s equity plans, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1409,7 +1409,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.
+         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s fundraising rounds, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1421,7 +1421,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
+         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
          * @param {string} id ID is the round to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {*} [options] Override http request option.
@@ -1434,7 +1434,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s SAFEs, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1446,7 +1446,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.
+         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share certificates, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1458,7 +1458,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.
+         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s stakeholders, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1470,7 +1470,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.
+         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Computes the caller org\'s cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1482,7 +1482,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
+         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces one share class\'s terms.
          * @param {string} id ID addresses the resource. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which row is written whatever a body claims.
          * @param {CaptableCaptableShareClassAmend} captableCaptableShareClassAmend 
@@ -1496,7 +1496,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
+         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Changes one of the caller org\'s stakeholders.
          * @param {string} id ID is the stakeholder to update. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {CaptableCaptableStakeholderPatch} captableCaptableStakeholderPatch 
@@ -1510,7 +1510,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
+         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Defines a new class of shares.
          * @param {CaptableCaptableShareClassIn} captableCaptableShareClassIn 
          * @param {*} [options] Override http request option.
@@ -1523,7 +1523,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a convertible note.
+         * Records a convertible note.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a convertible note.
          * @param {CaptableCaptableConvertibleIn} captableCaptableConvertibleIn 
          * @param {*} [options] Override http request option.
@@ -1536,7 +1536,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Grants options to a stakeholder from an equity plan.
+         * Grants options to a stakeholder from an equity plan.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Grants options to a stakeholder from an equity plan.
          * @param {CaptableCaptableOptionIn} captableCaptableOptionIn 
          * @param {*} [options] Override http request option.
@@ -1549,7 +1549,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens an equity plan that options are granted from.
+         * Opens an equity plan that options are granted from.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an equity plan that options are granted from.
          * @param {CaptableCaptableEquityPlanIn} captableCaptableEquityPlanIn 
          * @param {*} [options] Override http request option.
@@ -1562,7 +1562,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
+         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens a priced round that investments can be added to.
          * @param {CaptableCaptableRoundIn} captableCaptableRoundIn 
          * @param {*} [options] Override http request option.
@@ -1575,7 +1575,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
          * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {CaptableCaptableRoundCloseRequest} captableCaptableRoundCloseRequest 
@@ -1589,7 +1589,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
+         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records one investor\'s money into an open round.
          * @param {string} id ID is the round to invest in. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which round is written whatever a body claims.
          * @param {CaptableCaptableInvestmentIn} captableCaptableInvestmentIn 
@@ -1603,7 +1603,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a SAFE — a simple agreement for future equity.
+         * Records a SAFE — a simple agreement for future equity.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a SAFE — a simple agreement for future equity.
          * @param {CaptableCaptableSafeIn} captableCaptableSafeIn 
          * @param {*} [options] Override http request option.
@@ -1616,7 +1616,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
+         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Issues a share certificate to a stakeholder.
          * @param {CaptableCaptableShareIn} captableCaptableShareIn 
          * @param {*} [options] Override http request option.
@@ -1629,7 +1629,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
+         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Moves shares from one stakeholder to another.
          * @param {CaptableCaptableShareTransfer} captableCaptableShareTransfer 
          * @param {*} [options] Override http request option.
@@ -1642,7 +1642,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused 401, and one from a member who is neither a SuperAdmin nor an admin of the org is refused 403. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
          * @summary Add stakeholders to the cap table
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1654,7 +1654,7 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
+         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sets the caller org\'s company name and incorporation details.
          * @param {CaptableCaptableCompanyUpdate} captableCaptableCompanyUpdate 
          * @param {*} [options] Override http request option.
@@ -1677,7 +1677,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = CaptableApiFp(configuration)
     return {
         /**
-         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
          * @param {CaptableApiDeleteCaptableConvertiblesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1687,7 +1687,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCaptableConvertiblesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
          * @param {CaptableApiDeleteCaptableOptionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1697,7 +1697,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCaptableOptionsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+         * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
          * @param {CaptableApiDeleteCaptableSafesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1707,7 +1707,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCaptableSafesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
+         * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
          * @param {CaptableApiDeleteCaptableSharesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1717,7 +1717,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCaptableSharesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
+         * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Removes one of the caller org\'s stakeholders.
          * @param {CaptableApiDeleteCaptableStakeholdersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1727,7 +1727,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCaptableStakeholdersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.
+         * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share classes, in creation order.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1736,7 +1736,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableClasses(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.
+         * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s cap-table company record.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1745,7 +1745,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableCompany(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s convertible notes, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1754,7 +1754,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableConvertibles(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.
+         * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s investments, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1763,7 +1763,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableInvestments(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.
+         * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s option grants, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1772,7 +1772,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableOptions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.
+         * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s equity plans, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1781,7 +1781,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptablePlans(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.
+         * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s fundraising rounds, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1790,7 +1790,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableRounds(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
+         * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
          * @param {CaptableApiGetCaptableRoundsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1800,7 +1800,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableRoundsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+         * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s SAFEs, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1809,7 +1809,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableSafes(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.
+         * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s share certificates, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1818,7 +1818,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableShares(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.
+         * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s stakeholders, newest first.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1827,7 +1827,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableStakeholders(options).then((request) => request(axios, basePath));
         },
         /**
-         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.
+         * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Computes the caller org\'s cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1836,7 +1836,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCaptableSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
+         * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces one share class\'s terms.
          * @param {CaptableApiPatchCaptableClassesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1846,7 +1846,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.patchCaptableClassesById(requestParameters.id, requestParameters.captableCaptableShareClassAmend, options).then((request) => request(axios, basePath));
         },
         /**
-         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
+         * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Changes one of the caller org\'s stakeholders.
          * @param {CaptableApiPatchCaptableStakeholdersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1856,7 +1856,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.patchCaptableStakeholdersById(requestParameters.id, requestParameters.captableCaptableStakeholderPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
+         * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Defines a new class of shares.
          * @param {CaptableApiPostCaptableClassesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1866,7 +1866,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableClasses(requestParameters.captableCaptableShareClassIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a convertible note.
+         * Records a convertible note.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a convertible note.
          * @param {CaptableApiPostCaptableConvertiblesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1876,7 +1876,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableConvertibles(requestParameters.captableCaptableConvertibleIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Grants options to a stakeholder from an equity plan.
+         * Grants options to a stakeholder from an equity plan.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Grants options to a stakeholder from an equity plan.
          * @param {CaptableApiPostCaptableOptionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1886,7 +1886,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableOptions(requestParameters.captableCaptableOptionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens an equity plan that options are granted from.
+         * Opens an equity plan that options are granted from.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an equity plan that options are granted from.
          * @param {CaptableApiPostCaptablePlansRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1896,7 +1896,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptablePlans(requestParameters.captableCaptableEquityPlanIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
+         * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens a priced round that investments can be added to.
          * @param {CaptableApiPostCaptableRoundsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1906,7 +1906,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableRounds(requestParameters.captableCaptableRoundIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
          * @param {CaptableApiPostCaptableRoundsByIdCloseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1916,7 +1916,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableRoundsByIdClose(requestParameters.id, requestParameters.captableCaptableRoundCloseRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
+         * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records one investor\'s money into an open round.
          * @param {CaptableApiPostCaptableRoundsByIdInvestmentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1926,7 +1926,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableRoundsByIdInvestments(requestParameters.id, requestParameters.captableCaptableInvestmentIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a SAFE — a simple agreement for future equity.
+         * Records a SAFE — a simple agreement for future equity.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a SAFE — a simple agreement for future equity.
          * @param {CaptableApiPostCaptableSafesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1936,7 +1936,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableSafes(requestParameters.captableCaptableSafeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
+         * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Issues a share certificate to a stakeholder.
          * @param {CaptableApiPostCaptableSharesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1946,7 +1946,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableShares(requestParameters.captableCaptableShareIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
+         * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Moves shares from one stakeholder to another.
          * @param {CaptableApiPostCaptableSharesTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1956,7 +1956,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableSharesTransfer(requestParameters.captableCaptableShareTransfer, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused 401, and one from a member who is neither a SuperAdmin nor an admin of the org is refused 403. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
          * @summary Add stakeholders to the cap table
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1965,7 +1965,7 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCaptableStakeholders(options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
+         * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sets the caller org\'s company name and incorporation details.
          * @param {CaptableApiPutCaptableCompanyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2279,7 +2279,7 @@ export interface CaptableApiPutCaptableCompanyRequest {
  */
 export class CaptableApi extends BaseAPI {
     /**
-     * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+     * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
      * @param {CaptableApiDeleteCaptableConvertiblesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2291,7 +2291,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
+     * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
      * @param {CaptableApiDeleteCaptableOptionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2303,7 +2303,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
+     * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
      * @param {CaptableApiDeleteCaptableSafesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2315,7 +2315,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
+     * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
      * @param {CaptableApiDeleteCaptableSharesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2327,7 +2327,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
+     * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Removes one of the caller org\'s stakeholders.
      * @param {CaptableApiDeleteCaptableStakeholdersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2339,7 +2339,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.
+     * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s share classes, in creation order.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2350,7 +2350,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.
+     * Returns the caller org\'s cap-table company record. The row is seeded when the tenant\'s store first opens, so it always exists; its name and incorporation details are set with PUT /v1/captable/company.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s cap-table company record.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2361,7 +2361,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+     * Returns the caller org\'s convertible notes, newest first. A note\'s principal sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s convertible notes, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2372,7 +2372,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.
+     * Returns the caller org\'s investments, newest first. It spans every round, so it is the flat ledger of cheques written into the company, each naming its investor and the round it went into.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s investments, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2383,7 +2383,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.
+     * Returns the caller org\'s option grants, newest first. Each row is joined to its grantee and its equity plan. Grants that are EXERCISED, EXPIRED or CANCELLED are listed here but do not dilute the cap table.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s option grants, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2394,7 +2394,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.
+     * Returns the caller org\'s equity plans, newest first. An equity plan is an option pool: a reserve of shares, drawn from one share class, that option grants are written against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s equity plans, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2405,7 +2405,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.
+     * Returns the caller org\'s fundraising rounds, newest first. A round groups a fundraising event; a PRICED round also carries the share class and price per share it issues at.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s fundraising rounds, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2416,7 +2416,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
+     * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
      * @param {CaptableApiGetCaptableRoundsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2428,7 +2428,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
+     * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s SAFEs, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2439,7 +2439,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.
+     * Returns the caller org\'s share certificates, newest first. Each row is joined to its holder and its share class, so a certificate names who holds it and what class it is in without a second call.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s share certificates, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2450,7 +2450,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.
+     * Returns the caller org\'s stakeholders, newest first. The response is a bare JSON array, not an envelope. Each row carries the holder\'s contact and address fields alongside the company\'s name.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s stakeholders, newest first.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2461,7 +2461,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.
+     * Computes the caller org\'s cap table. It answers who owns what on a fully-diluted basis: outstanding shares, granted options, per-stakeholder ownership percentages, each share class\'s authorized versus issued position, and the capital sitting on SAFEs and convertible notes that have not yet converted. Only non-terminal option grants dilute — EXERCISED, EXPIRED and CANCELLED grants are excluded, so equity issued through an exercised option is never counted twice.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Computes the caller org\'s cap table.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2472,7 +2472,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.
+     * Replaces one share class\'s terms.  It is a full REPLACE and not a merge, despite the PATCH: every field is written as sent, so a field omitted is written empty rather than left alone. Send the whole class. The method is PATCH because the resource is addressed by id, not because the body is partial — and getting that backwards silently blanks terms every later issuance prices against.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Replaces one share class\'s terms.
      * @param {CaptableApiPatchCaptableClassesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2484,7 +2484,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
+     * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Changes one of the caller org\'s stakeholders.
      * @param {CaptableApiPatchCaptableStakeholdersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2496,7 +2496,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.
+     * Defines a new class of shares.  Every field but convertsToShareClassId is required — a class is the instrument every later issuance prices against, so a partially-specified one would silently mis-value every share issued into it. `seniority` orders liquidation preference with LOWER first.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Defines a new class of shares.
      * @param {CaptableApiPostCaptableClassesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2508,7 +2508,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records a convertible note.
+     * Records a convertible note.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records a convertible note.
      * @param {CaptableApiPostCaptableConvertiblesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2520,7 +2520,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Grants options to a stakeholder from an equity plan.
+     * Grants options to a stakeholder from an equity plan.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Grants options to a stakeholder from an equity plan.
      * @param {CaptableApiPostCaptableOptionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2532,7 +2532,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Opens an equity plan that options are granted from.
+     * Opens an equity plan that options are granted from.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Opens an equity plan that options are granted from.
      * @param {CaptableApiPostCaptablePlansRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2544,7 +2544,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.
+     * Opens a priced round that investments can be added to.  The round opens OPEN; investing into a closed one is refused.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Opens a priced round that investments can be added to.
      * @param {CaptableApiPostCaptableRoundsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2556,7 +2556,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+     * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
      * @param {CaptableApiPostCaptableRoundsByIdCloseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2568,7 +2568,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.
+     * Records one investor\'s money into an open round.  The round must be OPEN; investing into a closed one is refused. Where the round carries a price per share, the investment also issues the shares it buys and the answer names them.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records one investor\'s money into an open round.
      * @param {CaptableApiPostCaptableRoundsByIdInvestmentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2580,7 +2580,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records a SAFE — a simple agreement for future equity.
+     * Records a SAFE — a simple agreement for future equity.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records a SAFE — a simple agreement for future equity.
      * @param {CaptableApiPostCaptableSafesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2592,7 +2592,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.
+     * Issues a share certificate to a stakeholder.  The certificate id must be UNIQUE within the company — a duplicate is refused 409, not silently merged — and both the stakeholder and the share class must belong to this company, so an id from another tenant is a 400 rather than a cross-company issuance.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Issues a share certificate to a stakeholder.
      * @param {CaptableApiPostCaptableSharesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2604,7 +2604,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.
+     * Moves shares from one stakeholder to another.  Omit `quantity` to transfer the whole certificate, which REASSIGNS it and mints no new share. Send a quantity below the amount held to SPLIT it — the source certificate keeps the remainder, and a split additionally requires `certificateId` for the new certificate, which must be unique in the company. A quantity outside 1..held is refused, so a transfer can never over-issue.  Both outcomes answer 200: a transfer records a movement between holders and mints no security of its own, which is why this is not a 201 the way an investment is.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Moves shares from one stakeholder to another.
      * @param {CaptableApiPostCaptableSharesTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2616,7 +2616,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused 401, and one from a member who is neither a SuperAdmin nor an admin of the org is refused 403. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
      * @summary Add stakeholders to the cap table
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2627,7 +2627,7 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.
+     * Sets the caller org\'s company name and incorporation details. The name is required; the three incorporation fields are optional and each is stored as empty when omitted, so a call that sends only a name CLEARS them. The company row itself is seeded when the tenant\'s store first opens, so this never creates one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Sets the caller org\'s company name and incorporation details.
      * @param {CaptableApiPutCaptableCompanyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

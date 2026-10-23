@@ -77,5 +77,11 @@ export interface AutoAutomationIn {
      * @memberof AutoAutomationIn
      */
     'schedule'?: AutoSchedule;
+    /**
+     * Source is the product it is made in: chat, dev, studio or workflow. Absent is dev.
+     * @type {string}
+     * @memberof AutoAutomationIn
+     */
+    'source'?: string;
 }
 

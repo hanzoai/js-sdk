@@ -431,8 +431,8 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Creates the caller\'s organization.
+         * Creates an organization and makes the caller its owner.  The caller\'s own account is not touched: who they are, the org their account lives in and how they sign in are the same before and after. The new org is a separate organization they belong to by membership, carried in the signed `orgs` claim of their next token, and reached by selecting it (X-Org-Id, the org switcher). Teammates join it the same way. The org starts at a zero balance, and its default API key is minted for the creator and returned once.  Moving the creator into the org instead re-keyed their identity to \"<org>/<name>\", and sign-in, which resolves an address in the signup org, then found nobody: the person was offered a second account for their own address.
+         * @summary Creates an organization and makes the caller its owner.
          * @param {AccountOnboardReq} accountOnboardReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -610,8 +610,8 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Creates the caller\'s organization.
+         * Creates an organization and makes the caller its owner.  The caller\'s own account is not touched: who they are, the org their account lives in and how they sign in are the same before and after. The new org is a separate organization they belong to by membership, carried in the signed `orgs` claim of their next token, and reached by selecting it (X-Org-Id, the org switcher). Teammates join it the same way. The org starts at a zero balance, and its default API key is minted for the creator and returned once.  Moving the creator into the org instead re-keyed their identity to \"<org>/<name>\", and sign-in, which resolves an address in the signup org, then found nobody: the person was offered a second account for their own address.
+         * @summary Creates an organization and makes the caller its owner.
          * @param {AccountOnboardReq} accountOnboardReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -729,8 +729,8 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postAccountKeys(requestParameters.accountKeyIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-         * @summary Creates the caller\'s organization.
+         * Creates an organization and makes the caller its owner.  The caller\'s own account is not touched: who they are, the org their account lives in and how they sign in are the same before and after. The new org is a separate organization they belong to by membership, carried in the signed `orgs` claim of their next token, and reached by selecting it (X-Org-Id, the org switcher). Teammates join it the same way. The org starts at a zero balance, and its default API key is minted for the creator and returned once.  Moving the creator into the org instead re-keyed their identity to \"<org>/<name>\", and sign-in, which resolves an address in the signup org, then found nobody: the person was offered a second account for their own address.
+         * @summary Creates an organization and makes the caller its owner.
          * @param {AccountApiPostAccountOrgsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -984,8 +984,8 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * Creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
-     * @summary Creates the caller\'s organization.
+     * Creates an organization and makes the caller its owner.  The caller\'s own account is not touched: who they are, the org their account lives in and how they sign in are the same before and after. The new org is a separate organization they belong to by membership, carried in the signed `orgs` claim of their next token, and reached by selecting it (X-Org-Id, the org switcher). Teammates join it the same way. The org starts at a zero balance, and its default API key is minted for the creator and returned once.  Moving the creator into the org instead re-keyed their identity to \"<org>/<name>\", and sign-in, which resolves an address in the signup org, then found nobody: the person was offered a second account for their own address.
+     * @summary Creates an organization and makes the caller its owner.
      * @param {AccountApiPostAccountOrgsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

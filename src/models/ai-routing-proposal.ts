@@ -38,5 +38,11 @@ export interface AiRoutingProposal {
      * @memberof AiRoutingProposal
      */
     'family'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiRoutingProposal
+     */
+    'refused'?: string;
 }
 

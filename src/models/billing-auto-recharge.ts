@@ -45,6 +45,12 @@ export interface BillingAutoRecharge {
      */
     'lastRechargedAt'?: string;
     /**
+     * PerDay is the most times the sweep reloads the balance in one UTC day.
+     * @type {number}
+     * @memberof BillingAutoRecharge
+     */
+    'perDay'?: number;
+    /**
      * 
      * @type {boolean}
      * @memberof BillingAutoRecharge

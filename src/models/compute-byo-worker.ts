@@ -19,6 +19,9 @@ import type { ComputeByoGPU } from './compute-byo-gpu';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { ComputeEngineAdvertisement } from './compute-engine-advertisement';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ComputeLaneModel } from './compute-lane-model';
 
 /**
  * 
@@ -105,6 +108,12 @@ export interface ComputeByoWorker {
      */
     'jobQueue'?: string;
     /**
+     * Lanes are the Studio render lanes the node\'s engine can run now (image.zen, edit.qwen, video.wan, mesh, ...): advertised only when every weight file a lane loads is on the node, so a page offers a GPU card only where it renders.
+     * @type {Array<string>}
+     * @memberof ComputeByoWorker
+     */
+    'lanes'?: Array<string>;
+    /**
      * LastHeartbeat is the most recent beat this node sent, RFC 3339. It is what Status is computed from, so a reader can check the judgement.
      * @type {string}
      * @memberof ComputeByoWorker
@@ -122,6 +131,12 @@ export interface ComputeByoWorker {
      * @memberof ComputeByoWorker
      */
     'memory'?: number;
+    /**
+     * Models are the weights behind those lanes, each with its SPDX licence.
+     * @type {Array<ComputeLaneModel>}
+     * @memberof ComputeByoWorker
+     */
+    'models'?: Array<ComputeLaneModel>;
     /**
      * Os is the host\'s operating system: linux, darwin or windows.
      * @type {string}

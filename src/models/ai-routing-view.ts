@@ -49,6 +49,12 @@ export interface AiRoutingView {
     'family'?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof AiRoutingView
+     */
+    'redeployed'?: boolean;
+    /**
+     * 
      * @type {any}
      * @memberof AiRoutingView
      */

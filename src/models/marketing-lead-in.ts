@@ -15,6 +15,15 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketingAddress } from './marketing-address';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MarketingAnswer } from './marketing-answer';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MarketingTags } from './marketing-tags';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketingVisit } from './marketing-visit';
 
 /**
@@ -24,11 +33,41 @@ import type { MarketingVisit } from './marketing-visit';
  */
 export interface MarketingLeadIn {
     /**
+     * Address is where an investor lives, or where the entity they invest through is: street, city and country required, each at most 200 characters.
+     * @type {MarketingAddress}
+     * @memberof MarketingLeadIn
+     */
+    'address'?: MarketingAddress;
+    /**
+     * 
+     * @type {any}
+     * @memberof MarketingLeadIn
+     */
+    'amount'?: any;
+    /**
+     * Answers is the application question by question, as the form asked it: at most 40, each question clipped at 200 characters and each answer at 2 KiB. Recorded on the lead as they came; optional.
+     * @type {Array<MarketingAnswer>}
+     * @memberof MarketingLeadIn
+     */
+    'answers'?: Array<MarketingAnswer>;
+    /**
+     * Campaign is the utm_* tags of the link the visit arrived on, recorded on the lead. Optional.
+     * @type {MarketingTags}
+     * @memberof MarketingLeadIn
+     */
+    'campaign'?: MarketingTags;
+    /**
      * Company is the person\'s company. Optional; clipped at 200 characters.
      * @type {string}
      * @memberof MarketingLeadIn
      */
     'company'?: string;
+    /**
+     * Consent is the applicant ticking \"Keep me posted about roles and news at Hanzo. Unsubscribe any time.\" Unticked, they hear nothing but the reply to their application. Read only with Job.
+     * @type {boolean}
+     * @memberof MarketingLeadIn
+     */
+    'consent'?: boolean;
     /**
      * Country is where the person is. Optional; clipped at 200 characters.
      * @type {string}
@@ -36,13 +75,43 @@ export interface MarketingLeadIn {
      */
     'country'?: string;
     /**
+     * Coupon is the offer code the visitor\'s page held: letters, digits, dash and underscore, at most 32. Any other value is recorded as none. Optional.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'coupon'?: string;
+    /**
+     * Department is the opening\'s department. Read only with Job.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'department'?: string;
+    /**
      * Email is where sales replies: the person\'s work email. Required, and it must look like an address. It is not verified.
      * @type {string}
      * @memberof MarketingLeadIn
      */
     'email'?: string;
     /**
-     * Name is the person\'s name. Optional; clipped at 200 characters.
+     * Entity is the legal name of the entity an investor invests through; empty, they invest in their own name. At most 200 characters. Read only with program investor, as are Title, Amount, Phone and Address.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'entity'?: string;
+    /**
+     * Job is the opening a careers form applies to, by its id on the careers page (senior-backend-engineer). A body naming one is a job application: it is filed as a candidate, never as a lead, so it is offered no call and no code, no ad platform hears of it, and the brand\'s careers mailbox is told instead of sales. Name, Email, Role (the opening\'s title), Country (where the person is), Need (what they wrote about themselves), Source and Answers carry over. Optional; clipped at 200 characters.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'job'?: string;
+    /**
+     * Links are https addresses the applicant gave: a portfolio, a profile, a site. At most five, each at most 500 characters; any other value is dropped. Read only with Job.
+     * @type {Array<string>}
+     * @memberof MarketingLeadIn
+     */
+    'links'?: Array<string>;
+    /**
+     * Name is the person\'s name. Optional, and clipped at 200 characters, except for an investor, who must give it, in at most 200.
      * @type {string}
      * @memberof MarketingLeadIn
      */
@@ -53,6 +122,30 @@ export interface MarketingLeadIn {
      * @memberof MarketingLeadIn
      */
     'need'?: string;
+    /**
+     * Phone is an investor\'s phone number: 3 to 20 digits, an optional leading +, and any spaces, dots, dashes or brackets between them. Optional.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'phone'?: string;
+    /**
+     * Program is the program the person applies to: beta, research or partner. Any other value is recorded as none. An application is mailed a code for 50% off a first month, once per address (offer.go). Optional. \"investor\" is an investor\'s subscription (investor.go): it is mailed no code, it is sent a SAFE, and Name, Amount and Address are required.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'program'?: string;
+    /**
+     * Resume is an https address the applicant gave for their resume. Read only with Job; any other value is recorded as none.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'resume'?: string;
+    /**
+     * ResumeFile is the key POST /v1/marketing/leads/resume handed out for the resume the applicant uploaded. Any other value is recorded as none. Read only with Job.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'resume_file'?: string;
     /**
      * Role is the person\'s job title. Optional; clipped at 200 characters.
      * @type {string}
@@ -71,6 +164,12 @@ export interface MarketingLeadIn {
      * @memberof MarketingLeadIn
      */
     'source'?: string;
+    /**
+     * Title is the investor\'s title at Entity, as the SAFE\'s signature block names it. At most 200 characters; read only with Entity.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'title'?: string;
     /**
      * Visit is what the visitor\'s page knows about the ad click that brought them and the consent they gave, so the lead reaches the ad platforms matched to the click and under the visitor\'s own choice. Optional.
      * @type {MarketingVisit}

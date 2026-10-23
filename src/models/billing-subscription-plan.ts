@@ -50,5 +50,11 @@ export interface BillingSubscriptionPlan {
      * @memberof BillingSubscriptionPlan
      */
     'price'?: number;
+    /**
+     * Slug is the catalog plan it was opened on, e.g. \"max-20x\": what a reader matches against GET /v1/billing/plans. Empty on a row that predates it.
+     * @type {string}
+     * @memberof BillingSubscriptionPlan
+     */
+    'slug'?: string;
 }
 

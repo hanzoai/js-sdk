@@ -1876,6 +1876,40 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.  The address works once. The provider leg runs on a fresh transaction, bound to this browser by a cookie set on this navigation, so that transaction and its binding exist only here.
+         * @summary Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/link`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with. It is what a security page lists next to the option to disconnect one.
          * @summary Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with.
          * @param {*} [options] Override http request option.
@@ -1988,7 +2022,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
          * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3752,8 +3786,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
-         * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
+         * Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them. The person keeps their account and owns the org by membership.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
+         * @summary Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4034,11 +4068,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
          * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
          * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamInvitationsAccept: async (iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamInvitationsAccept: async (iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamAcceptBody' is not null or undefined
             assertParamExists('postIamInvitationsAccept', 'iamAcceptBody', iamAcceptBody)
             const localVarPath = `/v1/iam/invitations/accept`;
@@ -4069,6 +4105,12 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             }
             if (secFetchSite != null) {
                 localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (origin != null) {
+                localVarHeaderParameter['Origin'] = String(origin);
+            }
+            if (host != null) {
+                localVarHeaderParameter['Host'] = String(host);
             }
             if (contentType != null) {
                 localVarHeaderParameter['Content-Type'] = String(contentType);
@@ -4170,7 +4212,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with an address for your browser to open; from there you go to the provider, and when it returns, that identity is attached and you come back to returnUri. Only the browser where you are signed in here can carry a link through.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
          * @summary Starts connecting another sign-in identity to the account you are already signed in as.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4381,6 +4423,40 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         postIamOauthAuthorize: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/oauth/authorize`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
+         * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/oauth/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5300,7 +5376,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5402,7 +5478,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.  Only this site\'s own pages may finish an enrollment, and only as JSON.
          * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5481,10 +5557,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {IamAccountBody} iamAccountBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamAccount: async (iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamAccount: async (iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamAccountBody' is not null or undefined
             assertParamExists('putIamAccount', 'iamAccountBody', iamAccountBody)
             const localVarPath = `/v1/iam/account`;
@@ -5512,6 +5592,18 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             }
             if (authorization != null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (secFetchSite != null) {
+                localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (origin != null) {
+                localVarHeaderParameter['Origin'] = String(origin);
+            }
+            if (host != null) {
+                localVarHeaderParameter['Host'] = String(host);
+            }
+            if (contentType != null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
             }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -5803,10 +5895,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {IamPasswordBody} iamPasswordBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamPassword: async (iamPasswordBody: IamPasswordBody, cookie?: string, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamPassword: async (iamPasswordBody: IamPasswordBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamPasswordBody' is not null or undefined
             assertParamExists('putIamPassword', 'iamPasswordBody', iamPasswordBody)
             const localVarPath = `/v1/iam/password`;
@@ -5834,6 +5930,18 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             }
             if (authorization != null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (secFetchSite != null) {
+                localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (origin != null) {
+                localVarHeaderParameter['Origin'] = String(origin);
+            }
+            if (host != null) {
+                localVarHeaderParameter['Host'] = String(host);
+            }
+            if (contentType != null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
             }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -6081,11 +6189,15 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {IamTermsBody} iamTermsBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {string} [xForwardedFor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamTerms: async (iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamTerms: async (iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamTermsBody' is not null or undefined
             assertParamExists('putIamTerms', 'iamTermsBody', iamTermsBody)
             const localVarPath = `/v1/iam/terms`;
@@ -6113,6 +6225,18 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             }
             if (authorization != null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (secFetchSite != null) {
+                localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (origin != null) {
+                localVarHeaderParameter['Origin'] = String(origin);
+            }
+            if (host != null) {
+                localVarHeaderParameter['Host'] = String(host);
+            }
+            if (contentType != null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
             }
             if (xForwardedFor != null) {
                 localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
@@ -7252,6 +7376,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.  The address works once. The provider leg runs on a fresh transaction, bound to this browser by a cookie set on this navigation, so that transaction and its binding exist only here.
+         * @summary Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamLink(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamLink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with. It is what a security page lists next to the option to disconnect one.
          * @summary Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with.
          * @param {*} [options] Override http request option.
@@ -7290,7 +7426,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
          * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7883,8 +8019,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
-         * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
+         * Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them. The person keeps their account and owns the org by membership.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
+         * @summary Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7980,12 +8116,14 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {string} [cookie] 
          * @param {string} [authorization] 
          * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
          * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamInvitationsAccept(iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsAccept(iamAcceptBody, cookie, authorization, secFetchSite, contentType, options);
+        async postIamInvitationsAccept(iamAcceptBody: IamAcceptBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsAccept(iamAcceptBody, cookie, authorization, secFetchSite, origin, host, contentType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsAccept']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8019,7 +8157,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with an address for your browser to open; from there you go to the provider, and when it returns, that identity is attached and you come back to returnUri. Only the browser where you are signed in here can carry a link through.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
          * @summary Starts connecting another sign-in identity to the account you are already signed in as.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8100,6 +8238,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamOauthAuthorize(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamOauthAuthorize']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
+         * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamOauthCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamOauthCallback(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamOauthCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8411,7 +8561,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8447,7 +8597,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.  Only this site\'s own pages may finish an enrollment, and only as JSON.
          * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8477,11 +8627,15 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {IamAccountBody} iamAccountBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamAccount(iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAccount(iamAccountBody, cookie, authorization, options);
+        async putIamAccount(iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAccount(iamAccountBody, cookie, authorization, secFetchSite, origin, host, contentType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8579,11 +8733,15 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {IamPasswordBody} iamPasswordBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamPassword(iamPasswordBody: IamPasswordBody, cookie?: string, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamPassword(iamPasswordBody, cookie, authorization, options);
+        async putIamPassword(iamPasswordBody: IamPasswordBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamPassword(iamPasswordBody, cookie, authorization, secFetchSite, origin, host, contentType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8667,12 +8825,16 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {IamTermsBody} iamTermsBody 
          * @param {string} [cookie] 
          * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
          * @param {string} [xForwardedFor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamTerms(iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamTerms(iamTermsBody, cookie, authorization, xForwardedFor, options);
+        async putIamTerms(iamTermsBody: IamTermsBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamTerms(iamTermsBody, cookie, authorization, secFetchSite, origin, host, contentType, xForwardedFor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamTerms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9276,6 +9438,15 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamKeysPrincipal(options).then((request) => request(axios, basePath));
         },
         /**
+         * Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.  The address works once. The provider leg runs on a fresh transaction, bound to this browser by a cookie set on this navigation, so that transaction and its binding exist only here.
+         * @summary Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamLink(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with. It is what a security page lists next to the option to disconnect one.
          * @summary Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with.
          * @param {*} [options] Override http request option.
@@ -9304,7 +9475,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamOauthAuthorize(options).then((request) => request(axios, basePath));
         },
         /**
-         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
          * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9736,8 +9907,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.patchIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
-         * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
+         * Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them. The person keeps their account and owns the org by membership.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
+         * @summary Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9811,7 +9982,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         postIamInvitationsAccept(requestParameters: IamApiPostIamInvitationsAcceptRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.contentType, options).then((request) => request(axios, basePath));
+            return localVarFp.postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(axios, basePath));
         },
         /**
          * Emails an invitation to the address it is pinned to: who invited them, to which organization, and the link that joins them.  The caller chooses nothing about how it goes out. It is sent through the platform application the caller\'s access token was issued to, from that application\'s org\'s email account, with a link on the identity host that issued the token — the way the inviter came in. Only the pinned address receives it.
@@ -9834,7 +10005,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamKeys(requestParameters.iamKey, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with an address for your browser to open; from there you go to the provider, and when it returns, that identity is attached and you come back to returnUri. Only the browser where you are signed in here can carry a link through.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
          * @summary Starts connecting another sign-in identity to the account you are already signed in as.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9895,6 +10066,15 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamOauthAuthorize(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIamOauthAuthorize(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
+         * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamOauthCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a sign-in on a device with no browser and no keyboard — a TV, a CLI, a headless box. It returns a short code to show the person and the address to send them to on a phone or laptop.  Nothing is granted until a human approves it there; until then the code is just a pending request.
@@ -10129,7 +10309,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10156,7 +10336,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamWebauthnSigninFinish(options).then((request) => request(axios, basePath));
         },
         /**
-         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.  Only this site\'s own pages may finish an enrollment, and only as JSON.
          * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10182,7 +10362,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(axios, basePath));
+            return localVarFp.putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
@@ -10251,7 +10431,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         putIamPassword(requestParameters: IamApiPutIamPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.putIamPassword(requestParameters.iamPasswordBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(axios, basePath));
+            return localVarFp.putIamPassword(requestParameters.iamPasswordBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
@@ -10311,7 +10491,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         putIamTerms(requestParameters: IamApiPutIamTermsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
+            return localVarFp.putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.  A SuperAdmin\'s account is changed only by a SuperAdmin.
@@ -11812,6 +11992,20 @@ export interface IamApiPostIamInvitationsAcceptRequest {
      * @type {string}
      * @memberof IamApiPostIamInvitationsAccept
      */
+    readonly origin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
+    readonly host?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamInvitationsAccept
+     */
     readonly contentType?: string
 }
 
@@ -12002,6 +12196,34 @@ export interface IamApiPutIamAccountRequest {
      * @memberof IamApiPutIamAccount
      */
     readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly secFetchSite?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly origin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly host?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly contentType?: string
 }
 
 /**
@@ -12170,6 +12392,34 @@ export interface IamApiPutIamPasswordRequest {
      * @memberof IamApiPutIamPassword
      */
     readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamPassword
+     */
+    readonly secFetchSite?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamPassword
+     */
+    readonly origin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamPassword
+     */
+    readonly host?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamPassword
+     */
+    readonly contentType?: string
 }
 
 /**
@@ -12324,6 +12574,34 @@ export interface IamApiPutIamTermsRequest {
      * @memberof IamApiPutIamTerms
      */
     readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly secFetchSite?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly origin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly host?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamTerms
+     */
+    readonly contentType?: string
 
     /**
      * 
@@ -13133,6 +13411,17 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.  The address works once. The provider leg runs on a fresh transaction, bound to this browser by a cookie set on this navigation, so that transaction and its binding exist only here.
+     * @summary Continues a link in the browser of the person it is for: the browser opens the address POST /v1/iam/link answered, as a top-level navigation, signed in here as that person, and is sent on to the provider.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamLink(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamLink(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with. It is what a security page lists next to the option to disconnect one.
      * @summary Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with.
      * @param {*} [options] Override http request option.
@@ -13167,7 +13456,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+     * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
      * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13689,8 +13978,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
-     * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
+     * Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them. The person keeps their account and owns the org by membership.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
+     * @summary Founds an org on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -13779,7 +14068,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public postIamInvitationsAccept(requestParameters: IamApiPostIamInvitationsAcceptRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).postIamInvitationsAccept(requestParameters.iamAcceptBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13807,7 +14096,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+     * Starts connecting another sign-in identity to the account you are already signed in as. It answers with an address for your browser to open; from there you go to the provider, and when it returns, that identity is attached and you come back to returnUri. Only the browser where you are signed in here can carry a link through.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
      * @summary Starts connecting another sign-in identity to the account you are already signed in as.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13881,6 +14170,17 @@ export class IamApi extends BaseAPI {
      */
     public postIamOauthAuthorize(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamOauthAuthorize(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state. A redirect provider\'s reply is read from the query of its GET. A form_post provider\'s POST is answered with a 303 to a GET of this address naming a single-use handoff that holds the reply, and that GET finishes the sign-in.
+     * @summary Completes the round-trip: it resolves and burns the single-use transaction (checking expiry + browser binding), exchanges and verifies the IdP response, links or provisions the local user, and mints the iam authorization code the relying party expects — then redirects to the original redirect_uri with code + state.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamOauthCallback(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamOauthCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14166,7 +14466,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
      * @summary Validates the request and asks otp to get a code to the person.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14199,7 +14499,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+     * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.  Only this site\'s own pages may finish an enrollment, and only as JSON.
      * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14230,7 +14530,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14313,7 +14613,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public putIamPassword(requestParameters: IamApiPutIamPasswordRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamPassword(requestParameters.iamPasswordBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).putIamPassword(requestParameters.iamPasswordBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14385,7 +14685,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public putIamTerms(requestParameters: IamApiPutIamTermsRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).putIamTerms(requestParameters.iamTermsBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

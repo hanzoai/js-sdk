@@ -28,6 +28,14 @@ import type { MarketingAudienceList } from '../models';
 // @ts-ignore
 import type { MarketingAudiencePreview } from '../models';
 // @ts-ignore
+import type { MarketingBeta } from '../models';
+// @ts-ignore
+import type { MarketingBetaActIn } from '../models';
+// @ts-ignore
+import type { MarketingBetaIn } from '../models';
+// @ts-ignore
+import type { MarketingBetaRequest } from '../models';
+// @ts-ignore
 import type { MarketingCalendarPost } from '../models';
 // @ts-ignore
 import type { MarketingCampaign } from '../models';
@@ -40,9 +48,15 @@ import type { MarketingEnrollResult } from '../models';
 // @ts-ignore
 import type { MarketingEnrollmentList } from '../models';
 // @ts-ignore
+import type { MarketingEsignEvent } from '../models';
+// @ts-ignore
 import type { MarketingLead } from '../models';
 // @ts-ignore
 import type { MarketingLeadIn } from '../models';
+// @ts-ignore
+import type { MarketingMailIn } from '../models';
+// @ts-ignore
+import type { MarketingMailOut } from '../models';
 // @ts-ignore
 import type { MarketingPostList } from '../models';
 // @ts-ignore
@@ -56,6 +70,10 @@ import type { MarketingRedeemResult } from '../models';
 // @ts-ignore
 import type { MarketingRedemption } from '../models';
 // @ts-ignore
+import type { MarketingResumeForm } from '../models';
+// @ts-ignore
+import type { MarketingResumeIn } from '../models';
+// @ts-ignore
 import type { MarketingScheduleInput } from '../models';
 // @ts-ignore
 import type { MarketingSequence } from '../models';
@@ -65,6 +83,8 @@ import type { MarketingSequenceList } from '../models';
 import type { MarketingSequenceStatus } from '../models';
 // @ts-ignore
 import type { MarketingSequenceView } from '../models';
+// @ts-ignore
+import type { MarketingSigning } from '../models';
 // @ts-ignore
 import type { MarketingStep } from '../models';
 // @ts-ignore
@@ -344,6 +364,40 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             assertParamExists('getMarketingAudiencesByIdPreview', 'id', id)
             const localVarPath = `/v1/marketing/audiences/{id}/preview`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist. An account that has not applied answers applied false and place 0.
+         * @summary Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/beta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1015,6 +1069,86 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust. An action already counted changes nothing. A star GitHub does not show answers 422, and a login another account\'s stars are counted for, 409.
+         * @summary Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust.
+         * @param {MarketingBetaActIn} marketingBetaActIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaActions: async (marketingBetaActIn: MarketingBetaActIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBetaActIn' is not null or undefined
+            assertParamExists('postMarketingBetaActions', 'marketingBetaActIn', marketingBetaActIn)
+            const localVarPath = `/v1/marketing/beta/actions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaActIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Adds betas to those the signed-in caller asked for, creating the record when there is none. Each new id is stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Adds betas to those the signed-in caller asked for, creating the record when there is none.
+         * @param {MarketingBetaRequest} marketingBetaRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaRequest: async (marketingBetaRequest: MarketingBetaRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBetaRequest' is not null or undefined
+            assertParamExists('postMarketingBetaRequest', 'marketingBetaRequest', marketingBetaRequest)
+            const localVarPath = `/v1/marketing/beta/request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingCalendarPost} marketingCalendarPost 
@@ -1139,8 +1273,8 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane. No account is needed and none is read: every lead lands in the brand\'s org. Answers 201 with an opaque reference.  A brand org without the CRM installed answers 503, a body over 16 KiB answers 413, and a missing or malformed email answers 400 — in that order.
-         * @summary Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane.
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingLeadIn} marketingLeadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1172,6 +1306,126 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(marketingLeadIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status. The caller is Hanzo eSign acting as itself: its own IAM client_credentials token, verified by the identity boundary like every other. No caller answers 401, and any caller but eSign\'s application 403.  A status only moves forward (submitted, investor signed, countersigned, completed; or declined, or voided), so a replay or a late event changes nothing. The document must be the one the form recorded; any other, and any reference that names no investor\'s form, answers 200 with no status and changes nothing.
+         * @summary Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status.
+         * @param {MarketingEsignEvent} marketingEsignEvent 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLeadsEsign: async (marketingEsignEvent: MarketingEsignEvent, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingEsignEvent' is not null or undefined
+            assertParamExists('postMarketingLeadsEsign', 'marketingEsignEvent', marketingEsignEvent)
+            const localVarPath = `/v1/marketing/leads/esign`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingEsignEvent, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`). PUBLIC like the form itself: each caller is limited to ten an hour, a file that is not a PDF, DOC or DOCX of at most 10 MB is refused 400, and a deployment that cannot sign one answers 503.
+         * @summary Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`).
+         * @param {MarketingResumeIn} marketingResumeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLeadsResume: async (marketingResumeIn: MarketingResumeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingResumeIn' is not null or undefined
+            assertParamExists('postMarketingLeadsResume', 'marketingResumeIn', marketingResumeIn)
+            const localVarPath = `/v1/marketing/leads/resume`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingResumeIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
+         * @param {MarketingMailIn} marketingMailIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingMail: async (marketingMailIn: MarketingMailIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingMailIn' is not null or undefined
+            assertParamExists('postMarketingMail', 'marketingMailIn', marketingMailIn)
+            const localVarPath = `/v1/marketing/mail`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingMailIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1540,6 +1794,46 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under. A field left out keeps what the record holds; betas replace the set, each new id stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under.
+         * @param {MarketingBetaIn} marketingBetaIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingBeta: async (marketingBetaIn: MarketingBetaIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBetaIn' is not null or undefined
+            assertParamExists('putMarketingBeta', 'marketingBetaIn', marketingBetaIn)
+            const localVarPath = `/v1/marketing/beta`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
          * @summary Replaces a post\'s editable fields.
          * @param {string} id ID is the server-assigned post id (\&quot;cal_\&quot; + 128 random bits).
@@ -1729,6 +2023,18 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiencesByIdPreview(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingAudiencesByIdPreview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist. An account that has not applied answers applied false and place 0.
+         * @summary Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingBeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBeta>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBeta(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1947,6 +2253,32 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust. An action already counted changes nothing. A star GitHub does not show answers 422, and a login another account\'s stars are counted for, 409.
+         * @summary Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust.
+         * @param {MarketingBetaActIn} marketingBetaActIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBetaActions(marketingBetaActIn: MarketingBetaActIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBeta>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBetaActions(marketingBetaActIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBetaActions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Adds betas to those the signed-in caller asked for, creating the record when there is none. Each new id is stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Adds betas to those the signed-in caller asked for, creating the record when there is none.
+         * @param {MarketingBetaRequest} marketingBetaRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBetaRequest(marketingBetaRequest: MarketingBetaRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBeta>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBetaRequest(marketingBetaRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBetaRequest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingCalendarPost} marketingCalendarPost 
@@ -1987,8 +2319,8 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane. No account is needed and none is read: every lead lands in the brand\'s org. Answers 201 with an opaque reference.  A brand org without the CRM installed answers 503, a body over 16 KiB answers 413, and a missing or malformed email answers 400 — in that order.
-         * @summary Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane.
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingLeadIn} marketingLeadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1997,6 +2329,45 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingLeads(marketingLeadIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingLeads']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status. The caller is Hanzo eSign acting as itself: its own IAM client_credentials token, verified by the identity boundary like every other. No caller answers 401, and any caller but eSign\'s application 403.  A status only moves forward (submitted, investor signed, countersigned, completed; or declined, or voided), so a replay or a late event changes nothing. The document must be the one the form recorded; any other, and any reference that names no investor\'s form, answers 200 with no status and changes nothing.
+         * @summary Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status.
+         * @param {MarketingEsignEvent} marketingEsignEvent 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingLeadsEsign(marketingEsignEvent: MarketingEsignEvent, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSigning>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingLeadsEsign(marketingEsignEvent, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingLeadsEsign']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`). PUBLIC like the form itself: each caller is limited to ten an hour, a file that is not a PDF, DOC or DOCX of at most 10 MB is refused 400, and a deployment that cannot sign one answers 503.
+         * @summary Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`).
+         * @param {MarketingResumeIn} marketingResumeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingLeadsResume(marketingResumeIn: MarketingResumeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingResumeForm>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingLeadsResume(marketingResumeIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingLeadsResume']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
+         * @param {MarketingMailIn} marketingMailIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingMail(marketingMailIn: MarketingMailIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingMailOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingMail(marketingMailIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingMail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2113,6 +2484,19 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under. A field left out keeps what the record holds; betas replace the set, each new id stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under.
+         * @param {MarketingBetaIn} marketingBetaIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMarketingBeta(marketingBetaIn: MarketingBetaIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBeta>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingBeta(marketingBetaIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingBeta']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
          * @summary Replaces a post\'s editable fields.
          * @param {string} id ID is the server-assigned post id (\&quot;cal_\&quot; + 128 random bits).
@@ -2219,6 +2603,15 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         getMarketingAudiencesByIdPreview(requestParameters: MarketingApiGetMarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingAudiencePreview> {
             return localVarFp.getMarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist. An account that has not applied answers applied false and place 0.
+         * @summary Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBeta(options?: RawAxiosRequestConfig): AxiosPromise<MarketingBeta> {
+            return localVarFp.getMarketingBeta(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
@@ -2379,6 +2772,26 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingAudiences(requestParameters.marketingAudience, options).then((request) => request(axios, basePath));
         },
         /**
+         * Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust. An action already counted changes nothing. A star GitHub does not show answers 422, and a login another account\'s stars are counted for, 409.
+         * @summary Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust.
+         * @param {MarketingApiPostMarketingBetaActionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaActions(requestParameters: MarketingApiPostMarketingBetaActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBeta> {
+            return localVarFp.postMarketingBetaActions(requestParameters.marketingBetaActIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Adds betas to those the signed-in caller asked for, creating the record when there is none. Each new id is stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Adds betas to those the signed-in caller asked for, creating the record when there is none.
+         * @param {MarketingApiPostMarketingBetaRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaRequest(requestParameters: MarketingApiPostMarketingBetaRequestRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBeta> {
+            return localVarFp.postMarketingBetaRequest(requestParameters.marketingBetaRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
@@ -2409,14 +2822,44 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.marketingScheduleInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane. No account is needed and none is read: every lead lands in the brand\'s org. Answers 201 with an opaque reference.  A brand org without the CRM installed answers 503, a body over 16 KiB answers 413, and a missing or malformed email answers 400 — in that order.
-         * @summary Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane.
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingApiPostMarketingLeadsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postMarketingLeads(requestParameters: MarketingApiPostMarketingLeadsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingLead> {
             return localVarFp.postMarketingLeads(requestParameters.marketingLeadIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status. The caller is Hanzo eSign acting as itself: its own IAM client_credentials token, verified by the identity boundary like every other. No caller answers 401, and any caller but eSign\'s application 403.  A status only moves forward (submitted, investor signed, countersigned, completed; or declined, or voided), so a replay or a late event changes nothing. The document must be the one the form recorded; any other, and any reference that names no investor\'s form, answers 200 with no status and changes nothing.
+         * @summary Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status.
+         * @param {MarketingApiPostMarketingLeadsEsignRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLeadsEsign(requestParameters: MarketingApiPostMarketingLeadsEsignRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSigning> {
+            return localVarFp.postMarketingLeadsEsign(requestParameters.marketingEsignEvent, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`). PUBLIC like the form itself: each caller is limited to ten an hour, a file that is not a PDF, DOC or DOCX of at most 10 MB is refused 400, and a deployment that cannot sign one answers 503.
+         * @summary Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`).
+         * @param {MarketingApiPostMarketingLeadsResumeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLeadsResume(requestParameters: MarketingApiPostMarketingLeadsResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingResumeForm> {
+            return localVarFp.postMarketingLeadsResume(requestParameters.marketingResumeIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
+         * @param {MarketingApiPostMarketingMailRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingMail(requestParameters: MarketingApiPostMarketingMailRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingMailOut> {
+            return localVarFp.postMarketingMail(requestParameters.marketingMailIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the caller org\'s claim on a promo. NOTHING IS CREDITED: the redemption is a row, and credit into an org is an admin decision made on the admin surface against an auditable ledger.  The plan is DERIVED from the org\'s live ACTIVE/TRIALING paid subscription and can never be named by the caller — an org with no qualifying subscription is refused, and so is one whose subscription cannot be read. The seat count is the single-seat floor (claimSeats), so the recorded figure has no input that can inflate it.  Guards run under one lock so the cap cannot be raced past: the fleet-wide redemption cap, one redemption per org, one per payment instrument (REQUIRED), and the per-redemption ceiling.  It is IDEMPOTENT: an org that already redeemed gets its original redemption back with alreadyRedeemed true.
@@ -2497,6 +2940,16 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingUnsubscribed> {
             return localVarFp.postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under. A field left out keeps what the record holds; betas replace the set, each new id stamped with the time it was asked for and stated on the event plane as beta_requested.
+         * @summary Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under.
+         * @param {MarketingApiPutMarketingBetaRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingBeta(requestParameters: MarketingApiPutMarketingBetaRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBeta> {
+            return localVarFp.putMarketingBeta(requestParameters.marketingBetaIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
@@ -2900,6 +3353,34 @@ export interface MarketingApiPostMarketingAudiencesRequest {
 }
 
 /**
+ * Request parameters for postMarketingBetaActions operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBetaActionsRequest
+ */
+export interface MarketingApiPostMarketingBetaActionsRequest {
+    /**
+     * 
+     * @type {MarketingBetaActIn}
+     * @memberof MarketingApiPostMarketingBetaActions
+     */
+    readonly marketingBetaActIn: MarketingBetaActIn
+}
+
+/**
+ * Request parameters for postMarketingBetaRequest operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBetaRequestRequest
+ */
+export interface MarketingApiPostMarketingBetaRequestRequest {
+    /**
+     * 
+     * @type {MarketingBetaRequest}
+     * @memberof MarketingApiPostMarketingBetaRequest
+     */
+    readonly marketingBetaRequest: MarketingBetaRequest
+}
+
+/**
  * Request parameters for postMarketingCalendar operation in MarketingApi.
  * @export
  * @interface MarketingApiPostMarketingCalendarRequest
@@ -2960,6 +3441,48 @@ export interface MarketingApiPostMarketingLeadsRequest {
      * @memberof MarketingApiPostMarketingLeads
      */
     readonly marketingLeadIn: MarketingLeadIn
+}
+
+/**
+ * Request parameters for postMarketingLeadsEsign operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingLeadsEsignRequest
+ */
+export interface MarketingApiPostMarketingLeadsEsignRequest {
+    /**
+     * 
+     * @type {MarketingEsignEvent}
+     * @memberof MarketingApiPostMarketingLeadsEsign
+     */
+    readonly marketingEsignEvent: MarketingEsignEvent
+}
+
+/**
+ * Request parameters for postMarketingLeadsResume operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingLeadsResumeRequest
+ */
+export interface MarketingApiPostMarketingLeadsResumeRequest {
+    /**
+     * 
+     * @type {MarketingResumeIn}
+     * @memberof MarketingApiPostMarketingLeadsResume
+     */
+    readonly marketingResumeIn: MarketingResumeIn
+}
+
+/**
+ * Request parameters for postMarketingMail operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingMailRequest
+ */
+export interface MarketingApiPostMarketingMailRequest {
+    /**
+     * 
+     * @type {MarketingMailIn}
+     * @memberof MarketingApiPostMarketingMail
+     */
+    readonly marketingMailIn: MarketingMailIn
 }
 
 /**
@@ -3138,6 +3661,20 @@ export interface MarketingApiPostMarketingUnsubscribeRequest {
 }
 
 /**
+ * Request parameters for putMarketingBeta operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPutMarketingBetaRequest
+ */
+export interface MarketingApiPutMarketingBetaRequest {
+    /**
+     * 
+     * @type {MarketingBetaIn}
+     * @memberof MarketingApiPutMarketingBeta
+     */
+    readonly marketingBetaIn: MarketingBetaIn
+}
+
+/**
  * Request parameters for putMarketingCalendarById operation in MarketingApi.
  * @export
  * @interface MarketingApiPutMarketingCalendarByIdRequest
@@ -3268,6 +3805,17 @@ export class MarketingApi extends BaseAPI {
      */
     public getMarketingAudiencesByIdPreview(requestParameters: MarketingApiGetMarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).getMarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist. An account that has not applied answers applied false and place 0.
+     * @summary Answers the signed-in caller\'s waitlist record: the application as it stands, the betas asked for, the points and the actions that earned them, and the place on the waitlist.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingBeta(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingBeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3461,6 +4009,30 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust. An action already counted changes nothing. A star GitHub does not show answers 422, and a login another account\'s stars are counted for, 409.
+     * @summary Counts one action of the signed-in caller: a star on a Hanzo repository, verified on GitHub for the login named, or a follow of a founder\'s link, taken on trust.
+     * @param {MarketingApiPostMarketingBetaActionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBetaActions(requestParameters: MarketingApiPostMarketingBetaActionsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBetaActions(requestParameters.marketingBetaActIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adds betas to those the signed-in caller asked for, creating the record when there is none. Each new id is stamped with the time it was asked for and stated on the event plane as beta_requested.
+     * @summary Adds betas to those the signed-in caller asked for, creating the record when there is none.
+     * @param {MarketingApiPostMarketingBetaRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBetaRequest(requestParameters: MarketingApiPostMarketingBetaRequestRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBetaRequest(requestParameters.marketingBetaRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
      * @summary Adds a post to the content calendar.
      * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
@@ -3497,8 +4069,8 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane. No account is needed and none is read: every lead lands in the brand\'s org. Answers 201 with an opaque reference.  A brand org without the CRM installed answers 503, a body over 16 KiB answers 413, and a missing or malformed email answers 400 — in that order.
-     * @summary Files a sales inquiry as a new lead in the deployment\'s own CRM and states it on the event plane.
+     * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+     * @summary Files one public form in the deployment\'s own CRM.
      * @param {MarketingApiPostMarketingLeadsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3506,6 +4078,42 @@ export class MarketingApi extends BaseAPI {
      */
     public postMarketingLeads(requestParameters: MarketingApiPostMarketingLeadsRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).postMarketingLeads(requestParameters.marketingLeadIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status. The caller is Hanzo eSign acting as itself: its own IAM client_credentials token, verified by the identity boundary like every other. No caller answers 401, and any caller but eSign\'s application 403.  A status only moves forward (submitted, investor signed, countersigned, completed; or declined, or voided), so a replay or a late event changes nothing. The document must be the one the form recorded; any other, and any reference that names no investor\'s form, answers 200 with no status and changes nothing.
+     * @summary Takes Hanzo eSign\'s webhook: a SAFE was signed, countersigned, completed, declined or voided, and the investor\'s form in the brand\'s CRM moves to that status.
+     * @param {MarketingApiPostMarketingLeadsEsignRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingLeadsEsign(requestParameters: MarketingApiPostMarketingLeadsEsignRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingLeadsEsign(requestParameters.marketingEsignEvent, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`). PUBLIC like the form itself: each caller is limited to ten an hour, a file that is not a PDF, DOC or DOCX of at most 10 MB is refused 400, and a deployment that cannot sign one answers 503.
+     * @summary Signs a form the careers page posts one resume through, into the brand org\'s private careers bucket, and answers the key to name on the application (`resume_file`).
+     * @param {MarketingApiPostMarketingLeadsResumeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingLeadsResume(requestParameters: MarketingApiPostMarketingLeadsResumeRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingLeadsResume(requestParameters.marketingResumeIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
+     * @param {MarketingApiPostMarketingMailRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingMail(requestParameters: MarketingApiPostMarketingMailRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingMail(requestParameters.marketingMailIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3602,6 +4210,18 @@ export class MarketingApi extends BaseAPI {
      */
     public postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under. A field left out keeps what the record holds; betas replace the set, each new id stamped with the time it was asked for and stated on the event plane as beta_requested.
+     * @summary Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under.
+     * @param {MarketingApiPutMarketingBetaRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public putMarketingBeta(requestParameters: MarketingApiPutMarketingBetaRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingBeta(requestParameters.marketingBetaIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

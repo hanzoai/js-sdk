@@ -78,13 +78,13 @@ export interface AiLimits {
      */
     'period_end'?: string;
     /**
-     * PeriodStart and PeriodEnd bound the billing period (RFC3339).
+     * PeriodStart and PeriodEnd bound the month the plan\'s usage renews over (RFC3339): the billing period, or one month of a yearly one.
      * @type {string}
      * @memberof AiLimits
      */
     'period_start'?: string;
     /**
-     * Plan is the plan the caller is served as (\"dev\", \"max-5x\", \"max-20x\", \"team\", \"team-annual\", \"agency\", \"advisory\", \"dedicated\", ...), \"free\" when none counts.
+     * Plan is the plan the caller is served as (\"dev\", \"max-5x\", \"max-20x\", \"team\", \"agency\", \"advisory\", \"dedicated\", ...), \"free\" when none counts.
      * @type {string}
      * @memberof AiLimits
      */

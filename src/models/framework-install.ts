@@ -33,6 +33,12 @@ export interface FrameworkInstall {
      */
     'existing'?: Array<string>;
     /**
+     * Grown names the existing DocTypes that gained the fields the module now declares and the org\'s stored definition lacked.
+     * @type {Array<string>}
+     * @memberof FrameworkInstall
+     */
+    'grown'?: Array<string>;
+    /**
      * 
      * @type {string}
      * @memberof FrameworkInstall

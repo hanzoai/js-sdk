@@ -27,12 +27,6 @@ export interface AgentRegisterReq {
      */
     'account'?: string;
     /**
-     * Actor is the \"org/sub\" identity to record the session under, up to 256 characters. Omit it and the calling principal is used, which is almost always what you want: it is what a login revoke matches on to stop this session.
-     * @type {string}
-     * @memberof AgentRegisterReq
-     */
-    'actor'?: string;
-    /**
      * Agent is the label the surface opening this session calls itself by (\"hanzo-dev\"). REQUIRED, up to 128 characters, and free text — nothing resolves it against a defined agent.
      * @type {string}
      * @memberof AgentRegisterReq

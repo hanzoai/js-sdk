@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { BenchmarkPublishedClaim } from './benchmark-published-claim';
+import type { BenchmarkClaim } from './benchmark-claim';
 
 /**
  * 
@@ -25,10 +25,10 @@ import type { BenchmarkPublishedClaim } from './benchmark-published-claim';
 export interface BenchmarkPutClaimsIn {
     /**
      * Data is the claims to record. One row is a correction; many is an import. There is no separate bulk endpoint because there is no separate operation: importing a leaderboard and fixing one number are the same write.
-     * @type {Array<BenchmarkPublishedClaim>}
+     * @type {Array<BenchmarkClaim>}
      * @memberof BenchmarkPutClaimsIn
      */
-    'data'?: Array<BenchmarkPublishedClaim>;
+    'data'?: Array<BenchmarkClaim>;
     /**
      * Visibility is who may read every row in Data: \"private\", the default, keeps them to the caller\'s org; \"public\" shows them to anyone. Restating a claim with the other value moves it.
      * @type {string}

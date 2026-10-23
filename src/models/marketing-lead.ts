@@ -21,11 +21,23 @@
  */
 export interface MarketingLead {
     /**
-     * Lead is the lead\'s reference, \"lead_\" and 24 hex characters. It is random, not the lead\'s internal name, so it says nothing about how many leads the team has.
+     * Lead is the reference of what was filed: \"lead_\" and 24 hex characters for a lead, \"cand_\" and 24 for a job application. It is random, not a record\'s id, so it says nothing about how many the team has.
      * @type {string}
      * @memberof MarketingLead
      */
     'lead'?: string;
+    /**
+     * Offer says what an application\'s code did: \"mailed\", a new code went to the address; \"held\", the address already holds one. Absent when no code was given. The code itself is never answered here.
+     * @type {string}
+     * @memberof MarketingLead
+     */
+    'offer'?: string;
+    /**
+     * Sent says whether an investor\'s SAFE went out for signature from Hanzo eSign: false when the deployment sends none yet, or eSign did not take it, and the investor is filed either way. Absent on every other form.
+     * @type {boolean}
+     * @memberof MarketingLead
+     */
+    'sent'?: boolean;
     /**
      * Stage is where the lead stands. Always \"new\" on a fresh lead.
      * @type {string}

@@ -36,11 +36,15 @@ import type { AgentBuildView } from '../models';
 // @ts-ignore
 import type { AgentClaimKeyOut } from '../models';
 // @ts-ignore
+import type { AgentCodingAck } from '../models';
+// @ts-ignore
 import type { AgentCodingArtifacts } from '../models';
 // @ts-ignore
 import type { AgentCodingBlob } from '../models';
 // @ts-ignore
 import type { AgentCodingChanges } from '../models';
+// @ts-ignore
+import type { AgentCodingInstruction } from '../models';
 // @ts-ignore
 import type { AgentCodingMerged } from '../models';
 // @ts-ignore
@@ -276,7 +280,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403, and a share of another organization 404. Every revoke is written to the audit trail.
+         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403 (an admin of a held org included), and a share of another organization 404. Every revoke is written to the audit trail.
          * @summary Revoke any link in your organization
          * @param {string} share 
          * @param {*} [options] Override http request option.
@@ -386,8 +390,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent\'s own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
-         * @summary Serves the org-wide recent-activity feed.
+         * Serves the recent-activity feed. Events are REAL: each of the caller\'s own recorded runs is an invoked (ok) or failed (error) event; each of the org\'s agents\' create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
+         * @summary Serves the recent-activity feed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -501,8 +505,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
-         * @summary Returns one agent with its system prompt and its 20 most recent runs.
+         * Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
+         * @summary Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s.
          * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -539,8 +543,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
-         * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
+         * Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took. A run is the person\'s who asked for it, so another member\'s runs are not listed, nor an org admin\'s view of them; a run no person asked for (a schedule) is listed to a SuperAdmin alone. Every row is a run that actually happened.
+         * @summary Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took.
          * @param {string} ref Ref is the agent\&#39;s public id or its org-unique name, from the path.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {*} [options] Override http request option.
@@ -625,8 +629,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
-         * @summary List the agent threads in your org
+         * Returns a summary of each conversation the caller opened — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  A conversation is the person\'s who opened it, not the org\'s: another member of the same org lists none of it. Each org\'s conversations live in a store of its own, and inside it only the caller\'s are listed. One recorded before members were kept names nobody and is nobody\'s: `?memberless=true` lists those instead, for a SuperAdmin alone (403 for anyone else), and each such list is audited. A validated principal naming an org and a user the identity boundary attests no two people share is required: 401 without a principal, 403 without an org or such a user.
+         * @summary List your own conversations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -659,7 +663,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns every message of one of the caller\'s conversations in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  Another member\'s conversation, another org\'s, and one recorded with no member are answered 404, exactly as an id that never existed, so an id says nothing about whose it is (a SuperAdmin alone reads one with no member, and each read is audited). A turn sent under such an id opens a fresh conversation of the caller\'s. A validated principal naming an org and a user is required: 401 without a principal, 403 without an org or a user.
          * @summary Read one agent thread in full
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -841,7 +845,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403.
+         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403, and so is an admin of a held org such as hanzo, whose members are customers who are strangers to each other.
          * @summary List every live link in your organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1037,8 +1041,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
-         * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
+         * Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
+         * @summary Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs.
          * @param {string} [range] Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1076,8 +1080,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
-         * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
+         * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
+         * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {string} [status] Status keeps only runs with this outcome (\&quot;ok\&quot; or \&quot;error\&quot;). Empty keeps both. It is the filter an operator reaches for first — \&quot;show me what broke\&quot; — and answering it here rather than by paging the whole history client-side is the difference between a usable feed and a download.
          * @param {*} [options] Override http request option.
@@ -1957,6 +1961,50 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * @summary Redirect your running or paused coding session.
+         * @param {string} session Session identifies the running or paused coding session from the path.
+         * @param {AgentCodingInstruction} agentCodingInstruction 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionSteer: async (session: string, agentCodingInstruction: AgentCodingInstruction, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'session' is not null or undefined
+            assertParamExists('postAgentCodingBySessionSteer', 'session', session)
+            // verify required parameter 'agentCodingInstruction' is not null or undefined
+            assertParamExists('postAgentCodingBySessionSteer', 'agentCodingInstruction', agentCodingInstruction)
+            const localVarPath = `/v1/agent/coding/{session}/steer`
+                .replace(`{${"session"}}`, encodeURIComponent(String(session)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentCodingInstruction, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Speaks MCP over streamable HTTP for one of the org\'s MCP servers, named by its id: tools/list answers the tools of it an admin of the org activated, and tools/call calls one. The server\'s address and credential never reach the run: the tool plane adds the credential and dials the server.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. A request without a live ticket is 401, and a server the run\'s kit did not carry when it started is 403. A run has at most four requests in flight here and twenty in a burst, then one a second; a request past that is 429 with Retry-After.
          * @summary The MCP address a coding run\'s harness reaches one of its org\'s MCP servers through.
          * @param {string} server 
@@ -2528,7 +2576,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403, and a share of another organization 404. Every revoke is written to the audit trail.
+         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403 (an admin of a held org included), and a share of another organization 404. Every revoke is written to the audit trail.
          * @summary Revoke any link in your organization
          * @param {string} share 
          * @param {*} [options] Override http request option.
@@ -2566,8 +2614,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent\'s own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
-         * @summary Serves the org-wide recent-activity feed.
+         * Serves the recent-activity feed. Events are REAL: each of the caller\'s own recorded runs is an invoked (ok) or failed (error) event; each of the org\'s agents\' create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
+         * @summary Serves the recent-activity feed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2605,8 +2653,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
-         * @summary Returns one agent with its system prompt and its 20 most recent runs.
+         * Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
+         * @summary Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s.
          * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2618,8 +2666,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
-         * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
+         * Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took. A run is the person\'s who asked for it, so another member\'s runs are not listed, nor an org admin\'s view of them; a run no person asked for (a schedule) is listed to a SuperAdmin alone. Every row is a run that actually happened.
+         * @summary Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took.
          * @param {string} ref Ref is the agent\&#39;s public id or its org-unique name, from the path.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {*} [options] Override http request option.
@@ -2646,8 +2694,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
-         * @summary List the agent threads in your org
+         * Returns a summary of each conversation the caller opened — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  A conversation is the person\'s who opened it, not the org\'s: another member of the same org lists none of it. Each org\'s conversations live in a store of its own, and inside it only the caller\'s are listed. One recorded before members were kept names nobody and is nobody\'s: `?memberless=true` lists those instead, for a SuperAdmin alone (403 for anyone else), and each such list is audited. A validated principal naming an org and a user the identity boundary attests no two people share is required: 401 without a principal, 403 without an org or such a user.
+         * @summary List your own conversations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2658,7 +2706,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns every message of one of the caller\'s conversations in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  Another member\'s conversation, another org\'s, and one recorded with no member are answered 404, exactly as an id that never existed, so an id says nothing about whose it is (a SuperAdmin alone reads one with no member, and each read is audited). A turn sent under such an id opens a fresh conversation of the caller\'s. A validated principal naming an org and a user is required: 401 without a principal, 403 without an org or a user.
          * @summary Read one agent thread in full
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -2721,7 +2769,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403.
+         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403, and so is an admin of a held org such as hanzo, whose members are customers who are strangers to each other.
          * @summary List every live link in your organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2787,8 +2835,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
-         * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
+         * Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
+         * @summary Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs.
          * @param {string} [range] Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2800,8 +2848,8 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
-         * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
+         * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
+         * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {string} [status] Status keeps only runs with this outcome (\&quot;ok\&quot; or \&quot;error\&quot;). Empty keeps both. It is the filter an operator reaches for first — \&quot;show me what broke\&quot; — and answering it here rather than by paging the whole history client-side is the difference between a usable feed and a download.
          * @param {*} [options] Override http request option.
@@ -3092,6 +3140,20 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * @summary Redirect your running or paused coding session.
+         * @param {string} session Session identifies the running or paused coding session from the path.
+         * @param {AgentCodingInstruction} agentCodingInstruction 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentCodingBySessionSteer(session: string, agentCodingInstruction: AgentCodingInstruction, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentCodingAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentCodingBySessionSteer(session, agentCodingInstruction, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentCodingBySessionSteer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Speaks MCP over streamable HTTP for one of the org\'s MCP servers, named by its id: tools/list answers the tools of it an admin of the org activated, and tools/call calls one. The server\'s address and credential never reach the run: the tool plane adds the credential and dials the server.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. A request without a live ticket is 401, and a server the run\'s kit did not carry when it started is 403. A run has at most four requests in flight here and twenty in a burst, then one a second; a request past that is 429 with Retry-After.
          * @summary The MCP address a coding run\'s harness reaches one of its org\'s MCP servers through.
          * @param {string} server 
@@ -3306,7 +3368,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.deleteAgentChatConversationsByIdSharesByShareViewersByViewer(requestParameters.id, requestParameters.share, requestParameters.viewer, options).then((request) => request(axios, basePath));
         },
         /**
-         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403, and a share of another organization 404. Every revoke is written to the audit trail.
+         * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403 (an admin of a held org included), and a share of another organization 404. Every revoke is written to the audit trail.
          * @summary Revoke any link in your organization
          * @param {AgentApiDeleteAgentChatSharesByShareRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3335,8 +3397,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgent(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent\'s own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
-         * @summary Serves the org-wide recent-activity feed.
+         * Serves the recent-activity feed. Events are REAL: each of the caller\'s own recorded runs is an invoked (ok) or failed (error) event; each of the org\'s agents\' create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
+         * @summary Serves the recent-activity feed.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3364,8 +3426,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentBuildsByOrgByProject(requestParameters.org, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
-         * @summary Returns one agent with its system prompt and its 20 most recent runs.
+         * Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
+         * @summary Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s.
          * @param {AgentApiGetAgentByRefRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3374,8 +3436,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
-         * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
+         * Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took. A run is the person\'s who asked for it, so another member\'s runs are not listed, nor an org admin\'s view of them; a run no person asked for (a schedule) is listed to a SuperAdmin alone. Every row is a run that actually happened.
+         * @summary Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took.
          * @param {AgentApiGetAgentByRefRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3394,8 +3456,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentByRefSpend(requestParameters.ref, requestParameters.by, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
-         * @summary List the agent threads in your org
+         * Returns a summary of each conversation the caller opened — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  A conversation is the person\'s who opened it, not the org\'s: another member of the same org lists none of it. Each org\'s conversations live in a store of its own, and inside it only the caller\'s are listed. One recorded before members were kept names nobody and is nobody\'s: `?memberless=true` lists those instead, for a SuperAdmin alone (403 for anyone else), and each such list is audited. A validated principal naming an org and a user the identity boundary attests no two people share is required: 401 without a principal, 403 without an org or such a user.
+         * @summary List your own conversations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3403,7 +3465,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentChatConversations(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+         * Returns every message of one of the caller\'s conversations in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  Another member\'s conversation, another org\'s, and one recorded with no member are answered 404, exactly as an id that never existed, so an id says nothing about whose it is (a SuperAdmin alone reads one with no member, and each read is audited). A turn sent under such an id opens a fresh conversation of the caller\'s. A validated principal naming an org and a user is required: 401 without a principal, 403 without an org or a user.
          * @summary Read one agent thread in full
          * @param {AgentApiGetAgentChatConversationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3451,7 +3513,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentChatSharedByShare(requestParameters.share, options).then((request) => request(axios, basePath));
         },
         /**
-         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403.
+         * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403, and so is an admin of a held org such as hanzo, whose members are customers who are strangers to each other.
          * @summary List every live link in your organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3500,8 +3562,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentCodingBySessionTree(requestParameters.session, requestParameters.path, options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
-         * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
+         * Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
+         * @summary Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs.
          * @param {AgentApiGetAgentMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3510,8 +3572,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
-         * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
+         * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
+         * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {AgentApiGetAgentRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3722,6 +3784,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         postAgentCodingBySessionMerge(requestParameters: AgentApiPostAgentCodingBySessionMergeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentCodingMerged> {
             return localVarFp.postAgentCodingBySessionMerge(requestParameters.session, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * @summary Redirect your running or paused coding session.
+         * @param {AgentApiPostAgentCodingBySessionSteerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionSteer(requestParameters: AgentApiPostAgentCodingBySessionSteerRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentCodingAck> {
+            return localVarFp.postAgentCodingBySessionSteer(requestParameters.session, requestParameters.agentCodingInstruction, options).then((request) => request(axios, basePath));
         },
         /**
          * Speaks MCP over streamable HTTP for one of the org\'s MCP servers, named by its id: tools/list answers the tools of it an admin of the org activated, and tools/call calls one. The server\'s address and credential never reach the run: the tool plane adds the credential and dials the server.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. A request without a live ticket is 401, and a server the run\'s kit did not carry when it started is 403. A run has at most four requests in flight here and twenty in a burst, then one a second; a request past that is 429 with Retry-After.
@@ -4477,6 +4549,27 @@ export interface AgentApiPostAgentCodingBySessionMergeRequest {
 }
 
 /**
+ * Request parameters for postAgentCodingBySessionSteer operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentCodingBySessionSteerRequest
+ */
+export interface AgentApiPostAgentCodingBySessionSteerRequest {
+    /**
+     * Session identifies the running or paused coding session from the path.
+     * @type {string}
+     * @memberof AgentApiPostAgentCodingBySessionSteer
+     */
+    readonly session: string
+
+    /**
+     * 
+     * @type {AgentCodingInstruction}
+     * @memberof AgentApiPostAgentCodingBySessionSteer
+     */
+    readonly agentCodingInstruction: AgentCodingInstruction
+}
+
+/**
  * Request parameters for postAgentMcpByServer operation in AgentApi.
  * @export
  * @interface AgentApiPostAgentMcpByServerRequest
@@ -4756,7 +4849,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403, and a share of another organization 404. Every revoke is written to the audit trail.
+     * For an admin of the caller\'s organization: ends one share made in it, for every viewer, exactly as its owner\'s revoke does. Anyone else is answered 403 (an admin of a held org included), and a share of another organization 404. Every revoke is written to the audit trail.
      * @summary Revoke any link in your organization
      * @param {AgentApiDeleteAgentChatSharesByShareRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4791,8 +4884,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent\'s own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
-     * @summary Serves the org-wide recent-activity feed.
+     * Serves the recent-activity feed. Events are REAL: each of the caller\'s own recorded runs is an invoked (ok) or failed (error) event; each of the org\'s agents\' create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
+     * @summary Serves the recent-activity feed.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentApi
@@ -4826,8 +4919,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
-     * @summary Returns one agent with its system prompt and its 20 most recent runs.
+     * Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
+     * @summary Returns one agent with its system prompt and the caller\'s own 20 most recent runs of it: a run\'s input and output are its person\'s.
      * @param {AgentApiGetAgentByRefRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4838,8 +4931,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
-     * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
+     * Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took. A run is the person\'s who asked for it, so another member\'s runs are not listed, nor an org admin\'s view of them; a run no person asked for (a schedule) is listed to a SuperAdmin alone. Every row is a run that actually happened.
+     * @summary Returns the caller\'s own runs of one agent, newest first — each run\'s input, its output or its error, and how long it took.
      * @param {AgentApiGetAgentByRefRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4862,8 +4955,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns a summary of every agent conversation in the caller\'s org — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
-     * @summary List the agent threads in your org
+     * Returns a summary of each conversation the caller opened — id, title, when it was last appended to, and whether it is pinned or archived — for populating a thread list: pinned first, then most recent. Archived conversations are left out; `?archived=true` lists them alone.  A conversation is the person\'s who opened it, not the org\'s: another member of the same org lists none of it. Each org\'s conversations live in a store of its own, and inside it only the caller\'s are listed. One recorded before members were kept names nobody and is nobody\'s: `?memberless=true` lists those instead, for a SuperAdmin alone (403 for anyone else), and each such list is audited. A validated principal naming an org and a user the identity boundary attests no two people share is required: 401 without a principal, 403 without an org or such a user.
+     * @summary List your own conversations
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentApi
@@ -4873,7 +4966,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required: 401 without a principal, 403 without an org.
+     * Returns every message of one of the caller\'s conversations in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  Another member\'s conversation, another org\'s, and one recorded with no member are answered 404, exactly as an id that never existed, so an id says nothing about whose it is (a SuperAdmin alone reads one with no member, and each read is audited). A turn sent under such an id opens a fresh conversation of the caller\'s. A validated principal naming an org and a user is required: 401 without a principal, 403 without an org or a user.
      * @summary Read one agent thread in full
      * @param {AgentApiGetAgentChatConversationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4931,7 +5024,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403.
+     * For an admin of the caller\'s organization: every unrevoked share made in it, with the conversation\'s id and title, the member who made it, when, and how many people it is open to. `?user=` narrows it to one member\'s. Anyone else is answered 403, and so is an admin of a held org such as hanzo, whose members are customers who are strangers to each other.
      * @summary List every live link in your organization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4990,8 +5083,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
-     * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
+     * Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
+     * @summary Serves the invocations-over-time histogram for the Agents dashboard, over the caller\'s own runs.
      * @param {AgentApiGetAgentMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5002,8 +5095,8 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
-     * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
+     * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
+     * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
      * @param {AgentApiGetAgentRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5257,6 +5350,18 @@ export class AgentApi extends BaseAPI {
      */
     public postAgentCodingBySessionMerge(requestParameters: AgentApiPostAgentCodingBySessionMergeRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).postAgentCodingBySessionMerge(requestParameters.session, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+     * @summary Redirect your running or paused coding session.
+     * @param {AgentApiPostAgentCodingBySessionSteerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentCodingBySessionSteer(requestParameters: AgentApiPostAgentCodingBySessionSteerRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentCodingBySessionSteer(requestParameters.session, requestParameters.agentCodingInstruction, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -2007,82 +2007,6 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @summary Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get3dById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('get3dById', 'id', id)
-            const localVarPath = `/v1/3d/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @summary Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get3dByIdContent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('get3dByIdContent', 'id', id)
-            const localVarPath = `/v1/3d/{id}/content`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Account
          * @param {*} [options] Override http request option.
@@ -2515,7 +2439,7 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal, so only the caller\'s own connection can result.
+         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal\'s, and only its admins may begin one (requireConnectionAdmin), so the state this signs names an org its holder administers.
          * @summary Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL.
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -7666,40 +7590,6 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @summary Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        post3dGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/3d/generations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -13226,32 +13116,6 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @summary Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async get3dById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.get3dById(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AiApi.get3dById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @summary Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async get3dByIdContent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.get3dByIdContent(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AiApi.get3dByIdContent']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * 
          * @summary Account
          * @param {*} [options] Override http request option.
@@ -13402,7 +13266,7 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal, so only the caller\'s own connection can result.
+         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal\'s, and only its admins may begin one (requireConnectionAdmin), so the state this signs names an org its holder administers.
          * @summary Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL.
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -15152,18 +15016,6 @@ export const AiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiWorkflowsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @summary Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async post3dGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.post3dGenerations(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AiApi.post3dGenerations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17215,26 +17067,6 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.deleteAudioTranscriptById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @summary Implements GET /v1/3d/:id (Retrieve 3D status).
-         * @param {AiApiGet3dByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get3dById(requestParameters: AiApiGet3dByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.get3dById(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @summary Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-         * @param {AiApiGet3dByIdContentRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get3dByIdContent(requestParameters: AiApiGet3dByIdContentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.get3dByIdContent(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
          * @summary Account
          * @param {*} [options] Override http request option.
@@ -17346,7 +17178,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.getAiConnections(options).then((request) => request(axios, basePath));
         },
         /**
-         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal, so only the caller\'s own connection can result.
+         * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal\'s, and only its admins may begin one (requireConnectionAdmin), so the state this signs names an org its holder administers.
          * @summary Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL.
          * @param {AiApiGetAiConnectionsByProviderAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -18622,15 +18454,6 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          */
         patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.patchAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @summary Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        post3dGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.post3dGenerations(options).then((request) => request(axios, basePath));
         },
         /**
          * Create one article.
@@ -20476,34 +20299,6 @@ export interface AiApiDeleteAudioTranscriptByIdRequest {
      * 
      * @type {string}
      * @memberof AiApiDeleteAudioTranscriptById
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for get3dById operation in AiApi.
- * @export
- * @interface AiApiGet3dByIdRequest
- */
-export interface AiApiGet3dByIdRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AiApiGet3dById
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for get3dByIdContent operation in AiApi.
- * @export
- * @interface AiApiGet3dByIdContentRequest
- */
-export interface AiApiGet3dByIdContentRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AiApiGet3dByIdContent
      */
     readonly id: string
 }
@@ -24008,30 +23803,6 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Implements GET /v1/3d/:id (Retrieve 3D status).
-     * @summary Implements GET /v1/3d/:id (Retrieve 3D status).
-     * @param {AiApiGet3dByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AiApi
-     */
-    public get3dById(requestParameters: AiApiGet3dByIdRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).get3dById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-     * @summary Implements GET /v1/3d/:id/content (Download 3D splat/glb content).
-     * @param {AiApiGet3dByIdContentRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AiApi
-     */
-    public get3dByIdContent(requestParameters: AiApiGet3dByIdContentRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).get3dByIdContent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * 
      * @summary Account
      * @param {*} [options] Override http request option.
@@ -24167,7 +23938,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal, so only the caller\'s own connection can result.
+     * Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL. By default it 302-redirects (a top-level browser \"connect your login\" click); a SPA/BFF that needs to drive the redirect itself passes ?format=json and gets {authorizeUrl} in the standard envelope. The org is the VERIFIED principal\'s, and only its admins may begin one (requireConnectionAdmin), so the state this signs names an org its holder administers.
      * @summary Begins an OAuth connection for the caller\'s org: it binds the org into a signed state and sends the caller to the provider\'s authorize URL.
      * @param {AiApiGetAiConnectionsByProviderAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -25714,17 +25485,6 @@ export class AiApi extends BaseAPI {
      */
     public patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).patchAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-     * @summary Implements POST /v1/3d/generations (Text/Image to 3D & Gaussian Splats).
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AiApi
-     */
-    public post3dGenerations(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).post3dGenerations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

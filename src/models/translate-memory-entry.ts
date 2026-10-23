@@ -27,11 +27,35 @@ export interface TranslateMemoryEntry {
      */
     'actor'?: string;
     /**
+     * Format is the markup the source carried: text, html or markdown. Part of the identity.
+     * @type {string}
+     * @memberof TranslateMemoryEntry
+     */
+    'format'?: string;
+    /**
      * Glossary is the glossary VERSION the entry was translated under — the digest version() derives from the terms, so changing a term changes the key and the stale rendering can never be served.
      * @type {string}
      * @memberof TranslateMemoryEntry
      */
     'glossary_version'?: string;
+    /**
+     * Lang is the source language the translate call declared, empty when the engine detected it. Part of the identity; an entry with none also serves a call that declares one.
+     * @type {string}
+     * @memberof TranslateMemoryEntry
+     */
+    'lang'?: string;
+    /**
+     * Model is the quality-tier model the translate call named, empty for the default. Part of the identity: one model\'s rendering never answers for another\'s.
+     * @type {string}
+     * @memberof TranslateMemoryEntry
+     */
+    'model'?: string;
+    /**
+     * RequestID is the X-Request-Id of the translate call whose engine produced the entry. Empty on an entry a human wrote, and on one older than the field.
+     * @type {string}
+     * @memberof TranslateMemoryEntry
+     */
+    'request_id'?: string;
     /**
      * Source is the ORIGINAL string this entry translates. Part of the identity.
      * @type {string}

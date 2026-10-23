@@ -80,7 +80,7 @@ import type { ProblemDetails } from '../models';
 export const CompanyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -241,7 +241,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
          * @param {CompanyBeginIn} companyBeginIn 
          * @param {*} [options] Override http request option.
@@ -281,7 +281,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Runs the ONE guarded transition of the formation machine.
          * @param {CompanyAdvanceIn} companyAdvanceIn 
          * @param {*} [options] Override http request option.
@@ -321,7 +321,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -395,7 +395,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
+         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -429,7 +429,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
+         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records whether the formation documents have been signed.
          * @param {CompanyEsignCompleteIn} companyEsignCompleteIn 
          * @param {*} [options] Override http request option.
@@ -469,7 +469,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
+         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces the formation\'s founders.
          * @param {CompanyFoundersIn} companyFoundersIn 
          * @param {*} [options] Override http request option.
@@ -509,7 +509,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, for a SuperAdmin or an admin of that org (a member who is neither is refused 403), and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
          * @summary Share a pitch deck in the org\'s data room
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
@@ -547,7 +547,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
+         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a fundraising round on the org\'s canonical cap table.
          * @param {CompanyRoundInput} companyRoundInput 
          * @param {*} [options] Override http request option.
@@ -587,7 +587,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
+         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
          * @param {CompanySafeIn} companySafeIn 
          * @param {*} [options] Override http request option.
@@ -627,7 +627,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.
+         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -661,7 +661,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
+         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
          * @param {CompanyImportCapTableIn} companyImportCapTableIn 
          * @param {*} [options] Override http request option.
@@ -701,7 +701,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
+         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
          * @param {CompanyImportDocumentsIn} companyImportDocumentsIn 
          * @param {*} [options] Override http request option.
@@ -741,7 +741,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -775,7 +775,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -809,7 +809,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -843,7 +843,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -917,7 +917,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
+         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records the entity kind, the state of formation and the proposed name.
          * @param {CompanyStructureIn} companyStructureIn 
          * @param {*} [options] Override http request option.
@@ -967,7 +967,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CompanyApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1020,7 +1020,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
          * @param {CompanyBeginIn} companyBeginIn 
          * @param {*} [options] Override http request option.
@@ -1033,7 +1033,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Runs the ONE guarded transition of the formation machine.
          * @param {CompanyAdvanceIn} companyAdvanceIn 
          * @param {*} [options] Override http request option.
@@ -1046,7 +1046,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1071,7 +1071,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
+         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1083,7 +1083,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
+         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records whether the formation documents have been signed.
          * @param {CompanyEsignCompleteIn} companyEsignCompleteIn 
          * @param {*} [options] Override http request option.
@@ -1096,7 +1096,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
+         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces the formation\'s founders.
          * @param {CompanyFoundersIn} companyFoundersIn 
          * @param {*} [options] Override http request option.
@@ -1109,7 +1109,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, for a SuperAdmin or an admin of that org (a member who is neither is refused 403), and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
          * @summary Share a pitch deck in the org\'s data room
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
@@ -1122,7 +1122,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
+         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a fundraising round on the org\'s canonical cap table.
          * @param {CompanyRoundInput} companyRoundInput 
          * @param {*} [options] Override http request option.
@@ -1135,7 +1135,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
+         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
          * @param {CompanySafeIn} companySafeIn 
          * @param {*} [options] Override http request option.
@@ -1148,7 +1148,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.
+         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1160,7 +1160,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
+         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
          * @param {CompanyImportCapTableIn} companyImportCapTableIn 
          * @param {*} [options] Override http request option.
@@ -1173,7 +1173,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
+         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
          * @param {CompanyImportDocumentsIn} companyImportDocumentsIn 
          * @param {*} [options] Override http request option.
@@ -1186,7 +1186,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1198,7 +1198,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1210,7 +1210,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1222,7 +1222,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1247,7 +1247,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
+         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records the entity kind, the state of formation and the proposed name.
          * @param {CompanyStructureIn} companyStructureIn 
          * @param {*} [options] Override http request option.
@@ -1270,7 +1270,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = CompanyApiFp(configuration)
     return {
         /**
-         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+         * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1308,7 +1308,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getCompanyReview(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+         * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
          * @param {CompanyApiPostCompanyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1318,7 +1318,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompany(requestParameters.companyBeginIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Runs the ONE guarded transition of the formation machine.
          * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1328,7 +1328,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyAdvance(requestParameters.companyAdvanceIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1347,7 +1347,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyEin(requestParameters.companyEinIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
+         * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1356,7 +1356,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyEsign(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
+         * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records whether the formation documents have been signed.
          * @param {CompanyApiPostCompanyEsignCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1366,7 +1366,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyEsignComplete(requestParameters.companyEsignCompleteIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
+         * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Replaces the formation\'s founders.
          * @param {CompanyApiPostCompanyFoundersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1376,7 +1376,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyFounders(requestParameters.companyFoundersIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, for a SuperAdmin or an admin of that org (a member who is neither is refused 403), and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
          * @summary Share a pitch deck in the org\'s data room
          * @param {CompanyApiPostCompanyFundraiseDeckRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1386,7 +1386,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyFundraiseDeck(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
+         * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records a fundraising round on the org\'s canonical cap table.
          * @param {CompanyApiPostCompanyFundraiseRoundRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1396,7 +1396,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyFundraiseRound(requestParameters.companyRoundInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
+         * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
          * @param {CompanyApiPostCompanyFundraiseSafeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1406,7 +1406,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyFundraiseSafe(requestParameters.companySafeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.
+         * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1415,7 +1415,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyGenesis(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
+         * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
          * @param {CompanyApiPostCompanyImportCaptableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1425,7 +1425,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyImportCaptable(requestParameters.companyImportCapTableIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
+         * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
          * @param {CompanyApiPostCompanyImportDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1435,7 +1435,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyImportDocuments(requestParameters.companyImportDocumentsIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+         * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1444,7 +1444,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyKyc(options).then((request) => request(axios, basePath));
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1453,7 +1453,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyKycRefresh(options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1462,7 +1462,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyPayment(options).then((request) => request(axios, basePath));
         },
         /**
-         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+         * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1481,7 +1481,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyTariff(requestParameters.companyTariffIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
+         * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
          * @summary Records the entity kind, the state of formation and the proposed name.
          * @param {CompanyApiPutCompanyStructureRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1718,7 +1718,7 @@ export interface CompanyApiPutCompanyStructureRequest {
  */
 export class CompanyApi extends BaseAPI {
     /**
-     * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
+     * Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Returns the caller org\'s formation and the stages reachable from it, or 404 when the org has not begun one.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1764,7 +1764,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.
+     * Starts the org\'s one formation and returns it with the stages reachable from it. It is idempotent: an org that already has a formation gets that one back with 200, while a first call creates it and answers 201.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Starts the org\'s one formation and returns it with the stages reachable from it.
      * @param {CompanyApiPostCompanyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1776,7 +1776,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+     * Runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Runs the ONE guarded transition of the formation machine.
      * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1788,7 +1788,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+     * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1811,7 +1811,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
+     * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1822,7 +1822,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.
+     * Records whether the formation documents have been signed. It consults the e-signature provider, which a real provider\'s webhook drives; the signal is idempotent.  An explicit `signed` in the request overrides the provider\'s answer, which is the manual path for the stub provider that never self-completes.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records whether the formation documents have been signed.
      * @param {CompanyApiPostCompanyEsignCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1834,7 +1834,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.
+     * Replaces the formation\'s founders. Each founder needs a name, an email and an equity share in basis points; every founder is (re)set to pending KYC, so a previously settled decision does not survive a change of the list.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Replaces the formation\'s founders.
      * @param {CompanyApiPostCompanyFoundersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1846,7 +1846,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+     * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, for a SuperAdmin or an admin of that org (a member who is neither is refused 403), and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
      * @summary Share a pitch deck in the org\'s data room
      * @param {CompanyApiPostCompanyFundraiseDeckRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1858,7 +1858,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.
+     * Records a fundraising round on the org\'s canonical cap table. Available only after incorporation (stage company); roundType defaults to PRICED.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records a fundraising round on the org\'s canonical cap table.
      * @param {CompanyApiPostCompanyFundraiseRoundRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1870,7 +1870,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).
+     * Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper. Available only after incorporation (stage company).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Raises an e-signature request over documents already in the org\'s data room — a SAFE, a convertible note, or any other fundraising paper.
      * @param {CompanyApiPostCompanyFundraiseSafeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1882,7 +1882,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.
+     * Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.  It is idempotent: once a root is recorded the cap table is NOT re-seeded, which would double-issue founder share certificates. The root is persisted even when the on-chain submit fails, because the root is the tamper-evident witness and must not be recomputed on retry. Available only at the genesis stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Seeds the canonical cap table with the founding allocation (stakeholders, a common share class, issued shares) and anchors the deterministic equity-genesis root on-chain.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1893,7 +1893,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.
+     * Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.  The first row is a header and columns are matched by name (case-insensitive): name and email are required, type/relationship/institution optional. A sheet without name and email columns, or with no usable data rows, is refused with 400. Available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Reads an existing company\'s cap table from a Google Sheet and adds its stakeholders to the canonical cap table.
      * @param {CompanyApiPostCompanyImportCaptableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1905,7 +1905,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.
+     * Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room. The import is shallow — sub-folders are skipped, not walked — and available only at the import stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Ingests an existing company\'s corporate documents from a Google Drive folder into the org\'s data room.
      * @param {CompanyApiPostCompanyImportDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1917,7 +1917,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).
+     * Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.  A start is never a decision: any terminal status the provider reports at inquiry time is clamped back to pending, so the payment gate can never open here. A terminal status arrives only from POST /v1/company/kyc/refresh (the provider) or POST /v1/company/kyc/decision (a Hanzo platform reviewer).  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Opens an identity-verification session for every founder with the wired provider and records each session\'s reference on the formation.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1928,7 +1928,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1939,7 +1939,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+     * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1950,7 +1950,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.
+     * Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity. Available only at the structure stage.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Marks the org as already incorporated and moves it onto the import path, so an existing company brings its documents and cap table in instead of forming a new entity.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1973,7 +1973,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
+     * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.  Only a SuperAdmin or an admin of the org may call it; a member who is neither is refused 403.
      * @summary Records the entity kind, the state of formation and the proposed name.
      * @param {CompanyApiPutCompanyStructureRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

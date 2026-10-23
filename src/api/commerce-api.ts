@@ -726,44 +726,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Delete a webhook, keeping a recoverable copy
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('deleteCommerceWebhookByWebhookid', 'webhookid', webhookid)
-            const localVarPath = `/v1/commerce/webhook/{webhookid}`
-                .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Discard a cart the shopper abandoned
          * @param {string} id ID is the cart\&#39;s id, as the open call answered it.
@@ -2474,78 +2436,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary List your org\'s webhooks, as a page
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/commerce/webhook`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Fetch one webhook
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('getCommerceWebhookByWebhookid', 'webhookid', webhookid)
-            const localVarPath = `/v1/commerce/webhook/{webhookid}`
-                .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Open a cart for a shopper to fill
          * @param {CartOpen} cartOpen 
@@ -3247,44 +3137,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('patchCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Change part of a webhook
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('patchCommerceWebhookByWebhookid', 'webhookid', webhookid)
-            const localVarPath = `/v1/commerce/webhook/{webhookid}`
-                .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5282,79 +5134,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Create a webhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/commerce/webhook`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
-         * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('postCommerceWebhookByWebhookid', 'webhookid', webhookid)
-            const localVarPath = `/v1/commerce/webhook/{webhookid}`
-                .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * Accepts a payment provider\'s event, verifies it, applies its settlement, refund, dispute and subscription effects, and records it for audit. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The path names the one processor that verifies, and only a processor holding its webhook secret may; any other name is 401. Each event is applied once for the whole deployment: a redelivery of an applied event is acknowledged as a duplicate, one still being applied is 409, and an event whose effect could not land is 503 so the provider redelivers it.
          * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -6080,44 +5860,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Replace a webhook outright
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('putCommerceWebhookByWebhookid', 'webhookid', webhookid)
-            const localVarPath = `/v1/commerce/webhook/{webhookid}`
-                .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Set one item\'s quantity in a cart; zero removes it
          * @param {string} id ID is the cart to amend, from the path.
@@ -6404,19 +6146,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Delete a webhook, keeping a recoverable copy
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceWebhookByWebhookid(webhookid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7012,31 +6741,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary List your org\'s webhooks, as a page
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWebhook(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWebhook']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Fetch one webhook
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWebhookByWebhookid(webhookid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Open a cart for a shopper to fill
          * @param {CartOpen} cartOpen 
@@ -7282,19 +6986,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Change part of a webhook
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWebhookByWebhookid(webhookid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7976,32 +7667,7 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Create a webhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWebhook(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWebhook']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
-         * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWebhookByWebhookid(webhookid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * Accepts a payment provider\'s event, verifies it, applies its settlement, refund, dispute and subscription effects, and records it for audit. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The path names the one processor that verifies, and only a processor holding its webhook secret may; any other name is 401. Each event is applied once for the whole deployment: a redelivery of an applied event is acknowledged as a duplicate, one still being applied is 409, and an event whose effect could not land is 503 so the provider redelivers it.
          * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -8249,19 +7915,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Replace a webhook outright
-         * @param {string} webhookid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceWebhookByWebhookid(webhookid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Set one item\'s quantity in a cart; zero removes it
          * @param {string} id ID is the cart to amend, from the path.
@@ -8464,16 +8117,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         deleteCommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Delete a webhook, keeping a recoverable copy
-         * @param {CommerceApiDeleteCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -8923,25 +8566,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary List your org\'s webhooks, as a page
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCommerceWebhook(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Fetch one webhook
-         * @param {CommerceApiGetCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Open a cart for a shopper to fill
          * @param {CommerceApiOpenCartRequest} requestParameters Request parameters.
@@ -9130,16 +8754,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         patchCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.patchCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Change part of a webhook
-         * @param {CommerceApiPatchCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job — the platform\'s own application, an IAM identity under the admin org.
@@ -9652,26 +9266,7 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Create a webhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCommerceWebhook(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
-         * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceWebhookByWebhookid(requestParameters: CommerceApiPostCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * Accepts a payment provider\'s event, verifies it, applies its settlement, refund, dispute and subscription effects, and records it for audit. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The path names the one processor that verifies, and only a processor holding its webhook secret may; any other name is 401. Each event is applied once for the whole deployment: a redelivery of an applied event is acknowledged as a duplicate, one still being applied is 409, and an event whose effect could not land is 503 so the provider redelivers it.
          * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
          * @param {CommerceApiPostCommerceWebhooksByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -9859,16 +9454,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         putCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-         * @summary Replace a webhook outright
-         * @param {CommerceApiPutCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -10140,20 +9725,6 @@ export interface CommerceApiDeleteCommerceWatchlistByWatchlistidRequest {
      * @memberof CommerceApiDeleteCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
-}
-
-/**
- * Request parameters for deleteCommerceWebhookByWebhookid operation in CommerceApi.
- * @export
- * @interface CommerceApiDeleteCommerceWebhookByWebhookidRequest
- */
-export interface CommerceApiDeleteCommerceWebhookByWebhookidRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiDeleteCommerceWebhookByWebhookid
-     */
-    readonly webhookid: string
 }
 
 /**
@@ -10521,20 +10092,6 @@ export interface CommerceApiGetCommerceWatchlistByWatchlistidRequest {
 }
 
 /**
- * Request parameters for getCommerceWebhookByWebhookid operation in CommerceApi.
- * @export
- * @interface CommerceApiGetCommerceWebhookByWebhookidRequest
- */
-export interface CommerceApiGetCommerceWebhookByWebhookidRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiGetCommerceWebhookByWebhookid
-     */
-    readonly webhookid: string
-}
-
-/**
  * Request parameters for openCart operation in CommerceApi.
  * @export
  * @interface CommerceApiOpenCartRequest
@@ -10805,20 +10362,6 @@ export interface CommerceApiPatchCommerceWatchlistByWatchlistidRequest {
      * @memberof CommerceApiPatchCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
-}
-
-/**
- * Request parameters for patchCommerceWebhookByWebhookid operation in CommerceApi.
- * @export
- * @interface CommerceApiPatchCommerceWebhookByWebhookidRequest
- */
-export interface CommerceApiPatchCommerceWebhookByWebhookidRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiPatchCommerceWebhookByWebhookid
-     */
-    readonly webhookid: string
 }
 
 /**
@@ -11347,20 +10890,6 @@ export interface CommerceApiPostCommerceWatchlistByWatchlistidRequest {
 }
 
 /**
- * Request parameters for postCommerceWebhookByWebhookid operation in CommerceApi.
- * @export
- * @interface CommerceApiPostCommerceWebhookByWebhookidRequest
- */
-export interface CommerceApiPostCommerceWebhookByWebhookidRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiPostCommerceWebhookByWebhookid
-     */
-    readonly webhookid: string
-}
-
-/**
  * Request parameters for postCommerceWebhooksByProvider operation in CommerceApi.
  * @export
  * @interface CommerceApiPostCommerceWebhooksByProviderRequest
@@ -11634,20 +11163,6 @@ export interface CommerceApiPutCommerceWatchlistByWatchlistidRequest {
 }
 
 /**
- * Request parameters for putCommerceWebhookByWebhookid operation in CommerceApi.
- * @export
- * @interface CommerceApiPutCommerceWebhookByWebhookidRequest
- */
-export interface CommerceApiPutCommerceWebhookByWebhookidRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiPutCommerceWebhookByWebhookid
-     */
-    readonly webhookid: string
-}
-
-/**
  * Request parameters for setCartItem operation in CommerceApi.
  * @export
  * @interface CommerceApiSetCartItemRequest
@@ -11889,18 +11404,6 @@ export class CommerceApi extends BaseAPI {
      */
     public deleteCommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).deleteCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary Delete a webhook, keeping a recoverable copy
-     * @param {CommerceApiDeleteCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public deleteCommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12445,29 +11948,6 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary List your org\'s webhooks, as a page
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public getCommerceWebhook(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getCommerceWebhook(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary Fetch one webhook
-     * @param {CommerceApiGetCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Open a cart for a shopper to fill
      * @param {CommerceApiOpenCartRequest} requestParameters Request parameters.
@@ -12693,18 +12173,6 @@ export class CommerceApi extends BaseAPI {
      */
     public patchCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).patchCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary Change part of a webhook
-     * @param {CommerceApiPatchCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13324,30 +12792,7 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary Create a webhook
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public postCommerceWebhook(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postCommerceWebhook(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
-     * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public postCommerceWebhookByWebhookid(requestParameters: CommerceApiPostCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+     * Accepts a payment provider\'s event, verifies it, applies its settlement, refund, dispute and subscription effects, and records it for audit. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The path names the one processor that verifies, and only a processor holding its webhook secret may; any other name is 401. Each event is applied once for the whole deployment: a redelivery of an applied event is acknowledged as a duplicate, one still being applied is 409, and an event whose effect could not land is 503 so the provider redelivers it.
      * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
      * @param {CommerceApiPostCommerceWebhooksByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13572,18 +13017,6 @@ export class CommerceApi extends BaseAPI {
      */
     public putCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).putCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
-     * @summary Replace a webhook outright
-     * @param {CommerceApiPutCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

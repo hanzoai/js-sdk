@@ -21,11 +21,29 @@
  */
 export interface TranslateReviewRequest {
     /**
+     * Format is the markup the source carries: text (the default), html or markdown. Part of the entry\'s identity.
+     * @type {string}
+     * @memberof TranslateReviewRequest
+     */
+    'format'?: string;
+    /**
      * Glossary is the terminology the entry was translated under. Its VERSION — the digest of the sorted terms — is part of the entry\'s identity, so editing a term yields a new entry rather than overwriting the old rendering.
      * @type {{ [key: string]: string; }}
      * @memberof TranslateReviewRequest
      */
     'glossary'?: { [key: string]: string; };
+    /**
+     * Lang is the source language the translate calls this entry serves declare (their `source`), empty for calls that let the engine detect it. Part of the entry\'s identity; an entry with none also serves calls that declare one.
+     * @type {string}
+     * @memberof TranslateReviewRequest
+     */
+    'lang'?: string;
+    /**
+     * Model is the quality-tier model the translate calls this entry serves name; empty for the default. Part of the entry\'s identity, and refused with bulk.
+     * @type {string}
+     * @memberof TranslateReviewRequest
+     */
+    'model'?: string;
     /**
      * Source is the ORIGINAL string this entry translates. Required; part of the entry\'s identity, so a different source is a different entry.
      * @type {string}

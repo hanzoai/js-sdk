@@ -17,43 +17,55 @@
 /**
  * 
  * @export
- * @interface BenchmarkPublishedClaim
+ * @interface BenchmarkClaim
  */
-export interface BenchmarkPublishedClaim {
+export interface BenchmarkClaim {
     /**
      * Benchmark is the canonical test id the claim is about, from /catalog.
      * @type {string}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'benchmark'?: string;
     /**
+     * Evidence are the evidence uris the claim rests on, at most 64.
+     * @type {Array<string>}
+     * @memberof BenchmarkClaim
+     */
+    'evidence'?: Array<string>;
+    /**
      * Model is the system the score is claimed for.
      * @type {string}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'model'?: string;
     /**
-     * Protocol records HOW it was scored — provider-reported, agentic, third-party-leaderboard — because a provider card and a third party running its own harness are different kinds of number and must not be blended.
+     * Protocol records HOW it was scored — provider-reported, agentic, third-party-leaderboard — so a provider card is never read as a measurement.
      * @type {string}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'protocol'?: string;
     /**
-     * Provider is who the claim belongs to — the lab or leaderboard whose number this is. It joins a claim to the attempts measured for that same model.
+     * Provider is who the claim belongs to — the lab or leaderboard whose number this is.
      * @type {string}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'provider'?: string;
     /**
+     * Runs are the research run ids the claim rests on, at most 64.
+     * @type {Array<string>}
+     * @memberof BenchmarkClaim
+     */
+    'runs'?: Array<string>;
+    /**
      * Score is the reported aggregate, as a percentage.
      * @type {number}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'score'?: number;
     /**
-     * Source is the citation the row was read from. A claim without one is a number nobody can check, so every write requires it.
+     * Source is the citation the row was read from. Required.
      * @type {string}
-     * @memberof BenchmarkPublishedClaim
+     * @memberof BenchmarkClaim
      */
     'source'?: string;
 }

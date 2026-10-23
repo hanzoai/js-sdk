@@ -22,6 +22,12 @@
 export interface ReplayBody {
     /**
      * 
+     * @type {any}
+     * @memberof ReplayBody
+     */
+    'consent'?: any;
+    /**
+     * 
      * @type {string}
      * @memberof ReplayBody
      */

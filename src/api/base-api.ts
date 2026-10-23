@@ -106,6 +106,40 @@ export const BaseApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * The schema of the caller\'s org Base as GraphQL SDL: a type per collection with its fields, relations and the records pointing at it, a filter input per collection, orderBy, connections, aggregates and the writes. It is that org\'s own, so it changes with its collections. /v1/graphql carries the same schema under `base`.
+         * @summary Read your org Base\'s GraphQL schema
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseGraphql: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/base/graphql`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
          * @param {*} [options] Override http request option.
@@ -121,6 +155,40 @@ export const BaseApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs one GraphQL request against the caller\'s org Base. Every field is answered by the Base\'s own record, aggregate and history routes as the caller, so what a field reads or writes is what the same request over /v1/base/collections may. No subscriptions: realtime is /v1/base/realtime.
+         * @summary Query or write your org Base with GraphQL
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBaseGraphql: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/base/graphql`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -175,6 +243,18 @@ export const BaseApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The schema of the caller\'s org Base as GraphQL SDL: a type per collection with its fields, relations and the records pointing at it, a filter input per collection, orderBy, connections, aggregates and the writes. It is that org\'s own, so it changes with its collections. /v1/graphql carries the same schema under `base`.
+         * @summary Read your org Base\'s GraphQL schema
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBaseGraphql(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseGraphql(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseGraphql']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
          * @param {*} [options] Override http request option.
@@ -184,6 +264,18 @@ export const BaseApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseHealth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs one GraphQL request against the caller\'s org Base. Every field is answered by the Base\'s own record, aggregate and history routes as the caller, so what a field reads or writes is what the same request over /v1/base/collections may. No subscriptions: realtime is /v1/base/realtime.
+         * @summary Query or write your org Base with GraphQL
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBaseGraphql(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBaseGraphql(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BaseApi.postBaseGraphql']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -216,6 +308,15 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getBaseBasesByOrg(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
+         * The schema of the caller\'s org Base as GraphQL SDL: a type per collection with its fields, relations and the records pointing at it, a filter input per collection, orderBy, connections, aggregates and the writes. It is that org\'s own, so it changes with its collections. /v1/graphql carries the same schema under `base`.
+         * @summary Read your org Base\'s GraphQL schema
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseGraphql(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBaseGraphql(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
          * @param {*} [options] Override http request option.
@@ -223,6 +324,15 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
          */
         getBaseHealth(options?: RawAxiosRequestConfig): AxiosPromise<BaseBaseHealth> {
             return localVarFp.getBaseHealth(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs one GraphQL request against the caller\'s org Base. Every field is answered by the Base\'s own record, aggregate and history routes as the caller, so what a field reads or writes is what the same request over /v1/base/collections may. No subscriptions: realtime is /v1/base/realtime.
+         * @summary Query or write your org Base with GraphQL
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBaseGraphql(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBaseGraphql(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -272,6 +382,17 @@ export class BaseApi extends BaseAPI {
     }
 
     /**
+     * The schema of the caller\'s org Base as GraphQL SDL: a type per collection with its fields, relations and the records pointing at it, a filter input per collection, orderBy, connections, aggregates and the writes. It is that org\'s own, so it changes with its collections. /v1/graphql carries the same schema under `base`.
+     * @summary Read your org Base\'s GraphQL schema
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BaseApi
+     */
+    public getBaseGraphql(options?: RawAxiosRequestConfig) {
+        return BaseApiFp(this.configuration).getBaseGraphql(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
      * @summary Reports that the base subsystem is serving.
      * @param {*} [options] Override http request option.
@@ -280,6 +401,17 @@ export class BaseApi extends BaseAPI {
      */
     public getBaseHealth(options?: RawAxiosRequestConfig) {
         return BaseApiFp(this.configuration).getBaseHealth(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs one GraphQL request against the caller\'s org Base. Every field is answered by the Base\'s own record, aggregate and history routes as the caller, so what a field reads or writes is what the same request over /v1/base/collections may. No subscriptions: realtime is /v1/base/realtime.
+     * @summary Query or write your org Base with GraphQL
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BaseApi
+     */
+    public postBaseGraphql(options?: RawAxiosRequestConfig) {
+        return BaseApiFp(this.configuration).postBaseGraphql(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

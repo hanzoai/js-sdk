@@ -42,6 +42,12 @@ export interface ComplianceWire {
      */
     'after'?: any;
     /**
+     * Agent is present ONLY on an action a delegated token took: who acted for this row\'s sub — the deployment that ran their work in a sandbox — while org, sub and email stay the person\'s, who is billed for it.
+     * @type {string}
+     * @memberof ComplianceWire
+     */
+    'agent'?: string;
+    /**
      * Auth is the credential the actor presented: \"jwt\", \"api-key\", or \"none\".
      * @type {string}
      * @memberof ComplianceWire

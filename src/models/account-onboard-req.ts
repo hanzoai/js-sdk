@@ -27,7 +27,7 @@ export interface AccountOnboardReq {
      */
     'name'?: string;
     /**
-     * Personal asks for the caller\'s own space: the name is derived from their username and the slug auto-suffixes to stay unique. Meaningless — and refused — for a caller who already has an organization.
+     * Personal marks the organization as the caller\'s own space: the name is derived from their username and the slug auto-suffixes to stay unique.
      * @type {boolean}
      * @memberof AccountOnboardReq
      */

@@ -15,7 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { BillingSubscriptionLine } from './billing-subscription-line';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { BillingSubscriptionPlan } from './billing-subscription-plan';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { BillingSubscriptionSeat } from './billing-subscription-seat';
 
 /**
  * 
@@ -23,6 +29,12 @@ import type { BillingSubscriptionPlan } from './billing-subscription-plan';
  * @interface BillingSubscription
  */
 export interface BillingSubscription {
+    /**
+     * Assigned is which member holds which seat type, as the org\'s admin set it.
+     * @type {Array<BillingSubscriptionSeat>}
+     * @memberof BillingSubscription
+     */
+    'assigned'?: Array<BillingSubscriptionSeat>;
     /**
      * CancelAtPeriodEnd reports that the plan ends at CurrentPeriodEnd.
      * @type {boolean}
@@ -78,11 +90,23 @@ export interface BillingSubscription {
      */
     'endedAt'?: string;
     /**
+     * Held reports that this row is the subject\'s one paid plan: while it stands, commerce refuses a second paid sale (409).
+     * @type {boolean}
+     * @memberof BillingSubscription
+     */
+    'held'?: boolean;
+    /**
      * ID is the subscription\'s own id, the one cancel and reactivate take.
      * @type {string}
      * @memberof BillingSubscription
      */
     'id'?: string;
+    /**
+     * Lines are a team\'s other seat types beside Plan (a team of standard and premium seats is Plan \"team\" and one line of \"team-premium\"), each with the seats of it the period in hand was paid for. Seats above counts them too. After Held, so the fields before them keep their places on the ZAP wire.
+     * @type {Array<BillingSubscriptionLine>}
+     * @memberof BillingSubscription
+     */
+    'lines'?: Array<BillingSubscriptionLine>;
     /**
      * MRRCents is what this subscription contributes per month — commerce\'s own figure, interval-normalized and multiplied by its seats, so no reader re-derives it from price and interval.
      * @type {number}

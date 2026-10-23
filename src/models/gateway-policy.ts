@@ -51,13 +51,19 @@ export interface GatewayPolicy {
      */
     'mode'?: string;
     /**
-     * OrgRPM is the org\'s OWN authenticated rate ceiling, requests per minute, as ScopeRateLimit enforces it. Unset inherits the platform default, then the static boot default.
+     * OrgCap is the most this organization\'s ceiling may be, requests per minute. Unset, it is the platform\'s org_rpm, else 60,000. Only a SuperAdmin sets it: it is how the platform raises one organization above the default, and the organization a limit governs does not get to remove it. It does not inherit from the platform row. Read back, it is the cap in force.
+     * @type {number}
+     * @memberof GatewayPolicy
+     */
+    'org_cap'?: number;
+    /**
+     * OrgRPM is the org\'s OWN authenticated rate ceiling, requests per minute, as ScopeRateLimit enforces it across the deployment. An organization may lower it but never raise it past its cap (org_cap); unset, the org is held to its cap. On the platform row it is every organization\'s default cap, and it does not inherit into any organization\'s own row. Read back, it is the ceiling in force: the org\'s own, clipped to its cap.
      * @type {number}
      * @memberof GatewayPolicy
      */
     'org_rpm'?: number;
     /**
-     * PerIPRPM is the PLATFORM-scope pre-auth flood cap: requests EdgeRateLimit admits per WindowSec from one client IP. SuperAdmin-only, same reason.
+     * PerIPRPM is the PLATFORM-scope flood cap: requests admitted per WindowSec from one client IP that presents no credential, or a credential that resolves to nobody. A request presenting a credential is held to ten times this from its address until the credential is checked; a validated caller is then held by its key and org ceilings instead. SuperAdmin-only, same reason.
      * @type {number}
      * @memberof GatewayPolicy
      */

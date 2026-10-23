@@ -60,7 +60,7 @@ import type { S3UploadStarted } from '../models';
 export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
+         * Removes an EMPTY bucket and answers 204.  It requires an admin of the org, or a SuperAdmin, as creating one does; anyone else is refused 403 with nothing deleted.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
          * @summary Removes an EMPTY bucket and answers 204.
          * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
          * @param {*} [options] Override http request option.
@@ -308,7 +308,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  It requires an admin of the org, a SuperAdmin, or the org\'s own application (CI makes its cache bucket on first use): every member of the org uses its buckets, and only an admin makes or removes one. Anyone else is refused 403 with nothing created.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
          * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
          * @param {S3BucketIn} s3BucketIn 
          * @param {*} [options] Override http request option.
@@ -542,7 +542,7 @@ export const S3ApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = S3ApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
+         * Removes an EMPTY bucket and answers 204.  It requires an admin of the org, or a SuperAdmin, as creating one does; anyone else is refused 403 with nothing deleted.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
          * @summary Removes an EMPTY bucket and answers 204.
          * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
          * @param {*} [options] Override http request option.
@@ -624,7 +624,7 @@ export const S3ApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  It requires an admin of the org, a SuperAdmin, or the org\'s own application (CI makes its cache bucket on first use): every member of the org uses its buckets, and only an admin makes or removes one. Anyone else is refused 403 with nothing created.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
          * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
          * @param {S3BucketIn} s3BucketIn 
          * @param {*} [options] Override http request option.
@@ -705,7 +705,7 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
     const localVarFp = S3ApiFp(configuration)
     return {
         /**
-         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
+         * Removes an EMPTY bucket and answers 204.  It requires an admin of the org, or a SuperAdmin, as creating one does; anyone else is refused 403 with nothing deleted.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
          * @summary Removes an EMPTY bucket and answers 204.
          * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -763,7 +763,7 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.getS3Health(options).then((request) => request(axios, basePath));
         },
         /**
-         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  It requires an admin of the org, a SuperAdmin, or the org\'s own application (CI makes its cache bucket on first use): every member of the org uses its buckets, and only an admin makes or removes one. Anyone else is refused 403 with nothing created.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
          * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
          * @param {S3ApiPostS3BucketsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1033,7 +1033,7 @@ export interface S3ApiPostS3BucketsByBucketUploadsByUploadPartsRequest {
  */
 export class S3Api extends BaseAPI {
     /**
-     * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
+     * Removes an EMPTY bucket and answers 204.  It requires an admin of the org, or a SuperAdmin, as creating one does; anyone else is refused 403 with nothing deleted.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the bucket is gone.
      * @summary Removes an EMPTY bucket and answers 204.
      * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1103,7 +1103,7 @@ export class S3Api extends BaseAPI {
     }
 
     /**
-     * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
+     * Makes a new bucket for the caller\'s org and answers 201 with it.  It requires an admin of the org, a SuperAdmin, or the org\'s own application (CI makes its cache bucket on first use): every member of the org uses its buckets, and only an admin makes or removes one. Anyone else is refused 403 with nothing created.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing created, and the debit lands only once the bucket exists.
      * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
      * @param {S3ApiPostS3BucketsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

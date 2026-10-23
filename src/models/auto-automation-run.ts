@@ -48,6 +48,12 @@ export interface AutoAutomationRun {
      */
     'id'?: string;
     /**
+     * Outputs are the Library items the run made: its answer, kept as a document. Never null.
+     * @type {Array<string>}
+     * @memberof AutoAutomationRun
+     */
+    'outputs'?: Array<string>;
+    /**
      * Posts are where it went: one per account, its link or the platform\'s reason it did not go. Never null.
      * @type {Array<AutoPostResult>}
      * @memberof AutoAutomationRun

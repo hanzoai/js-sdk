@@ -564,7 +564,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
+         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent: a DocType the org already has is reported as existing and never replaced. It only grows, by the fields the lane now declares and the stored definition lacks (reported as grown), so re-installing is how a lane\'s new fields reach an org that installed it earlier. Manager-only.
          * @summary Creates an app lane\'s DocTypes in the caller\'s org.
          * @param {string} module Module is the lane\&#39;s registered name (\&quot;cms\&quot;, \&quot;erp\&quot;), from the path.
          * @param {*} [options] Override http request option.
@@ -872,7 +872,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
+         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent: a DocType the org already has is reported as existing and never replaced. It only grows, by the fields the lane now declares and the stored definition lacks (reported as grown), so re-installing is how a lane\'s new fields reach an org that installed it earlier. Manager-only.
          * @summary Creates an app lane\'s DocTypes in the caller\'s org.
          * @param {string} module Module is the lane\&#39;s registered name (\&quot;cms\&quot;, \&quot;erp\&quot;), from the path.
          * @param {*} [options] Override http request option.
@@ -1050,7 +1050,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
             return localVarFp.postFrameworkDoctypes(requestParameters.frameworkDocType, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
+         * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent: a DocType the org already has is reported as existing and never replaced. It only grows, by the fields the lane now declares and the stored definition lacks (reported as grown), so re-installing is how a lane\'s new fields reach an org that installed it earlier. Manager-only.
          * @summary Creates an app lane\'s DocTypes in the caller\'s org.
          * @param {FrameworkApiPostFrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1495,7 +1495,7 @@ export class FrameworkApi extends BaseAPI {
     }
 
     /**
-     * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
+     * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent: a DocType the org already has is reported as existing and never replaced. It only grows, by the fields the lane now declares and the stored definition lacks (reported as grown), so re-installing is how a lane\'s new fields reach an org that installed it earlier. Manager-only.
      * @summary Creates an app lane\'s DocTypes in the caller\'s org.
      * @param {FrameworkApiPostFrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
