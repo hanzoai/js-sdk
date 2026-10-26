@@ -69,7 +69,7 @@ export interface MarketingBeta {
      */
     'of'?: number;
     /**
-     * Place is the record\'s place on the waitlist, 1 first; 0 with no record.
+     * Place is the record\'s place on the waitlist, 1 first; 0 with no record, or when the board did not answer.
      * @type {number}
      * @memberof MarketingBeta
      */
@@ -92,6 +92,12 @@ export interface MarketingBeta {
      * @memberof MarketingBeta
      */
     'requested'?: { [key: string]: string; };
+    /**
+     * Score is what the waitlist ranks the record by: Points, the account\'s referrals and its token usage (GET /v1/leaderboard/beta says how). 0 with no record, or when the board did not answer.
+     * @type {number}
+     * @memberof MarketingBeta
+     */
+    'score'?: number;
     /**
      * Since is when the record began, as the CRM stamped it; empty with no record.
      * @type {string}

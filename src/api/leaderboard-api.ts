@@ -24,6 +24,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { LeaderboardActivityView } from '../models';
 // @ts-ignore
+import type { LeaderboardBetaBoard } from '../models';
+// @ts-ignore
 import type { LeaderboardLeaderboardView } from '../models';
 // @ts-ignore
 import type { LeaderboardOptinView } from '../models';
@@ -138,6 +140,45 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
 
             if (to !== undefined) {
                 localVarQueryParameter['to'] = to;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier record. Share clicks count for nothing.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * @param {number} [limit] Limit caps the rows, clamped to 1..100. Defaults to 25, which is also what a non-positive value takes.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardBeta: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/beta`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
             }
 
 
@@ -308,6 +349,19 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier record. Share clicks count for nothing.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * @param {number} [limit] Limit caps the rows, clamped to 1..100. Defaults to 25, which is also what a non-positive value takes.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardBeta(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardBetaBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardBeta(limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardBeta']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
          * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
          * @param {*} [options] Override http request option.
@@ -374,6 +428,16 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
          */
         getLeaderboardActivity(requestParameters: LeaderboardApiGetLeaderboardActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardActivityView> {
             return localVarFp.getLeaderboardActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier record. Share clicks count for nothing.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * @param {LeaderboardApiGetLeaderboardBetaRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardBeta(requestParameters: LeaderboardApiGetLeaderboardBetaRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardBetaBoard> {
+            return localVarFp.getLeaderboardBeta(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
@@ -478,6 +542,20 @@ export interface LeaderboardApiGetLeaderboardActivityRequest {
 }
 
 /**
+ * Request parameters for getLeaderboardBeta operation in LeaderboardApi.
+ * @export
+ * @interface LeaderboardApiGetLeaderboardBetaRequest
+ */
+export interface LeaderboardApiGetLeaderboardBetaRequest {
+    /**
+     * Limit caps the rows, clamped to 1..100. Defaults to 25, which is also what a non-positive value takes.
+     * @type {number}
+     * @memberof LeaderboardApiGetLeaderboardBeta
+     */
+    readonly limit?: number
+}
+
+/**
  * Request parameters for putLeaderboardOptin operation in LeaderboardApi.
  * @export
  * @interface LeaderboardApiPutLeaderboardOptinRequest
@@ -534,6 +612,18 @@ export class LeaderboardApi extends BaseAPI {
      */
     public getLeaderboardActivity(requestParameters: LeaderboardApiGetLeaderboardActivityRequest = {}, options?: RawAxiosRequestConfig) {
         return LeaderboardApiFp(this.configuration).getLeaderboardActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier record. Share clicks count for nothing.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+     * @param {LeaderboardApiGetLeaderboardBetaRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardBeta(requestParameters: LeaderboardApiGetLeaderboardBetaRequest = {}, options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardBeta(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

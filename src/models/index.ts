@@ -1245,6 +1245,8 @@ export * from './layout';
 export * from './leaderboard-activity-point';
 export * from './leaderboard-activity-totals';
 export * from './leaderboard-activity-view';
+export * from './leaderboard-beta-board';
+export * from './leaderboard-beta-row';
 export * from './leaderboard-leaderboard-row';
 export * from './leaderboard-leaderboard-view';
 export * from './leaderboard-optin-view';

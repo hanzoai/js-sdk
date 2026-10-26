@@ -1378,6 +1378,8 @@ src/models/layout.ts
 src/models/leaderboard-activity-point.ts
 src/models/leaderboard-activity-totals.ts
 src/models/leaderboard-activity-view.ts
+src/models/leaderboard-beta-board.ts
+src/models/leaderboard-beta-row.ts
 src/models/leaderboard-leaderboard-row.ts
 src/models/leaderboard-leaderboard-view.ts
 src/models/leaderboard-optin-view.ts
