@@ -27,7 +27,7 @@ export interface MarketingMailIn {
      */
     'body'?: string;
     /**
-     * Person is the CRM person the mail is written to. When set, the sent mail goes on their timeline.
+     * Person is the CRM person the mail is written to. Empty, the mail goes on the timeline of the person the org holds for the address, if any.
      * @type {string}
      * @memberof MarketingMailIn
      */

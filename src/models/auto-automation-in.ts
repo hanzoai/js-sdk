@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AutoOutcomeTrigger } from './auto-outcome-trigger';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AutoSchedule } from './auto-schedule';
 
 /**
@@ -29,6 +32,12 @@ export interface AutoAutomationIn {
      * @memberof AutoAutomationIn
      */
     'enabled'?: boolean;
+    /**
+     * Event arms a product-outcome trigger; it is mutually exclusive with a timed schedule.
+     * @type {AutoOutcomeTrigger}
+     * @memberof AutoAutomationIn
+     */
+    'event'?: AutoOutcomeTrigger;
     /**
      * Instructions are what the agent is asked to do each run. Required.
      * @type {string}
@@ -83,5 +92,11 @@ export interface AutoAutomationIn {
      * @memberof AutoAutomationIn
      */
     'source'?: string;
+    /**
+     * Target selects a registered execution target for the coding run.
+     * @type {string}
+     * @memberof AutoAutomationIn
+     */
+    'target'?: string;
 }
 

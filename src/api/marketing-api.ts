@@ -96,6 +96,8 @@ import type { MarketingSummary } from '../models';
 // @ts-ignore
 import type { MarketingSuppression } from '../models';
 // @ts-ignore
+import type { MarketingSuppressionCheck } from '../models';
+// @ts-ignore
 import type { MarketingSuppressionList } from '../models';
 // @ts-ignore
 import type { MarketingUnsubscribed } from '../models';
@@ -222,16 +224,14 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
-         * @param {string} [channel] Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
-         * @param {string} [address] Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
-         * @param {string} [reason] Reason is a free-text note, capped at 1024 bytes. The public one-click endpoint records \&quot;one-click unsubscribe\&quot;.
-         * @param {number} [createdAt] CreatedAt is unix seconds, server-assigned.
+         * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
+         * @param {string} [address] Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMarketingSuppressions: async (channel?: string, address?: string, reason?: string, createdAt?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketingSuppressions: async (channel?: string, address?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/suppressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -254,14 +254,6 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (address !== undefined) {
                 localVarQueryParameter['address'] = address;
-            }
-
-            if (reason !== undefined) {
-                localVarQueryParameter['reason'] = reason;
-            }
-
-            if (createdAt !== undefined) {
-                localVarQueryParameter['createdAt'] = createdAt;
             }
 
 
@@ -979,16 +971,61 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
+         * Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @summary Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
+         * @param {string} [address] Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingSuppressionsCheck: async (channel?: string, address?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/suppressions/check`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
+            }
+
+            if (address !== undefined) {
+                localVarQueryParameter['address'] = address;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. With company=true the address\'s whole domain is opted out of this org\'s mail too, which a free mail address may not ask (422); without it, the answer offers the company\'s domain when there is one to offer. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
          * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
          * @param {string} [org] Org is the org the link was minted for.
          * @param {string} [channel] Channel is the surface to opt out of.
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address). It is the ONLY authority here — there is no principal — so it binds the request to one tuple and nothing else.
+         * @param {boolean} [company] Company opts out everyone at the address\&#39;s domain as well, in this org alone: a company\&#39;s unsubscribe. An address at a free mail provider is a person\&#39;s and is refused 422.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, company?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/unsubscribe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1015,6 +1052,10 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (token !== undefined) {
                 localVarQueryParameter['token'] = token;
+            }
+
+            if (company !== undefined) {
+                localVarQueryParameter['company'] = company;
             }
 
 
@@ -1393,7 +1434,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail, whose company did, or that the platform blocks (Sent is false then, and that is not an error). It carries the opt-out footer and List-Unsubscribe. The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and the mail, sent or refused, goes on the timeline of its person.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
          * @param {MarketingMailIn} marketingMailIn 
          * @param {*} [options] Override http request option.
@@ -1691,7 +1732,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
          * @param {*} [options] Override http request option.
@@ -1971,17 +2012,15 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
-         * @param {string} [channel] Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
-         * @param {string} [address] Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
-         * @param {string} [reason] Reason is a free-text note, capped at 1024 bytes. The public one-click endpoint records \&quot;one-click unsubscribe\&quot;.
-         * @param {number} [createdAt] CreatedAt is unix seconds, server-assigned.
+         * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
+         * @param {string} [address] Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMarketingSuppressions(channel?: string, address?: string, reason?: string, createdAt?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingSuppressions(channel, address, reason, createdAt, options);
+        async deleteMarketingSuppressions(channel?: string, address?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingSuppressions(channel, address, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2224,17 +2263,32 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
+         * Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @summary Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
+         * @param {string} [address] Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingSuppressionsCheck(channel?: string, address?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSuppressionCheck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSuppressionsCheck(channel, address, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSuppressionsCheck']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. With company=true the address\'s whole domain is opted out of this org\'s mail too, which a free mail address may not ask (422); without it, the answer offers the company\'s domain when there is one to offer. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
          * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
          * @param {string} [org] Org is the org the link was minted for.
          * @param {string} [channel] Channel is the surface to opt out of.
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address). It is the ONLY authority here — there is no principal — so it binds the request to one tuple and nothing else.
+         * @param {boolean} [company] Company opts out everyone at the address\&#39;s domain as well, in this org alone: a company\&#39;s unsubscribe. An address at a free mail provider is a person\&#39;s and is refused 422.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingUnsubscribe(org, channel, address, token, options);
+        async getMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, company?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingUnsubscribe(org, channel, address, token, company, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2358,7 +2412,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail, whose company did, or that the platform blocks (Sent is false then, and that is not an error). It carries the opt-out footer and List-Unsubscribe. The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and the mail, sent or refused, goes on the timeline of its person.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
          * @param {MarketingMailIn} marketingMailIn 
          * @param {*} [options] Override http request option.
@@ -2454,7 +2508,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
          * @param {*} [options] Override http request option.
@@ -2565,14 +2619,14 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteMarketingSuppressions(requestParameters: MarketingApiDeleteMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s saved audiences, most recently updated first.
@@ -2752,14 +2806,24 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingSuppressions(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
+         * Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @summary Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+         * @param {MarketingApiGetMarketingSuppressionsCheckRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingSuppressionsCheck(requestParameters: MarketingApiGetMarketingSuppressionsCheckRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSuppressionCheck> {
+            return localVarFp.getMarketingSuppressionsCheck(requestParameters.channel, requestParameters.address, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. With company=true the address\'s whole domain is opted out of this org\'s mail too, which a free mail address may not ask (422); without it, the answer offers the company\'s domain when there is one to offer. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
          * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
          * @param {MarketingApiGetMarketingUnsubscribeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingUnsubscribed> {
-            return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, options).then((request) => request(axios, basePath));
         },
         /**
          * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
@@ -2852,7 +2916,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingLeadsResume(requestParameters.marketingResumeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail, whose company did, or that the platform blocks (Sent is false then, and that is not an error). It carries the opt-out footer and List-Unsubscribe. The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and the mail, sent or refused, goes on the timeline of its person.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
          * @param {MarketingApiPostMarketingMailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2922,7 +2986,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdSteps(requestParameters.id, requestParameters.marketingStepInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
+         * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3023,32 +3087,18 @@ export interface MarketingApiDeleteMarketingCampaignsByIdRequest {
  */
 export interface MarketingApiDeleteMarketingSuppressionsRequest {
     /**
-     * Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
+     * Channel is the surface the entry opts out of; empty is email.
      * @type {string}
      * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly channel?: string
 
     /**
-     * Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
+     * Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
      * @type {string}
      * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly address?: string
-
-    /**
-     * Reason is a free-text note, capped at 1024 bytes. The public one-click endpoint records \&quot;one-click unsubscribe\&quot;.
-     * @type {string}
-     * @memberof MarketingApiDeleteMarketingSuppressions
-     */
-    readonly reason?: string
-
-    /**
-     * CreatedAt is unix seconds, server-assigned.
-     * @type {number}
-     * @memberof MarketingApiDeleteMarketingSuppressions
-     */
-    readonly createdAt?: number
 }
 
 /**
@@ -3304,6 +3354,27 @@ export interface MarketingApiGetMarketingSuppressionsRequest {
 }
 
 /**
+ * Request parameters for getMarketingSuppressionsCheck operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingSuppressionsCheckRequest
+ */
+export interface MarketingApiGetMarketingSuppressionsCheckRequest {
+    /**
+     * Channel is the surface the entry opts out of; empty is email.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSuppressionsCheck
+     */
+    readonly channel?: string
+
+    /**
+     * Address is the entry: an address, or \&quot;@example.com\&quot; for a company.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSuppressionsCheck
+     */
+    readonly address?: string
+}
+
+/**
  * Request parameters for getMarketingUnsubscribe operation in MarketingApi.
  * @export
  * @interface MarketingApiGetMarketingUnsubscribeRequest
@@ -3336,6 +3407,13 @@ export interface MarketingApiGetMarketingUnsubscribeRequest {
      * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly token?: string
+
+    /**
+     * Company opts out everyone at the address\&#39;s domain as well, in this org alone: a company\&#39;s unsubscribe. An address at a free mail provider is a person\&#39;s and is refused 422.
+     * @type {boolean}
+     * @memberof MarketingApiGetMarketingUnsubscribe
+     */
+    readonly company?: boolean
 }
 
 /**
@@ -3760,7 +3838,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
+     * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Re-subscribes an address on one channel and answers 204.
      * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3768,7 +3846,7 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public deleteMarketingSuppressions(requestParameters: MarketingApiDeleteMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3985,7 +4063,19 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
+     * Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+     * @summary Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
+     * @param {MarketingApiGetMarketingSuppressionsCheckRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingSuppressionsCheck(requestParameters: MarketingApiGetMarketingSuppressionsCheckRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSuppressionsCheck(requestParameters.channel, requestParameters.address, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. With company=true the address\'s whole domain is opted out of this org\'s mail too, which a free mail address may not ask (422); without it, the answer offers the company\'s domain when there is one to offer. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
      * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
      * @param {MarketingApiGetMarketingUnsubscribeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3993,7 +4083,7 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4105,7 +4195,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail (Sent is false then, and that is not an error). The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and a sent mail with a person goes on their timeline.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail, whose company did, or that the platform blocks (Sent is false then, and that is not an error). It carries the opt-out footer and List-Unsubscribe. The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and the mail, sent or refused, goes on the timeline of its person.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.
      * @param {MarketingApiPostMarketingMailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4189,7 +4279,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
+     * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Records an opt-out for the org (admin / self-service management).
      * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

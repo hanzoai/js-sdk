@@ -33,6 +33,18 @@ export interface MarketingUnsubscribed {
      */
     'channel'?: string;
     /**
+     * Company is the domain opted out whole, when the link asked for it.
+     * @type {string}
+     * @memberof MarketingUnsubscribed
+     */
+    'company'?: string;
+    /**
+     * Offer is the domain the reader may opt out whole by asking again with company=true: the company\'s own domain, never a free mail provider\'s. Absent when the company is already out, or for free mail.
+     * @type {string}
+     * @memberof MarketingUnsubscribed
+     */
+    'offer'?: string;
+    /**
      * Unsubscribed is always true here: the opt-out is idempotent, so a second click on the same link confirms the same thing rather than reporting nothing changed. A refused token never reaches this shape — it is a 403.
      * @type {boolean}
      * @memberof MarketingUnsubscribed

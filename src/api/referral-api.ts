@@ -29,6 +29,8 @@ import type { ReferralClaimRequest } from '../models';
 import type { ReferralClaimView } from '../models';
 // @ts-ignore
 import type { ReferralMyReferrals } from '../models';
+// @ts-ignore
+import type { ReferralSetCodeRequest } from '../models';
 /**
  * ReferralApi - axios parameter creator
  * @export
@@ -109,6 +111,46 @@ export const ReferralApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Updates the caller\'s referral code and returns the updated referral summary.
+         * @summary Updates the caller\'s referral code and returns the updated referral summary.
+         * @param {ReferralSetCodeRequest} referralSetCodeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putReferral: async (referralSetCodeRequest: ReferralSetCodeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'referralSetCodeRequest' is not null or undefined
+            assertParamExists('putReferral', 'referralSetCodeRequest', referralSetCodeRequest)
+            const localVarPath = `/v1/referral`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(referralSetCodeRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -144,6 +186,19 @@ export const ReferralApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ReferralApi.postReferralClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Updates the caller\'s referral code and returns the updated referral summary.
+         * @summary Updates the caller\'s referral code and returns the updated referral summary.
+         * @param {ReferralSetCodeRequest} referralSetCodeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putReferral(referralSetCodeRequest: ReferralSetCodeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferralMyReferrals>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putReferral(referralSetCodeRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralApi.putReferral']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -173,6 +228,16 @@ export const ReferralApiFactory = function (configuration?: Configuration, baseP
         postReferralClaim(requestParameters: ReferralApiPostReferralClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferralClaimView> {
             return localVarFp.postReferralClaim(requestParameters.referralClaimRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Updates the caller\'s referral code and returns the updated referral summary.
+         * @summary Updates the caller\'s referral code and returns the updated referral summary.
+         * @param {ReferralApiPutReferralRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putReferral(requestParameters: ReferralApiPutReferralRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReferralMyReferrals> {
+            return localVarFp.putReferral(requestParameters.referralSetCodeRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -188,6 +253,20 @@ export interface ReferralApiPostReferralClaimRequest {
      * @memberof ReferralApiPostReferralClaim
      */
     readonly referralClaimRequest: ReferralClaimRequest
+}
+
+/**
+ * Request parameters for putReferral operation in ReferralApi.
+ * @export
+ * @interface ReferralApiPutReferralRequest
+ */
+export interface ReferralApiPutReferralRequest {
+    /**
+     * 
+     * @type {ReferralSetCodeRequest}
+     * @memberof ReferralApiPutReferral
+     */
+    readonly referralSetCodeRequest: ReferralSetCodeRequest
 }
 
 /**
@@ -218,6 +297,18 @@ export class ReferralApi extends BaseAPI {
      */
     public postReferralClaim(requestParameters: ReferralApiPostReferralClaimRequest, options?: RawAxiosRequestConfig) {
         return ReferralApiFp(this.configuration).postReferralClaim(requestParameters.referralClaimRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Updates the caller\'s referral code and returns the updated referral summary.
+     * @summary Updates the caller\'s referral code and returns the updated referral summary.
+     * @param {ReferralApiPutReferralRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReferralApi
+     */
+    public putReferral(requestParameters: ReferralApiPutReferralRequest, options?: RawAxiosRequestConfig) {
+        return ReferralApiFp(this.configuration).putReferral(requestParameters.referralSetCodeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

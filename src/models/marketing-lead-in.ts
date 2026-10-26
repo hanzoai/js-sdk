@@ -129,7 +129,7 @@ export interface MarketingLeadIn {
      */
     'phone'?: string;
     /**
-     * Program is the program the person applies to: beta, research or partner. Any other value is recorded as none. An application is mailed a code for 50% off a first month, once per address (offer.go). Optional. \"investor\" is an investor\'s subscription (investor.go): it is mailed no code, it is sent a SAFE, and Name, Amount and Address are required.
+     * Program is the program the person applies to: beta, research or partner. Any other value is recorded as none. An application is mailed a code for 50% off the first three months, once per address (offer.go). Optional. \"investor\" is an investor\'s subscription (investor.go): it is mailed no code, it is sent a SAFE, and Name, Amount and Address are required.
      * @type {string}
      * @memberof MarketingLeadIn
      */

@@ -21,7 +21,7 @@
  */
 export interface MarketingSuppression {
     /**
-     * Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
+     * Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required. An entry \"@example.com\" opts out everyone at that domain, a company\'s unsubscribe; a free mail provider\'s domain is refused.
      * @type {string}
      * @memberof MarketingSuppression
      */

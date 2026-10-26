@@ -94,6 +94,16 @@ import type { ProviderGithubUserOut } from '../models';
 // @ts-ignore
 import type { ProviderGitlabProjectsOut } from '../models';
 // @ts-ignore
+import type { ProviderGoogleUserCompleteIn } from '../models';
+// @ts-ignore
+import type { ProviderGoogleUserConnectIn } from '../models';
+// @ts-ignore
+import type { ProviderGoogleUserConnectOut } from '../models';
+// @ts-ignore
+import type { ProviderGoogleUserDisconnectOut } from '../models';
+// @ts-ignore
+import type { ProviderGoogleUserOut } from '../models';
+// @ts-ignore
 import type { ProviderLinearBackfillIn } from '../models';
 // @ts-ignore
 import type { ProviderLinearBackfillResult } from '../models';
@@ -886,6 +896,74 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
          */
         getProviderGitlabProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/provider/gitlab/projects`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @summary Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderGoogleUser: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/provider/google/user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is where Google returns the person. It verifies the state, burns its nonce, and parks the code for the return page to complete; it exchanges nothing. PUBLIC and state-authed, like every OAuth return, and raw because it answers a browser with a redirect.
+         * @summary Is where Google returns the person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderGoogleUserCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/provider/google/user/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2223,6 +2301,120 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them. Only the person who started the flow can complete it — another person\'s grant id is simply not found — and a grant completes once. A grant that leaves out sending mail, or offline access, is refused and nothing is kept: a connection that cannot send is not one this surface offers.
+         * @summary Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them.
+         * @param {ProviderGoogleUserCompleteIn} providerGoogleUserCompleteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserComplete: async (providerGoogleUserCompleteIn: ProviderGoogleUserCompleteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providerGoogleUserCompleteIn' is not null or undefined
+            assertParamExists('postProviderGoogleUserComplete', 'providerGoogleUserCompleteIn', providerGoogleUserCompleteIn)
+            const localVarPath = `/v1/provider/google/user/complete`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(providerGoogleUserCompleteIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold at Google.
+         * @summary Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person.
+         * @param {ProviderGoogleUserConnectIn} providerGoogleUserConnectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserConnect: async (providerGoogleUserConnectIn: ProviderGoogleUserConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providerGoogleUserConnectIn' is not null or undefined
+            assertParamExists('postProviderGoogleUserConnect', 'providerGoogleUserConnectIn', providerGoogleUserConnectIn)
+            const localVarPath = `/v1/provider/google/user/connect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(providerGoogleUserConnectIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go. It says whether Google confirmed the revocation rather than reporting a success it did not see. Disconnecting what is not connected succeeds.
+         * @summary Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserDisconnect: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/provider/google/user/disconnect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
          * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
          * @param {ProviderLinearClaimIn} providerLinearClaimIn 
@@ -3125,6 +3317,30 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @summary Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProviderGoogleUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderGoogleUserOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProviderGoogleUser(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.getProviderGoogleUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is where Google returns the person. It verifies the state, burns its nonce, and parks the code for the return page to complete; it exchanges nothing. PUBLIC and state-authed, like every OAuth return, and raw because it answers a browser with a redirect.
+         * @summary Is where Google returns the person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProviderGoogleUserCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProviderGoogleUserCallback(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.getProviderGoogleUserCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists Slack conversations for the caller\'s connected workspace. Read next_cursor until empty to discover channels, including private channels or group DMs when types requests them and the bot has their read scopes.
          * @summary Lists Slack conversations for the caller\'s connected workspace.
          * @param {string} [types] Types selects public_channel, private_channel, im or mpim, comma-separated. Defaults to public_channel; each selected type requires its own read scope.
@@ -3564,6 +3780,44 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them. Only the person who started the flow can complete it — another person\'s grant id is simply not found — and a grant completes once. A grant that leaves out sending mail, or offline access, is refused and nothing is kept: a connection that cannot send is not one this surface offers.
+         * @summary Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them.
+         * @param {ProviderGoogleUserCompleteIn} providerGoogleUserCompleteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postProviderGoogleUserComplete(providerGoogleUserCompleteIn: ProviderGoogleUserCompleteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderGoogleUserOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderGoogleUserComplete(providerGoogleUserCompleteIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderGoogleUserComplete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold at Google.
+         * @summary Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person.
+         * @param {ProviderGoogleUserConnectIn} providerGoogleUserConnectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postProviderGoogleUserConnect(providerGoogleUserConnectIn: ProviderGoogleUserConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderGoogleUserConnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderGoogleUserConnect(providerGoogleUserConnectIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderGoogleUserConnect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go. It says whether Google confirmed the revocation rather than reporting a success it did not see. Disconnecting what is not connected succeeds.
+         * @summary Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postProviderGoogleUserDisconnect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderGoogleUserDisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderGoogleUserDisconnect(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderGoogleUserDisconnect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
          * @summary Binds the caller\'s Linear organization to the org and seals the webhook secret.
          * @param {ProviderLinearClaimIn} providerLinearClaimIn 
@@ -3978,6 +4232,24 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getProviderGitlabProjects(options).then((request) => request(axios, basePath));
         },
         /**
+         * Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @summary Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderGoogleUser(options?: RawAxiosRequestConfig): AxiosPromise<ProviderGoogleUserOut> {
+            return localVarFp.getProviderGoogleUser(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is where Google returns the person. It verifies the state, burns its nonce, and parks the code for the return page to complete; it exchanges nothing. PUBLIC and state-authed, like every OAuth return, and raw because it answers a browser with a redirect.
+         * @summary Is where Google returns the person.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderGoogleUserCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getProviderGoogleUserCallback(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists Slack conversations for the caller\'s connected workspace. Read next_cursor until empty to discover channels, including private channels or group DMs when types requests them and the bot has their read scopes.
          * @summary Lists Slack conversations for the caller\'s connected workspace.
          * @param {ProviderApiGetProviderSlackChannelsRequest} requestParameters Request parameters.
@@ -4301,6 +4573,35 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
          */
         postProviderGithubWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postProviderGithubWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them. Only the person who started the flow can complete it — another person\'s grant id is simply not found — and a grant completes once. A grant that leaves out sending mail, or offline access, is refused and nothing is kept: a connection that cannot send is not one this surface offers.
+         * @summary Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them.
+         * @param {ProviderApiPostProviderGoogleUserCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserComplete(requestParameters: ProviderApiPostProviderGoogleUserCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderGoogleUserOut> {
+            return localVarFp.postProviderGoogleUserComplete(requestParameters.providerGoogleUserCompleteIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold at Google.
+         * @summary Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person.
+         * @param {ProviderApiPostProviderGoogleUserConnectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserConnect(requestParameters: ProviderApiPostProviderGoogleUserConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderGoogleUserConnectOut> {
+            return localVarFp.postProviderGoogleUserConnect(requestParameters.providerGoogleUserConnectIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go. It says whether Google confirmed the revocation rather than reporting a success it did not see. Disconnecting what is not connected succeeds.
+         * @summary Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderGoogleUserDisconnect(options?: RawAxiosRequestConfig): AxiosPromise<ProviderGoogleUserDisconnectOut> {
+            return localVarFp.postProviderGoogleUserDisconnect(options).then((request) => request(axios, basePath));
         },
         /**
          * Binds the caller\'s Linear organization to the org and seals the webhook secret. The organization is READ from the caller\'s own key, never taken from the body: a person can only bind an organization they are a member of. An organization another org already holds is refused.
@@ -5014,6 +5315,34 @@ export interface ProviderApiPostProviderGithubUserConnectRequest {
 }
 
 /**
+ * Request parameters for postProviderGoogleUserComplete operation in ProviderApi.
+ * @export
+ * @interface ProviderApiPostProviderGoogleUserCompleteRequest
+ */
+export interface ProviderApiPostProviderGoogleUserCompleteRequest {
+    /**
+     * 
+     * @type {ProviderGoogleUserCompleteIn}
+     * @memberof ProviderApiPostProviderGoogleUserComplete
+     */
+    readonly providerGoogleUserCompleteIn: ProviderGoogleUserCompleteIn
+}
+
+/**
+ * Request parameters for postProviderGoogleUserConnect operation in ProviderApi.
+ * @export
+ * @interface ProviderApiPostProviderGoogleUserConnectRequest
+ */
+export interface ProviderApiPostProviderGoogleUserConnectRequest {
+    /**
+     * 
+     * @type {ProviderGoogleUserConnectIn}
+     * @memberof ProviderApiPostProviderGoogleUserConnect
+     */
+    readonly providerGoogleUserConnectIn: ProviderGoogleUserConnectIn
+}
+
+/**
  * Request parameters for postProviderLinearClaim operation in ProviderApi.
  * @export
  * @interface ProviderApiPostProviderLinearClaimRequest
@@ -5381,6 +5710,28 @@ export class ProviderApi extends BaseAPI {
      */
     public getProviderGitlabProjects(options?: RawAxiosRequestConfig) {
         return ProviderApiFp(this.configuration).getProviderGitlabProjects(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+     * @summary Reports whether the caller has connected their own Google account in the org they act in, and as whom.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public getProviderGoogleUser(options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).getProviderGoogleUser(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is where Google returns the person. It verifies the state, burns its nonce, and parks the code for the return page to complete; it exchanges nothing. PUBLIC and state-authed, like every OAuth return, and raw because it answers a browser with a redirect.
+     * @summary Is where Google returns the person.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public getProviderGoogleUserCallback(options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).getProviderGoogleUserCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5774,6 +6125,41 @@ export class ProviderApi extends BaseAPI {
      */
     public postProviderGithubWebhook(options?: RawAxiosRequestConfig) {
         return ProviderApiFp(this.configuration).postProviderGithubWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them. Only the person who started the flow can complete it — another person\'s grant id is simply not found — and a grant completes once. A grant that leaves out sending mail, or offline access, is refused and nothing is kept: a connection that cannot send is not one this surface offers.
+     * @summary Finishes connecting the caller\'s Google account: it takes the authorization the callback parked, trades it for the person\'s tokens, and seals them.
+     * @param {ProviderApiPostProviderGoogleUserCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public postProviderGoogleUserComplete(requestParameters: ProviderApiPostProviderGoogleUserCompleteRequest, options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).postProviderGoogleUserComplete(requestParameters.providerGoogleUserCompleteIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold at Google.
+     * @summary Begins connecting the caller\'s own Google account: it answers Google\'s consent page, asking offline access to send mail as them, carrying a state signed for this org and this person.
+     * @param {ProviderApiPostProviderGoogleUserConnectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public postProviderGoogleUserConnect(requestParameters: ProviderApiPostProviderGoogleUserConnectRequest, options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).postProviderGoogleUserConnect(requestParameters.providerGoogleUserConnectIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go. It says whether Google confirmed the revocation rather than reporting a success it did not see. Disconnecting what is not connected succeeds.
+     * @summary Forgets the caller\'s Google connection in this org: the grant is revoked at Google, and the sealed secrets and the row go.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public postProviderGoogleUserDisconnect(options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).postProviderGoogleUserDisconnect(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

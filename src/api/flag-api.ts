@@ -34,6 +34,14 @@ import type { FlagEvaluateIn } from '../models';
 // @ts-ignore
 import type { FlagHealthOut } from '../models';
 // @ts-ignore
+import type { FlagOptinIn } from '../models';
+// @ts-ignore
+import type { FlagOptinOut } from '../models';
+// @ts-ignore
+import type { FlagOrgOptinIn } from '../models';
+// @ts-ignore
+import type { FlagOrgOptinOut } from '../models';
+// @ts-ignore
 import type { FlagPlatformOut } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
@@ -227,6 +235,40 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public. A beta not listed is private, granted person by person.
+         * @summary Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlagOptin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/flag/optin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
          * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
          * @param {*} [options] Override http request option.
@@ -384,6 +426,86 @@ export const FlagApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is. Self only: the row written is the caller\'s validated subject, whatever the request says. Opting in while the org they act in blocked it is refused; opting out never is.
+         * @summary Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is.
+         * @param {FlagOptinIn} flagOptinIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putFlagOptin: async (flagOptinIn: FlagOptinIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flagOptinIn' is not null or undefined
+            assertParamExists('putFlagOptin', 'flagOptinIn', flagOptinIn)
+            const localVarPath = `/v1/flag/optin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(flagOptinIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in. An owner or admin of that org, or a SuperAdmin, may; a member may not. It only withholds: blocked, no member gets a public beta by opting in, and their own choices are kept for when it is lifted; it never turns a beta on. A shared sign-up org has no admin to speak for its members and is refused. The change is on the audit trail before it lands.
+         * @summary Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in.
+         * @param {FlagOrgOptinIn} flagOrgOptinIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putFlagOptinOrg: async (flagOrgOptinIn: FlagOrgOptinIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flagOrgOptinIn' is not null or undefined
+            assertParamExists('putFlagOptinOrg', 'flagOrgOptinIn', flagOrgOptinIn)
+            const localVarPath = `/v1/flag/optin/org`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(flagOrgOptinIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -458,6 +580,18 @@ export const FlagApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public. A beta not listed is private, granted person by person.
+         * @summary Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFlagOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagOptinOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagOptin(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FlagApi.getFlagOptin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
          * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
          * @param {*} [options] Override http request option.
@@ -507,6 +641,32 @@ export const FlagApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putFlagDefsByKey(key, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FlagApi.putFlagDefsByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is. Self only: the row written is the caller\'s validated subject, whatever the request says. Opting in while the org they act in blocked it is refused; opting out never is.
+         * @summary Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is.
+         * @param {FlagOptinIn} flagOptinIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putFlagOptin(flagOptinIn: FlagOptinIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagOptinOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putFlagOptin(flagOptinIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FlagApi.putFlagOptin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in. An owner or admin of that org, or a SuperAdmin, may; a member may not. It only withholds: blocked, no member gets a public beta by opting in, and their own choices are kept for when it is lifted; it never turns a beta on. A shared sign-up org has no admin to speak for its members and is refused. The change is on the audit trail before it lands.
+         * @summary Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in.
+         * @param {FlagOrgOptinIn} flagOrgOptinIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putFlagOptinOrg(flagOrgOptinIn: FlagOrgOptinIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlagOrgOptinOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putFlagOptinOrg(flagOrgOptinIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FlagApi.putFlagOptinOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -568,6 +728,15 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getFlagHealth(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public. A beta not listed is private, granted person by person.
+         * @summary Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlagOptin(options?: RawAxiosRequestConfig): AxiosPromise<FlagOptinOut> {
+            return localVarFp.getFlagOptin(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
          * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
          * @param {*} [options] Override http request option.
@@ -605,6 +774,26 @@ export const FlagApiFactory = function (configuration?: Configuration, basePath?
          */
         putFlagDefsByKey(requestParameters: FlagApiPutFlagDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagDefRow> {
             return localVarFp.putFlagDefsByKey(requestParameters.key, requestParameters.body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is. Self only: the row written is the caller\'s validated subject, whatever the request says. Opting in while the org they act in blocked it is refused; opting out never is.
+         * @summary Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is.
+         * @param {FlagApiPutFlagOptinRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putFlagOptin(requestParameters: FlagApiPutFlagOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagOptinOut> {
+            return localVarFp.putFlagOptin(requestParameters.flagOptinIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in. An owner or admin of that org, or a SuperAdmin, may; a member may not. It only withholds: blocked, no member gets a public beta by opting in, and their own choices are kept for when it is lifted; it never turns a beta on. A shared sign-up org has no admin to speak for its members and is refused. The change is on the audit trail before it lands.
+         * @summary Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in.
+         * @param {FlagApiPutFlagOptinOrgRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putFlagOptinOrg(requestParameters: FlagApiPutFlagOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlagOrgOptinOut> {
+            return localVarFp.putFlagOptinOrg(requestParameters.flagOrgOptinIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -701,6 +890,34 @@ export interface FlagApiPutFlagDefsByKeyRequest {
 }
 
 /**
+ * Request parameters for putFlagOptin operation in FlagApi.
+ * @export
+ * @interface FlagApiPutFlagOptinRequest
+ */
+export interface FlagApiPutFlagOptinRequest {
+    /**
+     * 
+     * @type {FlagOptinIn}
+     * @memberof FlagApiPutFlagOptin
+     */
+    readonly flagOptinIn: FlagOptinIn
+}
+
+/**
+ * Request parameters for putFlagOptinOrg operation in FlagApi.
+ * @export
+ * @interface FlagApiPutFlagOptinOrgRequest
+ */
+export interface FlagApiPutFlagOptinOrgRequest {
+    /**
+     * 
+     * @type {FlagOrgOptinIn}
+     * @memberof FlagApiPutFlagOptinOrg
+     */
+    readonly flagOrgOptinIn: FlagOrgOptinIn
+}
+
+/**
  * FlagApi - object-oriented interface
  * @export
  * @class FlagApi
@@ -766,6 +983,17 @@ export class FlagApi extends BaseAPI {
     }
 
     /**
+     * Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public. A beta not listed is private, granted person by person.
+     * @summary Answers the signed-in caller\'s opt-in to public betas: whether they opted in, whether the org they act in blocked it, and which betas are public.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlagApi
+     */
+    public getFlagOptin(options?: RawAxiosRequestConfig) {
+        return FlagApiFp(this.configuration).getFlagOptin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states. A SuperAdmin targets them from the admin cockpit; nothing here changes them. A request without a signed-in principal is refused, and a switch that cannot be read is 503, which a caller takes as off.
      * @summary Answers the platform switches that are decided per caller — `beta`, whether the caller sees what is not yet generally available — as they apply to the signed-in caller: its validated org and user, never anything the request states.
      * @param {*} [options] Override http request option.
@@ -810,6 +1038,30 @@ export class FlagApi extends BaseAPI {
      */
     public putFlagDefsByKey(requestParameters: FlagApiPutFlagDefsByKeyRequest, options?: RawAxiosRequestConfig) {
         return FlagApiFp(this.configuration).putFlagDefsByKey(requestParameters.key, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is. Self only: the row written is the caller\'s validated subject, whatever the request says. Opting in while the org they act in blocked it is refused; opting out never is.
+     * @summary Sets the signed-in caller\'s OWN opt-in to public betas: on, every public beta and each one promoted later is on for them; off, none is.
+     * @param {FlagApiPutFlagOptinRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlagApi
+     */
+    public putFlagOptin(requestParameters: FlagApiPutFlagOptinRequest, options?: RawAxiosRequestConfig) {
+        return FlagApiFp(this.configuration).putFlagOptin(requestParameters.flagOptinIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in. An owner or admin of that org, or a SuperAdmin, may; a member may not. It only withholds: blocked, no member gets a public beta by opting in, and their own choices are kept for when it is lifted; it never turns a beta on. A shared sign-up org has no admin to speak for its members and is refused. The change is on the audit trail before it lands.
+     * @summary Blocks or unblocks the opt-in to public betas for every member of the org the caller acts in.
+     * @param {FlagApiPutFlagOptinOrgRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FlagApi
+     */
+    public putFlagOptinOrg(requestParameters: FlagApiPutFlagOptinOrgRequest, options?: RawAxiosRequestConfig) {
+        return FlagApiFp(this.configuration).putFlagOptinOrg(requestParameters.flagOrgOptinIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

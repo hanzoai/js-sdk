@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AutoOutcomeTrigger } from './auto-outcome-trigger';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AutoSchedule } from './auto-schedule';
 
 /**
@@ -29,6 +32,12 @@ export interface AutoAutomationPatch {
      * @memberof AutoAutomationPatch
      */
     'enabled'?: boolean;
+    /**
+     * Event replaces the trigger with a product outcome; null clears it.
+     * @type {AutoOutcomeTrigger}
+     * @memberof AutoAutomationPatch
+     */
+    'event'?: AutoOutcomeTrigger;
     /**
      * ID is the automation, from the path.
      * @type {string}
@@ -83,5 +92,11 @@ export interface AutoAutomationPatch {
      * @memberof AutoAutomationPatch
      */
     'schedule'?: AutoSchedule;
+    /**
+     * Target replaces the registered execution target; null clears it.
+     * @type {string}
+     * @memberof AutoAutomationPatch
+     */
+    'target'?: string;
 }
 

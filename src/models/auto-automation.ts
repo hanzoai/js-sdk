@@ -18,6 +18,9 @@
 import type { AutoLastRun } from './auto-last-run';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AutoOutcomeTrigger } from './auto-outcome-trigger';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AutoSchedule } from './auto-schedule';
 
 /**
@@ -44,6 +47,12 @@ export interface AutoAutomation {
      * @memberof AutoAutomation
      */
     'enabled'?: boolean;
+    /**
+     * Event runs the automation on a committed product outcome instead of a schedule.
+     * @type {AutoOutcomeTrigger}
+     * @memberof AutoAutomation
+     */
+    'event'?: AutoOutcomeTrigger;
     /**
      * ID is the automation\'s id, which is also its flow\'s.
      * @type {string}
@@ -116,6 +125,12 @@ export interface AutoAutomation {
      * @memberof AutoAutomation
      */
     'source'?: string;
+    /**
+     * Target is an optional registered execution target, such as the person\'s local machine.
+     * @type {string}
+     * @memberof AutoAutomation
+     */
+    'target'?: string;
     /**
      * 
      * @type {string}
