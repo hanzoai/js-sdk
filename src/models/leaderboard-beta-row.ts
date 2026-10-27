@@ -21,7 +21,7 @@
  */
 export interface LeaderboardBetaRow {
     /**
-     * Applied is the day the record began, 2006-01-02.
+     * Applied is the day the application began, 2006-01-02: the record\'s own, or the day of the lead it claims when that was earlier.
      * @type {string}
      * @memberof LeaderboardBetaRow
      */

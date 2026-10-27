@@ -34,6 +34,16 @@ import type { MarketingBetaActIn } from '../models';
 // @ts-ignore
 import type { MarketingBetaIn } from '../models';
 // @ts-ignore
+import type { MarketingBetaInviteIn } from '../models';
+// @ts-ignore
+import type { MarketingBetaInviteList } from '../models';
+// @ts-ignore
+import type { MarketingBetaInviteRows } from '../models';
+// @ts-ignore
+import type { MarketingBetaInviteSentIn } from '../models';
+// @ts-ignore
+import type { MarketingBetaInvites } from '../models';
+// @ts-ignore
 import type { MarketingBetaRequest } from '../models';
 // @ts-ignore
 import type { MarketingCalendarPost } from '../models';
@@ -390,6 +400,40 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          */
         getMarketingBeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/beta`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now. A reservation that lapsed unsent is not listed: it holds nothing.
+         * @summary Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBetaInvites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/beta/invites`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1143,6 +1187,86 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaActIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address. Nothing is sent from here; the member\'s browser sends each from their own Gmail and reports it to POST /v1/marketing/beta/invites/sent.  An address is skipped, with why, when it is not an email address, is the member\'s own, cannot be invited (it opted out of the brand\'s email, its company did, the platform bars it, or it already holds an account: one reason for all, so no one learns which), was invited in the last 30 days, or is past the member\'s 20 a day or 100 a month. When the limits leave the member nothing to reserve the answer is 429, with Retry-After the seconds until a slot frees.
+         * @summary Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address.
+         * @param {MarketingBetaInviteIn} marketingBetaInviteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaInvites: async (marketingBetaInviteIn: MarketingBetaInviteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBetaInviteIn' is not null or undefined
+            assertParamExists('postMarketingBetaInvites', 'marketingBetaInviteIn', marketingBetaInviteIn)
+            const localVarPath = `/v1/marketing/beta/invites`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaInviteIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason. Only the member who reserved an invite marks it, only while it is reserved, and only within the 24 hours it holds; anything else is left as it stands. Each invite that becomes sent is filed on its invitee\'s CRM timeline, the person made when the org held none, a CRM that cannot answer costing the timeline an entry and never the report. It answers the named invites that are the caller\'s, as they stand.
+         * @summary Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason.
+         * @param {MarketingBetaInviteSentIn} marketingBetaInviteSentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaInvitesSent: async (marketingBetaInviteSentIn: MarketingBetaInviteSentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBetaInviteSentIn' is not null or undefined
+            assertParamExists('postMarketingBetaInvitesSent', 'marketingBetaInviteSentIn', marketingBetaInviteSentIn)
+            const localVarPath = `/v1/marketing/beta/invites/sent`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBetaInviteSentIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2077,6 +2201,18 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now. A reservation that lapsed unsent is not listed: it holds nothing.
+         * @summary Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingBetaInvites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBetaInviteList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBetaInvites(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBetaInvites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @param {string} [status] Status keeps only posts in that state (draft, scheduled, published, failed, canceled). Empty means every post.
@@ -2317,6 +2453,32 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBetaActions(marketingBetaActIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBetaActions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address. Nothing is sent from here; the member\'s browser sends each from their own Gmail and reports it to POST /v1/marketing/beta/invites/sent.  An address is skipped, with why, when it is not an email address, is the member\'s own, cannot be invited (it opted out of the brand\'s email, its company did, the platform bars it, or it already holds an account: one reason for all, so no one learns which), was invited in the last 30 days, or is past the member\'s 20 a day or 100 a month. When the limits leave the member nothing to reserve the answer is 429, with Retry-After the seconds until a slot frees.
+         * @summary Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address.
+         * @param {MarketingBetaInviteIn} marketingBetaInviteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBetaInvites(marketingBetaInviteIn: MarketingBetaInviteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBetaInvites>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBetaInvites(marketingBetaInviteIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBetaInvites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason. Only the member who reserved an invite marks it, only while it is reserved, and only within the 24 hours it holds; anything else is left as it stands. Each invite that becomes sent is filed on its invitee\'s CRM timeline, the person made when the org held none, a CRM that cannot answer costing the timeline an entry and never the report. It answers the named invites that are the caller\'s, as they stand.
+         * @summary Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason.
+         * @param {MarketingBetaInviteSentIn} marketingBetaInviteSentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBetaInvitesSent(marketingBetaInviteSentIn: MarketingBetaInviteSentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBetaInviteRows>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBetaInvitesSent(marketingBetaInviteSentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBetaInvitesSent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2668,6 +2830,15 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingBeta(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now. A reservation that lapsed unsent is not listed: it holds nothing.
+         * @summary Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBetaInvites(options?: RawAxiosRequestConfig): AxiosPromise<MarketingBetaInviteList> {
+            return localVarFp.getMarketingBetaInvites(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
@@ -2844,6 +3015,26 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         postMarketingBetaActions(requestParameters: MarketingApiPostMarketingBetaActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBeta> {
             return localVarFp.postMarketingBetaActions(requestParameters.marketingBetaActIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address. Nothing is sent from here; the member\'s browser sends each from their own Gmail and reports it to POST /v1/marketing/beta/invites/sent.  An address is skipped, with why, when it is not an email address, is the member\'s own, cannot be invited (it opted out of the brand\'s email, its company did, the platform bars it, or it already holds an account: one reason for all, so no one learns which), was invited in the last 30 days, or is past the member\'s 20 a day or 100 a month. When the limits leave the member nothing to reserve the answer is 429, with Retry-After the seconds until a slot frees.
+         * @summary Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address.
+         * @param {MarketingApiPostMarketingBetaInvitesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaInvites(requestParameters: MarketingApiPostMarketingBetaInvitesRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBetaInvites> {
+            return localVarFp.postMarketingBetaInvites(requestParameters.marketingBetaInviteIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason. Only the member who reserved an invite marks it, only while it is reserved, and only within the 24 hours it holds; anything else is left as it stands. Each invite that becomes sent is filed on its invitee\'s CRM timeline, the person made when the org held none, a CRM that cannot answer costing the timeline an entry and never the report. It answers the named invites that are the caller\'s, as they stand.
+         * @summary Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason.
+         * @param {MarketingApiPostMarketingBetaInvitesSentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBetaInvitesSent(requestParameters: MarketingApiPostMarketingBetaInvitesSentRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBetaInviteRows> {
+            return localVarFp.postMarketingBetaInvitesSent(requestParameters.marketingBetaInviteSentIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds betas to those the signed-in caller asked for, creating the record when there is none. Each new id is stamped with the time it was asked for and stated on the event plane as beta_requested.
@@ -3445,6 +3636,34 @@ export interface MarketingApiPostMarketingBetaActionsRequest {
 }
 
 /**
+ * Request parameters for postMarketingBetaInvites operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBetaInvitesRequest
+ */
+export interface MarketingApiPostMarketingBetaInvitesRequest {
+    /**
+     * 
+     * @type {MarketingBetaInviteIn}
+     * @memberof MarketingApiPostMarketingBetaInvites
+     */
+    readonly marketingBetaInviteIn: MarketingBetaInviteIn
+}
+
+/**
+ * Request parameters for postMarketingBetaInvitesSent operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBetaInvitesSentRequest
+ */
+export interface MarketingApiPostMarketingBetaInvitesSentRequest {
+    /**
+     * 
+     * @type {MarketingBetaInviteSentIn}
+     * @memberof MarketingApiPostMarketingBetaInvitesSent
+     */
+    readonly marketingBetaInviteSentIn: MarketingBetaInviteSentIn
+}
+
+/**
  * Request parameters for postMarketingBetaRequest operation in MarketingApi.
  * @export
  * @interface MarketingApiPostMarketingBetaRequestRequest
@@ -3897,6 +4116,17 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now. A reservation that lapsed unsent is not listed: it holds nothing.
+     * @summary Answers the caller\'s invites, newest first, with how many were sent, how many joined, and how many more they may send now.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingBetaInvites(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingBetaInvites(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
      * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
      * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
@@ -4108,6 +4338,30 @@ export class MarketingApi extends BaseAPI {
      */
     public postMarketingBetaActions(requestParameters: MarketingApiPostMarketingBetaActionsRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).postMarketingBetaActions(requestParameters.marketingBetaActIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address. Nothing is sent from here; the member\'s browser sends each from their own Gmail and reports it to POST /v1/marketing/beta/invites/sent.  An address is skipped, with why, when it is not an email address, is the member\'s own, cannot be invited (it opted out of the brand\'s email, its company did, the platform bars it, or it already holds an account: one reason for all, so no one learns which), was invited in the last 30 days, or is past the member\'s 20 a day or 100 a month. When the limits leave the member nothing to reserve the answer is 429, with Retry-After the seconds until a slot frees.
+     * @summary Reserves an invite for each address the limits admit and answers the message the member\'s mailbox sends for each: subject, text and HTML, the unsubscribe headers, with the member\'s referral link for that invite and a one-click unsubscribe for that address.
+     * @param {MarketingApiPostMarketingBetaInvitesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBetaInvites(requestParameters: MarketingApiPostMarketingBetaInvitesRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBetaInvites(requestParameters.marketingBetaInviteIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason. Only the member who reserved an invite marks it, only while it is reserved, and only within the 24 hours it holds; anything else is left as it stands. Each invite that becomes sent is filed on its invitee\'s CRM timeline, the person made when the org held none, a CRM that cannot answer costing the timeline an entry and never the report. It answers the named invites that are the caller\'s, as they stand.
+     * @summary Records what the member\'s browser did with its reservations: the invites sent, and the ones that failed with the mailbox\'s reason.
+     * @param {MarketingApiPostMarketingBetaInvitesSentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBetaInvitesSent(requestParameters: MarketingApiPostMarketingBetaInvitesSentRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBetaInvitesSent(requestParameters.marketingBetaInviteSentIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

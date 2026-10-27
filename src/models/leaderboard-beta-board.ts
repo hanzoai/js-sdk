@@ -24,7 +24,7 @@ import type { LeaderboardBetaRow } from './leaderboard-beta-row';
  */
 export interface LeaderboardBetaBoard {
     /**
-     * Of is how many records are on the waitlist.
+     * Of is how many people are on the waitlist: every account that applied, and every lead that applied before it had an account.
      * @type {number}
      * @memberof LeaderboardBetaBoard
      */

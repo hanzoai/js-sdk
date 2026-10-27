@@ -31,6 +31,12 @@ export interface Decision {
     'defaults'?: Grants;
     /**
      * 
+     * @type {number}
+     * @memberof Decision
+     */
+    'floor'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof Decision
      */

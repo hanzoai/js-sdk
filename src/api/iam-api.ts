@@ -2945,7 +2945,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here.
+         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here. Pass your application\'s clientId and, from a page at one of its registered redirect origins, the challenge names that page\'s site, which is what the wallet shows the person.
          * @summary Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7738,7 +7738,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here.
+         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here. Pass your application\'s clientId and, from a page at one of its registered redirect origins, the challenge names that page\'s site, which is what the wallet shows the person.
          * @summary Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9704,7 +9704,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.email, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here.
+         * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here. Pass your application\'s clientId and, from a page at one of its registered redirect origins, the challenge names that page\'s site, which is what the wallet shows the person.
          * @summary Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13733,7 +13733,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here.
+     * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here. Pass your application\'s clientId and, from a page at one of its registered redirect origins, the challenge names that page\'s site, which is what the wallet shows the person.
      * @summary Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

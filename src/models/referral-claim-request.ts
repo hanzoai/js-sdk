@@ -26,5 +26,11 @@ export interface ReferralClaimRequest {
      * @memberof ReferralClaimRequest
      */
     'code'?: string;
+    /**
+     * Invite is the beta invite the referee\'s link carried (its utm_content), when it carried one. Optional; it only lets the referrer\'s invite be marked joined, and never changes who the referral credits.
+     * @type {string}
+     * @memberof ReferralClaimRequest
+     */
+    'invite'?: string;
 }
 

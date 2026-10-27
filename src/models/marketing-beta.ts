@@ -63,7 +63,7 @@ export interface MarketingBeta {
      */
     'lead'?: string;
     /**
-     * Of is how many records are on the waitlist.
+     * Of is how many people are on the waitlist, as the board counts them.
      * @type {number}
      * @memberof MarketingBeta
      */

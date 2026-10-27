@@ -94,6 +94,7 @@ export * from './api/node-api';
 export * from './api/notify-api';
 export * from './api/o11y-api';
 export * from './api/openapi-api';
+export * from './api/patent-api';
 export * from './api/patrol-api';
 export * from './api/plan-api';
 export * from './api/platform-api';
