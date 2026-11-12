@@ -35,19 +35,11 @@ jobs:
         with:
           node-version: '20'
           registry-url: ${{ env.npm_config_registry }}
+          cache: npm
 
-      # `npm ci`, not `npm install`: the lockfile is committed, and a release
-      # that silently resolves a different axios than the gate did is not
-      # the thing that was gated.
-      - run: npm ci --no-audit --no-fund
-
-      # There's no test script — `build` is both halves (CJS + the
-      # bundler-facing ESM) and the only thing that type-checks the whole
-      # generated tree, so it's the gate. It runs before the version becomes
-      # immutable rather than after: a broken `dist/` published under a real
-      # version cannot be taken back, only superseded.
-      - run: npm run build
-
+      # Asked BEFORE the install and the build: most pushes to main do not move
+      # the version, and those used to pay for a full `npm ci` and build to learn
+      # there was nothing to publish.
       - name: Read the version to publish
         id: what
         run: echo "version=$(node -p 'require("./package.json").version')" >> "$GITHUB_OUTPUT"
@@ -70,6 +62,22 @@ jobs:
           else
             echo "yes=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # `npm ci`, not `npm install`: the lockfile is committed, and a release
+      # that silently resolves a different axios than the gate did is not
+      # the thing that was gated.
+      - name: Install
+        if: steps.ahead.outputs.yes == 'true'
+        run: npm ci --no-audit --no-fund
+
+      # There's no test script — `build` is both halves (CJS + the
+      # bundler-facing ESM) and the only thing that type-checks the whole
+      # generated tree, so it's the gate. It runs before the version becomes
+      # immutable rather than after: a broken `dist/` published under a real
+      # version cannot be taken back, only superseded.
+      - name: Build
+        if: steps.ahead.outputs.yes == 'true'
+        run: npm run build
 
       - name: Pack
         if: steps.ahead.outputs.yes == 'true'
