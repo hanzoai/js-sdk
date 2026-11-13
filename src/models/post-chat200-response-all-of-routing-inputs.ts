@@ -33,11 +33,17 @@ export interface PostChat200ResponseAllOfRoutingInputs {
      */
     'key': string;
     /**
-     * Whether the caller\'s plan or credit pays for the paid model at that depth.
+     * Whether the caller\'s plan or balance pays for the tier; unfunded is served on its no-cost rungs at no charge.
      * @type {string}
      * @memberof PostChat200ResponseAllOfRoutingInputs
      */
     'policy': PostChat200ResponseAllOfRoutingInputsPolicyEnum;
+    /**
+     * The task the router read a request that left its effort to it as.
+     * @type {string}
+     * @memberof PostChat200ResponseAllOfRoutingInputs
+     */
+    'task'?: string;
 }
 
 export const PostChat200ResponseAllOfRoutingInputsPolicyEnum = {

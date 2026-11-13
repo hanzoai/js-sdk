@@ -28,6 +28,8 @@ import type { IamAcceptBody } from '../models';
 // @ts-ignore
 import type { IamAccountBody } from '../models';
 // @ts-ignore
+import type { IamAddressBody } from '../models';
+// @ts-ignore
 import type { IamAnswer } from '../models';
 // @ts-ignore
 import type { IamApplication } from '../models';
@@ -718,7 +720,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
          * @summary Removes a role.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -841,10 +843,11 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
          * @summary Removes a team.
          * @param {string} name 
+         * @param {string} [owner] Owner is the organization the team belongs to: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamTeamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIamTeamsByName: async (name: string, owner?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('deleteIamTeamsByName', 'name', name)
             const localVarPath = `/v1/iam/teams/{name}`
@@ -864,6 +867,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (owner !== undefined) {
+                localVarQueryParameter['owner'] = owner;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -878,7 +885,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
          * @summary Removes a person from your organization.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1988,7 +1995,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2090,7 +2097,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2390,7 +2397,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
-         * @param {string} [owner] 
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2429,7 +2436,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one role: who is in it, and the roles it includes.
          * @summary Returns one role: who is in it, and the roles it includes.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2772,12 +2779,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  Name no organization and it is yours, from your credentials. Name one you belong to and you see its teams; any other is refused.
          * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamTeams: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamTeams: async (owner?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2794,6 +2802,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (owner !== undefined) {
+                localVarQueryParameter['owner'] = owner;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2809,10 +2821,11 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * Returns one team: who is in it.
          * @summary Returns one team: who is in it.
          * @param {string} name 
+         * @param {string} [owner] Owner is the organization the team belongs to: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamTeamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamTeamsByName: async (name: string, owner?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('getIamTeamsByName', 'name', name)
             const localVarPath = `/v1/iam/teams/{name}`
@@ -2832,6 +2845,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (owner !== undefined) {
+                localVarQueryParameter['owner'] = owner;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2846,7 +2863,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
          * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
-         * @param {string} [owner] 
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
@@ -4416,7 +4433,41 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Registers an agent that acts for the person whose email it names. Nothing is granted here: the answer is a code for that person to approve, and a claim token the agent polls with until they do.  It asks for no credential, so it is bounded: per address and per person named, an hour at a time, and what is refused is never written.
+         * @summary Registers an agent that acts for the person whose email it names.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthAgentIdentity: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/oauth/agent/identity`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4620,7 +4671,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5376,7 +5427,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([Landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5410,7 +5461,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.
+         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.  A wallet no account holds yet creates one, and one address or one network creates only so many in a window, a day by default. Past that the answer is 429 with Retry-After and code wallet_signup_capped; data names the bound (\"ip\" or \"subnet\"), its limit, and its window in seconds. A wallet already on file is never counted.
          * @summary Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5609,6 +5660,104 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamAccountBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.  Only an account ALREADY signed in here can be chosen, by the subject GET /v1/iam/accounts named it with; anything else is refused and the order is unchanged. Nobody is signed in or out, and nothing is granted: each account keeps resolving to its own row, its own org and its own roles, so switching cannot carry one account\'s standing to another. Like every write on the session cookie it is taken only from this site\'s own pages, as JSON.
+         * @summary Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/accounts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.  First ask POST /v1/iam/verification-codes to send a code to the new address, with the applicationId of the application you sign in at, then send that application\'s clientId, the address and the code here. Only the caller\'s own account is written; the request names nobody.  It adds and never replaces: an account that already has an email keeps it, and asking again with the same address answers ok. An address another account at that application already signs in with is refused with the same words a wrong code gets.
+         * @summary Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.
+         * @param {IamAddressBody} iamAddressBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAddress: async (iamAddressBody: IamAddressBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAddressBody' is not null or undefined
+            assertParamExists('putIamAddress', 'iamAddressBody', iamAddressBody)
+            const localVarPath = `/v1/iam/address`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (cookie != null) {
+                localVarHeaderParameter['Cookie'] = String(cookie);
+            }
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (secFetchSite != null) {
+                localVarHeaderParameter['Sec-Fetch-Site'] = String(secFetchSite);
+            }
+            if (origin != null) {
+                localVarHeaderParameter['Origin'] = String(origin);
+            }
+            if (host != null) {
+                localVarHeaderParameter['Host'] = String(host);
+            }
+            if (contentType != null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAddressBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6052,7 +6201,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
          * @summary Changes who is in a role, or which roles it includes.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to. Leave it out and it is yours, from your credentials; name another only if you administer it.
          * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
          * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
@@ -6989,7 +7138,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
          * @summary Removes a role.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7031,11 +7180,12 @@ export const IamApiFp = function(configuration?: Configuration) {
          * Removes a team. Everyone in it loses the access it carried; their accounts, and any other team they are in, are untouched.
          * @summary Removes a team.
          * @param {string} name 
+         * @param {string} [owner] Owner is the organization the team belongs to: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamTeamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamTeamsByName(name, options);
+        async deleteIamTeamsByName(name: string, owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamTeamsByName(name, owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamTeamsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7043,7 +7193,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
          * @summary Removes a person from your organization.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7414,7 +7564,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7450,7 +7600,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7554,7 +7704,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
-         * @param {string} [owner] 
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7567,7 +7717,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one role: who is in it, and the roles it includes.
          * @summary Returns one role: who is in it, and the roles it includes.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to: yours when left out.
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7682,13 +7832,14 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  Name no organization and it is yours, from your credentials. Name one you belong to and you see its teams; any other is refused.
          * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamTeams(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsListOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeams(options);
+        async getIamTeams(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeamsListOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeams(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamTeams']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7697,11 +7848,12 @@ export const IamApiFp = function(configuration?: Configuration) {
          * Returns one team: who is in it.
          * @summary Returns one team: who is in it.
          * @param {string} name 
+         * @param {string} [owner] Owner is the organization the team belongs to: yours when left out.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamTeamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeam>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeamsByName(name, options);
+        async getIamTeamsByName(name: string, owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTeam>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamTeamsByName(name, owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamTeamsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7709,7 +7861,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
          * @summary Returns a page of the people in an organization, with the total so you can page through the rest.
-         * @param {string} [owner] 
+         * @param {string} [owner] Owner is the organization whose teams to list: yours when left out.
          * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
@@ -8229,7 +8381,19 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Registers an agent that acts for the person whose email it names. Nothing is granted here: the answer is a code for that person to approve, and a claim token the agent polls with until they do.  It asks for no credential, so it is bounded: per address and per person named, an hour at a time, and what is refused is never written.
+         * @summary Registers an agent that acts for the person whose email it names.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamOauthAgentIdentity(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamOauthAgentIdentity(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamOauthAgentIdentity']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8301,7 +8465,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8561,7 +8725,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([Landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8573,7 +8737,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.
+         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.  A wallet no account holds yet creates one, and one address or one network creates only so many in a window, a day by default. Past that the answer is 429 with Retry-After and code wallet_signup_capped; data names the bound (\"ip\" or \"subnet\"), its limit, and its window in seconds. A wallet already on file is never counted.
          * @summary Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8638,6 +8802,37 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAccount(iamAccountBody, cookie, authorization, secFetchSite, origin, host, contentType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAccount']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.  Only an account ALREADY signed in here can be chosen, by the subject GET /v1/iam/accounts named it with; anything else is refused and the order is unchanged. Nobody is signed in or out, and nothing is granted: each account keeps resolving to its own row, its own org and its own roles, so switching cannot carry one account\'s standing to another. Like every write on the session cookie it is taken only from this site\'s own pages, as JSON.
+         * @summary Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAccounts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAccounts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.  First ask POST /v1/iam/verification-codes to send a code to the new address, with the applicationId of the application you sign in at, then send that application\'s clientId, the address and the code here. Only the caller\'s own account is written; the request names nobody.  It adds and never replaces: an account that already has an email keeps it, and asking again with the same address answers ok. An address another account at that application already signs in with is refused with the same words a wrong code gets.
+         * @summary Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.
+         * @param {IamAddressBody} iamAddressBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {string} [secFetchSite] 
+         * @param {string} [origin] 
+         * @param {string} [host] 
+         * @param {string} [contentType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamAddress(iamAddressBody: IamAddressBody, cookie?: string, authorization?: string, secFetchSite?: string, origin?: string, host?: string, contentType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAddress(iamAddressBody, cookie, authorization, secFetchSite, origin, host, contentType, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAddress']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8779,7 +8974,7 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
          * @summary Changes who is in a role, or which roles it includes.
-         * @param {string} owner 
+         * @param {string} owner Owner is the organization the team belongs to. Leave it out and it is yours, from your credentials; name another only if you administer it.
          * @param {string} name Name addresses the team on update and names it on create; every other field is content and binds from the BODY, never the URL.
          * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
@@ -9190,7 +9385,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteIamTeamsByName(requestParameters: IamApiDeleteIamTeamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeamsDeleteOutput> {
-            return localVarFp.deleteIamTeamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteIamTeamsByName(requestParameters.name, requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.  A SuperAdmin\'s account is removed only by a SuperAdmin.
@@ -9466,7 +9661,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9493,7 +9688,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamOauthDelegationKeys(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9665,13 +9860,14 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamServiceAccounts(requestParameters.organization, requestParameters.p, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+         * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  Name no organization and it is yours, from your credentials. Name one you belong to and you see its teams; any other is refused.
          * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+         * @param {IamApiGetIamTeamsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamTeams(options?: RawAxiosRequestConfig): AxiosPromise<IamTeamsListOutput> {
-            return localVarFp.getIamTeams(options).then((request) => request(axios, basePath));
+        getIamTeams(requestParameters: IamApiGetIamTeamsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamTeamsListOutput> {
+            return localVarFp.getIamTeams(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one team: who is in it.
@@ -9681,7 +9877,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getIamTeamsByName(requestParameters: IamApiGetIamTeamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTeam> {
-            return localVarFp.getIamTeamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+            return localVarFp.getIamTeamsByName(requestParameters.name, requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a page of the people in an organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.  Which organization comes from your credentials, not from the request: you read your own and no one else\'s, and a credential whose scope spans tenants reads the tenant it names — or, naming none, every one of them.
@@ -10059,7 +10255,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamMfaSetupInitiate(options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+         * Registers an agent that acts for the person whose email it names. Nothing is granted here: the answer is a code for that person to approve, and a claim token the agent polls with until they do.  It asks for no credential, so it is bounded: per address and per person named, an hour at a time, and what is refused is never written.
+         * @summary Registers an agent that acts for the person whose email it names.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamOauthAgentIdentity(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamOauthAgentIdentity(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
          * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10113,7 +10318,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthIntrospect(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10309,7 +10514,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([Landing]); otherwise it is the code alone.
          * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10318,7 +10523,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamVerificationCodes(options).then((request) => request(axios, basePath));
         },
         /**
-         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.
+         * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.  A wallet no account holds yet creates one, and one address or one network creates only so many in a window, a day by default. Past that the answer is 429 with Retry-After and code wallet_signup_capped; data names the bound (\"ip\" or \"subnet\"), its limit, and its window in seconds. A wallet already on file is never counted.
          * @summary Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10363,6 +10568,25 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
             return localVarFp.putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.  Only an account ALREADY signed in here can be chosen, by the subject GET /v1/iam/accounts named it with; anything else is refused and the order is unchanged. Nobody is signed in or out, and nothing is granted: each account keeps resolving to its own row, its own org and its own roles, so switching cannot carry one account\'s standing to another. Like every write on the session cookie it is taken only from this site\'s own pages, as JSON.
+         * @summary Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putIamAccounts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.  First ask POST /v1/iam/verification-codes to send a code to the new address, with the applicationId of the application you sign in at, then send that application\'s clientId, the address and the code here. Only the caller\'s own account is written; the request names nobody.  It adds and never replaces: an account that already has an email keeps it, and asking again with the same address answers ok. An address another account at that application already signs in with is refused with the same words a wrong code gets.
+         * @summary Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.
+         * @param {IamApiPutIamAddressRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAddress(requestParameters: IamApiPutIamAddressRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.putIamAddress(requestParameters.iamAddressBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here. An application that serves other organizations — isShared, or any orgChoiceMode but \"\" and \"None\" — is written by a SuperAdmin only, before and after the change.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
@@ -10840,7 +11064,7 @@ export interface IamApiDeleteIamProjectsByOwnerByNameRequest {
  */
 export interface IamApiDeleteIamRolesByOwnerByNameRequest {
     /**
-     * 
+     * Owner is the organization the team belongs to: yours when left out.
      * @type {string}
      * @memberof IamApiDeleteIamRolesByOwnerByName
      */
@@ -10901,6 +11125,13 @@ export interface IamApiDeleteIamTeamsByNameRequest {
      * @memberof IamApiDeleteIamTeamsByName
      */
     readonly name: string
+
+    /**
+     * Owner is the organization the team belongs to: yours when left out.
+     * @type {string}
+     * @memberof IamApiDeleteIamTeamsByName
+     */
+    readonly owner?: string
 }
 
 /**
@@ -10910,7 +11141,7 @@ export interface IamApiDeleteIamTeamsByNameRequest {
  */
 export interface IamApiDeleteIamUsersByOwnerByNameRequest {
     /**
-     * 
+     * Owner is the organization the team belongs to: yours when left out.
      * @type {string}
      * @memberof IamApiDeleteIamUsersByOwnerByName
      */
@@ -11386,7 +11617,7 @@ export interface IamApiGetIamProjectsByOwnerByNameRequest {
  */
 export interface IamApiGetIamRolesRequest {
     /**
-     * 
+     * Owner is the organization whose teams to list: yours when left out.
      * @type {string}
      * @memberof IamApiGetIamRoles
      */
@@ -11400,7 +11631,7 @@ export interface IamApiGetIamRolesRequest {
  */
 export interface IamApiGetIamRolesByOwnerByNameRequest {
     /**
-     * 
+     * Owner is the organization the team belongs to: yours when left out.
      * @type {string}
      * @memberof IamApiGetIamRolesByOwnerByName
      */
@@ -11492,6 +11723,20 @@ export interface IamApiGetIamServiceAccountsRequest {
 }
 
 /**
+ * Request parameters for getIamTeams operation in IamApi.
+ * @export
+ * @interface IamApiGetIamTeamsRequest
+ */
+export interface IamApiGetIamTeamsRequest {
+    /**
+     * Owner is the organization whose teams to list: yours when left out.
+     * @type {string}
+     * @memberof IamApiGetIamTeams
+     */
+    readonly owner?: string
+}
+
+/**
  * Request parameters for getIamTeamsByName operation in IamApi.
  * @export
  * @interface IamApiGetIamTeamsByNameRequest
@@ -11503,6 +11748,13 @@ export interface IamApiGetIamTeamsByNameRequest {
      * @memberof IamApiGetIamTeamsByName
      */
     readonly name: string
+
+    /**
+     * Owner is the organization the team belongs to: yours when left out.
+     * @type {string}
+     * @memberof IamApiGetIamTeamsByName
+     */
+    readonly owner?: string
 }
 
 /**
@@ -11512,7 +11764,7 @@ export interface IamApiGetIamTeamsByNameRequest {
  */
 export interface IamApiGetIamUsersRequest {
     /**
-     * 
+     * Owner is the organization whose teams to list: yours when left out.
      * @type {string}
      * @memberof IamApiGetIamUsers
      */
@@ -12227,6 +12479,62 @@ export interface IamApiPutIamAccountRequest {
 }
 
 /**
+ * Request parameters for putIamAddress operation in IamApi.
+ * @export
+ * @interface IamApiPutIamAddressRequest
+ */
+export interface IamApiPutIamAddressRequest {
+    /**
+     * 
+     * @type {IamAddressBody}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly iamAddressBody: IamAddressBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly cookie?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly secFetchSite?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly origin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly host?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAddress
+     */
+    readonly contentType?: string
+}
+
+/**
  * Request parameters for putIamApplicationsByOwnerByName operation in IamApi.
  * @export
  * @interface IamApiPutIamApplicationsByOwnerByNameRequest
@@ -12485,7 +12793,7 @@ export interface IamApiPutIamProjectsByOwnerByNameRequest {
  */
 export interface IamApiPutIamRolesByOwnerByNameRequest {
     /**
-     * 
+     * Owner is the organization the team belongs to. Leave it out and it is yours, from your credentials; name another only if you administer it.
      * @type {string}
      * @memberof IamApiPutIamRolesByOwnerByName
      */
@@ -13112,7 +13420,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteIamTeamsByName(requestParameters: IamApiDeleteIamTeamsByNameRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteIamTeamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteIamTeamsByName(requestParameters.name, requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13445,7 +13753,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
      * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13478,7 +13786,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13686,14 +13994,15 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  You see your own organization\'s teams and no one else\'s; which organization that is comes from your credentials, not from the request.
+     * Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.  Name no organization and it is yours, from your credentials. Name one you belong to and you see its teams; any other is refused.
      * @summary Returns your organization\'s teams, newest first — each a named set of people that roles and permissions are granted to.
+     * @param {IamApiGetIamTeamsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamTeams(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamTeams(options).then((request) => request(this.axios, this.basePath));
+    public getIamTeams(requestParameters: IamApiGetIamTeamsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamTeams(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13705,7 +14014,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getIamTeamsByName(requestParameters: IamApiGetIamTeamsByNameRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamTeamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getIamTeamsByName(requestParameters.name, requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14162,7 +14471,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
+     * Registers an agent that acts for the person whose email it names. Nothing is granted here: the answer is a code for that person to approve, and a claim token the agent polls with until they do.  It asks for no credential, so it is bounded: per address and per person named, an hour at a time, and what is refused is never written.
+     * @summary Registers an agent that acts for the person whose email it names.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamOauthAgentIdentity(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamOauthAgentIdentity(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. When SEVERAL people are signed in on the browser and the request names none of them, it asks which one, with the account chooser. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not (`account_selection_required` when several accounts are signed in and none is named), but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose among the accounts signed in on this browser, or sign in to another. `login_hint` names which of those accounts the request is for.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
      * @summary Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14228,7 +14548,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Four things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear), or, when `logout_hint` names one account, that account\'s     session alone (sessions.End), leaving everyone else signed in on the     browser. Server-side revocation is the load-bearing half: a copy of the     cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. A navigating sign-out visits each of the issuer\'s other sign-in origins and     ends the same sessions there (nextSignout), because each holds its own.  4. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard: a redirect happens only when a VERIFIED id_token_hint (or client_id) identifies the application and that application has registered the target. Nobody can turn your logout link into a redirect to a site of their choosing.  A GET is the end-session navigation (OIDC RP-Initiated Logout 1.0 §2), so it always ends on a page: the registered address when one was asked for, else this issuer\'s sign-in page for the application being signed out of. A relying party therefore needs no configuration to sign someone out. A POST is also how a program signs out, so it keeps the JSON answer unless it asks for HTML.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14466,7 +14786,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([landing]); otherwise it is the code alone.
+     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.  An email is the designed sign-in mail, a link beside the code and from the application\'s org as its reader knows it (otp.IssueLink), when the request\'s Origin is the origin of one of the application\'s redirect URIs ([Landing]); otherwise it is the code alone.
      * @summary Validates the request and asks otp to get a code to the person.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14477,7 +14797,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.
+     * Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.  This IS the login — it answers exactly as a password sign-in does, so the rest of your flow does not branch on how somebody arrived.  A wallet no account holds yet creates one, and one address or one network creates only so many in a window, a day by default. Past that the answer is 429 with Retry-After and code wallet_signup_capped; data names the bound (\"ip\" or \"subnet\"), its limit, and its window in seconds. A wallet already on file is never counted.
      * @summary Completes a wallet sign-in: it verifies the signed challenge and, if it holds, signs the wallet\'s owner in.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14531,6 +14851,29 @@ export class IamApi extends BaseAPI {
      */
     public putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.  Only an account ALREADY signed in here can be chosen, by the subject GET /v1/iam/accounts named it with; anything else is refused and the order is unchanged. Nobody is signed in or out, and nothing is granted: each account keeps resolving to its own row, its own org and its own roles, so switching cannot carry one account\'s standing to another. Like every write on the session cookie it is taken only from this site\'s own pages, as JSON.
+     * @summary Makes one of the accounts signed in on this browser the current one — the account an account menu switches to — and answers the list in its new order, current first.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamAccounts(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamAccounts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.  First ask POST /v1/iam/verification-codes to send a code to the new address, with the applicationId of the application you sign in at, then send that application\'s clientId, the address and the code here. Only the caller\'s own account is written; the request names nobody.  It adds and never replaces: an account that already has an email keeps it, and asking again with the same address answers ok. An address another account at that application already signs in with is refused with the same words a wrong code gets.
+     * @summary Adds an email address or a phone number to the calling person\'s own account, so they can sign in with it — by a code sent there, or to recover a password.
+     * @param {IamApiPutIamAddressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamAddress(requestParameters: IamApiPutIamAddressRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamAddress(requestParameters.iamAddressBody, requestParameters.cookie, requestParameters.authorization, requestParameters.secFetchSite, requestParameters.origin, requestParameters.host, requestParameters.contentType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

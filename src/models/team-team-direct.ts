@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { TeamTeamRoom } from './team-team-room';
+import type { TeamTeamChannel } from './team-team-channel';
 
 /**
  * 
@@ -24,16 +24,16 @@ import type { TeamTeamRoom } from './team-team-room';
  */
 export interface TeamTeamDirect {
     /**
+     * Channel is the direct message, as the channel listing answers it.
+     * @type {TeamTeamChannel}
+     * @memberof TeamTeamDirect
+     */
+    'channel'?: TeamTeamChannel;
+    /**
      * Created is true when this call opened the conversation (201) and false when it already existed (200).
      * @type {boolean}
      * @memberof TeamTeamDirect
      */
     'created'?: boolean;
-    /**
-     * Room is the direct message, as the room listing answers it.
-     * @type {TeamTeamRoom}
-     * @memberof TeamTeamDirect
-     */
-    'room'?: TeamTeamRoom;
 }
 

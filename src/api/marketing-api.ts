@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { MarketingAdded } from '../models';
+// @ts-ignore
 import type { MarketingAudience } from '../models';
 // @ts-ignore
 import type { MarketingAudienceList } from '../models';
@@ -46,11 +48,27 @@ import type { MarketingBetaInvites } from '../models';
 // @ts-ignore
 import type { MarketingBetaRequest } from '../models';
 // @ts-ignore
+import type { MarketingBroadcast } from '../models';
+// @ts-ignore
+import type { MarketingBroadcastIn } from '../models';
+// @ts-ignore
+import type { MarketingBroadcastPage } from '../models';
+// @ts-ignore
+import type { MarketingBroadcastStats } from '../models';
+// @ts-ignore
+import type { MarketingBulkIn } from '../models';
+// @ts-ignore
+import type { MarketingBulkOut } from '../models';
+// @ts-ignore
 import type { MarketingCalendarPost } from '../models';
 // @ts-ignore
 import type { MarketingCampaign } from '../models';
 // @ts-ignore
 import type { MarketingCampaignList } from '../models';
+// @ts-ignore
+import type { MarketingConfirmIn } from '../models';
+// @ts-ignore
+import type { MarketingCreated } from '../models';
 // @ts-ignore
 import type { MarketingEnrollInput } from '../models';
 // @ts-ignore
@@ -60,9 +78,25 @@ import type { MarketingEnrollmentList } from '../models';
 // @ts-ignore
 import type { MarketingEsignEvent } from '../models';
 // @ts-ignore
+import type { MarketingFieldSet } from '../models';
+// @ts-ignore
+import type { MarketingImport } from '../models';
+// @ts-ignore
+import type { MarketingImportIn } from '../models';
+// @ts-ignore
+import type { MarketingImportPage } from '../models';
+// @ts-ignore
 import type { MarketingLead } from '../models';
 // @ts-ignore
 import type { MarketingLeadIn } from '../models';
+// @ts-ignore
+import type { MarketingList } from '../models';
+// @ts-ignore
+import type { MarketingListIn } from '../models';
+// @ts-ignore
+import type { MarketingListPage } from '../models';
+// @ts-ignore
+import type { MarketingListStats } from '../models';
 // @ts-ignore
 import type { MarketingMailIn } from '../models';
 // @ts-ignore
@@ -86,6 +120,16 @@ import type { MarketingResumeIn } from '../models';
 // @ts-ignore
 import type { MarketingScheduleInput } from '../models';
 // @ts-ignore
+import type { MarketingSegment } from '../models';
+// @ts-ignore
+import type { MarketingSegmentIn } from '../models';
+// @ts-ignore
+import type { MarketingSegmentPage } from '../models';
+// @ts-ignore
+import type { MarketingSendIn } from '../models';
+// @ts-ignore
+import type { MarketingSender } from '../models';
+// @ts-ignore
 import type { MarketingSequence } from '../models';
 // @ts-ignore
 import type { MarketingSequenceList } from '../models';
@@ -102,6 +146,16 @@ import type { MarketingStepInput } from '../models';
 // @ts-ignore
 import type { MarketingStepList } from '../models';
 // @ts-ignore
+import type { MarketingSubscribeIn } from '../models';
+// @ts-ignore
+import type { MarketingSubscriber } from '../models';
+// @ts-ignore
+import type { MarketingSubscriberIn } from '../models';
+// @ts-ignore
+import type { MarketingSubscriberPage } from '../models';
+// @ts-ignore
+import type { MarketingSubscription } from '../models';
+// @ts-ignore
 import type { MarketingSummary } from '../models';
 // @ts-ignore
 import type { MarketingSuppression } from '../models';
@@ -109,6 +163,10 @@ import type { MarketingSuppression } from '../models';
 import type { MarketingSuppressionCheck } from '../models';
 // @ts-ignore
 import type { MarketingSuppressionList } from '../models';
+// @ts-ignore
+import type { MarketingTestIn } from '../models';
+// @ts-ignore
+import type { MarketingTestOut } from '../models';
 // @ts-ignore
 import type { MarketingUnsubscribed } from '../models';
 // @ts-ignore
@@ -130,6 +188,44 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteMarketingAudiencesById', 'id', id)
             const localVarPath = `/v1/marketing/audiences/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes a broadcast that is not sending, with its record of who it went to, and answers 204. One that is sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes a broadcast that is not sending, with its record of who it went to, and answers 204.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingBroadcastsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMarketingBroadcastsById', 'id', id)
+            const localVarPath = `/v1/marketing/broadcasts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -234,6 +330,128 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204. A list with a broadcast sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMarketingListsById', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes a saved segment and answers 204. A scheduled broadcast to it is 409; change or cancel the broadcast first.  Org admin only.
+         * @summary Deletes a saved segment and answers 204.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {string} sid SID is the segment\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsByIdSegmentsBySid: async (id: string, sid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMarketingListsByIdSegmentsBySid', 'id', id)
+            // verify required parameter 'sid' is not null or undefined
+            assertParamExists('deleteMarketingListsByIdSegmentsBySid', 'sid', sid)
+            const localVarPath = `/v1/marketing/lists/{id}/segments/{sid}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes one subscriber from one of the org\'s lists and answers 204. The row and its evidence are gone; to keep the record of someone leaving, set their status to unsubscribed instead.  Org admin only.
+         * @summary Removes one subscriber from one of the org\'s lists and answers 204.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {number} sid SID is the subscriber\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsByIdSubscribersBySid: async (id: string, sid: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMarketingListsByIdSubscribersBySid', 'id', id)
+            // verify required parameter 'sid' is not null or undefined
+            assertParamExists('deleteMarketingListsByIdSubscribersBySid', 'sid', sid)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers/{sid}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
@@ -278,13 +496,15 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns the org\'s saved audiences, most recently updated first.
-         * @summary Returns the org\'s saved audiences, most recently updated first.
+         * Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count. A list or a segment is an audience as a cohort is: a sequence enrolls any of them by id.
+         * @summary Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketingAudiences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingAudiences: async (limit?: number, cursor?: string, prefix?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/audiences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -303,6 +523,14 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (prefix !== undefined) {
+                localVarQueryParameter['prefix'] = prefix;
             }
 
 
@@ -434,6 +662,131 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          */
         getMarketingBetaInvites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/beta/invites`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the org\'s broadcasts, newest first.
+         * @summary Returns the org\'s broadcasts, newest first.
+         * @param {string} [list] List keeps one list\&#39;s broadcasts, by id or slug.
+         * @param {string} [status] Status keeps broadcasts in one status.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcasts: async (list?: string, status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/broadcasts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (list !== undefined) {
+                localVarQueryParameter['list'] = list;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one of the org\'s broadcasts.
+         * @summary Returns one of the org\'s broadcasts.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcastsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingBroadcastsById', 'id', id)
+            const localVarPath = `/v1/marketing/broadcasts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @summary Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcastsByIdStats: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingBroadcastsByIdStats', 'id', id)
+            const localVarPath = `/v1/marketing/broadcasts/{id}/stats`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -664,6 +1017,498 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Returns the custom fields the org defined for its subscribers.
+         * @summary Returns the custom fields the org defined for its subscribers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingFields: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/fields`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the org\'s imports, newest first, each with its report.
+         * @summary Returns the org\'s imports, newest first, each with its report.
+         * @param {string} [list] List keeps one list\&#39;s imports, by id or slug.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingImports: async (list?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/imports`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (list !== undefined) {
+                localVarQueryParameter['list'] = list;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @summary Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingImportsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingImportsById', 'id', id)
+            const localVarPath = `/v1/marketing/imports/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @summary Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingLists: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @summary Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsById', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields. The selection takes the same query fields as the subscriber list (status, tag, source, ref, basis, q, field, value, the date ranges and segment). The answer streams as it is read, so a list of millions exports in bounded memory.  Org admin only.
+         * @summary Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdExport: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsByIdExport', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}/export`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one list\'s saved segments, newest first.
+         * @summary Returns one list\'s saved segments, newest first.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSegments: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsByIdSegments', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}/segments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate. Every number is read from kept counts, never by reading the list.
+         * @summary Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} [from] From is the first day, YYYY-MM-DD (UTC); 30 days before To by default.
+         * @param {string} [to] To is the last day, YYYY-MM-DD (UTC); today by default. At most 366 days after From.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdStats: async (id: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsByIdStats', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}/stats`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = to;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a page of one list\'s subscribers, newest first unless asked otherwise. Every filter (status, tag, source, ref, consent basis, a prefix of the address or name, a custom field\'s value, ranges of when they joined and confirmed, and whether they opened or clicked since a time) walks an index of its own, so a page costs the same on a list of ten rows or ten million. Continue with next.
+         * @summary Returns a page of one list\'s subscribers, newest first unless asked otherwise.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} [status] Status is one status or several, comma-separated: pending, subscribed, unsubscribed, bounced, complained, cleaned.
+         * @param {string} [tag] Tag keeps subscribers carrying this tag.
+         * @param {string} [source] Source keeps subscribers that came from this kind of source: form, page, api, import or commerce.
+         * @param {string} [ref] Ref keeps subscribers from one source instance: a form id, a page, an import batch id.
+         * @param {string} [basis] Basis keeps subscribers by the consent basis recorded for them: explicit, legitimate_interest or unverified.
+         * @param {string} [q] Q keeps subscribers whose address or name begins with it, case-insensitively. A search is ordered by address.
+         * @param {string} [field] Field names a custom field, and Value keeps subscribers whose value for it is exactly this.
+         * @param {string} [value] Value is the custom field\&#39;s value Field keeps.
+         * @param {number} [createdAfter] CreatedAfter and CreatedBefore bound when the subscriber joined the list, unix seconds, inclusive. Zero is unbounded.
+         * @param {number} [createdBefore] CreatedBefore is the upper bound of CreatedAfter\&#39;s range.
+         * @param {number} [confirmedAfter] ConfirmedAfter and ConfirmedBefore bound when the subscription was confirmed, unix seconds, inclusive.
+         * @param {number} [confirmedBefore] ConfirmedBefore is the upper bound of ConfirmedAfter\&#39;s range.
+         * @param {number} [openedAfter] OpenedAfter keeps subscribers who opened a broadcast at or after this time.
+         * @param {number} [notOpenedSince] NotOpenedSince keeps subscribers who have opened nothing since this time, including those who never opened anything.
+         * @param {number} [clickedAfter] ClickedAfter keeps subscribers who clicked a link at or after this time.
+         * @param {string} [segment] Segment applies a saved segment of the list; the filter fields narrow it further.
+         * @param {string} [sort] Sort is created (the default), email, name, confirmed or opened. A search (q) is always by address.
+         * @param {string} [order] Order is desc (the default) or asc.
+         * @param {string} [cursor] Cursor continues from where the previous page ended.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 500.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSubscribers: async (id: string, status?: string, tag?: string, source?: string, ref?: string, basis?: string, q?: string, field?: string, value?: string, createdAfter?: number, createdBefore?: number, confirmedAfter?: number, confirmedBefore?: number, openedAfter?: number, notOpenedSince?: number, clickedAfter?: number, segment?: string, sort?: string, order?: string, cursor?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsByIdSubscribers', 'id', id)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (tag !== undefined) {
+                localVarQueryParameter['tag'] = tag;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (basis !== undefined) {
+                localVarQueryParameter['basis'] = basis;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (field !== undefined) {
+                localVarQueryParameter['field'] = field;
+            }
+
+            if (value !== undefined) {
+                localVarQueryParameter['value'] = value;
+            }
+
+            if (createdAfter !== undefined) {
+                localVarQueryParameter['createdAfter'] = createdAfter;
+            }
+
+            if (createdBefore !== undefined) {
+                localVarQueryParameter['createdBefore'] = createdBefore;
+            }
+
+            if (confirmedAfter !== undefined) {
+                localVarQueryParameter['confirmedAfter'] = confirmedAfter;
+            }
+
+            if (confirmedBefore !== undefined) {
+                localVarQueryParameter['confirmedBefore'] = confirmedBefore;
+            }
+
+            if (openedAfter !== undefined) {
+                localVarQueryParameter['openedAfter'] = openedAfter;
+            }
+
+            if (notOpenedSince !== undefined) {
+                localVarQueryParameter['notOpenedSince'] = notOpenedSince;
+            }
+
+            if (clickedAfter !== undefined) {
+                localVarQueryParameter['clickedAfter'] = clickedAfter;
+            }
+
+            if (segment !== undefined) {
+                localVarQueryParameter['segment'] = segment;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (order !== undefined) {
+                localVarQueryParameter['order'] = order;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @summary Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {number} sid SID is the subscriber\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSubscribersBySid: async (id: string, sid: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketingListsByIdSubscribersBySid', 'id', id)
+            // verify required parameter 'sid' is not null or undefined
+            assertParamExists('getMarketingListsByIdSubscribersBySid', 'sid', sid)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers/{sid}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
          * @summary Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap.
          * @param {*} [options] Override http request option.
@@ -784,13 +1629,49 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns the org\'s drip sequences, most recently updated first.
-         * @summary Returns the org\'s drip sequences, most recently updated first.
-         * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+         * @summary Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketingSequences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSender: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/marketing/sender`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the org\'s drip sequences, most recently updated first.
+         * @summary Returns the org\'s drip sequences, most recently updated first.
+         * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingSequences: async (limit?: number, cursor?: string, prefix?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/sequences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -809,6 +1690,14 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (prefix !== undefined) {
+                localVarQueryParameter['prefix'] = prefix;
             }
 
 
@@ -976,13 +1865,15 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
+         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to. The page carries `next` (an opaque cursor for the following page, empty on the last) and `total` (the true count of this org\'s opt-outs on this channel, across every page).
          * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketingSuppressions: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSuppressions: async (limit?: number, cursor?: string, prefix?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/suppressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1001,6 +1892,14 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (prefix !== undefined) {
+                localVarQueryParameter['prefix'] = prefix;
             }
 
 
@@ -1066,10 +1965,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address). It is the ONLY authority here — there is no principal — so it binds the request to one tuple and nothing else.
          * @param {boolean} [company] Company opts out everyone at the address\&#39;s domain as well, in this org alone: a company\&#39;s unsubscribe. An address at a free mail provider is a person\&#39;s and is refused 422.
+         * @param {string} [list] List is the marketing list a broadcast\&#39;s link leaves; with it the token is the list\&#39;s, the address leaves that list alone, and the org\&#39;s other mail still reaches it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, company?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, company?: boolean, list?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/unsubscribe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1102,11 +2002,151 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['company'] = company;
             }
 
+            if (list !== undefined) {
+                localVarQueryParameter['list'] = list;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes the fields the body names on a draft or scheduled broadcast and answers it. One that is sending or done is 409.  Org admin only.
+         * @summary Changes the fields the body names on a draft or scheduled broadcast and answers it.
+         * @param {string} id ID is the broadcast to change, from the path; ignored on create.
+         * @param {MarketingBroadcastIn} marketingBroadcastIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingBroadcastsById: async (id: string, marketingBroadcastIn: MarketingBroadcastIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchMarketingBroadcastsById', 'id', id)
+            // verify required parameter 'marketingBroadcastIn' is not null or undefined
+            assertParamExists('patchMarketingBroadcastsById', 'marketingBroadcastIn', marketingBroadcastIn)
+            const localVarPath = `/v1/marketing/broadcasts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBroadcastIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes the fields the body names on one of the org\'s lists and answers the list. A field left out keeps its value; an empty string clears a sender field back to the org\'s.  Org admin only.
+         * @summary Changes the fields the body names on one of the org\'s lists and answers the list.
+         * @param {string} id ID is the list to change, from the path; ignored on create.
+         * @param {MarketingListIn} marketingListIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingListsById: async (id: string, marketingListIn: MarketingListIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchMarketingListsById', 'id', id)
+            // verify required parameter 'marketingListIn' is not null or undefined
+            assertParamExists('patchMarketingListsById', 'marketingListIn', marketingListIn)
+            const localVarPath = `/v1/marketing/lists/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingListIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes the fields the body names on one subscriber and answers the row. A status change follows the same rule as add: an address that unsubscribed or complained is not put back by the org.  Org admin only.
+         * @summary Changes the fields the body names on one subscriber and answers the row.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {number} sid SID is the subscriber to change, from the path; ignored on add.
+         * @param {MarketingSubscriberIn} marketingSubscriberIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingListsByIdSubscribersBySid: async (id: string, sid: number, marketingSubscriberIn: MarketingSubscriberIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchMarketingListsByIdSubscribersBySid', 'id', id)
+            // verify required parameter 'sid' is not null or undefined
+            assertParamExists('patchMarketingListsByIdSubscribersBySid', 'sid', sid)
+            // verify required parameter 'marketingSubscriberIn' is not null or undefined
+            assertParamExists('patchMarketingListsByIdSubscribersBySid', 'marketingSubscriberIn', marketingSubscriberIn)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers/{sid}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSubscriberIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1314,6 +2354,172 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it. With scheduledAt it is scheduled; without, a draft until sent.  Org admin only.
+         * @summary Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it.
+         * @param {MarketingBroadcastIn} marketingBroadcastIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcasts: async (marketingBroadcastIn: MarketingBroadcastIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingBroadcastIn' is not null or undefined
+            assertParamExists('postMarketingBroadcasts', 'marketingBroadcastIn', marketingBroadcastIn)
+            const localVarPath = `/v1/marketing/broadcasts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBroadcastIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stops a scheduled or sending broadcast and answers it. Who it already reached stays recorded.  Org admin only.
+         * @summary Stops a scheduled or sending broadcast and answers it.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdCancel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingBroadcastsByIdCancel', 'id', id)
+            const localVarPath = `/v1/marketing/broadcasts/{id}/cancel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it. The list\'s sender must carry a postal address, which every commercial mail states (CAN-SPAM); without one it is 422.  Org admin only.
+         * @summary Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it.
+         * @param {string} id ID is the broadcast, from the path.
+         * @param {MarketingSendIn} marketingSendIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdSend: async (id: string, marketingSendIn: MarketingSendIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingBroadcastsByIdSend', 'id', id)
+            // verify required parameter 'marketingSendIn' is not null or undefined
+            assertParamExists('postMarketingBroadcastsByIdSend', 'marketingSendIn', marketingSendIn)
+            const localVarPath = `/v1/marketing/broadcasts/{id}/send`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSendIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.  Org admin only.
+         * @summary Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.
+         * @param {string} id ID is the broadcast, from the path.
+         * @param {MarketingTestIn} marketingTestIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdTest: async (id: string, marketingTestIn: MarketingTestIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingBroadcastsByIdTest', 'id', id)
+            // verify required parameter 'marketingTestIn' is not null or undefined
+            assertParamExists('postMarketingBroadcastsByIdTest', 'marketingTestIn', marketingTestIn)
+            const localVarPath = `/v1/marketing/broadcasts/{id}/test`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingTestIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingCalendarPost} marketingCalendarPost 
@@ -1438,7 +2644,123 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * Creates an import into one of the org\'s lists and answers it. For a file the import waits in state receiving for its bytes (PUT /v1/marketing/imports/{id}/data); for a source (from: commerce) it is queued at once. A key makes the call idempotent: a second create with it answers the first import. The rows are stamped with the import\'s id as their source ref, so a filter on ref selects the batch.  Org admin only.
+         * @summary Creates an import into one of the org\'s lists and answers it.
+         * @param {MarketingImportIn} marketingImportIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImports: async (marketingImportIn: MarketingImportIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingImportIn' is not null or undefined
+            assertParamExists('postMarketingImports', 'marketingImportIn', marketingImportIn)
+            const localVarPath = `/v1/marketing/imports`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingImportIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stops an import that has not finished and answers it. The rows it already wrote stay; a filter on its id as ref selects them.  Org admin only.
+         * @summary Stops an import that has not finished and answers it.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImportsByIdCancel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingImportsByIdCancel', 'id', id)
+            const localVarPath = `/v1/marketing/imports/{id}/cancel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there. An import with no bytes is 409.  Org admin only.
+         * @summary Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImportsByIdStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingImportsByIdStart', 'id', id)
+            const localVarPath = `/v1/marketing/imports/{id}/start`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A person signed in files under the address their token was issued to: a body naming another address is 400, and so is a sign-in issued with no address. An order that upgrades an organization names it in `upgrade`, sent signed in and acting in that organization (X-Org-Id) as its owner or an admin, and the lead records that verified handle; anyone else naming one is 403. `payment` is card or invoice, and an Enterprise inquiry paying by invoice is also stated as invoice_requested. X-Idempotency-Key makes a retry safe: the same key from the same address answers the same reference, and files, mails and states nothing twice; the same key sent with another form is 409. The sales mail states the payment and the verified organization to upgrade beside the answers.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
          * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingLeadIn} marketingLeadIn 
          * @param {*} [options] Override http request option.
@@ -1551,6 +2873,178 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(marketingResumeIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a list in the org and answers 201 with it. Name is required; a new list is private, asks public subscribers to confirm, and takes the org\'s sender for every sender field it leaves empty. A slug the org already uses is 409.  Org admin only.
+         * @summary Creates a list in the org and answers 201 with it.
+         * @param {MarketingListIn} marketingListIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLists: async (marketingListIn: MarketingListIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingListIn' is not null or undefined
+            assertParamExists('postMarketingLists', 'marketingListIn', marketingListIn)
+            const localVarPath = `/v1/marketing/lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingListIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.  Org admin only.
+         * @summary Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingSegmentIn} marketingSegmentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSegments: async (id: string, marketingSegmentIn: MarketingSegmentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingListsByIdSegments', 'id', id)
+            // verify required parameter 'marketingSegmentIn' is not null or undefined
+            assertParamExists('postMarketingListsByIdSegments', 'marketingSegmentIn', marketingSegmentIn)
+            const localVarPath = `/v1/marketing/lists/{id}/segments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSegmentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row. Pending mails the address a link to confirm. An address that unsubscribed or complained cannot be put back by the org: it is 409, and the person rejoins by subscribing and confirming again.  Org admin only.
+         * @summary Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingSubscriberIn} marketingSubscriberIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSubscribers: async (id: string, marketingSubscriberIn: MarketingSubscriberIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingListsByIdSubscribers', 'id', id)
+            // verify required parameter 'marketingSubscriberIn' is not null or undefined
+            assertParamExists('postMarketingListsByIdSubscribers', 'marketingSubscriberIn', marketingSubscriberIn)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSubscriberIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Applies one action to a selection of a list and answers how many rows it matched and changed. The selection is ids, a saved segment, a filter, or the whole list. It walks the selection in batches of a thousand, one transaction each, so millions of rows move in bounded memory: tag and untag add or remove a tag; move moves the rows to another list of the org; unsubscribe and clean set those statuses on every row that is pending or subscribed, each telling the CRM and the event stream; delete removes the rows and their evidence.  Org admin only.
+         * @summary Applies one action to a selection of a list and answers how many rows it matched and changed.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingBulkIn} marketingBulkIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSubscribersBulk: async (id: string, marketingBulkIn: MarketingBulkIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketingListsByIdSubscribersBulk', 'id', id)
+            // verify required parameter 'marketingBulkIn' is not null or undefined
+            assertParamExists('postMarketingListsByIdSubscribersBulk', 'marketingBulkIn', marketingBulkIn)
+            const localVarPath = `/v1/marketing/lists/{id}/subscribers/bulk`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingBulkIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1856,6 +3350,78 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Asks for the brand\'s newsletter for an address and answers 202 pending. Nothing is recorded: the address is mailed a link to confirm, good for seven days, and only a press on it subscribes. The answer is the same for an address that is new, already subscribed or unsubscribed, and each is mailed alike, so the answer says nothing about the address; one that unsubscribed gets the link too, which is how it comes back. No account is needed, and nothing is told to the sales mailbox or stated to an ad platform.  A deployment whose brand cannot hold the newsletter answers 503, a caller past ten requests in an hour 429, a body over 4 KiB 413, a missing or malformed email 400, and an address already sent three links today, or a deployment past its hourly ceiling, 429, in that order.
+         * @summary Asks for the brand\'s newsletter for an address and answers 202 pending.
+         * @param {MarketingSubscribeIn} marketingSubscribeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingSubscribe: async (marketingSubscribeIn: MarketingSubscribeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingSubscribeIn' is not null or undefined
+            assertParamExists('postMarketingSubscribe', 'marketingSubscribeIn', marketingSubscribeIn)
+            const localVarPath = `/v1/marketing/subscribe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSubscribeIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Subscribes the address a confirmation link names and answers 200 confirmed. The token is the t value in the link\'s fragment, and it is the only authority. The subscriber is filed in the brand\'s CRM: the person, their place on the Newsletter list, and the confirmation on their timeline with the page and language it came from, when it was asked for, and when and from which address it was confirmed (double opt-in). The brand\'s opt-out for that address is lifted, since the person asked to come back. Pressing the same link again answers 200 and changes nothing.  A caller past thirty presses in an hour answers 429, a link that is missing, malformed, altered or signed elsewhere 400, one older than seven days 410, and a deployment whose brand cannot hold the CRM 503.
+         * @summary Subscribes the address a confirmation link names and answers 200 confirmed.
+         * @param {MarketingConfirmIn} marketingConfirmIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingSubscribeConfirm: async (marketingConfirmIn: MarketingConfirmIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingConfirmIn' is not null or undefined
+            assertParamExists('postMarketingSubscribeConfirm', 'marketingConfirmIn', marketingConfirmIn)
+            const localVarPath = `/v1/marketing/subscribe/confirm`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingConfirmIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
@@ -1902,11 +3468,12 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [channel] Channel is the surface to opt out of.
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address), the only authority here.
+         * @param {string} [list] List is the marketing list the link leaves, as on the signed link.
          * @param {string} [listUnsubscribe] OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, listUnsubscribe?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, list?: string, listUnsubscribe?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/unsubscribe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1938,6 +3505,10 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
 
             if (token !== undefined) {
                 localVarQueryParameter['token'] = token;
+            }
+
+            if (list !== undefined) {
+                localVarQueryParameter['list'] = list;
             }
 
 
@@ -2086,6 +3657,172 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Replaces the org\'s custom fields with the set the body carries and answers it. A field dropped from the set is removed from every subscriber; a field kept keeps its values when its type does not change, and a changed type is 409 while any subscriber has a value for it.  Org admin only.
+         * @summary Replaces the org\'s custom fields with the set the body carries and answers it.
+         * @param {MarketingFieldSet} marketingFieldSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingFields: async (marketingFieldSet: MarketingFieldSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingFieldSet' is not null or undefined
+            assertParamExists('putMarketingFields', 'marketingFieldSet', marketingFieldSet)
+            const localVarPath = `/v1/marketing/fields`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingFieldSet, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds. A piece at an offset the import has passed is taken only past what it holds, so a retried piece writes nothing twice; a piece past the end is 409 naming the offset to resume from. Send the file in order, in pieces of any size up to the request limit, then start it.  Org admin only.
+         * @summary Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingImportsByIdData: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putMarketingImportsByIdData', 'id', id)
+            const localVarPath = `/v1/marketing/imports/{id}/data`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.  Org admin only.
+         * @summary Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} sid SID is the segment to change, from the path; ignored on create.
+         * @param {MarketingSegmentIn} marketingSegmentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingListsByIdSegmentsBySid: async (id: string, sid: string, marketingSegmentIn: MarketingSegmentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putMarketingListsByIdSegmentsBySid', 'id', id)
+            // verify required parameter 'sid' is not null or undefined
+            assertParamExists('putMarketingListsByIdSegmentsBySid', 'sid', sid)
+            // verify required parameter 'marketingSegmentIn' is not null or undefined
+            assertParamExists('putMarketingListsByIdSegmentsBySid', 'marketingSegmentIn', marketingSegmentIn)
+            const localVarPath = `/v1/marketing/lists/{id}/segments/{sid}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSegmentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces the org\'s sender and answers it. Every field is written; one left out is cleared.  Org admin only.
+         * @summary Replaces the org\'s sender and answers it.
+         * @param {MarketingSender} marketingSender 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingSender: async (marketingSender: MarketingSender, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'marketingSender' is not null or undefined
+            assertParamExists('putMarketingSender', 'marketingSender', marketingSender)
+            const localVarPath = `/v1/marketing/sender`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketingSender, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2107,6 +3844,19 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingAudiencesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingAudiencesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes a broadcast that is not sending, with its record of who it went to, and answers 204. One that is sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes a broadcast that is not sending, with its record of who it went to, and answers 204.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMarketingBroadcastsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingBroadcastsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingBroadcastsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2136,6 +3886,47 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204. A list with a broadcast sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMarketingListsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingListsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingListsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes a saved segment and answers 204. A scheduled broadcast to it is 409; change or cancel the broadcast first.  Org admin only.
+         * @summary Deletes a saved segment and answers 204.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {string} sid SID is the segment\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMarketingListsByIdSegmentsBySid(id: string, sid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingListsByIdSegmentsBySid(id, sid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingListsByIdSegmentsBySid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes one subscriber from one of the org\'s lists and answers 204. The row and its evidence are gone; to keep the record of someone leaving, set their status to unsubscribed instead.  Org admin only.
+         * @summary Removes one subscriber from one of the org\'s lists and answers 204.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {number} sid SID is the subscriber\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMarketingListsByIdSubscribersBySid(id: string, sid: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingListsByIdSubscribersBySid(id, sid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingListsByIdSubscribersBySid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {string} [channel] Channel is the surface the entry opts out of; empty is email.
@@ -2150,14 +3941,16 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s saved audiences, most recently updated first.
-         * @summary Returns the org\'s saved audiences, most recently updated first.
+         * Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count. A list or a segment is an audience as a cohort is: a sequence enrolls any of them by id.
+         * @summary Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketingAudiences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingAudienceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiences(limit, options);
+        async getMarketingAudiences(limit?: number, cursor?: string, prefix?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingAudienceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiences(limit, cursor, prefix, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingAudiences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2210,6 +4003,47 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBetaInvites(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBetaInvites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the org\'s broadcasts, newest first.
+         * @summary Returns the org\'s broadcasts, newest first.
+         * @param {string} [list] List keeps one list\&#39;s broadcasts, by id or slug.
+         * @param {string} [status] Status keeps broadcasts in one status.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingBroadcasts(list?: string, status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcastPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBroadcasts(list, status, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBroadcasts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one of the org\'s broadcasts.
+         * @summary Returns one of the org\'s broadcasts.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingBroadcastsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcast>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBroadcastsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBroadcastsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @summary Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingBroadcastsByIdStats(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcastStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingBroadcastsByIdStats(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingBroadcastsByIdStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2281,6 +4115,158 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the custom fields the org defined for its subscribers.
+         * @summary Returns the custom fields the org defined for its subscribers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingFields(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingFieldSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingFields(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingFields']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the org\'s imports, newest first, each with its report.
+         * @summary Returns the org\'s imports, newest first, each with its report.
+         * @param {string} [list] List keeps one list\&#39;s imports, by id or slug.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingImports(list?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingImportPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingImports(list, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingImports']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @summary Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingImportsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingImportsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingImportsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @summary Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingLists(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingListPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingLists(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingLists']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @summary Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields. The selection takes the same query fields as the subscriber list (status, tag, source, ref, basis, q, field, value, the date ranges and segment). The answer streams as it is read, so a list of millions exports in bounded memory.  Org admin only.
+         * @summary Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsByIdExport(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsByIdExport(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsByIdExport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one list\'s saved segments, newest first.
+         * @summary Returns one list\'s saved segments, newest first.
+         * @param {string} id ID is the list\&#39;s id or its slug.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsByIdSegments(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSegmentPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsByIdSegments(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsByIdSegments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate. Every number is read from kept counts, never by reading the list.
+         * @summary Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} [from] From is the first day, YYYY-MM-DD (UTC); 30 days before To by default.
+         * @param {string} [to] To is the last day, YYYY-MM-DD (UTC); today by default. At most 366 days after From.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsByIdStats(id: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingListStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsByIdStats(id, from, to, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsByIdStats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a page of one list\'s subscribers, newest first unless asked otherwise. Every filter (status, tag, source, ref, consent basis, a prefix of the address or name, a custom field\'s value, ranges of when they joined and confirmed, and whether they opened or clicked since a time) walks an index of its own, so a page costs the same on a list of ten rows or ten million. Continue with next.
+         * @summary Returns a page of one list\'s subscribers, newest first unless asked otherwise.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} [status] Status is one status or several, comma-separated: pending, subscribed, unsubscribed, bounced, complained, cleaned.
+         * @param {string} [tag] Tag keeps subscribers carrying this tag.
+         * @param {string} [source] Source keeps subscribers that came from this kind of source: form, page, api, import or commerce.
+         * @param {string} [ref] Ref keeps subscribers from one source instance: a form id, a page, an import batch id.
+         * @param {string} [basis] Basis keeps subscribers by the consent basis recorded for them: explicit, legitimate_interest or unverified.
+         * @param {string} [q] Q keeps subscribers whose address or name begins with it, case-insensitively. A search is ordered by address.
+         * @param {string} [field] Field names a custom field, and Value keeps subscribers whose value for it is exactly this.
+         * @param {string} [value] Value is the custom field\&#39;s value Field keeps.
+         * @param {number} [createdAfter] CreatedAfter and CreatedBefore bound when the subscriber joined the list, unix seconds, inclusive. Zero is unbounded.
+         * @param {number} [createdBefore] CreatedBefore is the upper bound of CreatedAfter\&#39;s range.
+         * @param {number} [confirmedAfter] ConfirmedAfter and ConfirmedBefore bound when the subscription was confirmed, unix seconds, inclusive.
+         * @param {number} [confirmedBefore] ConfirmedBefore is the upper bound of ConfirmedAfter\&#39;s range.
+         * @param {number} [openedAfter] OpenedAfter keeps subscribers who opened a broadcast at or after this time.
+         * @param {number} [notOpenedSince] NotOpenedSince keeps subscribers who have opened nothing since this time, including those who never opened anything.
+         * @param {number} [clickedAfter] ClickedAfter keeps subscribers who clicked a link at or after this time.
+         * @param {string} [segment] Segment applies a saved segment of the list; the filter fields narrow it further.
+         * @param {string} [sort] Sort is created (the default), email, name, confirmed or opened. A search (q) is always by address.
+         * @param {string} [order] Order is desc (the default) or asc.
+         * @param {string} [cursor] Cursor continues from where the previous page ended.
+         * @param {number} [limit] Limit is the page size, 50 by default and at most 500.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsByIdSubscribers(id: string, status?: string, tag?: string, source?: string, ref?: string, basis?: string, q?: string, field?: string, value?: string, createdAfter?: number, createdBefore?: number, confirmedAfter?: number, confirmedBefore?: number, openedAfter?: number, notOpenedSince?: number, clickedAfter?: number, segment?: string, sort?: string, order?: string, cursor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSubscriberPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsByIdSubscribers(id, status, tag, source, ref, basis, q, field, value, createdAfter, createdBefore, confirmedAfter, confirmedBefore, openedAfter, notOpenedSince, clickedAfter, segment, sort, order, cursor, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsByIdSubscribers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @summary Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @param {string} id ID is the list, by id or slug.
+         * @param {number} sid SID is the subscriber\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingListsByIdSubscribersBySid(id: string, sid: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSubscriber>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingListsByIdSubscribersBySid(id, sid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingListsByIdSubscribersBySid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
          * @summary Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap.
          * @param {*} [options] Override http request option.
@@ -2321,14 +4307,28 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s drip sequences, most recently updated first.
-         * @summary Returns the org\'s drip sequences, most recently updated first.
-         * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+         * @summary Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketingSequences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSequenceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequences(limit, options);
+        async getMarketingSender(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSender>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSender(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSender']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the org\'s drip sequences, most recently updated first.
+         * @summary Returns the org\'s drip sequences, most recently updated first.
+         * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketingSequences(limit?: number, cursor?: string, prefix?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSequenceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequences(limit, cursor, prefix, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSequences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2386,14 +4386,16 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
+         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to. The page carries `next` (an opaque cursor for the following page, empty on the last) and `total` (the true count of this org\'s opt-outs on this channel, across every page).
          * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+         * @param {string} [prefix] Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketingSuppressions(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSuppressionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSuppressions(limit, options);
+        async getMarketingSuppressions(limit?: number, cursor?: string, prefix?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSuppressionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSuppressions(limit, cursor, prefix, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2420,13 +4422,57 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address). It is the ONLY authority here — there is no principal — so it binds the request to one tuple and nothing else.
          * @param {boolean} [company] Company opts out everyone at the address\&#39;s domain as well, in this org alone: a company\&#39;s unsubscribe. An address at a free mail provider is a person\&#39;s and is refused 422.
+         * @param {string} [list] List is the marketing list a broadcast\&#39;s link leaves; with it the token is the list\&#39;s, the address leaves that list alone, and the org\&#39;s other mail still reaches it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, company?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingUnsubscribe(org, channel, address, token, company, options);
+        async getMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, company?: boolean, list?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingUnsubscribe(org, channel, address, token, company, list, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes the fields the body names on a draft or scheduled broadcast and answers it. One that is sending or done is 409.  Org admin only.
+         * @summary Changes the fields the body names on a draft or scheduled broadcast and answers it.
+         * @param {string} id ID is the broadcast to change, from the path; ignored on create.
+         * @param {MarketingBroadcastIn} marketingBroadcastIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchMarketingBroadcastsById(id: string, marketingBroadcastIn: MarketingBroadcastIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcast>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMarketingBroadcastsById(id, marketingBroadcastIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.patchMarketingBroadcastsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes the fields the body names on one of the org\'s lists and answers the list. A field left out keeps its value; an empty string clears a sender field back to the org\'s.  Org admin only.
+         * @summary Changes the fields the body names on one of the org\'s lists and answers the list.
+         * @param {string} id ID is the list to change, from the path; ignored on create.
+         * @param {MarketingListIn} marketingListIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchMarketingListsById(id: string, marketingListIn: MarketingListIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMarketingListsById(id, marketingListIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.patchMarketingListsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes the fields the body names on one subscriber and answers the row. A status change follows the same rule as add: an address that unsubscribed or complained is not put back by the org.  Org admin only.
+         * @summary Changes the fields the body names on one subscriber and answers the row.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {number} sid SID is the subscriber to change, from the path; ignored on add.
+         * @param {MarketingSubscriberIn} marketingSubscriberIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchMarketingListsByIdSubscribersBySid(id: string, sid: number, marketingSubscriberIn: MarketingSubscriberIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSubscriber>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMarketingListsByIdSubscribersBySid(id, sid, marketingSubscriberIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.patchMarketingListsByIdSubscribersBySid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2495,6 +4541,60 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it. With scheduledAt it is scheduled; without, a draft until sent.  Org admin only.
+         * @summary Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it.
+         * @param {MarketingBroadcastIn} marketingBroadcastIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBroadcasts(marketingBroadcastIn: MarketingBroadcastIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcast>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBroadcasts(marketingBroadcastIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBroadcasts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Stops a scheduled or sending broadcast and answers it. Who it already reached stays recorded.  Org admin only.
+         * @summary Stops a scheduled or sending broadcast and answers it.
+         * @param {string} id ID is the broadcast\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBroadcastsByIdCancel(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcast>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBroadcastsByIdCancel(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBroadcastsByIdCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it. The list\'s sender must carry a postal address, which every commercial mail states (CAN-SPAM); without one it is 422.  Org admin only.
+         * @summary Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it.
+         * @param {string} id ID is the broadcast, from the path.
+         * @param {MarketingSendIn} marketingSendIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBroadcastsByIdSend(id: string, marketingSendIn: MarketingSendIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBroadcast>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBroadcastsByIdSend(id, marketingSendIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBroadcastsByIdSend']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.  Org admin only.
+         * @summary Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.
+         * @param {string} id ID is the broadcast, from the path.
+         * @param {MarketingTestIn} marketingTestIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingBroadcastsByIdTest(id: string, marketingTestIn: MarketingTestIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingTestOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingBroadcastsByIdTest(id, marketingTestIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingBroadcastsByIdTest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingCalendarPost} marketingCalendarPost 
@@ -2535,7 +4635,46 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * Creates an import into one of the org\'s lists and answers it. For a file the import waits in state receiving for its bytes (PUT /v1/marketing/imports/{id}/data); for a source (from: commerce) it is queued at once. A key makes the call idempotent: a second create with it answers the first import. The rows are stamped with the import\'s id as their source ref, so a filter on ref selects the batch.  Org admin only.
+         * @summary Creates an import into one of the org\'s lists and answers it.
+         * @param {MarketingImportIn} marketingImportIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingImports(marketingImportIn: MarketingImportIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingImports(marketingImportIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingImports']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Stops an import that has not finished and answers it. The rows it already wrote stay; a filter on its id as ref selects them.  Org admin only.
+         * @summary Stops an import that has not finished and answers it.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingImportsByIdCancel(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingImportsByIdCancel(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingImportsByIdCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there. An import with no bytes is 409.  Org admin only.
+         * @summary Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there.
+         * @param {string} id ID is the import\&#39;s id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingImportsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingImportsByIdStart(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingImportsByIdStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A person signed in files under the address their token was issued to: a body naming another address is 400, and so is a sign-in issued with no address. An order that upgrades an organization names it in `upgrade`, sent signed in and acting in that organization (X-Org-Id) as its owner or an admin, and the lead records that verified handle; anyone else naming one is 403. `payment` is card or invoice, and an Enterprise inquiry paying by invoice is also stated as invoice_requested. X-Idempotency-Key makes a retry safe: the same key from the same address answers the same reference, and files, mails and states nothing twice; the same key sent with another form is 409. The sales mail states the payment and the verified organization to upgrade beside the answers.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
          * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingLeadIn} marketingLeadIn 
          * @param {*} [options] Override http request option.
@@ -2571,6 +4710,61 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingLeadsResume(marketingResumeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingLeadsResume']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a list in the org and answers 201 with it. Name is required; a new list is private, asks public subscribers to confirm, and takes the org\'s sender for every sender field it leaves empty. A slug the org already uses is 409.  Org admin only.
+         * @summary Creates a list in the org and answers 201 with it.
+         * @param {MarketingListIn} marketingListIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingLists(marketingListIn: MarketingListIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingLists(marketingListIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingLists']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.  Org admin only.
+         * @summary Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingSegmentIn} marketingSegmentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingListsByIdSegments(id: string, marketingSegmentIn: MarketingSegmentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSegment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingListsByIdSegments(id, marketingSegmentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingListsByIdSegments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row. Pending mails the address a link to confirm. An address that unsubscribed or complained cannot be put back by the org: it is 409, and the person rejoins by subscribing and confirming again.  Org admin only.
+         * @summary Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingSubscriberIn} marketingSubscriberIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingListsByIdSubscribers(id: string, marketingSubscriberIn: MarketingSubscriberIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingAdded>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingListsByIdSubscribers(id, marketingSubscriberIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingListsByIdSubscribers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Applies one action to a selection of a list and answers how many rows it matched and changed. The selection is ids, a saved segment, a filter, or the whole list. It walks the selection in batches of a thousand, one transaction each, so millions of rows move in bounded memory: tag and untag add or remove a tag; move moves the rows to another list of the org; unsubscribe and clean set those statuses on every row that is pending or subscribed, each telling the CRM and the event stream; delete removes the rows and their evidence.  Org admin only.
+         * @summary Applies one action to a selection of a list and answers how many rows it matched and changed.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {MarketingBulkIn} marketingBulkIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingListsByIdSubscribersBulk(id: string, marketingBulkIn: MarketingBulkIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingBulkOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingListsByIdSubscribersBulk(id, marketingBulkIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingListsByIdSubscribersBulk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2670,6 +4864,32 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Asks for the brand\'s newsletter for an address and answers 202 pending. Nothing is recorded: the address is mailed a link to confirm, good for seven days, and only a press on it subscribes. The answer is the same for an address that is new, already subscribed or unsubscribed, and each is mailed alike, so the answer says nothing about the address; one that unsubscribed gets the link too, which is how it comes back. No account is needed, and nothing is told to the sales mailbox or stated to an ad platform.  A deployment whose brand cannot hold the newsletter answers 503, a caller past ten requests in an hour 429, a body over 4 KiB 413, a missing or malformed email 400, and an address already sent three links today, or a deployment past its hourly ceiling, 429, in that order.
+         * @summary Asks for the brand\'s newsletter for an address and answers 202 pending.
+         * @param {MarketingSubscribeIn} marketingSubscribeIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingSubscribe(marketingSubscribeIn: MarketingSubscribeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSubscribe(marketingSubscribeIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSubscribe']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Subscribes the address a confirmation link names and answers 200 confirmed. The token is the t value in the link\'s fragment, and it is the only authority. The subscriber is filed in the brand\'s CRM: the person, their place on the Newsletter list, and the confirmation on their timeline with the page and language it came from, when it was asked for, and when and from which address it was confirmed (double opt-in). The brand\'s opt-out for that address is lifted, since the person asked to come back. Pressing the same link again answers 200 and changes nothing.  A caller past thirty presses in an hour answers 429, a link that is missing, malformed, altered or signed elsewhere 400, one older than seven days 410, and a deployment whose brand cannot hold the CRM 503.
+         * @summary Subscribes the address a confirmation link names and answers 200 confirmed.
+         * @param {MarketingConfirmIn} marketingConfirmIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketingSubscribeConfirm(marketingConfirmIn: MarketingConfirmIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSubscribeConfirm(marketingConfirmIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSubscribeConfirm']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingSuppression} marketingSuppression 
@@ -2689,12 +4909,13 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {string} [channel] Channel is the surface to opt out of.
          * @param {string} [address] Address is the recipient to opt out.
          * @param {string} [token] Token is the HMAC over (org, channel, address), the only authority here.
+         * @param {string} [list] List is the marketing list the link leaves, as on the signed link.
          * @param {string} [listUnsubscribe] OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, listUnsubscribe?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingUnsubscribe(org, channel, address, token, listUnsubscribe, options);
+        async postMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, list?: string, listUnsubscribe?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingUnsubscribed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingUnsubscribe(org, channel, address, token, list, listUnsubscribe, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2740,6 +4961,60 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Replaces the org\'s custom fields with the set the body carries and answers it. A field dropped from the set is removed from every subscriber; a field kept keeps its values when its type does not change, and a changed type is 409 while any subscriber has a value for it.  Org admin only.
+         * @summary Replaces the org\'s custom fields with the set the body carries and answers it.
+         * @param {MarketingFieldSet} marketingFieldSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMarketingFields(marketingFieldSet: MarketingFieldSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingFieldSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingFields(marketingFieldSet, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingFields']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds. A piece at an offset the import has passed is taken only past what it holds, so a retried piece writes nothing twice; a piece past the end is 409 naming the offset to resume from. Send the file in order, in pieces of any size up to the request limit, then start it.  Org admin only.
+         * @summary Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds.
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMarketingImportsByIdData(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingImportsByIdData(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingImportsByIdData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.  Org admin only.
+         * @summary Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.
+         * @param {string} id ID is the list, by id or slug, from the path.
+         * @param {string} sid SID is the segment to change, from the path; ignored on create.
+         * @param {MarketingSegmentIn} marketingSegmentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMarketingListsByIdSegmentsBySid(id: string, sid: string, marketingSegmentIn: MarketingSegmentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSegment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingListsByIdSegmentsBySid(id, sid, marketingSegmentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingListsByIdSegmentsBySid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces the org\'s sender and answers it. Every field is written; one left out is cleared.  Org admin only.
+         * @summary Replaces the org\'s sender and answers it.
+         * @param {MarketingSender} marketingSender 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMarketingSender(marketingSender: MarketingSender, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketingSender>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingSender(marketingSender, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingSender']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2759,6 +5034,16 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         deleteMarketingAudiencesById(requestParameters: MarketingApiDeleteMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteMarketingAudiencesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes a broadcast that is not sending, with its record of who it went to, and answers 204. One that is sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes a broadcast that is not sending, with its record of who it went to, and answers 204.
+         * @param {MarketingApiDeleteMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingBroadcastsById(requestParameters: MarketingApiDeleteMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteMarketingBroadcastsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s posts and answers 204. A post already published is deleted from the calendar only — nothing is retracted from the network it went out on.
@@ -2781,6 +5066,36 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204. A list with a broadcast sending is 409; cancel it first.  Org admin only.
+         * @summary Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204.
+         * @param {MarketingApiDeleteMarketingListsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsById(requestParameters: MarketingApiDeleteMarketingListsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteMarketingListsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes a saved segment and answers 204. A scheduled broadcast to it is 409; change or cancel the broadcast first.  Org admin only.
+         * @summary Deletes a saved segment and answers 204.
+         * @param {MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsByIdSegmentsBySid(requestParameters: MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteMarketingListsByIdSegmentsBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes one subscriber from one of the org\'s lists and answers 204. The row and its evidence are gone; to keep the record of someone leaving, set their status to unsubscribed instead.  Org admin only.
+         * @summary Removes one subscriber from one of the org\'s lists and answers 204.
+         * @param {MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Re-subscribes an address on one channel and answers 204.
          * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
@@ -2791,14 +5106,14 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s saved audiences, most recently updated first.
-         * @summary Returns the org\'s saved audiences, most recently updated first.
+         * Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count. A list or a segment is an audience as a cohort is: a sequence enrolls any of them by id.
+         * @summary Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count.
          * @param {MarketingApiGetMarketingAudiencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMarketingAudiences(requestParameters: MarketingApiGetMarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingAudienceList> {
-            return localVarFp.getMarketingAudiences(requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketingAudiences(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s saved audiences. An audience belonging to another org reads as not found.
@@ -2837,6 +5152,36 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         getMarketingBetaInvites(options?: RawAxiosRequestConfig): AxiosPromise<MarketingBetaInviteList> {
             return localVarFp.getMarketingBetaInvites(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the org\'s broadcasts, newest first.
+         * @summary Returns the org\'s broadcasts, newest first.
+         * @param {MarketingApiGetMarketingBroadcastsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcasts(requestParameters: MarketingApiGetMarketingBroadcastsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcastPage> {
+            return localVarFp.getMarketingBroadcasts(requestParameters.list, requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one of the org\'s broadcasts.
+         * @summary Returns one of the org\'s broadcasts.
+         * @param {MarketingApiGetMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcastsById(requestParameters: MarketingApiGetMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcast> {
+            return localVarFp.getMarketingBroadcastsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @summary Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+         * @param {MarketingApiGetMarketingBroadcastsByIdStatsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingBroadcastsByIdStats(requestParameters: MarketingApiGetMarketingBroadcastsByIdStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcastStats> {
+            return localVarFp.getMarketingBroadcastsByIdStats(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
@@ -2889,6 +5234,104 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingClick(requestParameters.userAgent, requestParameters.t, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the custom fields the org defined for its subscribers.
+         * @summary Returns the custom fields the org defined for its subscribers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingFields(options?: RawAxiosRequestConfig): AxiosPromise<MarketingFieldSet> {
+            return localVarFp.getMarketingFields(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the org\'s imports, newest first, each with its report.
+         * @summary Returns the org\'s imports, newest first, each with its report.
+         * @param {MarketingApiGetMarketingImportsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingImports(requestParameters: MarketingApiGetMarketingImportsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingImportPage> {
+            return localVarFp.getMarketingImports(requestParameters.list, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @summary Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+         * @param {MarketingApiGetMarketingImportsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingImportsById(requestParameters: MarketingApiGetMarketingImportsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingImport> {
+            return localVarFp.getMarketingImportsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @summary Returns the org\'s lists, newest first, each with its subscribers counted by status.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingLists(options?: RawAxiosRequestConfig): AxiosPromise<MarketingListPage> {
+            return localVarFp.getMarketingLists(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @summary Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+         * @param {MarketingApiGetMarketingListsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsById(requestParameters: MarketingApiGetMarketingListsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingList> {
+            return localVarFp.getMarketingListsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields. The selection takes the same query fields as the subscriber list (status, tag, source, ref, basis, q, field, value, the date ranges and segment). The answer streams as it is read, so a list of millions exports in bounded memory.  Org admin only.
+         * @summary Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields.
+         * @param {MarketingApiGetMarketingListsByIdExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdExport(requestParameters: MarketingApiGetMarketingListsByIdExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMarketingListsByIdExport(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one list\'s saved segments, newest first.
+         * @summary Returns one list\'s saved segments, newest first.
+         * @param {MarketingApiGetMarketingListsByIdSegmentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSegments(requestParameters: MarketingApiGetMarketingListsByIdSegmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSegmentPage> {
+            return localVarFp.getMarketingListsByIdSegments(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate. Every number is read from kept counts, never by reading the list.
+         * @summary Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate.
+         * @param {MarketingApiGetMarketingListsByIdStatsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdStats(requestParameters: MarketingApiGetMarketingListsByIdStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingListStats> {
+            return localVarFp.getMarketingListsByIdStats(requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a page of one list\'s subscribers, newest first unless asked otherwise. Every filter (status, tag, source, ref, consent basis, a prefix of the address or name, a custom field\'s value, ranges of when they joined and confirmed, and whether they opened or clicked since a time) walks an index of its own, so a page costs the same on a list of ten rows or ten million. Continue with next.
+         * @summary Returns a page of one list\'s subscribers, newest first unless asked otherwise.
+         * @param {MarketingApiGetMarketingListsByIdSubscribersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSubscribers(requestParameters: MarketingApiGetMarketingListsByIdSubscribersRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSubscriberPage> {
+            return localVarFp.getMarketingListsByIdSubscribers(requestParameters.id, requestParameters.status, requestParameters.tag, requestParameters.source, requestParameters.ref, requestParameters.basis, requestParameters.q, requestParameters.field, requestParameters.value, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.confirmedAfter, requestParameters.confirmedBefore, requestParameters.openedAfter, requestParameters.notOpenedSince, requestParameters.clickedAfter, requestParameters.segment, requestParameters.sort, requestParameters.order, requestParameters.cursor, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @summary Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+         * @param {MarketingApiGetMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiGetMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSubscriber> {
+            return localVarFp.getMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
          * @summary Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap.
          * @param {*} [options] Override http request option.
@@ -2918,6 +5361,15 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingPromosByCodeRedemption(requestParameters.code, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+         * @summary Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketingSender(options?: RawAxiosRequestConfig): AxiosPromise<MarketingSender> {
+            return localVarFp.getMarketingSender(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the org\'s drip sequences, most recently updated first.
          * @summary Returns the org\'s drip sequences, most recently updated first.
          * @param {MarketingApiGetMarketingSequencesRequest} requestParameters Request parameters.
@@ -2925,7 +5377,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getMarketingSequences(requestParameters: MarketingApiGetMarketingSequencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSequenceList> {
-            return localVarFp.getMarketingSequences(requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketingSequences(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s sequences together with its steps in send order. A sequence belonging to another org reads as not found.
@@ -2967,14 +5419,14 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
+         * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to. The page carries `next` (an opaque cursor for the following page, empty on the last) and `total` (the true count of this org\'s opt-outs on this channel, across every page).
          * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
          * @param {MarketingApiGetMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMarketingSuppressions(requestParameters: MarketingApiGetMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSuppressionList> {
-            return localVarFp.getMarketingSuppressions(requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketingSuppressions(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers whether the org\'s send gate refuses an address, and which list holds it, by the same check every commercial send asks.
@@ -2994,7 +5446,37 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingUnsubscribed> {
-            return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, requestParameters.list, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes the fields the body names on a draft or scheduled broadcast and answers it. One that is sending or done is 409.  Org admin only.
+         * @summary Changes the fields the body names on a draft or scheduled broadcast and answers it.
+         * @param {MarketingApiPatchMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingBroadcastsById(requestParameters: MarketingApiPatchMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcast> {
+            return localVarFp.patchMarketingBroadcastsById(requestParameters.id, requestParameters.marketingBroadcastIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes the fields the body names on one of the org\'s lists and answers the list. A field left out keeps its value; an empty string clears a sender field back to the org\'s.  Org admin only.
+         * @summary Changes the fields the body names on one of the org\'s lists and answers the list.
+         * @param {MarketingApiPatchMarketingListsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingListsById(requestParameters: MarketingApiPatchMarketingListsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingList> {
+            return localVarFp.patchMarketingListsById(requestParameters.id, requestParameters.marketingListIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes the fields the body names on one subscriber and answers the row. A status change follows the same rule as add: an address that unsubscribed or complained is not put back by the org.  Org admin only.
+         * @summary Changes the fields the body names on one subscriber and answers the row.
+         * @param {MarketingApiPatchMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiPatchMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSubscriber> {
+            return localVarFp.patchMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, requestParameters.marketingSubscriberIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.  Org admin or SuperAdmin only; a member of the org is refused.
@@ -3047,6 +5529,46 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingBetaRequest(requestParameters.marketingBetaRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it. With scheduledAt it is scheduled; without, a draft until sent.  Org admin only.
+         * @summary Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it.
+         * @param {MarketingApiPostMarketingBroadcastsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcasts(requestParameters: MarketingApiPostMarketingBroadcastsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcast> {
+            return localVarFp.postMarketingBroadcasts(requestParameters.marketingBroadcastIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Stops a scheduled or sending broadcast and answers it. Who it already reached stays recorded.  Org admin only.
+         * @summary Stops a scheduled or sending broadcast and answers it.
+         * @param {MarketingApiPostMarketingBroadcastsByIdCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdCancel(requestParameters: MarketingApiPostMarketingBroadcastsByIdCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcast> {
+            return localVarFp.postMarketingBroadcastsByIdCancel(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it. The list\'s sender must carry a postal address, which every commercial mail states (CAN-SPAM); without one it is 422.  Org admin only.
+         * @summary Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it.
+         * @param {MarketingApiPostMarketingBroadcastsByIdSendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdSend(requestParameters: MarketingApiPostMarketingBroadcastsByIdSendRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBroadcast> {
+            return localVarFp.postMarketingBroadcastsByIdSend(requestParameters.id, requestParameters.marketingSendIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.  Org admin only.
+         * @summary Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.
+         * @param {MarketingApiPostMarketingBroadcastsByIdTestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingBroadcastsByIdTest(requestParameters: MarketingApiPostMarketingBroadcastsByIdTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingTestOut> {
+            return localVarFp.postMarketingBroadcastsByIdTest(requestParameters.id, requestParameters.marketingTestIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
          * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
@@ -3077,7 +5599,37 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.marketingScheduleInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+         * Creates an import into one of the org\'s lists and answers it. For a file the import waits in state receiving for its bytes (PUT /v1/marketing/imports/{id}/data); for a source (from: commerce) it is queued at once. A key makes the call idempotent: a second create with it answers the first import. The rows are stamped with the import\'s id as their source ref, so a filter on ref selects the batch.  Org admin only.
+         * @summary Creates an import into one of the org\'s lists and answers it.
+         * @param {MarketingApiPostMarketingImportsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImports(requestParameters: MarketingApiPostMarketingImportsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingCreated> {
+            return localVarFp.postMarketingImports(requestParameters.marketingImportIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Stops an import that has not finished and answers it. The rows it already wrote stay; a filter on its id as ref selects them.  Org admin only.
+         * @summary Stops an import that has not finished and answers it.
+         * @param {MarketingApiPostMarketingImportsByIdCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImportsByIdCancel(requestParameters: MarketingApiPostMarketingImportsByIdCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingImport> {
+            return localVarFp.postMarketingImportsByIdCancel(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there. An import with no bytes is 409.  Org admin only.
+         * @summary Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there.
+         * @param {MarketingApiPostMarketingImportsByIdStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingImportsByIdStart(requestParameters: MarketingApiPostMarketingImportsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingImport> {
+            return localVarFp.postMarketingImportsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A person signed in files under the address their token was issued to: a body naming another address is 400, and so is a sign-in issued with no address. An order that upgrades an organization names it in `upgrade`, sent signed in and acting in that organization (X-Org-Id) as its owner or an admin, and the lead records that verified handle; anyone else naming one is 403. `payment` is card or invoice, and an Enterprise inquiry paying by invoice is also stated as invoice_requested. X-Idempotency-Key makes a retry safe: the same key from the same address answers the same reference, and files, mails and states nothing twice; the same key sent with another form is 409. The sales mail states the payment and the verified organization to upgrade beside the answers.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
          * @summary Files one public form in the deployment\'s own CRM.
          * @param {MarketingApiPostMarketingLeadsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3105,6 +5657,46 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          */
         postMarketingLeadsResume(requestParameters: MarketingApiPostMarketingLeadsResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingResumeForm> {
             return localVarFp.postMarketingLeadsResume(requestParameters.marketingResumeIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a list in the org and answers 201 with it. Name is required; a new list is private, asks public subscribers to confirm, and takes the org\'s sender for every sender field it leaves empty. A slug the org already uses is 409.  Org admin only.
+         * @summary Creates a list in the org and answers 201 with it.
+         * @param {MarketingApiPostMarketingListsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingLists(requestParameters: MarketingApiPostMarketingListsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingList> {
+            return localVarFp.postMarketingLists(requestParameters.marketingListIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.  Org admin only.
+         * @summary Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.
+         * @param {MarketingApiPostMarketingListsByIdSegmentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSegments(requestParameters: MarketingApiPostMarketingListsByIdSegmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSegment> {
+            return localVarFp.postMarketingListsByIdSegments(requestParameters.id, requestParameters.marketingSegmentIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row. Pending mails the address a link to confirm. An address that unsubscribed or complained cannot be put back by the org: it is 409, and the person rejoins by subscribing and confirming again.  Org admin only.
+         * @summary Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row.
+         * @param {MarketingApiPostMarketingListsByIdSubscribersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSubscribers(requestParameters: MarketingApiPostMarketingListsByIdSubscribersRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingAdded> {
+            return localVarFp.postMarketingListsByIdSubscribers(requestParameters.id, requestParameters.marketingSubscriberIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Applies one action to a selection of a list and answers how many rows it matched and changed. The selection is ids, a saved segment, a filter, or the whole list. It walks the selection in batches of a thousand, one transaction each, so millions of rows move in bounded memory: tag and untag add or remove a tag; move moves the rows to another list of the org; unsubscribe and clean set those statuses on every row that is pending or subscribed, each telling the CRM and the event stream; delete removes the rows and their evidence.  Org admin only.
+         * @summary Applies one action to a selection of a list and answers how many rows it matched and changed.
+         * @param {MarketingApiPostMarketingListsByIdSubscribersBulkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingListsByIdSubscribersBulk(requestParameters: MarketingApiPostMarketingListsByIdSubscribersBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingBulkOut> {
+            return localVarFp.postMarketingListsByIdSubscribersBulk(requestParameters.id, requestParameters.marketingBulkIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends one email from the org to one person, the way a person on the org\'s team writes back to a lead from its record.  It leaves by the org\'s own path, the one every marketing send takes: the org\'s mailbox when it has one, else the platform\'s notify rail, and never to an address that opted out of the org\'s mail, whose company did, or that the platform blocks (Sent is false then, and that is not an error). It carries the opt-out footer and List-Unsubscribe. The org\'s mailbox caps hold: at its cap the send is refused with 429 and the time it frees.  An admin of the org acting, or SuperAdmin, may send: mail that leaves in the org\'s name is the team\'s to write, not every member\'s. The send is on the audit trail before it leaves (marketing.mail.send: the address, the subject and the person, never the text), and the mail, sent or refused, goes on the timeline of its person.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -3177,6 +5769,26 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingSequencesByIdSteps(requestParameters.id, requestParameters.marketingStepInput, options).then((request) => request(axios, basePath));
         },
         /**
+         * Asks for the brand\'s newsletter for an address and answers 202 pending. Nothing is recorded: the address is mailed a link to confirm, good for seven days, and only a press on it subscribes. The answer is the same for an address that is new, already subscribed or unsubscribed, and each is mailed alike, so the answer says nothing about the address; one that unsubscribed gets the link too, which is how it comes back. No account is needed, and nothing is told to the sales mailbox or stated to an ad platform.  A deployment whose brand cannot hold the newsletter answers 503, a caller past ten requests in an hour 429, a body over 4 KiB 413, a missing or malformed email 400, and an address already sent three links today, or a deployment past its hourly ceiling, 429, in that order.
+         * @summary Asks for the brand\'s newsletter for an address and answers 202 pending.
+         * @param {MarketingApiPostMarketingSubscribeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingSubscribe(requestParameters: MarketingApiPostMarketingSubscribeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSubscription> {
+            return localVarFp.postMarketingSubscribe(requestParameters.marketingSubscribeIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Subscribes the address a confirmation link names and answers 200 confirmed. The token is the t value in the link\'s fragment, and it is the only authority. The subscriber is filed in the brand\'s CRM: the person, their place on the Newsletter list, and the confirmation on their timeline with the page and language it came from, when it was asked for, and when and from which address it was confirmed (double opt-in). The brand\'s opt-out for that address is lifted, since the person asked to come back. Pressing the same link again answers 200 and changes nothing.  A caller past thirty presses in an hour answers 429, a link that is missing, malformed, altered or signed elsewhere 400, one older than seven days 410, and a deployment whose brand cannot hold the CRM 503.
+         * @summary Subscribes the address a confirmation link names and answers 200 confirmed.
+         * @param {MarketingApiPostMarketingSubscribeConfirmRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketingSubscribeConfirm(requestParameters: MarketingApiPostMarketingSubscribeConfirmRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSubscription> {
+            return localVarFp.postMarketingSubscribeConfirm(requestParameters.marketingConfirmIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
          * @summary Records an opt-out for the org (admin / self-service management).
          * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
@@ -3194,7 +5806,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketingUnsubscribed> {
-            return localVarFp.postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(axios, basePath));
+            return localVarFp.postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.list, requestParameters.listUnsubscribe, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the signed-in caller\'s application: the program, the answers, the betas asked for and the lead it was filed under. A field left out keeps what the record holds; betas replace the set, each new id stamped with the time it was asked for and stated on the event plane as beta_requested.
@@ -3226,6 +5838,46 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
         putMarketingCampaignsById(requestParameters: MarketingApiPutMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingCampaign> {
             return localVarFp.putMarketingCampaignsById(requestParameters.id, requestParameters.marketingCampaign, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Replaces the org\'s custom fields with the set the body carries and answers it. A field dropped from the set is removed from every subscriber; a field kept keeps its values when its type does not change, and a changed type is 409 while any subscriber has a value for it.  Org admin only.
+         * @summary Replaces the org\'s custom fields with the set the body carries and answers it.
+         * @param {MarketingApiPutMarketingFieldsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingFields(requestParameters: MarketingApiPutMarketingFieldsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingFieldSet> {
+            return localVarFp.putMarketingFields(requestParameters.marketingFieldSet, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds. A piece at an offset the import has passed is taken only past what it holds, so a retried piece writes nothing twice; a piece past the end is 409 naming the offset to resume from. Send the file in order, in pieces of any size up to the request limit, then start it.  Org admin only.
+         * @summary Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds.
+         * @param {MarketingApiPutMarketingImportsByIdDataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingImportsByIdData(requestParameters: MarketingApiPutMarketingImportsByIdDataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putMarketingImportsByIdData(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.  Org admin only.
+         * @summary Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.
+         * @param {MarketingApiPutMarketingListsByIdSegmentsBySidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingListsByIdSegmentsBySid(requestParameters: MarketingApiPutMarketingListsByIdSegmentsBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSegment> {
+            return localVarFp.putMarketingListsByIdSegmentsBySid(requestParameters.id, requestParameters.sid, requestParameters.marketingSegmentIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the org\'s sender and answers it. Every field is written; one left out is cleared.  Org admin only.
+         * @summary Replaces the org\'s sender and answers it.
+         * @param {MarketingApiPutMarketingSenderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMarketingSender(requestParameters: MarketingApiPutMarketingSenderRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketingSender> {
+            return localVarFp.putMarketingSender(requestParameters.marketingSender, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -3239,6 +5891,20 @@ export interface MarketingApiDeleteMarketingAudiencesByIdRequest {
      * ID is the audience id from the path, as returned by create.
      * @type {string}
      * @memberof MarketingApiDeleteMarketingAudiencesById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deleteMarketingBroadcastsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiDeleteMarketingBroadcastsByIdRequest
+ */
+export interface MarketingApiDeleteMarketingBroadcastsByIdRequest {
+    /**
+     * ID is the broadcast\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiDeleteMarketingBroadcastsById
      */
     readonly id: string
 }
@@ -3269,6 +5935,62 @@ export interface MarketingApiDeleteMarketingCampaignsByIdRequest {
      * @memberof MarketingApiDeleteMarketingCampaignsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for deleteMarketingListsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiDeleteMarketingListsByIdRequest
+ */
+export interface MarketingApiDeleteMarketingListsByIdRequest {
+    /**
+     * ID is the list\&#39;s id or its slug.
+     * @type {string}
+     * @memberof MarketingApiDeleteMarketingListsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deleteMarketingListsByIdSegmentsBySid operation in MarketingApi.
+ * @export
+ * @interface MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest
+ */
+export interface MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest {
+    /**
+     * ID is the list, by id or slug.
+     * @type {string}
+     * @memberof MarketingApiDeleteMarketingListsByIdSegmentsBySid
+     */
+    readonly id: string
+
+    /**
+     * SID is the segment\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiDeleteMarketingListsByIdSegmentsBySid
+     */
+    readonly sid: string
+}
+
+/**
+ * Request parameters for deleteMarketingListsByIdSubscribersBySid operation in MarketingApi.
+ * @export
+ * @interface MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest
+ */
+export interface MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest {
+    /**
+     * ID is the list, by id or slug.
+     * @type {string}
+     * @memberof MarketingApiDeleteMarketingListsByIdSubscribersBySid
+     */
+    readonly id: string
+
+    /**
+     * SID is the subscriber\&#39;s id.
+     * @type {number}
+     * @memberof MarketingApiDeleteMarketingListsByIdSubscribersBySid
+     */
+    readonly sid: number
 }
 
 /**
@@ -3304,6 +6026,20 @@ export interface MarketingApiGetMarketingAudiencesRequest {
      * @memberof MarketingApiGetMarketingAudiences
      */
     readonly limit?: number
+
+    /**
+     * Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingAudiences
+     */
+    readonly cursor?: string
+
+    /**
+     * Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingAudiences
+     */
+    readonly prefix?: string
 }
 
 /**
@@ -3330,6 +6066,62 @@ export interface MarketingApiGetMarketingAudiencesByIdPreviewRequest {
      * ID is the audience id from the path, as returned by create.
      * @type {string}
      * @memberof MarketingApiGetMarketingAudiencesByIdPreview
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingBroadcasts operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingBroadcastsRequest
+ */
+export interface MarketingApiGetMarketingBroadcastsRequest {
+    /**
+     * List keeps one list\&#39;s broadcasts, by id or slug.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingBroadcasts
+     */
+    readonly list?: string
+
+    /**
+     * Status keeps broadcasts in one status.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingBroadcasts
+     */
+    readonly status?: string
+
+    /**
+     * Limit is the page size, 50 by default and at most 200.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingBroadcasts
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getMarketingBroadcastsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingBroadcastsByIdRequest
+ */
+export interface MarketingApiGetMarketingBroadcastsByIdRequest {
+    /**
+     * ID is the broadcast\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingBroadcastsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingBroadcastsByIdStats operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingBroadcastsByIdStatsRequest
+ */
+export interface MarketingApiGetMarketingBroadcastsByIdStatsRequest {
+    /**
+     * ID is the broadcast\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingBroadcastsByIdStats
      */
     readonly id: string
 }
@@ -3426,6 +6218,286 @@ export interface MarketingApiGetMarketingClickRequest {
 }
 
 /**
+ * Request parameters for getMarketingImports operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingImportsRequest
+ */
+export interface MarketingApiGetMarketingImportsRequest {
+    /**
+     * List keeps one list\&#39;s imports, by id or slug.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingImports
+     */
+    readonly list?: string
+
+    /**
+     * Limit is the page size, 50 by default and at most 200.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingImports
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getMarketingImportsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingImportsByIdRequest
+ */
+export interface MarketingApiGetMarketingImportsByIdRequest {
+    /**
+     * ID is the import\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingImportsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingListsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdRequest
+ */
+export interface MarketingApiGetMarketingListsByIdRequest {
+    /**
+     * ID is the list\&#39;s id or its slug.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingListsByIdExport operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdExportRequest
+ */
+export interface MarketingApiGetMarketingListsByIdExportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdExport
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingListsByIdSegments operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdSegmentsRequest
+ */
+export interface MarketingApiGetMarketingListsByIdSegmentsRequest {
+    /**
+     * ID is the list\&#39;s id or its slug.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSegments
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketingListsByIdStats operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdStatsRequest
+ */
+export interface MarketingApiGetMarketingListsByIdStatsRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdStats
+     */
+    readonly id: string
+
+    /**
+     * From is the first day, YYYY-MM-DD (UTC); 30 days before To by default.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdStats
+     */
+    readonly from?: string
+
+    /**
+     * To is the last day, YYYY-MM-DD (UTC); today by default. At most 366 days after From.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdStats
+     */
+    readonly to?: string
+}
+
+/**
+ * Request parameters for getMarketingListsByIdSubscribers operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdSubscribersRequest
+ */
+export interface MarketingApiGetMarketingListsByIdSubscribersRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly id: string
+
+    /**
+     * Status is one status or several, comma-separated: pending, subscribed, unsubscribed, bounced, complained, cleaned.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly status?: string
+
+    /**
+     * Tag keeps subscribers carrying this tag.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly tag?: string
+
+    /**
+     * Source keeps subscribers that came from this kind of source: form, page, api, import or commerce.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly source?: string
+
+    /**
+     * Ref keeps subscribers from one source instance: a form id, a page, an import batch id.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly ref?: string
+
+    /**
+     * Basis keeps subscribers by the consent basis recorded for them: explicit, legitimate_interest or unverified.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly basis?: string
+
+    /**
+     * Q keeps subscribers whose address or name begins with it, case-insensitively. A search is ordered by address.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly q?: string
+
+    /**
+     * Field names a custom field, and Value keeps subscribers whose value for it is exactly this.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly field?: string
+
+    /**
+     * Value is the custom field\&#39;s value Field keeps.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly value?: string
+
+    /**
+     * CreatedAfter and CreatedBefore bound when the subscriber joined the list, unix seconds, inclusive. Zero is unbounded.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly createdAfter?: number
+
+    /**
+     * CreatedBefore is the upper bound of CreatedAfter\&#39;s range.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly createdBefore?: number
+
+    /**
+     * ConfirmedAfter and ConfirmedBefore bound when the subscription was confirmed, unix seconds, inclusive.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly confirmedAfter?: number
+
+    /**
+     * ConfirmedBefore is the upper bound of ConfirmedAfter\&#39;s range.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly confirmedBefore?: number
+
+    /**
+     * OpenedAfter keeps subscribers who opened a broadcast at or after this time.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly openedAfter?: number
+
+    /**
+     * NotOpenedSince keeps subscribers who have opened nothing since this time, including those who never opened anything.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly notOpenedSince?: number
+
+    /**
+     * ClickedAfter keeps subscribers who clicked a link at or after this time.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly clickedAfter?: number
+
+    /**
+     * Segment applies a saved segment of the list; the filter fields narrow it further.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly segment?: string
+
+    /**
+     * Sort is created (the default), email, name, confirmed or opened. A search (q) is always by address.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly sort?: string
+
+    /**
+     * Order is desc (the default) or asc.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly order?: string
+
+    /**
+     * Cursor continues from where the previous page ended.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly cursor?: string
+
+    /**
+     * Limit is the page size, 50 by default and at most 500.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribers
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getMarketingListsByIdSubscribersBySid operation in MarketingApi.
+ * @export
+ * @interface MarketingApiGetMarketingListsByIdSubscribersBySidRequest
+ */
+export interface MarketingApiGetMarketingListsByIdSubscribersBySidRequest {
+    /**
+     * ID is the list, by id or slug.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribersBySid
+     */
+    readonly id: string
+
+    /**
+     * SID is the subscriber\&#39;s id.
+     * @type {number}
+     * @memberof MarketingApiGetMarketingListsByIdSubscribersBySid
+     */
+    readonly sid: number
+}
+
+/**
  * Request parameters for getMarketingPromosByCodeEligibility operation in MarketingApi.
  * @export
  * @interface MarketingApiGetMarketingPromosByCodeEligibilityRequest
@@ -3479,6 +6551,20 @@ export interface MarketingApiGetMarketingSequencesRequest {
      * @memberof MarketingApiGetMarketingSequences
      */
     readonly limit?: number
+
+    /**
+     * Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSequences
+     */
+    readonly cursor?: string
+
+    /**
+     * Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSequences
+     */
+    readonly prefix?: string
 }
 
 /**
@@ -3542,6 +6628,20 @@ export interface MarketingApiGetMarketingSuppressionsRequest {
      * @memberof MarketingApiGetMarketingSuppressions
      */
     readonly limit?: number
+
+    /**
+     * Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSuppressions
+     */
+    readonly cursor?: string
+
+    /**
+     * Prefix, when set, filters rows whose address begins with it (case-insensitive, on the normalized form). Suppression list only.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingSuppressions
+     */
+    readonly prefix?: string
 }
 
 /**
@@ -3605,6 +6705,83 @@ export interface MarketingApiGetMarketingUnsubscribeRequest {
      * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly company?: boolean
+
+    /**
+     * List is the marketing list a broadcast\&#39;s link leaves; with it the token is the list\&#39;s, the address leaves that list alone, and the org\&#39;s other mail still reaches it.
+     * @type {string}
+     * @memberof MarketingApiGetMarketingUnsubscribe
+     */
+    readonly list?: string
+}
+
+/**
+ * Request parameters for patchMarketingBroadcastsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPatchMarketingBroadcastsByIdRequest
+ */
+export interface MarketingApiPatchMarketingBroadcastsByIdRequest {
+    /**
+     * ID is the broadcast to change, from the path; ignored on create.
+     * @type {string}
+     * @memberof MarketingApiPatchMarketingBroadcastsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingBroadcastIn}
+     * @memberof MarketingApiPatchMarketingBroadcastsById
+     */
+    readonly marketingBroadcastIn: MarketingBroadcastIn
+}
+
+/**
+ * Request parameters for patchMarketingListsById operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPatchMarketingListsByIdRequest
+ */
+export interface MarketingApiPatchMarketingListsByIdRequest {
+    /**
+     * ID is the list to change, from the path; ignored on create.
+     * @type {string}
+     * @memberof MarketingApiPatchMarketingListsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingListIn}
+     * @memberof MarketingApiPatchMarketingListsById
+     */
+    readonly marketingListIn: MarketingListIn
+}
+
+/**
+ * Request parameters for patchMarketingListsByIdSubscribersBySid operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPatchMarketingListsByIdSubscribersBySidRequest
+ */
+export interface MarketingApiPatchMarketingListsByIdSubscribersBySidRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiPatchMarketingListsByIdSubscribersBySid
+     */
+    readonly id: string
+
+    /**
+     * SID is the subscriber to change, from the path; ignored on add.
+     * @type {number}
+     * @memberof MarketingApiPatchMarketingListsByIdSubscribersBySid
+     */
+    readonly sid: number
+
+    /**
+     * 
+     * @type {MarketingSubscriberIn}
+     * @memberof MarketingApiPatchMarketingListsByIdSubscribersBySid
+     */
+    readonly marketingSubscriberIn: MarketingSubscriberIn
 }
 
 /**
@@ -3678,6 +6855,76 @@ export interface MarketingApiPostMarketingBetaRequestRequest {
 }
 
 /**
+ * Request parameters for postMarketingBroadcasts operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBroadcastsRequest
+ */
+export interface MarketingApiPostMarketingBroadcastsRequest {
+    /**
+     * 
+     * @type {MarketingBroadcastIn}
+     * @memberof MarketingApiPostMarketingBroadcasts
+     */
+    readonly marketingBroadcastIn: MarketingBroadcastIn
+}
+
+/**
+ * Request parameters for postMarketingBroadcastsByIdCancel operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBroadcastsByIdCancelRequest
+ */
+export interface MarketingApiPostMarketingBroadcastsByIdCancelRequest {
+    /**
+     * ID is the broadcast\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingBroadcastsByIdCancel
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postMarketingBroadcastsByIdSend operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBroadcastsByIdSendRequest
+ */
+export interface MarketingApiPostMarketingBroadcastsByIdSendRequest {
+    /**
+     * ID is the broadcast, from the path.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingBroadcastsByIdSend
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingSendIn}
+     * @memberof MarketingApiPostMarketingBroadcastsByIdSend
+     */
+    readonly marketingSendIn: MarketingSendIn
+}
+
+/**
+ * Request parameters for postMarketingBroadcastsByIdTest operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingBroadcastsByIdTestRequest
+ */
+export interface MarketingApiPostMarketingBroadcastsByIdTestRequest {
+    /**
+     * ID is the broadcast, from the path.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingBroadcastsByIdTest
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingTestIn}
+     * @memberof MarketingApiPostMarketingBroadcastsByIdTest
+     */
+    readonly marketingTestIn: MarketingTestIn
+}
+
+/**
  * Request parameters for postMarketingCalendar operation in MarketingApi.
  * @export
  * @interface MarketingApiPostMarketingCalendarRequest
@@ -3727,6 +6974,48 @@ export interface MarketingApiPostMarketingCampaignsByIdScheduleRequest {
 }
 
 /**
+ * Request parameters for postMarketingImports operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingImportsRequest
+ */
+export interface MarketingApiPostMarketingImportsRequest {
+    /**
+     * 
+     * @type {MarketingImportIn}
+     * @memberof MarketingApiPostMarketingImports
+     */
+    readonly marketingImportIn: MarketingImportIn
+}
+
+/**
+ * Request parameters for postMarketingImportsByIdCancel operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingImportsByIdCancelRequest
+ */
+export interface MarketingApiPostMarketingImportsByIdCancelRequest {
+    /**
+     * ID is the import\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingImportsByIdCancel
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postMarketingImportsByIdStart operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingImportsByIdStartRequest
+ */
+export interface MarketingApiPostMarketingImportsByIdStartRequest {
+    /**
+     * ID is the import\&#39;s id.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingImportsByIdStart
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for postMarketingLeads operation in MarketingApi.
  * @export
  * @interface MarketingApiPostMarketingLeadsRequest
@@ -3766,6 +7055,83 @@ export interface MarketingApiPostMarketingLeadsResumeRequest {
      * @memberof MarketingApiPostMarketingLeadsResume
      */
     readonly marketingResumeIn: MarketingResumeIn
+}
+
+/**
+ * Request parameters for postMarketingLists operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingListsRequest
+ */
+export interface MarketingApiPostMarketingListsRequest {
+    /**
+     * 
+     * @type {MarketingListIn}
+     * @memberof MarketingApiPostMarketingLists
+     */
+    readonly marketingListIn: MarketingListIn
+}
+
+/**
+ * Request parameters for postMarketingListsByIdSegments operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingListsByIdSegmentsRequest
+ */
+export interface MarketingApiPostMarketingListsByIdSegmentsRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingListsByIdSegments
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingSegmentIn}
+     * @memberof MarketingApiPostMarketingListsByIdSegments
+     */
+    readonly marketingSegmentIn: MarketingSegmentIn
+}
+
+/**
+ * Request parameters for postMarketingListsByIdSubscribers operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingListsByIdSubscribersRequest
+ */
+export interface MarketingApiPostMarketingListsByIdSubscribersRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingListsByIdSubscribers
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingSubscriberIn}
+     * @memberof MarketingApiPostMarketingListsByIdSubscribers
+     */
+    readonly marketingSubscriberIn: MarketingSubscriberIn
+}
+
+/**
+ * Request parameters for postMarketingListsByIdSubscribersBulk operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingListsByIdSubscribersBulkRequest
+ */
+export interface MarketingApiPostMarketingListsByIdSubscribersBulkRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingListsByIdSubscribersBulk
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketingBulkIn}
+     * @memberof MarketingApiPostMarketingListsByIdSubscribersBulk
+     */
+    readonly marketingBulkIn: MarketingBulkIn
 }
 
 /**
@@ -3902,6 +7268,34 @@ export interface MarketingApiPostMarketingSequencesByIdStepsRequest {
 }
 
 /**
+ * Request parameters for postMarketingSubscribe operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingSubscribeRequest
+ */
+export interface MarketingApiPostMarketingSubscribeRequest {
+    /**
+     * 
+     * @type {MarketingSubscribeIn}
+     * @memberof MarketingApiPostMarketingSubscribe
+     */
+    readonly marketingSubscribeIn: MarketingSubscribeIn
+}
+
+/**
+ * Request parameters for postMarketingSubscribeConfirm operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPostMarketingSubscribeConfirmRequest
+ */
+export interface MarketingApiPostMarketingSubscribeConfirmRequest {
+    /**
+     * 
+     * @type {MarketingConfirmIn}
+     * @memberof MarketingApiPostMarketingSubscribeConfirm
+     */
+    readonly marketingConfirmIn: MarketingConfirmIn
+}
+
+/**
  * Request parameters for postMarketingSuppressions operation in MarketingApi.
  * @export
  * @interface MarketingApiPostMarketingSuppressionsRequest
@@ -3948,6 +7342,13 @@ export interface MarketingApiPostMarketingUnsubscribeRequest {
      * @memberof MarketingApiPostMarketingUnsubscribe
      */
     readonly token?: string
+
+    /**
+     * List is the marketing list the link leaves, as on the signed link.
+     * @type {string}
+     * @memberof MarketingApiPostMarketingUnsubscribe
+     */
+    readonly list?: string
 
     /**
      * OneClick is the form\\\&#39;s List-Unsubscribe field, \\\&quot;One-Click\\\&quot; from a mail client. The token decides; this field only names the form.
@@ -4014,6 +7415,76 @@ export interface MarketingApiPutMarketingCampaignsByIdRequest {
 }
 
 /**
+ * Request parameters for putMarketingFields operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPutMarketingFieldsRequest
+ */
+export interface MarketingApiPutMarketingFieldsRequest {
+    /**
+     * 
+     * @type {MarketingFieldSet}
+     * @memberof MarketingApiPutMarketingFields
+     */
+    readonly marketingFieldSet: MarketingFieldSet
+}
+
+/**
+ * Request parameters for putMarketingImportsByIdData operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPutMarketingImportsByIdDataRequest
+ */
+export interface MarketingApiPutMarketingImportsByIdDataRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketingApiPutMarketingImportsByIdData
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for putMarketingListsByIdSegmentsBySid operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPutMarketingListsByIdSegmentsBySidRequest
+ */
+export interface MarketingApiPutMarketingListsByIdSegmentsBySidRequest {
+    /**
+     * ID is the list, by id or slug, from the path.
+     * @type {string}
+     * @memberof MarketingApiPutMarketingListsByIdSegmentsBySid
+     */
+    readonly id: string
+
+    /**
+     * SID is the segment to change, from the path; ignored on create.
+     * @type {string}
+     * @memberof MarketingApiPutMarketingListsByIdSegmentsBySid
+     */
+    readonly sid: string
+
+    /**
+     * 
+     * @type {MarketingSegmentIn}
+     * @memberof MarketingApiPutMarketingListsByIdSegmentsBySid
+     */
+    readonly marketingSegmentIn: MarketingSegmentIn
+}
+
+/**
+ * Request parameters for putMarketingSender operation in MarketingApi.
+ * @export
+ * @interface MarketingApiPutMarketingSenderRequest
+ */
+export interface MarketingApiPutMarketingSenderRequest {
+    /**
+     * 
+     * @type {MarketingSender}
+     * @memberof MarketingApiPutMarketingSender
+     */
+    readonly marketingSender: MarketingSender
+}
+
+/**
  * MarketingApi - object-oriented interface
  * @export
  * @class MarketingApi
@@ -4030,6 +7501,18 @@ export class MarketingApi extends BaseAPI {
      */
     public deleteMarketingAudiencesById(requestParameters: MarketingApiDeleteMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).deleteMarketingAudiencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes a broadcast that is not sending, with its record of who it went to, and answers 204. One that is sending is 409; cancel it first.  Org admin only.
+     * @summary Deletes a broadcast that is not sending, with its record of who it went to, and answers 204.
+     * @param {MarketingApiDeleteMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public deleteMarketingBroadcastsById(requestParameters: MarketingApiDeleteMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingBroadcastsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4057,6 +7540,42 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204. A list with a broadcast sending is 409; cancel it first.  Org admin only.
+     * @summary Deletes one of the org\'s lists with every subscriber, segment, import and broadcast it has, and answers 204.
+     * @param {MarketingApiDeleteMarketingListsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public deleteMarketingListsById(requestParameters: MarketingApiDeleteMarketingListsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingListsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes a saved segment and answers 204. A scheduled broadcast to it is 409; change or cancel the broadcast first.  Org admin only.
+     * @summary Deletes a saved segment and answers 204.
+     * @param {MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public deleteMarketingListsByIdSegmentsBySid(requestParameters: MarketingApiDeleteMarketingListsByIdSegmentsBySidRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingListsByIdSegmentsBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes one subscriber from one of the org\'s lists and answers 204. The row and its evidence are gone; to keep the record of someone leaving, set their status to unsubscribed instead.  Org admin only.
+     * @summary Removes one subscriber from one of the org\'s lists and answers 204.
+     * @param {MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public deleteMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiDeleteMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Re-subscribes an address on one channel and answers 204. The entry is named in the query. An address that is not on the list reads as not found.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Re-subscribes an address on one channel and answers 204.
      * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
@@ -4069,15 +7588,15 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s saved audiences, most recently updated first.
-     * @summary Returns the org\'s saved audiences, most recently updated first.
+     * Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count. A list or a segment is an audience as a cohort is: a sequence enrolls any of them by id.
+     * @summary Returns every audience the org can send to: its saved cohorts, most recently updated first, then its mailing lists and their saved segments, newest first, each list with its subscribed count.
      * @param {MarketingApiGetMarketingAudiencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
     public getMarketingAudiences(requestParameters: MarketingApiGetMarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getMarketingAudiences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).getMarketingAudiences(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4124,6 +7643,42 @@ export class MarketingApi extends BaseAPI {
      */
     public getMarketingBetaInvites(options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).getMarketingBetaInvites(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the org\'s broadcasts, newest first.
+     * @summary Returns the org\'s broadcasts, newest first.
+     * @param {MarketingApiGetMarketingBroadcastsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingBroadcasts(requestParameters: MarketingApiGetMarketingBroadcastsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingBroadcasts(requestParameters.list, requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one of the org\'s broadcasts.
+     * @summary Returns one of the org\'s broadcasts.
+     * @param {MarketingApiGetMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingBroadcastsById(requestParameters: MarketingApiGetMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingBroadcastsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+     * @summary Returns one broadcast\'s numbers: audience, sent, refused, failed, and what the email plane reported (delivered, opened, clicked, bounced, complained, unsubscribed), each counted once per message, with open and click rates.
+     * @param {MarketingApiGetMarketingBroadcastsByIdStatsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingBroadcastsByIdStats(requestParameters: MarketingApiGetMarketingBroadcastsByIdStatsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingBroadcastsByIdStats(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4187,6 +7742,124 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Returns the custom fields the org defined for its subscribers.
+     * @summary Returns the custom fields the org defined for its subscribers.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingFields(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingFields(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the org\'s imports, newest first, each with its report.
+     * @summary Returns the org\'s imports, newest first, each with its report.
+     * @param {MarketingApiGetMarketingImportsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingImports(requestParameters: MarketingApiGetMarketingImportsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingImports(requestParameters.list, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+     * @summary Returns one of the org\'s imports: its state, how far its bytes and its reading have come, and its report so far.
+     * @param {MarketingApiGetMarketingImportsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingImportsById(requestParameters: MarketingApiGetMarketingImportsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingImportsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the org\'s lists, newest first, each with its subscribers counted by status.
+     * @summary Returns the org\'s lists, newest first, each with its subscribers counted by status.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingLists(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingLists(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+     * @summary Returns one of the org\'s lists, by id or slug, with its subscribers counted by status.
+     * @param {MarketingApiGetMarketingListsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsById(requestParameters: MarketingApiGetMarketingListsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields. The selection takes the same query fields as the subscriber list (status, tag, source, ref, basis, q, field, value, the date ranges and segment). The answer streams as it is read, so a list of millions exports in bounded memory.  Org admin only.
+     * @summary Streams a selection of one list as CSV (format=csv, the default) or as a JSON array (format=json), every subscriber with their consent evidence, engagement and custom fields.
+     * @param {MarketingApiGetMarketingListsByIdExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsByIdExport(requestParameters: MarketingApiGetMarketingListsByIdExportRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsByIdExport(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one list\'s saved segments, newest first.
+     * @summary Returns one list\'s saved segments, newest first.
+     * @param {MarketingApiGetMarketingListsByIdSegmentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsByIdSegments(requestParameters: MarketingApiGetMarketingListsByIdSegmentsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsByIdSegments(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate. Every number is read from kept counts, never by reading the list.
+     * @summary Returns one list\'s numbers for charting: subscribers by status, source and consent basis, and over a range of days, what happened each day, the net growth, the confirmation rate and the unsubscribe rate.
+     * @param {MarketingApiGetMarketingListsByIdStatsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsByIdStats(requestParameters: MarketingApiGetMarketingListsByIdStatsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsByIdStats(requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a page of one list\'s subscribers, newest first unless asked otherwise. Every filter (status, tag, source, ref, consent basis, a prefix of the address or name, a custom field\'s value, ranges of when they joined and confirmed, and whether they opened or clicked since a time) walks an index of its own, so a page costs the same on a list of ten rows or ten million. Continue with next.
+     * @summary Returns a page of one list\'s subscribers, newest first unless asked otherwise.
+     * @param {MarketingApiGetMarketingListsByIdSubscribersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsByIdSubscribers(requestParameters: MarketingApiGetMarketingListsByIdSubscribersRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsByIdSubscribers(requestParameters.id, requestParameters.status, requestParameters.tag, requestParameters.source, requestParameters.ref, requestParameters.basis, requestParameters.q, requestParameters.field, requestParameters.value, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.confirmedAfter, requestParameters.confirmedBefore, requestParameters.openedAfter, requestParameters.notOpenedSince, requestParameters.clickedAfter, requestParameters.segment, requestParameters.sort, requestParameters.order, requestParameters.cursor, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+     * @summary Returns one subscriber of one of the org\'s lists, with their consent evidence and engagement.
+     * @param {MarketingApiGetMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiGetMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
      * @summary Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap.
      * @param {*} [options] Override http request option.
@@ -4222,6 +7895,17 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+     * @summary Returns the org\'s sender: the provider and the from, reply and footer fields every list takes when it leaves its own empty.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public getMarketingSender(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSender(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the org\'s drip sequences, most recently updated first.
      * @summary Returns the org\'s drip sequences, most recently updated first.
      * @param {MarketingApiGetMarketingSequencesRequest} requestParameters Request parameters.
@@ -4230,7 +7914,7 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public getMarketingSequences(requestParameters: MarketingApiGetMarketingSequencesRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getMarketingSequences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).getMarketingSequences(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4281,7 +7965,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
+     * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to. The page carries `next` (an opaque cursor for the following page, empty on the last) and `total` (the true count of this org\'s opt-outs on this channel, across every page).
      * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
      * @param {MarketingApiGetMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4289,7 +7973,7 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public getMarketingSuppressions(requestParameters: MarketingApiGetMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getMarketingSuppressions(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).getMarketingSuppressions(requestParameters.limit, requestParameters.cursor, requestParameters.prefix, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4313,7 +7997,43 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.company, requestParameters.list, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes the fields the body names on a draft or scheduled broadcast and answers it. One that is sending or done is 409.  Org admin only.
+     * @summary Changes the fields the body names on a draft or scheduled broadcast and answers it.
+     * @param {MarketingApiPatchMarketingBroadcastsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public patchMarketingBroadcastsById(requestParameters: MarketingApiPatchMarketingBroadcastsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).patchMarketingBroadcastsById(requestParameters.id, requestParameters.marketingBroadcastIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes the fields the body names on one of the org\'s lists and answers the list. A field left out keeps its value; an empty string clears a sender field back to the org\'s.  Org admin only.
+     * @summary Changes the fields the body names on one of the org\'s lists and answers the list.
+     * @param {MarketingApiPatchMarketingListsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public patchMarketingListsById(requestParameters: MarketingApiPatchMarketingListsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).patchMarketingListsById(requestParameters.id, requestParameters.marketingListIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes the fields the body names on one subscriber and answers the row. A status change follows the same rule as add: an address that unsubscribed or complained is not put back by the org.  Org admin only.
+     * @summary Changes the fields the body names on one subscriber and answers the row.
+     * @param {MarketingApiPatchMarketingListsByIdSubscribersBySidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public patchMarketingListsByIdSubscribersBySid(requestParameters: MarketingApiPatchMarketingListsByIdSubscribersBySidRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).patchMarketingListsByIdSubscribersBySid(requestParameters.id, requestParameters.sid, requestParameters.marketingSubscriberIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4377,6 +8097,54 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it. With scheduledAt it is scheduled; without, a draft until sent.  Org admin only.
+     * @summary Composes a broadcast to one of the org\'s lists, or a segment of it, and answers 201 with it.
+     * @param {MarketingApiPostMarketingBroadcastsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBroadcasts(requestParameters: MarketingApiPostMarketingBroadcastsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBroadcasts(requestParameters.marketingBroadcastIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stops a scheduled or sending broadcast and answers it. Who it already reached stays recorded.  Org admin only.
+     * @summary Stops a scheduled or sending broadcast and answers it.
+     * @param {MarketingApiPostMarketingBroadcastsByIdCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBroadcastsByIdCancel(requestParameters: MarketingApiPostMarketingBroadcastsByIdCancelRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBroadcastsByIdCancel(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it. The list\'s sender must carry a postal address, which every commercial mail states (CAN-SPAM); without one it is 422.  Org admin only.
+     * @summary Sends a draft or scheduled broadcast now, or schedules it for at, and answers 202 with it.
+     * @param {MarketingApiPostMarketingBroadcastsByIdSendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBroadcastsByIdSend(requestParameters: MarketingApiPostMarketingBroadcastsByIdSendRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBroadcastsByIdSend(requestParameters.id, requestParameters.marketingSendIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.  Org admin only.
+     * @summary Sends the broadcast as it stands to up to five addresses, its subject marked [Test], through the same rail and footer the real send takes.
+     * @param {MarketingApiPostMarketingBroadcastsByIdTestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingBroadcastsByIdTest(requestParameters: MarketingApiPostMarketingBroadcastsByIdTestRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingBroadcastsByIdTest(requestParameters.id, requestParameters.marketingTestIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
      * @summary Adds a post to the content calendar.
      * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
@@ -4413,7 +8181,43 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
+     * Creates an import into one of the org\'s lists and answers it. For a file the import waits in state receiving for its bytes (PUT /v1/marketing/imports/{id}/data); for a source (from: commerce) it is queued at once. A key makes the call idempotent: a second create with it answers the first import. The rows are stamped with the import\'s id as their source ref, so a filter on ref selects the batch.  Org admin only.
+     * @summary Creates an import into one of the org\'s lists and answers it.
+     * @param {MarketingApiPostMarketingImportsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingImports(requestParameters: MarketingApiPostMarketingImportsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingImports(requestParameters.marketingImportIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stops an import that has not finished and answers it. The rows it already wrote stay; a filter on its id as ref selects them.  Org admin only.
+     * @summary Stops an import that has not finished and answers it.
+     * @param {MarketingApiPostMarketingImportsByIdCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingImportsByIdCancel(requestParameters: MarketingApiPostMarketingImportsByIdCancelRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingImportsByIdCancel(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there. An import with no bytes is 409.  Org admin only.
+     * @summary Queues an import whose bytes have all arrived and answers 202 with it; a worker reads it from there.
+     * @param {MarketingApiPostMarketingImportsByIdStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingImportsByIdStart(requestParameters: MarketingApiPostMarketingImportsByIdStartRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingImportsByIdStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Files one public form in the deployment\'s own CRM. A sales inquiry or a program application becomes a lead: the person, and the form on their timeline with every answer, the campaign and coupon its page carried; it is stated on the event plane and mailed to the brand\'s sales mailbox. A body naming a job opening becomes a candidate and its form, mailed to the brand\'s careers mailbox and stated nowhere. Program investor is an investor and their form at status submitted, stated nowhere, mailed to nobody, and sent a SAFE to sign (`sent` says whether it went). No account is needed: every record lands in the brand\'s org. A person signed in who applies to the beta also opens the products in beta (the CRM) for the org they act in. Answers 201 with an opaque reference.  A person signed in files under the address their token was issued to: a body naming another address is 400, and so is a sign-in issued with no address. An order that upgrades an organization names it in `upgrade`, sent signed in and acting in that organization (X-Org-Id) as its owner or an admin, and the lead records that verified handle; anyone else naming one is 403. `payment` is card or invoice, and an Enterprise inquiry paying by invoice is also stated as invoice_requested. X-Idempotency-Key makes a retry safe: the same key from the same address answers the same reference, and files, mails and states nothing twice; the same key sent with another form is 409. The sales mail states the payment and the verified organization to upgrade beside the answers.  A brand org whose Base cannot hold the CRM answers 503, a caller past ten forms in an hour 429, a body over 16 KiB 413, and a missing or malformed email 400 — in that order; an investor\'s form then answers 400 for its name, its amount (\"The minimum investment is $25,000.\"), its address, entity, title and phone, in that order.
      * @summary Files one public form in the deployment\'s own CRM.
      * @param {MarketingApiPostMarketingLeadsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4446,6 +8250,54 @@ export class MarketingApi extends BaseAPI {
      */
     public postMarketingLeadsResume(requestParameters: MarketingApiPostMarketingLeadsResumeRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).postMarketingLeadsResume(requestParameters.marketingResumeIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a list in the org and answers 201 with it. Name is required; a new list is private, asks public subscribers to confirm, and takes the org\'s sender for every sender field it leaves empty. A slug the org already uses is 409.  Org admin only.
+     * @summary Creates a list in the org and answers 201 with it.
+     * @param {MarketingApiPostMarketingListsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingLists(requestParameters: MarketingApiPostMarketingListsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingLists(requestParameters.marketingListIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.  Org admin only.
+     * @summary Saves a filter over one list as a segment and answers 201 with it and how many subscribers it selects now.
+     * @param {MarketingApiPostMarketingListsByIdSegmentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingListsByIdSegments(requestParameters: MarketingApiPostMarketingListsByIdSegmentsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingListsByIdSegments(requestParameters.id, requestParameters.marketingSegmentIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row. Pending mails the address a link to confirm. An address that unsubscribed or complained cannot be put back by the org: it is 409, and the person rejoins by subscribing and confirming again.  Org admin only.
+     * @summary Adds an address to one of the org\'s lists, or updates it when it is already there, and answers 201 or 200 with the row.
+     * @param {MarketingApiPostMarketingListsByIdSubscribersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingListsByIdSubscribers(requestParameters: MarketingApiPostMarketingListsByIdSubscribersRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingListsByIdSubscribers(requestParameters.id, requestParameters.marketingSubscriberIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Applies one action to a selection of a list and answers how many rows it matched and changed. The selection is ids, a saved segment, a filter, or the whole list. It walks the selection in batches of a thousand, one transaction each, so millions of rows move in bounded memory: tag and untag add or remove a tag; move moves the rows to another list of the org; unsubscribe and clean set those statuses on every row that is pending or subscribed, each telling the CRM and the event stream; delete removes the rows and their evidence.  Org admin only.
+     * @summary Applies one action to a selection of a list and answers how many rows it matched and changed.
+     * @param {MarketingApiPostMarketingListsByIdSubscribersBulkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingListsByIdSubscribersBulk(requestParameters: MarketingApiPostMarketingListsByIdSubscribersBulkRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingListsByIdSubscribersBulk(requestParameters.id, requestParameters.marketingBulkIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4533,6 +8385,30 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
+     * Asks for the brand\'s newsletter for an address and answers 202 pending. Nothing is recorded: the address is mailed a link to confirm, good for seven days, and only a press on it subscribes. The answer is the same for an address that is new, already subscribed or unsubscribed, and each is mailed alike, so the answer says nothing about the address; one that unsubscribed gets the link too, which is how it comes back. No account is needed, and nothing is told to the sales mailbox or stated to an ad platform.  A deployment whose brand cannot hold the newsletter answers 503, a caller past ten requests in an hour 429, a body over 4 KiB 413, a missing or malformed email 400, and an address already sent three links today, or a deployment past its hourly ceiling, 429, in that order.
+     * @summary Asks for the brand\'s newsletter for an address and answers 202 pending.
+     * @param {MarketingApiPostMarketingSubscribeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingSubscribe(requestParameters: MarketingApiPostMarketingSubscribeRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSubscribe(requestParameters.marketingSubscribeIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Subscribes the address a confirmation link names and answers 200 confirmed. The token is the t value in the link\'s fragment, and it is the only authority. The subscriber is filed in the brand\'s CRM: the person, their place on the Newsletter list, and the confirmation on their timeline with the page and language it came from, when it was asked for, and when and from which address it was confirmed (double opt-in). The brand\'s opt-out for that address is lifted, since the person asked to come back. Pressing the same link again answers 200 and changes nothing.  A caller past thirty presses in an hour answers 429, a link that is missing, malformed, altered or signed elsewhere 400, one older than seven days 410, and a deployment whose brand cannot hold the CRM 503.
+     * @summary Subscribes the address a confirmation link names and answers 200 confirmed.
+     * @param {MarketingApiPostMarketingSubscribeConfirmRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public postMarketingSubscribeConfirm(requestParameters: MarketingApiPostMarketingSubscribeConfirmRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSubscribeConfirm(requestParameters.marketingConfirmIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. An address of the form \"@example.com\" opts out the whole domain, a company; a free mail provider\'s domain is refused 422. The admin org\'s list is the platform\'s: what it holds, every org\'s send gate refuses. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.  Org admin or SuperAdmin only; a member of the org is refused.
      * @summary Records an opt-out for the org (admin / self-service management).
      * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
@@ -4553,7 +8429,7 @@ export class MarketingApi extends BaseAPI {
      * @memberof MarketingApi
      */
     public postMarketingUnsubscribe(requestParameters: MarketingApiPostMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.listUnsubscribe, options).then((request) => request(this.axios, this.basePath));
+        return MarketingApiFp(this.configuration).postMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, requestParameters.list, requestParameters.listUnsubscribe, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4590,6 +8466,54 @@ export class MarketingApi extends BaseAPI {
      */
     public putMarketingCampaignsById(requestParameters: MarketingApiPutMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
         return MarketingApiFp(this.configuration).putMarketingCampaignsById(requestParameters.id, requestParameters.marketingCampaign, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the org\'s custom fields with the set the body carries and answers it. A field dropped from the set is removed from every subscriber; a field kept keeps its values when its type does not change, and a changed type is 409 while any subscriber has a value for it.  Org admin only.
+     * @summary Replaces the org\'s custom fields with the set the body carries and answers it.
+     * @param {MarketingApiPutMarketingFieldsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public putMarketingFields(requestParameters: MarketingApiPutMarketingFieldsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingFields(requestParameters.marketingFieldSet, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds. A piece at an offset the import has passed is taken only past what it holds, so a retried piece writes nothing twice; a piece past the end is 409 naming the offset to resume from. Send the file in order, in pieces of any size up to the request limit, then start it.  Org admin only.
+     * @summary Takes a piece of an import\'s file at the offset the query names and answers how many bytes the import now holds.
+     * @param {MarketingApiPutMarketingImportsByIdDataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public putMarketingImportsByIdData(requestParameters: MarketingApiPutMarketingImportsByIdDataRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingImportsByIdData(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.  Org admin only.
+     * @summary Replaces a segment\'s name and filter and answers it with how many subscribers it selects now.
+     * @param {MarketingApiPutMarketingListsByIdSegmentsBySidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public putMarketingListsByIdSegmentsBySid(requestParameters: MarketingApiPutMarketingListsByIdSegmentsBySidRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingListsByIdSegmentsBySid(requestParameters.id, requestParameters.sid, requestParameters.marketingSegmentIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the org\'s sender and answers it. Every field is written; one left out is cleared.  Org admin only.
+     * @summary Replaces the org\'s sender and answers it.
+     * @param {MarketingApiPutMarketingSenderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingApi
+     */
+    public putMarketingSender(requestParameters: MarketingApiPutMarketingSenderRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingSender(requestParameters.marketingSender, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

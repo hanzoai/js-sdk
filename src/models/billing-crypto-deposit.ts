@@ -21,43 +21,85 @@
  */
 export interface BillingCryptoDeposit {
     /**
-     * 
+     * AddressTag is the destination tag the payment must carry, on a chain whose address is shared. Absent where the address alone names the payer.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'addressTag'?: string;
     /**
-     * 
+     * AmountCents is what the payer said they would send, in USD cents, when the address was asked for: a record of intent, not a quote. What is credited is what arrives. Absent when nothing was named.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'amountCents'?: number;
+    /**
+     * Chain is the network to send on.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'chain'?: string;
     /**
-     * 
+     * Confirmations is how deep the transfer being confirmed is now; zero until one is seen.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'confirmations'?: number;
+    /**
+     * CreditedCents is what the transfer this intent confirmed credited, in USD cents, once it succeeded. A later transfer to the same address is credited too, and shows in the balance rather than here.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'creditedCents'?: number;
+    /**
+     * DepositAddress is where to send it.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'depositAddress'?: string;
     /**
-     * 
+     * ExpiresAt is when this address stops being handed out again (RFC3339). A transfer that arrives after it is still credited.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'expiresAt'?: string;
     /**
-     * 
+     * FeeCents is deducted from every deposit before it is credited: the cost of sweeping it out of the custody address. Absent deducts nothing.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'feeCents'?: number;
+    /**
+     * ID names the intent; read it back at GET /v1/billing/crypto/deposit/{id}.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'id'?: string;
     /**
-     * 
+     * Instructions says, in one line, what to send where and when it is credited.
+     * @type {string}
+     * @memberof BillingCryptoDeposit
+     */
+    'instructions'?: string;
+    /**
+     * MinimumCents is the smallest deposit, in USD cents, that credits anything; less credits nothing. Absent when nothing is watching this asset now, and then nothing sent to it is credited.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'minimumCents'?: number;
+    /**
+     * RequiredConfirmations is how many blocks deep the transfer must be before it is credited.
+     * @type {number}
+     * @memberof BillingCryptoDeposit
+     */
+    'requiredConfirmations'?: number;
+    /**
+     * Status is pending until a transfer to the address is seen, confirming while the chain buries it, and succeeded once it is credited as cash in the payer\'s balance (GET /v1/billing/balance, cash).
      * @type {string}
      * @memberof BillingCryptoDeposit
      */
     'status'?: string;
     /**
-     * 
+     * Token is the asset to send; this intent credits that token alone.
      * @type {string}
      * @memberof BillingCryptoDeposit
      */

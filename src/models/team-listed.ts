@@ -21,7 +21,13 @@
  */
 export interface TeamListed {
     /**
-     * Members counts the room, and never names anybody in it.
+     * Channel addresses it in the owning store — what a join is called with.
+     * @type {string}
+     * @memberof TeamListed
+     */
+    'channel'?: string;
+    /**
+     * Members counts the channel, and never names anybody in it.
      * @type {number}
      * @memberof TeamListed
      */
@@ -33,25 +39,19 @@ export interface TeamListed {
      */
     'name'?: string;
     /**
-     * Org owns the room. It is also what a caller filters by to browse one org.
+     * Org owns the channel. It is also what a caller filters by to browse one org.
      * @type {string}
      * @memberof TeamListed
      */
     'org'?: string;
     /**
-     * Room addresses it in the owning store — what a join is called with.
-     * @type {string}
-     * @memberof TeamListed
-     */
-    'room'?: string;
-    /**
-     * Space is where the room lives inside that org.
+     * Space is where the channel lives inside that org.
      * @type {string}
      * @memberof TeamListed
      */
     'space'?: string;
     /**
-     * Topic is the room\'s one-line subject, empty when it has none.
+     * Topic is the channel\'s one-line subject, empty when it has none.
      * @type {string}
      * @memberof TeamListed
      */

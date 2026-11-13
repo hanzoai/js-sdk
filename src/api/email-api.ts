@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { EmailChoice } from '../models';
+// @ts-ignore
 import type { EmailDispatch } from '../models';
 // @ts-ignore
 import type { EmailListMessagesResult } from '../models';
@@ -33,6 +35,8 @@ import type { EmailSESStatusResult } from '../models';
 import type { EmailSendGridStatusResult } from '../models';
 // @ts-ignore
 import type { EmailSendMessageInput } from '../models';
+// @ts-ignore
+import type { EmailStats } from '../models';
 // @ts-ignore
 import type { EmailVerificationInput } from '../models';
 // @ts-ignore
@@ -46,14 +50,19 @@ import type { ProblemDetails } from '../models';
 export const EmailApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieves sent email messages for the authenticated organization.  GET /v1/email
-         * @summary Retrieves sent email messages for the authenticated organization.
-         * @param {number} [limit] Limit is the maximum number of messages to return (default 50, max 200).
-         * @param {string} [status] Status filters messages by delivery status.
+         * Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account. It narrows by status, provider, a range of send time (since, until) and one recipient, and pages by cursor: pass the answer\'s next to read the page after.  GET /v1/email
+         * @summary Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account.
+         * @param {number} [limit] Limit is the most messages on the page (default 50, max 200).
+         * @param {string} [status] Status is one status to list: queued, sent, failed, delivered, opened, clicked, bounced or complained.
+         * @param {string} [provider] Provider is ses or sendgrid.
+         * @param {string} [since] Since is the earliest send time listed, RFC 3339.
+         * @param {string} [until] Until is the send time listing stops before, RFC 3339.
+         * @param {string} [recipient] Recipient lists the messages to one address.
+         * @param {string} [cursor] Cursor is the next of the page before; empty is the newest page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEmail: async (limit?: number, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEmail: async (limit?: number, status?: string, provider?: string, since?: string, until?: string, recipient?: string, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/email`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -78,6 +87,26 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['status'] = status;
             }
 
+            if (provider !== undefined) {
+                localVarQueryParameter['provider'] = provider;
+            }
+
+            if (since !== undefined) {
+                localVarQueryParameter['since'] = since;
+            }
+
+            if (until !== undefined) {
+                localVarQueryParameter['until'] = until;
+            }
+
+            if (recipient !== undefined) {
+                localVarQueryParameter['recipient'] = recipient;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -90,9 +119,9 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Retrieves message delivery status by ID for the authenticated organization.  GET /v1/email/:id
-         * @summary Retrieves message delivery status by ID for the authenticated organization.
-         * @param {string} id ID is the unique identifier of the message to retrieve.
+         * Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.  GET /v1/email/:id
+         * @summary Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.
+         * @param {string} id ID is our id for the message (msg_…).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -128,8 +157,8 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.  GET /v1/email/sendgrid/status
-         * @summary Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.
+         * Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/sendgrid/status
+         * @summary Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.
          * @param {string} [domain] Domain is an optional sending domain to generate SendGrid whitelabel DKIM, Return-Path, and DMARC records for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -167,8 +196,8 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.  GET /v1/email/ses/status
-         * @summary Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.
+         * Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/ses/status
+         * @summary Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.
          * @param {string} [domain] Domain optionally specifies the sending domain to generate Easy DKIM and MAIL FROM records for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -206,10 +235,69 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058). Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503). Every message, sent or refused, goes on the CRM record of the person the org holds for the address. Transactional mail — a code, a receipt — is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
-         * @summary Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058).
+         * Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC). Mail sent around this API, from the org\'s own tools on its SES or SendGrid account, is counted from the providers\' events like mail sent through it.  GET /v1/email/stats
+         * @summary Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC).
+         * @param {string} [since] Since is where the range starts, RFC 3339, rounded down to its day or hour. Empty is 30 days before Until by day, 48 hours by hour.
+         * @param {string} [until] Until is where the range ends, RFC 3339, rounded up to its day or hour. Empty is now.
+         * @param {string} [interval] Interval is day (default, at most 400 days) or hour (at most 31 days), in UTC.
+         * @param {string} [provider] Provider counts one rail only: ses or sendgrid.
+         * @param {string} [campaign] Campaign counts one campaign only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEmailStats: async (since?: string, until?: string, interval?: string, provider?: string, campaign?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/email/stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (since !== undefined) {
+                localVarQueryParameter['since'] = since;
+            }
+
+            if (until !== undefined) {
+                localVarQueryParameter['until'] = until;
+            }
+
+            if (interval !== undefined) {
+                localVarQueryParameter['interval'] = interval;
+            }
+
+            if (provider !== undefined) {
+                localVarQueryParameter['provider'] = provider;
+            }
+
+            if (campaign !== undefined) {
+                localVarQueryParameter['campaign'] = campaign;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already. Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503).  The rail is the provider the request pins (ses or sendgrid), else the org\'s default (PUT /v1/email/provider), else SES, else SendGrid, whichever the org holds credentials for; anything else is 400. Every message is kept in the org\'s ledger (GET /v1/email), counted (GET /v1/email/stats), stated on the event stream as email_sent, and put on the CRM record of the person the org holds for the address. The same idempotency key and recipient send once. Transactional mail (a code, a receipt) is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
+         * @summary Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already.
          * @param {EmailSendMessageInput} emailSendMessageInput 
-         * @param {string} [idempotencyKey] IdempotencyKey prevents duplicate message dispatches on network retries.
+         * @param {string} [idempotencyKey] IdempotencyKey names the send, so a retried request sends each recipient\&#39;s message once: the same key and recipient name the same message.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -357,6 +445,46 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid. With none set it is SES, else SendGrid, whichever the org holds credentials for; a send that pins one goes by it. Org admin only, and on the audit trail (email.provider.set) before it takes effect.  PUT /v1/email/provider
+         * @summary Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid.
+         * @param {EmailChoice} emailChoice 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putEmailProvider: async (emailChoice: EmailChoice, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'emailChoice' is not null or undefined
+            assertParamExists('putEmailProvider', 'emailChoice', emailChoice)
+            const localVarPath = `/v1/email/provider`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(emailChoice, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -368,23 +496,28 @@ export const EmailApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EmailApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieves sent email messages for the authenticated organization.  GET /v1/email
-         * @summary Retrieves sent email messages for the authenticated organization.
-         * @param {number} [limit] Limit is the maximum number of messages to return (default 50, max 200).
-         * @param {string} [status] Status filters messages by delivery status.
+         * Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account. It narrows by status, provider, a range of send time (since, until) and one recipient, and pages by cursor: pass the answer\'s next to read the page after.  GET /v1/email
+         * @summary Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account.
+         * @param {number} [limit] Limit is the most messages on the page (default 50, max 200).
+         * @param {string} [status] Status is one status to list: queued, sent, failed, delivered, opened, clicked, bounced or complained.
+         * @param {string} [provider] Provider is ses or sendgrid.
+         * @param {string} [since] Since is the earliest send time listed, RFC 3339.
+         * @param {string} [until] Until is the send time listing stops before, RFC 3339.
+         * @param {string} [recipient] Recipient lists the messages to one address.
+         * @param {string} [cursor] Cursor is the next of the page before; empty is the newest page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEmail(limit?: number, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailListMessagesResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEmail(limit, status, options);
+        async getEmail(limit?: number, status?: string, provider?: string, since?: string, until?: string, recipient?: string, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailListMessagesResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEmail(limit, status, provider, since, until, recipient, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EmailApi.getEmail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Retrieves message delivery status by ID for the authenticated organization.  GET /v1/email/:id
-         * @summary Retrieves message delivery status by ID for the authenticated organization.
-         * @param {string} id ID is the unique identifier of the message to retrieve.
+         * Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.  GET /v1/email/:id
+         * @summary Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.
+         * @param {string} id ID is our id for the message (msg_…).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -395,8 +528,8 @@ export const EmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.  GET /v1/email/sendgrid/status
-         * @summary Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.
+         * Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/sendgrid/status
+         * @summary Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.
          * @param {string} [domain] Domain is an optional sending domain to generate SendGrid whitelabel DKIM, Return-Path, and DMARC records for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -408,8 +541,8 @@ export const EmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.  GET /v1/email/ses/status
-         * @summary Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.
+         * Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/ses/status
+         * @summary Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.
          * @param {string} [domain] Domain optionally specifies the sending domain to generate Easy DKIM and MAIL FROM records for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -421,10 +554,27 @@ export const EmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058). Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503). Every message, sent or refused, goes on the CRM record of the person the org holds for the address. Transactional mail — a code, a receipt — is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
-         * @summary Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058).
+         * Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC). Mail sent around this API, from the org\'s own tools on its SES or SendGrid account, is counted from the providers\' events like mail sent through it.  GET /v1/email/stats
+         * @summary Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC).
+         * @param {string} [since] Since is where the range starts, RFC 3339, rounded down to its day or hour. Empty is 30 days before Until by day, 48 hours by hour.
+         * @param {string} [until] Until is where the range ends, RFC 3339, rounded up to its day or hour. Empty is now.
+         * @param {string} [interval] Interval is day (default, at most 400 days) or hour (at most 31 days), in UTC.
+         * @param {string} [provider] Provider counts one rail only: ses or sendgrid.
+         * @param {string} [campaign] Campaign counts one campaign only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEmailStats(since?: string, until?: string, interval?: string, provider?: string, campaign?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEmailStats(since, until, interval, provider, campaign, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EmailApi.getEmailStats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already. Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503).  The rail is the provider the request pins (ses or sendgrid), else the org\'s default (PUT /v1/email/provider), else SES, else SendGrid, whichever the org holds credentials for; anything else is 400. Every message is kept in the org\'s ledger (GET /v1/email), counted (GET /v1/email/stats), stated on the event stream as email_sent, and put on the CRM record of the person the org holds for the address. The same idempotency key and recipient send once. Transactional mail (a code, a receipt) is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
+         * @summary Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already.
          * @param {EmailSendMessageInput} emailSendMessageInput 
-         * @param {string} [idempotencyKey] IdempotencyKey prevents duplicate message dispatches on network retries.
+         * @param {string} [idempotencyKey] IdempotencyKey names the send, so a retried request sends each recipient\&#39;s message once: the same key and recipient name the same message.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -471,6 +621,19 @@ export const EmailApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['EmailApi.postEmailWebhooksSes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid. With none set it is SES, else SendGrid, whichever the org holds credentials for; a send that pins one goes by it. Org admin only, and on the audit trail (email.provider.set) before it takes effect.  PUT /v1/email/provider
+         * @summary Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid.
+         * @param {EmailChoice} emailChoice 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putEmailProvider(emailChoice: EmailChoice, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailChoice>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putEmailProvider(emailChoice, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EmailApi.putEmailProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -482,18 +645,18 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = EmailApiFp(configuration)
     return {
         /**
-         * Retrieves sent email messages for the authenticated organization.  GET /v1/email
-         * @summary Retrieves sent email messages for the authenticated organization.
+         * Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account. It narrows by status, provider, a range of send time (since, until) and one recipient, and pages by cursor: pass the answer\'s next to read the page after.  GET /v1/email
+         * @summary Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account.
          * @param {EmailApiGetEmailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEmail(requestParameters: EmailApiGetEmailRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EmailListMessagesResult> {
-            return localVarFp.getEmail(requestParameters.limit, requestParameters.status, options).then((request) => request(axios, basePath));
+            return localVarFp.getEmail(requestParameters.limit, requestParameters.status, requestParameters.provider, requestParameters.since, requestParameters.until, requestParameters.recipient, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
-         * Retrieves message delivery status by ID for the authenticated organization.  GET /v1/email/:id
-         * @summary Retrieves message delivery status by ID for the authenticated organization.
+         * Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.  GET /v1/email/:id
+         * @summary Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.
          * @param {EmailApiGetEmailByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -502,8 +665,8 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEmailById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.  GET /v1/email/sendgrid/status
-         * @summary Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.
+         * Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/sendgrid/status
+         * @summary Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.
          * @param {EmailApiGetEmailSendgridStatusRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -512,8 +675,8 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEmailSendgridStatus(requestParameters.domain, options).then((request) => request(axios, basePath));
         },
         /**
-         * Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.  GET /v1/email/ses/status
-         * @summary Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.
+         * Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/ses/status
+         * @summary Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.
          * @param {EmailApiGetEmailSesStatusRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -522,8 +685,18 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getEmailSesStatus(requestParameters.domain, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058). Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503). Every message, sent or refused, goes on the CRM record of the person the org holds for the address. Transactional mail — a code, a receipt — is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
-         * @summary Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058).
+         * Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC). Mail sent around this API, from the org\'s own tools on its SES or SendGrid account, is counted from the providers\' events like mail sent through it.  GET /v1/email/stats
+         * @summary Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC).
+         * @param {EmailApiGetEmailStatsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEmailStats(requestParameters: EmailApiGetEmailStatsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EmailStats> {
+            return localVarFp.getEmailStats(requestParameters.since, requestParameters.until, requestParameters.interval, requestParameters.provider, requestParameters.campaign, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already. Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503).  The rail is the provider the request pins (ses or sendgrid), else the org\'s default (PUT /v1/email/provider), else SES, else SendGrid, whichever the org holds credentials for; anything else is 400. Every message is kept in the org\'s ledger (GET /v1/email), counted (GET /v1/email/stats), stated on the event stream as email_sent, and put on the CRM record of the person the org holds for the address. The same idempotency key and recipient send once. Transactional mail (a code, a receipt) is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
+         * @summary Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already.
          * @param {EmailApiPostEmailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -559,6 +732,16 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
         postEmailWebhooksSes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postEmailWebhooksSes(options).then((request) => request(axios, basePath));
         },
+        /**
+         * Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid. With none set it is SES, else SendGrid, whichever the org holds credentials for; a send that pins one goes by it. Org admin only, and on the audit trail (email.provider.set) before it takes effect.  PUT /v1/email/provider
+         * @summary Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid.
+         * @param {EmailApiPutEmailProviderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putEmailProvider(requestParameters: EmailApiPutEmailProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailChoice> {
+            return localVarFp.putEmailProvider(requestParameters.emailChoice, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -569,18 +752,53 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
  */
 export interface EmailApiGetEmailRequest {
     /**
-     * Limit is the maximum number of messages to return (default 50, max 200).
+     * Limit is the most messages on the page (default 50, max 200).
      * @type {number}
      * @memberof EmailApiGetEmail
      */
     readonly limit?: number
 
     /**
-     * Status filters messages by delivery status.
+     * Status is one status to list: queued, sent, failed, delivered, opened, clicked, bounced or complained.
      * @type {string}
      * @memberof EmailApiGetEmail
      */
     readonly status?: string
+
+    /**
+     * Provider is ses or sendgrid.
+     * @type {string}
+     * @memberof EmailApiGetEmail
+     */
+    readonly provider?: string
+
+    /**
+     * Since is the earliest send time listed, RFC 3339.
+     * @type {string}
+     * @memberof EmailApiGetEmail
+     */
+    readonly since?: string
+
+    /**
+     * Until is the send time listing stops before, RFC 3339.
+     * @type {string}
+     * @memberof EmailApiGetEmail
+     */
+    readonly until?: string
+
+    /**
+     * Recipient lists the messages to one address.
+     * @type {string}
+     * @memberof EmailApiGetEmail
+     */
+    readonly recipient?: string
+
+    /**
+     * Cursor is the next of the page before; empty is the newest page.
+     * @type {string}
+     * @memberof EmailApiGetEmail
+     */
+    readonly cursor?: string
 }
 
 /**
@@ -590,7 +808,7 @@ export interface EmailApiGetEmailRequest {
  */
 export interface EmailApiGetEmailByIdRequest {
     /**
-     * ID is the unique identifier of the message to retrieve.
+     * ID is our id for the message (msg_…).
      * @type {string}
      * @memberof EmailApiGetEmailById
      */
@@ -626,6 +844,48 @@ export interface EmailApiGetEmailSesStatusRequest {
 }
 
 /**
+ * Request parameters for getEmailStats operation in EmailApi.
+ * @export
+ * @interface EmailApiGetEmailStatsRequest
+ */
+export interface EmailApiGetEmailStatsRequest {
+    /**
+     * Since is where the range starts, RFC 3339, rounded down to its day or hour. Empty is 30 days before Until by day, 48 hours by hour.
+     * @type {string}
+     * @memberof EmailApiGetEmailStats
+     */
+    readonly since?: string
+
+    /**
+     * Until is where the range ends, RFC 3339, rounded up to its day or hour. Empty is now.
+     * @type {string}
+     * @memberof EmailApiGetEmailStats
+     */
+    readonly until?: string
+
+    /**
+     * Interval is day (default, at most 400 days) or hour (at most 31 days), in UTC.
+     * @type {string}
+     * @memberof EmailApiGetEmailStats
+     */
+    readonly interval?: string
+
+    /**
+     * Provider counts one rail only: ses or sendgrid.
+     * @type {string}
+     * @memberof EmailApiGetEmailStats
+     */
+    readonly provider?: string
+
+    /**
+     * Campaign counts one campaign only.
+     * @type {string}
+     * @memberof EmailApiGetEmailStats
+     */
+    readonly campaign?: string
+}
+
+/**
  * Request parameters for postEmail operation in EmailApi.
  * @export
  * @interface EmailApiPostEmailRequest
@@ -639,7 +899,7 @@ export interface EmailApiPostEmailRequest {
     readonly emailSendMessageInput: EmailSendMessageInput
 
     /**
-     * IdempotencyKey prevents duplicate message dispatches on network retries.
+     * IdempotencyKey names the send, so a retried request sends each recipient\&#39;s message once: the same key and recipient name the same message.
      * @type {string}
      * @memberof EmailApiPostEmail
      */
@@ -661,6 +921,20 @@ export interface EmailApiPostEmailVerifyRequest {
 }
 
 /**
+ * Request parameters for putEmailProvider operation in EmailApi.
+ * @export
+ * @interface EmailApiPutEmailProviderRequest
+ */
+export interface EmailApiPutEmailProviderRequest {
+    /**
+     * 
+     * @type {EmailChoice}
+     * @memberof EmailApiPutEmailProvider
+     */
+    readonly emailChoice: EmailChoice
+}
+
+/**
  * EmailApi - object-oriented interface
  * @export
  * @class EmailApi
@@ -668,20 +942,20 @@ export interface EmailApiPostEmailVerifyRequest {
  */
 export class EmailApi extends BaseAPI {
     /**
-     * Retrieves sent email messages for the authenticated organization.  GET /v1/email
-     * @summary Retrieves sent email messages for the authenticated organization.
+     * Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account. It narrows by status, provider, a range of send time (since, until) and one recipient, and pages by cursor: pass the answer\'s next to read the page after.  GET /v1/email
+     * @summary Reads a page of the org\'s ledger, newest first: every message sent through POST /v1/email, and every message SES or SendGrid told of by its events, sent from anywhere on the org\'s account.
      * @param {EmailApiGetEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmailApi
      */
     public getEmail(requestParameters: EmailApiGetEmailRequest = {}, options?: RawAxiosRequestConfig) {
-        return EmailApiFp(this.configuration).getEmail(requestParameters.limit, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+        return EmailApiFp(this.configuration).getEmail(requestParameters.limit, requestParameters.status, requestParameters.provider, requestParameters.since, requestParameters.until, requestParameters.recipient, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Retrieves message delivery status by ID for the authenticated organization.  GET /v1/email/:id
-     * @summary Retrieves message delivery status by ID for the authenticated organization.
+     * Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.  GET /v1/email/:id
+     * @summary Reads one message of the org\'s ledger, sent through this API or told of by its provider, with what became of it.
      * @param {EmailApiGetEmailByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -692,8 +966,8 @@ export class EmailApi extends BaseAPI {
     }
 
     /**
-     * Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.  GET /v1/email/sendgrid/status
-     * @summary Inspects the authenticated organization\'s dedicated SendGrid outreach configuration (separate from standard Twilio notify) and whitelabel DNS records.
+     * Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/sendgrid/status
+     * @summary Reports the org\'s SendGrid configuration: whether it holds the credentials a send needs, the account\'s credits as SendGrid answers them, what the org\'s ledger counted sent by SendGrid in the last 24 hours, and the DNS records of the sending domain.
      * @param {EmailApiGetEmailSendgridStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -704,8 +978,8 @@ export class EmailApi extends BaseAPI {
     }
 
     /**
-     * Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.  GET /v1/email/ses/status
-     * @summary Inspects the authenticated organization\'s Amazon SES configuration, sending limits, and Easy DKIM / MAIL FROM DNS records.
+     * Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.  GET /v1/email/ses/status
+     * @summary Reports the org\'s Amazon SES configuration: whether it holds the credentials a send needs, the account\'s limits as SES answers them (sandbox, sending enabled, 24-hour quota, rate, sent in the last 24 hours), what the org\'s ledger counted sent by SES in the last 24 hours, and the DNS records of the sending domain.
      * @param {EmailApiGetEmailSesStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -716,8 +990,20 @@ export class EmailApi extends BaseAPI {
     }
 
     /**
-     * Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058). Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503). Every message, sent or refused, goes on the CRM record of the person the org holds for the address. Transactional mail — a code, a receipt — is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
-     * @summary Sends commercial email from the org: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058).
+     * Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC). Mail sent around this API, from the org\'s own tools on its SES or SendGrid account, is counted from the providers\' events like mail sent through it.  GET /v1/email/stats
+     * @summary Counts the org\'s mail over a range: sent, delivered, opened, clicked, bounced, complained and unsubscribed, each a count of messages, in all, by provider, by campaign and by day or hour (UTC).
+     * @param {EmailApiGetEmailStatsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmailApi
+     */
+    public getEmailStats(requestParameters: EmailApiGetEmailStatsRequest = {}, options?: RawAxiosRequestConfig) {
+        return EmailApiFp(this.configuration).getEmailStats(requestParameters.since, requestParameters.until, requestParameters.interval, requestParameters.provider, requestParameters.campaign, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already. Every recipient is first asked of the one suppression check (marketing_clearance): an address the org\'s list holds, whose company unsubscribed, or that the platform blocks is not sent to, and is answered in refused with status 422 and the reason; when every recipient is refused the request is 422. A list that cannot answer sends nothing (503).  The rail is the provider the request pins (ses or sendgrid), else the org\'s default (PUT /v1/email/provider), else SES, else SendGrid, whichever the org holds credentials for; anything else is 400. Every message is kept in the org\'s ledger (GET /v1/email), counted (GET /v1/email/stats), stated on the event stream as email_sent, and put on the CRM record of the person the org holds for the address. The same idempotency key and recipient send once. Transactional mail (a code, a receipt) is not this route\'s: it goes by /v1/notify, which no opt-out stops.  POST /v1/email
+     * @summary Sends commercial email from the org through SES or SendGrid: one message per recipient, each carrying its own signed unsubscribe link in the footer and in List-Unsubscribe and List-Unsubscribe-Post (RFC 8058), and every http(s) link tagged with utm_source=email, utm_medium=<provider>, utm_campaign=<campaign>, utm_content=link<n> and from=<message id>, each only where the link does not carry it already.
      * @param {EmailApiPostEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -759,6 +1045,18 @@ export class EmailApi extends BaseAPI {
      */
     public postEmailWebhooksSes(options?: RawAxiosRequestConfig) {
         return EmailApiFp(this.configuration).postEmailWebhooksSes(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid. With none set it is SES, else SendGrid, whichever the org holds credentials for; a send that pins one goes by it. Org admin only, and on the audit trail (email.provider.set) before it takes effect.  PUT /v1/email/provider
+     * @summary Sets the provider the org\'s mail leaves by when a send pins none: ses or sendgrid.
+     * @param {EmailApiPutEmailProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmailApi
+     */
+    public putEmailProvider(requestParameters: EmailApiPutEmailProviderRequest, options?: RawAxiosRequestConfig) {
+        return EmailApiFp(this.configuration).putEmailProvider(requestParameters.emailChoice, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

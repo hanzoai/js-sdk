@@ -29,5 +29,17 @@ export interface MarketingSuppressionList {
      * @memberof MarketingSuppressionList
      */
     'data'?: Array<MarketingSuppression>;
+    /**
+     * Next is the opaque keyset cursor for the next page. Empty means this was the last page; pass it back as the `cursor` query to continue.
+     * @type {string}
+     * @memberof MarketingSuppressionList
+     */
+    'next'?: string;
+    /**
+     * Total is the true number of opt-outs the org has on this channel, across every page.
+     * @type {number}
+     * @memberof MarketingSuppressionList
+     */
+    'total'?: number;
 }
 

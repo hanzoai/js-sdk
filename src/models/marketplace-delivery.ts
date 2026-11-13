@@ -39,7 +39,7 @@ export interface MarketplaceDelivery {
      */
     'note'?: string;
     /**
-     * URL is where it is, https.
+     * URL is where it is, https. It is a KMS value (the row holds its path), so only the reads that serve a job to a party fill it.
      * @type {string}
      * @memberof MarketplaceDelivery
      */

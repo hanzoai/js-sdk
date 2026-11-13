@@ -30,13 +30,13 @@ export interface TeamTeamMessageWrite {
      */
     'files'?: Array<TeamTeamFileIn>;
     /**
-     * ID is the room to say it in, from the path.
+     * ID is the channel to say it in, from the path.
      * @type {string}
      * @memberof TeamTeamMessageWrite
      */
     'id'?: string;
     /**
-     * Space names the space holding the room. Body-only: a query string may not redirect a write.
+     * Space names the space holding the channel. Body-only: a query string may not redirect a write.
      * @type {string}
      * @memberof TeamTeamMessageWrite
      */

@@ -21,7 +21,13 @@
  */
 export interface LibraryKeepIn {
     /**
-     * Data is the bytes, base64, at most 10 MiB. Required.
+     * Bytes reserves an upload of this size, at most 2 GiB, when data is empty, and returns a signed PUT in upload.
+     * @type {number}
+     * @memberof LibraryKeepIn
+     */
+    'bytes'?: number;
+    /**
+     * Data is the bytes, base64, at most 10 MiB; omit when reserving with bytes.
      * @type {string}
      * @memberof LibraryKeepIn
      */

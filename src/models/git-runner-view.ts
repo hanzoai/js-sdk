@@ -21,11 +21,23 @@
  */
 export interface GitRunnerView {
     /**
+     * Busy is whether it is executing a job now. Known for a forge runner only.
+     * @type {boolean}
+     * @memberof GitRunnerView
+     */
+    'busy'?: boolean;
+    /**
      * Ephemeral means the daemon takes ONE job and exits, so it is not expected back and its absence is not a fault.
      * @type {boolean}
      * @memberof GitRunnerView
      */
     'ephemeral'?: boolean;
+    /**
+     * Forge is true for a runner registered on the forge (git.hanzo.ai), which runs the repositories whose home is there, and false for a daemon in one of this org\'s declared pools.
+     * @type {boolean}
+     * @memberof GitRunnerView
+     */
+    'forge'?: boolean;
     /**
      * Labels are what the daemon last said it can do.
      * @type {Array<string>}
@@ -51,7 +63,13 @@ export interface GitRunnerView {
      */
     'name'?: string;
     /**
-     * Pool is the declared capacity it entered.
+     * Online is whether it was heard from lately: within the forge\'s offline window for a forge runner, within a minute for a daemon here.
+     * @type {boolean}
+     * @memberof GitRunnerView
+     */
+    'online'?: boolean;
+    /**
+     * Pool is the declared capacity it entered; for a runner on the forge, the label set it answers to, sorted and joined by \"+\".
      * @type {string}
      * @memberof GitRunnerView
      */

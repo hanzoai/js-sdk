@@ -24,7 +24,7 @@ import type { AllowancePool } from './allowance-pool';
  */
 export interface AllowanceAllowance {
     /**
-     * calls the plan allows per period; 0 = unbounded
+     * calls the plan allows in Window; 0 = unbounded
      * @type {number}
      * @memberof AllowanceAllowance
      */
@@ -48,7 +48,7 @@ export interface AllowanceAllowance {
      */
     'pooled'?: boolean;
     /**
-     * unix seconds; when THAT window starts again
+     * Resets is the instant THAT window reopens, unix seconds: the next UTC hour or midnight, or a session\'s start plus its length — exact, to the second, from the call that opened it. 0 for a session that is not running: it opens at the next call.
      * @type {number}
      * @memberof AllowanceAllowance
      */
@@ -60,13 +60,19 @@ export interface AllowanceAllowance {
      */
     'spent'?: boolean;
     /**
-     * Used is how many free calls this subject has been admitted in the period ending at Resets — the UTC calendar day. A call counts when it is admitted, whatever its upstream then does; a refused call counts nothing. It stops AT Limit rather than climbing past it, so Limit-Used is what remains and never goes negative.
+     * Start is when the session this answer counts in opened, unix seconds: on a take, the session the call was counted in, which a give names back (AllowanceIn.Start); on a read, the session running. 0 where no session bounds the subject or none runs.
+     * @type {number}
+     * @memberof AllowanceAllowance
+     */
+    'start'?: number;
+    /**
+     * Used is how many free calls this subject has been admitted in the window ending at Resets. A call counts when it is admitted, whatever its upstream then does; a refused call counts nothing. It stops AT Limit rather than climbing past it, so Limit-Used is what remains and never goes negative.
      * @type {number}
      * @memberof AllowanceAllowance
      */
     'used'?: number;
     /**
-     * Window is which ceiling these numbers describe — \"hour\" or \"day\" — because a caller is held to both and only one of them is the answer. It is the window that REFUSED where one did, and otherwise the one with least left, so Limit-Used is always the number that will actually stop them next. Empty where no window bounds the subject at all.
+     * Window is which ceiling these numbers describe — \"hour\", \"session\" or \"day\" — because a caller can be held to more than one and only one of them is the answer. A session is the Free plan\'s: it opens at the subject\'s first call after the last one ended and runs five hours (ai_plan_session_hours). It is the window that REFUSED where one did, and otherwise the one with least left, so Limit-Used is always the number that will actually stop them next. Empty where no window bounds the subject at all.
      * @type {string}
      * @memberof AllowanceAllowance
      */

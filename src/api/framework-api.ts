@@ -131,10 +131,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [fields] Fields projects the response to a subset — a JSON array [\&quot;a\&quot;,\&quot;b\&quot;] or a comma list \&quot;a,b\&quot;. The envelope keys are always returned.
          * @param {string} [orderBy] OrderBy is \&quot;&lt;field&gt; [asc|desc]\&quot;. Empty means most-recently-updated first.
          * @param {string} [limit] Limit caps the rows returned. Anything that is not a positive integer leaves the engine\&#39;s default in place.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFrameworkByDoctype: async (doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkByDoctype: async (doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
             assertParamExists('getFrameworkByDoctype', 'doctype', doctype)
             const localVarPath = `/v1/framework/{doctype}`
@@ -168,6 +169,10 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
             }
 
 
@@ -732,11 +737,12 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {string} [fields] Fields projects the response to a subset — a JSON array [\&quot;a\&quot;,\&quot;b\&quot;] or a comma list \&quot;a,b\&quot;. The envelope keys are always returned.
          * @param {string} [orderBy] OrderBy is \&quot;&lt;field&gt; [asc|desc]\&quot;. Empty means most-recently-updated first.
          * @param {string} [limit] Limit caps the rows returned. Anything that is not a positive integer leaves the engine\&#39;s default in place.
+         * @param {string} [cursor] Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocumentList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctype(doctype, filters, fields, orderBy, limit, options);
+        async getFrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrameworkDocumentList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctype(doctype, filters, fields, orderBy, limit, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -950,7 +956,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<FrameworkDocumentList> {
-            return localVarFp.getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one document by name, with Password fields redacted.
@@ -1157,6 +1163,13 @@ export interface FrameworkApiGetFrameworkByDoctypeRequest {
      * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly limit?: string
+
+    /**
+     * Cursor is an opaque keyset cursor from a previous page\&#39;s &#x60;next&#x60;. Empty means the first page.
+     * @type {string}
+     * @memberof FrameworkApiGetFrameworkByDoctype
+     */
+    readonly cursor?: string
 }
 
 /**
@@ -1374,7 +1387,7 @@ export class FrameworkApi extends BaseAPI {
      * @memberof FrameworkApi
      */
     public getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return FrameworkApiFp(this.configuration).getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

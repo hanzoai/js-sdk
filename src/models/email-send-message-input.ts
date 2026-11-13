@@ -27,7 +27,13 @@ export interface EmailSendMessageInput {
      */
     'body'?: string;
     /**
-     * From is the sender address. If empty, the org\'s provider default is used.
+     * Campaign tags the messages: 1 to 128 letters, digits, \'-\' or \'_\', which is what an SES message tag may hold. Every link carries it as utm_campaign, the provider carries it back on every event, and the stats count by it.
+     * @type {string}
+     * @memberof EmailSendMessageInput
+     */
+    'campaign'?: string;
+    /**
+     * From is the sender address. If empty, the provider credential\'s from-email is used.
      * @type {string}
      * @memberof EmailSendMessageInput
      */
@@ -45,13 +51,13 @@ export interface EmailSendMessageInput {
      */
     'html'?: string;
     /**
-     * IdempotencyKey prevents duplicate message dispatches on network retries.
+     * IdempotencyKey names the send, so a retried request sends each recipient\'s message once: the same key and recipient name the same message.
      * @type {string}
      * @memberof EmailSendMessageInput
      */
     'idempotency_key'?: string;
     /**
-     * Provider optionally pins a provider (e.g. \"mail\", \"twilio_email\").
+     * Provider pins the rail, ses or sendgrid. Empty is the org\'s default (PUT /v1/email/provider), else ses, else sendgrid, whichever the org holds credentials for.
      * @type {string}
      * @memberof EmailSendMessageInput
      */
@@ -87,7 +93,7 @@ export interface EmailSendMessageInput {
      */
     'text'?: string;
     /**
-     * To lists destination recipient addresses.
+     * To lists destination recipient addresses. Each gets a message of its own.
      * @type {Array<string>}
      * @memberof EmailSendMessageInput
      */

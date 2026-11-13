@@ -30,6 +30,18 @@ import type { AgentAgentList } from '../models';
 // @ts-ignore
 import type { AgentAgentView } from '../models';
 // @ts-ignore
+import type { AgentAnswerIn } from '../models';
+// @ts-ignore
+import type { AgentAnswerView } from '../models';
+// @ts-ignore
+import type { AgentApplyRosterIn } from '../models';
+// @ts-ignore
+import type { AgentApplyRosterOut } from '../models';
+// @ts-ignore
+import type { AgentBriefList } from '../models';
+// @ts-ignore
+import type { AgentBriefRecord } from '../models';
+// @ts-ignore
 import type { AgentBuildList } from '../models';
 // @ts-ignore
 import type { AgentBuildView } from '../models';
@@ -44,9 +56,17 @@ import type { AgentCodingBlob } from '../models';
 // @ts-ignore
 import type { AgentCodingChanges } from '../models';
 // @ts-ignore
+import type { AgentCodingExtendIn } from '../models';
+// @ts-ignore
+import type { AgentCodingExtended } from '../models';
+// @ts-ignore
 import type { AgentCodingInstruction } from '../models';
 // @ts-ignore
 import type { AgentCodingMerged } from '../models';
+// @ts-ignore
+import type { AgentCodingPullIn } from '../models';
+// @ts-ignore
+import type { AgentCodingPulled } from '../models';
 // @ts-ignore
 import type { AgentCodingStartIn } from '../models';
 // @ts-ignore
@@ -62,7 +82,11 @@ import type { AgentControlResult } from '../models';
 // @ts-ignore
 import type { AgentCreateAgentIn } from '../models';
 // @ts-ignore
+import type { AgentDecideProposalIn } from '../models';
+// @ts-ignore
 import type { AgentEventIn } from '../models';
+// @ts-ignore
+import type { AgentEventList } from '../models';
 // @ts-ignore
 import type { AgentEventView } from '../models';
 // @ts-ignore
@@ -72,11 +96,21 @@ import type { AgentPatchSessionIn } from '../models';
 // @ts-ignore
 import type { AgentPatchTargetIn } from '../models';
 // @ts-ignore
+import type { AgentProposalList } from '../models';
+// @ts-ignore
 import type { AgentRegisterReq } from '../models';
 // @ts-ignore
 import type { AgentReportOut } from '../models';
 // @ts-ignore
 import type { AgentReportRunIn } from '../models';
+// @ts-ignore
+import type { AgentReviewProposalsIn } from '../models';
+// @ts-ignore
+import type { AgentReviewProposalsOut } from '../models';
+// @ts-ignore
+import type { AgentRoleProposal } from '../models';
+// @ts-ignore
+import type { AgentRosterTemplatesOut } from '../models';
 // @ts-ignore
 import type { AgentRoutedRunOut } from '../models';
 // @ts-ignore
@@ -95,6 +129,12 @@ import type { AgentSessionProgress } from '../models';
 import type { AgentSessionView } from '../models';
 // @ts-ignore
 import type { AgentSpendView } from '../models';
+// @ts-ignore
+import type { AgentSubmitBriefIn } from '../models';
+// @ts-ignore
+import type { AgentTalkIn } from '../models';
+// @ts-ignore
+import type { AgentTalkOut } from '../models';
 // @ts-ignore
 import type { AgentTargetDeleted } from '../models';
 // @ts-ignore
@@ -356,7 +396,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
+         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it. A retired built-in is left out.
          * @summary Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -397,6 +437,78 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          */
         getAgentActivity: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent/activity`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @summary Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentBriefs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agent/briefs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @summary Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @param {string} id ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentBriefsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAgentBriefsById', 'id', id)
+            const localVarPath = `/v1/agent/briefs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1080,6 +1192,84 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @summary Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @param {string} [venture] Venture filters proposals to a single venture slug when non-empty.
+         * @param {string} [status] Status filters proposals by state (pending, approved, rejected) when non-empty.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentProposals: async (venture?: string, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agent/proposals`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (venture !== undefined) {
+                localVarQueryParameter['venture'] = venture;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @summary Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentRosterTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agent/roster/templates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
          * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
@@ -1130,14 +1320,14 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
-         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
+         * @param {string} [channel] Channel filters to the sessions started in one collaborative channel — the query a space view runs to show what has been run in it.
          * @param {string} [kind] Kind filters to the sessions of one kind of run: \&quot;coding\&quot; lists coding runs, each carrying its repo, base, branch, environment and pull request.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {string} [after] After is the &#x60;next&#x60; of the previous page. Absent starts at the newest.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAgentSessions: async (root?: string, parent?: string, status?: string, project?: string, room?: string, kind?: string, limit?: number, after?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentSessions: async (root?: string, parent?: string, status?: string, project?: string, channel?: string, kind?: string, limit?: number, after?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1170,8 +1360,8 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['project'] = project;
             }
 
-            if (room !== undefined) {
-                localVarQueryParameter['room'] = room;
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
             }
 
             if (kind !== undefined) {
@@ -1198,13 +1388,15 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
-         * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-         * @param {string} id ID is the session to act on, from the path.
+         * Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor). The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
+         * @summary Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor).
+         * @param {string} id ID is the session to read, from the path.
+         * @param {string} [after] After pages forward through the session\&#39;s events starting strictly after this seq integer; omitted reads the tail of the log instead.
+         * @param {number} [limit] Limit bounds how many events recentEvents carries (1..1000; default 50 on a tail read, or 200 when paging forward with after).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAgentSessionsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentSessionsById: async (id: string, after?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getAgentSessionsById', 'id', id)
             const localVarPath = `/v1/agent/sessions/{id}`
@@ -1223,6 +1415,14 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (after !== undefined) {
+                localVarQueryParameter['after'] = after;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
 
 
     
@@ -1265,6 +1465,54 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
 
             if (after !== undefined) {
                 localVarQueryParameter['after'] = after;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped. It is how to see what a run did and why it ended — each model turn, tool call, status and log line, as the run wrote them. A run whose process went away is ended first, with its reason as the last event.
+         * @summary Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped.
+         * @param {string} id ID is the session to read, from the path.
+         * @param {number} [after] After is the seq of the last event already read; the page starts after it. Absent or zero starts at the first event.
+         * @param {number} [limit] Limit caps the page. Absent, zero or over 1000 reads as 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentSessionsByIdEvents: async (id: string, after?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAgentSessionsByIdEvents', 'id', id)
+            const localVarPath = `/v1/agent/sessions/{id}/events`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (after !== undefined) {
+                localVarQueryParameter['after'] = after;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
             }
 
 
@@ -1355,7 +1603,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn (with `id: <seq>`). Optional ?root=<session id> narrows the feed to a single subagent tree, and optional ?after=<seq> (or the `Last-Event-ID` request header) replays stored events with `seq > after` in order before streaming live updates without duplicates.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
          * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1671,6 +1919,40 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * The A2A server its agent card at /.well-known/agent-card.json names. Each SendMessage is a task the default assistant answers with the tools your credential reaches: an agent run like POST /v1/agent/:ref/run, so your balance is authorized before any inference and the flat run fee is charged only when the run succeeds. A request waits for the answer unless configuration.returnImmediately is set; either way the task is kept, and GetTask, ListTasks and CancelTask read and stop your own tasks. A conversation continues by sending the next message with the task\'s contextId.  Methods: SendMessage, GetTask, ListTasks, CancelTask. Streaming and push notifications answer UnsupportedOperation (-32004) and PushNotificationNotSupported (-32003). The A2A-Version header, when sent, is 1.0. With no credential the answer is 401 with a WWW-Authenticate challenge naming the protected-resource metadata; every other outcome, refusals included, is a JSON-RPC response.
+         * @summary Talk to the Hanzo assistant over A2A (Agent2Agent 1.0, JSON-RPC).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentA2a: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agent/a2a`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Speaks MCP over streamable HTTP and serves one tool, ask_user: a question and 2 to 8 options, shown as buttons in the run\'s thread, answered by the person the run is for. The call waits for the answer, up to 30 minutes, streaming as text/event-stream with a comment every 15 seconds, and returns it as the tool\'s result, or says none came.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. The ticket is minted for one run, opens this server and nothing else, names the run the question belongs to, and ends with the run. A request without a live ticket is 401, and any tool but ask_user is refused.
          * @summary The MCP server a coding run\'s harness asks its person through.
          * @param {*} [options] Override http request option.
@@ -1678,6 +1960,84 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          */
         postAgentAsk: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent/ask`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete. If any specialist fails, completed specialist work is preserved on the brief (`partial_failure`) so `POST /v1/agent/briefs/:id/rerun` re-executes only the failed specialist task.
+         * @summary Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete.
+         * @param {AgentSubmitBriefIn} agentSubmitBriefIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentBriefs: async (agentSubmitBriefIn: AgentSubmitBriefIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agentSubmitBriefIn' is not null or undefined
+            assertParamExists('postAgentBriefs', 'agentSubmitBriefIn', agentSubmitBriefIn)
+            const localVarPath = `/v1/agent/briefs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentSubmitBriefIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @summary RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @param {string} id ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentBriefsByIdRerun: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postAgentBriefsByIdRerun', 'id', id)
+            const localVarPath = `/v1/agent/briefs/{id}/rerun`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1883,7 +2243,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up has its own session and writes the same branch, so one piece of work is one branch and one pull request however many instructions it takes.  Pass `branch` to name the branch the run writes (`agent/<name>`), and `pull` as false to push it without opening a pull request.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {AgentCodingStartIn} agentCodingStartIn 
          * @param {*} [options] Override http request option.
@@ -1916,6 +2276,50 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(agentCodingStartIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gives your running coding run more time. A run is held to the time it was asked for (`timeoutSeconds`) and, when it is up, keeps its work on its branch and ends; this moves that time later while the run works, so a task expected to take five minutes that is nearly done is given two more rather than restarted. `seconds` is added to the time the run has left, as far as the longest a run may be given; the answer says when the run is up now, so asking for more than that reads what you got.  The run must be yours and still working: a run that is paused or already out of time is a conflict (start a new one with `after` set to its session), and one that is not running is not found. A run sent to a machine of your own keeps that machine\'s time and cannot be extended.
+         * @summary Gives your running coding run more time.
+         * @param {string} session Session is the run\&#39;s handle, from the path.
+         * @param {AgentCodingExtendIn} agentCodingExtendIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionExtend: async (session: string, agentCodingExtendIn: AgentCodingExtendIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'session' is not null or undefined
+            assertParamExists('postAgentCodingBySessionExtend', 'session', session)
+            // verify required parameter 'agentCodingExtendIn' is not null or undefined
+            assertParamExists('postAgentCodingBySessionExtend', 'agentCodingExtendIn', agentCodingExtendIn)
+            const localVarPath = `/v1/agent/coding/{session}/extend`
+                .replace(`{${"session"}}`, encodeURIComponent(String(session)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentCodingExtendIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1961,7 +2365,51 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.  A run pushes its branch and stops; the pull request is the step after, taken when the work is ready. A run that already has an open pull request, or a branch that has one on its host, answers with that one, so asking twice is safe. Title, body, base and draft are optional: the title and body come from the run\'s task, the base is the branch the run started from, and draft opens it as one a reviewer cannot merge yet. The run\'s branch must be on its host: a run that pushed nothing, or has not pushed yet, is 409. Who may is who may read the run, and the pull request is read back at GET /v1/agent/coding/{session}/changes.
+         * @summary Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.
+         * @param {string} session Session is the run\&#39;s handle, from the path.
+         * @param {AgentCodingPullIn} agentCodingPullIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionPull: async (session: string, agentCodingPullIn: AgentCodingPullIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'session' is not null or undefined
+            assertParamExists('postAgentCodingBySessionPull', 'session', session)
+            // verify required parameter 'agentCodingPullIn' is not null or undefined
+            assertParamExists('postAgentCodingBySessionPull', 'agentCodingPullIn', agentCodingPullIn)
+            const localVarPath = `/v1/agent/coding/{session}/pull`
+                .replace(`{${"session"}}`, encodeURIComponent(String(session)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentCodingPullIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Redirect your running or paused coding session. On an active dev turn the instruction is queued into the running turn in place; otherwise the current run keeps its work before starting a follow-up. Ownership comes from the authenticated credential, never the request body.
          * @summary Redirect your running or paused coding session.
          * @param {string} session Session identifies the running or paused coding session from the path.
          * @param {AgentCodingInstruction} agentCodingInstruction 
@@ -2043,6 +2491,130 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Approves or rejects a proposed role candidate. Approving a proposal creates the specialist agent under its reporting line once (and is idempotent on repeated approval); rejecting records the rejection without creating an agent.
+         * @summary Approves or rejects a proposed role candidate.
+         * @param {string} id ID is the proposal handle (&#x60;prop_...&#x60;) from the URL path.
+         * @param {AgentDecideProposalIn} agentDecideProposalIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentProposalsByIdDecide: async (id: string, agentDecideProposalIn: AgentDecideProposalIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postAgentProposalsByIdDecide', 'id', id)
+            // verify required parameter 'agentDecideProposalIn' is not null or undefined
+            assertParamExists('postAgentProposalsByIdDecide', 'agentDecideProposalIn', agentDecideProposalIn)
+            const localVarPath = `/v1/agent/proposals/{id}/decide`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentDecideProposalIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @summary Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @param {AgentReviewProposalsIn} agentReviewProposalsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentProposalsReview: async (agentReviewProposalsIn: AgentReviewProposalsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agentReviewProposalsIn' is not null or undefined
+            assertParamExists('postAgentProposalsReview', 'agentReviewProposalsIn', agentReviewProposalsIn)
+            const localVarPath = `/v1/agent/proposals/review`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentReviewProposalsIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions. Applying the same roster again (or resuming an interrupted launch) updates existing roles in place without duplicating agents or budgets.
+         * @summary Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions.
+         * @param {AgentApplyRosterIn} agentApplyRosterIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentRoster: async (agentApplyRosterIn: AgentApplyRosterIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agentApplyRosterIn' is not null or undefined
+            assertParamExists('postAgentRoster', 'agentApplyRosterIn', agentApplyRosterIn)
+            const localVarPath = `/v1/agent/roster`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentApplyRosterIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
          * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
          * @param {AgentRegisterReq} agentRegisterReq 
@@ -2076,6 +2648,50 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(agentRegisterReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on. The run waiting on it goes on with the answer. Only the person the question is for may answer, once: a question already answered or closed answers 409, and one this session did not ask answers 404.
+         * @summary Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on.
+         * @param {string} id ID is the session whose run asked, from the path.
+         * @param {AgentAnswerIn} agentAnswerIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentSessionsByIdAnswer: async (id: string, agentAnswerIn: AgentAnswerIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postAgentSessionsByIdAnswer', 'id', id)
+            // verify required parameter 'agentAnswerIn' is not null or undefined
+            assertParamExists('postAgentSessionsByIdAnswer', 'agentAnswerIn', agentAnswerIn)
+            const localVarPath = `/v1/agent/sessions/{id}/answer`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentAnswerIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2510,6 +3126,46 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Says one thing in the app\'s conversation and starts the turn that answers it. It answers at once with the conversation and the turn\'s run; the turn itself is read from the session (GET /v1/agent/sessions/{id}, and its ?root= stream): the person\'s words, what the agent is doing, the coding runs it starts, a question it asks, and its answer.  With no `session` it starts a conversation. With one it continues that conversation in the same session, under a new run, once its last turn has answered: 409 while a turn is still answering — what is said then is that turn\'s next input (POST /v1/agent/sessions/{id}/message). A conversation is its person\'s alone: anyone else\'s answers as absent, and a SuperAdmin acting in an org that is not their own holds none there (their sandbox and builds would be paid by that org).  Nothing is leased to answer: a turn that only talks uses no sandbox. Code is worked on by a coding run — `dev`, with its own tools — which leases the conversation\'s sandbox on the first build; a later one works on the conversation\'s repository and carries on its last run, in that run\'s sandbox and on its branch.
+         * @summary Says one thing in the app\'s conversation and starts the turn that answers it.
+         * @param {AgentTalkIn} agentTalkIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentTurns: async (agentTalkIn: AgentTalkIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agentTalkIn' is not null or undefined
+            assertParamExists('postAgentTurns', 'agentTalkIn', agentTalkIn)
+            const localVarPath = `/v1/agent/turns`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentTalkIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2602,7 +3258,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
+         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it. A retired built-in is left out.
          * @summary Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2623,6 +3279,31 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentActivity(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentActivity']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @summary Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentBriefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBriefList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentBriefs(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentBriefs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @summary Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @param {string} id ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentBriefsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBriefRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentBriefsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentBriefsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2848,6 +3529,32 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @summary Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @param {string} [venture] Venture filters proposals to a single venture slug when non-empty.
+         * @param {string} [status] Status filters proposals by state (pending, approved, rejected) when non-empty.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentProposals(venture?: string, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentProposalList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentProposals(venture, status, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentProposals']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @summary Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentRosterTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentRosterTemplatesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentRosterTemplates(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentRosterTemplates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
          * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
@@ -2868,28 +3575,30 @@ export const AgentApiFp = function(configuration?: Configuration) {
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
-         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
+         * @param {string} [channel] Channel filters to the sessions started in one collaborative channel — the query a space view runs to show what has been run in it.
          * @param {string} [kind] Kind filters to the sessions of one kind of run: \&quot;coding\&quot; lists coding runs, each carrying its repo, base, branch, environment and pull request.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {string} [after] After is the &#x60;next&#x60; of the previous page. Absent starts at the newest.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAgentSessions(root?: string, parent?: string, status?: string, project?: string, room?: string, kind?: string, limit?: number, after?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentSessionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessions(root, parent, status, project, room, kind, limit, after, options);
+        async getAgentSessions(root?: string, parent?: string, status?: string, project?: string, channel?: string, kind?: string, limit?: number, after?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentSessionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessions(root, parent, status, project, channel, kind, limit, after, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
-         * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-         * @param {string} id ID is the session to act on, from the path.
+         * Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor). The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
+         * @summary Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor).
+         * @param {string} id ID is the session to read, from the path.
+         * @param {string} [after] After pages forward through the session\&#39;s events starting strictly after this seq integer; omitted reads the tail of the log instead.
+         * @param {number} [limit] Limit bounds how many events recentEvents carries (1..1000; default 50 on a tail read, or 200 when paging forward with after).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAgentSessionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentSessionDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessionsById(id, options);
+        async getAgentSessionsById(id: string, after?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentSessionDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessionsById(id, after, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentSessionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2906,6 +3615,21 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessionsByIdControl(id, after, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentSessionsByIdControl']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped. It is how to see what a run did and why it ended — each model turn, tool call, status and log line, as the run wrote them. A run whose process went away is ended first, with its reason as the last event.
+         * @summary Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped.
+         * @param {string} id ID is the session to read, from the path.
+         * @param {number} [after] After is the seq of the last event already read; the page starts after it. Absent or zero starts at the first event.
+         * @param {number} [limit] Limit caps the page. Absent, zero or over 1000 reads as 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentSessionsByIdEvents(id: string, after?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentEventList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentSessionsByIdEvents(id, after, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentSessionsByIdEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2935,7 +3659,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn (with `id: <seq>`). Optional ?root=<session id> narrows the feed to a single subagent tree, and optional ?after=<seq> (or the `Last-Event-ID` request header) replays stored events with `seq > after` in order before streaming live updates without duplicates.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
          * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3040,6 +3764,18 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The A2A server its agent card at /.well-known/agent-card.json names. Each SendMessage is a task the default assistant answers with the tools your credential reaches: an agent run like POST /v1/agent/:ref/run, so your balance is authorized before any inference and the flat run fee is charged only when the run succeeds. A request waits for the answer unless configuration.returnImmediately is set; either way the task is kept, and GetTask, ListTasks and CancelTask read and stop your own tasks. A conversation continues by sending the next message with the task\'s contextId.  Methods: SendMessage, GetTask, ListTasks, CancelTask. Streaming and push notifications answer UnsupportedOperation (-32004) and PushNotificationNotSupported (-32003). The A2A-Version header, when sent, is 1.0. With no credential the answer is 401 with a WWW-Authenticate challenge naming the protected-resource metadata; every other outcome, refusals included, is a JSON-RPC response.
+         * @summary Talk to the Hanzo assistant over A2A (Agent2Agent 1.0, JSON-RPC).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentA2a(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentA2a(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentA2a']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Speaks MCP over streamable HTTP and serves one tool, ask_user: a question and 2 to 8 options, shown as buttons in the run\'s thread, answered by the person the run is for. The call waits for the answer, up to 30 minutes, streaming as text/event-stream with a comment every 15 seconds, and returns it as the tool\'s result, or says none came.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. The ticket is minted for one run, opens this server and nothing else, names the run the question belongs to, and ends with the run. A request without a live ticket is 401, and any tool but ask_user is refused.
          * @summary The MCP server a coding run\'s harness asks its person through.
          * @param {*} [options] Override http request option.
@@ -3049,6 +3785,32 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentAsk(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentAsk']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete. If any specialist fails, completed specialist work is preserved on the brief (`partial_failure`) so `POST /v1/agent/briefs/:id/rerun` re-executes only the failed specialist task.
+         * @summary Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete.
+         * @param {AgentSubmitBriefIn} agentSubmitBriefIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentBriefs(agentSubmitBriefIn: AgentSubmitBriefIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBriefRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentBriefs(agentSubmitBriefIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentBriefs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @summary RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @param {string} id ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentBriefsByIdRerun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentBriefRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentBriefsByIdRerun(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentBriefsByIdRerun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3114,7 +3876,7 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up has its own session and writes the same branch, so one piece of work is one branch and one pull request however many instructions it takes.  Pass `branch` to name the branch the run writes (`agent/<name>`), and `pull` as false to push it without opening a pull request.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {AgentCodingStartIn} agentCodingStartIn 
          * @param {*} [options] Override http request option.
@@ -3124,6 +3886,20 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentCoding(agentCodingStartIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentCoding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Gives your running coding run more time. A run is held to the time it was asked for (`timeoutSeconds`) and, when it is up, keeps its work on its branch and ends; this moves that time later while the run works, so a task expected to take five minutes that is nearly done is given two more rather than restarted. `seconds` is added to the time the run has left, as far as the longest a run may be given; the answer says when the run is up now, so asking for more than that reads what you got.  The run must be yours and still working: a run that is paused or already out of time is a conflict (start a new one with `after` set to its session), and one that is not running is not found. A run sent to a machine of your own keeps that machine\'s time and cannot be extended.
+         * @summary Gives your running coding run more time.
+         * @param {string} session Session is the run\&#39;s handle, from the path.
+         * @param {AgentCodingExtendIn} agentCodingExtendIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentCodingBySessionExtend(session: string, agentCodingExtendIn: AgentCodingExtendIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentCodingExtended>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentCodingBySessionExtend(session, agentCodingExtendIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentCodingBySessionExtend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3140,7 +3916,21 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.  A run pushes its branch and stops; the pull request is the step after, taken when the work is ready. A run that already has an open pull request, or a branch that has one on its host, answers with that one, so asking twice is safe. Title, body, base and draft are optional: the title and body come from the run\'s task, the base is the branch the run started from, and draft opens it as one a reviewer cannot merge yet. The run\'s branch must be on its host: a run that pushed nothing, or has not pushed yet, is 409. Who may is who may read the run, and the pull request is read back at GET /v1/agent/coding/{session}/changes.
+         * @summary Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.
+         * @param {string} session Session is the run\&#39;s handle, from the path.
+         * @param {AgentCodingPullIn} agentCodingPullIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentCodingBySessionPull(session: string, agentCodingPullIn: AgentCodingPullIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentCodingPulled>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentCodingBySessionPull(session, agentCodingPullIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentCodingBySessionPull']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Redirect your running or paused coding session. On an active dev turn the instruction is queued into the running turn in place; otherwise the current run keeps its work before starting a follow-up. Ownership comes from the authenticated credential, never the request body.
          * @summary Redirect your running or paused coding session.
          * @param {string} session Session identifies the running or paused coding session from the path.
          * @param {AgentCodingInstruction} agentCodingInstruction 
@@ -3167,6 +3957,46 @@ export const AgentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Approves or rejects a proposed role candidate. Approving a proposal creates the specialist agent under its reporting line once (and is idempotent on repeated approval); rejecting records the rejection without creating an agent.
+         * @summary Approves or rejects a proposed role candidate.
+         * @param {string} id ID is the proposal handle (&#x60;prop_...&#x60;) from the URL path.
+         * @param {AgentDecideProposalIn} agentDecideProposalIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentProposalsByIdDecide(id: string, agentDecideProposalIn: AgentDecideProposalIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentRoleProposal>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentProposalsByIdDecide(id, agentDecideProposalIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentProposalsByIdDecide']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @summary Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @param {AgentReviewProposalsIn} agentReviewProposalsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentProposalsReview(agentReviewProposalsIn: AgentReviewProposalsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentReviewProposalsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentProposalsReview(agentReviewProposalsIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentProposalsReview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions. Applying the same roster again (or resuming an interrupted launch) updates existing roles in place without duplicating agents or budgets.
+         * @summary Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions.
+         * @param {AgentApplyRosterIn} agentApplyRosterIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentRoster(agentApplyRosterIn: AgentApplyRosterIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentApplyRosterOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentRoster(agentApplyRosterIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentRoster']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
          * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
          * @param {AgentRegisterReq} agentRegisterReq 
@@ -3177,6 +4007,20 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentSessions(agentRegisterReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentSessions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on. The run waiting on it goes on with the answer. Only the person the question is for may answer, once: a question already answered or closed answers 409, and one this session did not ask answers 404.
+         * @summary Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on.
+         * @param {string} id ID is the session whose run asked, from the path.
+         * @param {AgentAnswerIn} agentAnswerIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentSessionsByIdAnswer(id: string, agentAnswerIn: AgentAnswerIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentAnswerView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentSessionsByIdAnswer(id, agentAnswerIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentSessionsByIdAnswer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3317,6 +4161,19 @@ export const AgentApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentTargetsByIdRunsByRunidReport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Says one thing in the app\'s conversation and starts the turn that answers it. It answers at once with the conversation and the turn\'s run; the turn itself is read from the session (GET /v1/agent/sessions/{id}, and its ?root= stream): the person\'s words, what the agent is doing, the coding runs it starts, a question it asks, and its answer.  With no `session` it starts a conversation. With one it continues that conversation in the same session, under a new run, once its last turn has answered: 409 while a turn is still answering — what is said then is that turn\'s next input (POST /v1/agent/sessions/{id}/message). A conversation is its person\'s alone: anyone else\'s answers as absent, and a SuperAdmin acting in an org that is not their own holds none there (their sandbox and builds would be paid by that org).  Nothing is leased to answer: a turn that only talks uses no sandbox. Code is worked on by a coding run — `dev`, with its own tools — which leases the conversation\'s sandbox on the first build; a later one works on the conversation\'s repository and carries on its last run, in that run\'s sandbox and on its branch.
+         * @summary Says one thing in the app\'s conversation and starts the turn that answers it.
+         * @param {AgentTalkIn} agentTalkIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentTurns(agentTalkIn: AgentTalkIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentTalkOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentTurns(agentTalkIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgentTurns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -3388,7 +4245,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.deleteAgentTargetsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
+         * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it. A retired built-in is left out.
          * @summary Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3404,6 +4261,25 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         getAgentActivity(options?: RawAxiosRequestConfig): AxiosPromise<AgentActivityFeed> {
             return localVarFp.getAgentActivity(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @summary Returns every durable research brief recorded in the caller\'s organization, newest first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentBriefs(options?: RawAxiosRequestConfig): AxiosPromise<AgentBriefList> {
+            return localVarFp.getAgentBriefs(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @summary Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+         * @param {AgentApiGetAgentBriefsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentBriefsById(requestParameters: AgentApiGetAgentBriefsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBriefRecord> {
+            return localVarFp.getAgentBriefsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the public index of every published build, most recently updated first, so a gallery can link straight to the story behind each product. PUBLIC, no tenancy: publishing is the author\'s act, and only published root sessions appear here.
@@ -3572,6 +4448,25 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @summary Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+         * @param {AgentApiGetAgentProposalsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentProposals(requestParameters: AgentApiGetAgentProposalsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AgentProposalList> {
+            return localVarFp.getAgentProposals(requestParameters.venture, requestParameters.status, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @summary Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentRosterTemplates(options?: RawAxiosRequestConfig): AxiosPromise<AgentRosterTemplatesOut> {
+            return localVarFp.getAgentRosterTemplates(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
          * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
          * @param {AgentApiGetAgentRunsRequest} requestParameters Request parameters.
@@ -3589,17 +4484,17 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         getAgentSessions(requestParameters: AgentApiGetAgentSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AgentSessionList> {
-            return localVarFp.getAgentSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.room, requestParameters.kind, requestParameters.limit, requestParameters.after, options).then((request) => request(axios, basePath));
+            return localVarFp.getAgentSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.channel, requestParameters.kind, requestParameters.limit, requestParameters.after, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
-         * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
+         * Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor). The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
+         * @summary Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor).
          * @param {AgentApiGetAgentSessionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAgentSessionsById(requestParameters: AgentApiGetAgentSessionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentSessionDetail> {
-            return localVarFp.getAgentSessionsById(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.getAgentSessionsById(requestParameters.id, requestParameters.after, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the steering commands (pause/resume/stop/message) recorded against the caller\'s own session that are newer than the cursor, oldest first, with the cursor to poll from next. It is how a locally started `hanzo code` session — which is not task-backed, so nothing forwards its commands to an execution engine — consumes what the dashboard posted. Read-only and bounded at 200 per poll, so a steady poll is cheap and an applied command is never redelivered.
@@ -3610,6 +4505,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         getAgentSessionsByIdControl(requestParameters: AgentApiGetAgentSessionsByIdControlRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentControlDrain> {
             return localVarFp.getAgentSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped. It is how to see what a run did and why it ended — each model turn, tool call, status and log line, as the run wrote them. A run whose process went away is ended first, with its reason as the last event.
+         * @summary Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped.
+         * @param {AgentApiGetAgentSessionsByIdEventsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentSessionsByIdEvents(requestParameters: AgentApiGetAgentSessionsByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentEventList> {
+            return localVarFp.getAgentSessionsByIdEvents(requestParameters.id, requestParameters.after, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.  It is a MODEL ESTIMATE read off the run\'s own transcript, not a measurement — `estimated` says so on every answer, and a run whose progress cannot be told reports phase \"unknown\" with no percentage rather than a zero it does not mean. A session that has already finished answers from its own status instead, and is marked not estimated.  The list and detail reads carry the same value; this address is the one that WAITS. Where the stored estimate has gone stale it is remade before answering, so a human deciding whether to step into a run gets a current reading rather than the last poll\'s — which costs one small completion, charged to the same wallet the session already names, at most once every thirty seconds per run.
@@ -3632,7 +4537,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAgentSessionsByIdTree(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn (with `id: <seq>`). Optional ?root=<session id> narrows the feed to a single subagent tree, and optional ?after=<seq> (or the `Last-Event-ID` request header) replays stored events with `seq > after` in order before streaming live updates without duplicates.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
          * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3710,6 +4615,15 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postAgent(requestParameters.agentCreateAgentIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * The A2A server its agent card at /.well-known/agent-card.json names. Each SendMessage is a task the default assistant answers with the tools your credential reaches: an agent run like POST /v1/agent/:ref/run, so your balance is authorized before any inference and the flat run fee is charged only when the run succeeds. A request waits for the answer unless configuration.returnImmediately is set; either way the task is kept, and GetTask, ListTasks and CancelTask read and stop your own tasks. A conversation continues by sending the next message with the task\'s contextId.  Methods: SendMessage, GetTask, ListTasks, CancelTask. Streaming and push notifications answer UnsupportedOperation (-32004) and PushNotificationNotSupported (-32003). The A2A-Version header, when sent, is 1.0. With no credential the answer is 401 with a WWW-Authenticate challenge naming the protected-resource metadata; every other outcome, refusals included, is a JSON-RPC response.
+         * @summary Talk to the Hanzo assistant over A2A (Agent2Agent 1.0, JSON-RPC).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentA2a(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentA2a(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Speaks MCP over streamable HTTP and serves one tool, ask_user: a question and 2 to 8 options, shown as buttons in the run\'s thread, answered by the person the run is for. The call waits for the answer, up to 30 minutes, streaming as text/event-stream with a comment every 15 seconds, and returns it as the tool\'s result, or says none came.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. The ticket is minted for one run, opens this server and nothing else, names the run the question belongs to, and ends with the run. A request without a live ticket is 401, and any tool but ask_user is refused.
          * @summary The MCP server a coding run\'s harness asks its person through.
          * @param {*} [options] Override http request option.
@@ -3717,6 +4631,26 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         postAgentAsk(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postAgentAsk(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete. If any specialist fails, completed specialist work is preserved on the brief (`partial_failure`) so `POST /v1/agent/briefs/:id/rerun` re-executes only the failed specialist task.
+         * @summary Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete.
+         * @param {AgentApiPostAgentBriefsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentBriefs(requestParameters: AgentApiPostAgentBriefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBriefRecord> {
+            return localVarFp.postAgentBriefs(requestParameters.agentSubmitBriefIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @summary RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+         * @param {AgentApiPostAgentBriefsByIdRerunRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentBriefsByIdRerun(requestParameters: AgentApiPostAgentBriefsByIdRerunRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentBriefRecord> {
+            return localVarFp.postAgentBriefsByIdRerun(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
@@ -3766,7 +4700,7 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postAgentChatSharesRead(options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up has its own session and writes the same branch, so one piece of work is one branch and one pull request however many instructions it takes.  Pass `branch` to name the branch the run writes (`agent/<name>`), and `pull` as false to push it without opening a pull request.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {AgentApiPostAgentCodingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3774,6 +4708,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         postAgentCoding(requestParameters: AgentApiPostAgentCodingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentCodingStarted> {
             return localVarFp.postAgentCoding(requestParameters.agentCodingStartIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gives your running coding run more time. A run is held to the time it was asked for (`timeoutSeconds`) and, when it is up, keeps its work on its branch and ends; this moves that time later while the run works, so a task expected to take five minutes that is nearly done is given two more rather than restarted. `seconds` is added to the time the run has left, as far as the longest a run may be given; the answer says when the run is up now, so asking for more than that reads what you got.  The run must be yours and still working: a run that is paused or already out of time is a conflict (start a new one with `after` set to its session), and one that is not running is not found. A run sent to a machine of your own keeps that machine\'s time and cannot be extended.
+         * @summary Gives your running coding run more time.
+         * @param {AgentApiPostAgentCodingBySessionExtendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionExtend(requestParameters: AgentApiPostAgentCodingBySessionExtendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentCodingExtended> {
+            return localVarFp.postAgentCodingBySessionExtend(requestParameters.session, requestParameters.agentCodingExtendIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Merges a coding run\'s pull request into the branch it proposes into, on the forge the run pushed to, and answers the pull request after.  The caller must be able to read the run: its person, or an admin of its org. What lands is the run\'s branch at the commit the forge holds when this asks — a push after that is refused, not merged unseen — and nothing is forced: a pull request that conflicts, was closed, or that a rule on its base keeps from merging is 409 with the forge\'s reason. One already merged answers as it is.
@@ -3786,7 +4730,17 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postAgentCodingBySessionMerge(requestParameters.session, options).then((request) => request(axios, basePath));
         },
         /**
-         * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+         * Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.  A run pushes its branch and stops; the pull request is the step after, taken when the work is ready. A run that already has an open pull request, or a branch that has one on its host, answers with that one, so asking twice is safe. Title, body, base and draft are optional: the title and body come from the run\'s task, the base is the branch the run started from, and draft opens it as one a reviewer cannot merge yet. The run\'s branch must be on its host: a run that pushed nothing, or has not pushed yet, is 409. Who may is who may read the run, and the pull request is read back at GET /v1/agent/coding/{session}/changes.
+         * @summary Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.
+         * @param {AgentApiPostAgentCodingBySessionPullRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentCodingBySessionPull(requestParameters: AgentApiPostAgentCodingBySessionPullRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentCodingPulled> {
+            return localVarFp.postAgentCodingBySessionPull(requestParameters.session, requestParameters.agentCodingPullIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Redirect your running or paused coding session. On an active dev turn the instruction is queued into the running turn in place; otherwise the current run keeps its work before starting a follow-up. Ownership comes from the authenticated credential, never the request body.
          * @summary Redirect your running or paused coding session.
          * @param {AgentApiPostAgentCodingBySessionSteerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3806,6 +4760,36 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postAgentMcpByServer(requestParameters.server, options).then((request) => request(axios, basePath));
         },
         /**
+         * Approves or rejects a proposed role candidate. Approving a proposal creates the specialist agent under its reporting line once (and is idempotent on repeated approval); rejecting records the rejection without creating an agent.
+         * @summary Approves or rejects a proposed role candidate.
+         * @param {AgentApiPostAgentProposalsByIdDecideRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentProposalsByIdDecide(requestParameters: AgentApiPostAgentProposalsByIdDecideRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentRoleProposal> {
+            return localVarFp.postAgentProposalsByIdDecide(requestParameters.id, requestParameters.agentDecideProposalIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @summary Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+         * @param {AgentApiPostAgentProposalsReviewRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentProposalsReview(requestParameters: AgentApiPostAgentProposalsReviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentReviewProposalsOut> {
+            return localVarFp.postAgentProposalsReview(requestParameters.agentReviewProposalsIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions. Applying the same roster again (or resuming an interrupted launch) updates existing roles in place without duplicating agents or budgets.
+         * @summary Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions.
+         * @param {AgentApiPostAgentRosterRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentRoster(requestParameters: AgentApiPostAgentRosterRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentApplyRosterOut> {
+            return localVarFp.postAgentRoster(requestParameters.agentApplyRosterIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
          * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
          * @param {AgentApiPostAgentSessionsRequest} requestParameters Request parameters.
@@ -3814,6 +4798,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         postAgentSessions(requestParameters: AgentApiPostAgentSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentSessionView> {
             return localVarFp.postAgentSessions(requestParameters.agentRegisterReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on. The run waiting on it goes on with the answer. Only the person the question is for may answer, once: a question already answered or closed answers 409, and one this session did not ask answers 404.
+         * @summary Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on.
+         * @param {AgentApiPostAgentSessionsByIdAnswerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentSessionsByIdAnswer(requestParameters: AgentApiPostAgentSessionsByIdAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentAnswerView> {
+            return localVarFp.postAgentSessionsByIdAnswer(requestParameters.id, requestParameters.agentAnswerIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets, raises, or removes a session\'s cap.    - a replacement must be strictly greater than what the session has consumed   - removal is one-way: a session whose cap was removed cannot take one again,     and a session created without one cannot be given one   - raising or removing the cap resumes work that paused at it
@@ -3914,6 +4908,16 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          */
         postAgentTargetsByIdRunsByRunidReport(requestParameters: AgentApiPostAgentTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentReportOut> {
             return localVarFp.postAgentTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.agentReportRunIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Says one thing in the app\'s conversation and starts the turn that answers it. It answers at once with the conversation and the turn\'s run; the turn itself is read from the session (GET /v1/agent/sessions/{id}, and its ?root= stream): the person\'s words, what the agent is doing, the coding runs it starts, a question it asks, and its answer.  With no `session` it starts a conversation. With one it continues that conversation in the same session, under a new run, once its last turn has answered: 409 while a turn is still answering — what is said then is that turn\'s next input (POST /v1/agent/sessions/{id}/message). A conversation is its person\'s alone: anyone else\'s answers as absent, and a SuperAdmin acting in an org that is not their own holds none there (their sandbox and builds would be paid by that org).  Nothing is leased to answer: a turn that only talks uses no sandbox. Code is worked on by a coding run — `dev`, with its own tools — which leases the conversation\'s sandbox on the first build; a later one works on the conversation\'s repository and carries on its last run, in that run\'s sandbox and on its branch.
+         * @summary Says one thing in the app\'s conversation and starts the turn that answers it.
+         * @param {AgentApiPostAgentTurnsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentTurns(requestParameters: AgentApiPostAgentTurnsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentTalkOut> {
+            return localVarFp.postAgentTurns(requestParameters.agentTalkIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4019,6 +5023,20 @@ export interface AgentApiDeleteAgentTargetsByIdRequest {
      * ID is the target to act on, from the path.
      * @type {string}
      * @memberof AgentApiDeleteAgentTargetsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getAgentBriefsById operation in AgentApi.
+ * @export
+ * @interface AgentApiGetAgentBriefsByIdRequest
+ */
+export interface AgentApiGetAgentBriefsByIdRequest {
+    /**
+     * ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+     * @type {string}
+     * @memberof AgentApiGetAgentBriefsById
      */
     readonly id: string
 }
@@ -4241,6 +5259,27 @@ export interface AgentApiGetAgentMetricsRequest {
 }
 
 /**
+ * Request parameters for getAgentProposals operation in AgentApi.
+ * @export
+ * @interface AgentApiGetAgentProposalsRequest
+ */
+export interface AgentApiGetAgentProposalsRequest {
+    /**
+     * Venture filters proposals to a single venture slug when non-empty.
+     * @type {string}
+     * @memberof AgentApiGetAgentProposals
+     */
+    readonly venture?: string
+
+    /**
+     * Status filters proposals by state (pending, approved, rejected) when non-empty.
+     * @type {string}
+     * @memberof AgentApiGetAgentProposals
+     */
+    readonly status?: string
+}
+
+/**
  * Request parameters for getAgentRuns operation in AgentApi.
  * @export
  * @interface AgentApiGetAgentRunsRequest
@@ -4296,11 +5335,11 @@ export interface AgentApiGetAgentSessionsRequest {
     readonly project?: string
 
     /**
-     * Room filters to the sessions started in one collaborative room — the query a space view runs to show what has been run in it.
+     * Channel filters to the sessions started in one collaborative channel — the query a space view runs to show what has been run in it.
      * @type {string}
      * @memberof AgentApiGetAgentSessions
      */
-    readonly room?: string
+    readonly channel?: string
 
     /**
      * Kind filters to the sessions of one kind of run: \&quot;coding\&quot; lists coding runs, each carrying its repo, base, branch, environment and pull request.
@@ -4331,11 +5370,25 @@ export interface AgentApiGetAgentSessionsRequest {
  */
 export interface AgentApiGetAgentSessionsByIdRequest {
     /**
-     * ID is the session to act on, from the path.
+     * ID is the session to read, from the path.
      * @type {string}
      * @memberof AgentApiGetAgentSessionsById
      */
     readonly id: string
+
+    /**
+     * After pages forward through the session\&#39;s events starting strictly after this seq integer; omitted reads the tail of the log instead.
+     * @type {string}
+     * @memberof AgentApiGetAgentSessionsById
+     */
+    readonly after?: string
+
+    /**
+     * Limit bounds how many events recentEvents carries (1..1000; default 50 on a tail read, or 200 when paging forward with after).
+     * @type {number}
+     * @memberof AgentApiGetAgentSessionsById
+     */
+    readonly limit?: number
 }
 
 /**
@@ -4357,6 +5410,34 @@ export interface AgentApiGetAgentSessionsByIdControlRequest {
      * @memberof AgentApiGetAgentSessionsByIdControl
      */
     readonly after?: number
+}
+
+/**
+ * Request parameters for getAgentSessionsByIdEvents operation in AgentApi.
+ * @export
+ * @interface AgentApiGetAgentSessionsByIdEventsRequest
+ */
+export interface AgentApiGetAgentSessionsByIdEventsRequest {
+    /**
+     * ID is the session to read, from the path.
+     * @type {string}
+     * @memberof AgentApiGetAgentSessionsByIdEvents
+     */
+    readonly id: string
+
+    /**
+     * After is the seq of the last event already read; the page starts after it. Absent or zero starts at the first event.
+     * @type {number}
+     * @memberof AgentApiGetAgentSessionsByIdEvents
+     */
+    readonly after?: number
+
+    /**
+     * Limit caps the page. Absent, zero or over 1000 reads as 200.
+     * @type {number}
+     * @memberof AgentApiGetAgentSessionsByIdEvents
+     */
+    readonly limit?: number
 }
 
 /**
@@ -4493,6 +5574,34 @@ export interface AgentApiPostAgentRequest {
 }
 
 /**
+ * Request parameters for postAgentBriefs operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentBriefsRequest
+ */
+export interface AgentApiPostAgentBriefsRequest {
+    /**
+     * 
+     * @type {AgentSubmitBriefIn}
+     * @memberof AgentApiPostAgentBriefs
+     */
+    readonly agentSubmitBriefIn: AgentSubmitBriefIn
+}
+
+/**
+ * Request parameters for postAgentBriefsByIdRerun operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentBriefsByIdRerunRequest
+ */
+export interface AgentApiPostAgentBriefsByIdRerunRequest {
+    /**
+     * ID is the brief handle (&#x60;brief_...&#x60;) from the path.
+     * @type {string}
+     * @memberof AgentApiPostAgentBriefsByIdRerun
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for postAgentByRefRun operation in AgentApi.
  * @export
  * @interface AgentApiPostAgentByRefRunRequest
@@ -4535,6 +5644,27 @@ export interface AgentApiPostAgentCodingRequest {
 }
 
 /**
+ * Request parameters for postAgentCodingBySessionExtend operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentCodingBySessionExtendRequest
+ */
+export interface AgentApiPostAgentCodingBySessionExtendRequest {
+    /**
+     * Session is the run\&#39;s handle, from the path.
+     * @type {string}
+     * @memberof AgentApiPostAgentCodingBySessionExtend
+     */
+    readonly session: string
+
+    /**
+     * 
+     * @type {AgentCodingExtendIn}
+     * @memberof AgentApiPostAgentCodingBySessionExtend
+     */
+    readonly agentCodingExtendIn: AgentCodingExtendIn
+}
+
+/**
  * Request parameters for postAgentCodingBySessionMerge operation in AgentApi.
  * @export
  * @interface AgentApiPostAgentCodingBySessionMergeRequest
@@ -4546,6 +5676,27 @@ export interface AgentApiPostAgentCodingBySessionMergeRequest {
      * @memberof AgentApiPostAgentCodingBySessionMerge
      */
     readonly session: string
+}
+
+/**
+ * Request parameters for postAgentCodingBySessionPull operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentCodingBySessionPullRequest
+ */
+export interface AgentApiPostAgentCodingBySessionPullRequest {
+    /**
+     * Session is the run\&#39;s handle, from the path.
+     * @type {string}
+     * @memberof AgentApiPostAgentCodingBySessionPull
+     */
+    readonly session: string
+
+    /**
+     * 
+     * @type {AgentCodingPullIn}
+     * @memberof AgentApiPostAgentCodingBySessionPull
+     */
+    readonly agentCodingPullIn: AgentCodingPullIn
 }
 
 /**
@@ -4584,6 +5735,55 @@ export interface AgentApiPostAgentMcpByServerRequest {
 }
 
 /**
+ * Request parameters for postAgentProposalsByIdDecide operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentProposalsByIdDecideRequest
+ */
+export interface AgentApiPostAgentProposalsByIdDecideRequest {
+    /**
+     * ID is the proposal handle (&#x60;prop_...&#x60;) from the URL path.
+     * @type {string}
+     * @memberof AgentApiPostAgentProposalsByIdDecide
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AgentDecideProposalIn}
+     * @memberof AgentApiPostAgentProposalsByIdDecide
+     */
+    readonly agentDecideProposalIn: AgentDecideProposalIn
+}
+
+/**
+ * Request parameters for postAgentProposalsReview operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentProposalsReviewRequest
+ */
+export interface AgentApiPostAgentProposalsReviewRequest {
+    /**
+     * 
+     * @type {AgentReviewProposalsIn}
+     * @memberof AgentApiPostAgentProposalsReview
+     */
+    readonly agentReviewProposalsIn: AgentReviewProposalsIn
+}
+
+/**
+ * Request parameters for postAgentRoster operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentRosterRequest
+ */
+export interface AgentApiPostAgentRosterRequest {
+    /**
+     * 
+     * @type {AgentApplyRosterIn}
+     * @memberof AgentApiPostAgentRoster
+     */
+    readonly agentApplyRosterIn: AgentApplyRosterIn
+}
+
+/**
  * Request parameters for postAgentSessions operation in AgentApi.
  * @export
  * @interface AgentApiPostAgentSessionsRequest
@@ -4595,6 +5795,27 @@ export interface AgentApiPostAgentSessionsRequest {
      * @memberof AgentApiPostAgentSessions
      */
     readonly agentRegisterReq: AgentRegisterReq
+}
+
+/**
+ * Request parameters for postAgentSessionsByIdAnswer operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentSessionsByIdAnswerRequest
+ */
+export interface AgentApiPostAgentSessionsByIdAnswerRequest {
+    /**
+     * ID is the session whose run asked, from the path.
+     * @type {string}
+     * @memberof AgentApiPostAgentSessionsByIdAnswer
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AgentAnswerIn}
+     * @memberof AgentApiPostAgentSessionsByIdAnswer
+     */
+    readonly agentAnswerIn: AgentAnswerIn
 }
 
 /**
@@ -4794,6 +6015,20 @@ export interface AgentApiPostAgentTargetsByIdRunsByRunidReportRequest {
 }
 
 /**
+ * Request parameters for postAgentTurns operation in AgentApi.
+ * @export
+ * @interface AgentApiPostAgentTurnsRequest
+ */
+export interface AgentApiPostAgentTurnsRequest {
+    /**
+     * 
+     * @type {AgentTalkIn}
+     * @memberof AgentApiPostAgentTurns
+     */
+    readonly agentTalkIn: AgentTalkIn
+}
+
+/**
  * AgentApi - object-oriented interface
  * @export
  * @class AgentApi
@@ -4873,7 +6108,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
+     * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it. A retired built-in is left out.
      * @summary Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4892,6 +6127,29 @@ export class AgentApi extends BaseAPI {
      */
     public getAgentActivity(options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).getAgentActivity(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every durable research brief recorded in the caller\'s organization, newest first.
+     * @summary Returns every durable research brief recorded in the caller\'s organization, newest first.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentBriefs(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentBriefs(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+     * @summary Returns one durable research brief and all of its specialist child tasks, citations, unsupported claims, open questions, and attribution records.
+     * @param {AgentApiGetAgentBriefsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentBriefsById(requestParameters: AgentApiGetAgentBriefsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentBriefsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5095,6 +6353,29 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
+     * Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+     * @summary Returns the organization\'s nightly role candidate proposals, optionally filtered by venture slug or decision status.
+     * @param {AgentApiGetAgentProposalsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentProposals(requestParameters: AgentApiGetAgentProposalsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentProposals(requestParameters.venture, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+     * @summary Returns the seven canonical studio functions and the shared, versioned role templates that ventures reuse.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentRosterTemplates(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentRosterTemplates(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed. A run is the person\'s who asked for it: another member\'s never appears, and a run no person asked for (a schedule) appears to a SuperAdmin alone.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
      * @summary Returns the caller\'s own agent runs across EVERY agent of the org, newest first — what ran, on which model, how long it took, and why it failed.
      * @param {AgentApiGetAgentRunsRequest} requestParameters Request parameters.
@@ -5115,19 +6396,19 @@ export class AgentApi extends BaseAPI {
      * @memberof AgentApi
      */
     public getAgentSessions(requestParameters: AgentApiGetAgentSessionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).getAgentSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.room, requestParameters.kind, requestParameters.limit, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
+        return AgentApiFp(this.configuration).getAgentSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.channel, requestParameters.kind, requestParameters.limit, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first. The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
-     * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
+     * Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor). The children are those the caller may see, by the rule the session itself is read by: a member\'s own, and every one for an admin of the org. In a held org, where self-serve signups land beside the platform\'s staff, a session is its person\'s alone.
+     * @summary Returns one session with its direct child sessions and a page of its events, oldest of those first (50 from the tail by default, up to `limit` up to 1000, or forward from `after` with a `next` cursor).
      * @param {AgentApiGetAgentSessionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentApi
      */
     public getAgentSessionsById(requestParameters: AgentApiGetAgentSessionsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).getAgentSessionsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentApiFp(this.configuration).getAgentSessionsById(requestParameters.id, requestParameters.after, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5140,6 +6421,18 @@ export class AgentApi extends BaseAPI {
      */
     public getAgentSessionsByIdControl(requestParameters: AgentApiGetAgentSessionsByIdControlRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).getAgentSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped. It is how to see what a run did and why it ended — each model turn, tool call, status and log line, as the run wrote them. A run whose process went away is ended first, with its reason as the last event.
+     * @summary Reads a session\'s log in order, a page at a time: everything after the seq a reader last saw, so a poll resumes exactly where it stopped.
+     * @param {AgentApiGetAgentSessionsByIdEventsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentSessionsByIdEvents(requestParameters: AgentApiGetAgentSessionsByIdEventsRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentSessionsByIdEvents(requestParameters.id, requestParameters.after, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5167,7 +6460,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+     * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn (with `id: <seq>`). Optional ?root=<session id> narrows the feed to a single subagent tree, and optional ?after=<seq> (or the `Last-Event-ID` request header) replays stored events with `seq > after` in order before streaming live updates without duplicates.  Requires a validated principal carrying an org: 401 without a principal, 403 without an org. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it. Within the org a subscriber receives what GET /v1/agent/sessions/{id} would show them: a member the frames of the sessions they opened, an org admin or a SuperAdmin the org\'s.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
      * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5261,6 +6554,17 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
+     * The A2A server its agent card at /.well-known/agent-card.json names. Each SendMessage is a task the default assistant answers with the tools your credential reaches: an agent run like POST /v1/agent/:ref/run, so your balance is authorized before any inference and the flat run fee is charged only when the run succeeds. A request waits for the answer unless configuration.returnImmediately is set; either way the task is kept, and GetTask, ListTasks and CancelTask read and stop your own tasks. A conversation continues by sending the next message with the task\'s contextId.  Methods: SendMessage, GetTask, ListTasks, CancelTask. Streaming and push notifications answer UnsupportedOperation (-32004) and PushNotificationNotSupported (-32003). The A2A-Version header, when sent, is 1.0. With no credential the answer is 401 with a WWW-Authenticate challenge naming the protected-resource metadata; every other outcome, refusals included, is a JSON-RPC response.
+     * @summary Talk to the Hanzo assistant over A2A (Agent2Agent 1.0, JSON-RPC).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentA2a(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentA2a(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Speaks MCP over streamable HTTP and serves one tool, ask_user: a question and 2 to 8 options, shown as buttons in the run\'s thread, answered by the person the run is for. The call waits for the answer, up to 30 minutes, streaming as text/event-stream with a comment every 15 seconds, and returns it as the tool\'s result, or says none came.  The caller is a coding run, not a tenant: the request carries the run\'s ticket in X-Hanzo-Run and no bearer. The ticket is minted for one run, opens this server and nothing else, names the run the question belongs to, and ends with the run. A request without a live ticket is 401, and any tool but ask_user is refused.
      * @summary The MCP server a coding run\'s harness asks its person through.
      * @param {*} [options] Override http request option.
@@ -5269,6 +6573,30 @@ export class AgentApi extends BaseAPI {
      */
     public postAgentAsk(options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).postAgentAsk(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete. If any specialist fails, completed specialist work is preserved on the brief (`partial_failure`) so `POST /v1/agent/briefs/:id/rerun` re-executes only the failed specialist task.
+     * @summary Assigns a research brief to a venture lead, dispatches durable child tasks to the designated specialist agents, attributes each specialist\'s cited findings and unsupported-claim flags, and runs the lead synthesis once all specialist tasks complete.
+     * @param {AgentApiPostAgentBriefsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentBriefs(requestParameters: AgentApiPostAgentBriefsRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentBriefs(requestParameters.agentSubmitBriefIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+     * @summary RerunBrief re-executes only the failed or pending specialist child tasks on a brief without re-running or duplicating specialists that already succeeded, then runs the lead synthesis once all specialist tasks are complete.
+     * @param {AgentApiPostAgentBriefsByIdRerunRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentBriefsByIdRerun(requestParameters: AgentApiPostAgentBriefsByIdRerunRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentBriefsByIdRerun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5329,7 +6657,7 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  Name no repo and the run works in an empty workspace of its own: nothing is cloned and nothing is pushed, and what it makes is kept in its sandbox and as its artifacts. Name a repository the caller can read and not push to — a public one — and it is cloned read-only, the same way.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agent/sessions/stream?root=<id>), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up has its own session and writes the same branch, so one piece of work is one branch and one pull request however many instructions it takes.  Pass `branch` to name the branch the run writes (`agent/<name>`), and `pull` as false to push it without opening a pull request.
      * @summary Start one autonomous coding run against a repo in the caller\'s org
      * @param {AgentApiPostAgentCodingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5338,6 +6666,18 @@ export class AgentApi extends BaseAPI {
      */
     public postAgentCoding(requestParameters: AgentApiPostAgentCodingRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).postAgentCoding(requestParameters.agentCodingStartIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gives your running coding run more time. A run is held to the time it was asked for (`timeoutSeconds`) and, when it is up, keeps its work on its branch and ends; this moves that time later while the run works, so a task expected to take five minutes that is nearly done is given two more rather than restarted. `seconds` is added to the time the run has left, as far as the longest a run may be given; the answer says when the run is up now, so asking for more than that reads what you got.  The run must be yours and still working: a run that is paused or already out of time is a conflict (start a new one with `after` set to its session), and one that is not running is not found. A run sent to a machine of your own keeps that machine\'s time and cannot be extended.
+     * @summary Gives your running coding run more time.
+     * @param {AgentApiPostAgentCodingBySessionExtendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentCodingBySessionExtend(requestParameters: AgentApiPostAgentCodingBySessionExtendRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentCodingBySessionExtend(requestParameters.session, requestParameters.agentCodingExtendIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5353,7 +6693,19 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
-     * Redirect your running or paused coding session. The current run keeps its work before starting a follow-up; its status events report the next session. Ownership comes from the authenticated credential, never the request body.
+     * Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.  A run pushes its branch and stops; the pull request is the step after, taken when the work is ready. A run that already has an open pull request, or a branch that has one on its host, answers with that one, so asking twice is safe. Title, body, base and draft are optional: the title and body come from the run\'s task, the base is the branch the run started from, and draft opens it as one a reviewer cannot merge yet. The run\'s branch must be on its host: a run that pushed nothing, or has not pushed yet, is 409. Who may is who may read the run, and the pull request is read back at GET /v1/agent/coding/{session}/changes.
+     * @summary Opens the pull request for the branch a coding run pushed, as the run\'s person and with no agent run, and answers its number and address.
+     * @param {AgentApiPostAgentCodingBySessionPullRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentCodingBySessionPull(requestParameters: AgentApiPostAgentCodingBySessionPullRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentCodingBySessionPull(requestParameters.session, requestParameters.agentCodingPullIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Redirect your running or paused coding session. On an active dev turn the instruction is queued into the running turn in place; otherwise the current run keeps its work before starting a follow-up. Ownership comes from the authenticated credential, never the request body.
      * @summary Redirect your running or paused coding session.
      * @param {AgentApiPostAgentCodingBySessionSteerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5377,6 +6729,42 @@ export class AgentApi extends BaseAPI {
     }
 
     /**
+     * Approves or rejects a proposed role candidate. Approving a proposal creates the specialist agent under its reporting line once (and is idempotent on repeated approval); rejecting records the rejection without creating an agent.
+     * @summary Approves or rejects a proposed role candidate.
+     * @param {AgentApiPostAgentProposalsByIdDecideRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentProposalsByIdDecide(requestParameters: AgentApiPostAgentProposalsByIdDecideRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentProposalsByIdDecide(requestParameters.id, requestParameters.agentDecideProposalIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+     * @summary Runs the scheduled review of repeated failures, missing expertise, and human review effort across the organization\'s runs, briefs, and observed coverage gaps, producing role candidate proposals with concrete examples, a micro-USD cost estimate, and a reporting line.
+     * @param {AgentApiPostAgentProposalsReviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentProposalsReview(requestParameters: AgentApiPostAgentProposalsReviewRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentProposalsReview(requestParameters.agentReviewProposalsIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions. Applying the same roster again (or resuming an interrupted launch) updates existing roles in place without duplicating agents or budgets.
+     * @summary Turns an approved organization chart into agent definitions in the caller\'s organization, resolving manager reporting lines (`parent` and `lineage`) and shared role templates with explicit versions.
+     * @param {AgentApiPostAgentRosterRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentRoster(requestParameters: AgentApiPostAgentRosterRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentRoster(requestParameters.agentApplyRosterIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
      * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
      * @param {AgentApiPostAgentSessionsRequest} requestParameters Request parameters.
@@ -5386,6 +6774,18 @@ export class AgentApi extends BaseAPI {
      */
     public postAgentSessions(requestParameters: AgentApiPostAgentSessionsRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).postAgentSessions(requestParameters.agentRegisterReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on. The run waiting on it goes on with the answer. Only the person the question is for may answer, once: a question already answered or closed answers 409, and one this session did not ask answers 404.
+     * @summary Answers a question a session\'s run asked its person — a coding run\'s harness, or a turn of the app\'s conversation asking whether a coding run may start — from the page the session is read on.
+     * @param {AgentApiPostAgentSessionsByIdAnswerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentSessionsByIdAnswer(requestParameters: AgentApiPostAgentSessionsByIdAnswerRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentSessionsByIdAnswer(requestParameters.id, requestParameters.agentAnswerIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5506,6 +6906,18 @@ export class AgentApi extends BaseAPI {
      */
     public postAgentTargetsByIdRunsByRunidReport(requestParameters: AgentApiPostAgentTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig) {
         return AgentApiFp(this.configuration).postAgentTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.agentReportRunIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Says one thing in the app\'s conversation and starts the turn that answers it. It answers at once with the conversation and the turn\'s run; the turn itself is read from the session (GET /v1/agent/sessions/{id}, and its ?root= stream): the person\'s words, what the agent is doing, the coding runs it starts, a question it asks, and its answer.  With no `session` it starts a conversation. With one it continues that conversation in the same session, under a new run, once its last turn has answered: 409 while a turn is still answering — what is said then is that turn\'s next input (POST /v1/agent/sessions/{id}/message). A conversation is its person\'s alone: anyone else\'s answers as absent, and a SuperAdmin acting in an org that is not their own holds none there (their sandbox and builds would be paid by that org).  Nothing is leased to answer: a turn that only talks uses no sandbox. Code is worked on by a coding run — `dev`, with its own tools — which leases the conversation\'s sandbox on the first build; a later one works on the conversation\'s repository and carries on its last run, in that run\'s sandbox and on its branch.
+     * @summary Says one thing in the app\'s conversation and starts the turn that answers it.
+     * @param {AgentApiPostAgentTurnsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public postAgentTurns(requestParameters: AgentApiPostAgentTurnsRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgentTurns(requestParameters.agentTalkIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

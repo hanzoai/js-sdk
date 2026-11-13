@@ -25,12 +25,52 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { SbomSbomHealth } from '../models';
+// @ts-ignore
+import type { SbomSbomView } from '../models';
 /**
  * SbomApi - axios parameter creator
  * @export
  */
 export const SbomApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Returns everything inside one container image, addressed by its digest or by its image ref.  Each component comes back with its name, version, type, package URL and license.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. It still requires an attested caller — global is not public — and answers 401 without one. Ingest is the closed half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. The pull reads OUR registries and nothing else, which is what makes one shared answer trustworthy for every tenant: an attached document is whoever controls that repository speaking, so a ref outside them answers 404 rather than a stranger\'s account of what is in their image. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
+         * @summary Returns everything inside one container image, addressed by its digest or by its image ref.
+         * @param {string} wildcard1 Ref is the image to resolve, either its content-addressed digest (&#x60;sha256:…&#x60;) or its full reference (&#x60;oci.hanzo.ai/hanzo/cloud:v1&#x60;). Both are matched, so either spelling of one image answers the same components. It is the greedy tail of the address, so slashes, a tag and a digest all travel in it whole, and a percent-encoded ref is decoded before it is looked up. Empty is a 400, never a scan of the store.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSbomByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getSbomByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/sbom/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected. Not JWT-gated, always 200 (a disconnected datastore is degraded-but-alive; the data endpoints report that as 503).
          * @summary Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected.
@@ -76,6 +116,19 @@ export const SbomApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SbomApiAxiosParamCreator(configuration)
     return {
         /**
+         * Returns everything inside one container image, addressed by its digest or by its image ref.  Each component comes back with its name, version, type, package URL and license.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. It still requires an attested caller — global is not public — and answers 401 without one. Ingest is the closed half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. The pull reads OUR registries and nothing else, which is what makes one shared answer trustworthy for every tenant: an attached document is whoever controls that repository speaking, so a ref outside them answers 404 rather than a stranger\'s account of what is in their image. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
+         * @summary Returns everything inside one container image, addressed by its digest or by its image ref.
+         * @param {string} wildcard1 Ref is the image to resolve, either its content-addressed digest (&#x60;sha256:…&#x60;) or its full reference (&#x60;oci.hanzo.ai/hanzo/cloud:v1&#x60;). Both are matched, so either spelling of one image answers the same components. It is the greedy tail of the address, so slashes, a tag and a digest all travel in it whole, and a percent-encoded ref is decoded before it is looked up. Empty is a 400, never a scan of the store.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSbomByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomSbomView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSbomByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SbomApi.getSbomByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected. Not JWT-gated, always 200 (a disconnected datastore is degraded-but-alive; the data endpoints report that as 503).
          * @summary Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected.
          * @param {*} [options] Override http request option.
@@ -98,6 +151,16 @@ export const SbomApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = SbomApiFp(configuration)
     return {
         /**
+         * Returns everything inside one container image, addressed by its digest or by its image ref.  Each component comes back with its name, version, type, package URL and license.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. It still requires an attested caller — global is not public — and answers 401 without one. Ingest is the closed half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. The pull reads OUR registries and nothing else, which is what makes one shared answer trustworthy for every tenant: an attached document is whoever controls that repository speaking, so a ref outside them answers 404 rather than a stranger\'s account of what is in their image. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
+         * @summary Returns everything inside one container image, addressed by its digest or by its image ref.
+         * @param {SbomApiGetSbomByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSbomByWildcard1(requestParameters: SbomApiGetSbomByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<SbomSbomView> {
+            return localVarFp.getSbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected. Not JWT-gated, always 200 (a disconnected datastore is degraded-but-alive; the data endpoints report that as 503).
          * @summary Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected.
          * @param {*} [options] Override http request option.
@@ -110,12 +173,38 @@ export const SbomApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
+ * Request parameters for getSbomByWildcard1 operation in SbomApi.
+ * @export
+ * @interface SbomApiGetSbomByWildcard1Request
+ */
+export interface SbomApiGetSbomByWildcard1Request {
+    /**
+     * Ref is the image to resolve, either its content-addressed digest (&#x60;sha256:…&#x60;) or its full reference (&#x60;oci.hanzo.ai/hanzo/cloud:v1&#x60;). Both are matched, so either spelling of one image answers the same components. It is the greedy tail of the address, so slashes, a tag and a digest all travel in it whole, and a percent-encoded ref is decoded before it is looked up. Empty is a 400, never a scan of the store.
+     * @type {string}
+     * @memberof SbomApiGetSbomByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * SbomApi - object-oriented interface
  * @export
  * @class SbomApi
  * @extends {BaseAPI}
  */
 export class SbomApi extends BaseAPI {
+    /**
+     * Returns everything inside one container image, addressed by its digest or by its image ref.  Each component comes back with its name, version, type, package URL and license.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. It still requires an attested caller — global is not public — and answers 401 without one. Ingest is the closed half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. The pull reads OUR registries and nothing else, which is what makes one shared answer trustworthy for every tenant: an attached document is whoever controls that repository speaking, so a ref outside them answers 404 rather than a stranger\'s account of what is in their image. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
+     * @summary Returns everything inside one container image, addressed by its digest or by its image ref.
+     * @param {SbomApiGetSbomByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SbomApi
+     */
+    public getSbomByWildcard1(requestParameters: SbomApiGetSbomByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return SbomApiFp(this.configuration).getSbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected. Not JWT-gated, always 200 (a disconnected datastore is degraded-but-alive; the data endpoints report that as 503).
      * @summary Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected.

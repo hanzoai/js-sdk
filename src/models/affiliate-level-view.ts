@@ -33,7 +33,7 @@ export interface AffiliateLevelView {
      */
     'level'?: number;
     /**
-     * RateBps is the commission paid at this level, in basis points OF Hanzo\'s margin (2000 = 20% of margin, never of the customer\'s bill). Level 1 is the affiliate\'s own negotiated rate; 2 and 3 are platform switches read live, so this is the schedule actually in force, not one compiled in.
+     * RateBps is the commission paid at this level, in basis points OF Hanzo\'s margin (1500 = 15% of margin, never of the customer\'s bill). Level 1 is the affiliate\'s own negotiated rate; 2 and 3 are platform switches read live, so this is the schedule actually in force, not one compiled in.
      * @type {number}
      * @memberof AffiliateLevelView
      */

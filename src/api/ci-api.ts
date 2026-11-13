@@ -24,8 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { CiExecutions } from '../models';
 // @ts-ignore
-import type { CiPipelines } from '../models';
-// @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
  * CiApi - axios parameter creator
@@ -33,40 +31,6 @@ import type { ProblemDetails } from '../models';
  */
 export const CiApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves. A service whose four values disagree names the step that broke.
-         * @summary Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCiFleet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/ci/fleet`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Lists recent builds: the repo, the branch, the commit and how each run ended, newest first. A run names a repo, a branch and an actor, so the list is never wider than the caller — a SuperAdmin sees the fleet, an org member sees only its own org.
          * @summary Lists recent builds: the repo, the branch, the commit and how each run ended, newest first.
@@ -112,18 +76,6 @@ export const CiApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CiApiAxiosParamCreator(configuration)
     return {
         /**
-         * Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves. A service whose four values disagree names the step that broke.
-         * @summary Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCiFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CiPipelines>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCiFleet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CiApi.getCiFleet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Lists recent builds: the repo, the branch, the commit and how each run ended, newest first. A run names a repo, a branch and an actor, so the list is never wider than the caller — a SuperAdmin sees the fleet, an org member sees only its own org.
          * @summary Lists recent builds: the repo, the branch, the commit and how each run ended, newest first.
          * @param {*} [options] Override http request option.
@@ -146,15 +98,6 @@ export const CiApiFactory = function (configuration?: Configuration, basePath?: 
     const localVarFp = CiApiFp(configuration)
     return {
         /**
-         * Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves. A service whose four values disagree names the step that broke.
-         * @summary Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCiFleet(options?: RawAxiosRequestConfig): AxiosPromise<CiPipelines> {
-            return localVarFp.getCiFleet(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Lists recent builds: the repo, the branch, the commit and how each run ended, newest first. A run names a repo, a branch and an actor, so the list is never wider than the caller — a SuperAdmin sees the fleet, an org member sees only its own org.
          * @summary Lists recent builds: the repo, the branch, the commit and how each run ended, newest first.
          * @param {*} [options] Override http request option.
@@ -173,17 +116,6 @@ export const CiApiFactory = function (configuration?: Configuration, basePath?: 
  * @extends {BaseAPI}
  */
 export class CiApi extends BaseAPI {
-    /**
-     * Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves. A service whose four values disagree names the step that broke.
-     * @summary Compares what was written with what is running, one row per service along a single causal line: head, the commit on the branch; built, the image that commit produced; declared, the tag pinned in the universe repository; running, what the cluster serves.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CiApi
-     */
-    public getCiFleet(options?: RawAxiosRequestConfig) {
-        return CiApiFp(this.configuration).getCiFleet(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Lists recent builds: the repo, the branch, the commit and how each run ended, newest first. A run names a repo, a branch and an actor, so the list is never wider than the caller — a SuperAdmin sees the fleet, an org member sees only its own org.
      * @summary Lists recent builds: the repo, the branch, the commit and how each run ended, newest first.

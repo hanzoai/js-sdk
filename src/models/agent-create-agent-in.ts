@@ -27,6 +27,18 @@ export interface AgentCreateAgentIn {
      */
     'avatar'?: string;
     /**
+     * AvatarLicence is the licence\'s short name, one line of up to 128 characters (\"Public domain\"). Like avatar_source, it is not stored without an avatar.
+     * @type {string}
+     * @memberof AgentCreateAgentIn
+     */
+    'avatar_licence'?: string;
+    /**
+     * AvatarSource is the https page the avatar image is described on, up to 2048 characters. It belongs to the image: without an avatar it is not stored.
+     * @type {string}
+     * @memberof AgentCreateAgentIn
+     */
+    'avatar_source'?: string;
+    /**
      * The budget, required. An agent is not creatable without one: a zero cap would mean no limit and no record of its spend, which is what a budget exists to remove. Integer micro-USD; the CLI converts dollars before sending.
      * @type {number}
      * @memberof AgentCreateAgentIn

@@ -46,6 +46,8 @@ import type { ProviderDeviceStartIn } from '../models';
 // @ts-ignore
 import type { ProviderDeviceStartOut } from '../models';
 // @ts-ignore
+import type { ProviderDisconnectIn } from '../models';
+// @ts-ignore
 import type { ProviderDisconnectOut } from '../models';
 // @ts-ignore
 import type { ProviderGithubBackfillIn } from '../models';
@@ -155,6 +157,10 @@ import type { ProviderTokenOut } from '../models';
 import type { ProviderUserCatalogOut } from '../models';
 // @ts-ignore
 import type { ProviderVerifyOut } from '../models';
+// @ts-ignore
+import type { ProviderWhatsappGroupIn } from '../models';
+// @ts-ignore
+import type { ProviderWhatsappGroupOut } from '../models';
 /**
  * ProviderApi - axios parameter creator
  * @export
@@ -460,7 +466,7 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.  A GitHub connect that returns from GitHub\'s authorization page, rather than its install page, answers a short page instead of a redirect when the person already controls installations no organization holds: they choose which one to connect, or go on to install the app on another account. Nothing is bound until they choose.
          * @summary OAuth return for any connector
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -1473,6 +1479,79 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Completes an X consent that arrived on the twitter spelling of the callback. The consent URL this process sends is /v1/provider/x/callback. The X app is also registered at this address, so a browser sent there still finishes the same flow. State is signed for provider x, and the answer is a redirect.
+         * @summary Completes an X consent that arrived on the twitter spelling of the callback.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderTwitterCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/provider/twitter/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads the invite link of a group this org\'s number owns.  Org admin, for the same reason creating one is: the link admits anyone who holds it.
+         * @summary Reads the invite link of a group this org\'s number owns.
+         * @param {string} [group] Group is the group id returned when the group was created.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderWhatsappGroups: async (group?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/provider/whatsapp/groups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Meta calls this once when the webhook is subscribed, carrying the verify token this deployment was configured with and a challenge to echo. The token is compared in constant time before the echo — answering the challenge without checking it would let anyone point their own app at this address and have it confirm the subscription.
          * @summary WhatsApp Cloud API subscription challenge
          * @param {*} [options] Override http request option.
@@ -1675,6 +1754,44 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * The form the chooser page posts: `state` (the token the page was given), and either `account` (one of the accounts it offered) or `install` (go on to the provider\'s install page). It binds the chosen account to the organization that started the connect and redirects back to the page that asked, as the callback does.  It is public and carries no principal. Its authority is the token alone: signed like the callback\'s state, carrying the offered accounts under its signature, and single-use, so a page answers once and only with an account it offered.
+         * @summary Answer the connect\'s account chooser
+         * @param {string} provider 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderByProviderChoose: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postProviderByProviderChoose', 'provider', provider)
+            const localVarPath = `/v1/provider/{provider}/choose`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
          * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
@@ -1719,15 +1836,18 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.  An `account` disconnects that one account and leaves the org\'s others; without it every account goes. A provider with an App installation (GitHub) also removes the installation at the provider for each account no other org still holds, so connecting that account again is a fresh install rather than GitHub\'s Configure page, which returns nothing the connect can bind.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connection) providers, which this surface never resolves.
+         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {ProviderDisconnectIn} providerDisconnectIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProviderByProviderDisconnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postProviderByProviderDisconnect: async (provider: string, providerDisconnectIn: ProviderDisconnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('postProviderByProviderDisconnect', 'provider', provider)
+            // verify required parameter 'providerDisconnectIn' is not null or undefined
+            assertParamExists('postProviderByProviderDisconnect', 'providerDisconnectIn', providerDisconnectIn)
             const localVarPath = `/v1/provider/{provider}/disconnect`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1747,9 +1867,12 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(providerDisconnectIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2193,7 +2316,7 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub.
+         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub. The page shows GitHub\'s account picker (githubPick), so a connect after a Disconnect can choose another account: GitHub otherwise skips the page for anyone who authorized the App before.
          * @summary Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person.
          * @param {ProviderGithubUserConnectIn} providerGithubUserConnectIn 
          * @param {*} [options] Override http request option.
@@ -2931,6 +3054,46 @@ export const ProviderApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Creates a group on the org\'s WhatsApp number and returns its invite link.  Org admin, because the group speaks as the org\'s number and the invite link admits anyone who holds it.
+         * @summary Creates a group on the org\'s WhatsApp number and returns its invite link.
+         * @param {ProviderWhatsappGroupIn} providerWhatsappGroupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderWhatsappGroups: async (providerWhatsappGroupIn: ProviderWhatsappGroupIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providerWhatsappGroupIn' is not null or undefined
+            assertParamExists('postProviderWhatsappGroups', 'providerWhatsappGroupIn', providerWhatsappGroupIn)
+            const localVarPath = `/v1/provider/whatsapp/groups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(providerWhatsappGroupIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * One delivery from Meta. Authenticity is the X-Hub-Signature-256 HMAC over the raw body, and it is the whole of it: a message accepted here creates the reply route that authorises this org to answer, so an unsigned delivery would let anyone hand an org a conversation to answer under its own number.  Meta batches (entry × changes × messages) and sends status callbacks — sent/delivered/read — through this same address with no message at all. Those are acknowledged and dropped rather than refused, because a non-2xx is retried with backoff and eventually disables the subscription: the only refusals here are an unconfigured endpoint and a bad signature, which are ours to fix and not Meta\'s to retry.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary WhatsApp Cloud API webhook
          * @param {*} [options] Override http request option.
@@ -3161,7 +3324,7 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.  A GitHub connect that returns from GitHub\'s authorization page, rather than its install page, answers a short page instead of a redirect when the person already controls installations no organization holds: they choose which one to connect, or go on to install the app on another account. Nothing is bound until they choose.
          * @summary OAuth return for any connector
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -3505,6 +3668,31 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Completes an X consent that arrived on the twitter spelling of the callback. The consent URL this process sends is /v1/provider/x/callback. The X app is also registered at this address, so a browser sent there still finishes the same flow. State is signed for provider x, and the answer is a redirect.
+         * @summary Completes an X consent that arrived on the twitter spelling of the callback.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProviderTwitterCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProviderTwitterCallback(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.getProviderTwitterCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads the invite link of a group this org\'s number owns.  Org admin, for the same reason creating one is: the link admits anyone who holds it.
+         * @summary Reads the invite link of a group this org\'s number owns.
+         * @param {string} [group] Group is the group id returned when the group was created.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProviderWhatsappGroups(group?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderWhatsappGroupOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProviderWhatsappGroups(group, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.getProviderWhatsappGroups']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Meta calls this once when the webhook is subscribed, carrying the verify token this deployment was configured with and a challenge to echo. The token is compared in constant time before the echo — answering the challenge without checking it would let anyone point their own app at this address and have it confirm the subscription.
          * @summary WhatsApp Cloud API subscription challenge
          * @param {*} [options] Override http request option.
@@ -3572,6 +3760,19 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The form the chooser page posts: `state` (the token the page was given), and either `account` (one of the accounts it offered) or `install` (go on to the provider\'s install page). It binds the chosen account to the organization that started the connect and redirects back to the page that asked, as the callback does.  It is public and carries no principal. Its authority is the token alone: signed like the callback\'s state, carrying the offered accounts under its signature, and single-use, so a page answers once and only with an account it offered.
+         * @summary Answer the connect\'s account chooser
+         * @param {string} provider 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postProviderByProviderChoose(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderByProviderChoose(provider, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderByProviderChoose']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
          * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
@@ -3586,14 +3787,15 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.  An `account` disconnects that one account and leaves the org\'s others; without it every account goes. A provider with an App installation (GitHub) also removes the installation at the provider for each account no other org still holds, so connecting that account again is a fresh install rather than GitHub\'s Configure page, which returns nothing the connect can bind.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connection) providers, which this surface never resolves.
+         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {ProviderDisconnectIn} providerDisconnectIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProviderByProviderDisconnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderDisconnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderByProviderDisconnect(provider, options);
+        async postProviderByProviderDisconnect(provider: string, providerDisconnectIn: ProviderDisconnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderDisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderByProviderDisconnect(provider, providerDisconnectIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderByProviderDisconnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3743,7 +3945,7 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub.
+         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub. The page shows GitHub\'s account picker (githubPick), so a connect after a Disconnect can choose another account: GitHub otherwise skips the page for anyone who authorized the App before.
          * @summary Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person.
          * @param {ProviderGithubUserConnectIn} providerGithubUserConnectIn 
          * @param {*} [options] Override http request option.
@@ -3993,6 +4195,19 @@ export const ProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates a group on the org\'s WhatsApp number and returns its invite link.  Org admin, because the group speaks as the org\'s number and the invite link admits anyone who holds it.
+         * @summary Creates a group on the org\'s WhatsApp number and returns its invite link.
+         * @param {ProviderWhatsappGroupIn} providerWhatsappGroupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postProviderWhatsappGroups(providerWhatsappGroupIn: ProviderWhatsappGroupIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderWhatsappGroupOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProviderWhatsappGroups(providerWhatsappGroupIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProviderApi.postProviderWhatsappGroups']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * One delivery from Meta. Authenticity is the X-Hub-Signature-256 HMAC over the raw body, and it is the whole of it: a message accepted here creates the reply route that authorises this org to answer, so an unsigned delivery would let anyone hand an org a conversation to answer under its own number.  Meta batches (entry × changes × messages) and sends status callbacks — sent/delivered/read — through this same address with no message at all. Those are acknowledged and dropped rather than refused, because a non-2xx is retried with backoff and eventually disables the subscription: the only refusals here are an unconfigured endpoint and a bad signature, which are ours to fix and not Meta\'s to retry.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary WhatsApp Cloud API webhook
          * @param {*} [options] Override http request option.
@@ -4119,7 +4334,7 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getProviderByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.  A GitHub connect that returns from GitHub\'s authorization page, rather than its install page, answers a short page instead of a redirect when the person already controls installations no organization holds: they choose which one to connect, or go on to install the app on another account. Nothing is bound until they choose.
          * @summary OAuth return for any connector
          * @param {ProviderApiGetProviderByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4369,6 +4584,25 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getProviderTelegramLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
+         * Completes an X consent that arrived on the twitter spelling of the callback. The consent URL this process sends is /v1/provider/x/callback. The X app is also registered at this address, so a browser sent there still finishes the same flow. State is signed for provider x, and the answer is a redirect.
+         * @summary Completes an X consent that arrived on the twitter spelling of the callback.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderTwitterCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getProviderTwitterCallback(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads the invite link of a group this org\'s number owns.  Org admin, for the same reason creating one is: the link admits anyone who holds it.
+         * @summary Reads the invite link of a group this org\'s number owns.
+         * @param {ProviderApiGetProviderWhatsappGroupsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProviderWhatsappGroups(requestParameters: ProviderApiGetProviderWhatsappGroupsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProviderWhatsappGroupOut> {
+            return localVarFp.getProviderWhatsappGroups(requestParameters.group, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Meta calls this once when the webhook is subscribed, carrying the verify token this deployment was configured with and a challenge to echo. The token is compared in constant time before the echo — answering the challenge without checking it would let anyone point their own app at this address and have it confirm the subscription.
          * @summary WhatsApp Cloud API subscription challenge
          * @param {*} [options] Override http request option.
@@ -4418,6 +4652,16 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postConnectionByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
+         * The form the chooser page posts: `state` (the token the page was given), and either `account` (one of the accounts it offered) or `install` (go on to the provider\'s install page). It binds the chosen account to the organization that started the connect and redirects back to the page that asked, as the callback does.  It is public and carries no principal. Its authority is the token alone: signed like the callback\'s state, carrying the offered accounts under its signature, and single-use, so a page answers once and only with an account it offered.
+         * @summary Answer the connect\'s account chooser
+         * @param {ProviderApiPostProviderByProviderChooseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderByProviderChoose(requestParameters: ProviderApiPostProviderByProviderChooseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postProviderByProviderChoose(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
          * @param {ProviderApiPostProviderByProviderConnectRequest} requestParameters Request parameters.
@@ -4428,14 +4672,14 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postProviderByProviderConnect(requestParameters.provider, requestParameters.providerConnectIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.  An `account` disconnects that one account and leaves the org\'s others; without it every account goes. A provider with an App installation (GitHub) also removes the installation at the provider for each account no other org still holds, so connecting that account again is a fresh install rather than GitHub\'s Configure page, which returns nothing the connect can bind.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
          * @param {ProviderApiPostProviderByProviderDisconnectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postProviderByProviderDisconnect(requestParameters: ProviderApiPostProviderByProviderDisconnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderDisconnectOut> {
-            return localVarFp.postProviderByProviderDisconnect(requestParameters.provider, options).then((request) => request(axios, basePath));
+            return localVarFp.postProviderByProviderDisconnect(requestParameters.provider, requestParameters.providerDisconnectIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one action of a connector as the caller\'s org, with the credential the org connected, and answers what the action returned. The credential is read from the org\'s KMS namespace here and never leaves this service. An action that ran and failed is ok:false with the reason; an unknown connector is 404, an action that does not run on this deployment 422, and a connector the org has not connected 424.
@@ -4547,7 +4791,7 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postProviderGithubUserComplete(requestParameters.providerGithubUserCompleteIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub.
+         * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub. The page shows GitHub\'s account picker (githubPick), so a connect after a Disconnect can choose another account: GitHub otherwise skips the page for anyone who authorized the App before.
          * @summary Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person.
          * @param {ProviderApiPostProviderGithubUserConnectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4735,6 +4979,16 @@ export const ProviderApiFactory = function (configuration?: Configuration, baseP
          */
         postProviderTelegramWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postProviderTelegramWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a group on the org\'s WhatsApp number and returns its invite link.  Org admin, because the group speaks as the org\'s number and the invite link admits anyone who holds it.
+         * @summary Creates a group on the org\'s WhatsApp number and returns its invite link.
+         * @param {ProviderApiPostProviderWhatsappGroupsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postProviderWhatsappGroups(requestParameters: ProviderApiPostProviderWhatsappGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderWhatsappGroupOut> {
+            return localVarFp.postProviderWhatsappGroups(requestParameters.providerWhatsappGroupIn, options).then((request) => request(axios, basePath));
         },
         /**
          * One delivery from Meta. Authenticity is the X-Hub-Signature-256 HMAC over the raw body, and it is the whole of it: a message accepted here creates the reply route that authorises this org to answer, so an unsigned delivery would let anyone hand an org a conversation to answer under its own number.  Meta batches (entry × changes × messages) and sends status callbacks — sent/delivered/read — through this same address with no message at all. Those are acknowledged and dropped rather than refused, because a non-2xx is retried with backoff and eventually disables the subscription: the only refusals here are an unconfigured endpoint and a bad signature, which are ours to fix and not Meta\'s to retry.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -5035,6 +5289,20 @@ export interface ProviderApiGetProviderSlackMessagesRequest {
 }
 
 /**
+ * Request parameters for getProviderWhatsappGroups operation in ProviderApi.
+ * @export
+ * @interface ProviderApiGetProviderWhatsappGroupsRequest
+ */
+export interface ProviderApiGetProviderWhatsappGroupsRequest {
+    /**
+     * Group is the group id returned when the group was created.
+     * @type {string}
+     * @memberof ProviderApiGetProviderWhatsappGroups
+     */
+    readonly group?: string
+}
+
+/**
  * Request parameters for postConnectionByIdRefresh operation in ProviderApi.
  * @export
  * @interface ProviderApiPostConnectionByIdRefreshRequest
@@ -5112,6 +5380,20 @@ export interface ProviderApiPostConnectionByProviderDeviceByFlowPollRequest {
 }
 
 /**
+ * Request parameters for postProviderByProviderChoose operation in ProviderApi.
+ * @export
+ * @interface ProviderApiPostProviderByProviderChooseRequest
+ */
+export interface ProviderApiPostProviderByProviderChooseRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProviderApiPostProviderByProviderChoose
+     */
+    readonly provider: string
+}
+
+/**
  * Request parameters for postProviderByProviderConnect operation in ProviderApi.
  * @export
  * @interface ProviderApiPostProviderByProviderConnectRequest
@@ -5139,11 +5421,18 @@ export interface ProviderApiPostProviderByProviderConnectRequest {
  */
 export interface ProviderApiPostProviderByProviderDisconnectRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connection) providers, which this surface never resolves.
+     * Provider is the connector\&#39;s registry id, from the :provider path segment.
      * @type {string}
      * @memberof ProviderApiPostProviderByProviderDisconnect
      */
     readonly provider: string
+
+    /**
+     * 
+     * @type {ProviderDisconnectIn}
+     * @memberof ProviderApiPostProviderByProviderDisconnect
+     */
+    readonly providerDisconnectIn: ProviderDisconnectIn
 }
 
 /**
@@ -5441,6 +5730,20 @@ export interface ProviderApiPostProviderSlackSearchRequest {
 }
 
 /**
+ * Request parameters for postProviderWhatsappGroups operation in ProviderApi.
+ * @export
+ * @interface ProviderApiPostProviderWhatsappGroupsRequest
+ */
+export interface ProviderApiPostProviderWhatsappGroupsRequest {
+    /**
+     * 
+     * @type {ProviderWhatsappGroupIn}
+     * @memberof ProviderApiPostProviderWhatsappGroups
+     */
+    readonly providerWhatsappGroupIn: ProviderWhatsappGroupIn
+}
+
+/**
  * Request parameters for putProviderGithubReposByRepoPages operation in ProviderApi.
  * @export
  * @interface ProviderApiPutProviderGithubReposByRepoPagesRequest
@@ -5576,7 +5879,7 @@ export class ProviderApi extends BaseAPI {
     }
 
     /**
-     * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+     * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.  A GitHub connect that returns from GitHub\'s authorization page, rather than its install page, answers a short page instead of a redirect when the person already controls installations no organization holds: they choose which one to connect, or go on to install the app on another account. Nothing is bound until they choose.
      * @summary OAuth return for any connector
      * @param {ProviderApiGetProviderByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5880,6 +6183,29 @@ export class ProviderApi extends BaseAPI {
     }
 
     /**
+     * Completes an X consent that arrived on the twitter spelling of the callback. The consent URL this process sends is /v1/provider/x/callback. The X app is also registered at this address, so a browser sent there still finishes the same flow. State is signed for provider x, and the answer is a redirect.
+     * @summary Completes an X consent that arrived on the twitter spelling of the callback.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public getProviderTwitterCallback(options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).getProviderTwitterCallback(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads the invite link of a group this org\'s number owns.  Org admin, for the same reason creating one is: the link admits anyone who holds it.
+     * @summary Reads the invite link of a group this org\'s number owns.
+     * @param {ProviderApiGetProviderWhatsappGroupsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public getProviderWhatsappGroups(requestParameters: ProviderApiGetProviderWhatsappGroupsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).getProviderWhatsappGroups(requestParameters.group, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Meta calls this once when the webhook is subscribed, carrying the verify token this deployment was configured with and a challenge to echo. The token is compared in constant time before the echo — answering the challenge without checking it would let anyone point their own app at this address and have it confirm the subscription.
      * @summary WhatsApp Cloud API subscription challenge
      * @param {*} [options] Override http request option.
@@ -5939,6 +6265,18 @@ export class ProviderApi extends BaseAPI {
     }
 
     /**
+     * The form the chooser page posts: `state` (the token the page was given), and either `account` (one of the accounts it offered) or `install` (go on to the provider\'s install page). It binds the chosen account to the organization that started the connect and redirects back to the page that asked, as the callback does.  It is public and carries no principal. Its authority is the token alone: signed like the callback\'s state, carrying the offered accounts under its signature, and single-use, so a page answers once and only with an account it offered.
+     * @summary Answer the connect\'s account chooser
+     * @param {ProviderApiPostProviderByProviderChooseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public postProviderByProviderChoose(requestParameters: ProviderApiPostProviderByProviderChooseRequest, options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).postProviderByProviderChoose(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
      * @summary Acquires the org\'s credential for one provider.
      * @param {ProviderApiPostProviderByProviderConnectRequest} requestParameters Request parameters.
@@ -5951,7 +6289,7 @@ export class ProviderApi extends BaseAPI {
     }
 
     /**
-     * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+     * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.  An `account` disconnects that one account and leaves the org\'s others; without it every account goes. A provider with an App installation (GitHub) also removes the installation at the provider for each account no other org still holds, so connecting that account again is a fresh install rather than GitHub\'s Configure page, which returns nothing the connect can bind.
      * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
      * @param {ProviderApiPostProviderByProviderDisconnectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5959,7 +6297,7 @@ export class ProviderApi extends BaseAPI {
      * @memberof ProviderApi
      */
     public postProviderByProviderDisconnect(requestParameters: ProviderApiPostProviderByProviderDisconnectRequest, options?: RawAxiosRequestConfig) {
-        return ProviderApiFp(this.configuration).postProviderByProviderDisconnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+        return ProviderApiFp(this.configuration).postProviderByProviderDisconnect(requestParameters.provider, requestParameters.providerDisconnectIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6094,7 +6432,7 @@ export class ProviderApi extends BaseAPI {
     }
 
     /**
-     * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub.
+     * Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person. Every member may connect their own; it grants nothing the person does not already hold on GitHub. The page shows GitHub\'s account picker (githubPick), so a connect after a Disconnect can choose another account: GitHub otherwise skips the page for anyone who authorized the App before.
      * @summary Begins connecting the caller\'s own GitHub account: it answers the App\'s authorization page, carrying a state signed for this org and this person.
      * @param {ProviderApiPostProviderGithubUserConnectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6321,6 +6659,18 @@ export class ProviderApi extends BaseAPI {
      */
     public postProviderTelegramWebhook(options?: RawAxiosRequestConfig) {
         return ProviderApiFp(this.configuration).postProviderTelegramWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a group on the org\'s WhatsApp number and returns its invite link.  Org admin, because the group speaks as the org\'s number and the invite link admits anyone who holds it.
+     * @summary Creates a group on the org\'s WhatsApp number and returns its invite link.
+     * @param {ProviderApiPostProviderWhatsappGroupsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProviderApi
+     */
+    public postProviderWhatsappGroups(requestParameters: ProviderApiPostProviderWhatsappGroupsRequest, options?: RawAxiosRequestConfig) {
+        return ProviderApiFp(this.configuration).postProviderWhatsappGroups(requestParameters.providerWhatsappGroupIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

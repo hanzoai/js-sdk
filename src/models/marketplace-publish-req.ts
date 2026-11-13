@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MarketplaceExpertIn } from './marketplace-expert-in';
 
 /**
  * 
@@ -45,7 +48,13 @@ export interface MarketplacePublishReq {
      */
     'docs'?: string;
     /**
-     * Kind is what is sold: agent, persona, app, skill, mcp or tool (the default). A tool is a platform tool, sold per call by the platform alone.
+     * Expert is the person behind a listing of kind expert — their hourly rate, areas, languages, time zone and weekly hours. Required for kind expert and refused for any other. The price is then the fixed engagement price; an expert sets a rate, a price or both.
+     * @type {MarketplaceExpertIn}
+     * @memberof MarketplacePublishReq
+     */
+    'expert'?: MarketplaceExpertIn;
+    /**
+     * Kind is what is sold: agent, persona, app, skill, mcp, tool (the default) or expert. A tool is a platform tool, sold per call by the platform alone; an expert is the caller, a person making their time available.
      * @type {string}
      * @memberof MarketplacePublishReq
      */
@@ -75,7 +84,7 @@ export interface MarketplacePublishReq {
      */
     'title'?: string;
     /**
-     * Tool names the thing sold, in the seller\'s own org: an agent\'s name or id, an app\'s project slug or id, a skill\'s name or id, an MCP server\'s name or id registered by hand, or a platform tool\'s registry name. It must be the seller\'s — there are no phantom listings.
+     * Tool names the thing sold, in the seller\'s own org: an agent\'s name or id, an app\'s project slug or id, a skill\'s name or id, an MCP server\'s name or id registered by hand, or a platform tool\'s registry name. It must be the seller\'s — there are no phantom listings. An expert\'s is the caller\'s own IAM identity, and is left out.
      * @type {string}
      * @memberof MarketplacePublishReq
      */

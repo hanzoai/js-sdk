@@ -30,6 +30,10 @@ import type { KmsKmsLogin } from '../models';
 // @ts-ignore
 import type { KmsKmsPut } from '../models';
 // @ts-ignore
+import type { KmsKmsRemoved } from '../models';
+// @ts-ignore
+import type { KmsKmsSecret } from '../models';
+// @ts-ignore
 import type { KmsKmsSecrets } from '../models';
 // @ts-ignore
 import type { KmsKmsStored } from '../models';
@@ -43,6 +47,49 @@ import type { ProblemDetails } from '../models';
  */
 export const KmsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Removes one secret from your org.  Forgets one secret belonging to the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. The org comes from the validated claim, never from the request.  A delete is a WRITE to the grant rule, like the put: destroying a secret is as consequential as replacing it, and a credential distributed to READ one must not be able to remove it. It opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf is removed by the app that holds it, and never here for membership or org admin, whatever the grant declaration says about enforcement: deleting a wallet\'s signing key or an MCP server\'s credential destroys what the app acts with.
+         * @summary Removes one secret from your org.
+         * @param {string} wildcard1 Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+         * @param {string} [env] Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKmsSecretsByWildcard1: async (wildcard1: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('deleteKmsSecretsByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/kms/secrets/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (env !== undefined) {
+                localVarQueryParameter['env'] = env;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns the runtime configuration for the KMS console.  What the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
          * @summary Returns the runtime configuration for the KMS console.
@@ -166,6 +213,49 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Reads one secret\'s value from your org.  Opens one sealed secret belonging to the caller\'s own org and returns its value, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the address, so another tenant\'s secret is not merely refused, it is unnameable. Within that org the value opens only for SuperAdmin holding an access token, audited, or for a holder a declared READ grant covers at this exact path, key and environment; membership and org admin alone open nothing. Admission is fail-closed and in order — a validated member, an org that is a DNS-1123 label, a store holding a master key, a well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched, so a refused caller learns nothing about whether the secret exists.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a repository\'s environment secret, a connected account\'s token — is read by the app that sealed it, and never opens here for membership or org admin, whatever the grant declaration says about enforcement. A deployed app\'s or a validator\'s own folder also opens for the org\'s KMS-sync identity, which projects it into the org\'s namespace.
+         * @summary Reads one secret\'s value from your org.
+         * @param {string} wildcard1 Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+         * @param {string} [env] Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKmsSecretsByWildcard1: async (wildcard1: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getKmsSecretsByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/kms/secrets/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (env !== undefined) {
+                localVarQueryParameter['env'] = env;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsKmsLogin} kmsKmsLogin 
@@ -206,7 +296,7 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. A `path` that starts with `/orgs/` is refused with a 400 that names where it would have landed: the root is already `/orgs/<org>`, so `/orgs/hanzo` written in org admin is stored at `/orgs/admin/orgs/hanzo`, which no reader of org hanzo looks in. The org is chosen with the credential (the CLI\'s `--as`).  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
          * @param {KmsKmsPut} kmsKmsPut 
          * @param {*} [options] Override http request option.
@@ -256,6 +346,20 @@ export const KmsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = KmsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Removes one secret from your org.  Forgets one secret belonging to the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. The org comes from the validated claim, never from the request.  A delete is a WRITE to the grant rule, like the put: destroying a secret is as consequential as replacing it, and a credential distributed to READ one must not be able to remove it. It opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf is removed by the app that holds it, and never here for membership or org admin, whatever the grant declaration says about enforcement: deleting a wallet\'s signing key or an MCP server\'s credential destroys what the app acts with.
+         * @summary Removes one secret from your org.
+         * @param {string} wildcard1 Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+         * @param {string} [env] Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteKmsSecretsByWildcard1(wildcard1: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsRemoved>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKmsSecretsByWildcard1(wildcard1, env, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KmsApi.deleteKmsSecretsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the runtime configuration for the KMS console.  What the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
          * @summary Returns the runtime configuration for the KMS console.
          * @param {*} [options] Override http request option.
@@ -296,6 +400,20 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads one secret\'s value from your org.  Opens one sealed secret belonging to the caller\'s own org and returns its value, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the address, so another tenant\'s secret is not merely refused, it is unnameable. Within that org the value opens only for SuperAdmin holding an access token, audited, or for a holder a declared READ grant covers at this exact path, key and environment; membership and org admin alone open nothing. Admission is fail-closed and in order — a validated member, an org that is a DNS-1123 label, a store holding a master key, a well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched, so a refused caller learns nothing about whether the secret exists.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a repository\'s environment secret, a connected account\'s token — is read by the app that sealed it, and never opens here for membership or org admin, whatever the grant declaration says about enforcement. A deployed app\'s or a validator\'s own folder also opens for the org\'s KMS-sync identity, which projects it into the org\'s namespace.
+         * @summary Reads one secret\'s value from your org.
+         * @param {string} wildcard1 Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+         * @param {string} [env] Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKmsSecretsByWildcard1(wildcard1: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsKmsSecret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKmsSecretsByWildcard1(wildcard1, env, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KmsApi.getKmsSecretsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsKmsLogin} kmsKmsLogin 
@@ -309,7 +427,7 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. A `path` that starts with `/orgs/` is refused with a 400 that names where it would have landed: the root is already `/orgs/<org>`, so `/orgs/hanzo` written in org admin is stored at `/orgs/admin/orgs/hanzo`, which no reader of org hanzo looks in. The org is chosen with the credential (the CLI\'s `--as`).  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
          * @param {KmsKmsPut} kmsKmsPut 
          * @param {*} [options] Override http request option.
@@ -331,6 +449,16 @@ export const KmsApiFp = function(configuration?: Configuration) {
 export const KmsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = KmsApiFp(configuration)
     return {
+        /**
+         * Removes one secret from your org.  Forgets one secret belonging to the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. The org comes from the validated claim, never from the request.  A delete is a WRITE to the grant rule, like the put: destroying a secret is as consequential as replacing it, and a credential distributed to READ one must not be able to remove it. It opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf is removed by the app that holds it, and never here for membership or org admin, whatever the grant declaration says about enforcement: deleting a wallet\'s signing key or an MCP server\'s credential destroys what the app acts with.
+         * @summary Removes one secret from your org.
+         * @param {KmsApiDeleteKmsSecretsByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKmsSecretsByWildcard1(requestParameters: KmsApiDeleteKmsSecretsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsRemoved> {
+            return localVarFp.deleteKmsSecretsByWildcard1(requestParameters.wildcard1, requestParameters.env, options).then((request) => request(axios, basePath));
+        },
         /**
          * Returns the runtime configuration for the KMS console.  What the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
          * @summary Returns the runtime configuration for the KMS console.
@@ -360,6 +488,16 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getKmsSecrets(requestParameters.env, requestParameters.environment, requestParameters.path, requestParameters.secretPath, options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads one secret\'s value from your org.  Opens one sealed secret belonging to the caller\'s own org and returns its value, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the address, so another tenant\'s secret is not merely refused, it is unnameable. Within that org the value opens only for SuperAdmin holding an access token, audited, or for a holder a declared READ grant covers at this exact path, key and environment; membership and org admin alone open nothing. Admission is fail-closed and in order — a validated member, an org that is a DNS-1123 label, a store holding a master key, a well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched, so a refused caller learns nothing about whether the secret exists.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a repository\'s environment secret, a connected account\'s token — is read by the app that sealed it, and never opens here for membership or org admin, whatever the grant declaration says about enforcement. A deployed app\'s or a validator\'s own folder also opens for the org\'s KMS-sync identity, which projects it into the org\'s namespace.
+         * @summary Reads one secret\'s value from your org.
+         * @param {KmsApiGetKmsSecretsByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKmsSecretsByWildcard1(requestParameters: KmsApiGetKmsSecretsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<KmsKmsSecret> {
+            return localVarFp.getKmsSecretsByWildcard1(requestParameters.wildcard1, requestParameters.env, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsApiPostKmsAuthLoginRequest} requestParameters Request parameters.
@@ -370,7 +508,7 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postKmsAuthLogin(requestParameters.kmsKmsLogin, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
+         * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. A `path` that starts with `/orgs/` is refused with a 400 that names where it would have landed: the root is already `/orgs/<org>`, so `/orgs/hanzo` written in org admin is stored at `/orgs/admin/orgs/hanzo`, which no reader of org hanzo looks in. The org is chosen with the credential (the CLI\'s `--as`).  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
          * @summary Stores or replaces one secret in your org.
          * @param {KmsApiPostKmsSecretsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -381,6 +519,27 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
         },
     };
 };
+
+/**
+ * Request parameters for deleteKmsSecretsByWildcard1 operation in KmsApi.
+ * @export
+ * @interface KmsApiDeleteKmsSecretsByWildcard1Request
+ */
+export interface KmsApiDeleteKmsSecretsByWildcard1Request {
+    /**
+     * Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+     * @type {string}
+     * @memberof KmsApiDeleteKmsSecretsByWildcard1
+     */
+    readonly wildcard1: string
+
+    /**
+     * Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+     * @type {string}
+     * @memberof KmsApiDeleteKmsSecretsByWildcard1
+     */
+    readonly env?: string
+}
 
 /**
  * Request parameters for getKmsSecrets operation in KmsApi.
@@ -415,6 +574,27 @@ export interface KmsApiGetKmsSecretsRequest {
      * @memberof KmsApiGetKmsSecrets
      */
     readonly secretPath?: string
+}
+
+/**
+ * Request parameters for getKmsSecretsByWildcard1 operation in KmsApi.
+ * @export
+ * @interface KmsApiGetKmsSecretsByWildcard1Request
+ */
+export interface KmsApiGetKmsSecretsByWildcard1Request {
+    /**
+     * Secret is the coordinate beneath the caller\&#39;s own org root: an optional &#x60;/&#x60;-separated subpath and then the name, such as &#x60;ci/deploy/token&#x60;. Over HTTP it is the trailing path itself, and the trailing path WINS over any other spelling sent with it. There is no org in it — the tenant comes from the validated claim — so another tenant\&#39;s secret is not merely refused, it is unnameable. OMITTED is refused with a 400: there is no secret named \&quot;everything\&quot;, and a blank address must not read as one.
+     * @type {string}
+     * @memberof KmsApiGetKmsSecretsByWildcard1
+     */
+    readonly wildcard1: string
+
+    /**
+     * Env selects the environment to resolve the secret in. It is part of the storage key, so one name in two environments is two secrets. OMITTED means the &#x60;default&#x60; environment — where a WRITE refuses to default, because a misplaced write strands a value no reader looks for, a read or a delete aimed at the wrong environment simply answers 404 and the caller learns.
+     * @type {string}
+     * @memberof KmsApiGetKmsSecretsByWildcard1
+     */
+    readonly env?: string
 }
 
 /**
@@ -453,6 +633,18 @@ export interface KmsApiPostKmsSecretsRequest {
  */
 export class KmsApi extends BaseAPI {
     /**
+     * Removes one secret from your org.  Forgets one secret belonging to the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. The org comes from the validated claim, never from the request.  A delete is a WRITE to the grant rule, like the put: destroying a secret is as consequential as replacing it, and a credential distributed to READ one must not be able to remove it. It opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf is removed by the app that holds it, and never here for membership or org admin, whatever the grant declaration says about enforcement: deleting a wallet\'s signing key or an MCP server\'s credential destroys what the app acts with.
+     * @summary Removes one secret from your org.
+     * @param {KmsApiDeleteKmsSecretsByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KmsApi
+     */
+    public deleteKmsSecretsByWildcard1(requestParameters: KmsApiDeleteKmsSecretsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return KmsApiFp(this.configuration).deleteKmsSecretsByWildcard1(requestParameters.wildcard1, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the runtime configuration for the KMS console.  What the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
      * @summary Returns the runtime configuration for the KMS console.
      * @param {*} [options] Override http request option.
@@ -487,6 +679,18 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
+     * Reads one secret\'s value from your org.  Opens one sealed secret belonging to the caller\'s own org and returns its value, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  `secret` is the coordinate beneath the caller\'s org root, subpath and name together, and over HTTP it is the trailing path itself. `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the address, so another tenant\'s secret is not merely refused, it is unnameable. Within that org the value opens only for SuperAdmin holding an access token, audited, or for a holder a declared READ grant covers at this exact path, key and environment; membership and org admin alone open nothing. Admission is fail-closed and in order — a validated member, an org that is a DNS-1123 label, a store holding a master key, a well-formed address, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched, so a refused caller learns nothing about whether the secret exists.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a repository\'s environment secret, a connected account\'s token — is read by the app that sealed it, and never opens here for membership or org admin, whatever the grant declaration says about enforcement. A deployed app\'s or a validator\'s own folder also opens for the org\'s KMS-sync identity, which projects it into the org\'s namespace.
+     * @summary Reads one secret\'s value from your org.
+     * @param {KmsApiGetKmsSecretsByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KmsApi
+     */
+    public getKmsSecretsByWildcard1(requestParameters: KmsApiGetKmsSecretsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return KmsApiFp(this.configuration).getKmsSecretsByWildcard1(requestParameters.wildcard1, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
      * @summary Exchanges a machine credential for an IAM bearer token.
      * @param {KmsApiPostKmsAuthLoginRequest} requestParameters Request parameters.
@@ -499,7 +703,7 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body.  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
+     * Stores or replaces one secret in your org.  Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. A `path` that starts with `/orgs/` is refused with a 400 that names where it would have landed: the root is already `/orgs/<org>`, so `/orgs/hanzo` written in org admin is stored at `/orgs/admin/orgs/hanzo`, which no reader of org hanzo looks in. The org is chosen with the credential (the CLI\'s `--as`).  Opens only for SuperAdmin holding an access token, audited, or for a holder a declared WRITE grant covers at this exact path, key and environment. Org admin confers nothing here. Fail-closed admission, in order: a validated member, well-formed org, master key present, well-formed input, then the grant — 401/403, 400, 503, 400 and 403, all decided before any record is touched.  A value this deployment seals on the org\'s behalf — an MCP server\'s credential, a wallet\'s signing key, a delivery provider\'s token — is written by the app that holds it, through that app\'s own operation, and is never replaced here for membership or org admin, whatever the grant declaration says about enforcement.
      * @summary Stores or replaces one secret in your org.
      * @param {KmsApiPostKmsSecretsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

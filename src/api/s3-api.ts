@@ -98,6 +98,48 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
+         * Removes one object and answers 204.  It removes ONE object and never a prefix: a key that looks like a folder deletes the placeholder at that key, not the objects beneath it. The key is path-cleaned first, so the delete cannot reach outside the bucket it names, and a bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the object is gone.
+         * @summary Removes one object and answers 204.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
+         * @param {string} wildcard1 Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
          * @summary Aborts a multipart upload and deletes the parts it stored.
          * @param {string} bucket Bucket is the bucket, from the path.
@@ -214,6 +256,48 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             if (recursive !== undefined) {
                 localVarQueryParameter['recursive'] = recursive;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mints a presigned GET URL the caller downloads from DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. It carries a content disposition of attachment naming the object\'s file name, so a browser following it saves the object rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows it comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a presigned GET URL the caller downloads from DIRECTLY.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
+         * @param {string} wildcard1 Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucket' is not null or undefined
+            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
+                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -555,6 +639,20 @@ export const S3ApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Removes one object and answers 204.  It removes ONE object and never a prefix: a key that looks like a folder deletes the placeholder at that key, not the objects beneath it. The key is path-cleaned first, so the delete cannot reach outside the bucket it names, and a bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the object is gone.
+         * @summary Removes one object and answers 204.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
+         * @param {string} wildcard1 Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
          * @summary Aborts a multipart upload and deletes the parts it stored.
          * @param {string} bucket Bucket is the bucket, from the path.
@@ -594,6 +692,20 @@ export const S3ApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjects(bucket, prefix, recursive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Mints a presigned GET URL the caller downloads from DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. It carries a content disposition of attachment naming the object\'s file name, so a browser following it saves the object rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows it comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a presigned GET URL the caller downloads from DIRECTLY.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
+         * @param {string} wildcard1 Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3PresignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -715,6 +827,16 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
+         * Removes one object and answers 204.  It removes ONE object and never a prefix: a key that looks like a folder deletes the placeholder at that key, not the objects beneath it. The key is path-cleaned first, so the delete cannot reach outside the bucket it names, and a bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the object is gone.
+         * @summary Removes one object and answers 204.
+         * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
          * @summary Aborts a multipart upload and deletes the parts it stored.
          * @param {S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
@@ -742,6 +864,16 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          */
         getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<S3ObjectList> {
             return localVarFp.getS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.prefix, requestParameters.recursive, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mints a presigned GET URL the caller downloads from DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. It carries a content disposition of attachment naming the object\'s file name, so a browser following it saves the object rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows it comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a presigned GET URL the caller downloads from DIRECTLY.
+         * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<S3PresignResponse> {
+            return localVarFp.getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the parts a multipart upload already holds, in order: what a client resuming after a dropped connection reads to send only the rest.
@@ -830,6 +962,27 @@ export interface S3ApiDeleteS3BucketsByBucketRequest {
 }
 
 /**
+ * Request parameters for deleteS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
+ * @export
+ * @interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request
+ */
+export interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request {
+    /**
+     * Bucket is the bucket\&#39;s friendly name, from the path.
+     * @type {string}
+     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
+     */
+    readonly bucket: string
+
+    /**
+     * Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+     * @type {string}
+     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * Request parameters for deleteS3BucketsByBucketUploadsByUpload operation in S3Api.
  * @export
  * @interface S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest
@@ -883,6 +1036,27 @@ export interface S3ApiGetS3BucketsByBucketObjectsRequest {
      * @memberof S3ApiGetS3BucketsByBucketObjects
      */
     readonly recursive?: string
+}
+
+/**
+ * Request parameters for getS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
+ * @export
+ * @interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request
+ */
+export interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request {
+    /**
+     * Bucket is the bucket\&#39;s friendly name, from the path.
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
+     */
+    readonly bucket: string
+
+    /**
+     * Key is the object\&#39;s key within the bucket — everything after that bucket\&#39;s /objects/. It MAY contain \&quot;/\&quot;, because a key is a path and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one key, not three. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the bucket, and a key that is empty, absolute or a bare folder marker is refused 400.
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
+     */
+    readonly wildcard1: string
 }
 
 /**
@@ -1045,6 +1219,18 @@ export class S3Api extends BaseAPI {
     }
 
     /**
+     * Removes one object and answers 204.  It removes ONE object and never a prefix: a key that looks like a folder deletes the placeholder at that key, not the objects beneath it. The key is path-cleaned first, so the delete cannot reach outside the bucket it names, and a bucket the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the object is gone.
+     * @summary Removes one object and answers 204.
+     * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Aborts a multipart upload and deletes the parts it stored. The object it would have become is never created.
      * @summary Aborts a multipart upload and deletes the parts it stored.
      * @param {S3ApiDeleteS3BucketsByBucketUploadsByUploadRequest} requestParameters Request parameters.
@@ -1077,6 +1263,18 @@ export class S3Api extends BaseAPI {
      */
     public getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
         return S3ApiFp(this.configuration).getS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.prefix, requestParameters.recursive, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mints a presigned GET URL the caller downloads from DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. It carries a content disposition of attachment naming the object\'s file name, so a browser following it saves the object rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows it comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+     * @summary Mints a presigned GET URL the caller downloads from DIRECTLY.
+     * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -24,6 +24,12 @@ import type { GitWorkflowView } from './git-workflow-view';
  */
 export interface GitWorkflowList {
     /**
+     * Commit is the commit the ref resolved to, which the documents were read at.
+     * @type {string}
+     * @memberof GitWorkflowList
+     */
+    'commit'?: string;
+    /**
      * Data is the workflows the repository declares at the ref.
      * @type {Array<GitWorkflowView>}
      * @memberof GitWorkflowList

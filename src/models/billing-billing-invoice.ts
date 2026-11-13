@@ -72,6 +72,12 @@ export interface BillingBillingInvoice {
      */
     'discount'?: number;
     /**
+     * DiscountName names what Discount took off (\"Customer price: $195.00/month\", a promo, a coupon\'s month). Last, for the ZAP wire.
+     * @type {string}
+     * @memberof BillingBillingInvoice
+     */
+    'discountName'?: string;
+    /**
      * 
      * @type {string}
      * @memberof BillingBillingInvoice

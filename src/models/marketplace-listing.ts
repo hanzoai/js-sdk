@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MarketplaceExpert } from './marketplace-expert';
 
 /**
  * 
@@ -51,13 +54,19 @@ export interface MarketplaceListing {
      */
     'docs'?: string;
     /**
+     * Expert is the person behind a listing of kind expert (expert.go); absent on every other kind.
+     * @type {MarketplaceExpert}
+     * @memberof MarketplaceListing
+     */
+    'expert'?: MarketplaceExpert;
+    /**
      * ID is the listing\'s id, minted here as \"lst_\" + 16 hex characters. A publisher cannot choose it: Create overwrites whatever arrives. It is unique within PublisherOrg (the primary key is the pair), and it is the path segment DELETE /v1/marketplace/listings/:id takes.
      * @type {string}
      * @memberof MarketplaceListing
      */
     'id'?: string;
     /**
-     * Kind is what the listing sells: agent, persona, app, skill, mcp or tool. Listings published before kinds existed sold tools, and read as tool.
+     * Kind is what the listing sells: agent, persona, app, skill, mcp, tool or expert. Listings published before kinds existed sold tools, and read as tool.
      * @type {string}
      * @memberof MarketplaceListing
      */
@@ -99,7 +108,7 @@ export interface MarketplaceListing {
      */
     'title'?: string;
     /**
-     * Tool names the thing sold, as the seller named it: the agent, app, skill or MCP server\'s name or id, or the tool\'s registry name. It was proved the seller\'s own when the listing was published. For a tool it is what install switches on.
+     * Tool names the thing sold, as the seller named it: the agent, app, skill or MCP server\'s name or id, or the tool\'s registry name. It was proved the seller\'s own when the listing was published. For a tool it is what install switches on. For an expert it is the person\'s IAM identity.
      * @type {string}
      * @memberof MarketplaceListing
      */

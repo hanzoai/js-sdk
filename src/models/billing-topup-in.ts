@@ -39,6 +39,12 @@ export interface BillingTopupIn {
      */
     'paymentMethodId'?: string;
     /**
+     * Provider names the explicit payment processor (\"square\" or \"paypal\") when SourceID is a provider-specific order/token (e.g. a PayPal v2 Order ID).
+     * @type {string}
+     * @memberof BillingTopupIn
+     */
+    'provider'?: string;
+    /**
      * SourceID is a single-use card token from the payment form, for the token endpoint. It is vaulted as part of the charge, so a caller never holds card numbers and this service never sees one.
      * @type {string}
      * @memberof BillingTopupIn

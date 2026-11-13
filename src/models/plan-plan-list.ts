@@ -21,7 +21,7 @@
  */
 export interface PlanPlanList {
     /**
-     * Plans are the plans in this section, each an opaque object exactly as the @hanzo/plans catalog emits it — typically id, name, description, priceMonthly, category, a feature list, a limits block and a price_ref.
+     * Plans are the plans in this section, each an object with id, name, description, category, priceMonthly and priceAnnual in dollars (null when the plan is sold by quote or not by the year), a feature list, a limits block, the entitlements it grants and a price_ref.
      * @type {Array<any>}
      * @memberof PlanPlanList
      */

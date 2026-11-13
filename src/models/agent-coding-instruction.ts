@@ -21,13 +21,19 @@
  */
 export interface AgentCodingInstruction {
     /**
+     * RequestID deduplicates retries of the same steer request; optional.
+     * @type {string}
+     * @memberof AgentCodingInstruction
+     */
+    'requestId'?: string;
+    /**
      * Session identifies the running or paused coding session from the path.
      * @type {string}
      * @memberof AgentCodingInstruction
      */
     'session'?: string;
     /**
-     * Text is the new instruction to carry into the follow-up run.
+     * Text is the new instruction to carry into the running turn or follow-up run.
      * @type {string}
      * @memberof AgentCodingInstruction
      */

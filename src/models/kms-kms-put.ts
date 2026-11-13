@@ -33,7 +33,7 @@ export interface KmsKmsPut {
      */
     'name'?: string;
     /**
-     * Path is an optional subpath beneath the org root, e.g. \"/ci\".
+     * Path is an optional subpath beneath the org root, e.g. \"/ci\". It never names an org: the root is already `/orgs/<org>`, taken from the credential, so a path that starts with `/orgs/` is refused rather than stored at `/orgs/<org>/orgs/…`.
      * @type {string}
      * @memberof KmsKmsPut
      */

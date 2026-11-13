@@ -22,33 +22,35 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ApprovalBatch } from '../models';
+import type { PatentApprovalBatch } from '../models';
 // @ts-ignore
-import type { ApprovalsOut } from '../models';
+import type { PatentApprovalsOut } from '../models';
 // @ts-ignore
-import type { DisclosureBatch } from '../models';
+import type { PatentDisclosureBatch } from '../models';
 // @ts-ignore
-import type { DiscsOut } from '../models';
+import type { PatentDiscsOut } from '../models';
 // @ts-ignore
-import type { GrantIn } from '../models';
+import type { PatentGrantIn } from '../models';
 // @ts-ignore
-import type { IdeaBatch } from '../models';
+import type { PatentIdeaBatch } from '../models';
 // @ts-ignore
-import type { IdeasOut } from '../models';
+import type { PatentIdeasOut } from '../models';
 // @ts-ignore
-import type { ImplBatch } from '../models';
+import type { PatentImplBatch } from '../models';
 // @ts-ignore
-import type { ImplsOut } from '../models';
+import type { PatentImplsOut } from '../models';
 // @ts-ignore
-import type { PatentGrantOut } from '../models';
+import type { PatentPatentGrantOut } from '../models';
 // @ts-ignore
-import type { PatentHealth } from '../models';
+import type { PatentPatentHealth } from '../models';
 // @ts-ignore
-import type { PatentProof } from '../models';
+import type { PatentPatentProof } from '../models';
 // @ts-ignore
-import type { PatentTimeline } from '../models';
+import type { PatentPatentTimeline } from '../models';
 // @ts-ignore
-import type { PatentWriteOut } from '../models';
+import type { PatentPatentWriteOut } from '../models';
+// @ts-ignore
+import type { ProblemDetails } from '../models';
 /**
  * PatentApi - axios parameter creator
  * @export
@@ -381,13 +383,13 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Appends one person\'s decision about one disclosure. The approver is the validated principal and nothing else, so no caller records a sign-off on someone else\'s behalf — which is the only way this field would be worth reading.
          * @summary Appends one person\'s decision about one disclosure.
-         * @param {ApprovalBatch} approvalBatch 
+         * @param {PatentApprovalBatch} patentApprovalBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentApprovals: async (approvalBatch: ApprovalBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'approvalBatch' is not null or undefined
-            assertParamExists('postPatentApprovals', 'approvalBatch', approvalBatch)
+        postPatentApprovals: async (patentApprovalBatch: PatentApprovalBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'patentApprovalBatch' is not null or undefined
+            assertParamExists('postPatentApprovals', 'patentApprovalBatch', patentApprovalBatch)
             const localVarPath = `/v1/patent/approvals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -411,7 +413,7 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(approvalBatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patentApprovalBatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -421,13 +423,13 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Appends the assembled document and the record ids it rests on. The document is a rendering of what the log already holds, and its citations are what let a reader check it instead of taking it.
          * @summary Appends the assembled document and the record ids it rests on.
-         * @param {DisclosureBatch} disclosureBatch 
+         * @param {PatentDisclosureBatch} patentDisclosureBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentDisclosures: async (disclosureBatch: DisclosureBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'disclosureBatch' is not null or undefined
-            assertParamExists('postPatentDisclosures', 'disclosureBatch', disclosureBatch)
+        postPatentDisclosures: async (patentDisclosureBatch: PatentDisclosureBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'patentDisclosureBatch' is not null or undefined
+            assertParamExists('postPatentDisclosures', 'patentDisclosureBatch', patentDisclosureBatch)
             const localVarPath = `/v1/patent/disclosures`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -451,7 +453,7 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(disclosureBatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patentDisclosureBatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -461,13 +463,13 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Makes the decision a recording never implied: whether an idea, implementation or disclosure stays private to its author\'s project, opens to the org, or goes public. Publication of a conception entry is a disclosure under 35 U.S.C. §102 in every jurisdiction that reads it that way, so it is always a separate call and never a side effect of writing one down.
          * @summary Makes the decision a recording never implied: whether an idea, implementation or disclosure stays private to its author\'s project, opens to the org, or goes public.
-         * @param {GrantIn} grantIn 
+         * @param {PatentGrantIn} patentGrantIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentGrants: async (grantIn: GrantIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'grantIn' is not null or undefined
-            assertParamExists('postPatentGrants', 'grantIn', grantIn)
+        postPatentGrants: async (patentGrantIn: PatentGrantIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'patentGrantIn' is not null or undefined
+            assertParamExists('postPatentGrants', 'patentGrantIn', patentGrantIn)
             const localVarPath = `/v1/patent/grants`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -491,7 +493,7 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(grantIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patentGrantIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -501,13 +503,13 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Appends conception entries. A write states the idea and nothing else: the project, the author, the clock, the append order and the content digest are all the server\'s, and a correction appends a version rather than editing the entry — which is the property that makes any of it usable as evidence at all.
          * @summary Appends conception entries.
-         * @param {IdeaBatch} ideaBatch 
+         * @param {PatentIdeaBatch} patentIdeaBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentIdeas: async (ideaBatch: IdeaBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'ideaBatch' is not null or undefined
-            assertParamExists('postPatentIdeas', 'ideaBatch', ideaBatch)
+        postPatentIdeas: async (patentIdeaBatch: PatentIdeaBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'patentIdeaBatch' is not null or undefined
+            assertParamExists('postPatentIdeas', 'patentIdeaBatch', patentIdeaBatch)
             const localVarPath = `/v1/patent/ideas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -531,7 +533,7 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(ideaBatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patentIdeaBatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -541,13 +543,13 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Appends the machine\'s half of the record, and the idea citation is the load-bearing field: it is what lets a reader see that the conception came first. An entry citing no idea is refused rather than filed.
          * @summary Appends the machine\'s half of the record, and the idea citation is the load-bearing field: it is what lets a reader see that the conception came first.
-         * @param {ImplBatch} implBatch 
+         * @param {PatentImplBatch} patentImplBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentImplementations: async (implBatch: ImplBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'implBatch' is not null or undefined
-            assertParamExists('postPatentImplementations', 'implBatch', implBatch)
+        postPatentImplementations: async (patentImplBatch: PatentImplBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'patentImplBatch' is not null or undefined
+            assertParamExists('postPatentImplementations', 'patentImplBatch', patentImplBatch)
             const localVarPath = `/v1/patent/implementations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -571,7 +573,7 @@ export const PatentApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(implBatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patentImplBatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -596,7 +598,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentApprovals(disclosure?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApprovalsOut>> {
+        async getPatentApprovals(disclosure?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentApprovalsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentApprovals(disclosure, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentApprovals']?.[localVarOperationServerIndex]?.url;
@@ -611,7 +613,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentDisclosures(id?: string, status?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiscsOut>> {
+        async getPatentDisclosures(id?: string, status?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentDiscsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentDisclosures(id, status, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentDisclosures']?.[localVarOperationServerIndex]?.url;
@@ -623,7 +625,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentHealth>> {
+        async getPatentHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentHealth']?.[localVarOperationServerIndex]?.url;
@@ -638,7 +640,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentIdeas(id?: string, kind?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IdeasOut>> {
+        async getPatentIdeas(id?: string, kind?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentIdeasOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentIdeas(id, kind, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentIdeas']?.[localVarOperationServerIndex]?.url;
@@ -653,7 +655,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentImplementations(id?: string, idea?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImplsOut>> {
+        async getPatentImplementations(id?: string, idea?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentImplsOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentImplementations(id, idea, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentImplementations']?.[localVarOperationServerIndex]?.url;
@@ -668,7 +670,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentProof(disclosure?: string, idea?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentProof>> {
+        async getPatentProof(disclosure?: string, idea?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentProof>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentProof(disclosure, idea, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentProof']?.[localVarOperationServerIndex]?.url;
@@ -683,7 +685,7 @@ export const PatentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPatentTimeline(id?: string, kind?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentTimeline>> {
+        async getPatentTimeline(id?: string, kind?: string, project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentTimeline>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPatentTimeline(id, kind, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.getPatentTimeline']?.[localVarOperationServerIndex]?.url;
@@ -692,12 +694,12 @@ export const PatentApiFp = function(configuration?: Configuration) {
         /**
          * Appends one person\'s decision about one disclosure. The approver is the validated principal and nothing else, so no caller records a sign-off on someone else\'s behalf — which is the only way this field would be worth reading.
          * @summary Appends one person\'s decision about one disclosure.
-         * @param {ApprovalBatch} approvalBatch 
+         * @param {PatentApprovalBatch} patentApprovalBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPatentApprovals(approvalBatch: ApprovalBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentWriteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentApprovals(approvalBatch, options);
+        async postPatentApprovals(patentApprovalBatch: PatentApprovalBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentWriteOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentApprovals(patentApprovalBatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.postPatentApprovals']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -705,12 +707,12 @@ export const PatentApiFp = function(configuration?: Configuration) {
         /**
          * Appends the assembled document and the record ids it rests on. The document is a rendering of what the log already holds, and its citations are what let a reader check it instead of taking it.
          * @summary Appends the assembled document and the record ids it rests on.
-         * @param {DisclosureBatch} disclosureBatch 
+         * @param {PatentDisclosureBatch} patentDisclosureBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPatentDisclosures(disclosureBatch: DisclosureBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentWriteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentDisclosures(disclosureBatch, options);
+        async postPatentDisclosures(patentDisclosureBatch: PatentDisclosureBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentWriteOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentDisclosures(patentDisclosureBatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.postPatentDisclosures']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -718,12 +720,12 @@ export const PatentApiFp = function(configuration?: Configuration) {
         /**
          * Makes the decision a recording never implied: whether an idea, implementation or disclosure stays private to its author\'s project, opens to the org, or goes public. Publication of a conception entry is a disclosure under 35 U.S.C. §102 in every jurisdiction that reads it that way, so it is always a separate call and never a side effect of writing one down.
          * @summary Makes the decision a recording never implied: whether an idea, implementation or disclosure stays private to its author\'s project, opens to the org, or goes public.
-         * @param {GrantIn} grantIn 
+         * @param {PatentGrantIn} patentGrantIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPatentGrants(grantIn: GrantIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentGrantOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentGrants(grantIn, options);
+        async postPatentGrants(patentGrantIn: PatentGrantIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentGrantOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentGrants(patentGrantIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.postPatentGrants']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -731,12 +733,12 @@ export const PatentApiFp = function(configuration?: Configuration) {
         /**
          * Appends conception entries. A write states the idea and nothing else: the project, the author, the clock, the append order and the content digest are all the server\'s, and a correction appends a version rather than editing the entry — which is the property that makes any of it usable as evidence at all.
          * @summary Appends conception entries.
-         * @param {IdeaBatch} ideaBatch 
+         * @param {PatentIdeaBatch} patentIdeaBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPatentIdeas(ideaBatch: IdeaBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentWriteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentIdeas(ideaBatch, options);
+        async postPatentIdeas(patentIdeaBatch: PatentIdeaBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentWriteOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentIdeas(patentIdeaBatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.postPatentIdeas']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -744,12 +746,12 @@ export const PatentApiFp = function(configuration?: Configuration) {
         /**
          * Appends the machine\'s half of the record, and the idea citation is the load-bearing field: it is what lets a reader see that the conception came first. An entry citing no idea is refused rather than filed.
          * @summary Appends the machine\'s half of the record, and the idea citation is the load-bearing field: it is what lets a reader see that the conception came first.
-         * @param {ImplBatch} implBatch 
+         * @param {PatentImplBatch} patentImplBatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPatentImplementations(implBatch: ImplBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentWriteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentImplementations(implBatch, options);
+        async postPatentImplementations(patentImplBatch: PatentImplBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatentPatentWriteOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPatentImplementations(patentImplBatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PatentApi.postPatentImplementations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -771,7 +773,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentApprovals(requestParameters: PatentApiGetPatentApprovalsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ApprovalsOut> {
+        getPatentApprovals(requestParameters: PatentApiGetPatentApprovalsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentApprovalsOut> {
             return localVarFp.getPatentApprovals(requestParameters.disclosure, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -781,7 +783,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentDisclosures(requestParameters: PatentApiGetPatentDisclosuresRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DiscsOut> {
+        getPatentDisclosures(requestParameters: PatentApiGetPatentDisclosuresRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentDiscsOut> {
             return localVarFp.getPatentDisclosures(requestParameters.id, requestParameters.status, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -790,7 +792,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentHealth(options?: RawAxiosRequestConfig): AxiosPromise<PatentHealth> {
+        getPatentHealth(options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentHealth> {
             return localVarFp.getPatentHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -800,7 +802,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentIdeas(requestParameters: PatentApiGetPatentIdeasRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IdeasOut> {
+        getPatentIdeas(requestParameters: PatentApiGetPatentIdeasRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentIdeasOut> {
             return localVarFp.getPatentIdeas(requestParameters.id, requestParameters.kind, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -810,7 +812,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentImplementations(requestParameters: PatentApiGetPatentImplementationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ImplsOut> {
+        getPatentImplementations(requestParameters: PatentApiGetPatentImplementationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentImplsOut> {
             return localVarFp.getPatentImplementations(requestParameters.id, requestParameters.idea, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -820,7 +822,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentProof(requestParameters: PatentApiGetPatentProofRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentProof> {
+        getPatentProof(requestParameters: PatentApiGetPatentProofRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentProof> {
             return localVarFp.getPatentProof(requestParameters.disclosure, requestParameters.idea, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -830,7 +832,7 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPatentTimeline(requestParameters: PatentApiGetPatentTimelineRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentTimeline> {
+        getPatentTimeline(requestParameters: PatentApiGetPatentTimelineRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentTimeline> {
             return localVarFp.getPatentTimeline(requestParameters.id, requestParameters.kind, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
@@ -840,8 +842,8 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentApprovals(requestParameters: PatentApiPostPatentApprovalsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentWriteOut> {
-            return localVarFp.postPatentApprovals(requestParameters.approvalBatch, options).then((request) => request(axios, basePath));
+        postPatentApprovals(requestParameters: PatentApiPostPatentApprovalsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentWriteOut> {
+            return localVarFp.postPatentApprovals(requestParameters.patentApprovalBatch, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends the assembled document and the record ids it rests on. The document is a rendering of what the log already holds, and its citations are what let a reader check it instead of taking it.
@@ -850,8 +852,8 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentDisclosures(requestParameters: PatentApiPostPatentDisclosuresRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentWriteOut> {
-            return localVarFp.postPatentDisclosures(requestParameters.disclosureBatch, options).then((request) => request(axios, basePath));
+        postPatentDisclosures(requestParameters: PatentApiPostPatentDisclosuresRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentWriteOut> {
+            return localVarFp.postPatentDisclosures(requestParameters.patentDisclosureBatch, options).then((request) => request(axios, basePath));
         },
         /**
          * Makes the decision a recording never implied: whether an idea, implementation or disclosure stays private to its author\'s project, opens to the org, or goes public. Publication of a conception entry is a disclosure under 35 U.S.C. §102 in every jurisdiction that reads it that way, so it is always a separate call and never a side effect of writing one down.
@@ -860,8 +862,8 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentGrants(requestParameters: PatentApiPostPatentGrantsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentGrantOut> {
-            return localVarFp.postPatentGrants(requestParameters.grantIn, options).then((request) => request(axios, basePath));
+        postPatentGrants(requestParameters: PatentApiPostPatentGrantsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentGrantOut> {
+            return localVarFp.postPatentGrants(requestParameters.patentGrantIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends conception entries. A write states the idea and nothing else: the project, the author, the clock, the append order and the content digest are all the server\'s, and a correction appends a version rather than editing the entry — which is the property that makes any of it usable as evidence at all.
@@ -870,8 +872,8 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentIdeas(requestParameters: PatentApiPostPatentIdeasRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentWriteOut> {
-            return localVarFp.postPatentIdeas(requestParameters.ideaBatch, options).then((request) => request(axios, basePath));
+        postPatentIdeas(requestParameters: PatentApiPostPatentIdeasRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentWriteOut> {
+            return localVarFp.postPatentIdeas(requestParameters.patentIdeaBatch, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends the machine\'s half of the record, and the idea citation is the load-bearing field: it is what lets a reader see that the conception came first. An entry citing no idea is refused rather than filed.
@@ -880,8 +882,8 @@ export const PatentApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPatentImplementations(requestParameters: PatentApiPostPatentImplementationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentWriteOut> {
-            return localVarFp.postPatentImplementations(requestParameters.implBatch, options).then((request) => request(axios, basePath));
+        postPatentImplementations(requestParameters: PatentApiPostPatentImplementationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatentPatentWriteOut> {
+            return localVarFp.postPatentImplementations(requestParameters.patentImplBatch, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1055,10 +1057,10 @@ export interface PatentApiGetPatentTimelineRequest {
 export interface PatentApiPostPatentApprovalsRequest {
     /**
      * 
-     * @type {ApprovalBatch}
+     * @type {PatentApprovalBatch}
      * @memberof PatentApiPostPatentApprovals
      */
-    readonly approvalBatch: ApprovalBatch
+    readonly patentApprovalBatch: PatentApprovalBatch
 }
 
 /**
@@ -1069,10 +1071,10 @@ export interface PatentApiPostPatentApprovalsRequest {
 export interface PatentApiPostPatentDisclosuresRequest {
     /**
      * 
-     * @type {DisclosureBatch}
+     * @type {PatentDisclosureBatch}
      * @memberof PatentApiPostPatentDisclosures
      */
-    readonly disclosureBatch: DisclosureBatch
+    readonly patentDisclosureBatch: PatentDisclosureBatch
 }
 
 /**
@@ -1083,10 +1085,10 @@ export interface PatentApiPostPatentDisclosuresRequest {
 export interface PatentApiPostPatentGrantsRequest {
     /**
      * 
-     * @type {GrantIn}
+     * @type {PatentGrantIn}
      * @memberof PatentApiPostPatentGrants
      */
-    readonly grantIn: GrantIn
+    readonly patentGrantIn: PatentGrantIn
 }
 
 /**
@@ -1097,10 +1099,10 @@ export interface PatentApiPostPatentGrantsRequest {
 export interface PatentApiPostPatentIdeasRequest {
     /**
      * 
-     * @type {IdeaBatch}
+     * @type {PatentIdeaBatch}
      * @memberof PatentApiPostPatentIdeas
      */
-    readonly ideaBatch: IdeaBatch
+    readonly patentIdeaBatch: PatentIdeaBatch
 }
 
 /**
@@ -1111,10 +1113,10 @@ export interface PatentApiPostPatentIdeasRequest {
 export interface PatentApiPostPatentImplementationsRequest {
     /**
      * 
-     * @type {ImplBatch}
+     * @type {PatentImplBatch}
      * @memberof PatentApiPostPatentImplementations
      */
-    readonly implBatch: ImplBatch
+    readonly patentImplBatch: PatentImplBatch
 }
 
 /**
@@ -1216,7 +1218,7 @@ export class PatentApi extends BaseAPI {
      * @memberof PatentApi
      */
     public postPatentApprovals(requestParameters: PatentApiPostPatentApprovalsRequest, options?: RawAxiosRequestConfig) {
-        return PatentApiFp(this.configuration).postPatentApprovals(requestParameters.approvalBatch, options).then((request) => request(this.axios, this.basePath));
+        return PatentApiFp(this.configuration).postPatentApprovals(requestParameters.patentApprovalBatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1228,7 +1230,7 @@ export class PatentApi extends BaseAPI {
      * @memberof PatentApi
      */
     public postPatentDisclosures(requestParameters: PatentApiPostPatentDisclosuresRequest, options?: RawAxiosRequestConfig) {
-        return PatentApiFp(this.configuration).postPatentDisclosures(requestParameters.disclosureBatch, options).then((request) => request(this.axios, this.basePath));
+        return PatentApiFp(this.configuration).postPatentDisclosures(requestParameters.patentDisclosureBatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1240,7 +1242,7 @@ export class PatentApi extends BaseAPI {
      * @memberof PatentApi
      */
     public postPatentGrants(requestParameters: PatentApiPostPatentGrantsRequest, options?: RawAxiosRequestConfig) {
-        return PatentApiFp(this.configuration).postPatentGrants(requestParameters.grantIn, options).then((request) => request(this.axios, this.basePath));
+        return PatentApiFp(this.configuration).postPatentGrants(requestParameters.patentGrantIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1252,7 +1254,7 @@ export class PatentApi extends BaseAPI {
      * @memberof PatentApi
      */
     public postPatentIdeas(requestParameters: PatentApiPostPatentIdeasRequest, options?: RawAxiosRequestConfig) {
-        return PatentApiFp(this.configuration).postPatentIdeas(requestParameters.ideaBatch, options).then((request) => request(this.axios, this.basePath));
+        return PatentApiFp(this.configuration).postPatentIdeas(requestParameters.patentIdeaBatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1264,7 +1266,7 @@ export class PatentApi extends BaseAPI {
      * @memberof PatentApi
      */
     public postPatentImplementations(requestParameters: PatentApiPostPatentImplementationsRequest, options?: RawAxiosRequestConfig) {
-        return PatentApiFp(this.configuration).postPatentImplementations(requestParameters.implBatch, options).then((request) => request(this.axios, this.basePath));
+        return PatentApiFp(this.configuration).postPatentImplementations(requestParameters.patentImplBatch, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

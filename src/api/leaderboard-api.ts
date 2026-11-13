@@ -26,6 +26,10 @@ import type { LeaderboardActivityView } from '../models';
 // @ts-ignore
 import type { LeaderboardBetaBoard } from '../models';
 // @ts-ignore
+import type { LeaderboardBountyBoard } from '../models';
+// @ts-ignore
+import type { LeaderboardGalaxyView } from '../models';
+// @ts-ignore
 import type { LeaderboardLeaderboardView } from '../models';
 // @ts-ignore
 import type { LeaderboardOptinView } from '../models';
@@ -33,6 +37,10 @@ import type { LeaderboardOptinView } from '../models';
 import type { LeaderboardOrgOptinReq } from '../models';
 // @ts-ignore
 import type { LeaderboardOrgOptinView } from '../models';
+// @ts-ignore
+import type { LeaderboardPulseView } from '../models';
+// @ts-ignore
+import type { LeaderboardStandingView } from '../models';
 // @ts-ignore
 import type { LeaderboardUserOptinReq } from '../models';
 // @ts-ignore
@@ -154,8 +162,8 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
          * @param {number} [limit] Limit caps the rows, clamped to 1..100. Defaults to 25, which is also what a non-positive value takes.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -193,6 +201,113 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @summary Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @param {number} [limit] Limit caps the hunter and award rows returned, clamped to 1..100. Defaults to 25.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardBounty: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/bounty`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Holds one text/event-stream open and pushes a `message` frame for each line as it happens, after replaying the last 20. `data` is `{id, kind, at, handle, detail}`, where kind is joined, referred, tried, milestone, hour, bounty, level or expert. `handle` is masked in the middle, whole for an org that listed itself and empty for one that withdrew. At most 30 lines a minute. A `: ping` comment is written every 25 seconds. There is no resume: a reader that reconnects is replayed the last 20. No credential is needed to read it.
+         * @summary Stream the board\'s live lines to anyone as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardFeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/feed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it. The window is the standing\'s: a signed-in reader sees their own star, five ranks below it and as many above as their points have earned; a reader who is not signed in sees the last ranks, where a newcomer starts. Every other star has `points` of -1 and no name, and is still drawn. The stars are columns of equal length, best first, and `center` is the tokens used and the orgs active in the last 24 hours. A star\'s id is opaque: it is the same wherever this answer mentions that star, names no org, and is replaced on the next read, about a minute later. A signed-in reader gets `self`, the id of their own star. Names are the standing\'s: masked in the middle, whole where the org listed itself, empty where it withdrew. No org id, handle or email is sent. No credential is needed to read it.
+         * @summary Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardGalaxy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/galaxy`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
          * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
          * @param {*} [options] Override http request option.
@@ -200,6 +315,74 @@ export const LeaderboardApiAxiosParamCreator = function (configuration?: Configu
          */
         getLeaderboardOptin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/leaderboard/optin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety). Every series is read from where cloud records it; one that cannot be read is left out and named in `missing`, and the ones nothing records today (orgs trying a product, shares) are always named there. Counts only: no org, no name. No credential is needed to read it.
+         * @summary Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardPulse: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/pulse`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader. Every org IAM holds is ranked, by points: tokens used, referrals, verified stars, follows and bounty awards. A signed-in reader sees their own rank, the ranks just below it and as many above it as their points have earned; the rest are counted in `locked` and never sent. A reader who is not signed in sees the last ranks, where a newcomer starts. Names are masked in the middle; the reader\'s own is whole, an org that listed itself is whole, and one that withdrew has none. No credential is needed to read it.
+         * @summary Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardStanding: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/leaderboard/standing`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -349,8 +532,8 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
          * @param {number} [limit] Limit caps the rows, clamped to 1..100. Defaults to 25, which is also what a non-positive value takes.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -359,6 +542,43 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardBeta(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardBeta']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @summary Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @param {number} [limit] Limit caps the hunter and award rows returned, clamped to 1..100. Defaults to 25.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardBounty(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardBountyBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardBounty(limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardBounty']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Holds one text/event-stream open and pushes a `message` frame for each line as it happens, after replaying the last 20. `data` is `{id, kind, at, handle, detail}`, where kind is joined, referred, tried, milestone, hour, bounty, level or expert. `handle` is masked in the middle, whole for an org that listed itself and empty for one that withdrew. At most 30 lines a minute. A `: ping` comment is written every 25 seconds. There is no resume: a reader that reconnects is replayed the last 20. No credential is needed to read it.
+         * @summary Stream the board\'s live lines to anyone as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardFeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardFeed(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardFeed']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it. The window is the standing\'s: a signed-in reader sees their own star, five ranks below it and as many above as their points have earned; a reader who is not signed in sees the last ranks, where a newcomer starts. Every other star has `points` of -1 and no name, and is still drawn. The stars are columns of equal length, best first, and `center` is the tokens used and the orgs active in the last 24 hours. A star\'s id is opaque: it is the same wherever this answer mentions that star, names no org, and is replaced on the next read, about a minute later. A signed-in reader gets `self`, the id of their own star. Names are the standing\'s: masked in the middle, whole where the org listed itself, empty where it withdrew. No org id, handle or email is sent. No credential is needed to read it.
+         * @summary Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardGalaxy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardGalaxyView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardGalaxy(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardGalaxy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -371,6 +591,30 @@ export const LeaderboardApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardOptin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety). Every series is read from where cloud records it; one that cannot be read is left out and named in `missing`, and the ones nothing records today (orgs trying a product, shares) are always named there. Counts only: no org, no name. No credential is needed to read it.
+         * @summary Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardPulse(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardPulseView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardPulse(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardPulse']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader. Every org IAM holds is ranked, by points: tokens used, referrals, verified stars, follows and bounty awards. A signed-in reader sees their own rank, the ranks just below it and as many above it as their points have earned; the rest are counted in `locked` and never sent. A reader who is not signed in sees the last ranks, where a newcomer starts. Names are masked in the middle; the reader\'s own is whole, an org that listed itself is whole, and one that withdrew has none. No credential is needed to read it.
+         * @summary Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLeaderboardStanding(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardStandingView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLeaderboardStanding(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LeaderboardApi.getLeaderboardStanding']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -430,14 +674,42 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getLeaderboardActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
-         * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+         * Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
          * @param {LeaderboardApiGetLeaderboardBetaRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getLeaderboardBeta(requestParameters: LeaderboardApiGetLeaderboardBetaRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardBetaBoard> {
             return localVarFp.getLeaderboardBeta(requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @summary Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+         * @param {LeaderboardApiGetLeaderboardBountyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardBounty(requestParameters: LeaderboardApiGetLeaderboardBountyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardBountyBoard> {
+            return localVarFp.getLeaderboardBounty(requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Holds one text/event-stream open and pushes a `message` frame for each line as it happens, after replaying the last 20. `data` is `{id, kind, at, handle, detail}`, where kind is joined, referred, tried, milestone, hour, bounty, level or expert. `handle` is masked in the middle, whole for an org that listed itself and empty for one that withdrew. At most 30 lines a minute. A `: ping` comment is written every 25 seconds. There is no resume: a reader that reconnects is replayed the last 20. No credential is needed to read it.
+         * @summary Stream the board\'s live lines to anyone as Server-Sent Events
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardFeed(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getLeaderboardFeed(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it. The window is the standing\'s: a signed-in reader sees their own star, five ranks below it and as many above as their points have earned; a reader who is not signed in sees the last ranks, where a newcomer starts. Every other star has `points` of -1 and no name, and is still drawn. The stars are columns of equal length, best first, and `center` is the tokens used and the orgs active in the last 24 hours. A star\'s id is opaque: it is the same wherever this answer mentions that star, names no org, and is replaced on the next read, about a minute later. A signed-in reader gets `self`, the id of their own star. Names are the standing\'s: masked in the middle, whole where the org listed itself, empty where it withdrew. No org id, handle or email is sent. No credential is needed to read it.
+         * @summary Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardGalaxy(options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardGalaxyView> {
+            return localVarFp.getLeaderboardGalaxy(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
@@ -447,6 +719,24 @@ export const LeaderboardApiFactory = function (configuration?: Configuration, ba
          */
         getLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardOptinView> {
             return localVarFp.getLeaderboardOptin(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety). Every series is read from where cloud records it; one that cannot be read is left out and named in `missing`, and the ones nothing records today (orgs trying a product, shares) are always named there. Counts only: no org, no name. No credential is needed to read it.
+         * @summary Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardPulse(options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardPulseView> {
+            return localVarFp.getLeaderboardPulse(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader. Every org IAM holds is ranked, by points: tokens used, referrals, verified stars, follows and bounty awards. A signed-in reader sees their own rank, the ranks just below it and as many above it as their points have earned; the rest are counted in `locked` and never sent. A reader who is not signed in sees the last ranks, where a newcomer starts. Names are masked in the middle; the reader\'s own is whole, an org that listed itself is whole, and one that withdrew has none. No credential is needed to read it.
+         * @summary Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLeaderboardStanding(options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardStandingView> {
+            return localVarFp.getLeaderboardStanding(options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
@@ -556,6 +846,20 @@ export interface LeaderboardApiGetLeaderboardBetaRequest {
 }
 
 /**
+ * Request parameters for getLeaderboardBounty operation in LeaderboardApi.
+ * @export
+ * @interface LeaderboardApiGetLeaderboardBountyRequest
+ */
+export interface LeaderboardApiGetLeaderboardBountyRequest {
+    /**
+     * Limit caps the hunter and award rows returned, clamped to 1..100. Defaults to 25.
+     * @type {number}
+     * @memberof LeaderboardApiGetLeaderboardBounty
+     */
+    readonly limit?: number
+}
+
+/**
  * Request parameters for putLeaderboardOptin operation in LeaderboardApi.
  * @export
  * @interface LeaderboardApiPutLeaderboardOptinRequest
@@ -615,8 +919,8 @@ export class LeaderboardApi extends BaseAPI {
     }
 
     /**
-     * Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: the record\'s verified-action points, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
+     * Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time. Ties go to the earlier application. Share clicks count for nothing.  Everyone who ever applied is on it. A form filed before the person had an account is a row of its own (no name, score 0, the day it was filed) until their account\'s record claims it, and the record then begins when the form did.  A row is named only for a person who opted into the public board (PUT /v1/leaderboard/optin); the caller always sees their own row named. Tokens are a range on every row and exact on a named row and the caller\'s. `tokens` and `referrals` say whether the warehouse and the referral service answered; a term that did not is left out of every score alike.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Ranks everyone on the hanzo.ai/beta waitlist by one score: 1 per star on GitHub verified for the record and 1 per founder link followed, plus 1 per org that signed up with its referral code, plus 20 per such org that has made metered spend, plus 1 per 100,000 tokens the person used, all time.
      * @param {LeaderboardApiGetLeaderboardBetaRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -624,6 +928,40 @@ export class LeaderboardApi extends BaseAPI {
      */
     public getLeaderboardBeta(requestParameters: LeaderboardApiGetLeaderboardBetaRequest = {}, options?: RawAxiosRequestConfig) {
         return LeaderboardApiFp(this.configuration).getLeaderboardBeta(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+     * @summary Returns the ranked bug hunters and bounty contributors, and the recent bug and bounty awards.
+     * @param {LeaderboardApiGetLeaderboardBountyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardBounty(requestParameters: LeaderboardApiGetLeaderboardBountyRequest = {}, options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardBounty(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Holds one text/event-stream open and pushes a `message` frame for each line as it happens, after replaying the last 20. `data` is `{id, kind, at, handle, detail}`, where kind is joined, referred, tried, milestone, hour, bounty, level or expert. `handle` is masked in the middle, whole for an org that listed itself and empty for one that withdrew. At most 30 lines a minute. A `: ping` comment is written every 25 seconds. There is no resume: a reader that reconnects is replayed the last 20. No credential is needed to read it.
+     * @summary Stream the board\'s live lines to anyone as Server-Sent Events
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardFeed(options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardFeed(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it. The window is the standing\'s: a signed-in reader sees their own star, five ranks below it and as many above as their points have earned; a reader who is not signed in sees the last ranks, where a newcomer starts. Every other star has `points` of -1 and no name, and is still drawn. The stars are columns of equal length, best first, and `center` is the tokens used and the orgs active in the last 24 hours. A star\'s id is opaque: it is the same wherever this answer mentions that star, names no org, and is replaced on the next read, about a minute later. A signed-in reader gets `self`, the id of their own star. Names are the standing\'s: masked in the middle, whole where the org listed itself, empty where it withdrew. No org id, handle or email is sent. No credential is needed to read it.
+     * @summary Returns every ranked org as a star, for a page to draw the community as a galaxy: each star holds its band in the reward program\'s level table, a coarse size (a factor of two), the star of the org that referred it, if any, and, only for the ranks the reader has earned a view of, its exact points and the name the standing shows for it.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardGalaxy(options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardGalaxy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -635,6 +973,28 @@ export class LeaderboardApi extends BaseAPI {
      */
     public getLeaderboardOptin(options?: RawAxiosRequestConfig) {
         return LeaderboardApiFp(this.configuration).getLeaderboardOptin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety). Every series is read from where cloud records it; one that cannot be read is left out and named in `missing`, and the ones nothing records today (orgs trying a product, shares) are always named there. Counts only: no org, no name. No credential is needed to read it.
+     * @summary Returns how fast the platform is being used and is spreading, as counts by day for thirty days and by hour for the last day: tokens used, orgs active, orgs signed up, orgs that came through a referral link, orgs using a model for the first time (with the models most tried), and how many different models were in use (variety).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardPulse(options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardPulse(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader. Every org IAM holds is ranked, by points: tokens used, referrals, verified stars, follows and bounty awards. A signed-in reader sees their own rank, the ranks just below it and as many above it as their points have earned; the rest are counted in `locked` and never sent. A reader who is not signed in sees the last ranks, where a newcomer starts. Names are masked in the middle; the reader\'s own is whole, an org that listed itself is whole, and one that withdrew has none. No credential is needed to read it.
+     * @summary Returns the public board of who has used and built the most on Hanzo, shown as a window around the reader.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeaderboardApi
+     */
+    public getLeaderboardStanding(options?: RawAxiosRequestConfig) {
+        return LeaderboardApiFp(this.configuration).getLeaderboardStanding(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

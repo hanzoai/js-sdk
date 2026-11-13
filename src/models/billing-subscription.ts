@@ -78,6 +78,12 @@ export interface BillingSubscription {
      */
     'currentPeriodStart'?: string;
     /**
+     * CustomerCents is the price staff agreed this subscriber pays for one seat each period, below the plan\'s list price; absent when none was. Every invoice bills the plan at list and the difference as the customer\'s discount. After LastPaid, for the ZAP wire.
+     * @type {number}
+     * @memberof BillingSubscription
+     */
+    'customerCents'?: number;
+    /**
      * DefaultPaymentMethod is the saved method a renewal would use. Empty means there is none, so nothing can charge the plan.
      * @type {string}
      * @memberof BillingSubscription
@@ -101,6 +107,12 @@ export interface BillingSubscription {
      * @memberof BillingSubscription
      */
     'id'?: string;
+    /**
+     * LastPaid is when the latest payment for this subscription arrived, RFC 3339: its latest paid invoice\'s paid time, or, for a period recorded as collected outside commerce, which keeps no time of its own record, the start of the latest period recorded — whichever is later. Any period, not only the one in hand: a plan past due still says when it was last paid. Empty when nothing was, or when the invoices did not read. Last, so every field before it keeps its place on the ZAP wire.
+     * @type {string}
+     * @memberof BillingSubscription
+     */
+    'lastPaid'?: string;
     /**
      * Lines are a team\'s other seat types beside Plan (a team of standard and premium seats is Plan \"team\" and one line of \"team-premium\"), each with the seats of it the period in hand was paid for. Seats above counts them too. After Held, so the fields before them keep their places on the ZAP wire.
      * @type {Array<BillingSubscriptionLine>}

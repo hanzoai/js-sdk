@@ -57,6 +57,12 @@ export interface AgentSessionView {
      */
     'branch'?: string;
     /**
+     * Channel is the collaborative channel this run was started in (HIP-0523), empty when it came from anywhere else — a CLI, a schedule, an API call. It is what lets a space view show the runs of one channel beside its messages.
+     * @type {string}
+     * @memberof AgentSessionView
+     */
+    'channel'?: string;
+    /**
      * Children is the DIRECT fan-out — how many sessions name this one as parent — and not the size of the subtree. Read the tree for that.
      * @type {number}
      * @memberof AgentSessionView
@@ -86,6 +92,12 @@ export interface AgentSessionView {
      * @memberof AgentSessionView
      */
     'environment'?: string;
+    /**
+     * Error explains why the session ended in error, when it did. Empty for any other status.
+     * @type {string}
+     * @memberof AgentSessionView
+     */
+    'error'?: string;
     /**
      * Events is how many turns the session\'s log holds, counted at read time. It is the whole log, however few of them RecentEvents carries.
      * @type {number}
@@ -170,12 +182,6 @@ export interface AgentSessionView {
      * @memberof AgentSessionView
      */
     'repo'?: string;
-    /**
-     * Room is the collaborative room this run was started in (HIP-0523), empty when it came from anywhere else — a CLI, a schedule, an API call. It is what lets a space view show the runs of one room beside its messages.
-     * @type {string}
-     * @memberof AgentSessionView
-     */
-    'room'?: string;
     /**
      * RootSessionID is the top of this session\'s tree, inherited from the parent and shared by every node in one flow. A root session\'s own id, when it has no parent. It is the key one indexed read pulls a whole flow by, and what ?root= narrows a list or a stream to.
      * @type {string}

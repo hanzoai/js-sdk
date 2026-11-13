@@ -38,6 +38,10 @@ import type { ToolBuildRequest } from '../models';
 // @ts-ignore
 import type { ToolCreateServerReq } from '../models';
 // @ts-ignore
+import type { ToolDetectReq } from '../models';
+// @ts-ignore
+import type { ToolDetectResult } from '../models';
+// @ts-ignore
 import type { ToolKit } from '../models';
 // @ts-ignore
 import type { ToolMCPListing } from '../models';
@@ -609,6 +613,46 @@ export const ToolApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.  Each candidate skill and tool is posed as a typed boolean question over the prompt state in a single Kai decision pass, returning calibrated probabilities in [0, 1]. When autoActivate is true, recommended entries that are not yet enabled — and that the caller has authority to toggle — are activated in the caller\'s (org, project) scope and recorded on the audit trail.
+         * @summary Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.
+         * @param {ToolDetectReq} toolDetectReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postToolDetect: async (toolDetectReq: ToolDetectReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'toolDetectReq' is not null or undefined
+            assertParamExists('postToolDetect', 'toolDetectReq', toolDetectReq)
+            const localVarPath = `/v1/tool/detect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(toolDetectReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
          * @param {ToolCreateServerReq} toolCreateServerReq 
@@ -1001,6 +1045,19 @@ export const ToolApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.  Each candidate skill and tool is posed as a typed boolean question over the prompt state in a single Kai decision pass, returning calibrated probabilities in [0, 1]. When autoActivate is true, recommended entries that are not yet enabled — and that the caller has authority to toggle — are activated in the caller\'s (org, project) scope and recorded on the audit trail.
+         * @summary Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.
+         * @param {ToolDetectReq} toolDetectReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postToolDetect(toolDetectReq: ToolDetectReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolDetectResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolDetect(toolDetectReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ToolApi.postToolDetect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server.
          * @param {ToolCreateServerReq} toolCreateServerReq 
@@ -1209,6 +1266,16 @@ export const ToolApiFactory = function (configuration?: Configuration, basePath?
          */
         postToolCall(requestParameters: ToolApiPostToolCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolToolResult> {
             return localVarFp.postToolCall(requestParameters.toolToolCall, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.  Each candidate skill and tool is posed as a typed boolean question over the prompt state in a single Kai decision pass, returning calibrated probabilities in [0, 1]. When autoActivate is true, recommended entries that are not yet enabled — and that the caller has authority to toggle — are activated in the caller\'s (org, project) scope and recorded on the audit trail.
+         * @summary Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.
+         * @param {ToolApiPostToolDetectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postToolDetect(requestParameters: ToolApiPostToolDetectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolDetectResult> {
+            return localVarFp.postToolDetect(requestParameters.toolDetectReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP server. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.  A server and the tools of it the org activates are carried into every agent run in the org, so registering one — or revising one, credential included — takes an admin of the org or a SuperAdmin; a member is refused 403. The registration is on the org\'s audit trail before it is made, and one the trail cannot record is refused 503.
@@ -1422,6 +1489,20 @@ export interface ToolApiPostToolCallRequest {
      * @memberof ToolApiPostToolCall
      */
     readonly toolToolCall: ToolToolCall
+}
+
+/**
+ * Request parameters for postToolDetect operation in ToolApi.
+ * @export
+ * @interface ToolApiPostToolDetectRequest
+ */
+export interface ToolApiPostToolDetectRequest {
+    /**
+     * 
+     * @type {ToolDetectReq}
+     * @memberof ToolApiPostToolDetect
+     */
+    readonly toolDetectReq: ToolDetectReq
 }
 
 /**
@@ -1662,6 +1743,18 @@ export class ToolApi extends BaseAPI {
      */
     public postToolCall(requestParameters: ToolApiPostToolCallRequest, options?: RawAxiosRequestConfig) {
         return ToolApiFp(this.configuration).postToolCall(requestParameters.toolToolCall, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.  Each candidate skill and tool is posed as a typed boolean question over the prompt state in a single Kai decision pass, returning calibrated probabilities in [0, 1]. When autoActivate is true, recommended entries that are not yet enabled — and that the caller has authority to toggle — are activated in the caller\'s (org, project) scope and recorded on the audit trail.
+     * @summary Asks Kai (POST /v1/decisions) which skills and tools in the caller\'s org and project are relevant to a prompt, and optionally activates them automatically.
+     * @param {ToolApiPostToolDetectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ToolApi
+     */
+    public postToolDetect(requestParameters: ToolApiPostToolDetectRequest, options?: RawAxiosRequestConfig) {
+        return ToolApiFp(this.configuration).postToolDetect(requestParameters.toolDetectReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

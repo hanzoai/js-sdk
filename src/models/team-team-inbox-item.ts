@@ -30,6 +30,12 @@ export interface TeamTeamInboxItem {
      */
     'archived'?: boolean;
     /**
+     * Channel is the channel it is about, when it is about a channel.
+     * @type {string}
+     * @memberof TeamTeamInboxItem
+     */
+    'channel'?: string;
+    /**
      * CreatedOn is when it was filed, unix milliseconds.
      * @type {number}
      * @memberof TeamTeamInboxItem
@@ -48,7 +54,7 @@ export interface TeamTeamInboxItem {
      */
     'id'?: string;
     /**
-     * Message is the message that caused it, as the message ops answer it. Absent when that message has since been deleted, or is in a room the caller can no longer see.
+     * Message is the message that caused it, as the message ops answer it. Absent when that message has since been deleted, or is in a channel the caller can no longer see.
      * @type {TeamTeamMessage}
      * @memberof TeamTeamInboxItem
      */
@@ -65,12 +71,6 @@ export interface TeamTeamInboxItem {
      * @memberof TeamTeamInboxItem
      */
     'reason'?: string;
-    /**
-     * Room is the room it is about, when it is about a room.
-     * @type {string}
-     * @memberof TeamTeamInboxItem
-     */
-    'room'?: string;
     /**
      * Space is the space uuid it was filed in.
      * @type {string}

@@ -48,6 +48,8 @@ import type { ProjectProjectsDomainsBind } from '../models';
 // @ts-ignore
 import type { ProjectProjectsFork } from '../models';
 // @ts-ignore
+import type { ProjectProjectsObjects } from '../models';
+// @ts-ignore
 import type { ProjectProjectsProject } from '../models';
 // @ts-ignore
 import type { ProjectProjectsPublish } from '../models';
@@ -313,6 +315,48 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getProjectBySlugDeploymentsById', 'id', id)
             const localVarPath = `/v1/project/{slug}/deployments/{id}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.  It is what lets a publisher upload only what changed. The publisher diffs its export against this listing — the store\'s own record, never a manifest kept from an earlier run — and uploads the files that differ or are absent; an object written in one part carries the MD5 of its bytes as its ETag, so a local digest is the whole comparison. A file the diff wrongly skips is still caught: the completion refuses a release while any key of its manifest is absent.  The listing is whole or refused. A store that is unconfigured or fails while listing answers 503 naming the cause, never a partial list.  Scope: a validated principal is required (401 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.
+         * @param {string} slug Slug is the project the deployment belongs to, from the path.
+         * @param {string} id ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectBySlugDeploymentsByIdObjects: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('getProjectBySlugDeploymentsByIdObjects', 'slug', slug)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getProjectBySlugDeploymentsByIdObjects', 'id', id)
+            const localVarPath = `/v1/project/{slug}/deployments/{id}/objects`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -766,7 +810,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the whole release, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. A fingerprinted asset the release drops stays up to 36 hours, so a tab opened on the previous release can still load its chunks. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  A live completion that names `keys` is not taken on trust. The objects `copy` names are first copied from the `copyFrom` site\'s prefix, then the prefix is listed, and while any key of the manifest is absent the answer is 409 naming how many and the first of them. A store that cannot be listed is a 503, and a copy that fails is a 502 naming the key. Each of those leaves the deployment queued — a release that cannot be proven whole is never marked live — so the publisher uploads what is missing and completes again.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
          * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
          * @param {string} slug Slug is the project the deployment belongs to, from the path.
          * @param {string} id ID is the queued deployment to complete, from the path.
@@ -1328,6 +1372,20 @@ export const ProjectApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.  It is what lets a publisher upload only what changed. The publisher diffs its export against this listing — the store\'s own record, never a manifest kept from an earlier run — and uploads the files that differ or are absent; an object written in one part carries the MD5 of its bytes as its ETag, so a local digest is the whole comparison. A file the diff wrongly skips is still caught: the completion refuses a release while any key of its manifest is absent.  The listing is whole or refused. A store that is unconfigured or fails while listing answers 503 naming the cause, never a partial list.  Scope: a validated principal is required (401 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.
+         * @param {string} slug Slug is the project the deployment belongs to, from the path.
+         * @param {string} id ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProjectBySlugDeploymentsByIdObjects(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectProjectsObjects>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectBySlugDeploymentsByIdObjects(slug, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectApi.getProjectBySlugDeploymentsByIdObjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (401 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
          * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
@@ -1471,7 +1529,7 @@ export const ProjectApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the whole release, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. A fingerprinted asset the release drops stays up to 36 hours, so a tab opened on the previous release can still load its chunks. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  A live completion that names `keys` is not taken on trust. The objects `copy` names are first copied from the `copyFrom` site\'s prefix, then the prefix is listed, and while any key of the manifest is absent the answer is 409 naming how many and the first of them. A store that cannot be listed is a 503, and a copy that fails is a 502 naming the key. Each of those leaves the deployment queued — a release that cannot be proven whole is never marked live — so the publisher uploads what is missing and completes again.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
          * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
          * @param {string} slug Slug is the project the deployment belongs to, from the path.
          * @param {string} id ID is the queued deployment to complete, from the path.
@@ -1700,6 +1758,16 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getProjectBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.  It is what lets a publisher upload only what changed. The publisher diffs its export against this listing — the store\'s own record, never a manifest kept from an earlier run — and uploads the files that differ or are absent; an object written in one part carries the MD5 of its bytes as its ETag, so a local digest is the whole comparison. A file the diff wrongly skips is still caught: the completion refuses a release while any key of its manifest is absent.  The listing is whole or refused. A store that is unconfigured or fails while listing answers 503 naming the cause, never a partial list.  Scope: a validated principal is required (401 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.
+         * @param {ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectBySlugDeploymentsByIdObjects(requestParameters: ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectProjectsObjects> {
+            return localVarFp.getProjectBySlugDeploymentsByIdObjects(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (401 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
          * @param {ProjectApiGetProjectBySlugDomainsRequest} requestParameters Request parameters.
@@ -1807,7 +1875,7 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postProjectBySlugDeployments(requestParameters.slug, requestParameters.projectProjectsDeployStart, options).then((request) => request(axios, basePath));
         },
         /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the whole release, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. A fingerprinted asset the release drops stays up to 36 hours, so a tab opened on the previous release can still load its chunks. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  A live completion that names `keys` is not taken on trust. The objects `copy` names are first copied from the `copyFrom` site\'s prefix, then the prefix is listed, and while any key of the manifest is absent the answer is 409 naming how many and the first of them. A store that cannot be listed is a 503, and a copy that fails is a 502 naming the key. Each of those leaves the deployment queued — a release that cannot be proven whole is never marked live — so the publisher uploads what is missing and completes again.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
          * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
          * @param {ProjectApiPostProjectBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2013,6 +2081,27 @@ export interface ProjectApiGetProjectBySlugDeploymentsByIdRequest {
      * ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
      * @type {string}
      * @memberof ProjectApiGetProjectBySlugDeploymentsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getProjectBySlugDeploymentsByIdObjects operation in ProjectApi.
+ * @export
+ * @interface ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest
+ */
+export interface ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest {
+    /**
+     * Slug is the project the deployment belongs to, from the path.
+     * @type {string}
+     * @memberof ProjectApiGetProjectBySlugDeploymentsByIdObjects
+     */
+    readonly slug: string
+
+    /**
+     * ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
+     * @type {string}
+     * @memberof ProjectApiGetProjectBySlugDeploymentsByIdObjects
      */
     readonly id: string
 }
@@ -2444,6 +2533,18 @@ export class ProjectApi extends BaseAPI {
     }
 
     /**
+     * Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.  It is what lets a publisher upload only what changed. The publisher diffs its export against this listing — the store\'s own record, never a manifest kept from an earlier run — and uploads the files that differ or are absent; an object written in one part carries the MD5 of its bytes as its ETag, so a local digest is the whole comparison. A file the diff wrongly skips is still caught: the completion refuses a release while any key of its manifest is absent.  The listing is whole or refused. A store that is unconfigured or fails while listing answers 503 naming the cause, never a partial list.  Scope: a validated principal is required (401 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+     * @summary Returns every object under a deployment\'s prefix as the object store itself records it: each key relative to the prefix, its size in bytes and its ETag.
+     * @param {ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectApi
+     */
+    public getProjectBySlugDeploymentsByIdObjects(requestParameters: ProjectApiGetProjectBySlugDeploymentsByIdObjectsRequest, options?: RawAxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).getProjectBySlugDeploymentsByIdObjects(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (401 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
      * @param {ProjectApiGetProjectBySlugDomainsRequest} requestParameters Request parameters.
@@ -2573,7 +2674,7 @@ export class ProjectApi extends BaseAPI {
     }
 
     /**
-     * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+     * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the whole release, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. A fingerprinted asset the release drops stays up to 36 hours, so a tab opened on the previous release can still load its chunks. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. No completion is charged: the site is billed for the storage it holds, and a live completion re-measures its org.  A live completion that names `keys` is not taken on trust. The objects `copy` names are first copied from the `copyFrom` site\'s prefix, then the prefix is listed, and while any key of the manifest is absent the answer is 409 naming how many and the first of them. A store that cannot be listed is a 503, and a copy that fails is a 502 naming the key. Each of those leaves the deployment queued — a release that cannot be proven whole is never marked live — so the publisher uploads what is missing and completes again.  Scope: a validated principal is required (401 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
      * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
      * @param {ProjectApiPostProjectBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

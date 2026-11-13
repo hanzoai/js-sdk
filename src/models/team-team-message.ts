@@ -33,13 +33,19 @@ export interface TeamTeamMessage {
      */
     'author'?: string;
     /**
+     * Channel is the channel it was said in — the same id the channel listing answers with, so a caller holding a message can name its channel without a second read. A reply names the channel its thread is in; a comment on a document has none.
+     * @type {string}
+     * @memberof TeamTeamMessage
+     */
+    'channel'?: string;
+    /**
      * CreatedOn is unix MILLIseconds, which is what the platform stamps.
      * @type {number}
      * @memberof TeamTeamMessage
      */
     'createdOn'?: number;
     /**
-     * Doc is the document this message is a comment on. Empty for a message in a room.
+     * Doc is the document this message is a comment on. Empty for a message in a channel.
      * @type {string}
      * @memberof TeamTeamMessage
      */
@@ -86,12 +92,6 @@ export interface TeamTeamMessage {
      * @memberof TeamTeamMessage
      */
     'replies'?: number;
-    /**
-     * Room is the room it was said in — the same id the room listing answers with, so a caller holding a message can name its room without a second read. A reply names the room its thread is in; a comment on a document has none.
-     * @type {string}
-     * @memberof TeamTeamMessage
-     */
-    'room'?: string;
     /**
      * Text is the message as PLAIN TEXT. The document stores markup; this is the same `plainText` reduction the agent responder reads a prompt with, so a caller never has to parse the client\'s markup to know what was said. A mention reads as \"@Name\" here and is listed by id in Mentions.
      * @type {string}

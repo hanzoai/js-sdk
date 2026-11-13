@@ -63,6 +63,12 @@ export interface AgentSessionDetail {
      */
     'branch'?: string;
     /**
+     * Channel is the collaborative channel this run was started in (HIP-0523), empty when it came from anywhere else — a CLI, a schedule, an API call. It is what lets a space view show the runs of one channel beside its messages.
+     * @type {string}
+     * @memberof AgentSessionDetail
+     */
+    'channel'?: string;
+    /**
      * Children is the session\'s DIRECT children, one level down, each with its own counts. The promoted `children` integer beside it is how many there are; this is who they are. For the whole subtree, read the tree.
      * @type {Array<AgentSessionView>}
      * @memberof AgentSessionDetail
@@ -99,6 +105,12 @@ export interface AgentSessionDetail {
      */
     'environment'?: string;
     /**
+     * Error explains why the session ended in error, when it did. Empty for any other status.
+     * @type {string}
+     * @memberof AgentSessionDetail
+     */
+    'error'?: string;
+    /**
      * Events is how many turns the session\'s log holds, counted at read time. It is the whole log, however few of them RecentEvents carries.
      * @type {number}
      * @memberof AgentSessionDetail
@@ -134,6 +146,12 @@ export interface AgentSessionDetail {
      * @memberof AgentSessionDetail
      */
     'mode'?: string;
+    /**
+     * Next is the seq cursor to pass as `after` when more events follow a forward page; omitted on tail reads and when the page reached the end of the log.
+     * @type {number}
+     * @memberof AgentSessionDetail
+     */
+    'next'?: number;
     /**
      * Org is the caller\'s OWN tenant, echoed so a client can build the public build URL (/builds/:org/:project) without a second call or a guess. It is never another tenant\'s — every read is org-scoped before it gets here.
      * @type {string}
@@ -177,7 +195,7 @@ export interface AgentSessionDetail {
      */
     'published'?: boolean;
     /**
-     * RecentEvents is the 50 most recent turns, OLDEST of those first — a transcript to read down, not a feed. The promoted `events` integer says how many the log holds in total; page the rest from a seq.
+     * RecentEvents is the page of turns returned for this read, OLDEST of those first — 50 from the tail by default, up to `limit` (1000 max), or forward from `after` when paging through the log. The promoted `events` integer says how many the log holds in total.
      * @type {Array<AgentEventView>}
      * @memberof AgentSessionDetail
      */
@@ -188,12 +206,6 @@ export interface AgentSessionDetail {
      * @memberof AgentSessionDetail
      */
     'repo'?: string;
-    /**
-     * Room is the collaborative room this run was started in (HIP-0523), empty when it came from anywhere else — a CLI, a schedule, an API call. It is what lets a space view show the runs of one room beside its messages.
-     * @type {string}
-     * @memberof AgentSessionDetail
-     */
-    'room'?: string;
     /**
      * RootSessionID is the top of this session\'s tree, inherited from the parent and shared by every node in one flow. A root session\'s own id, when it has no parent. It is the key one indexed read pulls a whole flow by, and what ?root= narrows a list or a stream to.
      * @type {string}

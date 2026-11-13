@@ -57,7 +57,7 @@ export interface IamInput {
      */
     'name'?: string;
     /**
-     * 
+     * Owner is the organization the team belongs to. Leave it out and it is yours, from your credentials; name another only if you administer it.
      * @type {string}
      * @memberof IamInput
      */

@@ -632,12 +632,13 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.  ?id= narrows it to the models named, in the catalog\'s order, and `total` counts what is answered: a page that prices five models reads five, not the catalog.
          * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
+         * @param {string} [id] ID is the models to answer, comma-separated: each matches a model whose id or name is exactly it, or whose id\&#39;s last path segment is (&#x60;gpt-5.5&#x60; finds &#x60;openai/gpt-5.5&#x60;). A model the catalog lists without an id is identified by its name, so &#x60;kai&#x60; also finds &#x60;hanzo/kai&#x60;. Absent answers the whole catalog.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingModels: async (id?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -653,6 +654,10 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
 
 
     
@@ -1153,13 +1158,14 @@ export const PricingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.  ?id= narrows it to the models named, in the catalog\'s order, and `total` counts what is answered: a page that prices five models reads five, not the catalog.
          * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
+         * @param {string} [id] ID is the models to answer, comma-separated: each matches a model whose id or name is exactly it, or whose id\&#39;s last path segment is (&#x60;gpt-5.5&#x60; finds &#x60;openai/gpt-5.5&#x60;). A model the catalog lists without an id is identified by its name, so &#x60;kai&#x60; also finds &#x60;hanzo/kai&#x60;. Absent answers the whole catalog.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPricingModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingModelList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModels(options);
+        async getPricingModels(id?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPricingModelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModels(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1425,13 +1431,14 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getPricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.  ?id= narrows it to the models named, in the catalog\'s order, and `total` counts what is answered: a page that prices five models reads five, not the catalog.
          * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
+         * @param {PricingApiGetPricingModelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPricingModels(options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingModelList> {
-            return localVarFp.getPricingModels(options).then((request) => request(axios, basePath));
+        getPricingModels(requestParameters: PricingApiGetPricingModelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PricingPricingModelList> {
+            return localVarFp.getPricingModels(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * ListPaaSPlans returns the application-hosting plans — the deploy-and-host tiers, each with its monthly and annual price, app and memory allowances and feature list.
@@ -1520,6 +1527,20 @@ export interface PricingApiGetPricingModelByNameRequest {
      * @memberof PricingApiGetPricingModelByName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for getPricingModels operation in PricingApi.
+ * @export
+ * @interface PricingApiGetPricingModelsRequest
+ */
+export interface PricingApiGetPricingModelsRequest {
+    /**
+     * ID is the models to answer, comma-separated: each matches a model whose id or name is exactly it, or whose id\&#39;s last path segment is (&#x60;gpt-5.5&#x60; finds &#x60;openai/gpt-5.5&#x60;). A model the catalog lists without an id is identified by its name, so &#x60;kai&#x60; also finds &#x60;hanzo/kai&#x60;. Absent answers the whole catalog.
+     * @type {string}
+     * @memberof PricingApiGetPricingModels
+     */
+    readonly id?: string
 }
 
 /**
@@ -1718,14 +1739,15 @@ export class PricingApi extends BaseAPI {
     }
 
     /**
-     * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.
+     * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see. A model an admin has disabled is absent; one in beta appears only for a caller the platform\'s `beta` switch is on for. A SuperAdmin sees every model, each annotated with its enablement state.  ?id= narrows it to the models named, in the catalog\'s order, and `total` counts what is answered: a page that prices five models reads five, not the catalog.
      * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller may see.
+     * @param {PricingApiGetPricingModelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getPricingModels(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getPricingModels(options).then((request) => request(this.axios, this.basePath));
+    public getPricingModels(requestParameters: PricingApiGetPricingModelsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingModels(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

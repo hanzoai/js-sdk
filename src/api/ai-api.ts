@@ -40,9 +40,11 @@ import type { AiDecisionsRequest } from '../models';
 // @ts-ignore
 import type { AiDecisionsResponse } from '../models';
 // @ts-ignore
-import type { AiLimits } from '../models';
+import type { AiFrameIn } from '../models';
 // @ts-ignore
-import type { AiLimitsSet } from '../models';
+import type { AiFrameOut } from '../models';
+// @ts-ignore
+import type { AiLimits } from '../models';
 // @ts-ignore
 import type { AiMCPSurface } from '../models';
 // @ts-ignore
@@ -51,6 +53,10 @@ import type { AiModelList } from '../models';
 import type { AiModels } from '../models';
 // @ts-ignore
 import type { AiRanking } from '../models';
+// @ts-ignore
+import type { AiRate } from '../models';
+// @ts-ignore
+import type { AiRateIn } from '../models';
 // @ts-ignore
 import type { AiResponse } from '../models';
 // @ts-ignore
@@ -324,6 +330,86 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
+         * Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @summary Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @param {AiFrameIn} aiFrameIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiFrameEdit: async (aiFrameIn: AiFrameIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiFrameIn' is not null or undefined
+            assertParamExists('aiFrameEdit', 'aiFrameIn', aiFrameIn)
+            const localVarPath = `/v1/frame/edits`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiFrameIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top. Returns the composited PNG (b64_json), the clean diffusion background (background_b64), self-contained Hyperframe HTML (html), and the editable layers stack (layers).
+         * @summary Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top.
+         * @param {AiFrameIn} aiFrameIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiFrameGenerate: async (aiFrameIn: AiFrameIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiFrameIn' is not null or undefined
+            assertParamExists('aiFrameGenerate', 'aiFrameIn', aiFrameIn)
+            const localVarPath = `/v1/frame/generations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiFrameIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -404,11 +490,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
          * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
          * @param {boolean} [free] Free keeps the models a call to which bills nothing (bounded by the free allowances instead of a balance).
+         * @param {boolean} [zdr] ZDR keeps only models eligible for Zero Data Retention (excludes free and data-shared routes).
          * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        aiModels: async (q?: string, _class?: string, family?: string, capability?: string, free?: boolean, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        aiModels: async (q?: string, _class?: string, family?: string, capability?: string, free?: boolean, zdr?: boolean, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/ai/mcp/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -445,6 +532,10 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
                 localVarQueryParameter['free'] = free;
             }
 
+            if (zdr !== undefined) {
+                localVarQueryParameter['zdr'] = zdr;
+            }
+
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
@@ -461,16 +552,50 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
-         * @summary Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent.
-         * @param {AiLimitsSet} aiLimitsSet 
+         * Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting. Any member may read it.
+         * @summary Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        aiSetLimits: async (aiLimitsSet: AiLimitsSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'aiLimitsSet' is not null or undefined
-            assertParamExists('aiSetLimits', 'aiLimitsSet', aiLimitsSet)
-            const localVarPath = `/v1/ai/limits`;
+        aiRateLimit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/ai/limits/rate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default. An owner or admin of the organization, or a SuperAdmin, may; a member may not, and a shared sign-up org, which has no admin to speak for its people, is refused. A change a page made with the caller\'s cookie, not the caller (cloud.CSRF), is refused (403). Live at once for every model request. On the audit trail before the write (ai.limits.rate.attempt) and with its outcome (ai.limits.rate), the setting before and after; a trail that does not take the attempt refuses the change (503), and nothing moves.
+         * @summary Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default.
+         * @param {AiRateIn} aiRateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSetRateLimit: async (aiRateIn: AiRateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiRateIn' is not null or undefined
+            assertParamExists('aiSetRateLimit', 'aiRateIn', aiRateIn)
+            const localVarPath = `/v1/ai/limits/rate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -493,7 +618,7 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(aiLimitsSet, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(aiRateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5917,7 +6042,7 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.
+         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.  ?id= narrows the listing to the models a page names, comma-separated and at most 100, in the listing\'s order; an id nothing lists is absent. Without it the listing is whole, which is what every OpenAI-compatible caller reads.
          * @summary Returns the list of available models from the routing table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7590,6 +7715,40 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d). Forwards to zen\'s /v1/3d/generations and bills per unit.
+         * @summary Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        post3dGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/3d/generations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10517,15 +10676,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChat: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChat: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postChat', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/chat`;
@@ -10548,6 +10708,9 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xFast != null) {
+                localVarHeaderParameter['X-Fast'] = String(xFast);
+            }
             if (xMaxCost != null) {
                 localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
                     ? xMaxCost
@@ -10569,15 +10732,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChatCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChatCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postChatCompletions', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/chat/completions`;
@@ -10600,6 +10764,9 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xFast != null) {
+                localVarHeaderParameter['X-Fast'] = String(xFast);
+            }
             if (xMaxCost != null) {
                 localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
                     ? xMaxCost
@@ -10661,15 +10828,16 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCompletions: async (openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'openaiChatCompletionRequest' is not null or undefined
             assertParamExists('postCompletions', 'openaiChatCompletionRequest', openaiChatCompletionRequest)
             const localVarPath = `/v1/completions`;
@@ -10692,6 +10860,9 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
+            if (xFast != null) {
+                localVarHeaderParameter['X-Fast'] = String(xFast);
+            }
             if (xMaxCost != null) {
                 localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
                     ? xMaxCost
@@ -10786,6 +10957,40 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(openaiEmbeddingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postFoleyGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/foley/generations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10939,6 +11144,40 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMusicGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/music/generations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Implements POST /v1/rerank (Cohere/Jina-compatible).  Body: {\"model\": \"...\", \"query\": \"...\", \"documents\": [\"...\", ...]|[{\"text\":\"...\"}],   \"top_n\"?: int, \"return_documents\"?: bool}  Response: {\"object\":\"list\",\"model\":...,\"results\":[{\"index\",\"relevance_score\",\"document\"?}],\"usage\":{...}}  Backend selection is provider-driven (one endpoint, one contract):   - If the model routes to a native rerank provider (Jina/Cohere/Voyage) the     request is proxied to that provider\'s /rerank endpoint.   - Otherwise scores are computed as a real bi-encoder ranking: embed the     query and documents through the resolved embedding model and rank by     cosine similarity. No rerank-specific key required.
          * @summary Implements POST /v1/rerank (Cohere/Jina-compatible).
          * @param {*} [options] Override http request option.
@@ -10973,14 +11212,15 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements POST /v1/responses.
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postResponses: async (xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResponses: async (xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/responses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10999,6 +11239,9 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            if (xFast != null) {
+                localVarHeaderParameter['X-Fast'] = String(xFast);
+            }
             if (xMaxCost != null) {
                 localVarHeaderParameter['X-Max-Cost'] = typeof xMaxCost === 'string'
                     ? xMaxCost
@@ -12551,6 +12794,32 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @summary Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @param {AiFrameIn} aiFrameIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiFrameEdit(aiFrameIn: AiFrameIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiFrameOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiFrameEdit(aiFrameIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiFrameEdit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top. Returns the composited PNG (b64_json), the clean diffusion background (background_b64), self-contained Hyperframe HTML (html), and the editable layers stack (layers).
+         * @summary Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top.
+         * @param {AiFrameIn} aiFrameIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiFrameGenerate(aiFrameIn: AiFrameIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiFrameOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiFrameGenerate(aiFrameIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiFrameGenerate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -12583,27 +12852,40 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {string} [family] Family keeps one Hanzo family: enso, zen, kai or zoo.
          * @param {string} [capability] Capability keeps the models that have it: tools, vision or reasoning, or a modality they take or give (text, image, audio, file, video, decision).
          * @param {boolean} [free] Free keeps the models a call to which bills nothing (bounded by the free allowances instead of a balance).
+         * @param {boolean} [zdr] ZDR keeps only models eligible for Zero Data Retention (excludes free and data-shared routes).
          * @param {number} [limit] Limit is the most models to answer, 1 to 500; 0 answers 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async aiModels(q?: string, _class?: string, family?: string, capability?: string, free?: boolean, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModels>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiModels(q, _class, family, capability, free, limit, options);
+        async aiModels(q?: string, _class?: string, family?: string, capability?: string, free?: boolean, zdr?: boolean, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModels>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiModels(q, _class, family, capability, free, zdr, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.aiModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
-         * @summary Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent.
-         * @param {AiLimitsSet} aiLimitsSet 
+         * Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting. Any member may read it.
+         * @summary Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async aiSetLimits(aiLimitsSet: AiLimitsSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiLimits>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSetLimits(aiLimitsSet, options);
+        async aiRateLimit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiRate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiRateLimit(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AiApi.aiSetLimits']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiRateLimit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default. An owner or admin of the organization, or a SuperAdmin, may; a member may not, and a shared sign-up org, which has no admin to speak for its people, is refused. A change a page made with the caller\'s cookie, not the caller (cloud.CSRF), is refused (403). Live at once for every model request. On the audit trail before the write (ai.limits.rate.attempt) and with its outcome (ai.limits.rate), the setting before and after; a trail that does not take the attempt refuses the change (503), and nothing moves.
+         * @summary Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default.
+         * @param {AiRateIn} aiRateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiSetRateLimit(aiRateIn: AiRateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiRate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSetRateLimit(aiRateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.aiSetRateLimit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -14475,7 +14757,7 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.
+         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.  ?id= narrows the listing to the models a page names, comma-separated and at most 100, in the listing\'s order; an id nothing lists is absent. Without it the listing is whole, which is what every OpenAI-compatible caller reads.
          * @summary Returns the list of available models from the routing table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15016,6 +15298,18 @@ export const AiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiWorkflowsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d). Forwards to zen\'s /v1/3d/generations and bills per unit.
+         * @summary Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async post3dGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.post3dGenerations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.post3dGenerations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -15988,31 +16282,33 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
+        async postChat(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(openaiChatCompletionRequest, xFast, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
+        async postChatCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(openaiChatCompletionRequest, xFast, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -16031,16 +16327,17 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {OpenaiChatCompletionRequest} openaiChatCompletionRequest 
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(openaiChatCompletionRequest, xMaxCost, xMaxLatencyMs, options);
+        async postCompletions(openaiChatCompletionRequest: OpenaiChatCompletionRequest, xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostChat200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(openaiChatCompletionRequest, xFast, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -16069,6 +16366,18 @@ export const AiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postEmbeddings(openaiEmbeddingRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postEmbeddings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postFoleyGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFoleyGenerations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.postFoleyGenerations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -16122,6 +16431,18 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMusicGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMusicGenerations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AiApi.postMusicGenerations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Implements POST /v1/rerank (Cohere/Jina-compatible).  Body: {\"model\": \"...\", \"query\": \"...\", \"documents\": [\"...\", ...]|[{\"text\":\"...\"}],   \"top_n\"?: int, \"return_documents\"?: bool}  Response: {\"object\":\"list\",\"model\":...,\"results\":[{\"index\",\"relevance_score\",\"document\"?}],\"usage\":{...}}  Backend selection is provider-driven (one endpoint, one contract):   - If the model routes to a native rerank provider (Jina/Cohere/Voyage) the     request is proxied to that provider\'s /rerank endpoint.   - Otherwise scores are computed as a real bi-encoder ranking: embed the     query and documents through the resolved embedding model and rank by     cosine similarity. No rerank-specific key required.
          * @summary Implements POST /v1/rerank (Cohere/Jina-compatible).
          * @param {*} [options] Override http request option.
@@ -16134,15 +16455,16 @@ export const AiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements POST /v1/responses.
+         * @param {string} [xFast] Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
          * @param {number} [xMaxCost] The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
          * @param {number} [xMaxLatencyMs] The slowest model this request accepts, in milliseconds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postResponses(xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostResponses200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(xMaxCost, xMaxLatencyMs, options);
+        async postResponses(xFast?: string, xMaxCost?: number, xMaxLatencyMs?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostResponses200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(xFast, xMaxCost, xMaxLatencyMs, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postResponses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -16658,6 +16980,26 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.aiDecide(requestParameters.aiDecideIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @summary Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+         * @param {AiApiAiFrameEditRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiFrameEdit(requestParameters: AiApiAiFrameEditRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiFrameOut> {
+            return localVarFp.aiFrameEdit(requestParameters.aiFrameIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top. Returns the composited PNG (b64_json), the clean diffusion background (background_b64), self-contained Hyperframe HTML (html), and the editable layers stack (layers).
+         * @summary Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top.
+         * @param {AiApiAiFrameGenerateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiFrameGenerate(requestParameters: AiApiAiFrameGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiFrameOut> {
+            return localVarFp.aiFrameGenerate(requestParameters.aiFrameIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
          * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
          * @param {*} [options] Override http request option.
@@ -16684,17 +17026,26 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @throws {RequiredError}
          */
         aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AiModels> {
-            return localVarFp.aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.zdr, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
-         * @summary Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent.
-         * @param {AiApiAiSetLimitsRequest} requestParameters Request parameters.
+         * Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting. Any member may read it.
+         * @summary Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        aiSetLimits(requestParameters: AiApiAiSetLimitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiLimits> {
-            return localVarFp.aiSetLimits(requestParameters.aiLimitsSet, options).then((request) => request(axios, basePath));
+        aiRateLimit(options?: RawAxiosRequestConfig): AxiosPromise<AiRate> {
+            return localVarFp.aiRateLimit(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default. An owner or admin of the organization, or a SuperAdmin, may; a member may not, and a shared sign-up org, which has no admin to speak for its people, is refused. A change a page made with the caller\'s cookie, not the caller (cloud.CSRF), is refused (403). Live at once for every model request. On the audit trail before the write (ai.limits.rate.attempt) and with its outcome (ai.limits.rate), the setting before and after; a trail that does not take the attempt refuses the change (503), and nothing moves.
+         * @summary Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default.
+         * @param {AiApiAiSetRateLimitRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSetRateLimit(requestParameters: AiApiAiSetRateLimitRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiRate> {
+            return localVarFp.aiSetRateLimit(requestParameters.aiRateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Files a correction of one question of one of the org\'s Kai decisions: the right answer, which must be one of that question\'s options and not what Kai answered, and why. A decision Kai captured can teach a capability of its question (/v1/capabilities); one made with capture off is kept with state missing and cannot. The org\'s first correction turns capture on, so its next decisions can teach. Refused: 409 not_wrong when the answer is Kai\'s own, 409 corrected when the question already has a correction, 404 when the decision captured no such question.
@@ -18075,7 +18426,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.getAiWorkflowsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.
+         * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.  ?id= narrows the listing to the models a page names, comma-separated and at most 100, in the listing\'s order; an id nothing lists is absent. Without it the listing is whole, which is what every OpenAI-compatible caller reads.
          * @summary Returns the list of available models from the routing table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18454,6 +18805,15 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          */
         patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.patchAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d). Forwards to zen\'s /v1/3d/generations and bills per unit.
+         * @summary Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        post3dGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.post3dGenerations(options).then((request) => request(axios, basePath));
         },
         /**
          * Create one article.
@@ -19180,24 +19540,24 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.postAudioVoice(options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {AiApiPostChatRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
-            return localVarFp.postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
+            return localVarFp.postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {AiApiPostChatCompletionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
-            return localVarFp.postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
+            return localVarFp.postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves one completion to a caller with no account.
@@ -19210,14 +19570,14 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.postChatPublic(requestParameters.openaiChatCompletionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements the OpenAI-compatible chat completions API
+         * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements the OpenAI-compatible chat completions API
          * @param {AiApiPostCompletionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostChat200Response> {
-            return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
+            return localVarFp.postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/decisions (the Decisions API).  Body: {\"model\": \"kai\", \"state\": \"...\"|{...}|[...], \"questions\": {\"<name>\": {\"type\": \"boolean\"|\"choice\"|\"score\", \"instructions\": ..., \"criteria\": ...}}}. model is kai, Kai\'s versioned id kai-<12 hex of the weights\' sha256> — priced as kai and sent as asked — or Jev by OpenRouter\'s vendor ids, typesafe/jev-1.13 and ~typesafe/jev-latest, which reach Jev itself and bill at Jev\'s list price, or Zen by zenlm/zen6 and zenlm/zen6-flash, answered by a chat completion under a strict schema and billed its output beside its input. No Jev id is ever answered by Kai: a bare one, such as jev-latest, is an unknown model. model is required; state and questions are required unless the request names a handle, which carries neither. instructions is optional and any JSON. A choice names at least 2 labels and a score at least 1 level, bounded by the token budget rather than a count; questions holds 1 to 100.  A boolean is a yes/no probability, answered {\"type\": \"boolean\", \"probability\": p}. noul is accepted as Jev\'s spelling of it and answered in Jev\'s shape, {\"type\": \"noul\", \"noul\": p}; an older Kai adds confidence and answer_confidence to a noul\'s. A boolean carries no confidence. Jev is asked a boolean as a noul, and its answer comes back as exactly the boolean.  observe holds the state under an id, and a later request naming that id as its handle decides over it again. An id is 1 to 128 characters of A-Z, a-z, 0-9, \'.\', \'_\' and \'-\'. A handle belongs to the org that observed it: no other org\'s request can name it.  Response: {\"id\",\"model\",\"provider\",\"answers\":{\"<name>\":{\"type\",...}}, \"usage\":{\"input_tokens\",\"output_tokens\"},\"routing\",\"state_hash\",\"latency_ms\"}. usage.input_tokens is the billed count — the request\'s text counted once, the state once and each question\'s instructions and options once; a decision over a handle bills the state once, when it was observed.  The body may be sent gzip, deflate, br or zstd encoded; decoded, it is bounded as sent.  Refusals are {\"error\":{\"code\",\"message\"}}: 400 malformed JSON or unknown model, 401 no valid credential, 402 insufficient balance, 403 a key kind that may not call this (pk-), 415 any other Content-Encoding, 422 an invalid question or handle id, a state beyond the checkpoint\'s reach (code state_too_long) or a body past 16 MiB (code request_too_long), 429 rate limited or queue full, 502 the service failed, 503 the model is known and not served, 529 overloaded. 402, 429 and 529 carry Retry-After and Retry-After-Ms, and every answer carries X-Request-Id. Billed on the answer\'s input and output tokens at the model\'s price.
@@ -19238,6 +19598,15 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          */
         postEmbeddings(requestParameters: AiApiPostEmbeddingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenaiEmbeddingResponse> {
             return localVarFp.postEmbeddings(requestParameters.openaiEmbeddingRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postFoleyGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFoleyGenerations(options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/images/generations (OpenAI-compatible).  Body: {\"model\": \"...\", \"prompt\": \"...\", \"n\"?: int, \"size\"?: \"1024x1024\",   \"response_format\"?: \"url\"|\"b64_json\"}  It authenticates the caller, resolves the model to its upstream provider via the shared routing table (zen3-image* → do-ai fal diffusion), reserves the per-image budget, generates the image(s) through the do-ai async image client, records usage for billing, and returns the OpenAI images response.
@@ -19278,6 +19647,15 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.postModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
+         * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+         * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMusicGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMusicGenerations(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Implements POST /v1/rerank (Cohere/Jina-compatible).  Body: {\"model\": \"...\", \"query\": \"...\", \"documents\": [\"...\", ...]|[{\"text\":\"...\"}],   \"top_n\"?: int, \"return_documents\"?: bool}  Response: {\"object\":\"list\",\"model\":...,\"results\":[{\"index\",\"relevance_score\",\"document\"?}],\"usage\":{...}}  Backend selection is provider-driven (one endpoint, one contract):   - If the model routes to a native rerank provider (Jina/Cohere/Voyage) the     request is proxied to that provider\'s /rerank endpoint.   - Otherwise scores are computed as a real bi-encoder ranking: embed the     query and documents through the resolved embedding model and rank by     cosine similarity. No rerank-specific key required.
          * @summary Implements POST /v1/rerank (Cohere/Jina-compatible).
          * @param {*} [options] Override http request option.
@@ -19287,14 +19665,14 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.postRerank(options).then((request) => request(axios, basePath));
         },
         /**
-         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
          * @summary Implements POST /v1/responses.
          * @param {AiApiPostResponsesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PostResponses200Response> {
-            return localVarFp.postResponses(requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
+            return localVarFp.postResponses(requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/videos/generations — the ASYNC create.  Body: {\"model\": \"...\", \"prompt\": \"...\", \"size\"?: \"1280x720\", \"seconds\"?: int}  It authenticates the caller, resolves the model to its upstream provider via the shared routing table (zen3-video* / wan2-2-t2v-a14b → the spark-video backend), reserves the per-video budget (the balance gate), creates ONE upstream job, registers it in the in-pod store, and returns the OpenAI-shaped video object with status \"queued\" IMMEDIATELY. The client then polls GET /v1/videos/{id} and downloads GET /v1/videos/{id}/content. Nothing is billed here — the debit lands on completion.
@@ -19660,6 +20038,34 @@ export interface AiApiAiDecideRequest {
 }
 
 /**
+ * Request parameters for aiFrameEdit operation in AiApi.
+ * @export
+ * @interface AiApiAiFrameEditRequest
+ */
+export interface AiApiAiFrameEditRequest {
+    /**
+     * 
+     * @type {AiFrameIn}
+     * @memberof AiApiAiFrameEdit
+     */
+    readonly aiFrameIn: AiFrameIn
+}
+
+/**
+ * Request parameters for aiFrameGenerate operation in AiApi.
+ * @export
+ * @interface AiApiAiFrameGenerateRequest
+ */
+export interface AiApiAiFrameGenerateRequest {
+    /**
+     * 
+     * @type {AiFrameIn}
+     * @memberof AiApiAiFrameGenerate
+     */
+    readonly aiFrameIn: AiFrameIn
+}
+
+/**
  * Request parameters for aiMCPTools operation in AiApi.
  * @export
  * @interface AiApiAiMCPToolsRequest
@@ -19715,6 +20121,13 @@ export interface AiApiAiModelsRequest {
     readonly free?: boolean
 
     /**
+     * ZDR keeps only models eligible for Zero Data Retention (excludes free and data-shared routes).
+     * @type {boolean}
+     * @memberof AiApiAiModels
+     */
+    readonly zdr?: boolean
+
+    /**
      * Limit is the most models to answer, 1 to 500; 0 answers 50.
      * @type {number}
      * @memberof AiApiAiModels
@@ -19723,17 +20136,17 @@ export interface AiApiAiModelsRequest {
 }
 
 /**
- * Request parameters for aiSetLimits operation in AiApi.
+ * Request parameters for aiSetRateLimit operation in AiApi.
  * @export
- * @interface AiApiAiSetLimitsRequest
+ * @interface AiApiAiSetRateLimitRequest
  */
-export interface AiApiAiSetLimitsRequest {
+export interface AiApiAiSetRateLimitRequest {
     /**
      * 
-     * @type {AiLimitsSet}
-     * @memberof AiApiAiSetLimits
+     * @type {AiRateIn}
+     * @memberof AiApiAiSetRateLimit
      */
-    readonly aiLimitsSet: AiLimitsSet
+    readonly aiRateIn: AiRateIn
 }
 
 /**
@@ -22431,6 +22844,13 @@ export interface AiApiPostChatRequest {
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
 
     /**
+     * Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
+     * @type {string}
+     * @memberof AiApiPostChat
+     */
+    readonly xFast?: string
+
+    /**
      * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
      * @type {number}
      * @memberof AiApiPostChat
@@ -22457,6 +22877,13 @@ export interface AiApiPostChatCompletionsRequest {
      * @memberof AiApiPostChatCompletions
      */
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
+
+    /**
+     * Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
+     * @type {string}
+     * @memberof AiApiPostChatCompletions
+     */
+    readonly xFast?: string
 
     /**
      * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
@@ -22499,6 +22926,13 @@ export interface AiApiPostCompletionsRequest {
      * @memberof AiApiPostCompletions
      */
     readonly openaiChatCompletionRequest: OpenaiChatCompletionRequest
+
+    /**
+     * Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
+     * @type {string}
+     * @memberof AiApiPostCompletions
+     */
+    readonly xFast?: string
 
     /**
      * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
@@ -22577,6 +23011,13 @@ export interface AiApiPostModelsByModelAccessRequest {
  * @interface AiApiPostResponsesRequest
  */
 export interface AiApiPostResponsesRequest {
+    /**
+     * Fast mode, as the body\&#39;s &#x60;fast&#x60;: \&quot;1\&quot; or \&quot;true\&quot;.
+     * @type {string}
+     * @memberof AiApiPostResponses
+     */
+    readonly xFast?: string
+
     /**
      * The most this request may cost, in USD per 1,000 tokens. Routing picks only models under it; an org\&#39;s own ceiling fills it when it is absent, and the lower of the two holds.
      * @type {number}
@@ -23310,6 +23751,30 @@ export class AiApi extends BaseAPI {
     }
 
     /**
+     * Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+     * @summary Edits an existing Hyperframe composite or its layer stack (POST /v1/frame/edits): pass background_b64 and layers (or headline, layout, theme, terminal, instruction, or layer_patches) to redesign text, reposition panels, swap themes (light, glass, dark), or add custom card/HTML layers in ~15ms with zero diffusion cost; or set edit_background=true (with qwen-image-edit or iro) to redo the visual background while keeping all typography and UI layers intact.
+     * @param {AiApiAiFrameEditRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiFrameEdit(requestParameters: AiApiAiFrameEditRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiFrameEdit(requestParameters.aiFrameIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top. Returns the composited PNG (b64_json), the clean diffusion background (background_b64), self-contained Hyperframe HTML (html), and the editable layers stack (layers).
+     * @summary Generates a Hyperframe graphic composite (POST /v1/frame/generations): strips all copy and text triggers from the diffusion prompt so the image model (iro, qwen-image, z-image-turbo, flux-3) renders a strictly text-free background, auto-detects the dark hardware/terminal surface bounding box, and layers pixel-perfect @hanzo/font (Zen + Zen Mono) typography and interactive HTML/UI elements on top.
+     * @param {AiApiAiFrameGenerateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiFrameGenerate(requestParameters: AiApiAiFrameGenerateRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiFrameGenerate(requestParameters.aiFrameIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on. Shares only, never amounts.
      * @summary Reads the caller\'s plan usage: for each class of model the plan includes, the share used of the billing period and of its short window, who pays for the next request, and whether the caller is in limited mode and why; the share used of the session and the day; and the ways on.
      * @param {*} [options] Override http request option.
@@ -23341,19 +23806,30 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public aiModels(requestParameters: AiApiAiModelsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).aiModels(requestParameters.q, requestParameters._class, requestParameters.family, requestParameters.capability, requestParameters.free, requestParameters.zdr, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent. A pooled org wallet is its org admin\'s to set; a person\'s own wallet is theirs. Every change is on the audit trail, before and after; no trail, no change. Answers the limits as they read after it.
-     * @summary Sets the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent.
-     * @param {AiApiAiSetLimitsRequest} requestParameters Request parameters.
+     * Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting. Any member may read it.
+     * @summary Reads the per-minute limit as it governs the organization the caller acts in: the model requests one person may make in a minute on every surface — the API, chat, coding runs, bots and MCP — the platform\'s default, which is the most the organization may set, and the organization\'s own setting.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public aiSetLimits(requestParameters: AiApiAiSetLimitsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).aiSetLimits(requestParameters.aiLimitsSet, options).then((request) => request(this.axios, this.basePath));
+    public aiRateLimit(options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiRateLimit(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default. An owner or admin of the organization, or a SuperAdmin, may; a member may not, and a shared sign-up org, which has no admin to speak for its people, is refused. A change a page made with the caller\'s cookie, not the caller (cloud.CSRF), is refused (403). Live at once for every model request. On the audit trail before the write (ai.limits.rate.attempt) and with its outcome (ai.limits.rate), the setting before and after; a trail that does not take the attempt refuses the change (503), and nothing moves.
+     * @summary Sets the model requests one person may make in a minute acting in the organization the caller acts in, on every surface: 1 up to the platform\'s default, never more, or 0 to hold its people to the default.
+     * @param {AiApiAiSetRateLimitRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public aiSetRateLimit(requestParameters: AiApiAiSetRateLimitRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).aiSetRateLimit(requestParameters.aiRateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -25029,7 +25505,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.
+     * Returns the list of available models from the routing table.  PUBLIC BY DESIGN, AND IT DOES NOT AUTHENTICATE — that is the whole contract, so it is stated here rather than left to be inferred. The catalogue is the same for everyone (listAvailableModels takes no principal), docs.hanzo.ai fetches it from the browser, and every policy layer around it says so: the authz filter lists \"models\" as public, filter_balance does not gate it, the rate limiter excludes it, and cloud\'s spend.Reachable carries /v1/models/ as \"the model catalog the shell reads for discovery\".  SO THE Authorization HEADER IS NOT AN ADMISSION CHECK HERE. It is read for ONE thing — annotating gated SKUs with the caller\'s own access standing — and annotation degrades to nothing when there is no verified principal.  A credential that is presented is verified, never merely shape-checked: a caller using /v1/models to ask \"is my key working?\" gets an honest answer, because a key that does not verify annotates nothing rather than reading as accepted.  ?id= narrows the listing to the models a page names, comma-separated and at most 100, in the listing\'s order; an id nothing lists is absent. Without it the listing is whole, which is what every OpenAI-compatible caller reads.
      * @summary Returns the list of available models from the routing table.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25485,6 +25961,17 @@ export class AiApi extends BaseAPI {
      */
     public patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).patchAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d). Forwards to zen\'s /v1/3d/generations and bills per unit.
+     * @summary Implements POST /v1/3d/generations for Zen family 3D SKUs (mori, zen-3d).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public post3dGenerations(options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).post3dGenerations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26362,7 +26849,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Implements the OpenAI-compatible chat completions API
+     * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
      * @summary Implements the OpenAI-compatible chat completions API
      * @param {AiApiPostChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26370,11 +26857,11 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postChat(requestParameters: AiApiPostChatRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postChat(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Implements the OpenAI-compatible chat completions API
+     * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
      * @summary Implements the OpenAI-compatible chat completions API
      * @param {AiApiPostChatCompletionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26382,7 +26869,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postChatCompletions(requestParameters: AiApiPostChatCompletionsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postChatCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26398,7 +26885,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Implements the OpenAI-compatible chat completions API
+     * Implements the OpenAI-compatible chat completions API  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
      * @summary Implements the OpenAI-compatible chat completions API
      * @param {AiApiPostCompletionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26406,7 +26893,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postCompletions(requestParameters: AiApiPostCompletionsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postCompletions(requestParameters.openaiChatCompletionRequest, requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26431,6 +26918,17 @@ export class AiApi extends BaseAPI {
      */
     public postEmbeddings(requestParameters: AiApiPostEmbeddingsRequest, options?: RawAxiosRequestConfig) {
         return AiApiFp(this.configuration).postEmbeddings(requestParameters.openaiEmbeddingRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+     * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public postFoleyGenerations(options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postFoleyGenerations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26480,6 +26978,17 @@ export class AiApi extends BaseAPI {
     }
 
     /**
+     * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
+     * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AiApi
+     */
+    public postMusicGenerations(options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postMusicGenerations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Implements POST /v1/rerank (Cohere/Jina-compatible).  Body: {\"model\": \"...\", \"query\": \"...\", \"documents\": [\"...\", ...]|[{\"text\":\"...\"}],   \"top_n\"?: int, \"return_documents\"?: bool}  Response: {\"object\":\"list\",\"model\":...,\"results\":[{\"index\",\"relevance_score\",\"document\"?}],\"usage\":{...}}  Backend selection is provider-driven (one endpoint, one contract):   - If the model routes to a native rerank provider (Jina/Cohere/Voyage) the     request is proxied to that provider\'s /rerank endpoint.   - Otherwise scores are computed as a real bi-encoder ranking: embed the     query and documents through the resolved embedding model and rank by     cosine similarity. No rerank-specific key required.
      * @summary Implements POST /v1/rerank (Cohere/Jina-compatible).
      * @param {*} [options] Override http request option.
@@ -26491,7 +27000,7 @@ export class AiApi extends BaseAPI {
     }
 
     /**
-     * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
+     * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.  Reasoning effort is `reasoning_effort` (Responses: `reasoning.effort`). Send `auto`, or nothing, and enso-auto\'s router decides: it starts at Enso Flash and moves to a deeper tier only when the router or Kai judges the request needs it. The ladder: `instant` (no reasoning; `none` and `minimal` read instant) serves enso-flash with thinking off, `low` enso-flash, `medium` enso-pro, `high` enso-max, `max` enso-ultra (`xhigh` reads max). On a tier named outright the effort sets only how hard it thinks, and `instant` turns thinking off. Fast mode is `fast: true` (or `X-Fast: 1`): billed from prepaid balance on every plan at 2x the price on enso-auto and enso-flash, 3x on enso-pro and enso-max, 4x on enso-ultra, it asks prepaid rungs first, and a payer with no money of its own is refused prepaid_required.
      * @summary Implements POST /v1/responses.
      * @param {AiApiPostResponsesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26499,7 +27008,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postResponses(requestParameters: AiApiPostResponsesRequest = {}, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postResponses(requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postResponses(requestParameters.xFast, requestParameters.xMaxCost, requestParameters.xMaxLatencyMs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

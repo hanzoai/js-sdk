@@ -24,16 +24,16 @@ import type { EmailMessageRecord } from './email-message-record';
  */
 export interface EmailListMessagesResult {
     /**
-     * Messages lists the stored transactional emails.
+     * Messages is the page.
      * @type {Array<EmailMessageRecord>}
      * @memberof EmailListMessagesResult
      */
     'messages'?: Array<EmailMessageRecord>;
     /**
-     * Total is the count of returned messages.
-     * @type {number}
+     * Next is the cursor of the page after this one; empty on the last page.
+     * @type {string}
      * @memberof EmailListMessagesResult
      */
-    'total'?: number;
+    'next'?: string;
 }
 

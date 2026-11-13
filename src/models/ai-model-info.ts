@@ -73,6 +73,12 @@ export interface AiModelInfo {
      * @type {string}
      * @memberof AiModelInfo
      */
+    'endpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiModelInfo
+     */
     'expires'?: string;
     /**
      * 

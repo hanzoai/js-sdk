@@ -4558,44 +4558,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
-         * @summary Start this store\'s no-card trial on the entry plan
-         * @param {string} storeid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceStoreByStoreidTrial: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postCommerceStoreByStoreidTrial', 'storeid', storeid)
-            const localVarPath = `/v1/commerce/store/{storeid}/trial`
-                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
          * @summary Mint your org\'s least-privilege storefront read key
          * @param {*} [options] Override http request option.
@@ -7467,19 +7429,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
-         * @summary Start this store\'s no-card trial on the entry plan
-         * @param {string} storeid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCommerceStoreByStoreidTrial(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidTrial(storeid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidTrial']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
          * @summary Mint your org\'s least-privilege storefront read key
          * @param {*} [options] Override http request option.
@@ -9112,16 +9061,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         postCommerceStoreByStoreidPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postCommerceStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
-         * @summary Start this store\'s no-card trial on the entry plan
-         * @param {CommerceApiPostCommerceStoreByStoreidTrialRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCommerceStoreByStoreidTrial(requestParameters: CommerceApiPostCommerceStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCommerceStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
@@ -10773,20 +10712,6 @@ export interface CommerceApiPostCommerceStoreByStoreidPaypalPayRequest {
      * 
      * @type {string}
      * @memberof CommerceApiPostCommerceStoreByStoreidPaypalPay
-     */
-    readonly storeid: string
-}
-
-/**
- * Request parameters for postCommerceStoreByStoreidTrial operation in CommerceApi.
- * @export
- * @interface CommerceApiPostCommerceStoreByStoreidTrialRequest
- */
-export interface CommerceApiPostCommerceStoreByStoreidTrialRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommerceApiPostCommerceStoreByStoreidTrial
      */
     readonly storeid: string
 }
@@ -12605,18 +12530,6 @@ export class CommerceApi extends BaseAPI {
      */
     public postCommerceStoreByStoreidPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).postCommerceStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
-     * @summary Start this store\'s no-card trial on the entry plan
-     * @param {CommerceApiPostCommerceStoreByStoreidTrialRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public postCommerceStoreByStoreidTrial(requestParameters: CommerceApiPostCommerceStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

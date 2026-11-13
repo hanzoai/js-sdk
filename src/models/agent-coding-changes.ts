@@ -66,7 +66,7 @@ export interface AgentCodingChanges {
      */
     'moreFiles'?: boolean;
     /**
-     * Pull is the run\'s pull request on the forge, or null while it has none — and for a run proposed somewhere else, a repository the forge only mirrors from GitHub.
+     * Pull is the run\'s pull request, or null while it has none. The forge\'s own is read whole; one proposed somewhere else — a repository the forge only mirrors from GitHub — is the address and number the run recorded, with its state, title and reviews empty.
      * @type {AgentCodingPull}
      * @memberof AgentCodingChanges
      */

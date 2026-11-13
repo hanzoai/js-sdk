@@ -86,6 +86,8 @@ import type { PlatformRunReq } from '../models';
 // @ts-ignore
 import type { PlatformRunView } from '../models';
 // @ts-ignore
+import type { PlatformRunnerBuildLog } from '../models';
+// @ts-ignore
 import type { PlatformRunnerBuildReq } from '../models';
 // @ts-ignore
 import type { PlatformRunnerBuildResp } from '../models';
@@ -251,6 +253,44 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getBuildById', 'id', id)
             const localVarPath = `/v1/build/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.  The log is read from the cluster when asked, never stored, so it lives as long as the build\'s pods do: once their TTL reaps them `log` is empty, and the status and reason GET /v1/build/{id} answers are what remain.  A build belongs to the organization its credential names, and another organization\'s build is 404, exactly as GET /v1/build/{id} answers it.
+         * @summary Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.
+         * @param {string} id ID is the build\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBuildByIdLogs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBuildByIdLogs', 'id', id)
+            const localVarPath = `/v1/build/{id}/logs`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1819,6 +1859,19 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.  The log is read from the cluster when asked, never stored, so it lives as long as the build\'s pods do: once their TTL reaps them `log` is empty, and the status and reason GET /v1/build/{id} answers are what remain.  A build belongs to the organization its credential names, and another organization\'s build is 404, exactly as GET /v1/build/{id} answers it.
+         * @summary Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.
+         * @param {string} id ID is the build\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBuildByIdLogs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformRunnerBuildLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBuildByIdLogs(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getBuildByIdLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
          * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
          * @param {string} [org] Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
@@ -2351,6 +2404,16 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getBuildById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.  The log is read from the cluster when asked, never stored, so it lives as long as the build\'s pods do: once their TTL reaps them `log` is empty, and the status and reason GET /v1/build/{id} answers are what remain.  A build belongs to the organization its credential names, and another organization\'s build is 404, exactly as GET /v1/build/{id} answers it.
+         * @summary Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.
+         * @param {PlatformApiGetBuildByIdLogsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBuildByIdLogs(requestParameters: PlatformApiGetBuildByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformRunnerBuildLog> {
+            return localVarFp.getBuildByIdLogs(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation, and a values file that does not parse is listed in `unreadable`, never dropped.
          * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
          * @param {PlatformApiGetPlatformAppsRequest} requestParameters Request parameters.
@@ -2791,6 +2854,20 @@ export interface PlatformApiGetBuildByIdRequest {
      * ID is the build\&#39;s id, from the path.
      * @type {string}
      * @memberof PlatformApiGetBuildById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getBuildByIdLogs operation in PlatformApi.
+ * @export
+ * @interface PlatformApiGetBuildByIdLogsRequest
+ */
+export interface PlatformApiGetBuildByIdLogsRequest {
+    /**
+     * ID is the build\&#39;s id, from the path.
+     * @type {string}
+     * @memberof PlatformApiGetBuildByIdLogs
      */
     readonly id: string
 }
@@ -3485,6 +3562,18 @@ export class PlatformApi extends BaseAPI {
      */
     public getBuildById(requestParameters: PlatformApiGetBuildByIdRequest, options?: RawAxiosRequestConfig) {
         return PlatformApiFp(this.configuration).getBuildById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.  The log is read from the cluster when asked, never stored, so it lives as long as the build\'s pods do: once their TTL reaps them `log` is empty, and the status and reason GET /v1/build/{id} answers are what remain.  A build belongs to the organization its credential names, and another organization\'s build is 404, exactly as GET /v1/build/{id} answers it.
+     * @summary Answers one build\'s BuildKit output: the log of each Job that ran it, every container in the order it ran them, so a failed step\'s real error is readable rather than cut off at the RUN line that failed.
+     * @param {PlatformApiGetBuildByIdLogsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getBuildByIdLogs(requestParameters: PlatformApiGetBuildByIdLogsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getBuildByIdLogs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

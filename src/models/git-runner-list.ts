@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { GitPoolHealth } from './git-pool-health';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { GitRunnerView } from './git-runner-view';
 
 /**
@@ -24,10 +27,22 @@ import type { GitRunnerView } from './git-runner-view';
  */
 export interface GitRunnerList {
     /**
-     * Data is the daemons registered into this org\'s pools, newest first.
+     * Data is the runners that can run the caller\'s work: the forge\'s, then the daemons registered into this org\'s pools, newest first.
      * @type {Array<GitRunnerView>}
      * @memberof GitRunnerList
      */
     'data'?: Array<GitRunnerView>;
+    /**
+     * Fault says why the forge\'s runners are missing from this answer, when the forge could not be read; the daemons here are listed either way.
+     * @type {string}
+     * @memberof GitRunnerList
+     */
+    'fault'?: string;
+    /**
+     * Pools is each label set a forge runner answers to or a queued job asks for, with how many runners carry it, how many of those are online, and how many of the caller\'s jobs wait on it. A pool with jobs queued and no runner online is a dead pool.
+     * @type {Array<GitPoolHealth>}
+     * @memberof GitRunnerList
+     */
+    'pools'?: Array<GitPoolHealth>;
 }
 

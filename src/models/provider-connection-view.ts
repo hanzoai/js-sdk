@@ -51,6 +51,12 @@ export interface ProviderConnectionView {
      */
     'id'?: string;
     /**
+     * Kind is personal or page for a social account that has one. Empty for every other connector.
+     * @type {string}
+     * @memberof ProviderConnectionView
+     */
+    'kind'?: string;
+    /**
      * Label is the caller\'s own name for this connection (\"default\", \"work\").
      * @type {string}
      * @memberof ProviderConnectionView

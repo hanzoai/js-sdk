@@ -237,8 +237,8 @@ export const LibraryApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
-         * @summary Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project.
+         * Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
+         * @summary Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload.
          * @param {string} id ID is the item, from the path.
          * @param {LibraryItemPatch} libraryItemPatch 
          * @param {*} [options] Override http request option.
@@ -281,7 +281,7 @@ export const LibraryApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. A save with the `key` of one already kept answers that item.
+         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. Send `data` up to 10 MiB inline, or send `bytes` up to 2 GiB to reserve a signed `upload` PUT and finish it with `PATCH /v1/library/:id` `{\"commit\": true}`. A save with the `key` of one already kept answers that item.
          * @summary Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it.
          * @param {LibraryKeepIn} libraryKeepIn 
          * @param {*} [options] Override http request option.
@@ -392,8 +392,8 @@ export const LibraryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
-         * @summary Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project.
+         * Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
+         * @summary Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload.
          * @param {string} id ID is the item, from the path.
          * @param {LibraryItemPatch} libraryItemPatch 
          * @param {*} [options] Override http request option.
@@ -406,7 +406,7 @@ export const LibraryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. A save with the `key` of one already kept answers that item.
+         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. Send `data` up to 10 MiB inline, or send `bytes` up to 2 GiB to reserve a signed `upload` PUT and finish it with `PATCH /v1/library/:id` `{\"commit\": true}`. A save with the `key` of one already kept answers that item.
          * @summary Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it.
          * @param {LibraryKeepIn} libraryKeepIn 
          * @param {*} [options] Override http request option.
@@ -469,8 +469,8 @@ export const LibraryApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getLibraryUnowned(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
-         * @summary Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project.
+         * Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
+         * @summary Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload.
          * @param {LibraryApiPatchLibraryByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -479,7 +479,7 @@ export const LibraryApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.patchLibraryById(requestParameters.id, requestParameters.libraryItemPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. A save with the `key` of one already kept answers that item.
+         * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. Send `data` up to 10 MiB inline, or send `bytes` up to 2 GiB to reserve a signed `upload` PUT and finish it with `PATCH /v1/library/:id` `{\"commit\": true}`. A save with the `key` of one already kept answers that item.
          * @summary Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it.
          * @param {LibraryApiPostLibraryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -701,8 +701,8 @@ export class LibraryApi extends BaseAPI {
     }
 
     /**
-     * Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
-     * @summary Renames one of your items, shares it with your organization or stops sharing it, or moves it to a project.
+     * Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload. Only its owner changes an item; a member\'s shared item answers 404 here as one that does not exist.
+     * @summary Renames one of your items, shares it with your organization or stops sharing it, moves it to a project, or commits a reserved upload.
      * @param {LibraryApiPatchLibraryByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -713,7 +713,7 @@ export class LibraryApi extends BaseAPI {
     }
 
     /**
-     * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. A save with the `key` of one already kept answers that item.
+     * Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it. Send `data` up to 10 MiB inline, or send `bytes` up to 2 GiB to reserve a signed `upload` PUT and finish it with `PATCH /v1/library/:id` `{\"commit\": true}`. A save with the `key` of one already kept answers that item.
      * @summary Keeps one thing you made in your Library: its bytes go to your own prefix of the Library\'s store, and it is listed to you alone until you share it.
      * @param {LibraryApiPostLibraryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

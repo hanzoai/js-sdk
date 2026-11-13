@@ -27,6 +27,18 @@ export interface AgentUpdateAgentIn {
      */
     'avatar'?: string;
     /**
+     * AvatarLicence is the licence\'s short name. Sending avatar or avatar_source without it clears it, so a replaced image never keeps the old one\'s licence.
+     * @type {string}
+     * @memberof AgentUpdateAgentIn
+     */
+    'avatar_licence'?: string;
+    /**
+     * AvatarSource and AvatarLicence say where the avatar image came from. They move with the image: sending avatar replaces both, so an image sent without them has none, and sending either replaces the pair.
+     * @type {string}
+     * @memberof AgentUpdateAgentIn
+     */
+    'avatar_source'?: string;
+    /**
      * The budget, any part of it. Changing the period opens a new window.
      * @type {number}
      * @memberof AgentUpdateAgentIn

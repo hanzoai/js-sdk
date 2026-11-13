@@ -27,6 +27,30 @@ export interface SocialSocialAccount {
      */
     'createdAt'?: number;
     /**
+     * Disabled is true when posting to this channel has been paused without disconnecting its stored credentials.
+     * @type {boolean}
+     * @memberof SocialSocialAccount
+     */
+    'disabled'?: boolean;
+    /**
+     * ExternalID is the platform id the sealed token is stored under. Empty for an account recorded by hand, before a consent named one. A publish uses it to choose that token rather than another account on the same network.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'externalId'?: string;
+    /**
+     * GroupID is the deterministic identifier of the employee or brand channel group this channel is organized under. Optional.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'groupId'?: string;
+    /**
+     * GroupName is the employee or brand group label (for example \"Antje Worring\", \"Zach Kelling\", or \"Hanzo AI\") used to organize and fan out posts across a person\'s or team\'s channels. Optional.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'groupName'?: string;
+    /**
      * Handle is the account\'s public name on the network, as the customer knows it. Trimmed and bounded at 1024 characters.  Example: \"@acme\"
      * @type {string}
      * @memberof SocialSocialAccount
@@ -39,11 +63,35 @@ export interface SocialSocialAccount {
      */
     'id'?: string;
     /**
+     * Name is the channel\'s human-readable display name on the network (for example \"Antje Worring\" or \"Hanzo AI\"). Optional.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'name'?: string;
+    /**
+     * Picture is the avatar URL of the connected channel profile, when reported by the network. Optional.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'picture'?: string;
+    /**
+     * Profile is the canonical profile identifier or URL slug on the network. Optional.
+     * @type {string}
+     * @memberof SocialSocialAccount
+     */
+    'profile'?: string;
+    /**
      * Provider is the network this account is on: x, facebook, instagram, linkedin, tiktok, youtube or threads.  Example: \"x\"
      * @type {string}
      * @memberof SocialSocialAccount
      */
     'provider'?: string;
+    /**
+     * RefreshNeeded is true when the upstream OAuth token has expired or requires interactive reconnection before publishing.
+     * @type {boolean}
+     * @memberof SocialSocialAccount
+     */
+    'refreshNeeded'?: boolean;
     /**
      * Status is the connection lifecycle: connected, disconnected or error. Only a connected account is a publish target.
      * @type {string}

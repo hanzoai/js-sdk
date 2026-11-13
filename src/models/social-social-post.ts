@@ -45,17 +45,35 @@ export interface SocialSocialPost {
      */
     'createdAt'?: number;
     /**
-     * Error is why the last publish attempt failed, verbatim and bounded. Absent when no attempt has failed; cleared by a later success.
+     * Error is why the last publish attempt failed, verbatim and bounded. Absent when no attempt has failed; cleared by a later success. A post published to several accounts that only some took is published, and this names the rest.
      * @type {string}
      * @memberof SocialSocialPost
      */
     'error'?: string;
+    /**
+     * ExternalGroup is the Postiz group the post belongs to (optional).
+     * @type {string}
+     * @memberof SocialSocialPost
+     */
+    'externalGroup'?: string;
     /**
      * ExternalID is the id the network returned for the published post, which is what reconciles this row against the post on the network. Absent until a publish succeeds.
      * @type {string}
      * @memberof SocialSocialPost
      */
     'externalId'?: string;
+    /**
+     * ExternalIDPostiz is the Postiz post id, set only for origin=postiz rows.
+     * @type {string}
+     * @memberof SocialSocialPost
+     */
+    'externalIdPostiz'?: string;
+    /**
+     * ExternalIntegrationId is the Postiz integration id that published it.
+     * @type {string}
+     * @memberof SocialSocialPost
+     */
+    'externalIntegrationId'?: string;
     /**
      * ID is the post\'s identifier, minted on create and the id every later call addresses it by.  Example: \"post_91ab20\"
      * @type {string}
@@ -68,6 +86,18 @@ export interface SocialSocialPost {
      * @memberof SocialSocialPost
      */
     'media'?: Array<string>;
+    /**
+     * Origin is who owns the post: \"native\" (a Hanzo user created it) or \"postiz\" (mirrored from Postiz via ingest/poller). Mirrored posts are read-only — clients may not create, update, publish or schedule them.
+     * @type {string}
+     * @memberof SocialSocialPost
+     */
+    'origin'?: string;
+    /**
+     * ReleaseURL is the live URL Postiz returned for the published post.
+     * @type {string}
+     * @memberof SocialSocialPost
+     */
+    'releaseUrl'?: string;
     /**
      * ScheduleAt is when the post is due, as a unix timestamp in SECONDS. 0 means unscheduled. It is meaningful only while the status is scheduled — a scheduled post whose time has arrived is published by the scheduler.
      * @type {number}

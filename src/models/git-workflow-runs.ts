@@ -24,10 +24,22 @@ import type { GitWorkflowRun } from './git-workflow-run';
  */
 export interface GitWorkflowRuns {
     /**
+     * Commit is the commit a ref named, when the listing asked for one: the runs are the ones on it, and a branch that moves does not move them.
+     * @type {string}
+     * @memberof GitWorkflowRuns
+     */
+    'commit'?: string;
+    /**
      * Data is the runs in scope, newest first.
      * @type {Array<GitWorkflowRun>}
      * @memberof GitWorkflowRuns
      */
     'data'?: Array<GitWorkflowRun>;
+    /**
+     * State answers \"is this ref green?\" when the listing named a forge ref: passed, failed, running, queued or none. It is read over the latest attempt of each workflow on the commit: any failed or cancelled run or job is failed; otherwise any still going is running, any waiting for a runner is queued, and when everything finished as success or skipped it is passed. none means nothing ran.
+     * @type {string}
+     * @memberof GitWorkflowRuns
+     */
+    'state'?: string;
 }
 

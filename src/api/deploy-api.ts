@@ -38,6 +38,10 @@ import type { DeployArgoTree } from '../models';
 // @ts-ignore
 import type { DeployDeployHealth } from '../models';
 // @ts-ignore
+import type { DeployLive } from '../models';
+// @ts-ignore
+import type { DeployRelease } from '../models';
+// @ts-ignore
 import type { DeploySessionEnded } from '../models';
 // @ts-ignore
 import type { DeploySessionUser } from '../models';
@@ -308,6 +312,50 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Answers, for each service, what it is running and whether that is what universe says it should run.  For every Hanzo CD Application the caller may see: the images its live pods run (tag, digest, and the source commit and repository each was built from where the registry answers it), the universe commit CD last applied, CD\'s sync and health verdicts, when it last synced, the image its values files pin at that commit, whether the two agree and which of them does not, and the image CD deployed before this one.  `service` lists one service. `commit` — at least seven hex characters of a sha — adds a top-level `live`: whether any listed service runs an image built from that commit. Together they answer \"is commit X live for service Y\", and a service\'s `previous` is where to roll back to.  It reads CD\'s own state and derives nothing CD already says. The declared image is read from the universe files the Application names, at the commits CD names. A value the registry or the repository has not yet answered is left out of this answer and read again on the next. Read-only, and scoped exactly as /v1/deploy/gitops is: a SuperAdmin sees every Application, a validated org member only its own org\'s, anyone else 403s.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster.
+         * @summary Answers, for each service, what it is running and whether that is what universe says it should run.
+         * @param {string} [service] Service lists one service, by the name it is listed under. Empty lists them all.
+         * @param {string} [commit] Commit asks whether the listed services run an image built from this source commit: at least seven hex characters of its sha, matched as a prefix.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeployLive: async (service?: string, commit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/deploy/live`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (service !== undefined) {
+                localVarQueryParameter['service'] = service;
+            }
+
+            if (commit !== undefined) {
+                localVarQueryParameter['commit'] = commit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
          * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
@@ -363,6 +411,55 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.  The service is scoped exactly as live is; its source repository is read off the image it runs unless repo names it, and is read from the forge as the caller, in a namespace the caller\'s org owns.
+         * @summary Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.
+         * @param {string} [service] Service is the service, by the name live lists it under, such as hanzo-cloud.
+         * @param {string} [repo] Repo is the forge repository the service is built from, owner/name. Empty reads it off the image the service runs.
+         * @param {number} [versions] Versions is how many of the newest claimed versions to read; 0 is 3, and 10 is the ceiling. The pinned and the live version are read as well.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeployRelease: async (service?: string, repo?: string, versions?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/deploy/release`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (service !== undefined) {
+                localVarQueryParameter['service'] = service;
+            }
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+            if (versions !== undefined) {
+                localVarQueryParameter['versions'] = versions;
+            }
 
 
     
@@ -463,44 +560,6 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
-         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
-         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployApplicationsByNameRollback: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('postDeployApplicationsByNameRollback', 'name', name)
-            const localVarPath = `/v1/deploy/applications/{name}/rollback`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -653,6 +712,20 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers, for each service, what it is running and whether that is what universe says it should run.  For every Hanzo CD Application the caller may see: the images its live pods run (tag, digest, and the source commit and repository each was built from where the registry answers it), the universe commit CD last applied, CD\'s sync and health verdicts, when it last synced, the image its values files pin at that commit, whether the two agree and which of them does not, and the image CD deployed before this one.  `service` lists one service. `commit` — at least seven hex characters of a sha — adds a top-level `live`: whether any listed service runs an image built from that commit. Together they answer \"is commit X live for service Y\", and a service\'s `previous` is where to roll back to.  It reads CD\'s own state and derives nothing CD already says. The declared image is read from the universe files the Application names, at the commits CD names. A value the registry or the repository has not yet answered is left out of this answer and read again on the next. Read-only, and scoped exactly as /v1/deploy/gitops is: a SuperAdmin sees every Application, a validated org member only its own org\'s, anyone else 403s.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster.
+         * @summary Answers, for each service, what it is running and whether that is what universe says it should run.
+         * @param {string} [service] Service lists one service, by the name it is listed under. Empty lists them all.
+         * @param {string} [commit] Commit asks whether the listed services run an image built from this source commit: at least seven hex characters of its sha, matched as a prefix.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDeployLive(service?: string, commit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployLive>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployLive(service, commit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployLive']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
          * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
@@ -674,6 +747,21 @@ export const DeployApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.  The service is scoped exactly as live is; its source repository is read off the image it runs unless repo names it, and is read from the forge as the caller, in a namespace the caller\'s org owns.
+         * @summary Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.
+         * @param {string} [service] Service is the service, by the name live lists it under, such as hanzo-cloud.
+         * @param {string} [repo] Repo is the forge repository the service is built from, owner/name. Empty reads it off the image the service runs.
+         * @param {number} [versions] Versions is how many of the newest claimed versions to read; 0 is 3, and 10 is the ceiling. The pinned and the live version are read as well.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDeployRelease(service?: string, repo?: string, versions?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployRelease(service, repo, versions, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployRelease']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -711,19 +799,6 @@ export const DeployApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployStreamApplicationsByNameResourceTree(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployStreamApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
-         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
-         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployArgoApp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameRollback(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameRollback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -816,6 +891,16 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getDeployHealth(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers, for each service, what it is running and whether that is what universe says it should run.  For every Hanzo CD Application the caller may see: the images its live pods run (tag, digest, and the source commit and repository each was built from where the registry answers it), the universe commit CD last applied, CD\'s sync and health verdicts, when it last synced, the image its values files pin at that commit, whether the two agree and which of them does not, and the image CD deployed before this one.  `service` lists one service. `commit` — at least seven hex characters of a sha — adds a top-level `live`: whether any listed service runs an image built from that commit. Together they answer \"is commit X live for service Y\", and a service\'s `previous` is where to roll back to.  It reads CD\'s own state and derives nothing CD already says. The declared image is read from the universe files the Application names, at the commits CD names. A value the registry or the repository has not yet answered is left out of this answer and read again on the next. Read-only, and scoped exactly as /v1/deploy/gitops is: a SuperAdmin sees every Application, a validated org member only its own org\'s, anyone else 403s.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster.
+         * @summary Answers, for each service, what it is running and whether that is what universe says it should run.
+         * @param {DeployApiGetDeployLiveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeployLive(requestParameters: DeployApiGetDeployLiveRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DeployLive> {
+            return localVarFp.getDeployLive(requestParameters.service, requestParameters.commit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
          * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
@@ -832,6 +917,16 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          */
         getDeployProjects(options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoProjectList> {
             return localVarFp.getDeployProjects(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.  The service is scoped exactly as live is; its source repository is read off the image it runs unless repo names it, and is read from the forge as the caller, in a namespace the caller\'s org owns.
+         * @summary Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.
+         * @param {DeployApiGetDeployReleaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeployRelease(requestParameters: DeployApiGetDeployReleaseRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DeployRelease> {
+            return localVarFp.getDeployRelease(requestParameters.service, requestParameters.repo, requestParameters.versions, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers \"is this browser signed in, and if not where does it sign in?\" — the dashboard SPA\'s bootstrap question, and the only route on this plane that answers for an anonymous caller.  The anonymous answer carries loggedIn:false and a URL and NOTHING else: no username, no org, no groups, no issuer, no hint about who the caller might be or what exists in the cluster. Answering it costs nothing (the caller already knows whether it holds a cookie) and withholding it costs the whole sign-in journey.  The predicate is the platform SuperAdmin fact — the SAME one every other route here gates on, minted from a validated principal whose org is the reserved admin org — so a validated-but-not-SuperAdmin caller is reported as NOT signed in, which is the truth as this console defines it: they cannot use it.
@@ -860,16 +955,6 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          */
         getDeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getDeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
-         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
-         * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployArgoApp> {
-            return localVarFp.postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
@@ -947,6 +1032,55 @@ export interface DeployApiGetDeployApplicationsByNameSyncwindowsRequest {
 }
 
 /**
+ * Request parameters for getDeployLive operation in DeployApi.
+ * @export
+ * @interface DeployApiGetDeployLiveRequest
+ */
+export interface DeployApiGetDeployLiveRequest {
+    /**
+     * Service lists one service, by the name it is listed under. Empty lists them all.
+     * @type {string}
+     * @memberof DeployApiGetDeployLive
+     */
+    readonly service?: string
+
+    /**
+     * Commit asks whether the listed services run an image built from this source commit: at least seven hex characters of its sha, matched as a prefix.
+     * @type {string}
+     * @memberof DeployApiGetDeployLive
+     */
+    readonly commit?: string
+}
+
+/**
+ * Request parameters for getDeployRelease operation in DeployApi.
+ * @export
+ * @interface DeployApiGetDeployReleaseRequest
+ */
+export interface DeployApiGetDeployReleaseRequest {
+    /**
+     * Service is the service, by the name live lists it under, such as hanzo-cloud.
+     * @type {string}
+     * @memberof DeployApiGetDeployRelease
+     */
+    readonly service?: string
+
+    /**
+     * Repo is the forge repository the service is built from, owner/name. Empty reads it off the image the service runs.
+     * @type {string}
+     * @memberof DeployApiGetDeployRelease
+     */
+    readonly repo?: string
+
+    /**
+     * Versions is how many of the newest claimed versions to read; 0 is 3, and 10 is the ceiling. The pinned and the live version are read as well.
+     * @type {number}
+     * @memberof DeployApiGetDeployRelease
+     */
+    readonly versions?: number
+}
+
+/**
  * Request parameters for getDeployStreamApplicationsByNameResourceTree operation in DeployApi.
  * @export
  * @interface DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest
@@ -956,20 +1090,6 @@ export interface DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest {
      * 
      * @type {string}
      * @memberof DeployApiGetDeployStreamApplicationsByNameResourceTree
-     */
-    readonly name: string
-}
-
-/**
- * Request parameters for postDeployApplicationsByNameRollback operation in DeployApi.
- * @export
- * @interface DeployApiPostDeployApplicationsByNameRollbackRequest
- */
-export interface DeployApiPostDeployApplicationsByNameRollbackRequest {
-    /**
-     * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
-     * @type {string}
-     * @memberof DeployApiPostDeployApplicationsByNameRollback
      */
     readonly name: string
 }
@@ -1063,6 +1183,18 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
+     * Answers, for each service, what it is running and whether that is what universe says it should run.  For every Hanzo CD Application the caller may see: the images its live pods run (tag, digest, and the source commit and repository each was built from where the registry answers it), the universe commit CD last applied, CD\'s sync and health verdicts, when it last synced, the image its values files pin at that commit, whether the two agree and which of them does not, and the image CD deployed before this one.  `service` lists one service. `commit` — at least seven hex characters of a sha — adds a top-level `live`: whether any listed service runs an image built from that commit. Together they answer \"is commit X live for service Y\", and a service\'s `previous` is where to roll back to.  It reads CD\'s own state and derives nothing CD already says. The declared image is read from the universe files the Application names, at the commits CD names. A value the registry or the repository has not yet answered is left out of this answer and read again on the next. Read-only, and scoped exactly as /v1/deploy/gitops is: a SuperAdmin sees every Application, a validated org member only its own org\'s, anyone else 403s.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster.
+     * @summary Answers, for each service, what it is running and whether that is what universe says it should run.
+     * @param {DeployApiGetDeployLiveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeployApi
+     */
+    public getDeployLive(requestParameters: DeployApiGetDeployLiveRequest = {}, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployLive(requestParameters.service, requestParameters.commit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
      * @summary Start the sign-in round trip for this console
      * @param {*} [options] Override http request option.
@@ -1082,6 +1214,18 @@ export class DeployApi extends BaseAPI {
      */
     public getDeployProjects(options?: RawAxiosRequestConfig) {
         return DeployApiFp(this.configuration).getDeployProjects(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.  The service is scoped exactly as live is; its source repository is read off the image it runs unless repo names it, and is read from the forge as the caller, in a namespace the caller\'s org owns.
+     * @summary Answers why a service is, or is not, live: for the newest versions claimed in its source repository, the commit each names, whether the pipeline\'s runs on it passed and which jobs failed with the lines that say why, whether an image of it was smoked, whether universe pins it, and whether it is what the pods run — and stuck, one sentence saying where the newest version stopped.
+     * @param {DeployApiGetDeployReleaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeployApi
+     */
+    public getDeployRelease(requestParameters: DeployApiGetDeployReleaseRequest = {}, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployRelease(requestParameters.service, requestParameters.repo, requestParameters.versions, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1116,18 +1260,6 @@ export class DeployApi extends BaseAPI {
      */
     public getDeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig) {
         return DeployApiFp(this.configuration).getDeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
-     * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
-     * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

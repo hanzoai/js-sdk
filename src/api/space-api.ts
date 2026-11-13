@@ -32,6 +32,8 @@ import type { SpaceDriveList } from '../models';
 // @ts-ignore
 import type { SpaceFileList } from '../models';
 // @ts-ignore
+import type { SpaceFileURL } from '../models';
+// @ts-ignore
 import type { SpaceSpaceHealth } from '../models';
 // @ts-ignore
 import type { SpaceSpaceIn } from '../models';
@@ -61,6 +63,52 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
             const localVarPath = `/v1/space/{space}/drives/{drive}`
                 .replace(`{${"space"}}`, encodeURIComponent(String(space)))
                 .replace(`{${"drive"}}`, encodeURIComponent(String(drive)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes one file and answers 204.  It removes ONE file and never a folder: a name that looks like a folder is refused, because a folder is emergent from the names beneath it and deleting one would have to mean deleting them. The name is path-cleaned first, so the delete cannot reach outside the drive it names, and a space the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the file is gone.
+         * @summary Removes one file and answers 204.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSpaceBySpaceDrivesByDriveFilesByWildcard1: async (space: string, drive: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('deleteSpaceBySpaceDrivesByDriveFilesByWildcard1', 'space', space)
+            // verify required parameter 'drive' is not null or undefined
+            assertParamExists('deleteSpaceBySpaceDrivesByDriveFilesByWildcard1', 'drive', drive)
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('deleteSpaceBySpaceDrivesByDriveFilesByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/space/{space}/drives/{drive}/files/{wildcard1}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)))
+                .replace(`{${"drive"}}`, encodeURIComponent(String(drive)))
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -165,6 +213,52 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
             if (recursive !== undefined) {
                 localVarQueryParameter['recursive'] = recursive;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mints a URL the caller downloads the file from DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. It carries a content disposition of attachment naming the file, so a browser following it saves the file rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller downloads the file from DIRECTLY.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSpaceBySpaceDrivesByDriveFilesByWildcard1: async (space: string, drive: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('getSpaceBySpaceDrivesByDriveFilesByWildcard1', 'space', space)
+            // verify required parameter 'drive' is not null or undefined
+            assertParamExists('getSpaceBySpaceDrivesByDriveFilesByWildcard1', 'drive', drive)
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getSpaceBySpaceDrivesByDriveFilesByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/space/{space}/drives/{drive}/files/{wildcard1}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)))
+                .replace(`{${"drive"}}`, encodeURIComponent(String(drive)))
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -329,6 +423,52 @@ export const SpaceApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Mints a URL the caller uploads the file to DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. Writing into a folder that does not exist is fine and creates nothing — a folder is emergent from \"/\" in the name. A deployment with no public endpoint configured cannot mint a URL and answers 503 rather than one that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller uploads the file to DIRECTLY.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putSpaceBySpaceDrivesByDriveFilesByWildcard1: async (space: string, drive: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'space' is not null or undefined
+            assertParamExists('putSpaceBySpaceDrivesByDriveFilesByWildcard1', 'space', space)
+            // verify required parameter 'drive' is not null or undefined
+            assertParamExists('putSpaceBySpaceDrivesByDriveFilesByWildcard1', 'drive', drive)
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('putSpaceBySpaceDrivesByDriveFilesByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/space/{space}/drives/{drive}/files/{wildcard1}`
+                .replace(`{${"space"}}`, encodeURIComponent(String(space)))
+                .replace(`{${"drive"}}`, encodeURIComponent(String(drive)))
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -351,6 +491,21 @@ export const SpaceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSpaceBySpaceDrivesByDrive(space, drive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.deleteSpaceBySpaceDrivesByDrive']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes one file and answers 204.  It removes ONE file and never a folder: a name that looks like a folder is refused, because a folder is emergent from the names beneath it and deleting one would have to mean deleting them. The name is path-cleaned first, so the delete cannot reach outside the drive it names, and a space the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the file is gone.
+         * @summary Removes one file and answers 204.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(space: string, drive: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(space, drive, wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SpaceApi.deleteSpaceBySpaceDrivesByDriveFilesByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -380,6 +535,21 @@ export const SpaceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceBySpaceDrivesByDriveFiles(space, drive, folder, recursive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceBySpaceDrivesByDriveFiles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Mints a URL the caller downloads the file from DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. It carries a content disposition of attachment naming the file, so a browser following it saves the file rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller downloads the file from DIRECTLY.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSpaceBySpaceDrivesByDriveFilesByWildcard1(space: string, drive: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceFileURL>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSpaceBySpaceDrivesByDriveFilesByWildcard1(space, drive, wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SpaceApi.getSpaceBySpaceDrivesByDriveFilesByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -433,6 +603,21 @@ export const SpaceApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['SpaceApi.postSpaceSpaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Mints a URL the caller uploads the file to DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. Writing into a folder that does not exist is fine and creates nothing — a folder is emergent from \"/\" in the name. A deployment with no public endpoint configured cannot mint a URL and answers 503 rather than one that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller uploads the file to DIRECTLY.
+         * @param {string} space Space is the space\&#39;s name, from the path.
+         * @param {string} drive Drive is the drive\&#39;s name, from the path.
+         * @param {string} wildcard1 File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putSpaceBySpaceDrivesByDriveFilesByWildcard1(space: string, drive: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SpaceFileURL>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSpaceBySpaceDrivesByDriveFilesByWildcard1(space, drive, wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SpaceApi.putSpaceBySpaceDrivesByDriveFilesByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -454,6 +639,16 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.deleteSpaceBySpaceDrivesByDrive(requestParameters.space, requestParameters.drive, options).then((request) => request(axios, basePath));
         },
         /**
+         * Removes one file and answers 204.  It removes ONE file and never a folder: a name that looks like a folder is refused, because a folder is emergent from the names beneath it and deleting one would have to mean deleting them. The name is path-cleaned first, so the delete cannot reach outside the drive it names, and a space the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the file is gone.
+         * @summary Removes one file and answers 204.
+         * @param {SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists a space\'s drives.  Listing the drives IS listing the space\'s root folder, because a drive is the first segment of a key and nothing else — so the two can never disagree the way a drives table and the keys under it would. A space the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing read, and the debit lands only once the listing has succeeded.
          * @summary Lists a space\'s drives.
          * @param {SpaceApiGetSpaceBySpaceDrivesRequest} requestParameters Request parameters.
@@ -472,6 +667,16 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
          */
         getSpaceBySpaceDrivesByDriveFiles(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceFileList> {
             return localVarFp.getSpaceBySpaceDrivesByDriveFiles(requestParameters.space, requestParameters.drive, requestParameters.folder, requestParameters.recursive, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mints a URL the caller downloads the file from DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. It carries a content disposition of attachment naming the file, so a browser following it saves the file rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller downloads the file from DIRECTLY.
+         * @param {SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<SpaceFileURL> {
+            return localVarFp.getSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports whether this deployment can serve spaces, drives and files.  It is a REAL probe rather than a constant: 200 when object-store credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no space and bills nothing.
@@ -511,6 +716,16 @@ export const SpaceApiFactory = function (configuration?: Configuration, basePath
         postSpaceSpaces(requestParameters: SpaceApiPostSpaceSpacesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SpaceSpaceItem> {
             return localVarFp.postSpaceSpaces(requestParameters.spaceSpaceIn, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Mints a URL the caller uploads the file to DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. Writing into a folder that does not exist is fine and creates nothing — a folder is emergent from \"/\" in the name. A deployment with no public endpoint configured cannot mint a URL and answers 503 rather than one that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+         * @summary Mints a URL the caller uploads the file to DIRECTLY.
+         * @param {SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<SpaceFileURL> {
+            return localVarFp.putSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -533,6 +748,34 @@ export interface SpaceApiDeleteSpaceBySpaceDrivesByDriveRequest {
      * @memberof SpaceApiDeleteSpaceBySpaceDrivesByDrive
      */
     readonly drive: string
+}
+
+/**
+ * Request parameters for deleteSpaceBySpaceDrivesByDriveFilesByWildcard1 operation in SpaceApi.
+ * @export
+ * @interface SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request
+ */
+export interface SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request {
+    /**
+     * Space is the space\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly space: string
+
+    /**
+     * Drive is the drive\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly drive: string
+
+    /**
+     * File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+     * @type {string}
+     * @memberof SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly wildcard1: string
 }
 
 /**
@@ -585,6 +828,34 @@ export interface SpaceApiGetSpaceBySpaceDrivesByDriveFilesRequest {
 }
 
 /**
+ * Request parameters for getSpaceBySpaceDrivesByDriveFilesByWildcard1 operation in SpaceApi.
+ * @export
+ * @interface SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request
+ */
+export interface SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request {
+    /**
+     * Space is the space\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly space: string
+
+    /**
+     * Drive is the drive\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly drive: string
+
+    /**
+     * File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+     * @type {string}
+     * @memberof SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * Request parameters for postSpaceBySpaceDrives operation in SpaceApi.
  * @export
  * @interface SpaceApiPostSpaceBySpaceDrivesRequest
@@ -620,6 +891,34 @@ export interface SpaceApiPostSpaceSpacesRequest {
 }
 
 /**
+ * Request parameters for putSpaceBySpaceDrivesByDriveFilesByWildcard1 operation in SpaceApi.
+ * @export
+ * @interface SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request
+ */
+export interface SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request {
+    /**
+     * Space is the space\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly space: string
+
+    /**
+     * Drive is the drive\&#39;s name, from the path.
+     * @type {string}
+     * @memberof SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly drive: string
+
+    /**
+     * File is the file\&#39;s name within the drive — everything after that drive\&#39;s /files/. It MAY contain \&quot;/\&quot;, because a folder is emergent from the name and this segment is captured whole: \&quot;2019/summer/a.jpg\&quot; is one file in two folders, not three names. It is path-cleaned before use, so \&quot;../\&quot; reaches nothing outside the drive, and a name that is empty, absolute or a bare folder marker is refused 400.
+     * @type {string}
+     * @memberof SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * SpaceApi - object-oriented interface
  * @export
  * @class SpaceApi
@@ -636,6 +935,18 @@ export class SpaceApi extends BaseAPI {
      */
     public deleteSpaceBySpaceDrivesByDrive(requestParameters: SpaceApiDeleteSpaceBySpaceDrivesByDriveRequest, options?: RawAxiosRequestConfig) {
         return SpaceApiFp(this.configuration).deleteSpaceBySpaceDrivesByDrive(requestParameters.space, requestParameters.drive, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes one file and answers 204.  It removes ONE file and never a folder: a name that looks like a folder is refused, because a folder is emergent from the names beneath it and deleting one would have to mean deleting them. The name is path-cleaned first, so the delete cannot reach outside the drive it names, and a space the caller\'s org does not own is the same 404 an unknown name gives.  Billed per call: the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing deleted, and the debit lands only once the file is gone.
+     * @summary Removes one file and answers 204.
+     * @param {SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SpaceApi
+     */
+    public deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiDeleteSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return SpaceApiFp(this.configuration).deleteSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -660,6 +971,18 @@ export class SpaceApi extends BaseAPI {
      */
     public getSpaceBySpaceDrivesByDriveFiles(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesRequest, options?: RawAxiosRequestConfig) {
         return SpaceApiFp(this.configuration).getSpaceBySpaceDrivesByDriveFiles(requestParameters.space, requestParameters.drive, requestParameters.folder, requestParameters.recursive, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mints a URL the caller downloads the file from DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. It carries a content disposition of attachment naming the file, so a browser following it saves the file rather than rendering it in place. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the download that follows comes straight from the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+     * @summary Mints a URL the caller downloads the file from DIRECTLY.
+     * @param {SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SpaceApi
+     */
+    public getSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiGetSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return SpaceApiFp(this.configuration).getSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -706,6 +1029,18 @@ export class SpaceApi extends BaseAPI {
      */
     public postSpaceSpaces(requestParameters: SpaceApiPostSpaceSpacesRequest, options?: RawAxiosRequestConfig) {
         return SpaceApiFp(this.configuration).postSpaceSpaces(requestParameters.spaceSpaceIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mints a URL the caller uploads the file to DIRECTLY.  The bytes never pass through this binary and the store credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this space, drive and file, and expires. Writing into a folder that does not exist is fine and creates nothing — a folder is emergent from \"/\" in the name. A deployment with no public endpoint configured cannot mint a URL and answers 503 rather than one that will not work.  Billed per call — for MINTING the URL, which is the work this operation does; the upload that follows goes straight to the store and is not seen here. The balance is checked BEFORE anything is touched, so an unfunded org is refused with no URL issued.
+     * @summary Mints a URL the caller uploads the file to DIRECTLY.
+     * @param {SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SpaceApi
+     */
+    public putSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters: SpaceApiPutSpaceBySpaceDrivesByDriveFilesByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return SpaceApiFp(this.configuration).putSpaceBySpaceDrivesByDriveFilesByWildcard1(requestParameters.space, requestParameters.drive, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

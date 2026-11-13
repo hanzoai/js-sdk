@@ -44,6 +44,8 @@ import type { SandboxPreviewGrant } from '../models';
 // @ts-ignore
 import type { SandboxPreviewIn } from '../models';
 // @ts-ignore
+import type { SandboxQuota } from '../models';
+// @ts-ignore
 import type { SandboxRan } from '../models';
 // @ts-ignore
 import type { SandboxRunIn } from '../models';
@@ -463,6 +465,40 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound). Staff set the quota per org or per plan; where they set none it is 100.
+         * @summary Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxQuota: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/sandbox/quota`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {SandboxLeaseIn} sandboxLeaseIn 
@@ -536,6 +572,44 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(sandboxSandboxIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Says what to do on a sandbox you hold, and a model does it there while you watch: a shell on any sandbox, and on a desktop or a browser the screen too — it takes a screenshot, clicks where it sees, types, presses keys, opens addresses and runs commands. The answer is a text/event-stream, one event a step, ending with `end`.  The body is JSON: `message` (required, what to do, in words), `history` (the conversation so far, oldest first, each {role: user|assistant, text}) and `model` (a model id from GET /v1/models; empty takes the deployment\'s).  Events (`event:` name, `data:` JSON): `say` {text} the model\'s words; `act` {tool, args} a tool it reached for; `result` {tool, ok, text} what the tool answered; `error` {text} the turn could not go on; `end` {rounds} the turn is over. A `: ping` comment every 15 seconds keeps intermediaries from closing the stream.  The server keeps nothing between turns: send the conversation so far as `history` ({role: user|assistant, text}). The model is billed to the caller\'s account at the gateway\'s rates, and the sandbox hour is the one the lease already bills. Open the sandbox\'s screen (POST /v1/sandbox/{id}/screen/ticket) beside it to watch.  409 when the sandbox is not running; 404 for a sandbox you do not hold; 503 where no model gateway is mounted.
+         * @summary Have a model work a sandbox
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdAgent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postSandboxByIdAgent', 'id', id)
+            const localVarPath = `/v1/sandbox/{id}/agent`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1123,6 +1197,18 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound). Staff set the quota per org or per plan; where they set none it is 100.
+         * @summary Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSandboxQuota(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxQuota>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxQuota(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.getSandboxQuota']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {SandboxLeaseIn} sandboxLeaseIn 
@@ -1146,6 +1232,19 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSandbox(sandboxSandboxIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandbox']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Says what to do on a sandbox you hold, and a model does it there while you watch: a shell on any sandbox, and on a desktop or a browser the screen too — it takes a screenshot, clicks where it sees, types, presses keys, opens addresses and runs commands. The answer is a text/event-stream, one event a step, ending with `end`.  The body is JSON: `message` (required, what to do, in words), `history` (the conversation so far, oldest first, each {role: user|assistant, text}) and `model` (a model id from GET /v1/models; empty takes the deployment\'s).  Events (`event:` name, `data:` JSON): `say` {text} the model\'s words; `act` {tool, args} a tool it reached for; `result` {tool, ok, text} what the tool answered; `error` {text} the turn could not go on; `end` {rounds} the turn is over. A `: ping` comment every 15 seconds keeps intermediaries from closing the stream.  The server keeps nothing between turns: send the conversation so far as `history` ({role: user|assistant, text}). The model is billed to the caller\'s account at the gateway\'s rates, and the sandbox hour is the one the lease already bills. Open the sandbox\'s screen (POST /v1/sandbox/{id}/screen/ticket) beside it to watch.  409 when the sandbox is not running; 404 for a sandbox you do not hold; 503 where no model gateway is mounted.
+         * @summary Have a model work a sandbox
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSandboxByIdAgent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxByIdAgent(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.postSandboxByIdAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1404,6 +1503,15 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getSandboxByIdTerminalWs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound). Staff set the quota per org or per plan; where they set none it is 100.
+         * @summary Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxQuota(options?: RawAxiosRequestConfig): AxiosPromise<SandboxQuota> {
+            return localVarFp.getSandboxQuota(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {SandboxApiLeaseSandboxRequest} requestParameters Request parameters.
@@ -1422,6 +1530,16 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
          */
         postSandbox(requestParameters: SandboxApiPostSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxSandbox> {
             return localVarFp.postSandbox(requestParameters.sandboxSandboxIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Says what to do on a sandbox you hold, and a model does it there while you watch: a shell on any sandbox, and on a desktop or a browser the screen too — it takes a screenshot, clicks where it sees, types, presses keys, opens addresses and runs commands. The answer is a text/event-stream, one event a step, ending with `end`.  The body is JSON: `message` (required, what to do, in words), `history` (the conversation so far, oldest first, each {role: user|assistant, text}) and `model` (a model id from GET /v1/models; empty takes the deployment\'s).  Events (`event:` name, `data:` JSON): `say` {text} the model\'s words; `act` {tool, args} a tool it reached for; `result` {tool, ok, text} what the tool answered; `error` {text} the turn could not go on; `end` {rounds} the turn is over. A `: ping` comment every 15 seconds keeps intermediaries from closing the stream.  The server keeps nothing between turns: send the conversation so far as `history` ({role: user|assistant, text}). The model is billed to the caller\'s account at the gateway\'s rates, and the sandbox hour is the one the lease already bills. Open the sandbox\'s screen (POST /v1/sandbox/{id}/screen/ticket) beside it to watch.  409 when the sandbox is not running; 404 for a sandbox you do not hold; 503 where no model gateway is mounted.
+         * @summary Have a model work a sandbox
+         * @param {SandboxApiPostSandboxByIdAgentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxByIdAgent(requestParameters: SandboxApiPostSandboxByIdAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxByIdAgent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one command in a sandbox the caller holds and answers with its exit code, stdout and stderr.  Send `argv` — an argument vector cannot be word-split by accident — or `command` for a shell line, which is the only input here that ever reaches a shell. A non-zero exit is a SUCCESSFUL call carrying a failed command: the status is 200 and the exit code is in the answer, because \"the command failed\" and \"the call failed\" are different facts.
@@ -1716,6 +1834,20 @@ export interface SandboxApiPostSandboxRequest {
      * @memberof SandboxApiPostSandbox
      */
     readonly sandboxSandboxIn: SandboxSandboxIn
+}
+
+/**
+ * Request parameters for postSandboxByIdAgent operation in SandboxApi.
+ * @export
+ * @interface SandboxApiPostSandboxByIdAgentRequest
+ */
+export interface SandboxApiPostSandboxByIdAgentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandboxApiPostSandboxByIdAgent
+     */
+    readonly id: string
 }
 
 /**
@@ -2014,6 +2146,17 @@ export class SandboxApi extends BaseAPI {
     }
 
     /**
+     * Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound). Staff set the quota per org or per plan; where they set none it is 100.
+     * @summary Answers the caller\'s sandbox quota: the account it belongs to — the org, or a person in the signup org — how many of that account\'s paid sandboxes are running, and how many may run at once (-1 for no bound).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public getSandboxQuota(options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).getSandboxQuota(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Leases the caller\'s sandbox, or returns the one it named if that lease is still running, or gives it a pod again if it is parked — with its disk as it was left.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
      * @summary Lease a sandbox — a real computer — or resume one you hold
      * @param {SandboxApiLeaseSandboxRequest} requestParameters Request parameters.
@@ -2035,6 +2178,18 @@ export class SandboxApi extends BaseAPI {
      */
     public postSandbox(requestParameters: SandboxApiPostSandboxRequest, options?: RawAxiosRequestConfig) {
         return SandboxApiFp(this.configuration).postSandbox(requestParameters.sandboxSandboxIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Says what to do on a sandbox you hold, and a model does it there while you watch: a shell on any sandbox, and on a desktop or a browser the screen too — it takes a screenshot, clicks where it sees, types, presses keys, opens addresses and runs commands. The answer is a text/event-stream, one event a step, ending with `end`.  The body is JSON: `message` (required, what to do, in words), `history` (the conversation so far, oldest first, each {role: user|assistant, text}) and `model` (a model id from GET /v1/models; empty takes the deployment\'s).  Events (`event:` name, `data:` JSON): `say` {text} the model\'s words; `act` {tool, args} a tool it reached for; `result` {tool, ok, text} what the tool answered; `error` {text} the turn could not go on; `end` {rounds} the turn is over. A `: ping` comment every 15 seconds keeps intermediaries from closing the stream.  The server keeps nothing between turns: send the conversation so far as `history` ({role: user|assistant, text}). The model is billed to the caller\'s account at the gateway\'s rates, and the sandbox hour is the one the lease already bills. Open the sandbox\'s screen (POST /v1/sandbox/{id}/screen/ticket) beside it to watch.  409 when the sandbox is not running; 404 for a sandbox you do not hold; 503 where no model gateway is mounted.
+     * @summary Have a model work a sandbox
+     * @param {SandboxApiPostSandboxByIdAgentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public postSandboxByIdAgent(requestParameters: SandboxApiPostSandboxByIdAgentRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).postSandboxByIdAgent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

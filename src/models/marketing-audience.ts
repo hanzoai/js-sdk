@@ -39,11 +39,29 @@ export interface MarketingAudience {
      */
     'id'?: string;
     /**
+     * Kind is what the audience is: cohort, a saved filter over the org\'s customers and their events; list, a mailing list\'s subscribed members; or segment, a saved filter over one list. Server-assigned; a create is a cohort.
+     * @type {string}
+     * @memberof MarketingAudience
+     */
+    'kind'?: string;
+    /**
+     * List is the list a list or a segment audience belongs to.
+     * @type {string}
+     * @memberof MarketingAudience
+     */
+    'list'?: string;
+    /**
      * Name is the audience\'s label. Required, trimmed, capped at 1024 bytes.
      * @type {string}
      * @memberof MarketingAudience
      */
     'name'?: string;
+    /**
+     * Subscribed is how many subscribed members a list audience has, from the list\'s kept counts.
+     * @type {number}
+     * @memberof MarketingAudience
+     */
+    'subscribed'?: number;
     /**
      * UpdatedAt is unix seconds of the last write, server-assigned, and the key the audience list is ordered by (newest first). A saved audience has no update route, so in practice it stays equal to CreatedAt: to change a filter you save another one.
      * @type {number}

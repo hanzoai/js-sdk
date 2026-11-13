@@ -21,6 +21,12 @@
  */
 export interface LibraryItemPatch {
     /**
+     * Commit finishes a reserved upload once its bytes have been PUT.
+     * @type {boolean}
+     * @memberof LibraryItemPatch
+     */
+    'commit'?: boolean;
+    /**
      * ID is the item, from the path.
      * @type {string}
      * @memberof LibraryItemPatch

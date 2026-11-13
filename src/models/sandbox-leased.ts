@@ -21,7 +21,13 @@
  */
 export interface SandboxLeased {
     /**
-     * Class is what was actually leased, from the closed set LeaseIn.Class names: exec | dev | desktop | android. A request that named none leased an `exec`, so this is where a caller learns which kind of computer it is holding, and it is what Workdir below follows from.
+     * Carried says the lease is extended for as long as it works and its wallet pays for the next hour. A lease that is not carried ends at ExpiresAt whatever it is doing: a free one.
+     * @type {boolean}
+     * @memberof SandboxLeased
+     */
+    'carried'?: boolean;
+    /**
+     * Class is what was actually leased, from the closed set LeaseIn.Class names: exec | dev | desktop | browser | android. A request that named none leased an `exec`, so this is where a caller learns which kind of computer it is holding, and it is what Workdir below follows from.
      * @type {string}
      * @memberof SandboxLeased
      */
@@ -32,6 +38,12 @@ export interface SandboxLeased {
      * @memberof SandboxLeased
      */
     'cluster'?: string;
+    /**
+     * ExpiresAt is when the lease ends, Unix seconds. A resumed sandbox keeps the expiry it had, so this is not always a fresh lease\'s.
+     * @type {number}
+     * @memberof SandboxLeased
+     */
+    'expiresAt'?: number;
     /**
      * ID names this computer for every later call — run, read, write, stop and end all take it, and a LeaseIn carrying it resumes THIS sandbox instead of leasing a second one. Minted here; a caller cannot choose it, and a resumed lease that had expired comes back under a new one.
      * @type {string}

@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketplaceExpert } from './marketplace-expert';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketplaceLinks } from './marketplace-links';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -60,13 +63,19 @@ export interface MarketplaceShopListing {
      */
     'docs'?: string;
     /**
+     * Expert is the person behind an expert listing — rate, areas, languages, skills, links, time zone, hours and whether staff verified them, and, where they can be told, their rewards standing and scores in products; absent on any other kind.
+     * @type {MarketplaceExpert}
+     * @memberof MarketplaceShopListing
+     */
+    'expert'?: MarketplaceExpert;
+    /**
      * ID is the listing.
      * @type {string}
      * @memberof MarketplaceShopListing
      */
     'id'?: string;
     /**
-     * Kind is what it sells: agent, persona, app, skill, mcp or tool.
+     * Kind is what it sells: agent, persona, app, skill, mcp, tool or expert.
      * @type {string}
      * @memberof MarketplaceShopListing
      */
@@ -114,7 +123,7 @@ export interface MarketplaceShopListing {
      */
     'title'?: string;
     /**
-     * Tool names the thing sold, as the seller named it.
+     * Tool names the thing sold, as the seller named it; empty for an expert, who is a person and not a thing.
      * @type {string}
      * @memberof MarketplaceShopListing
      */

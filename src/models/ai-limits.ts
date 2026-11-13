@@ -48,12 +48,6 @@ export interface AiLimits {
      */
     'classes'?: { [key: string]: AiClass; };
     /**
-     * CreditsAfterAllowance is the payer\'s choice to keep using a model on credits once the plan\'s included usage of it is spent (PUT /v1/ai/limits sets it).
-     * @type {boolean}
-     * @memberof AiLimits
-     */
-    'credits_after_allowance'?: boolean;
-    /**
      * 
      * @type {AiWindow}
      * @memberof AiLimits
@@ -71,6 +65,12 @@ export interface AiLimits {
      * @memberof AiLimits
      */
     'paused'?: Array<AiPaused>;
+    /**
+     * Pays is who pays for the next priced request of each class, on any plan or none: plan (its included usage), prepaid (funds the caller added), credits (granted credit, where it pays for the class) or none (nothing does: a request of the class is refused 402 insufficient_balance until funds are added, the `topup` action). It is the usage policy\'s own answer, so a picker shows Top up on `none` without knowing which credit pays for which class. A class is absent when the wallet could not be read.
+     * @type {{ [key: string]: string; }}
+     * @memberof AiLimits
+     */
+    'pays'?: { [key: string]: string; };
     /**
      * 
      * @type {string}

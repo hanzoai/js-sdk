@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { BillingCryptoPair } from './billing-crypto-pair';
 
 /**
  * 
@@ -21,11 +24,23 @@
  */
 export interface BillingCryptoOptions {
     /**
+     * Assets is every (chain, token) pair the deposit-address rail accepts. Chains and Tokens are its two axes: a chain and a token each on offer are not a pair on offer, so a picker that crosses them can name an asset the rail will refuse.
+     * @type {Array<BillingCryptoPair>}
+     * @memberof BillingCryptoOptions
+     */
+    'assets'?: Array<BillingCryptoPair>;
+    /**
      * 
      * @type {Array<string>}
      * @memberof BillingCryptoOptions
      */
     'chains'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BillingCryptoOptions
+     */
+    'gateway'?: Array<string>;
     /**
      * 
      * @type {Array<string>}

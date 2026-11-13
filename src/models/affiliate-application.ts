@@ -39,7 +39,7 @@ export interface AffiliateApplication {
      */
     'id'?: string;
     /**
-     * RateBps is the direct (level 1) commission rate the row carries, in basis points OF Hanzo\'s margin (2000 = 20% of margin, never of the customer\'s bill).
+     * RateBps is the direct (level 1) commission rate the row carries, in basis points OF Hanzo\'s margin (1500 = 15% of margin, never of the customer\'s bill).
      * @type {number}
      * @memberof AffiliateApplication
      */
@@ -51,7 +51,7 @@ export interface AffiliateApplication {
      */
     'requestedCode'?: string;
     /**
-     * Status is \"applied\" for a row this call created. A re-apply echoes the existing row\'s status, which may already be \"approved\" or \"suspended\".
+     * Status is \"applied\" for a row this call created. A re-apply echoes the existing row\'s status, which may already be \"approved\", \"suspended\" or \"declined\".
      * @type {string}
      * @memberof AffiliateApplication
      */

@@ -108,7 +108,7 @@ export interface CampaignCampaignResults {
      */
     'revenue'?: number;
     /**
-     * ROAS is return on ad spend: revenue per spend DOLLAR, rounded to 2 places (2.5 = $2.50 back per $1). 0 when nothing was spent.
+     * ROAS is return on ad spend: revenue per spend DOLLAR, rounded to 2 places (2.5 = $2.50 back per dollar). 0 when nothing was spent.
      * @type {number}
      * @memberof CampaignCampaignResults
      */

@@ -39,6 +39,12 @@ export interface BillingTier {
      */
     'plan'?: string;
     /**
+     * PlanName is the display name of the served plan (\"Unlimited\"), \"\" with no plan. A plan only the plan authority knows has no catalog name, so a reader shows this, not the tier. Last, for the ZAP wire.
+     * @type {string}
+     * @memberof BillingTier
+     */
+    'planName'?: string;
+    /**
      * Subscription is the id of the subscription row whose plan is the served rung, \"\" when the tier is not a subscription\'s.
      * @type {string}
      * @memberof BillingTier

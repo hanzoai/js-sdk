@@ -24,19 +24,19 @@ import type { EmailSESDNSRecord } from './email-sesdnsrecord';
  */
 export interface EmailSESStatusResult {
     /**
-     * ActiveProvider names the active primary email provider resolved for the organization.
+     * ActiveProvider is the provider the org\'s mail leaves by when a request pins none.
      * @type {string}
      * @memberof EmailSESStatusResult
      */
     'active_provider'?: string;
     /**
-     * ConfigurationSet is the Amazon SES v2 Configuration Set name used for open/click/bounce tracking.
+     * ConfigurationSet is the SES configuration set messages go out under, whose event destination publishes their events (hanzo-crm-events unless the credential names another).
      * @type {string}
      * @memberof EmailSESStatusResult
      */
     'configuration_set'?: string;
     /**
-     * Configured reports whether Amazon SES credentials are configured for the organization.
+     * Configured reports whether the org holds the SES credentials a send needs (access-key-id, secret-access-key, from-email).
      * @type {boolean}
      * @memberof EmailSESStatusResult
      */
@@ -72,13 +72,13 @@ export interface EmailSESStatusResult {
      */
     'mail_from_domain'?: string;
     /**
-     * Max24HourSend is the 24-hour sending quota for the SES account.
+     * Max24HourSend is the account\'s 24-hour sending quota, as SES answers it.
      * @type {number}
      * @memberof EmailSESStatusResult
      */
     'max_24_hour_send'?: number;
     /**
-     * MaxSendRate is the maximum messages per second allowed by SES.
+     * MaxSendRate is the account\'s most messages a second, as SES answers it.
      * @type {number}
      * @memberof EmailSESStatusResult
      */
@@ -90,19 +90,37 @@ export interface EmailSESStatusResult {
      */
     'org'?: string;
     /**
+     * ProviderSentLast24Hours is what SES counts sent by the account in the last 24 hours, from anywhere.
+     * @type {number}
+     * @memberof EmailSESStatusResult
+     */
+    'provider_sent_last_24_hours'?: number;
+    /**
+     * QuotaError says why the account\'s limits could not be read; the limits are then 0.
+     * @type {string}
+     * @memberof EmailSESStatusResult
+     */
+    'quota_error'?: string;
+    /**
      * Region is the configured Amazon SES AWS region (defaults to us-east-1).
      * @type {string}
      * @memberof EmailSESStatusResult
      */
     'region'?: string;
     /**
-     * Sandbox reports whether the account is in SES sandbox mode.
+     * Sandbox is whether SES says the account is still in its sandbox.
      * @type {boolean}
      * @memberof EmailSESStatusResult
      */
     'sandbox'?: boolean;
     /**
-     * SentLast24Hours is the count of messages dispatched in the trailing 24 hours.
+     * SendingEnabled is whether SES says the account may send.
+     * @type {boolean}
+     * @memberof EmailSESStatusResult
+     */
+    'sending_enabled'?: boolean;
+    /**
+     * SentLast24Hours is what the org\'s ledger counts sent by SES in the last 24 hours: through POST /v1/email, and every message SES\'s events told of.
      * @type {number}
      * @memberof EmailSESStatusResult
      */

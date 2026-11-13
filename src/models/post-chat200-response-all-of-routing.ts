@@ -27,6 +27,12 @@ import type { PostChat200ResponseAllOfRoutingInputs } from './post-chat200-respo
  */
 export interface PostChat200ResponseAllOfRouting {
     /**
+     * What chose the tier: the request\'s effort, the router\'s start, its table for the task, or Kai\'s effort decision.
+     * @type {string}
+     * @memberof PostChat200ResponseAllOfRouting
+     */
+    'by'?: PostChat200ResponseAllOfRoutingByEnum;
+    /**
      * Each model the router\'s table names, with the reasoning depths that read it, shallow to deep.
      * @type {Array<PostChat200ResponseAllOfRoutingCandidatesInner>}
      * @memberof PostChat200ResponseAllOfRouting
@@ -57,4 +63,14 @@ export interface PostChat200ResponseAllOfRouting {
      */
     'router': string;
 }
+
+export const PostChat200ResponseAllOfRoutingByEnum = {
+    Effort: 'effort',
+    Default: 'default',
+    Router: 'router',
+    Kai: 'kai'
+} as const;
+
+export type PostChat200ResponseAllOfRoutingByEnum = typeof PostChat200ResponseAllOfRoutingByEnum[keyof typeof PostChat200ResponseAllOfRoutingByEnum];
+
 

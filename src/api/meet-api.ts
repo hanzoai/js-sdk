@@ -106,18 +106,18 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * Answers where a channel\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the channel\'s call at the moment it draws one, rather than reading a media room name someone stored on the channel. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a channel id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
          * @summary Where a room\'s call happens
-         * @param {string} space Space is the space uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
-         * @param {string} room Room is the room\&#39;s own id within that space, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the space holding it.
+         * @param {string} space Space is the space uuid holding the channel, as GET /v1/team/channels reports it. It is the segment the caller\&#39;s membership is checked against.
+         * @param {string} channel Channel is the channel\&#39;s own id within that space, as GET /v1/team/channels reports it. It is opaque here: meet keeps no channels and cannot say whether one exists, only whether this caller may be seated in the space holding it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetCall: async (space: string, room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        meetCall: async (space: string, channel: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'space' is not null or undefined
             assertParamExists('meetCall', 'space', space)
-            // verify required parameter 'room' is not null or undefined
-            assertParamExists('meetCall', 'room', room)
+            // verify required parameter 'channel' is not null or undefined
+            assertParamExists('meetCall', 'channel', channel)
             const localVarPath = `/v1/meet/call`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -138,8 +138,8 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['space'] = space;
             }
 
-            if (room !== undefined) {
-                localVarQueryParameter['room'] = room;
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
             }
 
 
@@ -344,15 +344,15 @@ export const MeetApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * Answers where a channel\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the channel\'s call at the moment it draws one, rather than reading a media room name someone stored on the channel. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a channel id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
          * @summary Where a room\'s call happens
-         * @param {string} space Space is the space uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
-         * @param {string} room Room is the room\&#39;s own id within that space, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the space holding it.
+         * @param {string} space Space is the space uuid holding the channel, as GET /v1/team/channels reports it. It is the segment the caller\&#39;s membership is checked against.
+         * @param {string} channel Channel is the channel\&#39;s own id within that space, as GET /v1/team/channels reports it. It is opaque here: meet keeps no channels and cannot say whether one exists, only whether this caller may be seated in the space holding it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetCall(space: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetVenue>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.meetCall(space, room, options);
+        async meetCall(space: string, channel: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetVenue>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetCall(space, channel, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetCall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -437,14 +437,14 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getMeetSession(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * Answers where a channel\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the channel\'s call at the moment it draws one, rather than reading a media room name someone stored on the channel. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a channel id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
          * @summary Where a room\'s call happens
          * @param {MeetApiMeetCallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<MeetVenue> {
-            return localVarFp.meetCall(requestParameters.space, requestParameters.room, options).then((request) => request(axios, basePath));
+            return localVarFp.meetCall(requestParameters.space, requestParameters.channel, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
@@ -495,18 +495,18 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface MeetApiMeetCallRequest {
     /**
-     * Space is the space uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
+     * Space is the space uuid holding the channel, as GET /v1/team/channels reports it. It is the segment the caller\&#39;s membership is checked against.
      * @type {string}
      * @memberof MeetApiMeetCall
      */
     readonly space: string
 
     /**
-     * Room is the room\&#39;s own id within that space, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the space holding it.
+     * Channel is the channel\&#39;s own id within that space, as GET /v1/team/channels reports it. It is opaque here: meet keeps no channels and cannot say whether one exists, only whether this caller may be seated in the space holding it.
      * @type {string}
      * @memberof MeetApiMeetCall
      */
-    readonly room: string
+    readonly channel: string
 }
 
 /**
@@ -581,7 +581,7 @@ export class MeetApi extends BaseAPI {
     }
 
     /**
-     * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+     * Answers where a channel\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the channel\'s call at the moment it draws one, rather than reading a media room name someone stored on the channel. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a space-membership oracle for anyone who can guess a channel id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
      * @summary Where a room\'s call happens
      * @param {MeetApiMeetCallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -589,7 +589,7 @@ export class MeetApi extends BaseAPI {
      * @memberof MeetApi
      */
     public meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig) {
-        return MeetApiFp(this.configuration).meetCall(requestParameters.space, requestParameters.room, options).then((request) => request(this.axios, this.basePath));
+        return MeetApiFp(this.configuration).meetCall(requestParameters.space, requestParameters.channel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

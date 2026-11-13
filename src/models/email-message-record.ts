@@ -21,41 +21,77 @@
  */
 export interface EmailMessageRecord {
     /**
-     * CreatedAt is the timestamp when the message was accepted for delivery.
+     * Bounce is hard or soft, for a message that bounced.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'bounce'?: string;
+    /**
+     * BouncedAt is when it bounced, and Bounce whether hard or soft.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'bounced_at'?: string;
+    /**
+     * Campaign is the campaign the message was tagged with.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'campaign'?: string;
+    /**
+     * ClickedAt is when a link in it was first clicked.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'clicked_at'?: string;
+    /**
+     * ComplainedAt is when its recipient reported it as spam.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'complained_at'?: string;
+    /**
+     * CreatedAt is when the message was sent, or accepted to be.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'created_at'?: string;
     /**
-     * Error carries the failure details when Status is failed.
+     * DeliveredAt is when the receiving server first took it.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'delivered_at'?: string;
+    /**
+     * Error says why it failed, bounced, was deferred or was rejected.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'error'?: string;
     /**
-     * From is the sender email address used for delivery.
+     * From is the sender address, when known.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'from'?: string;
     /**
-     * HTML is the HTML body.
-     * @type {string}
-     * @memberof EmailMessageRecord
-     */
-    'html'?: string;
-    /**
-     * ID is the unique message identifier minted by the delivery service.
+     * ID is our id for the message (msg_…): every link in it carries it as from=, and the event stream names it by it.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'id'?: string;
     /**
-     * IdempotencyKey records the key used to deduplicate dispatch retries.
+     * IdempotencyKey is the key the message was sent under.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'idempotency_key'?: string;
+    /**
+     * OpenedAt is when it was first opened.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'opened_at'?: string;
     /**
      * Org is the organization owning this message.
      * @type {string}
@@ -63,40 +99,46 @@ export interface EmailMessageRecord {
      */
     'org'?: string;
     /**
-     * Provider is the delivery provider name that executed the dispatch.
+     * Origin is api for a message POST /v1/email sent, provider for one the provider\'s events told of, sent from the org\'s own tools.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'origin'?: string;
+    /**
+     * Provider is the rail it went by: ses or sendgrid.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'provider'?: string;
     /**
-     * ProviderID is the provider\'s own id for the message, which its delivery events name it by; empty for a provider that answers none.
+     * ProviderID is the provider\'s own id for the message, which its events name it by; empty until the provider answers one.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'provider_id'?: string;
     /**
-     * Status reports delivery status: queued, sent, delivered, or failed.
+     * Status is queued, sent, failed, delivered, opened, clicked, bounced or complained.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'status'?: string;
     /**
-     * Subject is the message subject line.
+     * Subject is the message subject line, when known.
      * @type {string}
      * @memberof EmailMessageRecord
      */
     'subject'?: string;
     /**
-     * Text is the plain text body.
-     * @type {string}
-     * @memberof EmailMessageRecord
-     */
-    'text'?: string;
-    /**
-     * To lists recipient destination addresses.
+     * To lists the recipients.
      * @type {Array<string>}
      * @memberof EmailMessageRecord
      */
     'to'?: Array<string>;
+    /**
+     * UnsubscribedAt is when its recipient unsubscribed from it.
+     * @type {string}
+     * @memberof EmailMessageRecord
+     */
+    'unsubscribed_at'?: string;
 }
 

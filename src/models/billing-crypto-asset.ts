@@ -27,13 +27,13 @@ export interface BillingCryptoAsset {
      */
     'amountCents'?: number;
     /**
-     * Chain is the network to receive on. Empty takes the rail\'s default.
+     * Chain is the network to receive on, one of GET /v1/billing/crypto/options chains. Empty takes the rail\'s default.
      * @type {string}
      * @memberof BillingCryptoAsset
      */
     'chain'?: string;
     /**
-     * Token is the asset on that chain. Empty takes the chain\'s native one.
+     * Token is the asset on that chain, one of the options\' tokens. Empty takes the rail\'s default.
      * @type {string}
      * @memberof BillingCryptoAsset
      */

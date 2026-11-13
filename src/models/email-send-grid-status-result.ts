@@ -24,7 +24,7 @@ import type { EmailSESDNSRecord } from './email-sesdnsrecord';
  */
 export interface EmailSendGridStatusResult {
     /**
-     * ActiveProvider is the highest-priority email provider currently configured for this organization.
+     * ActiveProvider is the provider the org\'s mail leaves by when a request pins none.
      * @type {string}
      * @memberof EmailSendGridStatusResult
      */
@@ -36,11 +36,29 @@ export interface EmailSendGridStatusResult {
      */
     'asm_group_id'?: string;
     /**
-     * Configured reports whether SendGrid outreach credentials are set in KMS for this organization.
+     * Configured reports whether the org holds the SendGrid credentials a send needs (api-key, from-email).
      * @type {boolean}
      * @memberof EmailSendGridStatusResult
      */
     'configured'?: boolean;
+    /**
+     * CreditsRemaining is the credits left in the period.
+     * @type {number}
+     * @memberof EmailSendGridStatusResult
+     */
+    'credits_remaining'?: number;
+    /**
+     * CreditsTotal, CreditsRemaining and CreditsUsed are the account\'s sending credits for the period, as SendGrid answers them.
+     * @type {number}
+     * @memberof EmailSendGridStatusResult
+     */
+    'credits_total'?: number;
+    /**
+     * CreditsUsed is the credits used in the period.
+     * @type {number}
+     * @memberof EmailSendGridStatusResult
+     */
+    'credits_used'?: number;
     /**
      * DNSRecords lists the required SendGrid Domain Authentication CNAME, Link Branding, SPF, and DMARC DNS records.
      * @type {Array<EmailSESDNSRecord>}
@@ -66,7 +84,7 @@ export interface EmailSendGridStatusResult {
      */
     'from_name'?: string;
     /**
-     * IPPool is the dedicated SendGrid IP pool name used to isolate cold outreach reputation.
+     * IPPool is the SendGrid IP pool the credential names, if any.
      * @type {string}
      * @memberof EmailSendGridStatusResult
      */
@@ -78,13 +96,19 @@ export interface EmailSendGridStatusResult {
      */
     'org'?: string;
     /**
+     * QuotaError says why the account\'s credits could not be read; they are then 0.
+     * @type {string}
+     * @memberof EmailSendGridStatusResult
+     */
+    'quota_error'?: string;
+    /**
      * ReplyTo is the configured Reply-To address for outreach replies.
      * @type {string}
      * @memberof EmailSendGridStatusResult
      */
     'reply_to'?: string;
     /**
-     * SentLast24Hours is the count of emails sent by this organization in the past 24 hours.
+     * SentLast24Hours is what the org\'s ledger counts sent by SendGrid in the last 24 hours: through POST /v1/email, and every message SendGrid\'s events told of.
      * @type {number}
      * @memberof EmailSendGridStatusResult
      */

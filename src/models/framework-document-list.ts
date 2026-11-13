@@ -26,5 +26,17 @@ export interface FrameworkDocumentList {
      * @memberof FrameworkDocumentList
      */
     'data'?: Array<{ [key: string]: any; }>;
+    /**
+     * Next is the opaque keyset cursor for the next page; empty on the last.
+     * @type {string}
+     * @memberof FrameworkDocumentList
+     */
+    'next'?: string;
+    /**
+     * Total is the true count of matching documents for this org+doctype.
+     * @type {number}
+     * @memberof FrameworkDocumentList
+     */
+    'total'?: number;
 }
 

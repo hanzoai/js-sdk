@@ -30,6 +30,12 @@ import type { ProviderOpView } from './provider-op-view';
  */
 export interface ProviderProviderView {
     /**
+     * Accounts is every account this org has connected for the provider, each with its own platform id. Tokens never appear here.
+     * @type {Array<ProviderConnectionView>}
+     * @memberof ProviderProviderView
+     */
+    'accounts'?: Array<ProviderConnectionView>;
+    /**
      * Actions are what the connector can be asked to do, by a flow step or an agent (POST /v1/provider/{provider}/run when Runnable).
      * @type {Array<ProviderOpView>}
      * @memberof ProviderProviderView
@@ -66,7 +72,7 @@ export interface ProviderProviderView {
      */
     'connected'?: boolean;
     /**
-     * Connection is the connected account\'s non-secret detail. Absent when the org has no connection; tokens NEVER appear here (they live only in KMS).
+     * Connection is the connected account\'s non-secret detail. Absent when the org has no connection; tokens NEVER appear here (they live only in KMS). When the org holds several accounts, this is the first and Accounts is every one of them.
      * @type {ProviderConnectionView}
      * @memberof ProviderProviderView
      */

@@ -24,6 +24,40 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 // @ts-ignore
+import type { SocialChannelAnalyticsOut } from '../models';
+// @ts-ignore
+import type { SocialChannelConnectIn } from '../models';
+// @ts-ignore
+import type { SocialChannelConnectOut } from '../models';
+// @ts-ignore
+import type { SocialChannelGroupList } from '../models';
+// @ts-ignore
+import type { SocialChannelItem } from '../models';
+// @ts-ignore
+import type { SocialChannelList } from '../models';
+// @ts-ignore
+import type { SocialChannelProviderList } from '../models';
+// @ts-ignore
+import type { SocialChannelSetGroupIn } from '../models';
+// @ts-ignore
+import type { SocialChannelUpdateIn } from '../models';
+// @ts-ignore
+import type { SocialOrgApps } from '../models';
+// @ts-ignore
+import type { SocialOrgAppsWrite } from '../models';
+// @ts-ignore
+import type { SocialPostAnalyticsOut } from '../models';
+// @ts-ignore
+import type { SocialPostCreateIn } from '../models';
+// @ts-ignore
+import type { SocialPostCreateOut } from '../models';
+// @ts-ignore
+import type { SocialPostItem } from '../models';
+// @ts-ignore
+import type { SocialPostList } from '../models';
+// @ts-ignore
+import type { SocialPostUpdateIn } from '../models';
+// @ts-ignore
 import type { SocialSocialAccount } from '../models';
 // @ts-ignore
 import type { SocialSocialAccountBody } from '../models';
@@ -49,6 +83,82 @@ import type { SocialSocialSummary } from '../models';
  */
 export const SocialApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @summary Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteChannelById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteChannelById', 'id', id)
+            const localVarPath = `/v1/channel/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes one social post record from the caller\'s organization.
+         * @summary Removes one social post record from the caller\'s organization.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePostById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deletePostById', 'id', id)
+            const localVarPath = `/v1/post/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
          * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
@@ -126,6 +236,339 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @summary Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @param {string} [provider] Provider keeps only channels on the named network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;). Omit for all networks.
+         * @param {string} [group] Group keeps only channels belonging to the named employee or brand group (matching groupId or case-insensitive groupName).
+         * @param {string} [limit] Limit bounds the maximum number of channels returned (default 200, max 1000).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannel: async (provider?: string, group?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/channel`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (provider !== undefined) {
+                localVarQueryParameter['provider'] = provider;
+            }
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one connected social channel by id for the caller\'s organization.
+         * @summary Returns one connected social channel by id for the caller\'s organization.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getChannelById', 'id', id)
+            const localVarPath = `/v1/channel/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @summary Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {string} [days] Days is the lookback window in days (7, 30, or 90; defaults to 7).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelByIdAnalytics: async (id: string, days?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getChannelByIdAnalytics', 'id', id)
+            const localVarPath = `/v1/channel/{id}/analytics`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @summary Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelGroups: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/channel/groups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @summary Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/channel/providers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @summary Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @param {string} [status] Status keeps only posts in one state (draft, scheduled, published, failed, or mirrored).
+         * @param {string} [channel] Channel keeps only posts targeting one social network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;).
+         * @param {string} [accountId] AccountID keeps only posts targeting or published by one specific connected channel ID.
+         * @param {string} [group] Group keeps only posts belonging to one employee or brand channel group (for example \&quot;Antje Worring\&quot; or \&quot;Hanzo AI\&quot;).
+         * @param {string} [limit] Limit bounds the maximum number of posts returned (default 200, max 1000).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPost: async (status?: string, channel?: string, accountId?: string, group?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/post`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
+            }
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one social post by id for the caller\'s organization.
+         * @summary Returns one social post by id for the caller\'s organization.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPostById', 'id', id)
+            const localVarPath = `/v1/post/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @summary Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostByIdAnalytics: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPostByIdAnalytics', 'id', id)
+            const localVarPath = `/v1/post/{id}/analytics`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
          * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
          * @param {string} [provider] Provider keeps only accounts on one network — x, facebook, instagram, linkedin, tiktok, youtube or threads. Omit it for every network. It is lower-cased and trimmed before it is matched, and a value that names no network simply matches nothing rather than being refused.
@@ -181,6 +624,40 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists('getSocialAccountsById', 'id', id)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the apps this org has sealed. The secret is not included.
+         * @summary Lists the apps this org has sealed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSocialCredentials: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/social/credentials`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -358,6 +835,124 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @summary Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @param {SocialChannelConnectIn} socialChannelConnectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postChannelConnect: async (socialChannelConnectIn: SocialChannelConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialChannelConnectIn' is not null or undefined
+            assertParamExists('postChannelConnect', 'socialChannelConnectIn', socialChannelConnectIn)
+            const localVarPath = `/v1/channel/connect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialChannelConnectIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @summary Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @param {SocialPostCreateIn} socialPostCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPost: async (socialPostCreateIn: SocialPostCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialPostCreateIn' is not null or undefined
+            assertParamExists('postPost', 'socialPostCreateIn', socialPostCreateIn)
+            const localVarPath = `/v1/post`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialPostCreateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @summary Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPostByIdPublish: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postPostByIdPublish', 'id', id)
+            const localVarPath = `/v1/post/{id}/publish`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @param {SocialSocialAccountBody} socialSocialAccountBody 
@@ -391,6 +986,44 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(socialSocialAccountBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates. It runs outside Bridge auth because the token IS the credential — no org, no bearer, nothing to validate upstream.
+         * @summary Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates.
+         * @param {string} ingestToken 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSocialIngestPostizByIngesttoken: async (ingestToken: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ingestToken' is not null or undefined
+            assertParamExists('postSocialIngestPostizByIngesttoken', 'ingestToken', ingestToken)
+            const localVarPath = `/v1/social/ingest/postiz/{ingestToken}`
+                .replace(`{${"ingestToken"}}`, encodeURIComponent(String(ingestToken)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -476,6 +1109,138 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @summary Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @param {string} id 
+         * @param {SocialChannelUpdateIn} socialChannelUpdateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putChannelById: async (id: string, socialChannelUpdateIn: SocialChannelUpdateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putChannelById', 'id', id)
+            // verify required parameter 'socialChannelUpdateIn' is not null or undefined
+            assertParamExists('putChannelById', 'socialChannelUpdateIn', socialChannelUpdateIn)
+            const localVarPath = `/v1/channel/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialChannelUpdateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @summary Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @param {string} id 
+         * @param {SocialChannelSetGroupIn} socialChannelSetGroupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putChannelByIdGroup: async (id: string, socialChannelSetGroupIn: SocialChannelSetGroupIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putChannelByIdGroup', 'id', id)
+            // verify required parameter 'socialChannelSetGroupIn' is not null or undefined
+            assertParamExists('putChannelByIdGroup', 'socialChannelSetGroupIn', socialChannelSetGroupIn)
+            const localVarPath = `/v1/channel/{id}/group`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialChannelSetGroupIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @summary Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @param {string} id 
+         * @param {SocialPostUpdateIn} socialPostUpdateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putPostById: async (id: string, socialPostUpdateIn: SocialPostUpdateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putPostById', 'id', id)
+            // verify required parameter 'socialPostUpdateIn' is not null or undefined
+            assertParamExists('putPostById', 'socialPostUpdateIn', socialPostUpdateIn)
+            const localVarPath = `/v1/post/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialPostUpdateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
          * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
@@ -513,6 +1278,46 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(socialSocialAccountWrite, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Seals the apps in the body. A network left out is unchanged.
+         * @summary Seals the apps in the body.
+         * @param {SocialOrgAppsWrite} socialOrgAppsWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putSocialCredentials: async (socialOrgAppsWrite: SocialOrgAppsWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialOrgAppsWrite' is not null or undefined
+            assertParamExists('putSocialCredentials', 'socialOrgAppsWrite', socialOrgAppsWrite)
+            const localVarPath = `/v1/social/credentials`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialOrgAppsWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -574,6 +1379,32 @@ export const SocialApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SocialApiAxiosParamCreator(configuration)
     return {
         /**
+         * Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @summary Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteChannelById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteChannelById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteChannelById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes one social post record from the caller\'s organization.
+         * @summary Removes one social post record from the caller\'s organization.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePostById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePostById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.deletePostById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
          * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
          * @param {string} id ID is the account or post to act on, taken from the path.
@@ -597,6 +1428,115 @@ export const SocialApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteSocialPostsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @summary Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @param {string} [provider] Provider keeps only channels on the named network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;). Omit for all networks.
+         * @param {string} [group] Group keeps only channels belonging to the named employee or brand group (matching groupId or case-insensitive groupName).
+         * @param {string} [limit] Limit bounds the maximum number of channels returned (default 200, max 1000).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannel(provider?: string, group?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannel(provider, group, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getChannel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one connected social channel by id for the caller\'s organization.
+         * @summary Returns one connected social channel by id for the caller\'s organization.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannelById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getChannelById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @summary Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @param {string} id ID is the channel identifier from the URL path.
+         * @param {string} [days] Days is the lookback window in days (7, 30, or 90; defaults to 7).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannelByIdAnalytics(id: string, days?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelAnalyticsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelByIdAnalytics(id, days, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getChannelByIdAnalytics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @summary Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannelGroups(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelGroupList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelGroups(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getChannelGroups']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @summary Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannelProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelProviderList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelProviders(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getChannelProviders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @summary Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @param {string} [status] Status keeps only posts in one state (draft, scheduled, published, failed, or mirrored).
+         * @param {string} [channel] Channel keeps only posts targeting one social network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;).
+         * @param {string} [accountId] AccountID keeps only posts targeting or published by one specific connected channel ID.
+         * @param {string} [group] Group keeps only posts belonging to one employee or brand channel group (for example \&quot;Antje Worring\&quot; or \&quot;Hanzo AI\&quot;).
+         * @param {string} [limit] Limit bounds the maximum number of posts returned (default 200, max 1000).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPost(status?: string, channel?: string, accountId?: string, group?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPost(status, channel, accountId, group, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one social post by id for the caller\'s organization.
+         * @summary Returns one social post by id for the caller\'s organization.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPostById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPostById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getPostById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @summary Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPostByIdAnalytics(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostAnalyticsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPostByIdAnalytics(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getPostByIdAnalytics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -624,6 +1564,18 @@ export const SocialApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccountsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the apps this org has sealed. The secret is not included.
+         * @summary Lists the apps this org has sealed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSocialCredentials(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialOrgApps>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialCredentials(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -678,6 +1630,45 @@ export const SocialApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @summary Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @param {SocialChannelConnectIn} socialChannelConnectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postChannelConnect(socialChannelConnectIn: SocialChannelConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelConnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChannelConnect(socialChannelConnectIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postChannelConnect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @summary Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @param {SocialPostCreateIn} socialPostCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPost(socialPostCreateIn: SocialPostCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostCreateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPost(socialPostCreateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @summary Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @param {string} id ID is the post identifier from the URL path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPostByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPostByIdPublish(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postPostByIdPublish']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @param {SocialSocialAccountBody} socialSocialAccountBody 
@@ -688,6 +1679,19 @@ export const SocialApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(socialSocialAccountBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialAccounts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates. It runs outside Bridge auth because the token IS the credential — no org, no bearer, nothing to validate upstream.
+         * @summary Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates.
+         * @param {string} ingestToken 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSocialIngestPostizByIngesttoken(ingestToken: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialIngestPostizByIngesttoken(ingestToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialIngestPostizByIngesttoken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -717,6 +1721,48 @@ export const SocialApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @summary Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @param {string} id 
+         * @param {SocialChannelUpdateIn} socialChannelUpdateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putChannelById(id: string, socialChannelUpdateIn: SocialChannelUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putChannelById(id, socialChannelUpdateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putChannelById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @summary Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @param {string} id 
+         * @param {SocialChannelSetGroupIn} socialChannelSetGroupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putChannelByIdGroup(id: string, socialChannelSetGroupIn: SocialChannelSetGroupIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialChannelItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putChannelByIdGroup(id, socialChannelSetGroupIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putChannelByIdGroup']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @summary Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @param {string} id 
+         * @param {SocialPostUpdateIn} socialPostUpdateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putPostById(id: string, socialPostUpdateIn: SocialPostUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPostItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPostById(id, socialPostUpdateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putPostById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
          * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
@@ -728,6 +1774,19 @@ export const SocialApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, socialSocialAccountWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialAccountsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Seals the apps in the body. A network left out is unchanged.
+         * @summary Seals the apps in the body.
+         * @param {SocialOrgAppsWrite} socialOrgAppsWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putSocialCredentials(socialOrgAppsWrite: SocialOrgAppsWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialOrgApps>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialCredentials(socialOrgAppsWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -755,6 +1814,26 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = SocialApiFp(configuration)
     return {
         /**
+         * Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @summary Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+         * @param {SocialApiDeleteChannelByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteChannelById(requestParameters: SocialApiDeleteChannelByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteChannelById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes one social post record from the caller\'s organization.
+         * @summary Removes one social post record from the caller\'s organization.
+         * @param {SocialApiDeletePostByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePostById(requestParameters: SocialApiDeletePostByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePostById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
          * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
          * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
@@ -775,6 +1854,84 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deleteSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @summary Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+         * @param {SocialApiGetChannelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannel(requestParameters: SocialApiGetChannelRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelList> {
+            return localVarFp.getChannel(requestParameters.provider, requestParameters.group, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one connected social channel by id for the caller\'s organization.
+         * @summary Returns one connected social channel by id for the caller\'s organization.
+         * @param {SocialApiGetChannelByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelById(requestParameters: SocialApiGetChannelByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelItem> {
+            return localVarFp.getChannelById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @summary Returns post delivery counts and upstream engagement metrics for one social channel.
+         * @param {SocialApiGetChannelByIdAnalyticsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelByIdAnalytics(requestParameters: SocialApiGetChannelByIdAnalyticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelAnalyticsOut> {
+            return localVarFp.getChannelByIdAnalytics(requestParameters.id, requestParameters.days, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @summary Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelGroups(options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelGroupList> {
+            return localVarFp.getChannelGroups(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @summary Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelProviders(options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelProviderList> {
+            return localVarFp.getChannelProviders(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @summary Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+         * @param {SocialApiGetPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPost(requestParameters: SocialApiGetPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostList> {
+            return localVarFp.getPost(requestParameters.status, requestParameters.channel, requestParameters.accountId, requestParameters.group, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one social post by id for the caller\'s organization.
+         * @summary Returns one social post by id for the caller\'s organization.
+         * @param {SocialApiGetPostByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostById(requestParameters: SocialApiGetPostByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostItem> {
+            return localVarFp.getPostById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @summary Returns delivery status, release URL, and upstream engagement metrics for one post.
+         * @param {SocialApiGetPostByIdAnalyticsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostByIdAnalytics(requestParameters: SocialApiGetPostByIdAnalyticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostAnalyticsOut> {
+            return localVarFp.getPostByIdAnalytics(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
          * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
          * @param {SocialApiGetSocialAccountsRequest} requestParameters Request parameters.
@@ -793,6 +1950,15 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          */
         getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
             return localVarFp.getSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the apps this org has sealed. The secret is not included.
+         * @summary Lists the apps this org has sealed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSocialCredentials(options?: RawAxiosRequestConfig): AxiosPromise<SocialOrgApps> {
+            return localVarFp.getSocialCredentials(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
@@ -833,6 +1999,36 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getSocialSummary(options).then((request) => request(axios, basePath));
         },
         /**
+         * Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @summary Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+         * @param {SocialApiPostChannelConnectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postChannelConnect(requestParameters: SocialApiPostChannelConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelConnectOut> {
+            return localVarFp.postChannelConnect(requestParameters.socialChannelConnectIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @summary Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+         * @param {SocialApiPostPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPost(requestParameters: SocialApiPostPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostCreateOut> {
+            return localVarFp.postPost(requestParameters.socialPostCreateIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @summary Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+         * @param {SocialApiPostPostByIdPublishRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPostByIdPublish(requestParameters: SocialApiPostPostByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostItem> {
+            return localVarFp.postPostByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
          * @param {SocialApiPostSocialAccountsRequest} requestParameters Request parameters.
@@ -841,6 +2037,16 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          */
         postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
             return localVarFp.postSocialAccounts(requestParameters.socialSocialAccountBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates. It runs outside Bridge auth because the token IS the credential — no org, no bearer, nothing to validate upstream.
+         * @summary Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates.
+         * @param {SocialApiPostSocialIngestPostizByIngesttokenRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSocialIngestPostizByIngesttoken(requestParameters: SocialApiPostSocialIngestPostizByIngesttokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSocialIngestPostizByIngesttoken(requestParameters.ingestToken, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
@@ -863,6 +2069,36 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.postSocialPostsByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @summary Modifies a social channel\'s display metadata, status, group, or disabled flag.
+         * @param {SocialApiPutChannelByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putChannelById(requestParameters: SocialApiPutChannelByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelItem> {
+            return localVarFp.putChannelById(requestParameters.id, requestParameters.socialChannelUpdateIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @summary Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+         * @param {SocialApiPutChannelByIdGroupRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putChannelByIdGroup(requestParameters: SocialApiPutChannelByIdGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialChannelItem> {
+            return localVarFp.putChannelByIdGroup(requestParameters.id, requestParameters.socialChannelSetGroupIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @summary Replaces one social post\'s content, target channel, schedule, status, and media.
+         * @param {SocialApiPutPostByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putPostById(requestParameters: SocialApiPutPostByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPostItem> {
+            return localVarFp.putPostById(requestParameters.id, requestParameters.socialPostUpdateIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
          * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
@@ -871,6 +2107,16 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          */
         putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialSocialAccount> {
             return localVarFp.putSocialAccountsById(requestParameters.id, requestParameters.socialSocialAccountWrite, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Seals the apps in the body. A network left out is unchanged.
+         * @summary Seals the apps in the body.
+         * @param {SocialApiPutSocialCredentialsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putSocialCredentials(requestParameters: SocialApiPutSocialCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialOrgApps> {
+            return localVarFp.putSocialCredentials(requestParameters.socialOrgAppsWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
@@ -884,6 +2130,34 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
         },
     };
 };
+
+/**
+ * Request parameters for deleteChannelById operation in SocialApi.
+ * @export
+ * @interface SocialApiDeleteChannelByIdRequest
+ */
+export interface SocialApiDeleteChannelByIdRequest {
+    /**
+     * ID is the channel identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiDeleteChannelById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deletePostById operation in SocialApi.
+ * @export
+ * @interface SocialApiDeletePostByIdRequest
+ */
+export interface SocialApiDeletePostByIdRequest {
+    /**
+     * ID is the post identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiDeletePostById
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for deleteSocialAccountsById operation in SocialApi.
@@ -909,6 +2183,139 @@ export interface SocialApiDeleteSocialPostsByIdRequest {
      * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiDeleteSocialPostsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getChannel operation in SocialApi.
+ * @export
+ * @interface SocialApiGetChannelRequest
+ */
+export interface SocialApiGetChannelRequest {
+    /**
+     * Provider keeps only channels on the named network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;). Omit for all networks.
+     * @type {string}
+     * @memberof SocialApiGetChannel
+     */
+    readonly provider?: string
+
+    /**
+     * Group keeps only channels belonging to the named employee or brand group (matching groupId or case-insensitive groupName).
+     * @type {string}
+     * @memberof SocialApiGetChannel
+     */
+    readonly group?: string
+
+    /**
+     * Limit bounds the maximum number of channels returned (default 200, max 1000).
+     * @type {string}
+     * @memberof SocialApiGetChannel
+     */
+    readonly limit?: string
+}
+
+/**
+ * Request parameters for getChannelById operation in SocialApi.
+ * @export
+ * @interface SocialApiGetChannelByIdRequest
+ */
+export interface SocialApiGetChannelByIdRequest {
+    /**
+     * ID is the channel identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiGetChannelById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getChannelByIdAnalytics operation in SocialApi.
+ * @export
+ * @interface SocialApiGetChannelByIdAnalyticsRequest
+ */
+export interface SocialApiGetChannelByIdAnalyticsRequest {
+    /**
+     * ID is the channel identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiGetChannelByIdAnalytics
+     */
+    readonly id: string
+
+    /**
+     * Days is the lookback window in days (7, 30, or 90; defaults to 7).
+     * @type {string}
+     * @memberof SocialApiGetChannelByIdAnalytics
+     */
+    readonly days?: string
+}
+
+/**
+ * Request parameters for getPost operation in SocialApi.
+ * @export
+ * @interface SocialApiGetPostRequest
+ */
+export interface SocialApiGetPostRequest {
+    /**
+     * Status keeps only posts in one state (draft, scheduled, published, failed, or mirrored).
+     * @type {string}
+     * @memberof SocialApiGetPost
+     */
+    readonly status?: string
+
+    /**
+     * Channel keeps only posts targeting one social network (for example \&quot;x\&quot; or \&quot;linkedin\&quot;).
+     * @type {string}
+     * @memberof SocialApiGetPost
+     */
+    readonly channel?: string
+
+    /**
+     * AccountID keeps only posts targeting or published by one specific connected channel ID.
+     * @type {string}
+     * @memberof SocialApiGetPost
+     */
+    readonly accountId?: string
+
+    /**
+     * Group keeps only posts belonging to one employee or brand channel group (for example \&quot;Antje Worring\&quot; or \&quot;Hanzo AI\&quot;).
+     * @type {string}
+     * @memberof SocialApiGetPost
+     */
+    readonly group?: string
+
+    /**
+     * Limit bounds the maximum number of posts returned (default 200, max 1000).
+     * @type {string}
+     * @memberof SocialApiGetPost
+     */
+    readonly limit?: string
+}
+
+/**
+ * Request parameters for getPostById operation in SocialApi.
+ * @export
+ * @interface SocialApiGetPostByIdRequest
+ */
+export interface SocialApiGetPostByIdRequest {
+    /**
+     * ID is the post identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiGetPostById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getPostByIdAnalytics operation in SocialApi.
+ * @export
+ * @interface SocialApiGetPostByIdAnalyticsRequest
+ */
+export interface SocialApiGetPostByIdAnalyticsRequest {
+    /**
+     * ID is the post identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiGetPostByIdAnalytics
      */
     readonly id: string
 }
@@ -984,6 +2391,48 @@ export interface SocialApiGetSocialPostsByIdRequest {
 }
 
 /**
+ * Request parameters for postChannelConnect operation in SocialApi.
+ * @export
+ * @interface SocialApiPostChannelConnectRequest
+ */
+export interface SocialApiPostChannelConnectRequest {
+    /**
+     * 
+     * @type {SocialChannelConnectIn}
+     * @memberof SocialApiPostChannelConnect
+     */
+    readonly socialChannelConnectIn: SocialChannelConnectIn
+}
+
+/**
+ * Request parameters for postPost operation in SocialApi.
+ * @export
+ * @interface SocialApiPostPostRequest
+ */
+export interface SocialApiPostPostRequest {
+    /**
+     * 
+     * @type {SocialPostCreateIn}
+     * @memberof SocialApiPostPost
+     */
+    readonly socialPostCreateIn: SocialPostCreateIn
+}
+
+/**
+ * Request parameters for postPostByIdPublish operation in SocialApi.
+ * @export
+ * @interface SocialApiPostPostByIdPublishRequest
+ */
+export interface SocialApiPostPostByIdPublishRequest {
+    /**
+     * ID is the post identifier from the URL path.
+     * @type {string}
+     * @memberof SocialApiPostPostByIdPublish
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for postSocialAccounts operation in SocialApi.
  * @export
  * @interface SocialApiPostSocialAccountsRequest
@@ -995,6 +2444,20 @@ export interface SocialApiPostSocialAccountsRequest {
      * @memberof SocialApiPostSocialAccounts
      */
     readonly socialSocialAccountBody: SocialSocialAccountBody
+}
+
+/**
+ * Request parameters for postSocialIngestPostizByIngesttoken operation in SocialApi.
+ * @export
+ * @interface SocialApiPostSocialIngestPostizByIngesttokenRequest
+ */
+export interface SocialApiPostSocialIngestPostizByIngesttokenRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SocialApiPostSocialIngestPostizByIngesttoken
+     */
+    readonly ingestToken: string
 }
 
 /**
@@ -1026,6 +2489,69 @@ export interface SocialApiPostSocialPostsByIdPublishRequest {
 }
 
 /**
+ * Request parameters for putChannelById operation in SocialApi.
+ * @export
+ * @interface SocialApiPutChannelByIdRequest
+ */
+export interface SocialApiPutChannelByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SocialApiPutChannelById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SocialChannelUpdateIn}
+     * @memberof SocialApiPutChannelById
+     */
+    readonly socialChannelUpdateIn: SocialChannelUpdateIn
+}
+
+/**
+ * Request parameters for putChannelByIdGroup operation in SocialApi.
+ * @export
+ * @interface SocialApiPutChannelByIdGroupRequest
+ */
+export interface SocialApiPutChannelByIdGroupRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SocialApiPutChannelByIdGroup
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SocialChannelSetGroupIn}
+     * @memberof SocialApiPutChannelByIdGroup
+     */
+    readonly socialChannelSetGroupIn: SocialChannelSetGroupIn
+}
+
+/**
+ * Request parameters for putPostById operation in SocialApi.
+ * @export
+ * @interface SocialApiPutPostByIdRequest
+ */
+export interface SocialApiPutPostByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SocialApiPutPostById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SocialPostUpdateIn}
+     * @memberof SocialApiPutPostById
+     */
+    readonly socialPostUpdateIn: SocialPostUpdateIn
+}
+
+/**
  * Request parameters for putSocialAccountsById operation in SocialApi.
  * @export
  * @interface SocialApiPutSocialAccountsByIdRequest
@@ -1044,6 +2570,20 @@ export interface SocialApiPutSocialAccountsByIdRequest {
      * @memberof SocialApiPutSocialAccountsById
      */
     readonly socialSocialAccountWrite: SocialSocialAccountWrite
+}
+
+/**
+ * Request parameters for putSocialCredentials operation in SocialApi.
+ * @export
+ * @interface SocialApiPutSocialCredentialsRequest
+ */
+export interface SocialApiPutSocialCredentialsRequest {
+    /**
+     * 
+     * @type {SocialOrgAppsWrite}
+     * @memberof SocialApiPutSocialCredentials
+     */
+    readonly socialOrgAppsWrite: SocialOrgAppsWrite
 }
 
 /**
@@ -1075,6 +2615,30 @@ export interface SocialApiPutSocialPostsByIdRequest {
  */
 export class SocialApi extends BaseAPI {
     /**
+     * Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+     * @summary Disconnects a social channel from the caller\'s organization and purges its sealed token from KMS.
+     * @param {SocialApiDeleteChannelByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public deleteChannelById(requestParameters: SocialApiDeleteChannelByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).deleteChannelById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes one social post record from the caller\'s organization.
+     * @summary Removes one social post record from the caller\'s organization.
+     * @param {SocialApiDeletePostByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public deletePostById(requestParameters: SocialApiDeletePostByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).deletePostById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
      * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
      * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
@@ -1099,6 +2663,100 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
+     * Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+     * @summary Returns the caller organization\'s connected and registered social channels, optionally filtered by provider (`?provider=x`) or employee/brand group (`?group=Antje%20Worring`).
+     * @param {SocialApiGetChannelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getChannel(requestParameters: SocialApiGetChannelRequest = {}, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getChannel(requestParameters.provider, requestParameters.group, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one connected social channel by id for the caller\'s organization.
+     * @summary Returns one connected social channel by id for the caller\'s organization.
+     * @param {SocialApiGetChannelByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getChannelById(requestParameters: SocialApiGetChannelByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getChannelById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns post delivery counts and upstream engagement metrics for one social channel.
+     * @summary Returns post delivery counts and upstream engagement metrics for one social channel.
+     * @param {SocialApiGetChannelByIdAnalyticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getChannelByIdAnalytics(requestParameters: SocialApiGetChannelByIdAnalyticsRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getChannelByIdAnalytics(requestParameters.id, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+     * @summary Lists the employee and brand channel groups configured across the caller organization\'s channels (such as executive profiles and brand accounts) with channel counts.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getChannelGroups(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getChannelGroups(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+     * @summary Lists every supported social and publishing network along with whether OAuth application credentials are ready on this deployment or sealed for the org.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getChannelProviders(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getChannelProviders(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+     * @summary Returns the caller organization\'s social posts, optionally filtered by status, network channel, specific channel ID (`accountId`), or employee/brand `group`.
+     * @param {SocialApiGetPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getPost(requestParameters: SocialApiGetPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getPost(requestParameters.status, requestParameters.channel, requestParameters.accountId, requestParameters.group, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one social post by id for the caller\'s organization.
+     * @summary Returns one social post by id for the caller\'s organization.
+     * @param {SocialApiGetPostByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getPostById(requestParameters: SocialApiGetPostByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getPostById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns delivery status, release URL, and upstream engagement metrics for one post.
+     * @summary Returns delivery status, release URL, and upstream engagement metrics for one post.
+     * @param {SocialApiGetPostByIdAnalyticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getPostByIdAnalytics(requestParameters: SocialApiGetPostByIdAnalyticsRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getPostByIdAnalytics(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
      * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
      * @param {SocialApiGetSocialAccountsRequest} requestParameters Request parameters.
@@ -1120,6 +2778,17 @@ export class SocialApi extends BaseAPI {
      */
     public getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
         return SocialApiFp(this.configuration).getSocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the apps this org has sealed. The secret is not included.
+     * @summary Lists the apps this org has sealed.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public getSocialCredentials(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialCredentials(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1169,6 +2838,42 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
+     * Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+     * @summary Initiates a 3-legged OAuth flow (returning `authorizeUrl`) or immediately seals and connects a credentialed social channel into Hanzo KMS, optionally assigning it to an employee or brand group (`group`).
+     * @param {SocialApiPostChannelConnectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public postChannelConnect(requestParameters: SocialApiPostChannelConnectRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postChannelConnect(requestParameters.socialChannelConnectIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+     * @summary Stores a new draft, scheduled post, or immediate publish (`status: \"now\"`), supporting single-network, multi-network (`channels`), specific channel ID (`accountId` / `accountIds`), and employee/brand group (`group`) fanout.
+     * @param {SocialApiPostPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public postPost(requestParameters: SocialApiPostPostRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postPost(requestParameters.socialPostCreateIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+     * @summary Immediately publishes a draft, scheduled, or failed post to its target channel(s) and returns the updated post record with its external post ID or failure reason.
+     * @param {SocialApiPostPostByIdPublishRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public postPostByIdPublish(requestParameters: SocialApiPostPostByIdPublishRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postPostByIdPublish(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
      * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
      * @param {SocialApiPostSocialAccountsRequest} requestParameters Request parameters.
@@ -1178,6 +2883,18 @@ export class SocialApi extends BaseAPI {
      */
     public postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig) {
         return SocialApiFp(this.configuration).postSocialAccounts(requestParameters.socialSocialAccountBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates. It runs outside Bridge auth because the token IS the credential — no org, no bearer, nothing to validate upstream.
+     * @summary Adapts ingestPostiz to a zip handler: it reads the bearer-free path token, decodes the body, and delegates.
+     * @param {SocialApiPostSocialIngestPostizByIngesttokenRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public postSocialIngestPostizByIngesttoken(requestParameters: SocialApiPostSocialIngestPostizByIngesttokenRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialIngestPostizByIngesttoken(requestParameters.ingestToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1205,6 +2922,42 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
+     * Modifies a social channel\'s display metadata, status, group, or disabled flag.
+     * @summary Modifies a social channel\'s display metadata, status, group, or disabled flag.
+     * @param {SocialApiPutChannelByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public putChannelById(requestParameters: SocialApiPutChannelByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putChannelById(requestParameters.id, requestParameters.socialChannelUpdateIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+     * @summary Assigns a channel to an employee or brand group (or clears the group when empty), keeping /v1/channel and post.hanzo.ai sidebar groups synchronized.
+     * @param {SocialApiPutChannelByIdGroupRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public putChannelByIdGroup(requestParameters: SocialApiPutChannelByIdGroupRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putChannelByIdGroup(requestParameters.id, requestParameters.socialChannelSetGroupIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces one social post\'s content, target channel, schedule, status, and media.
+     * @summary Replaces one social post\'s content, target channel, schedule, status, and media.
+     * @param {SocialApiPutPostByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public putPostById(requestParameters: SocialApiPutPostByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putPostById(requestParameters.id, requestParameters.socialPostUpdateIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
      * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
      * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
@@ -1214,6 +2967,18 @@ export class SocialApi extends BaseAPI {
      */
     public putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
         return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, requestParameters.socialSocialAccountWrite, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Seals the apps in the body. A network left out is unchanged.
+     * @summary Seals the apps in the body.
+     * @param {SocialApiPutSocialCredentialsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SocialApi
+     */
+    public putSocialCredentials(requestParameters: SocialApiPutSocialCredentialsRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putSocialCredentials(requestParameters.socialOrgAppsWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

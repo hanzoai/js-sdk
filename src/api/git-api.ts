@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { GitActivityOut } from '../models';
+// @ts-ignore
 import type { GitBlobJSON } from '../models';
 // @ts-ignore
 import type { GitCommitsJSON } from '../models';
@@ -69,6 +71,8 @@ import type { GitRefsJSON } from '../models';
 import type { GitRepoList } from '../models';
 // @ts-ignore
 import type { GitRepoView } from '../models';
+// @ts-ignore
+import type { GitRunLogs } from '../models';
 // @ts-ignore
 import type { GitRunStart } from '../models';
 // @ts-ignore
@@ -120,7 +124,7 @@ import type { RunnerTaskOut } from '../models';
 export const GitApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
+         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
          * @param {*} [options] Override http request option.
@@ -242,12 +246,13 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Browse your org\'s repositories
+         * Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.  Each is named owner/name, the coordinate `repos get`, `runs`, `workflows` and the browse reads take. The read is the caller\'s own forge login, so a private repository they are not given on the forge is not listed. The repositories this app holds are `repos list`.
+         * @summary Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.
+         * @param {string} [owner] Owner lists one forge namespace of the caller\&#39;s org, such as hanzo-inc. Empty lists every namespace the org owns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGit: async (owner?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/git`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -263,6 +268,64 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (owner !== undefined) {
+                localVarQueryParameter['owner'] = owner;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories. Public: private repositories are counted and never named.
+         * @summary Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories.
+         * @param {string} [org] Org lists one org\&#39;s repositories; empty lists every org\&#39;s.
+         * @param {string} [group] Group lists one group\&#39;s repositories (hanzo, lux, zoo); empty lists every group\&#39;s.
+         * @param {number} [page] Page is the repository page, from 1. Anything not positive means 1.
+         * @param {number} [limit] Limit is the page size. Anything not positive means 50; the cap is 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitActivity: async (org?: string, group?: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/activity`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
 
 
     
@@ -322,90 +385,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Open a repository\'s home page
-         * @param {string} org 
-         * @param {string} repo 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitByOrgByRepo: async (org: string, repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'org' is not null or undefined
-            assertParamExists('getGitByOrgByRepo', 'org', org)
-            // verify required parameter 'repo' is not null or undefined
-            assertParamExists('getGitByOrgByRepo', 'repo', repo)
-            const localVarPath = `/v1/git/{org}/{repo}`
-                .replace(`{${"org"}}`, encodeURIComponent(String(org)))
-                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Read a repository\'s commit log
-         * @param {string} org 
-         * @param {string} repo 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitByOrgByRepoCommits: async (org: string, repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'org' is not null or undefined
-            assertParamExists('getGitByOrgByRepoCommits', 'org', org)
-            // verify required parameter 'repo' is not null or undefined
-            assertParamExists('getGitByOrgByRepoCommits', 'repo', repo)
-            const localVarPath = `/v1/git/{org}/{repo}/commits`
-                .replace(`{${"org"}}`, encodeURIComponent(String(org)))
-                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -421,40 +400,6 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/v1/git/{org}/{repo}/info/refs`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Discover public repositories across every org
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitExplore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/git/explore`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -550,7 +495,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
+         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.  A name with an owner, hanzo-inc/cloud, is the repository on the forge (git.hanzo.ai), its one home, read there as the caller in a forge namespace their org owns; the tree and blob reads take the same coordinate.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
          * @param {*} [options] Override http request option.
@@ -1027,8 +972,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
-         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.  First the forge\'s: the runners registered on git.hanzo.ai, which run every repository whose home is there — the platform starts one for each job the forge queues, labelled as the job asked. Then the daemons registered into this org\'s own declared pools. Pools groups the forge\'s by label set, with the caller\'s jobs queued on each, so a label set with work waiting and no runner online — a dead pool — is visible.  The forge\'s runners serve every tenant and are named for the repository whose job they took, so they are listed by name to a SuperAdmin; anyone else sees the pools their own queued jobs wait on — the jobs of repositories the forge lets them read — with how many runners carry each and when one was last heard.
+         * @summary Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1061,14 +1006,15 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns this org\'s runs, newest first.
+         * Returns this org\'s runs, newest first.  A repository named owner/name is on the forge, and its runs are the forge\'s: the newest, or, when a ref is named, every run on the commit it resolves to, each with its jobs and steps and the ref\'s verdict in State.
          * @summary Returns this org\'s runs, newest first.
-         * @param {string} [repo] Repo restricts the listing to one repository. Empty lists the whole org.
+         * @param {string} [repo] Repo restricts the listing to one repository. owner/name, such as hanzo-inc/cloud, is a repository on the forge, and its runs are the forge\&#39;s; a bare name is one this app holds. Empty lists the whole org\&#39;s runs here.
+         * @param {string} [ref] Ref keeps one branch, tag or commit. On the forge it is resolved to its commit and every run on that commit is answered with its jobs, and State says whether the ref is green; here it keeps the runs of that branch.
          * @param {number} [limit] Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitRuns: async (repo?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGitRuns: async (repo?: string, ref?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/git/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1089,6 +1035,10 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
                 localVarQueryParameter['repo'] = repo;
             }
 
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
@@ -1105,13 +1055,14 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns one run.
-         * @summary Returns one run.
+         * Returns one run with its jobs and their steps.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns one run with its jobs and their steps.
          * @param {string} id ID is the run to read, from the :id path segment.
+         * @param {string} [repo] Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGitRunsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGitRunsById: async (id: string, repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getGitRunsById', 'id', id)
             const localVarPath = `/v1/git/runs/{id}`
@@ -1130,6 +1081,58 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.
+         * @param {string} id ID is the run, from the :id path segment: its id on the forge for a forge repository, or the id this app gave it.
+         * @param {string} [repo] Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
+         * @param {string} [job] Job is one job of the run, by its id or its name. Empty reads every job that failed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunsByIdLogs: async (id: string, repo?: string, job?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getGitRunsByIdLogs', 'id', id)
+            const localVarPath = `/v1/git/runs/{id}/logs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+            if (job !== undefined) {
+                localVarQueryParameter['job'] = job;
+            }
 
 
     
@@ -1177,9 +1180,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".  A repository named owner/name is read from the forge, at the commit the ref resolves to, in the same two directories the forge reads (.hanzo/workflows, then .github/workflows).
          * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
-         * @param {string} [repo] Repo is the repository whose workflows to read.
+         * @param {string} [repo] Repo is the repository whose workflows to read: owner/name on the forge, such as hanzo-inc/cloud, or a bare name this app holds.
          * @param {string} [ref] Ref is the branch to read them at; empty means the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2265,7 +2268,7 @@ export const GitApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GitApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
+         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
          * @param {*} [options] Override http request option.
@@ -2306,15 +2309,32 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Browse your org\'s repositories
+         * Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.  Each is named owner/name, the coordinate `repos get`, `runs`, `workflows` and the browse reads take. The read is the caller\'s own forge login, so a private repository they are not given on the forge is not listed. The repositories this app holds are `repos list`.
+         * @summary Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.
+         * @param {string} [owner] Owner lists one forge namespace of the caller\&#39;s org, such as hanzo-inc. Empty lists every namespace the org owns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGit(options);
+        async getGit(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepoList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGit(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories. Public: private repositories are counted and never named.
+         * @summary Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories.
+         * @param {string} [org] Org lists one org\&#39;s repositories; empty lists every org\&#39;s.
+         * @param {string} [group] Group lists one group\&#39;s repositories (hanzo, lux, zoo); empty lists every group\&#39;s.
+         * @param {number} [page] Page is the repository page, from 1. Anything not positive means 1.
+         * @param {number} [limit] Limit is the page size. Anything not positive means 50; the cap is 200.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitActivity(org?: string, group?: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitActivityOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitActivity(org, group, page, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitActivity']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2333,34 +2353,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Open a repository\'s home page
-         * @param {string} org 
-         * @param {string} repo 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGitByOrgByRepo(org: string, repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepo(org, repo, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Read a repository\'s commit log
-         * @param {string} org 
-         * @param {string} repo 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGitByOrgByRepoCommits(org: string, repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepoCommits(org, repo, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepoCommits']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -2372,18 +2364,6 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepoInfoRefs(org, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepoInfoRefs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Discover public repositories across every org
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGitExplore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitExplore(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitExplore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2411,7 +2391,7 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
+         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.  A name with an owner, hanzo-inc/cloud, is the repository on the forge (git.hanzo.ai), its one home, read there as the caller in a forge namespace their org owns; the tree and blob reads take the same coordinate.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
          * @param {*} [options] Override http request option.
@@ -2566,8 +2546,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
-         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.  First the forge\'s: the runners registered on git.hanzo.ai, which run every repository whose home is there — the platform starts one for each job the forge queues, labelled as the job asked. Then the daemons registered into this org\'s own declared pools. Pools groups the forge\'s by label set, with the caller\'s jobs queued on each, so a label set with work waiting and no runner online — a dead pool — is visible.  The forge\'s runners serve every tenant and are named for the repository whose job they took, so they are listed by name to a SuperAdmin; anyone else sees the pools their own queued jobs wait on — the jobs of repositories the forge lets them read — with how many runners carry each and when one was last heard.
+         * @summary Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2578,30 +2558,47 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns this org\'s runs, newest first.
+         * Returns this org\'s runs, newest first.  A repository named owner/name is on the forge, and its runs are the forge\'s: the newest, or, when a ref is named, every run on the commit it resolves to, each with its jobs and steps and the ref\'s verdict in State.
          * @summary Returns this org\'s runs, newest first.
-         * @param {string} [repo] Repo restricts the listing to one repository. Empty lists the whole org.
+         * @param {string} [repo] Repo restricts the listing to one repository. owner/name, such as hanzo-inc/cloud, is a repository on the forge, and its runs are the forge\&#39;s; a bare name is one this app holds. Empty lists the whole org\&#39;s runs here.
+         * @param {string} [ref] Ref keeps one branch, tag or commit. On the forge it is resolved to its commit and every run on that commit is answered with its jobs, and State says whether the ref is green; here it keeps the runs of that branch.
          * @param {number} [limit] Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitRuns(repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRuns>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRuns(repo, limit, options);
+        async getGitRuns(repo?: string, ref?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRuns>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRuns(repo, ref, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one run.
-         * @summary Returns one run.
+         * Returns one run with its jobs and their steps.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns one run with its jobs and their steps.
          * @param {string} id ID is the run to read, from the :id path segment.
+         * @param {string} [repo] Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGitRunsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRun>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRunsById(id, options);
+        async getGitRunsById(id: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWorkflowRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRunsById(id, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRunsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.
+         * @param {string} id ID is the run, from the :id path segment: its id on the forge for a forge repository, or the id this app gave it.
+         * @param {string} [repo] Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
+         * @param {string} [job] Job is one job of the run, by its id or its name. Empty reads every job that failed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitRunsByIdLogs(id: string, repo?: string, job?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRunLogs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitRunsByIdLogs(id, repo, job, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitRunsByIdLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2617,9 +2614,9 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".  A repository named owner/name is read from the forge, at the commit the ref resolves to, in the same two directories the forge reads (.hanzo/workflows, then .github/workflows).
          * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
-         * @param {string} [repo] Repo is the repository whose workflows to read.
+         * @param {string} [repo] Repo is the repository whose workflows to read: owner/name on the forge, such as hanzo-inc/cloud, or a bare name this app holds.
          * @param {string} [ref] Ref is the branch to read them at; empty means the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2976,7 +2973,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = GitApiFp(configuration)
     return {
         /**
-         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
+         * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3006,13 +3003,24 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteGitReposByNameTargetsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Browse your org\'s repositories
+         * Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.  Each is named owner/name, the coordinate `repos get`, `runs`, `workflows` and the browse reads take. The read is the caller\'s own forge login, so a private repository they are not given on the forge is not listed. The repositories this app holds are `repos list`.
+         * @summary Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.
+         * @param {GitApiGetGitRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGit(options).then((request) => request(axios, basePath));
+        getGit(requestParameters: GitApiGetGitRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoList> {
+            return localVarFp.getGit(requestParameters.owner, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories. Public: private repositories are counted and never named.
+         * @summary Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories.
+         * @param {GitApiGetGitActivityRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitActivity(requestParameters: GitApiGetGitActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitActivityOut> {
+            return localVarFp.getGitActivity(requestParameters.org, requestParameters.group, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
@@ -3025,26 +3033,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitByOrgByProjectByRepoInfoRefs(requestParameters.org, requestParameters.project, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Open a repository\'s home page
-         * @param {GitApiGetGitByOrgByRepoRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitByOrgByRepo(requestParameters: GitApiGetGitByOrgByRepoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGitByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Read a repository\'s commit log
-         * @param {GitApiGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitByOrgByRepoCommits(requestParameters: GitApiGetGitByOrgByRepoCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGitByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
-        },
-        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {GitApiGetGitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -3053,15 +3041,6 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGitByOrgByRepoInfoRefs(requestParameters: GitApiGetGitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getGitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-         * @summary Discover public repositories across every org
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGitExplore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGitExplore(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the capacity this org has declared and how many daemons have entered each pool.
@@ -3082,7 +3061,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitRepos(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
+         * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.  A name with an owner, hanzo-inc/cloud, is the repository on the forge (git.hanzo.ai), its one home, read there as the caller in a forge namespace their org owns; the tree and blob reads take the same coordinate.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
          * @param {GitApiGetGitReposByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3192,8 +3171,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitReposByNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
-         * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+         * Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.  First the forge\'s: the runners registered on git.hanzo.ai, which run every repository whose home is there — the platform starts one for each job the forge queues, labelled as the job asked. Then the daemons registered into this org\'s own declared pools. Pools groups the forge\'s by label set, with the caller\'s jobs queued on each, so a label set with work waiting and no runner online — a dead pool — is visible.  The forge\'s runners serve every tenant and are named for the repository whose job they took, so they are listed by name to a SuperAdmin; anyone else sees the pools their own queued jobs wait on — the jobs of repositories the forge lets them read — with how many runners carry each and when one was last heard.
+         * @summary Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3201,24 +3180,34 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitRunners(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns this org\'s runs, newest first.
+         * Returns this org\'s runs, newest first.  A repository named owner/name is on the forge, and its runs are the forge\'s: the newest, or, when a ref is named, every run on the commit it resolves to, each with its jobs and steps and the ref\'s verdict in State.
          * @summary Returns this org\'s runs, newest first.
          * @param {GitApiGetGitRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getGitRuns(requestParameters: GitApiGetGitRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowRuns> {
-            return localVarFp.getGitRuns(requestParameters.repo, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getGitRuns(requestParameters.repo, requestParameters.ref, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one run.
-         * @summary Returns one run.
+         * Returns one run with its jobs and their steps.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns one run with its jobs and their steps.
          * @param {GitApiGetGitRunsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getGitRunsById(requestParameters: GitApiGetGitRunsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitWorkflowRun> {
-            return localVarFp.getGitRunsById(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.getGitRunsById(requestParameters.id, requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+         * @summary Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.
+         * @param {GitApiGetGitRunsByIdLogsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitRunsByIdLogs(requestParameters: GitApiGetGitRunsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRunLogs> {
+            return localVarFp.getGitRunsByIdLogs(requestParameters.id, requestParameters.repo, requestParameters.job, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns per-repo and total storage bytes for the caller\'s org — the queryable, per-tenant number commerce and o11y meter on. It spans EVERY project sub-scope, unlike the repo list, so a billing consumer sees the whole tenant footprint in one call. Sizes are last-measured values (create, push, mirror and gc each re-measure), not a live walk of the disk.
@@ -3230,7 +3219,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitUsage(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+         * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".  A repository named owner/name is read from the forge, at the commit the ref resolves to, in the same two directories the forge reads (.hanzo/workflows, then .github/workflows).
          * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
          * @param {GitApiGetGitWorkflowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3537,6 +3526,55 @@ export interface GitApiDeleteGitReposByNameTargetsByIdRequest {
 }
 
 /**
+ * Request parameters for getGit operation in GitApi.
+ * @export
+ * @interface GitApiGetGitRequest
+ */
+export interface GitApiGetGitRequest {
+    /**
+     * Owner lists one forge namespace of the caller\&#39;s org, such as hanzo-inc. Empty lists every namespace the org owns.
+     * @type {string}
+     * @memberof GitApiGetGit
+     */
+    readonly owner?: string
+}
+
+/**
+ * Request parameters for getGitActivity operation in GitApi.
+ * @export
+ * @interface GitApiGetGitActivityRequest
+ */
+export interface GitApiGetGitActivityRequest {
+    /**
+     * Org lists one org\&#39;s repositories; empty lists every org\&#39;s.
+     * @type {string}
+     * @memberof GitApiGetGitActivity
+     */
+    readonly org?: string
+
+    /**
+     * Group lists one group\&#39;s repositories (hanzo, lux, zoo); empty lists every group\&#39;s.
+     * @type {string}
+     * @memberof GitApiGetGitActivity
+     */
+    readonly group?: string
+
+    /**
+     * Page is the repository page, from 1. Anything not positive means 1.
+     * @type {number}
+     * @memberof GitApiGetGitActivity
+     */
+    readonly page?: number
+
+    /**
+     * Limit is the page size. Anything not positive means 50; the cap is 200.
+     * @type {number}
+     * @memberof GitApiGetGitActivity
+     */
+    readonly limit?: number
+}
+
+/**
  * Request parameters for getGitByOrgByProjectByRepoInfoRefs operation in GitApi.
  * @export
  * @interface GitApiGetGitByOrgByProjectByRepoInfoRefsRequest
@@ -3560,48 +3598,6 @@ export interface GitApiGetGitByOrgByProjectByRepoInfoRefsRequest {
      * 
      * @type {string}
      * @memberof GitApiGetGitByOrgByProjectByRepoInfoRefs
-     */
-    readonly repo: string
-}
-
-/**
- * Request parameters for getGitByOrgByRepo operation in GitApi.
- * @export
- * @interface GitApiGetGitByOrgByRepoRequest
- */
-export interface GitApiGetGitByOrgByRepoRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof GitApiGetGitByOrgByRepo
-     */
-    readonly org: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof GitApiGetGitByOrgByRepo
-     */
-    readonly repo: string
-}
-
-/**
- * Request parameters for getGitByOrgByRepoCommits operation in GitApi.
- * @export
- * @interface GitApiGetGitByOrgByRepoCommitsRequest
- */
-export interface GitApiGetGitByOrgByRepoCommitsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof GitApiGetGitByOrgByRepoCommits
-     */
-    readonly org: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof GitApiGetGitByOrgByRepoCommits
      */
     readonly repo: string
 }
@@ -3872,11 +3868,18 @@ export interface GitApiGetGitReposByNameTreeRequest {
  */
 export interface GitApiGetGitRunsRequest {
     /**
-     * Repo restricts the listing to one repository. Empty lists the whole org.
+     * Repo restricts the listing to one repository. owner/name, such as hanzo-inc/cloud, is a repository on the forge, and its runs are the forge\&#39;s; a bare name is one this app holds. Empty lists the whole org\&#39;s runs here.
      * @type {string}
      * @memberof GitApiGetGitRuns
      */
     readonly repo?: string
+
+    /**
+     * Ref keeps one branch, tag or commit. On the forge it is resolved to its commit and every run on that commit is answered with its jobs, and State says whether the ref is green; here it keeps the runs of that branch.
+     * @type {string}
+     * @memberof GitApiGetGitRuns
+     */
+    readonly ref?: string
 
     /**
      * Limit caps the answer; 0 means the default of 50, and 200 is the ceiling.
@@ -3898,6 +3901,41 @@ export interface GitApiGetGitRunsByIdRequest {
      * @memberof GitApiGetGitRunsById
      */
     readonly id: string
+
+    /**
+     * Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
+     * @type {string}
+     * @memberof GitApiGetGitRunsById
+     */
+    readonly repo?: string
+}
+
+/**
+ * Request parameters for getGitRunsByIdLogs operation in GitApi.
+ * @export
+ * @interface GitApiGetGitRunsByIdLogsRequest
+ */
+export interface GitApiGetGitRunsByIdLogsRequest {
+    /**
+     * ID is the run, from the :id path segment: its id on the forge for a forge repository, or the id this app gave it.
+     * @type {string}
+     * @memberof GitApiGetGitRunsByIdLogs
+     */
+    readonly id: string
+
+    /**
+     * Repo is the forge repository the run belongs to, owner/name; empty for a run this app scheduled.
+     * @type {string}
+     * @memberof GitApiGetGitRunsByIdLogs
+     */
+    readonly repo?: string
+
+    /**
+     * Job is one job of the run, by its id or its name. Empty reads every job that failed.
+     * @type {string}
+     * @memberof GitApiGetGitRunsByIdLogs
+     */
+    readonly job?: string
 }
 
 /**
@@ -3907,7 +3945,7 @@ export interface GitApiGetGitRunsByIdRequest {
  */
 export interface GitApiGetGitWorkflowsRequest {
     /**
-     * Repo is the repository whose workflows to read.
+     * Repo is the repository whose workflows to read: owner/name on the forge, such as hanzo-inc/cloud, or a bare name this app holds.
      * @type {string}
      * @memberof GitApiGetGitWorkflows
      */
@@ -4412,7 +4450,7 @@ export interface GitApiPostRunnerTaskRequest {
  */
 export class GitApi extends BaseAPI {
     /**
-     * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
+     * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
      * @summary Removes a repo\'s metadata and purges its storage.
      * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4448,14 +4486,27 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-     * @summary Browse your org\'s repositories
+     * Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.  Each is named owner/name, the coordinate `repos get`, `runs`, `workflows` and the browse reads take. The read is the caller\'s own forge login, so a private repository they are not given on the forge is not listed. The repositories this app holds are `repos list`.
+     * @summary Returns the repositories on the forge (git.hanzo.ai) the caller can read, in every forge namespace their org owns or in the one named, most recently updated first.
+     * @param {GitApiGetGitRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getGit(options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGit(options).then((request) => request(this.axios, this.basePath));
+    public getGit(requestParameters: GitApiGetGitRequest = {}, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGit(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories. Public: private repositories are counted and never named.
+     * @summary Answers the estate\'s last 365 days: distinct commits, merges, active repositories and contributors, for the whole estate, each group and each org, a commit count per day, the newest public commits, and one page of public repositories.
+     * @param {GitApiGetGitActivityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitActivity(requestParameters: GitApiGetGitActivityRequest = {}, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitActivity(requestParameters.org, requestParameters.group, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4471,30 +4522,6 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-     * @summary Open a repository\'s home page
-     * @param {GitApiGetGitByOrgByRepoRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public getGitByOrgByRepo(requestParameters: GitApiGetGitByOrgByRepoRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-     * @summary Read a repository\'s commit log
-     * @param {GitApiGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public getGitByOrgByRepoCommits(requestParameters: GitApiGetGitByOrgByRepoCommitsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
      * @summary Advertise a repository\'s refs to a git client
      * @param {GitApiGetGitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -4504,17 +4531,6 @@ export class GitApi extends BaseAPI {
      */
     public getGitByOrgByRepoInfoRefs(requestParameters: GitApiGetGitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
-     * @summary Discover public repositories across every org
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GitApi
-     */
-    public getGitExplore(options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitExplore(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4540,7 +4556,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
+     * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.  A name with an owner, hanzo-inc/cloud, is the repository on the forge (git.hanzo.ai), its one home, read there as the caller in a forge namespace their org owns; the tree and blob reads take the same coordinate.
      * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
      * @param {GitApiGetGitReposByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4672,8 +4688,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
-     * @summary Returns the daemons registered into this org\'s pools, newest first, with when each was last heard from.
+     * Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.  First the forge\'s: the runners registered on git.hanzo.ai, which run every repository whose home is there — the platform starts one for each job the forge queues, labelled as the job asked. Then the daemons registered into this org\'s own declared pools. Pools groups the forge\'s by label set, with the caller\'s jobs queued on each, so a label set with work waiting and no runner online — a dead pool — is visible.  The forge\'s runners serve every tenant and are named for the repository whose job they took, so they are listed by name to a SuperAdmin; anyone else sees the pools their own queued jobs wait on — the jobs of repositories the forge lets them read — with how many runners carry each and when one was last heard.
+     * @summary Returns the runners that can run the caller\'s work, each with when it was last heard from, and the health of every pool.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
@@ -4683,7 +4699,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Returns this org\'s runs, newest first.
+     * Returns this org\'s runs, newest first.  A repository named owner/name is on the forge, and its runs are the forge\'s: the newest, or, when a ref is named, every run on the commit it resolves to, each with its jobs and steps and the ref\'s verdict in State.
      * @summary Returns this org\'s runs, newest first.
      * @param {GitApiGetGitRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4691,19 +4707,31 @@ export class GitApi extends BaseAPI {
      * @memberof GitApi
      */
     public getGitRuns(requestParameters: GitApiGetGitRunsRequest = {}, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitRuns(requestParameters.repo, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).getGitRuns(requestParameters.repo, requestParameters.ref, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one run.
-     * @summary Returns one run.
+     * Returns one run with its jobs and their steps.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+     * @summary Returns one run with its jobs and their steps.
      * @param {GitApiGetGitRunsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
     public getGitRunsById(requestParameters: GitApiGetGitRunsByIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getGitRunsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).getGitRunsById(requestParameters.id, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.  A run of a forge repository is addressed by its id on the forge and the repository, owner/name; one this app scheduled by its id alone.
+     * @summary Returns what a run\'s jobs wrote: one job\'s log, named by its id or its name, or by default the log of every job that failed, with the lines in each that say what failed picked out.
+     * @param {GitApiGetGitRunsByIdLogsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitRunsByIdLogs(requestParameters: GitApiGetGitRunsByIdLogsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitRunsByIdLogs(requestParameters.id, requestParameters.repo, requestParameters.job, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4718,7 +4746,7 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
+     * Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".  A repository named owner/name is read from the forge, at the commit the ref resolves to, in the same two directories the forge reads (.hanzo/workflows, then .github/workflows).
      * @summary Reports the workflows a repository declares at a ref and which declared pool would execute each job — the answer to \"would a push here run, and where\".
      * @param {GitApiGetGitWorkflowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

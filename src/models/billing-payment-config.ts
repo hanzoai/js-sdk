@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { BillingPayPalPublicConfig } from './billing-pay-pal-public-config';
 
 /**
  * 
@@ -44,6 +47,12 @@ export interface BillingPaymentConfig {
      * @memberof BillingPaymentConfig
      */
     'locationId'?: string;
+    /**
+     * PayPal is the public PayPal REST v2 posture alongside Square (or in place of Square in countries Square does not serve). Appended last for ZAP wire.
+     * @type {BillingPayPalPublicConfig}
+     * @memberof BillingPaymentConfig
+     */
+    'paypal'?: BillingPayPalPublicConfig;
     /**
      * 
      * @type {string}

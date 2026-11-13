@@ -95,5 +95,11 @@ export interface AiModel {
      * @memberof AiModel
      */
     'pricing'?: AiPrice;
+    /**
+     * ZDR is whether the model is eligible for Zero Data Retention (non-free, non-data-shared commercial route).
+     * @type {boolean}
+     * @memberof AiModel
+     */
+    'zdr'?: boolean;
 }
 

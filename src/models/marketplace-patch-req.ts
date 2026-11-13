@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { MarketplaceExpertIn } from './marketplace-expert-in';
 
 /**
  * 
@@ -44,6 +47,12 @@ export interface MarketplacePatchReq {
      * @memberof MarketplacePatchReq
      */
     'docs'?: string;
+    /**
+     * Expert replaces an expert listing\'s whole profile — rate, areas, languages, time zone and weekly hours; absent keeps it. Refused on any other kind.
+     * @type {MarketplaceExpertIn}
+     * @memberof MarketplacePatchReq
+     */
+    'expert'?: MarketplaceExpertIn;
     /**
      * ID is the listing to edit, from the path.
      * @type {string}

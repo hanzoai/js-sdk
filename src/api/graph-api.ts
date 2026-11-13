@@ -26,6 +26,8 @@ import type { GraphGraphAnswerIn } from '../models';
 // @ts-ignore
 import type { GraphGraphAnswerOut } from '../models';
 // @ts-ignore
+import type { GraphGraphAppleIn } from '../models';
+// @ts-ignore
 import type { GraphGraphAssertIn } from '../models';
 // @ts-ignore
 import type { GraphGraphAssertOut } from '../models';
@@ -34,6 +36,10 @@ import type { GraphGraphCommunitiesIn } from '../models';
 // @ts-ignore
 import type { GraphGraphCommunitiesOut } from '../models';
 // @ts-ignore
+import type { GraphGraphConvoIn } from '../models';
+// @ts-ignore
+import type { GraphGraphConvoOut } from '../models';
+// @ts-ignore
 import type { GraphGraphDeriveIn } from '../models';
 // @ts-ignore
 import type { GraphGraphDeriveOut } from '../models';
@@ -41,6 +47,10 @@ import type { GraphGraphDeriveOut } from '../models';
 import type { GraphGraphDiffIn } from '../models';
 // @ts-ignore
 import type { GraphGraphDiffOut } from '../models';
+// @ts-ignore
+import type { GraphGraphEntityIn } from '../models';
+// @ts-ignore
+import type { GraphGraphEntityOut } from '../models';
 // @ts-ignore
 import type { GraphGraphEraseIn } from '../models';
 // @ts-ignore
@@ -51,6 +61,8 @@ import type { GraphGraphExtractOut } from '../models';
 import type { GraphGraphNeighborsIn } from '../models';
 // @ts-ignore
 import type { GraphGraphNeighborsOut } from '../models';
+// @ts-ignore
+import type { GraphGraphOntologyOut } from '../models';
 // @ts-ignore
 import type { GraphGraphPathIn } from '../models';
 // @ts-ignore
@@ -152,6 +164,46 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.  Two-row reified edges sharing a relationship_id (one naming a CS*_/nm_* relationship type under PS1, the other pointing at the target entity) are collapsed into edges under their canonical relation names while preserving the raw Apple predicate and relationship class in evidence. Withdrawn rows in expired are recorded with until stamped so they remain inspectable in history without holding as live facts.  Time: at is the snapshot\'s valid instant, which an as_of read is bounded by; the server stamps knowable at the write, which an as_known read is bounded by.
+         * @summary Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.
+         * @param {GraphGraphAppleIn} graphGraphAppleIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphApple: async (graphGraphAppleIn: GraphGraphAppleIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphAppleIn' is not null or undefined
+            assertParamExists('graphApple', 'graphGraphAppleIn', graphGraphAppleIn)
+            const localVarPath = `/v1/graph/apple`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphAppleIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
          * @summary Records a batch of assertions and counts what became of each.
          * @param {GraphGraphAssertIn} graphGraphAssertIn 
@@ -232,6 +284,46 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Extracts entity state and relationship assertions from conversation turns and updates the graph.  First-person statements bind to the turn\'s speaker, second-person statements to its partner, and named subjects to their entity keys. Questions are skipped. Single-valued state updates (such as moving cities or changing roles) supersede prior values at the turn\'s timestamp, and explicit departures (such as leaving an employer) file a retraction ending the prior claim. Set dry_run to inspect what the turns state without writing.  Time: each turn\'s at (or the batch\'s at when omitted) is the valid instant of the assertions extracted from it, which an as_of read is bounded by; each becomes knowable at the write, which an as_known read is bounded by.
+         * @summary Extracts entity state and relationship assertions from conversation turns and updates the graph.
+         * @param {GraphGraphConvoIn} graphGraphConvoIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphConvo: async (graphGraphConvoIn: GraphGraphConvoIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphConvoIn' is not null or undefined
+            assertParamExists('graphConvo', 'graphGraphConvoIn', graphGraphConvoIn)
+            const localVarPath = `/v1/graph/convo`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphConvoIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
          * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
          * @param {GraphGraphDeriveIn} graphGraphDeriveIn 
@@ -305,6 +397,46 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(graphGraphDiffIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.  Each (entity, relation) pair is settled by the same Resolve rule as graphResolve. Statements begun by the point that lost to a retraction, an until or a newer value are returned in expired rather than discarded.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard by then; either absent is now.
+         * @summary Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.
+         * @param {GraphGraphEntityIn} graphGraphEntityIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphEntity: async (graphGraphEntityIn: GraphGraphEntityIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'graphGraphEntityIn' is not null or undefined
+            assertParamExists('graphEntity', 'graphGraphEntityIn', graphGraphEntityIn)
+            const localVarPath = `/v1/graph/entity`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(graphGraphEntityIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -465,6 +597,50 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(graphGraphNeighborsIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.  Every code graph.db and entityTagging.db write on macOS and iOS is here with its plain-language reading and the canonical relation key graphApple maps it to. Filter by group or by substring q.  Time: it takes no as_of or as_known; the shipped catalog is static.
+         * @summary Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.
+         * @param {string} [group] Group narrows classes or features to one group, such as core, person, activity, edge, identity, communication or photos. Absent returns every group.
+         * @param {string} [q] Q narrows classes, predicates and features to entries whose code, label, canonical relation or source contains this substring, case-insensitively. Absent returns the whole catalog.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphOntology: async (group?: string, q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/graph/ontology`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -784,6 +960,19 @@ export const GraphApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.  Two-row reified edges sharing a relationship_id (one naming a CS*_/nm_* relationship type under PS1, the other pointing at the target entity) are collapsed into edges under their canonical relation names while preserving the raw Apple predicate and relationship class in evidence. Withdrawn rows in expired are recorded with until stamped so they remain inspectable in history without holding as live facts.  Time: at is the snapshot\'s valid instant, which an as_of read is bounded by; the server stamps knowable at the write, which an as_known read is bounded by.
+         * @summary Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.
+         * @param {GraphGraphAppleIn} graphGraphAppleIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphApple(graphGraphAppleIn: GraphGraphAppleIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphAssertOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphApple(graphGraphAppleIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphApple']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
          * @summary Records a batch of assertions and counts what became of each.
          * @param {GraphGraphAssertIn} graphGraphAssertIn 
@@ -810,6 +999,19 @@ export const GraphApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Extracts entity state and relationship assertions from conversation turns and updates the graph.  First-person statements bind to the turn\'s speaker, second-person statements to its partner, and named subjects to their entity keys. Questions are skipped. Single-valued state updates (such as moving cities or changing roles) supersede prior values at the turn\'s timestamp, and explicit departures (such as leaving an employer) file a retraction ending the prior claim. Set dry_run to inspect what the turns state without writing.  Time: each turn\'s at (or the batch\'s at when omitted) is the valid instant of the assertions extracted from it, which an as_of read is bounded by; each becomes knowable at the write, which an as_known read is bounded by.
+         * @summary Extracts entity state and relationship assertions from conversation turns and updates the graph.
+         * @param {GraphGraphConvoIn} graphGraphConvoIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphConvo(graphGraphConvoIn: GraphGraphConvoIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphConvoOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphConvo(graphGraphConvoIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphConvo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
          * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
          * @param {GraphGraphDeriveIn} graphGraphDeriveIn 
@@ -833,6 +1035,19 @@ export const GraphApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.graphDiff(graphGraphDiffIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphDiff']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.  Each (entity, relation) pair is settled by the same Resolve rule as graphResolve. Statements begun by the point that lost to a retraction, an until or a newer value are returned in expired rather than discarded.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard by then; either absent is now.
+         * @summary Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.
+         * @param {GraphGraphEntityIn} graphGraphEntityIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphEntity(graphGraphEntityIn: GraphGraphEntityIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphEntityOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphEntity(graphGraphEntityIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphEntity']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -885,6 +1100,20 @@ export const GraphApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.graphNeighbors(graphGraphNeighborsIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GraphApi.graphNeighbors']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.  Every code graph.db and entityTagging.db write on macOS and iOS is here with its plain-language reading and the canonical relation key graphApple maps it to. Filter by group or by substring q.  Time: it takes no as_of or as_known; the shipped catalog is static.
+         * @summary Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.
+         * @param {string} [group] Group narrows classes or features to one group, such as core, person, activity, edge, identity, communication or photos. Absent returns every group.
+         * @param {string} [q] Q narrows classes, predicates and features to entries whose code, label, canonical relation or source contains this substring, case-insensitively. Absent returns the whole catalog.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphOntology(group?: string, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphGraphOntologyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphOntology(group, q, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphOntology']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1003,6 +1232,16 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.graphAnswer(requestParameters.graphGraphAnswerIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.  Two-row reified edges sharing a relationship_id (one naming a CS*_/nm_* relationship type under PS1, the other pointing at the target entity) are collapsed into edges under their canonical relation names while preserving the raw Apple predicate and relationship class in evidence. Withdrawn rows in expired are recorded with until stamped so they remain inspectable in history without holding as live facts.  Time: at is the snapshot\'s valid instant, which an as_of read is bounded by; the server stamps knowable at the write, which an as_known read is bounded by.
+         * @summary Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.
+         * @param {GraphApiGraphAppleRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphApple(requestParameters: GraphApiGraphAppleRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphAssertOut> {
+            return localVarFp.graphApple(requestParameters.graphGraphAppleIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
          * @summary Records a batch of assertions and counts what became of each.
          * @param {GraphApiGraphAssertRequest} requestParameters Request parameters.
@@ -1023,6 +1262,16 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.graphCommunities(requestParameters.graphGraphCommunitiesIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Extracts entity state and relationship assertions from conversation turns and updates the graph.  First-person statements bind to the turn\'s speaker, second-person statements to its partner, and named subjects to their entity keys. Questions are skipped. Single-valued state updates (such as moving cities or changing roles) supersede prior values at the turn\'s timestamp, and explicit departures (such as leaving an employer) file a retraction ending the prior claim. Set dry_run to inspect what the turns state without writing.  Time: each turn\'s at (or the batch\'s at when omitted) is the valid instant of the assertions extracted from it, which an as_of read is bounded by; each becomes knowable at the write, which an as_known read is bounded by.
+         * @summary Extracts entity state and relationship assertions from conversation turns and updates the graph.
+         * @param {GraphApiGraphConvoRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphConvo(requestParameters: GraphApiGraphConvoRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphConvoOut> {
+            return localVarFp.graphConvo(requestParameters.graphGraphConvoIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
          * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
          * @param {GraphApiGraphDeriveRequest} requestParameters Request parameters.
@@ -1041,6 +1290,16 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
          */
         graphDiff(requestParameters: GraphApiGraphDiffRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphDiffOut> {
             return localVarFp.graphDiff(requestParameters.graphGraphDiffIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.  Each (entity, relation) pair is settled by the same Resolve rule as graphResolve. Statements begun by the point that lost to a retraction, an until or a newer value are returned in expired rather than discarded.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard by then; either absent is now.
+         * @summary Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.
+         * @param {GraphApiGraphEntityRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphEntity(requestParameters: GraphApiGraphEntityRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphEntityOut> {
+            return localVarFp.graphEntity(requestParameters.graphGraphEntityIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes every assertion that names an entity and returns a receipt.  It requires an admin of the organization it acts in; platform sudo is not enough, so erasure is never cross-tenant. Nothing is removed while a matching assertion is under litigation hold (409) or where the erasure cannot be recorded (503). The audit trail keeps who, when, why, how many and the receipt\'s digest, never the entity, and holds it before the erasure commits.  Time: erasure is the one act outside the two times. The rows go at every as_of and as_known, so no past read recovers them.
@@ -1081,6 +1340,16 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
          */
         graphNeighbors(requestParameters: GraphApiGraphNeighborsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphNeighborsOut> {
             return localVarFp.graphNeighbors(requestParameters.graphGraphNeighborsIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.  Every code graph.db and entityTagging.db write on macOS and iOS is here with its plain-language reading and the canonical relation key graphApple maps it to. Filter by group or by substring q.  Time: it takes no as_of or as_known; the shipped catalog is static.
+         * @summary Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.
+         * @param {GraphApiGraphOntologyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphOntology(requestParameters: GraphApiGraphOntologyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphGraphOntologyOut> {
+            return localVarFp.graphOntology(requestParameters.group, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * Finds the shortest chain of in-force edges from one entity to another.  It is the walk behind neighbors stopped at a goal: the same bound and the same rule for which edge is in force. A causal chain is this op with relations naming the relations that mean cause, such as caused_by and influenced.  Time: as_of and as_known place the graph the path is found in; either absent is now.
@@ -1159,6 +1428,20 @@ export interface GraphApiGraphAnswerRequest {
 }
 
 /**
+ * Request parameters for graphApple operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphAppleRequest
+ */
+export interface GraphApiGraphAppleRequest {
+    /**
+     * 
+     * @type {GraphGraphAppleIn}
+     * @memberof GraphApiGraphApple
+     */
+    readonly graphGraphAppleIn: GraphGraphAppleIn
+}
+
+/**
  * Request parameters for graphAssert operation in GraphApi.
  * @export
  * @interface GraphApiGraphAssertRequest
@@ -1187,6 +1470,20 @@ export interface GraphApiGraphCommunitiesRequest {
 }
 
 /**
+ * Request parameters for graphConvo operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphConvoRequest
+ */
+export interface GraphApiGraphConvoRequest {
+    /**
+     * 
+     * @type {GraphGraphConvoIn}
+     * @memberof GraphApiGraphConvo
+     */
+    readonly graphGraphConvoIn: GraphGraphConvoIn
+}
+
+/**
  * Request parameters for graphDerive operation in GraphApi.
  * @export
  * @interface GraphApiGraphDeriveRequest
@@ -1212,6 +1509,20 @@ export interface GraphApiGraphDiffRequest {
      * @memberof GraphApiGraphDiff
      */
     readonly graphGraphDiffIn: GraphGraphDiffIn
+}
+
+/**
+ * Request parameters for graphEntity operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphEntityRequest
+ */
+export interface GraphApiGraphEntityRequest {
+    /**
+     * 
+     * @type {GraphGraphEntityIn}
+     * @memberof GraphApiGraphEntity
+     */
+    readonly graphGraphEntityIn: GraphGraphEntityIn
 }
 
 /**
@@ -1268,6 +1579,27 @@ export interface GraphApiGraphNeighborsRequest {
      * @memberof GraphApiGraphNeighbors
      */
     readonly graphGraphNeighborsIn: GraphGraphNeighborsIn
+}
+
+/**
+ * Request parameters for graphOntology operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphOntologyRequest
+ */
+export interface GraphApiGraphOntologyRequest {
+    /**
+     * Group narrows classes or features to one group, such as core, person, activity, edge, identity, communication or photos. Absent returns every group.
+     * @type {string}
+     * @memberof GraphApiGraphOntology
+     */
+    readonly group?: string
+
+    /**
+     * Q narrows classes, predicates and features to entries whose code, label, canonical relation or source contains this substring, case-insensitively. Absent returns the whole catalog.
+     * @type {string}
+     * @memberof GraphApiGraphOntology
+     */
+    readonly q?: string
 }
 
 /**
@@ -1434,6 +1766,18 @@ export class GraphApi extends BaseAPI {
     }
 
     /**
+     * Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.  Two-row reified edges sharing a relationship_id (one naming a CS*_/nm_* relationship type under PS1, the other pointing at the target entity) are collapsed into edges under their canonical relation names while preserving the raw Apple predicate and relationship class in evidence. Withdrawn rows in expired are recorded with until stamped so they remain inspectable in history without holding as live facts.  Time: at is the snapshot\'s valid instant, which an as_of read is bounded by; the server stamps knowable at the write, which an as_known read is bounded by.
+     * @summary Ingests an Apple Personal Knowledge Graph snapshot — live stable_graph triples, withdrawn expired_stable_graph rows and entityTagging kinship scorecards — into the organization\'s assertion plane.
+     * @param {GraphApiGraphAppleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphApple(requestParameters: GraphApiGraphAppleRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphApple(requestParameters.graphGraphAppleIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Records a batch of assertions and counts what became of each.  Each member is judged alone: one refusal does not discard the rest, and a member this plane already holds is a duplicate, not a refusal. A batch with nothing admitted answers 400.  Time: at and until are when the statement was so, which an as_of read is bounded by; the server stamps knowable, the later of seen and its own clock, which an as_known read is bounded by. Nothing is overwritten: a correction is the statement filed again, and the version known latest speaks for it.
      * @summary Records a batch of assertions and counts what became of each.
      * @param {GraphApiGraphAssertRequest} requestParameters Request parameters.
@@ -1458,6 +1802,18 @@ export class GraphApi extends BaseAPI {
     }
 
     /**
+     * Extracts entity state and relationship assertions from conversation turns and updates the graph.  First-person statements bind to the turn\'s speaker, second-person statements to its partner, and named subjects to their entity keys. Questions are skipped. Single-valued state updates (such as moving cities or changing roles) supersede prior values at the turn\'s timestamp, and explicit departures (such as leaving an employer) file a retraction ending the prior claim. Set dry_run to inspect what the turns state without writing.  Time: each turn\'s at (or the batch\'s at when omitted) is the valid instant of the assertions extracted from it, which an as_of read is bounded by; each becomes knowable at the write, which an as_known read is bounded by.
+     * @summary Extracts entity state and relationship assertions from conversation turns and updates the graph.
+     * @param {GraphApiGraphConvoRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphConvo(requestParameters: GraphApiGraphConvoRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphConvo(requestParameters.graphGraphConvoIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.  The rules are assertions — (`rule:<name>`, `rule`, `<text>`), Datalog over the organization\'s relations, with recursion, stratified negation and the builtins = and != — and the graph is read the way resolve reads it, so a retraction, an until and a declared cardinality all apply. Nothing derived is stored unless an admin asks to file it. Without names assertions to derive without, and the answer then says what would be lost, and what gained, if they had never been filed.  Time: as_of and as_known place the graph and the rules it is read with, as they place a resolve; either absent is now. Filing takes neither: a filed conclusion holds from the instant it was derived.
      * @summary Concludes what the organization\'s rules derive from the graph, with a proof for every conclusion: the rule, and each support as the assertion in force it rests on or as the derived atom it is.
      * @param {GraphApiGraphDeriveRequest} requestParameters Request parameters.
@@ -1479,6 +1835,18 @@ export class GraphApi extends BaseAPI {
      */
     public graphDiff(requestParameters: GraphApiGraphDiffRequest, options?: RawAxiosRequestConfig) {
         return GraphApiFp(this.configuration).graphDiff(requestParameters.graphGraphDiffIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.  Each (entity, relation) pair is settled by the same Resolve rule as graphResolve. Statements begun by the point that lost to a retraction, an until or a newer value are returned in expired rather than discarded.  Time: as_of is the instant of the world asked about and as_known how much this plane had heard by then; either absent is now.
+     * @summary Resolves the complete state of one entity at a point: its type, its holding properties and edges in both directions, its kinship scorecard and the expired statements it no longer holds.
+     * @param {GraphApiGraphEntityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphEntity(requestParameters: GraphApiGraphEntityRequest, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphEntity(requestParameters.graphGraphEntityIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1527,6 +1895,18 @@ export class GraphApi extends BaseAPI {
      */
     public graphNeighbors(requestParameters: GraphApiGraphNeighborsRequest, options?: RawAxiosRequestConfig) {
         return GraphApiFp(this.configuration).graphNeighbors(requestParameters.graphGraphNeighborsIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.  Every code graph.db and entityTagging.db write on macOS and iOS is here with its plain-language reading and the canonical relation key graphApple maps it to. Filter by group or by substring q.  Time: it takes no as_of or as_known; the shipped catalog is static.
+     * @summary Lists the entity classes, predicates, classifier features and kinship scorecard columns of the personal knowledge graph ontology.
+     * @param {GraphApiGraphOntologyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphOntology(requestParameters: GraphApiGraphOntologyRequest = {}, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphOntology(requestParameters.group, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

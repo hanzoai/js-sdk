@@ -39,6 +39,12 @@ export interface MarketingUnsubscribed {
      */
     'company'?: string;
     /**
+     * List is the marketing list the address left, when the link was a list\'s.
+     * @type {string}
+     * @memberof MarketingUnsubscribed
+     */
+    'list'?: string;
+    /**
      * Offer is the domain the reader may opt out whole by asking again with company=true: the company\'s own domain, never a free mail provider\'s. Absent when the company is already out, or for free mail.
      * @type {string}
      * @memberof MarketingUnsubscribed

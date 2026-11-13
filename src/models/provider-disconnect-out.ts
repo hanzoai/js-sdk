@@ -21,10 +21,22 @@
  */
 export interface ProviderDisconnectOut {
     /**
+     * Accounts are the account labels this disconnect removed. Omitted when none was connected.
+     * @type {Array<string>}
+     * @memberof ProviderDisconnectOut
+     */
+    'accounts'?: Array<string>;
+    /**
      * Disconnected is always true — the org\'s secrets and connection row are gone.
      * @type {boolean}
      * @memberof ProviderDisconnectOut
      */
     'disconnected'?: boolean;
+    /**
+     * Uninstalled are the accounts whose provider installation was removed too, because no other org held them. An account another org still holds keeps its installation and is absent here.
+     * @type {Array<string>}
+     * @memberof ProviderDisconnectOut
+     */
+    'uninstalled'?: Array<string>;
 }
 

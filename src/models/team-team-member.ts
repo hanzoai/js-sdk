@@ -39,7 +39,7 @@ export interface TeamTeamMember {
      */
     'bot'?: boolean;
     /**
-     * ID is the account uuid — the value every message\'s author, every room\'s members list and every `<@id>` mention token names.
+     * ID is the account uuid — the value every message\'s author, every channel\'s members list and every `<@id>` mention token names.
      * @type {string}
      * @memberof TeamTeamMember
      */

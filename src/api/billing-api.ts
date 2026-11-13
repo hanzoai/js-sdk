@@ -58,6 +58,10 @@ import type { BillingDetachment } from '../models';
 // @ts-ignore
 import type { BillingFinanceLedgerEntry } from '../models';
 // @ts-ignore
+import type { BillingGatewayPayment } from '../models';
+// @ts-ignore
+import type { BillingGatewayTerms } from '../models';
+// @ts-ignore
 import type { BillingHolder } from '../models';
 // @ts-ignore
 import type { BillingInvoice } from '../models';
@@ -70,9 +74,13 @@ import type { BillingMode } from '../models';
 // @ts-ignore
 import type { BillingModeIn } from '../models';
 // @ts-ignore
+import type { BillingPayPalOrderOut } from '../models';
+// @ts-ignore
 import type { BillingPaymentConfig } from '../models';
 // @ts-ignore
 import type { BillingPayout } from '../models';
+// @ts-ignore
+import type { BillingPaypalOrderIn } from '../models';
 // @ts-ignore
 import type { BillingRaiseIn } from '../models';
 // @ts-ignore
@@ -81,6 +89,8 @@ import type { BillingRecharge } from '../models';
 import type { BillingResize } from '../models';
 // @ts-ignore
 import type { BillingRollup } from '../models';
+// @ts-ignore
+import type { BillingSignedPayment } from '../models';
 // @ts-ignore
 import type { BillingSubscription } from '../models';
 // @ts-ignore
@@ -516,7 +526,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  `prepaid` is `cash` plus `line`: what pays for a model of another maker (OpenAI, Anthropic, Google and the rest). Granted `credit` does not, unless the usage policy says so, so a picker that shows Top up on those models shows it when `prepaid` is 0 and never reads the credit rule itself; `GET /v1/ai/limits` `pays` is the policy\'s own answer, per class.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
          * @summary Prepaid credit the caller\'s org can still spend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -652,7 +662,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  status is pending until a transfer to the address is seen, confirming while the chain buries it (confirmations counts up to requiredConfirmations), and succeeded once it is credited: creditedCents is then in the caller\'s balance as cash (GET /v1/billing/balance, cash). The answer is the same shape the mint returned, terms and instructions included, so polling it is all an agent needs.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
          * @param {string} id ID is the deposit intent id.
          * @param {*} [options] Override http request option.
@@ -690,8 +700,80 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
+         * Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.  Sign TransferWithAuthorization {from, to: payTo, value, validAfter, validBefore, nonce} under one network\'s domain, then POST it here with the salt. The nonce is the caller\'s own: a payment signed against it credits the caller and cannot be presented by anyone else.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCryptoGateway: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/crypto/gateway`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.  A payment belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm somebody else\'s payment exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.
+         * @param {string} id ID is the top-up\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCryptoGatewayById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBillingCryptoGatewayById', 'id', id)
+            const localVarPath = `/v1/billing/crypto/gateway/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -794,6 +876,82 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists('getBillingInvoicesByIdPdf', 'id', id)
             const localVarPath = `/v1/billing/invoices/{id}/pdf`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @summary Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @param {string} link 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingInvoicesHostedByLink: async (link: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'link' is not null or undefined
+            assertParamExists('getBillingInvoicesHostedByLink', 'link', link)
+            const localVarPath = `/v1/billing/invoices/hosted/{link}`
+                .replace(`{${"link"}}`, encodeURIComponent(String(link)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is the order invoice a link shows, as a PDF to print or save.
+         * @summary Is the order invoice a link shows, as a PDF to print or save.
+         * @param {string} link 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingInvoicesHostedByLinkPdf: async (link: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'link' is not null or undefined
+            assertParamExists('getBillingInvoicesHostedByLinkPdf', 'link', link)
+            const localVarPath = `/v1/billing/invoices/hosted/{link}/pdf`
+                .replace(`{${"link"}}`, encodeURIComponent(String(link)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -996,8 +1154,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
+         * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1526,7 +1684,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address, a status and the terms: the minimum that credits, any fee, the confirmations required, and one line of instructions. Once the transfer is that deep the deposit is credited as cash to the caller\'s balance (GET /v1/billing/balance, cash) and its status is succeeded.  The asset is checked against GET /v1/billing/crypto/options before anything is minted. A chain, a token or a pair the rail does not accept is 400, and the answer lists the accepted chains, tokens and assets. A deposit rail with nothing watched is 503 — nothing sent now can be credited, and the Gateway rail or a card is the way to pay until it reopens.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
          * @param {BillingCryptoAsset} billingCryptoAsset 
          * @param {*} [options] Override http request option.
@@ -1559,6 +1717,46 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(billingCryptoAsset, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.  accepted: Circle Gateway LOCKED the USDC and the caller is credited — or, once the caller holds $1,000 of credit Gateway has not confirmed, credited when Gateway confirms this payment (deferred). pending: the outcome is not known yet; read it back or present the same payment again — it resolves to one credit either way. A refusal is 4xx with Gateway\'s reason (insufficient_balance, invalid_signature, …) or ours (nonce_not_issued, recipient_mismatch, amount_below_minimum, …); 503 means the rail is shut.  Who is credited is the caller, never a body value: the payer is resolved server-side, and the payment\'s own nonce must be the one issued to it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.
+         * @param {BillingSignedPayment} billingSignedPayment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCryptoGateway: async (billingSignedPayment: BillingSignedPayment, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingSignedPayment' is not null or undefined
+            assertParamExists('postBillingCryptoGateway', 'billingSignedPayment', billingSignedPayment)
+            const localVarPath = `/v1/billing/crypto/gateway`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingSignedPayment, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1640,6 +1838,50 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).  No balance or subscription row is minted here: the browser hands the returned `orderId` to the PayPal Smart Buttons SDK for buyer approval, then settles the payment through POST /v1/billing/topup/token or POST /v1/billing/subscribe/card with `provider: \"paypal\"`.
+         * @summary Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).
+         * @param {BillingPaypalOrderIn} billingPaypalOrderIn 
+         * @param {string} [xIdempotencyKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingPaypalOrder: async (billingPaypalOrderIn: BillingPaypalOrderIn, xIdempotencyKey?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingPaypalOrderIn' is not null or undefined
+            assertParamExists('postBillingPaypalOrder', 'billingPaypalOrderIn', billingPaypalOrderIn)
+            const localVarPath = `/v1/billing/paypal/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xIdempotencyKey != null) {
+                localVarHeaderParameter['X-Idempotency-Key'] = String(xIdempotencyKey);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingPaypalOrderIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
@@ -1708,7 +1950,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1742,7 +1984,41 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
+         * Raises an OPEN invoice for an organization\'s order — the seats at the plan\'s price and the starting balance — and sends it to the buyer. NOTHING STARTS until it is paid: \"Your plan starts when we confirm your payment.\"  The body is a card sale\'s less the card and the coupon: `planId`, `quantity`, `lines`, `interval`, `balanceCents`. The organization is the one chosen with X-Org-Id (none chosen is 400), and only its admin, as IAM says now, orders (403). The answer carries the invoice, the amount due, the due date (the plan\'s `limits.invoiceDays`), when it is voided if unpaid (`limits.graceDays` later), the receiving bank with the reference to send exactly, the same as `howToPay` steps one field to a line, and `hostedUrl` and `pdfUrl`. A plan already paid for, or one with an invoice still open, is 409; a site that takes no order by invoice is 503. A retry under the same X-Idempotency-Key answers the same order as it stands at 200, with a new link and the bank read again; nothing is mailed again.
+         * @summary Order a plan by invoice, paid by wire
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingSubscribeInvoice: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/subscribe/invoice`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -1786,7 +2062,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt.
+         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a single-use card token and credits the caller\'s balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -1870,8 +2146,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.  The org\'s own account\'s rule is its admins\' to change, and the platform\'s; a member billed from a wallet of their own (a person in the signup org) changes that wallet\'s rule and no other (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the payer\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the payer\'s OWN. The org and the wallet come from the validated principal and the body names neither, so there is no field a write could be steered through onto another payer\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.
          * @param {BillingAutoRechargeEdit} billingAutoRechargeEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2226,7 +2502,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  `prepaid` is `cash` plus `line`: what pays for a model of another maker (OpenAI, Anthropic, Google and the rest). Granted `credit` does not, unless the usage policy says so, so a picker that shows Top up on those models shows it when `prepaid` is 0 and never reads the credit rule itself; `GET /v1/ai/limits` `pays` is the policy\'s own answer, per class.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
          * @summary Prepaid credit the caller\'s org can still spend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2274,7 +2550,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  status is pending until a transfer to the address is seen, confirming while the chain buries it (confirmations counts up to requiredConfirmations), and succeeded once it is credited: creditedCents is then in the caller\'s balance as cash (GET /v1/billing/balance, cash). The answer is the same shape the mint returned, terms and instructions included, so polling it is all an agent needs.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
          * @param {string} id ID is the deposit intent id.
          * @param {*} [options] Override http request option.
@@ -2287,8 +2563,33 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
+         * Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.  Sign TransferWithAuthorization {from, to: payTo, value, validAfter, validBefore, nonce} under one network\'s domain, then POST it here with the salt. The nonce is the caller\'s own: a payment signed against it credits the caller and cannot be presented by anyone else.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingCryptoGateway(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingGatewayTerms>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCryptoGateway(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCryptoGateway']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.  A payment belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm somebody else\'s payment exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.
+         * @param {string} id ID is the top-up\&#39;s id, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingCryptoGatewayById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingGatewayPayment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCryptoGatewayById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCryptoGatewayById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2326,6 +2627,32 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingInvoicesByIdPdf(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingInvoicesByIdPdf']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @summary Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @param {string} link 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingInvoicesHostedByLink(link: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingInvoicesHostedByLink(link, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingInvoicesHostedByLink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the order invoice a link shows, as a PDF to print or save.
+         * @summary Is the order invoice a link shows, as a PDF to print or save.
+         * @param {string} link 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingInvoicesHostedByLinkPdf(link: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingInvoicesHostedByLinkPdf(link, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingInvoicesHostedByLinkPdf']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2390,8 +2717,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
+         * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2569,7 +2896,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address, a status and the terms: the minimum that credits, any fee, the confirmations required, and one line of instructions. Once the transfer is that deep the deposit is credited as cash to the caller\'s balance (GET /v1/billing/balance, cash) and its status is succeeded.  The asset is checked against GET /v1/billing/crypto/options before anything is minted. A chain, a token or a pair the rail does not accept is 400, and the answer lists the accepted chains, tokens and assets. A deposit rail with nothing watched is 503 — nothing sent now can be credited, and the Gateway rail or a card is the way to pay until it reopens.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
          * @param {BillingCryptoAsset} billingCryptoAsset 
          * @param {*} [options] Override http request option.
@@ -2579,6 +2906,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCryptoDeposit(billingCryptoAsset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCryptoDeposit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.  accepted: Circle Gateway LOCKED the USDC and the caller is credited — or, once the caller holds $1,000 of credit Gateway has not confirmed, credited when Gateway confirms this payment (deferred). pending: the outcome is not known yet; read it back or present the same payment again — it resolves to one credit either way. A refusal is 4xx with Gateway\'s reason (insufficient_balance, invalid_signature, …) or ours (nonce_not_issued, recipient_mismatch, amount_below_minimum, …); 503 means the rail is shut.  Who is credited is the caller, never a body value: the payer is resolved server-side, and the payment\'s own nonce must be the one issued to it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.
+         * @param {BillingSignedPayment} billingSignedPayment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingCryptoGateway(billingSignedPayment: BillingSignedPayment, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingGatewayPayment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCryptoGateway(billingSignedPayment, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCryptoGateway']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2607,6 +2947,20 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).  No balance or subscription row is minted here: the browser hands the returned `orderId` to the PayPal Smart Buttons SDK for buyer approval, then settles the payment through POST /v1/billing/topup/token or POST /v1/billing/subscribe/card with `provider: \"paypal\"`.
+         * @summary Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).
+         * @param {BillingPaypalOrderIn} billingPaypalOrderIn 
+         * @param {string} [xIdempotencyKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingPaypalOrder(billingPaypalOrderIn: BillingPaypalOrderIn, xIdempotencyKey?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPayPalOrderOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingPaypalOrder(billingPaypalOrderIn, xIdempotencyKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingPaypalOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
@@ -2631,7 +2985,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2643,7 +2997,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
+         * Raises an OPEN invoice for an organization\'s order — the seats at the plan\'s price and the starting balance — and sends it to the buyer. NOTHING STARTS until it is paid: \"Your plan starts when we confirm your payment.\"  The body is a card sale\'s less the card and the coupon: `planId`, `quantity`, `lines`, `interval`, `balanceCents`. The organization is the one chosen with X-Org-Id (none chosen is 400), and only its admin, as IAM says now, orders (403). The answer carries the invoice, the amount due, the due date (the plan\'s `limits.invoiceDays`), when it is voided if unpaid (`limits.graceDays` later), the receiving bank with the reference to send exactly, the same as `howToPay` steps one field to a line, and `hostedUrl` and `pdfUrl`. A plan already paid for, or one with an invoice still open, is 409; a site that takes no order by invoice is 503. A retry under the same X-Idempotency-Key answers the same order as it stands at 200, with a new link and the bank read again; nothing is mailed again.
+         * @summary Order a plan by invoice, paid by wire
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingSubscribeInvoice(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingSubscribeInvoice(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingSubscribeInvoice']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -2657,7 +3023,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt.
+         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a single-use card token and credits the caller\'s balance.
          * @param {BillingTopupIn} billingTopupIn 
          * @param {string} [xIdempotencyKey] 
@@ -2684,8 +3050,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.  The org\'s own account\'s rule is its admins\' to change, and the platform\'s; a member billed from a wallet of their own (a person in the signup org) changes that wallet\'s rule and no other (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the payer\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the payer\'s OWN. The org and the wallet come from the validated principal and the body names neither, so there is no field a write could be steered through onto another payer\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.
          * @param {BillingAutoRechargeEdit} billingAutoRechargeEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2860,7 +3226,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingAlertsAuthorize(requestParameters.project, requestParameters.service, requestParameters.amount, requestParameters.pv, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  `prepaid` is `cash` plus `line`: what pays for a model of another maker (OpenAI, Anthropic, Google and the rest). Granted `credit` does not, unless the usage policy says so, so a picker that shows Top up on those models shows it when `prepaid` is 0 and never reads the credit rule itself; `GET /v1/ai/limits` `pays` is the policy\'s own answer, per class.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
          * @summary Prepaid credit the caller\'s org can still spend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2896,7 +3262,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingCredits(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  status is pending until a transfer to the address is seen, confirming while the chain buries it (confirmations counts up to requiredConfirmations), and succeeded once it is credited: creditedCents is then in the caller\'s balance as cash (GET /v1/billing/balance, cash). The answer is the same shape the mint returned, terms and instructions included, so polling it is all an agent needs.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
          * @param {BillingApiGetBillingCryptoDepositByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2906,8 +3272,27 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingCryptoDepositById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
+         * Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.  Sign TransferWithAuthorization {from, to: payTo, value, validAfter, validBefore, nonce} under one network\'s domain, then POST it here with the salt. The nonce is the caller\'s own: a payment signed against it credits the caller and cannot be presented by anyone else.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCryptoGateway(options?: RawAxiosRequestConfig): AxiosPromise<BillingGatewayTerms> {
+            return localVarFp.getBillingCryptoGateway(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.  A payment belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm somebody else\'s payment exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.
+         * @param {BillingApiGetBillingCryptoGatewayByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCryptoGatewayById(requestParameters: BillingApiGetBillingCryptoGatewayByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingGatewayPayment> {
+            return localVarFp.getBillingCryptoGatewayById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2933,6 +3318,26 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getBillingInvoicesByIdPdf(requestParameters: BillingApiGetBillingInvoicesByIdPdfRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getBillingInvoicesByIdPdf(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @summary Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+         * @param {BillingApiGetBillingInvoicesHostedByLinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingInvoicesHostedByLink(requestParameters: BillingApiGetBillingInvoicesHostedByLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingInvoicesHostedByLink(requestParameters.link, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the order invoice a link shows, as a PDF to print or save.
+         * @summary Is the order invoice a link shows, as a PDF to print or save.
+         * @param {BillingApiGetBillingInvoicesHostedByLinkPdfRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingInvoicesHostedByLinkPdf(requestParameters: BillingApiGetBillingInvoicesHostedByLinkPdfRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingInvoicesHostedByLinkPdf(requestParameters.link, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`), a HOLD sets money aside for a payment agreed and not yet made (negative, account `held:<org>`) and its return gives it back (positive), and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, wider than either half of it: the deposits are the grants /v1/billing/credits lists and the debits are the spend /v1/billing/usage rolls up. It answers 503 where this deployment runs no ledger, rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/billing/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
@@ -2981,8 +3386,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
+         * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3113,7 +3518,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingAlerts(requestParameters.billingAlertSpec, options).then((request) => request(axios, basePath));
         },
         /**
-         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address, a status and the terms: the minimum that credits, any fee, the confirmations required, and one line of instructions. Once the transfer is that deep the deposit is credited as cash to the caller\'s balance (GET /v1/billing/balance, cash) and its status is succeeded.  The asset is checked against GET /v1/billing/crypto/options before anything is minted. A chain, a token or a pair the rail does not accept is 400, and the answer lists the accepted chains, tokens and assets. A deposit rail with nothing watched is 503 — nothing sent now can be credited, and the Gateway rail or a card is the way to pay until it reopens.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
          * @param {BillingApiPostBillingCryptoDepositRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3121,6 +3526,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingCryptoDeposit(requestParameters: BillingApiPostBillingCryptoDepositRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCryptoDeposit> {
             return localVarFp.postBillingCryptoDeposit(requestParameters.billingCryptoAsset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.  accepted: Circle Gateway LOCKED the USDC and the caller is credited — or, once the caller holds $1,000 of credit Gateway has not confirmed, credited when Gateway confirms this payment (deferred). pending: the outcome is not known yet; read it back or present the same payment again — it resolves to one credit either way. A refusal is 4xx with Gateway\'s reason (insufficient_balance, invalid_signature, …) or ours (nonce_not_issued, recipient_mismatch, amount_below_minimum, …); 503 means the rail is shut.  Who is credited is the caller, never a body value: the payer is resolved server-side, and the payment\'s own nonce must be the one issued to it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.
+         * @param {BillingApiPostBillingCryptoGatewayRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCryptoGateway(requestParameters: BillingApiPostBillingCryptoGatewayRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingGatewayPayment> {
+            return localVarFp.postBillingCryptoGateway(requestParameters.billingSignedPayment, options).then((request) => request(axios, basePath));
         },
         /**
          * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
@@ -3142,6 +3557,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingMode(requestParameters.billingModeIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).  No balance or subscription row is minted here: the browser hands the returned `orderId` to the PayPal Smart Buttons SDK for buyer approval, then settles the payment through POST /v1/billing/topup/token or POST /v1/billing/subscribe/card with `provider: \"paypal\"`.
+         * @summary Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).
+         * @param {BillingApiPostBillingPaypalOrderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingPaypalOrder(requestParameters: BillingApiPostBillingPaypalOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingPayPalOrderOut> {
+            return localVarFp.postBillingPaypalOrder(requestParameters.billingPaypalOrderIn, requestParameters.xIdempotencyKey, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
          * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
@@ -3160,7 +3585,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingRechargeRunAll(options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3169,7 +3594,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingSubscribeCard(options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
+         * Raises an OPEN invoice for an organization\'s order — the seats at the plan\'s price and the starting balance — and sends it to the buyer. NOTHING STARTS until it is paid: \"Your plan starts when we confirm your payment.\"  The body is a card sale\'s less the card and the coupon: `planId`, `quantity`, `lines`, `interval`, `balanceCents`. The organization is the one chosen with X-Org-Id (none chosen is 400), and only its admin, as IAM says now, orders (403). The answer carries the invoice, the amount due, the due date (the plan\'s `limits.invoiceDays`), when it is voided if unpaid (`limits.graceDays` later), the receiving bank with the reference to send exactly, the same as `howToPay` steps one field to a line, and `hostedUrl` and `pdfUrl`. A plan already paid for, or one with an invoice still open, is 409; a site that takes no order by invoice is 503. A retry under the same X-Idempotency-Key answers the same order as it stands at 200, with a new link and the bank read again; nothing is mailed again.
+         * @summary Order a plan by invoice, paid by wire
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingSubscribeInvoice(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBillingSubscribeInvoice(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3179,7 +3613,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingTopup(requestParameters.billingTopupIn, requestParameters.xIdempotencyKey, options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt.
+         * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a single-use card token and credits the caller\'s balance.
          * @param {BillingApiPostBillingTopupTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3199,8 +3633,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingUsage(requestParameters.billingUsageReport, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
+         * Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.  The org\'s own account\'s rule is its admins\' to change, and the platform\'s; a member billed from a wallet of their own (a person in the signup org) changes that wallet\'s rule and no other (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the payer\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the payer\'s OWN. The org and the wallet come from the validated principal and the body names neither, so there is no field a write could be steered through onto another payer\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.
          * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3420,6 +3854,20 @@ export interface BillingApiGetBillingCryptoDepositByIdRequest {
 }
 
 /**
+ * Request parameters for getBillingCryptoGatewayById operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingCryptoGatewayByIdRequest
+ */
+export interface BillingApiGetBillingCryptoGatewayByIdRequest {
+    /**
+     * ID is the top-up\&#39;s id, from the path.
+     * @type {string}
+     * @memberof BillingApiGetBillingCryptoGatewayById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for getBillingInvoices operation in BillingApi.
  * @export
  * @interface BillingApiGetBillingInvoicesRequest
@@ -3473,6 +3921,34 @@ export interface BillingApiGetBillingInvoicesByIdPdfRequest {
      * @memberof BillingApiGetBillingInvoicesByIdPdf
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getBillingInvoicesHostedByLink operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingInvoicesHostedByLinkRequest
+ */
+export interface BillingApiGetBillingInvoicesHostedByLinkRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiGetBillingInvoicesHostedByLink
+     */
+    readonly link: string
+}
+
+/**
+ * Request parameters for getBillingInvoicesHostedByLinkPdf operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingInvoicesHostedByLinkPdfRequest
+ */
+export interface BillingApiGetBillingInvoicesHostedByLinkPdfRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiGetBillingInvoicesHostedByLinkPdf
+     */
+    readonly link: string
 }
 
 /**
@@ -3623,6 +4099,20 @@ export interface BillingApiPostBillingCryptoDepositRequest {
 }
 
 /**
+ * Request parameters for postBillingCryptoGateway operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingCryptoGatewayRequest
+ */
+export interface BillingApiPostBillingCryptoGatewayRequest {
+    /**
+     * 
+     * @type {BillingSignedPayment}
+     * @memberof BillingApiPostBillingCryptoGateway
+     */
+    readonly billingSignedPayment: BillingSignedPayment
+}
+
+/**
  * Request parameters for postBillingMode operation in BillingApi.
  * @export
  * @interface BillingApiPostBillingModeRequest
@@ -3634,6 +4124,27 @@ export interface BillingApiPostBillingModeRequest {
      * @memberof BillingApiPostBillingMode
      */
     readonly billingModeIn: BillingModeIn
+}
+
+/**
+ * Request parameters for postBillingPaypalOrder operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingPaypalOrderRequest
+ */
+export interface BillingApiPostBillingPaypalOrderRequest {
+    /**
+     * 
+     * @type {BillingPaypalOrderIn}
+     * @memberof BillingApiPostBillingPaypalOrder
+     */
+    readonly billingPaypalOrderIn: BillingPaypalOrderIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiPostBillingPaypalOrder
+     */
+    readonly xIdempotencyKey?: string
 }
 
 /**
@@ -3909,7 +4420,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
+     * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  `cash`, `line` and `credit` say where `available` came from, and add up to it. `cash` is money the customer paid — a settled card payment or a recorded wire. `credit` is money Hanzo minted: signup and promotional credit, admin grants. `line` is what is left of the org\'s postpaid credit line (`creditLimit`), and `due` what the account owes on it: usage the line paid for, invoiced, and paid down first by the next payment. A debit draws cash, then the line, then credit; granted credit never pays what is due. The three line fields are absent when the ledger did not report them.  `prepaid` is `cash` plus `line`: what pays for a model of another maker (OpenAI, Anthropic, Google and the rest). Granted `credit` does not, unless the usage policy says so, so a picker that shows Top up on those models shows it when `prepaid` is 0 and never reads the credit rule itself; `GET /v1/ai/limits` `pays` is the policy\'s own answer, per class.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401. A balance that cannot be READ is 502, never 0: unknown is not broke.
      * @summary Prepaid credit the caller\'s org can still spend
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3953,7 +4464,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  status is pending until a transfer to the address is seen, confirming while the chain buries it (confirmations counts up to requiredConfirmations), and succeeded once it is credited: creditedCents is then in the caller\'s balance as cash (GET /v1/billing/balance, cash). The answer is the same shape the mint returned, terms and instructions included, so polling it is all an agent needs.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
      * @param {BillingApiGetBillingCryptoDepositByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3965,8 +4476,31 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
+     * Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.  Sign TransferWithAuthorization {from, to: payTo, value, validAfter, validBefore, nonce} under one network\'s domain, then POST it here with the salt. The nonce is the caller\'s own: a payment signed against it credits the caller and cannot be presented by anyone else.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers the terms to sign a USDC top-up against, for an agent or a person paying from a wallet: the treasury to pay, the networks and USDC contracts, the EIP-712 domain and types, the limits, and a nonce issued to the caller.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingCryptoGateway(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingCryptoGateway(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.  A payment belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm somebody else\'s payment exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads one of the caller\'s own USDC top-ups back: pending, accepted (credited or deferred), settled, failed or refused.
+     * @param {BillingApiGetBillingCryptoGatewayByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingCryptoGatewayById(requestParameters: BillingApiGetBillingCryptoGatewayByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingCryptoGatewayById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders — and the pairs themselves in assets: a chain and a token each on offer are not a pair on offer.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3997,6 +4531,30 @@ export class BillingApi extends BaseAPI {
      */
     public getBillingInvoicesByIdPdf(requestParameters: BillingApiGetBillingInvoicesByIdPdfRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getBillingInvoicesByIdPdf(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+     * @summary Is the order invoice a link shows, read on the brand of the host it is asked on: a link read on another brand\'s host is a miss.
+     * @param {BillingApiGetBillingInvoicesHostedByLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingInvoicesHostedByLink(requestParameters: BillingApiGetBillingInvoicesHostedByLinkRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingInvoicesHostedByLink(requestParameters.link, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the order invoice a link shows, as a PDF to print or save.
+     * @summary Is the order invoice a link shows, as a PDF to print or save.
+     * @param {BillingApiGetBillingInvoicesHostedByLinkPdfRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingInvoicesHostedByLinkPdf(requestParameters: BillingApiGetBillingInvoicesHostedByLinkPdfRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingInvoicesHostedByLinkPdf(requestParameters.link, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4056,8 +4614,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day. It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Reads the org\'s auto-reload rule: top the balance up by `amountCents` whenever it falls below `thresholdCents`, charging the card on file off-session, at most `perDay` times in a UTC day.
+     * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -4216,7 +4774,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address, a status and the terms: the minimum that credits, any fee, the confirmations required, and one line of instructions. Once the transfer is that deep the deposit is credited as cash to the caller\'s balance (GET /v1/billing/balance, cash) and its status is succeeded.  The asset is checked against GET /v1/billing/crypto/options before anything is minted. A chain, a token or a pair the rail does not accept is 400, and the answer lists the accepted chains, tokens and assets. A deposit rail with nothing watched is 503 — nothing sent now can be credited, and the Gateway rail or a card is the way to pay until it reopens.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
      * @param {BillingApiPostBillingCryptoDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4225,6 +4783,18 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingCryptoDeposit(requestParameters: BillingApiPostBillingCryptoDepositRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingCryptoDeposit(requestParameters.billingCryptoAsset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.  accepted: Circle Gateway LOCKED the USDC and the caller is credited — or, once the caller holds $1,000 of credit Gateway has not confirmed, credited when Gateway confirms this payment (deferred). pending: the outcome is not known yet; read it back or present the same payment again — it resolves to one credit either way. A refusal is 4xx with Gateway\'s reason (insufficient_balance, invalid_signature, …) or ours (nonce_not_issued, recipient_mismatch, amount_below_minimum, …); 503 means the rail is shut.  Who is credited is the caller, never a body value: the payer is resolved server-side, and the payment\'s own nonce must be the one issued to it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Takes a signed USDC payment from the caller\'s Circle Gateway balance to the treasury, and answers what became of it.
+     * @param {BillingApiPostBillingCryptoGatewayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingCryptoGateway(requestParameters: BillingApiPostBillingCryptoGatewayRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingCryptoGateway(requestParameters.billingSignedPayment, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4251,6 +4821,18 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).  No balance or subscription row is minted here: the browser hands the returned `orderId` to the PayPal Smart Buttons SDK for buyer approval, then settles the payment through POST /v1/billing/topup/token or POST /v1/billing/subscribe/card with `provider: \"paypal\"`.
+     * @summary Opens a server-priced PayPal REST v2 order for either a bounded credit top-up (intent CAPTURE) or a plan purchase\'s first period (intent AUTHORIZE).
+     * @param {BillingApiPostBillingPaypalOrderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingPaypalOrder(requestParameters: BillingApiPostBillingPaypalOrderRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingPaypalOrder(requestParameters.billingPaypalOrderIn, requestParameters.xIdempotencyKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
      * @summary Save a card or account for the caller
      * @param {*} [options] Override http request option.
@@ -4273,7 +4855,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere: renewals are drawn from the prepaid balance.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
+     * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
      * @summary Buy a plan with a card
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4284,7 +4866,18 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card.
+     * Raises an OPEN invoice for an organization\'s order — the seats at the plan\'s price and the starting balance — and sends it to the buyer. NOTHING STARTS until it is paid: \"Your plan starts when we confirm your payment.\"  The body is a card sale\'s less the card and the coupon: `planId`, `quantity`, `lines`, `interval`, `balanceCents`. The organization is the one chosen with X-Org-Id (none chosen is 400), and only its admin, as IAM says now, orders (403). The answer carries the invoice, the amount due, the due date (the plan\'s `limits.invoiceDays`), when it is voided if unpaid (`limits.graceDays` later), the receiving bank with the reference to send exactly, the same as `howToPay` steps one field to a line, and `hostedUrl` and `pdfUrl`. A plan already paid for, or one with an invoice still open, is 409; a site that takes no order by invoice is 503. A retry under the same X-Idempotency-Key answers the same order as it stands at 200, with a new link and the bank read again; nothing is mailed again.
+     * @summary Order a plan by invoice, paid by wire
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingSubscribeInvoice(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingSubscribeInvoice(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
      * @summary Charges a card the caller already saved and credits the balance.
      * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4296,7 +4889,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt.
+     * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
      * @summary Charges a single-use card token and credits the caller\'s balance.
      * @param {BillingApiPostBillingTopupTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4320,8 +4913,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Sets the org\'s auto-reload rule, and answers with the rule as stored.  ONLY AN ADMIN OF THE ORG, or the platform, may (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the org\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the org\'s OWN. The org comes from the validated principal and the body names none, so there is no field a write could be steered through onto another tenant\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Sets the org\'s auto-reload rule, and answers with the rule as stored.
+     * Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.  The org\'s own account\'s rule is its admins\' to change, and the platform\'s; a member billed from a wallet of their own (a person in the signup org) changes that wallet\'s rule and no other (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the payer\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the payer\'s OWN. The org and the wallet come from the validated principal and the body names neither, so there is no field a write could be steered through onto another payer\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.
      * @param {BillingApiPutBillingRechargeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

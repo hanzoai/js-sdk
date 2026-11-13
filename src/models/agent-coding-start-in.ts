@@ -24,7 +24,7 @@ import type { AgentReply } from './agent-reply';
  */
 export interface AgentCodingStartIn {
     /**
-     * After names a previous run\'s session, and starts this one from where that one stopped instead of from the repository\'s default. It is how a follow-up instruction — \"now add tests for it\" — builds on work already done rather than beginning again on a fresh clone: the follow-up resumes the earlier run\'s sandbox and works in its tree, files, installs and all, while that sandbox is kept; one reaped by then is cloned again from the earlier branch.  It sets the base and nothing else, so this run still writes its OWN branch. One run, one branch: a run that wrote back onto an earlier run\'s branch would break the rule the forge\'s ref policy is built on, and would leave two turns of work with one name to review.  A caller who already knows the branch may pass Base directly; this exists because the branch is derived from a session id and nobody should have to know how. Base wins if both are given.
+     * After names a previous run\'s session, and starts this one from where that one stopped instead of from the repository\'s default. It is how a follow-up instruction — \"now add tests for it\" — builds on work already done rather than beginning again on a fresh clone: the follow-up resumes the earlier run\'s sandbox and works in its tree, files, installs and all, while that sandbox is kept; one reaped by then is cloned again from the earlier branch.  The follow-up writes the SAME branch the earlier run did, on top of its commits, so one piece of work is one branch and one pull request however many instructions it takes. It pushes without force, so it only ever adds to that branch. When the earlier run was on another repository, or kept its work local, there is no branch to carry on and the follow-up writes a new one. Branch names the branch instead.  A caller who already knows the branch may pass Base directly. Base wins if both are given.
      * @type {string}
      * @memberof AgentCodingStartIn
      */
@@ -42,11 +42,29 @@ export interface AgentCodingStartIn {
      */
     'base'?: string;
     /**
+     * Branch names the branch the run writes, as `agent/<name>`: pass the name alone, or with the prefix. Runs write only under `agent/`, never to Base or to the default branch, so the name is letters, digits, `.`, `_` and `-`. Empty takes `agent/` and the first part of the run\'s session id, or the earlier run\'s branch when After names one.  A branch that already exists on the repository is carried on, not replaced: the run starts from it and adds commits, and its pull request is the one it already has.
+     * @type {string}
+     * @memberof AgentCodingStartIn
+     */
+    'branch'?: string;
+    /**
+     * Conversation is the Dev conversation this run is part of (POST /v1/agent/turns): one of the caller\'s own. The run is held in its tree, so it is read, steered and written as the conversation is — by its person alone. The app writes it; a run that carries on one in a conversation (After) is in that conversation without naming it. Empty is a run of its own.
+     * @type {string}
+     * @memberof AgentCodingStartIn
+     */
+    'conversation'?: string;
+    /**
      * Desktop asks for a run with a SCREEN — an image carrying an X server — for a task that has to drive a browser or another windowed program. False, the default, is a headless checkout, which is what writing code needs.
      * @type {boolean}
      * @memberof AgentCodingStartIn
      */
     'desktop'?: boolean;
+    /**
+     * DeveloperInstructions is the explicit alias for Instructions passed to the coding harness as developer_instructions; optional.
+     * @type {string}
+     * @memberof AgentCodingStartIn
+     */
+    'developerInstructions'?: string;
     /**
      * Effort is how hard that model reasons: low, medium or high. Empty takes the model\'s own default. Taken by the dev and codex harnesses, like Model.
      * @type {string}
@@ -54,11 +72,17 @@ export interface AgentCodingStartIn {
      */
     'effort'?: string;
     /**
-     * Issue is the number of the issue on Repo this run resolves. Its pull request says `Closes #<n>`, so merging the work closes the issue. Zero is a run no issue asked for.
-     * @type {number}
+     * Instructions carries per-run developer instructions (such as active skills and memories) separate from Prompt so the user\'s message stays clean; optional.
+     * @type {string}
      * @memberof AgentCodingStartIn
      */
-    'issue'?: number;
+    'instructions'?: string;
+    /**
+     * Issue is the issue this run resolves: its number on Repo (`464` or `#464`), or `owner/name#464` for an issue in another repository. Its pull request says `Closes <issue>`, so merging the work closes the issue. Empty, or 0, is a run no issue asked for.
+     * @type {string}
+     * @memberof AgentCodingStartIn
+     */
+    'issue'?: string;
     /**
      * Mode is what the run may do to the repository: `build` edits, commits and pushes its branch; `plan` reads the repository and answers with a plan, writing nothing — its sandbox is handed a credential that can only read and no push step runs, and the plan arrives as the run\'s final status. `setup` is a plan put to one question: its agent explores the checkout, installs and checks what it finds, and ends with the codebase\'s environment, which is kept as the proposal at /v1/environment/{repo} until someone saves it. Empty is `build`. A plan or a setup runs in our sandbox only: a claimed machine clones and pushes with its own credential, so one routed to a machine is refused.
      * @type {string}
@@ -84,7 +108,13 @@ export interface AgentCodingStartIn {
      */
     'prompt'?: string;
     /**
-     * Reply is WHERE THE RUN NARRATES ITSELF, when the surface that started it has somewhere for it to talk. Empty means nobody is listening and the run simply does not narrate — which is the app surface\'s case, because /v1/agent/coding hands back a session id and the session stream is a better progress feed than any message could be.  IT IS NOT A FIELD A MODEL FILLS IN. A run asked for in a conversation is dispatched with the address that conversation is happening at, written over whatever arrived here (apps/agents/replyto.go). A model naming a channel is a model naming a room it was not spoken to in, so the value it chose is discarded rather than argued with — which is the same rule that left the org and the subject off this type entirely.
+     * Pull is whether the run opens a pull request for what it pushed. Unset, it pushes the branch and opens none: a pull request is the step after the work, taken when it is ready, and a run resumed with `after` adds to the same branch. True opens one when the run changed something.
+     * @type {boolean}
+     * @memberof AgentCodingStartIn
+     */
+    'pull'?: boolean;
+    /**
+     * Reply is WHERE THE RUN NARRATES ITSELF, when the surface that started it has somewhere for it to talk. Empty means nobody is listening and the run simply does not narrate — which is the app surface\'s case, because /v1/agent/coding hands back a session id and the session stream is a better progress feed than any message could be.  IT IS NOT A FIELD A MODEL FILLS IN. A run asked for in a conversation is dispatched with the address that conversation is happening at, written over whatever arrived here (apps/agents/replyto.go). A model naming a channel is a model naming a channel it was not spoken to in, so the value it chose is discarded rather than argued with — which is the same rule that left the org and the subject off this type entirely.
      * @type {AgentReply}
      * @memberof AgentCodingStartIn
      */
@@ -95,6 +125,12 @@ export interface AgentCodingStartIn {
      * @memberof AgentCodingStartIn
      */
     'repo'?: string;
+    /**
+     * RequestID deduplicates retries of the same start request for this caller; optional.
+     * @type {string}
+     * @memberof AgentCodingStartIn
+     */
+    'requestId'?: string;
     /**
      * TargetID routes the run to a registered machine the org has claimed instead of to a sandbox in our cluster. Empty runs it here, which is the usual case.
      * @type {string}

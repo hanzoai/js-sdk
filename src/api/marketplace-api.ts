@@ -66,6 +66,8 @@ import type { MarketplaceShopListing } from '../models';
 // @ts-ignore
 import type { MarketplaceVerifyIn } from '../models';
 // @ts-ignore
+import type { MarketplaceVerifyReq } from '../models';
+// @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
  * MarketplaceApi - axios parameter creator
@@ -74,7 +76,7 @@ import type { ProblemDetails } from '../models';
 export const MarketplaceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes, and an expert unpublishes their own listing.
          * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
          * @param {string} id ID is the listing, from the path.
          * @param {*} [options] Override http request option.
@@ -228,12 +230,13 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
-         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy.
+         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
+         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketplaceListings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketplaceListings: async (kind?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketplace/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -249,6 +252,10 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
 
 
     
@@ -301,20 +308,31 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
          * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
-         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {string} [category] Category keeps one category, exactly.
          * @param {string} [price] Price keeps free listings or priced ones.
          * @param {number} [rating] Rating keeps listings rated at least this many stars, 1 to 5.
          * @param {string} [seller] Seller keeps one seller org\&#39;s listings.
+         * @param {string} [area] Area keeps the experts who work on one area: configure, base, commerce, bot, agents, cloud, models, creative or freelance.
          * @param {number} [limit] Limit is the page size: 48 by default, 200 at most.
          * @param {number} [offset] Offset is where the page starts.
+         * @param {string} [sort] Sort orders experts, with kind&#x3D;expert: tokens (the token tier), level, points (the rewards program\&#39;s, put last for an expert whose reward profile is not public), rating (unrated last), jobs (jobs completed), rate (the hourly rate, none last) or newest. It is newest by default.
+         * @param {string} [dir] Dir is the direction of Sort: desc by default, or asc. An expert the order cannot place stays last either way.
+         * @param {string} [language] Language keeps the experts who work in a language, a BCP 47 tag such as en, es or zh-cn; zh keeps zh-cn and zh-tw as well. With kind&#x3D;expert.
+         * @param {boolean} [verified] Verified, true, keeps the experts staff verified; false keeps everyone. With kind&#x3D;expert.
+         * @param {number} [minLevel] MinLevel keeps the experts whose public reward profile shows this level or higher; 0 keeps everyone. With kind&#x3D;expert.
+         * @param {string} [badge] Badge keeps the experts whose public reward profile holds a badge, by id such as first-merge. With kind&#x3D;expert.
+         * @param {string} [tokenTier] TokenTier keeps the experts whose token tier is at least this: 100k, 1m, 5m, 10m, 100m, 1b, 10b, 100b or 1t. With kind&#x3D;expert.
+         * @param {string} [rateMin] RateMin keeps the experts whose hourly rate is at least this decimal USD amount; an expert with no hourly rate is kept by neither RateMin nor RateMax. With kind&#x3D;expert.
+         * @param {string} [rateMax] RateMax keeps the experts whose hourly rate is at most this decimal USD amount. With kind&#x3D;expert.
+         * @param {string} [product] Product orders the experts by their score in a product, best first, those with none last: dev, bot, team, base, commerce, cloud, agents, kai, enso, zen or creative. It is the order, so it is not given with Sort. With kind&#x3D;expert.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketplaceShop: async (q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketplaceShop: async (q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, area?: string, limit?: number, offset?: number, sort?: string, dir?: string, language?: string, verified?: boolean, minLevel?: number, badge?: string, tokenTier?: string, rateMin?: string, rateMax?: string, product?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketplace/shop`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -351,12 +369,56 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter['seller'] = seller;
             }
 
+            if (area !== undefined) {
+                localVarQueryParameter['area'] = area;
+            }
+
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
 
             if (offset !== undefined) {
                 localVarQueryParameter['offset'] = offset;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (dir !== undefined) {
+                localVarQueryParameter['dir'] = dir;
+            }
+
+            if (language !== undefined) {
+                localVarQueryParameter['language'] = language;
+            }
+
+            if (verified !== undefined) {
+                localVarQueryParameter['verified'] = verified;
+            }
+
+            if (minLevel !== undefined) {
+                localVarQueryParameter['minLevel'] = minLevel;
+            }
+
+            if (badge !== undefined) {
+                localVarQueryParameter['badge'] = badge;
+            }
+
+            if (tokenTier !== undefined) {
+                localVarQueryParameter['tokenTier'] = tokenTier;
+            }
+
+            if (rateMin !== undefined) {
+                localVarQueryParameter['rateMin'] = rateMin;
+            }
+
+            if (rateMax !== undefined) {
+                localVarQueryParameter['rateMax'] = rateMax;
+            }
+
+            if (product !== undefined) {
+                localVarQueryParameter['product'] = product;
             }
 
 
@@ -405,8 +467,8 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
-         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits, and an expert edits their own listing.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands.
          * @param {string} id ID is the listing to edit, from the path.
          * @param {MarketplacePatchReq} marketplacePatchReq 
          * @param {*} [options] Override http request option.
@@ -857,7 +919,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
          * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplacePublishReq} marketplacePublishReq 
          * @param {*} [options] Override http request option.
@@ -890,6 +952,50 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(marketplacePublishReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Marks an expert listing verified, or takes the mark away, whichever org published it. Verified is staff\'s word that the person is who the listing says and does what it says: only a SuperAdmin (an owner of the reserved admin org) gives it, never an org admin and never the expert, and each change is on the audit trail with who made it. It answers the listing as it now stands. A listing that is not an expert\'s is a 404.
+         * @summary Marks an expert listing verified, or takes the mark away, whichever org published it.
+         * @param {string} id ID is the expert listing, from the path.
+         * @param {MarketplaceVerifyReq} marketplaceVerifyReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceListingsByIdVerify: async (id: string, marketplaceVerifyReq: MarketplaceVerifyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMarketplaceListingsByIdVerify', 'id', id)
+            // verify required parameter 'marketplaceVerifyReq' is not null or undefined
+            assertParamExists('postMarketplaceListingsByIdVerify', 'marketplaceVerifyReq', marketplaceVerifyReq)
+            const localVarPath = `/v1/marketplace/listings/{id}/verify`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(marketplaceVerifyReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1027,7 +1133,7 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MarketplaceApiAxiosParamCreator(configuration)
     return {
         /**
-         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes, and an expert unpublishes their own listing.
          * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
          * @param {string} id ID is the listing, from the path.
          * @param {*} [options] Override http request option.
@@ -1079,13 +1185,14 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
-         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy.
+         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
+         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketplaceListings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListingPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceListings(options);
+        async getMarketplaceListings(kind?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListingPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceListings(kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceListings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1104,21 +1211,32 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
          * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
-         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {string} [category] Category keeps one category, exactly.
          * @param {string} [price] Price keeps free listings or priced ones.
          * @param {number} [rating] Rating keeps listings rated at least this many stars, 1 to 5.
          * @param {string} [seller] Seller keeps one seller org\&#39;s listings.
+         * @param {string} [area] Area keeps the experts who work on one area: configure, base, commerce, bot, agents, cloud, models, creative or freelance.
          * @param {number} [limit] Limit is the page size: 48 by default, 200 at most.
          * @param {number} [offset] Offset is where the page starts.
+         * @param {string} [sort] Sort orders experts, with kind&#x3D;expert: tokens (the token tier), level, points (the rewards program\&#39;s, put last for an expert whose reward profile is not public), rating (unrated last), jobs (jobs completed), rate (the hourly rate, none last) or newest. It is newest by default.
+         * @param {string} [dir] Dir is the direction of Sort: desc by default, or asc. An expert the order cannot place stays last either way.
+         * @param {string} [language] Language keeps the experts who work in a language, a BCP 47 tag such as en, es or zh-cn; zh keeps zh-cn and zh-tw as well. With kind&#x3D;expert.
+         * @param {boolean} [verified] Verified, true, keeps the experts staff verified; false keeps everyone. With kind&#x3D;expert.
+         * @param {number} [minLevel] MinLevel keeps the experts whose public reward profile shows this level or higher; 0 keeps everyone. With kind&#x3D;expert.
+         * @param {string} [badge] Badge keeps the experts whose public reward profile holds a badge, by id such as first-merge. With kind&#x3D;expert.
+         * @param {string} [tokenTier] TokenTier keeps the experts whose token tier is at least this: 100k, 1m, 5m, 10m, 100m, 1b, 10b, 100b or 1t. With kind&#x3D;expert.
+         * @param {string} [rateMin] RateMin keeps the experts whose hourly rate is at least this decimal USD amount; an expert with no hourly rate is kept by neither RateMin nor RateMax. With kind&#x3D;expert.
+         * @param {string} [rateMax] RateMax keeps the experts whose hourly rate is at most this decimal USD amount. With kind&#x3D;expert.
+         * @param {string} [product] Product orders the experts by their score in a product, best first, those with none last: dev, bot, team, base, commerce, cloud, agents, kai, enso, zen or creative. It is the order, so it is not given with Sort. With kind&#x3D;expert.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMarketplaceShop(q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceShop>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShop(q, kind, category, price, rating, seller, limit, offset, options);
+        async getMarketplaceShop(q?: string, kind?: string, category?: string, price?: string, rating?: number, seller?: string, area?: string, limit?: number, offset?: number, sort?: string, dir?: string, language?: string, verified?: boolean, minLevel?: number, badge?: string, tokenTier?: string, rateMin?: string, rateMax?: string, product?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceShop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShop(q, kind, category, price, rating, seller, area, limit, offset, sort, dir, language, verified, minLevel, badge, tokenTier, rateMin, rateMax, product, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceShop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1137,8 +1255,8 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
-         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits, and an expert edits their own listing.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands.
          * @param {string} id ID is the listing to edit, from the path.
          * @param {MarketplacePatchReq} marketplacePatchReq 
          * @param {*} [options] Override http request option.
@@ -1285,7 +1403,7 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
          * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplacePublishReq} marketplacePublishReq 
          * @param {*} [options] Override http request option.
@@ -1295,6 +1413,20 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceListings(marketplacePublishReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceListings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Marks an expert listing verified, or takes the mark away, whichever org published it. Verified is staff\'s word that the person is who the listing says and does what it says: only a SuperAdmin (an owner of the reserved admin org) gives it, never an org admin and never the expert, and each change is on the audit trail with who made it. It answers the listing as it now stands. A listing that is not an expert\'s is a 404.
+         * @summary Marks an expert listing verified, or takes the mark away, whichever org published it.
+         * @param {string} id ID is the expert listing, from the path.
+         * @param {MarketplaceVerifyReq} marketplaceVerifyReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMarketplaceListingsByIdVerify(id: string, marketplaceVerifyReq: MarketplaceVerifyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceListingsByIdVerify(id, marketplaceVerifyReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceListingsByIdVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1347,7 +1479,7 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
     const localVarFp = MarketplaceApiFp(configuration)
     return {
         /**
-         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+         * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes, and an expert unpublishes their own listing.
          * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
          * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1386,13 +1518,14 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getMarketplaceJobsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
-         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy.
+         * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
+         * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
+         * @param {MarketplaceApiGetMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMarketplaceListings(options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListingPage> {
-            return localVarFp.getMarketplaceListings(options).then((request) => request(axios, basePath));
+        getMarketplaceListings(requestParameters: MarketplaceApiGetMarketplaceListingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListingPage> {
+            return localVarFp.getMarketplaceListings(requestParameters.kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers where the caller\'s org stands as a seller, in one read: its founders\' identity verification (KYC) and legal entity (KYB), its tax form and whether it is certified and valid, its own sanctions screening — only what an org may see about itself — the payout wallet it proved, the TaxPrincipalCredentials signed for its agents, what it earned in the year from the economic events the rails stated, and the 1099s payers furnished it. Ready says nothing is missing. Each owning app is asked as the org; one this deployment does not run is named absent rather than read as empty. An org admin reads it.
@@ -1405,14 +1538,14 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getMarketplaceSeller(requestParameters.year, options).then((request) => request(axios, basePath));
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
          * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMarketplaceShop(requestParameters: MarketplaceApiGetMarketplaceShopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceShop> {
-            return localVarFp.getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+            return localVarFp.getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.area, requestParameters.limit, requestParameters.offset, requestParameters.sort, requestParameters.dir, requestParameters.language, requestParameters.verified, requestParameters.minLevel, requestParameters.badge, requestParameters.tokenTier, requestParameters.rateMin, requestParameters.rateMax, requestParameters.product, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one public listing as the shop shows it — its seller\'s public face, its reputation and the ways to buy it. A private listing and one that does not exist are the same 404. It needs no credential.
@@ -1425,8 +1558,8 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getMarketplaceShopById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
-         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+         * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits, and an expert edits their own listing.
+         * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands.
          * @param {MarketplaceApiPatchMarketplaceListingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1535,7 +1668,7 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.postMarketplaceJobsByIdRelease(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
          * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1543,6 +1676,16 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          */
         postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListing> {
             return localVarFp.postMarketplaceListings(requestParameters.marketplacePublishReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Marks an expert listing verified, or takes the mark away, whichever org published it. Verified is staff\'s word that the person is who the listing says and does what it says: only a SuperAdmin (an owner of the reserved admin org) gives it, never an org admin and never the expert, and each change is on the audit trail with who made it. It answers the listing as it now stands. A listing that is not an expert\'s is a 404.
+         * @summary Marks an expert listing verified, or takes the mark away, whichever org published it.
+         * @param {MarketplaceApiPostMarketplaceListingsByIdVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMarketplaceListingsByIdVerify(requestParameters: MarketplaceApiPostMarketplaceListingsByIdVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceListing> {
+            return localVarFp.postMarketplaceListingsByIdVerify(requestParameters.id, requestParameters.marketplaceVerifyReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts binding one of the caller org\'s wallets as the wallet it is paid into: answers a challenge naming the org, the wallet and its address, to be signed with that wallet within fifteen minutes and sent to POST /v1/marketplace/seller/payout/verify. A newer challenge replaces an older one. An org admin binds.
@@ -1627,6 +1770,20 @@ export interface MarketplaceApiGetMarketplaceJobsByIdRequest {
 }
 
 /**
+ * Request parameters for getMarketplaceListings operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceListingsRequest
+ */
+export interface MarketplaceApiGetMarketplaceListingsRequest {
+    /**
+     * Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceListings
+     */
+    readonly kind?: string
+}
+
+/**
  * Request parameters for getMarketplaceSeller operation in MarketplaceApi.
  * @export
  * @interface MarketplaceApiGetMarketplaceSellerRequest
@@ -1654,7 +1811,7 @@ export interface MarketplaceApiGetMarketplaceShopRequest {
     readonly q?: string
 
     /**
-     * Kind keeps one kind: agent, persona, app, skill, mcp or tool.
+     * Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
      * @type {string}
      * @memberof MarketplaceApiGetMarketplaceShop
      */
@@ -1689,6 +1846,13 @@ export interface MarketplaceApiGetMarketplaceShopRequest {
     readonly seller?: string
 
     /**
+     * Area keeps the experts who work on one area: configure, base, commerce, bot, agents, cloud, models, creative or freelance.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly area?: string
+
+    /**
      * Limit is the page size: 48 by default, 200 at most.
      * @type {number}
      * @memberof MarketplaceApiGetMarketplaceShop
@@ -1701,6 +1865,76 @@ export interface MarketplaceApiGetMarketplaceShopRequest {
      * @memberof MarketplaceApiGetMarketplaceShop
      */
     readonly offset?: number
+
+    /**
+     * Sort orders experts, with kind&#x3D;expert: tokens (the token tier), level, points (the rewards program\&#39;s, put last for an expert whose reward profile is not public), rating (unrated last), jobs (jobs completed), rate (the hourly rate, none last) or newest. It is newest by default.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly sort?: string
+
+    /**
+     * Dir is the direction of Sort: desc by default, or asc. An expert the order cannot place stays last either way.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly dir?: string
+
+    /**
+     * Language keeps the experts who work in a language, a BCP 47 tag such as en, es or zh-cn; zh keeps zh-cn and zh-tw as well. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly language?: string
+
+    /**
+     * Verified, true, keeps the experts staff verified; false keeps everyone. With kind&#x3D;expert.
+     * @type {boolean}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly verified?: boolean
+
+    /**
+     * MinLevel keeps the experts whose public reward profile shows this level or higher; 0 keeps everyone. With kind&#x3D;expert.
+     * @type {number}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly minLevel?: number
+
+    /**
+     * Badge keeps the experts whose public reward profile holds a badge, by id such as first-merge. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly badge?: string
+
+    /**
+     * TokenTier keeps the experts whose token tier is at least this: 100k, 1m, 5m, 10m, 100m, 1b, 10b, 100b or 1t. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly tokenTier?: string
+
+    /**
+     * RateMin keeps the experts whose hourly rate is at least this decimal USD amount; an expert with no hourly rate is kept by neither RateMin nor RateMax. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly rateMin?: string
+
+    /**
+     * RateMax keeps the experts whose hourly rate is at most this decimal USD amount. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly rateMax?: string
+
+    /**
+     * Product orders the experts by their score in a product, best first, those with none last: dev, bot, team, base, commerce, cloud, agents, kai, enso, zen or creative. It is the order, so it is not given with Sort. With kind&#x3D;expert.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShop
+     */
+    readonly product?: string
 }
 
 /**
@@ -1921,6 +2155,27 @@ export interface MarketplaceApiPostMarketplaceListingsRequest {
 }
 
 /**
+ * Request parameters for postMarketplaceListingsByIdVerify operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiPostMarketplaceListingsByIdVerifyRequest
+ */
+export interface MarketplaceApiPostMarketplaceListingsByIdVerifyRequest {
+    /**
+     * ID is the expert listing, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiPostMarketplaceListingsByIdVerify
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {MarketplaceVerifyReq}
+     * @memberof MarketplaceApiPostMarketplaceListingsByIdVerify
+     */
+    readonly marketplaceVerifyReq: MarketplaceVerifyReq
+}
+
+/**
  * Request parameters for postMarketplaceSellerPayout operation in MarketplaceApi.
  * @export
  * @interface MarketplaceApiPostMarketplaceSellerPayoutRequest
@@ -1970,7 +2225,7 @@ export interface MarketplaceApiPostMarketplaceUninstallRequest {
  */
 export class MarketplaceApi extends BaseAPI {
     /**
-     * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes.
+     * Withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it, and a job already opened through it runs to its end. An org admin unpublishes, and an expert unpublishes their own listing.
      * @summary Withdraws one of the caller org\'s listings from the marketplace and answers 204.
      * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2017,14 +2272,15 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
-     * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy.
+     * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
+     * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
+     * @param {MarketplaceApiGetMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public getMarketplaceListings(options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).getMarketplaceListings(options).then((request) => request(this.axios, this.basePath));
+    public getMarketplaceListings(requestParameters: MarketplaceApiGetMarketplaceListingsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceListings(requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2040,7 +2296,7 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.
+     * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
      * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
      * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2048,7 +2304,7 @@ export class MarketplaceApi extends BaseAPI {
      * @memberof MarketplaceApi
      */
     public getMarketplaceShop(requestParameters: MarketplaceApiGetMarketplaceShopRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+        return MarketplaceApiFp(this.configuration).getMarketplaceShop(requestParameters.q, requestParameters.kind, requestParameters.category, requestParameters.price, requestParameters.rating, requestParameters.seller, requestParameters.area, requestParameters.limit, requestParameters.offset, requestParameters.sort, requestParameters.dir, requestParameters.language, requestParameters.verified, requestParameters.minLevel, requestParameters.badge, requestParameters.tokenTier, requestParameters.rateMin, requestParameters.rateMax, requestParameters.product, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2064,8 +2320,8 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits.
-     * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation — under the same rules publish applies, and answers the listing as it now stands.
+     * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits, and an expert edits their own listing.
+     * @summary Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands.
      * @param {MarketplaceApiPatchMarketplaceListingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2196,7 +2452,7 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+     * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
      * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
      * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2205,6 +2461,18 @@ export class MarketplaceApi extends BaseAPI {
      */
     public postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).postMarketplaceListings(requestParameters.marketplacePublishReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Marks an expert listing verified, or takes the mark away, whichever org published it. Verified is staff\'s word that the person is who the listing says and does what it says: only a SuperAdmin (an owner of the reserved admin org) gives it, never an org admin and never the expert, and each change is on the audit trail with who made it. It answers the listing as it now stands. A listing that is not an expert\'s is a 404.
+     * @summary Marks an expert listing verified, or takes the mark away, whichever org published it.
+     * @param {MarketplaceApiPostMarketplaceListingsByIdVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public postMarketplaceListingsByIdVerify(requestParameters: MarketplaceApiPostMarketplaceListingsByIdVerifyRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceListingsByIdVerify(requestParameters.id, requestParameters.marketplaceVerifyReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -108,7 +108,7 @@ export interface AffiliateAffiliateStanding {
      */
     'requestedCode'?: string;
     /**
-     * Status is \"applied\", \"approved\" or \"suspended\". Only an approved affiliate has a code that resolves for attribution and accrues commission; suspended keeps what it already earned but stops earning more.
+     * Status is \"applied\", \"approved\", \"suspended\" or \"declined\". Only an approved affiliate has a code that resolves for attribution and accrues commission; suspended keeps what it already earned but stops earning more.
      * @type {string}
      * @memberof AffiliateAffiliateStanding
      */

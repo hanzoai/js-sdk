@@ -39,7 +39,7 @@ export interface AffiliateAffiliateSelf {
      */
     'code'?: string;
     /**
-     * DefaultRateBps is the direct rate a new affiliate starts at, in basis points of margin (2000 = 20%). Answered ONLY to a caller that has not applied, as the quote beside `schedule`.
+     * DefaultRateBps is the direct rate a new affiliate starts at, in basis points of margin (1500 = 15%). Answered ONLY to a caller that has not applied, as the quote beside `schedule`.
      * @type {number}
      * @memberof AffiliateAffiliateSelf
      */
@@ -117,7 +117,7 @@ export interface AffiliateAffiliateSelf {
      */
     'schedule'?: Array<AffiliateLevelView>;
     /**
-     * Status is \"applied\", \"approved\" or \"suspended\"; absent for a caller that never applied. Only \"approved\" mints links and accrues.
+     * Status is \"applied\", \"approved\", \"suspended\" or \"declined\"; absent for a caller that never applied. Only \"approved\" mints links and accrues.
      * @type {string}
      * @memberof AffiliateAffiliateSelf
      */

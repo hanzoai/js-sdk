@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { LibraryLibraryUpload } from './library-library-upload';
 
 /**
  * 
@@ -146,6 +149,12 @@ export interface LibraryLibraryItem {
      * @memberof LibraryLibraryItem
      */
     'updated'?: string;
+    /**
+     * Upload is where a reserved item\'s bytes go, on the reservation response before it is committed.
+     * @type {LibraryLibraryUpload}
+     * @memberof LibraryLibraryItem
+     */
+    'upload'?: LibraryLibraryUpload;
     /**
      * 
      * @type {string}

@@ -26,6 +26,8 @@ import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { TaskBoardView } from '../models';
 // @ts-ignore
+import type { TaskChannelWork } from '../models';
+// @ts-ignore
 import type { TaskCommentList } from '../models';
 // @ts-ignore
 import type { TaskIssueEdit } from '../models';
@@ -37,8 +39,6 @@ import type { TaskIssueHits } from '../models';
 import type { TaskIssueView } from '../models';
 // @ts-ignore
 import type { TaskNewIssue } from '../models';
-// @ts-ignore
-import type { TaskRoomWork } from '../models';
 /**
  * TaskApi - axios parameter creator
  * @export
@@ -153,6 +153,44 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Summarises one channel\'s work.  The channel is opaque here and is deliberately not resolved: this package cannot say whether a channel exists — apps/team owns that document — so an unknown channel answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the channel list (HIP-0523 §2 forbids it, and it would drift the first time a channel was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its channel.
+         * @summary Summarises one channel\'s work.
+         * @param {string} channel Channel is the channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the channel identically. From the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTaskChannelsByChannel: async (channel: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'channel' is not null or undefined
+            assertParamExists('getTaskChannelsByChannel', 'channel', channel)
+            const localVarPath = `/v1/task/channels/{channel}`
+                .replace(`{${"channel"}}`, encodeURIComponent(String(channel)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
          * @summary Answers across every project in the org.
          * @param {string} [q] Q matches an issue\&#39;s title or description. A word from the issue, which is what someone remembers — not its number, which is what they are looking up.
@@ -160,14 +198,14 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
-         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+         * @param {string} [channel] Channel keeps issues bound to one collaboration channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the channel the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTaskIssues: async (q?: string, project?: string, status?: string, kind?: string, repo?: string, room?: string, source?: string, assignee?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTaskIssues: async (q?: string, project?: string, status?: string, kind?: string, repo?: string, channel?: string, source?: string, assignee?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/task/issues`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -204,8 +242,8 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['repo'] = repo;
             }
 
-            if (room !== undefined) {
-                localVarQueryParameter['room'] = room;
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
             }
 
             if (source !== undefined) {
@@ -456,44 +494,6 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
-         * @summary Summarises one room\'s work.
-         * @param {string} room Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTaskRoomsByRoom: async (room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'room' is not null or undefined
-            assertParamExists('getTaskRoomsByRoom', 'room', room)
-            const localVarPath = `/v1/task/rooms/{room}`
-                .replace(`{${"room"}}`, encodeURIComponent(String(room)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Answers 405. A task board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
@@ -614,7 +614,7 @@ export const TaskApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers the card with the issue\'s address as `url`.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
+         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers 201 with the card: its `number`, its `id`, and the issue\'s address as `url`. A create that cannot say what it made answers 502, never an empty 2xx.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
          * @summary Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all.
          * @param {string} key Key is the board — the repository name, from the path. &#x60;owner/name&#x60;, or &#x60;github.com/owner/name&#x60;, names a repository on GitHub that no board on the forge stands for.
          * @param {TaskNewIssue} taskNewIssue 
@@ -742,6 +742,19 @@ export const TaskApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Summarises one channel\'s work.  The channel is opaque here and is deliberately not resolved: this package cannot say whether a channel exists — apps/team owns that document — so an unknown channel answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the channel list (HIP-0523 §2 forbids it, and it would drift the first time a channel was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its channel.
+         * @summary Summarises one channel\'s work.
+         * @param {string} channel Channel is the channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the channel identically. From the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTaskChannelsByChannel(channel: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskChannelWork>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTaskChannelsByChannel(channel, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TaskApi.getTaskChannelsByChannel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
          * @summary Answers across every project in the org.
          * @param {string} [q] Q matches an issue\&#39;s title or description. A word from the issue, which is what someone remembers — not its number, which is what they are looking up.
@@ -749,15 +762,15 @@ export const TaskApiFp = function(configuration?: Configuration) {
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
-         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+         * @param {string} [channel] Channel keeps issues bound to one collaboration channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the channel the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTaskIssues(q?: string, project?: string, status?: string, kind?: string, repo?: string, room?: string, source?: string, assignee?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskIssueHits>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTaskIssues(q, project, status, kind, repo, room, source, assignee, limit, options);
+        async getTaskIssues(q?: string, project?: string, status?: string, kind?: string, repo?: string, channel?: string, source?: string, assignee?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskIssueHits>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTaskIssues(q, project, status, kind, repo, channel, source, assignee, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaskApi.getTaskIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -835,19 +848,6 @@ export const TaskApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
-         * @summary Summarises one room\'s work.
-         * @param {string} room Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTaskRoomsByRoom(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskRoomWork>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTaskRoomsByRoom(room, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TaskApi.getTaskRoomsByRoom']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Answers 405. A task board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
@@ -888,7 +888,7 @@ export const TaskApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers the card with the issue\'s address as `url`.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
+         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers 201 with the card: its `number`, its `id`, and the issue\'s address as `url`. A create that cannot say what it made answers 502, never an empty 2xx.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
          * @summary Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all.
          * @param {string} key Key is the board — the repository name, from the path. &#x60;owner/name&#x60;, or &#x60;github.com/owner/name&#x60;, names a repository on GitHub that no board on the forge stands for.
          * @param {TaskNewIssue} taskNewIssue 
@@ -946,6 +946,16 @@ export const TaskApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTaskBoard(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.label, requestParameters.source, requestParameters.scheduled, options).then((request) => request(axios, basePath));
         },
         /**
+         * Summarises one channel\'s work.  The channel is opaque here and is deliberately not resolved: this package cannot say whether a channel exists — apps/team owns that document — so an unknown channel answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the channel list (HIP-0523 §2 forbids it, and it would drift the first time a channel was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its channel.
+         * @summary Summarises one channel\'s work.
+         * @param {TaskApiGetTaskChannelsByChannelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTaskChannelsByChannel(requestParameters: TaskApiGetTaskChannelsByChannelRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaskChannelWork> {
+            return localVarFp.getTaskChannelsByChannel(requestParameters.channel, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
          * @summary Answers across every project in the org.
          * @param {TaskApiGetTaskIssuesRequest} requestParameters Request parameters.
@@ -953,7 +963,7 @@ export const TaskApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         getTaskIssues(requestParameters: TaskApiGetTaskIssuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TaskIssueHits> {
-            return localVarFp.getTaskIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.room, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getTaskIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.channel, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the boards of your org — the places your work actually is. The key addresses the board\'s issues.  A BOARD IS A PLACE WORK IS, not an object somebody provisioned. So the list is assembled from the work itself: the repositories your org has filed issues on, plus the boards the index holds. A repository with nothing on it is not in the list and is still perfectly addressable — GET /projects/<name> reads it and a create files into it — so nothing is lost by leaving it out.  Measured, which is why: reading the forge\'s whole repository inventory put 745 boards here, of which all but a handful were vendored forks and mirrors (.github, .profile, DOMPurify, BoatAttack) that will never carry this org\'s work. A list that long is not a list — the estate\'s real roadmap was in it somewhere and no one could see it.  The forge half is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
@@ -1005,16 +1015,6 @@ export const TaskApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTaskProjectsByKeyIssuesByNumComments(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
         },
         /**
-         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
-         * @summary Summarises one room\'s work.
-         * @param {TaskApiGetTaskRoomsByRoomRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTaskRoomsByRoom(requestParameters: TaskApiGetTaskRoomsByRoomRequest, options?: RawAxiosRequestConfig): AxiosPromise<TaskRoomWork> {
-            return localVarFp.getTaskRoomsByRoom(requestParameters.room, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Answers 405. A task board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {TaskApiPatchTaskProjectsByKeyRequest} requestParameters Request parameters.
@@ -1044,7 +1044,7 @@ export const TaskApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postTaskProjects(options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers the card with the issue\'s address as `url`.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
+         * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers 201 with the card: its `number`, its `id`, and the issue\'s address as `url`. A create that cannot say what it made answers 502, never an empty 2xx.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
          * @summary Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all.
          * @param {TaskApiPostTaskProjectsByKeyIssuesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1137,6 +1137,20 @@ export interface TaskApiGetTaskBoardRequest {
 }
 
 /**
+ * Request parameters for getTaskChannelsByChannel operation in TaskApi.
+ * @export
+ * @interface TaskApiGetTaskChannelsByChannelRequest
+ */
+export interface TaskApiGetTaskChannelsByChannelRequest {
+    /**
+     * Channel is the channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the channel identically. From the path.
+     * @type {string}
+     * @memberof TaskApiGetTaskChannelsByChannel
+     */
+    readonly channel: string
+}
+
+/**
  * Request parameters for getTaskIssues operation in TaskApi.
  * @export
  * @interface TaskApiGetTaskIssuesRequest
@@ -1178,11 +1192,11 @@ export interface TaskApiGetTaskIssuesRequest {
     readonly repo?: string
 
     /**
-     * Room keeps issues bound to one collaboration room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+     * Channel keeps issues bound to one collaboration channel, spelled \&quot;&lt;space&gt;_&lt;channel&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its task list name the channel the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
      * @type {string}
      * @memberof TaskApiGetTaskIssues
      */
-    readonly room?: string
+    readonly channel?: string
 
     /**
      * Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
@@ -1319,20 +1333,6 @@ export interface TaskApiGetTaskProjectsByKeyIssuesByNumCommentsRequest {
 }
 
 /**
- * Request parameters for getTaskRoomsByRoom operation in TaskApi.
- * @export
- * @interface TaskApiGetTaskRoomsByRoomRequest
- */
-export interface TaskApiGetTaskRoomsByRoomRequest {
-    /**
-     * Room is the room, spelled \&quot;&lt;space&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
-     * @type {string}
-     * @memberof TaskApiGetTaskRoomsByRoom
-     */
-    readonly room: string
-}
-
-/**
  * Request parameters for patchTaskProjectsByKey operation in TaskApi.
  * @export
  * @interface TaskApiPatchTaskProjectsByKeyRequest
@@ -1448,6 +1448,18 @@ export class TaskApi extends BaseAPI {
     }
 
     /**
+     * Summarises one channel\'s work.  The channel is opaque here and is deliberately not resolved: this package cannot say whether a channel exists — apps/team owns that document — so an unknown channel answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the channel list (HIP-0523 §2 forbids it, and it would drift the first time a channel was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its channel.
+     * @summary Summarises one channel\'s work.
+     * @param {TaskApiGetTaskChannelsByChannelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TaskApi
+     */
+    public getTaskChannelsByChannel(requestParameters: TaskApiGetTaskChannelsByChannelRequest, options?: RawAxiosRequestConfig) {
+        return TaskApiFp(this.configuration).getTaskChannelsByChannel(requestParameters.channel, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
      * @summary Answers across every project in the org.
      * @param {TaskApiGetTaskIssuesRequest} requestParameters Request parameters.
@@ -1456,7 +1468,7 @@ export class TaskApi extends BaseAPI {
      * @memberof TaskApi
      */
     public getTaskIssues(requestParameters: TaskApiGetTaskIssuesRequest = {}, options?: RawAxiosRequestConfig) {
-        return TaskApiFp(this.configuration).getTaskIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.room, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return TaskApiFp(this.configuration).getTaskIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.channel, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1519,18 +1531,6 @@ export class TaskApi extends BaseAPI {
     }
 
     /**
-     * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
-     * @summary Summarises one room\'s work.
-     * @param {TaskApiGetTaskRoomsByRoomRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TaskApi
-     */
-    public getTaskRoomsByRoom(requestParameters: TaskApiGetTaskRoomsByRoomRequest, options?: RawAxiosRequestConfig) {
-        return TaskApiFp(this.configuration).getTaskRoomsByRoom(requestParameters.room, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Answers 405. A task board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
      * @summary Refused — a board is a repository on the forge
      * @param {TaskApiPatchTaskProjectsByKeyRequest} requestParameters Request parameters.
@@ -1566,7 +1566,7 @@ export class TaskApi extends BaseAPI {
     }
 
     /**
-     * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers the card with the issue\'s address as `url`.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
+     * Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all. Answers 201 with the card: its `number`, its `id`, and the issue\'s address as `url`. A create that cannot say what it made answers 502, never an empty 2xx.  The column and priority are written as LABELS, which is what makes the card and the issue the same object: someone relabelling in the web UI has moved your card.  Asked for in a chat thread, the issue is bound to that thread, and what happens to it on GitHub is said there.
      * @summary Opens a work item on the board, filed as YOU, where the repository lives: an issue on the deployment\'s forge, or on GitHub for a repository the forge mirrors from there or does not hold at all.
      * @param {TaskApiPostTaskProjectsByKeyIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

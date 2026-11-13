@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { GitRunJob } from './git-run-job';
 
 /**
  * 
@@ -27,6 +30,12 @@ export interface GitWorkflowRun {
      */
     'actor'?: string;
     /**
+     * Attempt counts the forge\'s re-runs of this run, from 1.
+     * @type {number}
+     * @memberof GitWorkflowRun
+     */
+    'attempt'?: number;
+    /**
      * Commit is the commit being run, in full.
      * @type {string}
      * @memberof GitWorkflowRun
@@ -39,6 +48,12 @@ export interface GitWorkflowRun {
      */
     'createdAt'?: number;
     /**
+     * EndedAt is when it finished, RFC 3339; absent until it has.
+     * @type {string}
+     * @memberof GitWorkflowRun
+     */
+    'endedAt'?: string;
+    /**
      * Event is what caused the run, e.g. \"push\".
      * @type {string}
      * @memberof GitWorkflowRun
@@ -50,6 +65,12 @@ export interface GitWorkflowRun {
      * @memberof GitWorkflowRun
      */
     'id'?: string;
+    /**
+     * Jobs are the run\'s jobs in the order they were created, with their steps: answered by `runs get`, and by `runs list` when a ref names one commit.
+     * @type {Array<GitRunJob>}
+     * @memberof GitWorkflowRun
+     */
+    'jobs'?: Array<GitRunJob>;
     /**
      * Number is the run\'s position in its repository, counting from 1 — the handle a person uses (\"#4\").
      * @type {number}
@@ -69,17 +90,35 @@ export interface GitWorkflowRun {
      */
     'repo'?: string;
     /**
-     * Status is waiting, running, success, failure, cancelled or skipped.
+     * StartedAt is when it started executing, RFC 3339; absent until it has.
+     * @type {string}
+     * @memberof GitWorkflowRun
+     */
+    'startedAt'?: string;
+    /**
+     * Status is waiting, running, success, failure, cancelled or skipped: waiting until a runner takes it (or, on the forge, while a job it needs is still going), running while it executes, and then how it ended.
      * @type {string}
      * @memberof GitWorkflowRun
      */
     'status'?: string;
+    /**
+     * Title is the run\'s display title on the forge, usually its commit\'s subject.
+     * @type {string}
+     * @memberof GitWorkflowRun
+     */
+    'title'?: string;
     /**
      * UpdatedAt is when its status last changed, in unix seconds.
      * @type {number}
      * @memberof GitWorkflowRun
      */
     'updatedAt'?: number;
+    /**
+     * URL is the run\'s page on the forge.
+     * @type {string}
+     * @memberof GitWorkflowRun
+     */
+    'url'?: string;
     /**
      * Workflow is the path of the document being run, e.g. \".hanzo/workflows/ci.yml\".
      * @type {string}

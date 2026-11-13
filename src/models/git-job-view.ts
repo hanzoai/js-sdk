@@ -27,7 +27,13 @@ export interface GitJobView {
      */
     'name'?: string;
     /**
-     * Pool is the declared pool carrying every one of those labels, or empty when no pool does — which is the answer to \"why is nothing running\".
+     * Needs are the jobs this one waits for.
+     * @type {Array<string>}
+     * @memberof GitJobView
+     */
+    'needs'?: Array<string>;
+    /**
+     * Pool is where the job would run. Here it is the declared pool carrying every one of those labels, or empty when no pool does — which is the answer to \"why is nothing running\". On the forge it is the label set, sorted and joined by \"+\", that the platform starts a runner for when the job queues, and empty when no node in the cluster can run it (macOS, Windows) or the job asks for nothing.
      * @type {string}
      * @memberof GitJobView
      */
@@ -38,5 +44,11 @@ export interface GitJobView {
      * @memberof GitJobView
      */
     'runsOn'?: Array<string>;
+    /**
+     * Uses is the reusable workflow the job calls instead of running steps of its own, such as hanzoai/ci/.github/workflows/build.yml@v2.1.21; its jobs run where that workflow says.
+     * @type {string}
+     * @memberof GitJobView
+     */
+    'uses'?: string;
 }
 

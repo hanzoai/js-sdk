@@ -27,6 +27,12 @@ export interface AgentCodingStarted {
      */
     'branch'?: string;
     /**
+     * Pull is the CLI command or instruction to pull this run locally, e.g. `hanzo pull <sessionId>`.
+     * @type {string}
+     * @memberof AgentCodingStarted
+     */
+    'pull'?: string;
+    /**
      * Repo is the repository the run was admitted against, echoed back as the engine resolved it.
      * @type {string}
      * @memberof AgentCodingStarted

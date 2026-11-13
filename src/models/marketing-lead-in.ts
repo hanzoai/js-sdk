@@ -123,13 +123,19 @@ export interface MarketingLeadIn {
      */
     'need'?: string;
     /**
+     * Payment is how an order the form files would be paid: \"card\" or \"invoice\" (a bank transfer against an invoice sales sends). Empty is none; anything else is 400. An Enterprise inquiry asking to pay by invoice is stated on the event plane as invoice_requested beside its generate_lead.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'payment'?: string;
+    /**
      * Phone is an investor\'s phone number: 3 to 20 digits, an optional leading +, and any spaces, dots, dashes or brackets between them. Optional.
      * @type {string}
      * @memberof MarketingLeadIn
      */
     'phone'?: string;
     /**
-     * Program is the program the person applies to: beta, research or partner. Any other value is recorded as none. An application is mailed a code for 50% off the first three months, once per address (offer.go). Optional. \"investor\" is an investor\'s subscription (investor.go): it is mailed no code, it is sent a SAFE, and Name, Amount and Address are required.
+     * Program is the program the person applies to: beta, research or partner. Any other value is recorded as none. An application is mailed a code for 50% off the first three months, once per address (offer.go). Optional. \"enterprise\" is a sales inquiry about the Enterprise plan: recorded as the lead\'s program, offered the intro call as every inquiry is, and mailed no code. \"investor\" is an investor\'s subscription (investor.go): it is mailed no code, it is sent a SAFE, and Name, Amount and Address are required.
      * @type {string}
      * @memberof MarketingLeadIn
      */
@@ -170,6 +176,12 @@ export interface MarketingLeadIn {
      * @memberof MarketingLeadIn
      */
     'title'?: string;
+    /**
+     * Upgrade is the handle of the organization an order upgrades. It is filed only for a person signed in, acting in that organization (X-Org-Id) as its owner or an admin, which the identity boundary attests from the token; any other caller naming one is 403. Empty is a new organization, or none.
+     * @type {string}
+     * @memberof MarketingLeadIn
+     */
+    'upgrade'?: string;
     /**
      * Visit is what the visitor\'s page knows about the ad click that brought them and the consent they gave, so the lead reaches the ad platforms matched to the click and under the visitor\'s own choice. Optional.
      * @type {MarketingVisit}

@@ -21,6 +21,12 @@
  */
 export interface MarketingCampaign {
     /**
+     * Audience is who the campaign reaches: a saved cohort (aud_…), a mailing list (lst_…) or a saved segment of one (seg_…), as GET /v1/marketing/audiences lists them. Empty is none named; one the org does not have is refused.
+     * @type {string}
+     * @memberof MarketingCampaign
+     */
+    'audience'?: string;
+    /**
      * Budget is what the campaign is allowed to cost, in USD cents. A negative value is clamped to 0; nothing enforces the ceiling here.
      * @type {number}
      * @memberof MarketingCampaign

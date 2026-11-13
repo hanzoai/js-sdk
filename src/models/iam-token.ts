@@ -93,6 +93,12 @@ export interface IamToken {
      */
     'deleted'?: boolean;
     /**
+     * Denied records that the person a device authorization (UserCode set) was shown to refused it. The device\'s next poll is told access_denied once and the code is burned (device.go); until then it cannot be approved.
+     * @type {boolean}
+     * @memberof IamToken
+     */
+    'denied'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof IamToken
@@ -104,6 +110,12 @@ export interface IamToken {
      * @memberof IamToken
      */
     'id'?: string;
+    /**
+     * LoginHint is the address an agent registration (internal/oidc agent.go) named as the person it acts for, normalized. Only the account whose VERIFIED email is this address may approve the registration; empty on every other row.
+     * @type {string}
+     * @memberof IamToken
+     */
+    'loginHint'?: string;
     /**
      * 
      * @type {string}
@@ -128,6 +140,12 @@ export interface IamToken {
      * @memberof IamToken
      */
     'owner'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamToken
+     */
+    'polled'?: number;
     /**
      * PublicGrant records that this grant was established WITHOUT client authentication — a PKCE code exchange from a client that presented no secret. Whether a client is confidential is a property of the GRANT, not only of the registration: `hanzo-cli` and every @hanzo/iam SPA keep a registered secret for a BACKEND path while the surface that actually signs in is a public PKCE client that cannot hold one. authorizationCodeGrant already makes exactly that bounded relaxation; this is the same fact, recorded so refreshTokenGrant can honour it instead of demanding a secret the client never had (which 401s invalid_client and kills the session at the access token\'s expiry). Carried across rotation, so the second refresh behaves like the first.
      * @type {boolean}
@@ -176,6 +194,24 @@ export interface IamToken {
      * @memberof IamToken
      */
     'refreshTokenHash'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamToken
+     */
+    'requestCountry'?: string;
+    /**
+     * Where and when a device authorization was STARTED, shown to the person asked to approve it: the device is the requester\'s, not theirs, and the one thing a stranger\'s request cannot hide is that it comes from somewhere else. RequestIp is the address the edge saw connect, RequestCountry the edge\'s two-letter answer for it, Requested the unix second. Polled is the last poll in unix milliseconds, which is what the interval of RFC 8628 §3.5 is held to.
+     * @type {string}
+     * @memberof IamToken
+     */
+    'requestIp'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamToken
+     */
+    'requested'?: number;
     /**
      * RFC 8707 resource indicator
      * @type {string}

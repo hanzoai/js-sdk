@@ -116,8 +116,8 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day. It is the canonical catalog for every caller — these plans carry no reseller overrides.
-         * @summary ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day.
+         * ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day. They are the plan authority\'s rows of the dns category, the same for every caller. Answers 503 while the authority has never been read.
+         * @summary ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -150,9 +150,9 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
+         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same rows and the same 404 for an id none holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+         * @param {string} id ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -324,9 +324,9 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
+         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id is a plan\'s slug, or a slug the plan replaces: a plan the plan authority holds a row for, whatever its status (an archived plan still resolves for a renewal), or a cloud VM plan. An id neither holds answers 404, and 503 while the authority has never been read.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+         * @param {string} id ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -430,8 +430,8 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference. Scoped to the caller\'s catalog.
-         * @summary Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference.
+         * Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference. The plans are the plan authority\'s rows, the ones a card is charged from: an edit made at admin.hanzo.ai is published here within seconds. Answers 503 while the authority has never been read.
+         * @summary Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -566,8 +566,8 @@ export const PlanApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day. It is the canonical catalog for every caller — these plans carry no reseller overrides.
-         * @summary ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day.
+         * ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day. They are the plan authority\'s rows of the dns category, the same for every caller. Answers 503 while the authority has never been read.
+         * @summary ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -578,9 +578,9 @@ export const PlanApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
+         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same rows and the same 404 for an id none holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+         * @param {string} id ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -639,9 +639,9 @@ export const PlanApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
+         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id is a plan\'s slug, or a slug the plan replaces: a plan the plan authority holds a row for, whatever its status (an archived plan still resolves for a renewal), or a cloud VM plan. An id neither holds answers 404, and 503 while the authority has never been read.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+         * @param {string} id ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -676,8 +676,8 @@ export const PlanApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference. Scoped to the caller\'s catalog.
-         * @summary Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference.
+         * Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference. The plans are the plan authority\'s rows, the ones a card is charged from: an edit made at admin.hanzo.ai is published here within seconds. Answers 503 while the authority has never been read.
+         * @summary Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -740,8 +740,8 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getPlanBlockchain(options).then((request) => request(axios, basePath));
         },
         /**
-         * ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day. It is the canonical catalog for every caller — these plans carry no reseller overrides.
-         * @summary ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day.
+         * ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day. They are the plan authority\'s rows of the dns category, the same for every caller. Answers 503 while the authority has never been read.
+         * @summary ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -749,7 +749,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getPlanDns(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
+         * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same rows and the same 404 for an id none holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
          * @param {PlanApiGetPlanEntitlementsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -795,7 +795,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getPlanRegions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
+         * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id is a plan\'s slug, or a slug the plan replaces: a plan the plan authority holds a row for, whatever its status (an archived plan still resolves for a renewal), or a cloud VM plan. An id neither holds answers 404, and 503 while the authority has never been read.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
          * @param {PlanApiGetPlanResolveByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -823,8 +823,8 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getPlanStorage(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference. Scoped to the caller\'s catalog.
-         * @summary Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference.
+         * Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference. The plans are the plan authority\'s rows, the ones a card is charged from: an edit made at admin.hanzo.ai is published here within seconds. Answers 503 while the authority has never been read.
+         * @summary Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -859,7 +859,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface PlanApiGetPlanEntitlementsByIdRequest {
     /**
-     * ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+     * ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
      * @type {string}
      * @memberof PlanApiGetPlanEntitlementsById
      */
@@ -873,7 +873,7 @@ export interface PlanApiGetPlanEntitlementsByIdRequest {
  */
 export interface PlanApiGetPlanResolveByIdRequest {
     /**
-     * ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
+     * ID is the plan\&#39;s slug in the plan authority (\&quot;go\&quot;, \&quot;team\&quot;), a slug that plan replaces, or a cloud VM plan\&#39;s id. An archived plan still resolves for a renewal, which is why this takes an id rather than a ladder position.
      * @type {string}
      * @memberof PlanApiGetPlanResolveById
      */
@@ -910,8 +910,8 @@ export class PlanApi extends BaseAPI {
     }
 
     /**
-     * ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day. It is the canonical catalog for every caller — these plans carry no reseller overrides.
-     * @summary ListDNSPlans returns the DNS plan catalog: the tiers priced on zones, records per zone and queries per day.
+     * ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day. They are the plan authority\'s rows of the dns category, the same for every caller. Answers 503 while the authority has never been read.
+     * @summary ListDNSPlans returns the DNS plans on sale: the tiers priced on zones, records per zone and queries per day.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlanApi
@@ -921,7 +921,7 @@ export class PlanApi extends BaseAPI {
     }
 
     /**
-     * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
+     * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same rows and the same 404 for an id none holds — the read a licensing or quota gate makes.
      * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
      * @param {PlanApiGetPlanEntitlementsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -977,7 +977,7 @@ export class PlanApi extends BaseAPI {
     }
 
     /**
-     * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
+     * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id is a plan\'s slug, or a slug the plan replaces: a plan the plan authority holds a row for, whatever its status (an archived plan still resolves for a renewal), or a cloud VM plan. An id neither holds answers 404, and 503 while the authority has never been read.
      * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
      * @param {PlanApiGetPlanResolveByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1011,8 +1011,8 @@ export class PlanApi extends BaseAPI {
     }
 
     /**
-     * Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference. Scoped to the caller\'s catalog.
-     * @summary Returns the subscription ladder — the personal and team tiers a customer buys to use the cloud, each with its monthly and annual price, seat rules, limits and billing reference.
+     * Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference. The plans are the plan authority\'s rows, the ones a card is charged from: an edit made at admin.hanzo.ai is published here within seconds. Answers 503 while the authority has never been read.
+     * @summary Returns the plans a customer subscribes to that are on sale — each with its monthly and annual price, seat rules, limits, the entitlement block it grants and its billing reference.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlanApi

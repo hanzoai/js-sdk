@@ -48,6 +48,12 @@ export interface AiClass {
      */
     'state'?: string;
     /**
+     * Unbounded says the plan includes all of this class\'s use: there is no share to use up, and Percent is 0.
+     * @type {boolean}
+     * @memberof AiClass
+     */
+    'unbounded'?: boolean;
+    /**
      * 
      * @type {AiWindow}
      * @memberof AiClass

@@ -51,6 +51,12 @@ export interface IamRegistration {
      */
     'enableCodeSignin'?: boolean;
     /**
+     * EnableSignUp opens the application to self-service registration (password, email code, OAuth federation, wallet) and identifier-first address lookup. A POINTER so a reconcile that omits it preserves the stored setting.
+     * @type {boolean}
+     * @memberof IamRegistration
+     */
+    'enableSignUp'?: boolean;
+    /**
      * ExpireInHours and RefreshExpireInHours are the application\'s token lifetimes. They are the ONLY declarative way to say that a refresh token must OUTLIVE its access token: with neither stated, oidc.refreshTTL clamps the refresh lifetime to the access lifetime, so the refresh_token grant the registration advertises expires at the same instant as the token it was meant to renew and can never be exercised. `hanzo-cli` sat in exactly that state — a browser re-login every hour, and a live refresh returning 401.  POINTERS, for the same reason as IsShared: a plain float would read as 0 on every reconcile that says nothing and reset a deliberate lifetime back to the default. Nil means \"not stated, leave it\".
      * @type {number}
      * @memberof IamRegistration
@@ -98,5 +104,11 @@ export interface IamRegistration {
      * @memberof IamRegistration
      */
     'refreshExpireInHours'?: number;
+    /**
+     * SigninUrl is where this application\'s people sign in, when that is not the issuer: the origin of the page IAM sends them to for the approval of a device sign-in, and the hosted login of an authorize request. An absolute https URL, or \"\" to say the issuer. A POINTER so a reconcile that omits it preserves what the application has. IAM prints it only for an origin the operator configured as a sign-in origin of the issuer (oidc verificationOrigin).
+     * @type {string}
+     * @memberof IamRegistration
+     */
+    'signinUrl'?: string;
 }
 

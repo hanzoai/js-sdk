@@ -27,6 +27,18 @@ export interface AgentAgentView {
      */
     'avatar'?: string;
     /**
+     * AvatarLicence is the short name of the licence the avatar image is used under (\"Public domain\", \"CC0\"). Present only with an avatar image.
+     * @type {string}
+     * @memberof AgentAgentView
+     */
+    'avatar_licence'?: string;
+    /**
+     * AvatarSource is the page the avatar image is described on, where its author and licence can be read (a Wikimedia Commons file page, say). Present only with an avatar image.
+     * @type {string}
+     * @memberof AgentAgentView
+     */
+    'avatar_source'?: string;
+    /**
      * CapMicroUSD is the total this agent may spend within one Period, as an integer number of micro-USD (1,000,000 = $1). It is required at creation: a cap of zero would mean no limit and no per-agent spend record at all.
      * @type {number}
      * @memberof AgentAgentView
@@ -129,7 +141,7 @@ export interface AgentAgentView {
      */
     'serviceAccountId'?: string;
     /**
-     * Status is the agent\'s readiness, and today it is \"ready\" on every row: an agent is a definition rather than a provisioned thing, so nothing transitions it. Server-set at create; no route accepts it.
+     * Status is the agent\'s readiness: \"ready\", or \"retired\" for a built-in whose member has left Hanzo\'s team. A retired agent is left out of the list and still answers a get by its handle. Server-set; no route accepts it.
      * @type {string}
      * @memberof AgentAgentView
      */

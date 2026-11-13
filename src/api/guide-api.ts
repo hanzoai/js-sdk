@@ -32,13 +32,25 @@ import type { GuideChatResponse } from '../models';
 // @ts-ignore
 import type { GuideCorpusView } from '../models';
 // @ts-ignore
+import type { GuideCreateVentureIn } from '../models';
+// @ts-ignore
 import type { GuideCurriculumView } from '../models';
 // @ts-ignore
 import type { GuideOverviewView } from '../models';
 // @ts-ignore
+import type { GuidePortfolioView } from '../models';
+// @ts-ignore
 import type { GuideProfileResponse } from '../models';
 // @ts-ignore
 import type { GuideSuggestResponse } from '../models';
+// @ts-ignore
+import type { GuideVentureLifecycleIn } from '../models';
+// @ts-ignore
+import type { GuideVentureLifecycleOut } from '../models';
+// @ts-ignore
+import type { GuideVentureList } from '../models';
+// @ts-ignore
+import type { GuideVentureRecord } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
@@ -218,6 +230,40 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @summary Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuidePortfolio: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/guide/portfolio`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
          * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
@@ -308,6 +354,78 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          */
         getGuideSuggest: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/suggest`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @summary Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuideVentures: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/guide/ventures`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @summary Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @param {string} slug Slug is the venture\&#39;s unique handle in the studio portfolio, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuideVenturesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('getGuideVenturesBySlug', 'slug', slug)
+            const localVarPath = `/v1/guide/ventures/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -565,6 +683,90 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture). Repeated or interrupted calls with the same slug resume idempotently without duplicating the venture, its team checkpoint, or its initial budget.
+         * @summary Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture).
+         * @param {GuideCreateVentureIn} guideCreateVentureIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGuideVentures: async (guideCreateVentureIn: GuideCreateVentureIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'guideCreateVentureIn' is not null or undefined
+            assertParamExists('postGuideVentures', 'guideCreateVentureIn', guideCreateVentureIn)
+            const localVarPath = `/v1/guide/ventures`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(guideCreateVentureIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @summary Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @param {string} slug Slug is the venture handle from the URL path.
+         * @param {GuideVentureLifecycleIn} guideVentureLifecycleIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGuideVenturesBySlugLifecycle: async (slug: string, guideVentureLifecycleIn: GuideVentureLifecycleIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('postGuideVenturesBySlugLifecycle', 'slug', slug)
+            // verify required parameter 'guideVentureLifecycleIn' is not null or undefined
+            assertParamExists('postGuideVenturesBySlugLifecycle', 'guideVentureLifecycleIn', guideVentureLifecycleIn)
+            const localVarPath = `/v1/guide/ventures/{slug}/lifecycle`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(guideVentureLifecycleIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
@@ -669,6 +871,18 @@ export const GuideApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @summary Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGuidePortfolio(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuidePortfolioView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuidePortfolio(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuidePortfolio']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
          * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
@@ -705,6 +919,31 @@ export const GuideApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideSuggest(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideSuggest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @summary Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGuideVentures(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideVentureList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideVentures(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideVentures']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @summary Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @param {string} slug Slug is the venture\&#39;s unique handle in the studio portfolio, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGuideVenturesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideVentureRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideVenturesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideVenturesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -786,6 +1025,33 @@ export const GuideApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture). Repeated or interrupted calls with the same slug resume idempotently without duplicating the venture, its team checkpoint, or its initial budget.
+         * @summary Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture).
+         * @param {GuideCreateVentureIn} guideCreateVentureIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGuideVentures(guideCreateVentureIn: GuideCreateVentureIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideVentureRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideVentures(guideCreateVentureIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideVentures']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @summary Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @param {string} slug Slug is the venture handle from the URL path.
+         * @param {GuideVentureLifecycleIn} guideVentureLifecycleIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGuideVenturesBySlugLifecycle(slug: string, guideVentureLifecycleIn: GuideVentureLifecycleIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuideVentureLifecycleOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideVenturesBySlugLifecycle(slug, guideVentureLifecycleIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideVenturesBySlugLifecycle']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
@@ -853,6 +1119,15 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getGuideCurriculum(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @summary Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuidePortfolio(options?: RawAxiosRequestConfig): AxiosPromise<GuidePortfolioView> {
+            return localVarFp.getGuidePortfolio(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
          * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
          * @param {*} [options] Override http request option.
@@ -879,6 +1154,25 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          */
         getGuideSuggest(options?: RawAxiosRequestConfig): AxiosPromise<GuideSuggestResponse> {
             return localVarFp.getGuideSuggest(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @summary Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuideVentures(options?: RawAxiosRequestConfig): AxiosPromise<GuideVentureList> {
+            return localVarFp.getGuideVentures(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @summary Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+         * @param {GuideApiGetGuideVenturesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGuideVenturesBySlug(requestParameters: GuideApiGetGuideVenturesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideVentureRecord> {
+            return localVarFp.getGuideVenturesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
@@ -941,6 +1235,26 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture). Repeated or interrupted calls with the same slug resume idempotently without duplicating the venture, its team checkpoint, or its initial budget.
+         * @summary Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture).
+         * @param {GuideApiPostGuideVenturesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGuideVentures(requestParameters: GuideApiPostGuideVenturesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideVentureRecord> {
+            return localVarFp.postGuideVentures(requestParameters.guideCreateVentureIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @summary Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+         * @param {GuideApiPostGuideVenturesBySlugLifecycleRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGuideVenturesBySlugLifecycle(requestParameters: GuideApiPostGuideVenturesBySlugLifecycleRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuideVentureLifecycleOut> {
+            return localVarFp.postGuideVenturesBySlugLifecycle(requestParameters.slug, requestParameters.guideVentureLifecycleIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org: 401 without a principal, 403 without an org. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
          * @summary Replace your org\'s journey with a curriculum you author
          * @param {*} [options] Override http request option.
@@ -978,6 +1292,20 @@ export interface GuideApiGetGuideStrategiesRequest {
      * @memberof GuideApiGetGuideStrategies
      */
     readonly workload?: string
+}
+
+/**
+ * Request parameters for getGuideVenturesBySlug operation in GuideApi.
+ * @export
+ * @interface GuideApiGetGuideVenturesBySlugRequest
+ */
+export interface GuideApiGetGuideVenturesBySlugRequest {
+    /**
+     * Slug is the venture\&#39;s unique handle in the studio portfolio, from the path.
+     * @type {string}
+     * @memberof GuideApiGetGuideVenturesBySlug
+     */
+    readonly slug: string
 }
 
 /**
@@ -1065,6 +1393,41 @@ export interface GuideApiPostGuideStepsByIdStartRequest {
 }
 
 /**
+ * Request parameters for postGuideVentures operation in GuideApi.
+ * @export
+ * @interface GuideApiPostGuideVenturesRequest
+ */
+export interface GuideApiPostGuideVenturesRequest {
+    /**
+     * 
+     * @type {GuideCreateVentureIn}
+     * @memberof GuideApiPostGuideVentures
+     */
+    readonly guideCreateVentureIn: GuideCreateVentureIn
+}
+
+/**
+ * Request parameters for postGuideVenturesBySlugLifecycle operation in GuideApi.
+ * @export
+ * @interface GuideApiPostGuideVenturesBySlugLifecycleRequest
+ */
+export interface GuideApiPostGuideVenturesBySlugLifecycleRequest {
+    /**
+     * Slug is the venture handle from the URL path.
+     * @type {string}
+     * @memberof GuideApiPostGuideVenturesBySlugLifecycle
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {GuideVentureLifecycleIn}
+     * @memberof GuideApiPostGuideVenturesBySlugLifecycle
+     */
+    readonly guideVentureLifecycleIn: GuideVentureLifecycleIn
+}
+
+/**
  * GuideApi - object-oriented interface
  * @export
  * @class GuideApi
@@ -1127,6 +1490,17 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
+     * Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+     * @summary Returns the studio\'s portfolio operations rollup: stage, status, checklist progress, decisions waiting on people, latest evidence, failed runs, and spend for every venture operated by the studio organization.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public getGuidePortfolio(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuidePortfolio(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
      * @summary Returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics.
      * @param {*} [options] Override http request option.
@@ -1158,6 +1532,29 @@ export class GuideApi extends BaseAPI {
      */
     public getGuideSuggest(options?: RawAxiosRequestConfig) {
         return GuideApiFp(this.configuration).getGuideSuggest(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+     * @summary Returns every venture in the caller studio organization\'s portfolio that the caller is authorized to access, with its live checklist progress and shared studio templates.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public getGuideVentures(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideVentures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+     * @summary Returns one venture from the caller studio\'s portfolio by slug, including its setup checkpoints, live checklist progress, and shared templates.
+     * @param {GuideApiGetGuideVenturesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public getGuideVenturesBySlug(requestParameters: GuideApiGetGuideVenturesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideVenturesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1230,6 +1627,30 @@ export class GuideApi extends BaseAPI {
      */
     public postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig) {
         return GuideApiFp(this.configuration).postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture). Repeated or interrupted calls with the same slug resume idempotently without duplicating the venture, its team checkpoint, or its initial budget.
+     * @summary Creates or imports a venture under the caller studio\'s portfolio, captures its thesis, sponsor, owner, initial budget and seed evidence, and enrolls its isolated venture organization in a versioned Guide playbook (defaulting to venture).
+     * @param {GuideApiPostGuideVenturesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public postGuideVentures(requestParameters: GuideApiPostGuideVenturesRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideVentures(requestParameters.guideCreateVentureIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+     * @summary Executes a portfolio lifecycle operation on a venture (pause, resume, advance, form, export, sync, offboard, assign_member, or revoke_member) and updates its operational telemetry (spend, pending decisions, failed runs, latest evidence, or company formation ID).
+     * @param {GuideApiPostGuideVenturesBySlugLifecycleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public postGuideVenturesBySlugLifecycle(requestParameters: GuideApiPostGuideVenturesBySlugLifecycleRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideVenturesBySlugLifecycle(requestParameters.slug, requestParameters.guideVentureLifecycleIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

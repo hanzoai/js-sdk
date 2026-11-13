@@ -45,7 +45,7 @@ export interface PlanPlanResolution {
      */
     'price_ref'?: any;
     /**
-     * TenantID is the catalog the record came from: \"hanzo\" for the canonical catalog, a reseller org for that reseller\'s override.
+     * TenantID is the catalog the record came from: \"hanzo\", the platform\'s.
      * @type {string}
      * @memberof PlanPlanResolution
      */
