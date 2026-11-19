@@ -131,8 +131,7 @@ request's `signal` and `timeout`, and left whole on `err.cause.response.data`. `
 these where they would throw `answer.Fault`; a 402 there is still the `denied`
 arm.
 
-The routes are generated: `aiLimits()` and `aiSetLimits({ aiLimitsSet: {
-creditsAfterAllowance } })` on `/v1/ai/limits`; `SyncApi`'s `getSync`,
+The routes are generated: `aiLimits()` on `/v1/ai/limits`; `SyncApi`'s `getSync`,
 `getSyncById`, `postSync` and `postSyncByIdRun` ("sync now") on `/v1/sync`;
 `postDecisions`; and `getModels`, whose rows carry `class` (premium, ours or
 free), `family` and `pricing.variable`.

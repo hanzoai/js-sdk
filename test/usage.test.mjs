@@ -416,37 +416,28 @@ test('readUsage: absent or empty reads undefined, never 0 or ""', () => {
   assert.deepEqual(hanzoai.readUsage(new Headers({ 'x-hanzo-served': 'zen5' })), { ...none, served: 'zen5' });
 });
 
-test('GET /v1/ai/limits and PUT /v1/ai/limits', async (t) => {
+test('GET /v1/ai/limits', async (t) => {
   const limits = {
     plan: 'free',
     state: 'ok',
     classes: {},
+    pays: { premium: 'none', ours: 'credits' },
     actions: [
       { kind: 'upgrade', label: 'Upgrade to Pro', url: 'https://hanzo.ai/pay/cart?plan=dev', plan: 'dev' },
       { kind: 'topup', label: 'Add prepaid credit', url: 'https://hanzo.ai/pay' },
     ],
     upgrade: 'dev',
-    credits_after_allowance: false,
   };
-  const sent = wire([
-    { status: 200, body: limits },
-    { status: 200, body: { ...limits, credits_after_allowance: true } },
-  ]);
+  const sent = wire([{ status: 200, body: limits }]);
   t.after(sent.restore);
 
   const ai = new hanzoai.AiApi(configuration());
   const read = await ai.aiLimits();
   assert.equal(read.data.plan, 'free');
-  assert.equal(read.data.credits_after_allowance, false);
+  assert.deepEqual(read.data.pays, { premium: 'none', ours: 'credits' });
   assert.equal(sent[0].method, 'GET');
   assert.equal(sent[0].url, 'https://api.hanzo.ai/v1/ai/limits');
   assert.equal(sent[0].headers.authorization, 'Bearer tok-1');
-
-  const set = await ai.aiSetLimits({ aiLimitsSet: { creditsAfterAllowance: true } });
-  assert.equal(set.data.credits_after_allowance, true);
-  assert.equal(sent[1].method, 'PUT');
-  assert.equal(sent[1].url, 'https://api.hanzo.ai/v1/ai/limits');
-  assert.deepEqual(json(sent[1]), { creditsAfterAllowance: true });
 });
 
 test('/v1/sync: list, get, create, and sync now', async (t) => {

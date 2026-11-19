@@ -13,9 +13,8 @@
 //   export HANZO_API_KEY=$(hanzo auth token)
 //   npm run build && npx tsx examples/limits/index.ts
 //
-// It reads and asks; it changes nothing. "Continue with credits" is
-// `aiSetLimits({ aiLimitsSet: { creditsAfterAllowance: true } })` and "sync now"
-// is `postSyncByIdRun({ id })` — both a person's choice, so printed, not taken.
+// It reads and asks; it changes nothing. "Sync now" is
+// `postSyncByIdRun({ id })` — a person's choice, so printed, not taken.
 import {
   AiApi,
   SyncApi,
@@ -44,9 +43,9 @@ async function main() {
   const ai = new AiApi(config());
 
   const { data: limits } = await ai.aiLimits();
-  console.log(`plan ${limits.plan} · ${limits.state} · credits after allowance ${limits.credits_after_allowance}`);
+  console.log(`plan ${limits.plan} · ${limits.state}`);
   for (const [name, c] of Object.entries(limits.classes ?? {})) {
-    console.log(`  ${name}: ${c.percent}% used, ${c.state}, paid by ${c.paying}`);
+    console.log(`  ${name}: ${c.percent}% used, ${c.state}, paid by ${limits.pays?.[name] ?? c.paying}`);
   }
   for (const a of limits.actions ?? []) console.log(`  → ${a.label}: ${a.url}`);
 
